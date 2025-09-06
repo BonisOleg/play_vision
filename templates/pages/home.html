@@ -1,0 +1,466 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Play Vision - Освітня платформа для футбольних фахівців{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" x-data="{ currentSlide: 0 }">
+    <div class="hero-carousel">
+        <div class="hero-slide" :class="{ 'active': currentSlide === 0 }">
+            <div class="hero-content">
+                <h1>Стань професіоналом у футболі</h1>
+                <p>Навчайся у кращих експертів України та світу</p>
+                <a href="{% url 'content:course_list' %}" class="btn btn-primary btn-lg">Почати навчання</a>
+            </div>
+        </div>
+        <div class="hero-slide" :class="{ 'active': currentSlide === 1 }">
+            <div class="hero-content">
+                <h1>Для тренерів, гравців та батьків</h1>
+                <p>Комплексний підхід до розвитку футболу</p>
+                <a href="{% url 'core:about' %}" class="btn btn-primary btn-lg">Дізнатись більше</a>
+            </div>
+        </div>
+        <div class="hero-slide" :class="{ 'active': currentSlide === 2 }">
+            <div class="hero-content">
+                <h1>Унікальні івенти та семінари</h1>
+                <p>Зустрічайся з експертами наживо</p>
+                <a href="#" class="btn btn-primary btn-lg">Переглянути івенти</a>
+            </div>
+        </div>
+        <div class="hero-slide" :class="{ 'active': currentSlide === 3 }">
+            <div class="hero-content">
+                <h1>Персональний ментор-коучінг</h1>
+                <p>Індивідуальний підхід до твого розвитку</p>
+                <a href="#" class="btn btn-primary btn-lg">Замовити консультацію</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-dots">
+        <button @click="currentSlide = 0" :class="{ 'active': currentSlide === 0 }"></button>
+        <button @click="currentSlide = 1" :class="{ 'active': currentSlide === 1 }"></button>
+        <button @click="currentSlide = 2" :class="{ 'active': currentSlide === 2 }"></button>
+        <button @click="currentSlide = 3" :class="{ 'active': currentSlide === 3 }"></button>
+    </div>
+
+    <script>
+        // Auto-advance carousel
+        setInterval(() => {
+            Alpine.store('heroCarousel', (Alpine.store('heroCarousel') + 1) % 4);
+        }, 7000);
+    </script>
+</section>
+
+<!-- Featured Courses -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Курси та освітні програми</h2>
+        <div class="course-slider" x-data="{ scrollPosition: 0 }">
+            <div class="course-grid">
+                {% for course in featured_courses %}
+                <div class="course-card card">
+                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" class="card-image">
+                    <div class="card-body">
+                        <span class="course-category">{{ course.category.name }}</span>
+                        <h3 class="card-title">{{ course.title }}</h3>
+                        <p class="card-text">{{ course.short_description }}</p>
+                        <div class="course-meta">
+                            <span class="course-duration">{{ course.duration_display }}</span>
+                            <span class="course-price">
+                                {% if course.is_free %}
+                                Безкоштовно
+                                {% else %}
+                                {{ course.price }} ₴
+                                {% endif %}
+                            </span>
+                        </div>
+                        <a href="{{ course.get_absolute_url }}" class="btn btn-primary">Огляд курсу</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="slider-prev" @click="scrollPosition -= 320">&lt;</button>
+            <button class="slider-next" @click="scrollPosition += 320">&gt;</button>
+        </div>
+    </div>
+</section>
+
+<!-- Events Calendar -->
+<section class="section section-gray">
+    <div class="container">
+        <h2 class="section-title">Календар івентів</h2>
+        <div class="events-calendar">
+            <div class="calendar-filters">
+                <button class="filter-btn active">Усі</button>
+                <button class="filter-btn">Форуми</button>
+                <button class="filter-btn">Вебінари</button>
+                <button class="filter-btn">Стажування</button>
+            </div>
+            <div class="calendar-grid">
+                <!-- Calendar implementation -->
+                <p class="text-center">Календар завантажується...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mentor Coaching -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Ментор-коучінг</h2>
+        <p class="section-subtitle">Еко-система розвитку гравця з комплексним підходом</p>
+
+        <div class="mentor-coaching-map">
+            <div class="coaching-center">
+                <h3>МЕНТОР-КОУЧІНГ</h3>
+            </div>
+
+            <div class="coaching-areas">
+                <div class="coaching-area" data-area="game-intelligence">
+                    <div class="area-icon">🧠</div>
+                    <h4>Ігровий інтелект</h4>
+                    <p>Система роботи з покращення розуміння гри, аналіз ігор, формування відеонарізок</p>
+                </div>
+
+                <div class="coaching-area" data-area="physics">
+                    <div class="area-icon">💪</div>
+                    <h4>Фізика</h4>
+                    <p>Робота над координацією, постановкою, корекція слабких сторін і профілактика травм</p>
+                </div>
+
+                <div class="coaching-area" data-area="technique">
+                    <div class="area-icon">⚽</div>
+                    <h4>Техніка</h4>
+                    <p>Доведення технічної бази до автоматизму, розширення технічної бази, корекція помилок</p>
+                </div>
+
+                <div class="coaching-area" data-area="mentality">
+                    <div class="area-icon">🧘</div>
+                    <h4>Ментальність</h4>
+                    <p>Контроль емоцій, впевненість, мотивація, реакція на невдачі та конфлікти</p>
+                </div>
+
+                <div class="coaching-area" data-area="lifestyle">
+                    <div class="area-icon">🏠</div>
+                    <h4>Життя і побут</h4>
+                    <p>Експертиза з медіаграмотності, фінансової грамотності, планування режиму дня, адаптація в новому
+                        місці</p>
+                </div>
+
+                <div class="coaching-area" data-area="health">
+                    <div class="area-icon">💊</div>
+                    <h4>Здоров'я</h4>
+                    <p>Нутриціологія та харчування, вітаміни і БАДи, якісне відновлення, медичний супровід</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-primary">Дізнатись більше</a>
+        </div>
+    </div>
+</section>
+
+<!-- Experts -->
+<section class="section section-gray">
+    <div class="container">
+        <h2 class="section-title">Обличчя компанії</h2>
+        <div class="experts-grid grid grid-cols-4">
+            <div class="expert-card">
+                <img src="{% static 'images/expert-1.jpg' %}" alt="Expert" class="expert-photo">
+                <h4>Олександр Петров</h4>
+                <p class="expert-position">Головний тренер збірної U-19</p>
+                <p class="expert-bio">20+ років досвіду, UEFA PRO ліцензія</p>
+                <a href="#" class="btn btn-outline btn-sm">Детальніше</a>
+            </div>
+            <div class="expert-card">
+                <img src="{% static 'images/expert-2.jpg' %}" alt="Expert" class="expert-photo">
+                <h4>Марія Коваленко</h4>
+                <p class="expert-position">Спортивний психолог</p>
+                <p class="expert-bio">Працює з топ-клубами УПЛ</p>
+                <a href="#" class="btn btn-outline btn-sm">Детальніше</a>
+            </div>
+            <div class="expert-card">
+                <img src="{% static 'images/expert-3.jpg' %}" alt="Expert" class="expert-photo">
+                <h4>Андрій Шевченко</h4>
+                <p class="expert-position">Футбольний аналітик</p>
+                <p class="expert-bio">Експерт телеканалу Футбол</p>
+                <a href="#" class="btn btn-outline btn-sm">Детальніше</a>
+            </div>
+            <div class="expert-card">
+                <img src="{% static 'images/expert-4.jpg' %}" alt="Expert" class="expert-photo">
+                <h4>Ірина Мельник</h4>
+                <p class="expert-position">Дитячий тренер</p>
+                <p class="expert-bio">Авторка методики раннього розвитку</p>
+                <a href="#" class="btn btn-outline btn-sm">Детальніше</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="container text-center">
+        <h2>Стань частиною ком'юніті Play Vision</h2>
+        <p class="lead">Заповни невеличку анкету та отримай персональні рекомендації. Так ми зможемо краще зрозуміти,
+            яку цінність тобі надати.</p>
+        <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg">Доєднатись</a>
+    </div>
+</section>
+
+<style>
+    /* Hero Section */
+    .hero {
+        position: relative;
+        height: 600px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+
+    .hero-carousel {
+        height: 100%;
+    }
+
+    .hero-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-slide.active {
+        opacity: 1;
+    }
+
+    .hero-content {
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        padding: var(--spacing-xl);
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .hero-content p {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-xl);
+        opacity: 0.9;
+    }
+
+    .hero-dots {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+    }
+
+    .hero-dots button {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid white;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .hero-dots button.active {
+        background: white;
+        width: 30px;
+        border-radius: 6px;
+    }
+
+    /* Sections */
+    .section {
+        padding: var(--spacing-xxl) 0;
+    }
+
+    .section-gray {
+        background: var(--color-bg-gray);
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: var(--color-text-light);
+        font-size: 1.125rem;
+        margin: -1rem 0 var(--spacing-xl);
+    }
+
+    /* Course Cards */
+    .course-grid {
+        display: flex;
+        gap: var(--spacing-lg);
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding-bottom: var(--spacing-md);
+    }
+
+    .course-card {
+        min-width: 300px;
+        flex-shrink: 0;
+    }
+
+    .course-category {
+        color: var(--color-primary);
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .course-meta {
+        display: flex;
+        justify-content: space-between;
+        margin: var(--spacing-md) 0;
+        font-size: 0.875rem;
+    }
+
+    .course-price {
+        font-weight: 600;
+        color: var(--color-primary);
+    }
+
+    /* Mentor Coaching Map */
+    .mentor-coaching-map {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: var(--spacing-xxl);
+    }
+
+    .coaching-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--color-primary);
+        color: white;
+        padding: var(--spacing-lg);
+        border-radius: 12px;
+        z-index: 10;
+        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+    }
+
+    .coaching-areas {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    .coaching-area {
+        background: white;
+        border: 2px solid var(--color-border);
+        border-radius: 12px;
+        padding: var(--spacing-md);
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .coaching-area:hover {
+        border-color: var(--color-primary);
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .area-icon {
+        font-size: 2.5rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .coaching-area h4 {
+        margin-bottom: var(--spacing-xs);
+        font-size: 1.125rem;
+    }
+
+    .coaching-area p {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+        margin: 0;
+    }
+
+    /* Experts */
+    .expert-card {
+        text-align: center;
+        padding: var(--spacing-lg);
+        background: white;
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+    }
+
+    .expert-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .expert-photo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .expert-position {
+        color: var(--color-primary);
+        font-size: 0.875rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .expert-bio {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+        margin-bottom: var(--spacing-md);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+        color: white;
+    }
+
+    .cta-section h2 {
+        color: white;
+    }
+
+    .cta-section .lead {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto var(--spacing-xl);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+
+        .hero {
+            height: 400px;
+        }
+
+        .coaching-areas {
+            grid-template-columns: 1fr;
+        }
+
+        .experts-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+{% endblock %}

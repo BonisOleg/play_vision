@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="{% block meta_description %}Play Vision - Освітня платформа для футбольних фахівців{% endblock %}">
+    <title>{% block title %}Play Vision{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
+    <!-- PWA -->
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#ff6b35">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block extra_css %}{% endblock %}
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" x-data="{ mobileMenuOpen: false }">
+        <div class="container">
+            <nav class="navbar">
+                <!-- Logo -->
+                <a href="{% url 'core:home' %}" class="navbar-brand">
+                    <img src="{% static 'images/logo.png' %}" alt="Play Vision" class="logo">
+                    <span>Play Vision</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="navbar-menu">
+                    <a href="{% url 'core:home' %}"
+                        class="navbar-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                        Головна
+                    </a>
+                    <a href="{% url 'core:about' %}"
+                        class="navbar-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                        Про Play Vision
+                    </a>
+                    <a href="{% url 'content:course_list' %}"
+                        class="navbar-link hub-link {% if 'hub' in request.path %}active{% endif %}">
+                        Хаб знань
+                    </a>
+                    <a href="#" class="navbar-link">Івенти</a>
+                    <a href="#" class="navbar-link">Ментор-коучінг</a>
+                    <a href="#" class="btn btn-primary">Підписка</a>
+                </div>
+
+                <!-- User Menu -->
+                <div class="navbar-actions">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:profile' %}" class="navbar-icon">
+                        <svg class="icon">
+                            <use xlink:href="#icon-user"></use>
+                        </svg>
+                        <span class="sr-only">Кабінет</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}" class="navbar-link">Вхід</a>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-outline">Реєстрація</a>
+                    {% endif %}
+
+                    <!-- Cart -->
+                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon"
+                        hx-get="{% url 'htmx:cart:cart_count' %}" hx-trigger="load, cartUpdated from:body"
+                        hx-swap="innerHTML">
+                        <svg class="icon">
+                            <use xlink:href="#icon-cart"></use>
+                        </svg>
+                        <span class="cart-count">0</span>
+                    </a>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" @click="mobileMenuOpen = !mobileMenuOpen">
+                        <svg class="icon">
+                            <use xlink:href="#icon-menu"></use>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" x-show="mobileMenuOpen" x-transition>
+                <a href="{% url 'core:home' %}" class="mobile-menu-link">Головна</a>
+                <a href="{% url 'core:about' %}" class="mobile-menu-link">Про Play Vision</a>
+                <a href="{% url 'content:course_list' %}" class="mobile-menu-link">Хаб знань</a>
+                <a href="#" class="mobile-menu-link">Івенти</a>
+                <a href="#" class="mobile-menu-link">Ментор-коучінг</a>
+                <a href="#" class="mobile-menu-link">Підписка</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}" class="mobile-menu-link">Мій кабінет</a>
+                <a href="{% url 'accounts:logout' %}" class="mobile-menu-link">Вийти</a>
+                {% else %}
+                <a href="{% url 'accounts:login' %}" class="mobile-menu-link">Вхід</a>
+                <a href="{% url 'accounts:register' %}" class="mobile-menu-link">Реєстрація</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message message-{{ message.tags }}" x-data="{ show: true }" x-show="show">
+            {{ message }}
+            <button @click="show = false" class="message-close">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Play Vision</h3>
+                    <p>Освітня платформа для футбольних фахівців</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навігація</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:home' %}">Головна</a></li>
+                        <li><a href="{% url 'core:about' %}">Про нас</a></li>
+                        <li><a href="{% url 'content:course_list' %}">Хаб знань</a></li>
+                        <li><a href="{% url 'core:contacts' %}">Контакти</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Правова інформація</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:legal' slug='privacy' %}">Політика приватності</a></li>
+                        <li><a href="{% url 'core:legal' slug='terms' %}">Умови використання</a></li>
+                        <li><a href="{% url 'core:legal' slug='cookies' %}">Політика cookies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакти</h4>
+                    <p>Email: support@playvision.com</p>
+                    <p>Телефон: +380 44 123 45 67</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Play Vision. Всі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SVG Icons -->
+    <svg style="display: none;">
+        <symbol id="icon-user" viewBox="0 0 24 24">
+            <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </symbol>
+        <symbol id="icon-cart" viewBox="0 0 24 24">
+            <path
+                d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+        </symbol>
+        <symbol id="icon-menu" viewBox="0 0 24 24">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+        </symbol>
+    </svg>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+<svg class="icon">
+    <use xlink:href="#icon-cart"></use>
+</svg>
+<span class="cart-count">{{ cart_count|default:0 }}</span>
+
+{% if message %}
+<script>
+    PlayVision.showMessage('{{ message }}', 'success');
+</script>
+{% endif %}

@@ -1,0 +1,20 @@
+# Core Django
+Django==5.1.6
+psycopg2-binary==2.9.10
+
+# Frontend Integration  
+django-htmx==1.20.0
+django-widget-tweaks==1.5.0
+
+# API
+djangorestframework==3.15.2
+django-cors-headers==4.6.0
+
+# Production
+gunicorn==23.0.0
+whitenoise==6.8.2
+dj-database-url==2.3.0
+
+# Utils
+python-decouple==3.8
+Pillow==11.0.0

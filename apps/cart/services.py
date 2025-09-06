@@ -1,0 +1,414 @@
+from decimal import Decimal
+from django.utils import timezone
+from django.db import transaction
+from apps.subscriptions.models import Plan
+from apps.content.models import Course
+from .models import Cart, CartItem
+
+
+class CartService:
+    """
+    Main cart service for handling cart operations
+    """
+    
+    def __init__(self, request):
+        self.request = request
+        self.user = request.user if request.user.is_authenticated else None
+        self._cart = None
+    
+    @property
+    def cart(self):
+        """Get or create cart"""
+        if self._cart is None:
+            self._cart = self.get_or_create_cart()
+        return self._cart
+    
+    def get_or_create_cart(self):
+        """Get or create cart for current user/session"""
+        if self.user:
+            cart, created = Cart.objects.get_or_create(user=self.user)
+            
+            # Merge anonymous cart if exists
+            anonymous_cart_id = self.request.session.get('cart_id')
+            if anonymous_cart_id and created:
+                try:
+                    anonymous_cart = Cart.objects.get(id=anonymous_cart_id, user=None)
+                    cart.merge_with(anonymous_cart)
+                    del self.request.session['cart_id']
+                except Cart.DoesNotExist:
+                    pass
+        else:
+            cart_id = self.request.session.get('cart_id')
+            if cart_id:
+                try:
+                    cart = Cart.objects.get(id=cart_id, user=None)
+                except Cart.DoesNotExist:
+                    cart = Cart.objects.create()
+                    self.request.session['cart_id'] = cart.id
+            else:
+                cart = Cart.objects.create()
+                self.request.session['cart_id'] = cart.id
+        
+        return cart
+    
+    def add_course(self, course, quantity=1):
+        """Add course to cart"""
+        # Check if user already has access to this course
+        if self.user and self.user.has_course_access(course):
+            return False, "У вас вже є доступ до цього курсу"
+        
+        # Check if course is available for purchase
+        if not course.is_published:
+            return False, "Курс недоступний для покупки"
+        
+        item = self.cart.add_course(course, quantity)
+        return True, f"Курс '{course.title}' додано до кошика"
+    
+    def add_subscription(self, plan):
+        """Add subscription plan to cart"""
+        # Check if user has active subscription
+        if self.user and self.user.has_active_subscription():
+            return False, "У вас вже є активна підписка"
+        
+        item = self.cart.add_subscription(plan)
+        return True, f"План '{plan.name}' додано до кошика"
+    
+    def add_event_ticket(self, event):
+        """Add event ticket to cart"""
+        # Check if user can register for event
+        can_register, message = event.can_register(self.user)
+        if not can_register:
+            return False, message
+        
+        # Check if user already has ticket in cart
+        existing_item = self.cart.items.filter(
+            item_type='event_ticket',
+            item_id=event.id
+        ).first()
+        
+        if existing_item:
+            return False, "Квиток на цей івент вже в кошику"
+        
+        # Add to cart
+        item = CartItem.objects.create(
+            cart=self.cart,
+            item_type='event_ticket',
+            item_id=event.id,
+            item_name=event.title,
+            price=event.price,
+            quantity=1
+        )
+        
+        return True, f"Квиток на '{event.title}' додано до кошика"
+    
+    def remove_item(self, item_id):
+        """Remove item from cart"""
+        try:
+            item = self.cart.items.get(id=item_id)
+            item_name = item.item_name
+            item.delete()
+            return True, f"'{item_name}' видалено з кошика"
+        except CartItem.DoesNotExist:
+            return False, "Товар не знайдено в кошику"
+    
+    def update_quantity(self, item_id, quantity):
+        """Update item quantity"""
+        try:
+            item = self.cart.items.get(id=item_id)
+            
+            if quantity <= 0:
+                return self.remove_item(item_id)
+            
+            # Only courses can have quantity > 1
+            if item.item_type != 'course' and quantity > 1:
+                return False, "Неможливо додати більше одного цього товару"
+            
+            item.quantity = quantity
+            item.save()
+            return True, "Кількість оновлено"
+            
+        except CartItem.DoesNotExist:
+            return False, "Товар не знайдено в кошику"
+    
+    def clear(self):
+        """Clear all items from cart"""
+        self.cart.clear()
+        return True, "Кошик очищено"
+    
+    def get_total(self):
+        """Get cart total"""
+        return self.cart.get_total()
+    
+    def get_items_count(self):
+        """Get total items count"""
+        return self.cart.get_items_count()
+    
+    def apply_coupon(self, coupon_code):
+        """Apply coupon to cart"""
+        from apps.payments.models import Coupon
+        
+        try:
+            coupon = Coupon.objects.get(code=coupon_code.upper(), is_active=True)
+        except Coupon.DoesNotExist:
+            return False, "Промокод не знайдено"
+        
+        # Validate coupon
+        if not coupon.can_be_used_by(self.user):
+            return False, "Цей промокод не може бути використаний"
+        
+        cart_total = self.get_total()
+        if cart_total < coupon.min_amount:
+            return False, f"Мінімальна сума замовлення: {coupon.min_amount} ₴"
+        
+        # Calculate discount
+        if coupon.discount_type == 'percentage':
+            discount = cart_total * (coupon.discount_value / 100)
+        else:
+            discount = min(coupon.discount_value, cart_total)
+        
+        return True, f"Промокод застосовано! Знижка: {discount:.0f} ₴"
+    
+    def get_recommendations(self):
+        """Get product recommendations based on cart contents"""
+        recommendations = []
+        
+        # Get course IDs in cart
+        cart_course_ids = self.cart.items.filter(
+            item_type='course'
+        ).values_list('item_id', flat=True)
+        
+        if cart_course_ids:
+            # Get courses from same categories
+            cart_courses = Course.objects.filter(id__in=cart_course_ids)
+            category_ids = cart_courses.values_list('category_id', flat=True).distinct()
+            
+            related_courses = Course.objects.filter(
+                category_id__in=category_ids,
+                is_published=True
+            ).exclude(id__in=cart_course_ids)[:3]
+            
+            recommendations.extend(related_courses)
+        
+        # Add featured courses if needed
+        if len(recommendations) < 3:
+            featured_courses = Course.objects.filter(
+                is_featured=True,
+                is_published=True
+            ).exclude(id__in=cart_course_ids)[:3-len(recommendations)]
+            
+            recommendations.extend(featured_courses)
+        
+        return recommendations
+    
+    @transaction.atomic
+    def prepare_checkout(self):
+        """Prepare cart for checkout"""
+        if not self.cart.items.exists():
+            return False, "Кошик порожній"
+        
+        # Validate all items
+        invalid_items = []
+        
+        for item in self.cart.items.all():
+            if item.item_type == 'course':
+                try:
+                    course = Course.objects.get(id=item.item_id, is_published=True)
+                    if self.user and self.user.has_course_access(course):
+                        invalid_items.append(item)
+                except Course.DoesNotExist:
+                    invalid_items.append(item)
+            
+            elif item.item_type == 'subscription':
+                try:
+                    plan = Plan.objects.get(id=item.item_id, is_active=True)
+                    if self.user and self.user.has_active_subscription():
+                        invalid_items.append(item)
+                except Plan.DoesNotExist:
+                    invalid_items.append(item)
+            
+            elif item.item_type == 'event_ticket':
+                try:
+                    from apps.events.models import Event
+                    event = Event.objects.get(id=item.item_id, status='published')
+                    can_register, _ = event.can_register(self.user)
+                    if not can_register:
+                        invalid_items.append(item)
+                except:
+                    invalid_items.append(item)
+        
+        # Remove invalid items
+        if invalid_items:
+            for item in invalid_items:
+                item.delete()
+            
+            if not self.cart.items.exists():
+                return False, "Всі товари в кошику стали недоступними"
+        
+        return True, "Кошик готовий до оформлення"
+    
+    def create_order(self):
+        """Create order from cart contents"""
+        from apps.payments.models import Order, OrderItem
+        import uuid
+        
+        success, message = self.prepare_checkout()
+        if not success:
+            return None, message
+        
+        # Generate order number
+        order_number = f"PV{timezone.now().strftime('%Y%m%d')}{uuid.uuid4().hex[:8].upper()}"
+        
+        # Create order
+        order = Order.objects.create(
+            user=self.user,
+            order_number=order_number,
+            status='draft'
+        )
+        
+        # Create order items
+        for cart_item in self.cart.items.all():
+            OrderItem.objects.create(
+                order=order,
+                item_type=cart_item.item_type,
+                item_id=cart_item.item_id,
+                item_name=cart_item.item_name,
+                quantity=cart_item.quantity,
+                price=cart_item.price
+            )
+        
+        # Calculate totals
+        order.calculate_totals()
+        
+        return order, "Замовлення створено"
+
+
+class SubscriptionSuggestionService:
+    """
+    Service for suggesting better subscription deals in cart
+    """
+    
+    def should_show_suggestion(self, cart, user):
+        """
+        Check if we should show subscription suggestion
+        """
+        # Don't show if user has active subscription
+        if user and user.is_authenticated and user.has_active_subscription():
+            return False
+        
+        # Don't show if already shown in this session
+        if cart.suggestion_shown:
+            # Reset after 24 hours
+            if cart.suggestion_shown_at and (timezone.now() - cart.suggestion_shown_at).days >= 1:
+                cart.suggestion_shown = False
+                cart.save()
+            else:
+                return False
+        
+        # Only show if cart has courses
+        course_items = cart.items.filter(item_type='course')
+        if not course_items.exists():
+            return False
+        
+        # Show if cart total is more than 50% of monthly subscription
+        cart_total = cart.get_total()
+        monthly_plan = Plan.objects.filter(duration='1_month', is_active=True).first()
+        
+        if monthly_plan and cart_total > (monthly_plan.price * Decimal('0.5')):
+            return True
+        
+        return False
+    
+    def get_suggestion_data(self, cart):
+        """
+        Get data for subscription suggestion display
+        """
+        cart_total = cart.get_total()
+        cart_items_count = cart.items.filter(item_type='course').count()
+        
+        # Get active plans ordered by duration
+        plans = Plan.objects.filter(is_active=True).order_by('duration_months')
+        
+        suggestion = {
+            'cart_total': cart_total,
+            'cart_items_count': cart_items_count,
+            'plans': [],
+            'show_suggestion': True
+        }
+        
+        for plan in plans:
+            plan_data = {
+                'id': plan.id,
+                'name': plan.name,
+                'duration': plan.get_duration_display(),
+                'total_price': plan.price,
+                'monthly_price': plan.monthly_price,
+                'savings_percentage': plan.savings_percentage,
+                'features': plan.features,
+                'badge_text': plan.badge_text,
+                'is_popular': plan.is_popular,
+                'is_best_value': plan.duration_months == 12,  # Annual plan is best value
+            }
+            
+            # Calculate how much user saves vs buying courses individually
+            if cart_total > plan.price:
+                plan_data['saves_vs_cart'] = cart_total - plan.price
+                plan_data['saves_percentage'] = int(((cart_total - plan.price) / cart_total) * 100)
+            else:
+                plan_data['saves_vs_cart'] = 0
+                plan_data['saves_percentage'] = 0
+            
+            suggestion['plans'].append(plan_data)
+        
+        # Mark suggestion as shown
+        cart.suggestion_shown = True
+        cart.suggestion_shown_at = timezone.now()
+        cart.save()
+        
+        return suggestion
+    
+    def get_comparison_text(self, cart_total, plan):
+        """
+        Get comparison text for UI
+        """
+        if cart_total > plan.price:
+            savings = cart_total - plan.price
+            return f"Заощадь {savings:.0f} ₴ оформивши підписку {plan.name}"
+        else:
+            extra = plan.price - cart_total
+            return f"Отримай доступ до всіх курсів доплативши лише {extra:.0f} ₴"
+    
+    def calculate_recommended_plan(self, cart):
+        """
+        Calculate which plan to recommend based on cart contents
+        """
+        cart_total = cart.get_total()
+        plans = Plan.objects.filter(is_active=True).order_by('price')
+        
+        # Find the plan that gives best value
+        best_plan = None
+        best_value_score = 0
+        
+        for plan in plans:
+            # Calculate value score
+            if cart_total > plan.price:
+                # User saves money with subscription
+                value_score = (cart_total - plan.price) / plan.price
+            else:
+                # User gets more content for slightly more money
+                extra_cost = plan.price - cart_total
+                if extra_cost < cart_total * Decimal('0.3'):  # Within 30% extra
+                    value_score = 1 / (1 + extra_cost / cart_total)
+                else:
+                    value_score = 0
+            
+            # Boost score for longer plans
+            if plan.duration_months >= 12:
+                value_score *= 1.5
+            elif plan.duration_months >= 3:
+                value_score *= 1.2
+            
+            if value_score > best_value_score:
+                best_value_score = value_score
+                best_plan = plan
+        
+        return best_plan

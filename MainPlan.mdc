@@ -1,0 +1,1970 @@
+---
+alwaysApply: true
+---
+## 1. ЗАГАЛЬНА АРХІТЕКТУРА
+
+### 1.1 Технологічний стек
+```yaml
+Backend:
+  - Django: 5.1+
+  - Python: 3.11+
+  - PostgreSQL: 15+
+  - Redis: 7.0+
+  - Celery: 5.3+
+  - Gunicorn + Nginx
+
+Frontend:
+  - Vanilla JS (ES6+)
+  - CSS3 + SCSS
+  - HTML5
+  - Alpine.js (для реактивності)
+  - HTMX (для AJAX)
+  - Service Worker API
+
+Платіжні системи:
+  - Stripe API
+  - Apple Pay SDK
+  - Google Pay API
+
+Медіа та CDN:
+  - AWS S3 / CloudFront
+  - FFmpeg (конвертація)
+  - HLS streaming
+  
+Моніторинг:
+  - Sentry
+  - Prometheus + Grafana
+  - ELK Stack
+```
+
+### 1.2 Структура проєкту
+```
+playvision/
+├── apps/
+│   ├── accounts/        # Користувачі, профілі, авторизація
+│   ├── subscriptions/   # Підписки та плани
+│   ├── payments/        # Платежі, транзакції
+│   ├── content/         # Курси, матеріали, теги
+│   ├── events/          # Івенти, квитки, QR
+│   ├── mentoring/       # Ментор-коучінг
+│   ├── cart/            # Кошик, промокоди
+│   ├── ai/              # AI-агент, база знань
+│   ├── cms/             # CMS функціонал
+│   ├── analytics/       # Внутрішня аналітика
+│   ├── notifications/   # Push, email, SMS
+│   ├── loyalty/         # Програма лояльності
+│   └── core/            # Спільні компоненти
+├── static/
+├── media/
+├── templates/
+├── locale/              # i18n файли
+├── docker/
+└── requirements/
+```
+
+### 1.3 Логічні модулі та відповідальності
+
+| Модуль | Відповідальність | Ключові моделі |
+|--------|-----------------|----------------|
+| accounts | Управління користувачами | User, Profile, Role |
+| subscriptions | Логіка підписок | Plan, Subscription, Entitlement |
+| payments | Обробка платежів | Payment, Order, Transaction |
+| content | Навчальні матеріали | Course, Material, Tag, Progress |
+| events | Івент-менеджмент | Event, Ticket, Speaker |
+| cart | Кошик та чекаут | Cart, CartItem, Coupon |
+| ai | Штучний інтелект | AIQuery, KnowledgeBase |
+| loyalty | Програма лояльності | LoyaltyLevel, Points |
+
+---
+
+## 2. ДОМЕННА МОДЕЛЬ
+
+### 2.1 ER-схема основних сутностей
+
+```mermaid
+erDiagram
+    User ||--o{ Profile : has
+    User ||--o{ Subscription : has
+    User ||--o{ Payment : makes
+    User ||--o{ Progress : tracks
+    User ||--o{ Favorite : marks
+    User ||--o{ EventTicket : purchases
+    
+    Subscription }o--|| Plan : based_on
+    Subscription ||--o{ Entitlement : grants
+    
+    Course ||--o{ Material : contains
+    Course }o--o{ Tag : tagged_with
+    Course ||--o{ Progress : tracked_in
+    
+    Event ||--o{ EventTicket : sells
+    Event ||--o{ Speaker : features
+    
+    Cart ||--o{ CartItem : contains
+    Order ||--o{ OrderItem : includes
+    Order ||--|| Payment : paid_by
+    
+    Coupon ||--o{ Order : applied_to
+    LoyaltyLevel ||--o{ User : assigned_to
+```
+
+### 2.2 Детальні моделі
+
+#### User та Profile
+```python
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=20, blank=True)
+    is_email_verified = models.BooleanField(default=False)
+    is_phone_verified = models.BooleanField(default=False)
+    stripe_customer_id = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    birth_date = models.DateField(null=True)
+    avatar = models.ImageField(upload_to='avatars/')
+    profession = models.CharField(max_length=100)
+    interests = models.ManyToManyField('Tag')
+    completed_survey = models.BooleanField(default=False)
+```
+
+#### Subscription та Entitlement
+```python
+class Plan(models.Model):
+    DURATION_CHOICES = [
+        ('1_month', '1 місяць'),
+        ('3_months', '3 місяці'),
+        ('12_months', '12 місяців'),
+    ]
+    name = models.CharField(max_length=100)
+    duration = models.CharField(max_length=20, choices=DURATION_CHOICES)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    features = models.JSONField()  # ["Всі курси", "Івенти", ...]
+    event_tickets_balance = models.IntegerField(default=0)
+    discount_percentage = models.IntegerField(default=0)
+    
+class Subscription(models.Model):
+    STATUS_CHOICES = [
+        ('active', 'Активна'),
+        ('paused', 'Призупинена'),
+        ('cancelled', 'Скасована'),
+        ('expired', 'Закінчилась'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    auto_renew = models.BooleanField(default=True)
+    stripe_subscription_id = models.CharField(max_length=100)
+    
+class Entitlement(models.Model):
+    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=50)  # 'course', 'event', etc
+    content_id = models.IntegerField()
+    granted_at = models.DateTimeField(auto_now_add=True)
+```
+
+### 2.3 Матриця прав доступу
+
+| Роль | Публічні сторінки | Хаб знань | Івенти | Ментор-коучінг | Кабінет | CMS |
+|------|------------------|-----------|---------|----------------|---------|-----|
+| Гість | ✅ Повний | 👁️ Preview | 👁️ Перегляд | 👁️ Перегляд | ❌ | ❌ |
+| Користувач | ✅ Повний | 👁️ Preview | 🛒 Купівля | 🛒 Бронювання | ✅ Базовий | ❌ |
+| L1 підписник | ✅ Повний | ✅ Базові курси | 🛒 Купівля | 💰 Знижка 5% | ✅ Повний | ❌ |
+| L2 підписник | ✅ Повний | ✅ Всі курси | 🎫 1 квиток/міс | 💰 Знижка 10% | ✅ Повний | ❌ |
+| L3 підписник | ✅ Повний | ✅ Всі + VIP | 🎫 3 квитки/міс | 💰 Знижка 15% | ✅ Повний | ❌ |
+| Адміністратор | ✅ Повний | ✅ Повний | ✅ Управління | ✅ Управління | ✅ Всі | ✅ Повний |
+
+---
+
+## 3. РОУТИНГ ТА СТОРІНКИ
+
+### 3.1 Повна структура URL
+```python
+# urls.py
+urlpatterns = [
+    # Публічні
+    path('', HomeView.as_view(), name='home'),
+    path('about/', AboutView.as_view(), name='about'),
+    path('contacts/', ContactView.as_view(), name='contacts'),
+    path('legal/<slug:slug>/', LegalPageView.as_view(), name='legal'),
+    
+    # Авторизація
+    path('auth/', include('apps.accounts.urls')),
+    
+    # Хаб знань
+    path('hub/', include('apps.content.urls')),
+    
+    # Івенти
+    path('events/', include('apps.events.urls')),
+    
+    # Ментор-коучінг
+    path('mentor-coaching/', include('apps.mentoring.urls')),
+    
+    # Комерційні
+    path('pricing/', PricingView.as_view(), name='pricing'),
+    path('cart/', include('apps.cart.urls')),
+    path('checkout/', include('apps.payments.urls')),
+    
+    # Особистий кабінет
+    path('account/', include('apps.accounts.cabinet_urls')),
+    
+    # API
+    path('api/v1/', include('apps.core.api_urls')),
+    
+    # Webhooks
+    path('webhooks/', include('apps.payments.webhook_urls')),
+    
+    # Admin
+    path('admin/', admin.site.urls),
+    path('cms/', include('apps.cms.urls')),
+]
+```
+
+### 3.2 Ключові елементи сторінок
+
+#### Головна сторінка
+```yaml
+Hero карусель:
+  - 4 слайди з автозміною (5-7 сек)
+  - Повноекранні зображення + текст overlay
+  - Кнопки CTA на кожному слайді
+
+Секція курсів:
+  - 6 featured курсів
+  - Картки з ціною, тривалістю, badges
+  - Кнопка "Огляд курсу"
+
+Календар івентів:
+  - Місячний view з кольоровими мітками
+  - Фільтри по типу подій
+  - Клік → деталі івенту
+
+Ментор-коучінг:
+  - 6 блоків напрямків (ігровий інтелект, фізика, техніка...)
+  - Інтерактивна схема з анімацією
+  
+CTA блок:
+  - "Стань частиною ком'юніті Play Vision"
+  - Кнопка → реєстрація/анкета
+```
+
+#### Хаб знань
+```yaml
+Постійний банер:
+  - Текст про підписку (sticky)
+  - Клік → /pricing/
+
+Цитати експертів:
+  - Карусель (10-20 сек)
+  - Портрети + цитати
+
+Каталог курсів:
+  - Фільтри: категорія, складність, тривалість
+  - Пошук з автокомпліт
+  - Пагінація по 12 курсів
+  - Badges: топ, новинка, для вас
+
+Картка курсу:
+  - Preview on hover
+  - Ціна/підписка
+  - Улюблені (❤️)
+  - Прогрес (для користувачів)
+```
+
+---
+
+## 4. КОНТЕНТ-ГЕЙТИНГ
+
+### 4.1 Політика доступу
+```python
+class ContentAccessMiddleware:
+    """Єдина політика: платний контент до оплати недоступний"""
+    
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        # Перевірка доступу для content views
+        if hasattr(view_func, 'view_class'):
+            view_class = view_func.view_class
+            if issubclass(view_class, ContentDetailView):
+                content = self.get_content(view_kwargs)
+                has_access = self.check_access(request.user, content)
+                request.content_access = has_access
+```
+
+### 4.2 Стани блоку контенту
+```javascript
+// content-block.js
+class ContentBlock {
+    constructor(element) {
+        this.state = element.dataset.state; // 'locked', 'preview', 'unlocked'
+        this.contentType = element.dataset.type; // 'video', 'pdf', 'article'
+    }
+    
+    render() {
+        switch(this.state) {
+            case 'locked':
+                this.showPaywall();
+                break;
+            case 'preview':
+                this.startPreview();
+                break;
+            case 'unlocked':
+                this.showFullContent();
+                break;
+        }
+    }
+    
+    showPaywall() {
+        // Blur effect + lock icon
+        this.element.classList.add('content-locked');
+        this.addCTAButtons();
+    }
+    
+    startPreview() {
+        if (this.contentType === 'video') {
+            this.playVideo(20); // 20 seconds
+        } else {
+            this.showPartialContent(0.1); // 10%
+        }
+    }
+}
+```
+
+### 4.3 CTA логіка
+```html
+<!-- paywall-cta.html -->
+<div class="paywall-cta">
+    {% if not user.is_authenticated %}
+        <a href="{% url 'auth:register' %}" class="btn btn-primary">
+            Вступити в клуб
+        </a>
+    {% elif not user.has_active_subscription %}
+        <a href="{% url 'pricing' %}" class="btn btn-primary">
+            Оформити підписку
+        </a>
+        <a href="{% url 'cart:add' %}?course={{ course.id }}" class="btn btn-secondary">
+            Купити окремо за {{ course.price }}₴
+        </a>
+    {% else %}
+        <a href="{% url 'auth:login' %}" class="btn btn-primary">
+            Увійти
+        </a>
+    {% endif %}
+</div>
+```
+
+### 4.4 Серверна перевірка
+```python
+# views.py
+class CourseDetailView(DetailView):
+    model = Course
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        course = self.object
+        
+        # Серверна перевірка прав
+        if user.is_authenticated:
+            has_access = check_entitlements(user, course)
+            context['has_access'] = has_access
+            context['access_type'] = get_access_type(user, course)
+        else:
+            context['has_access'] = False
+            context['access_type'] = 'guest'
+            
+        # Preview параметри
+        if course.is_free or context['has_access']:
+            context['content_state'] = 'unlocked'
+        elif course.has_preview:
+            context['content_state'] = 'preview'
+        else:
+            context['content_state'] = 'locked'
+            
+        return context
+```
+
+---
+
+## 5. ЗАХИСТ МЕДІА
+
+### 5.1 Відео захист (HLS + AES-128)
+```python
+# video_protection.py
+class VideoProtectionService:
+    def generate_hls_playlist(self, video_file, user):
+        """Генерація захищеного HLS плейлиста"""
+        # 1. Конвертація в HLS
+        output_dir = f"media/hls/{video_file.id}/"
+        self.convert_to_hls(video_file.path, output_dir)
+        
+        # 2. Шифрування сегментів
+        key = self.generate_aes_key()
+        self.encrypt_segments(output_dir, key)
+        
+        # 3. Створення підписаного URL
+        signed_url = self.create_signed_url(
+            playlist_path=f"{output_dir}/playlist.m3u8",
+            user_id=user.id,
+            expires_in=3600  # 1 година
+        )
+        
+        return signed_url
+    
+    def add_watermark(self, video_stream, user):
+        """Динамічний водяний знак"""
+        watermark_text = f"{user.email} | ID: {user.id} | {timezone.now()}"
+        # FFmpeg overlay команда
+        return self.apply_text_overlay(video_stream, watermark_text)
+```
+
+### 5.2 PDF/документи захист
+```python
+# document_protection.py
+class DocumentProtectionService:
+    def generate_protected_pdf(self, pdf_file, user):
+        """Генерація PDF з водяним знаком"""
+        # 1. Відкриття оригіналу
+        pdf = PyPDF2.PdfReader(pdf_file)
+        output = PyPDF2.PdfWriter()
+        
+        # 2. Додавання водяного знаку на кожну сторінку
+        for page in pdf.pages:
+            watermark = self.create_watermark(
+                text=f"{user.email} | {user.profile.full_name}",
+                opacity=0.3
+            )
+            page.merge_page(watermark)
+            output.add_page(page)
+        
+        # 3. Збереження в тимчасовий файл
+        temp_file = self.save_temp_pdf(output)
+        
+        return temp_file
+```
+
+### 5.3 Service Worker конфігурація
+```javascript
+// sw.js
+self.addEventListener('fetch', event => {
+    const url = new URL(event.request.url);
+    
+    // Ніколи не кешувати приватний контент
+    const privatePatterns = [
+        /\/media\/protected\//,
+        /\/api\/content\//,
+        /\/hls\//,
+        /\.m3u8$/,
+        /\.ts$/
+    ];
+    
+    if (privatePatterns.some(pattern => pattern.test(url.pathname))) {
+        event.respondWith(
+            fetch(event.request, {
+                cache: 'no-store',
+                credentials: 'include'
+            })
+        );
+        return;
+    }
+    
+    // Звичайна логіка кешування для публічних ресурсів
+    // ...
+});
+```
+
+---
+
+## 6. ПЛАТІЖНА СИСТЕМА
+
+### 6.1 Інтеграція з провайдерами
+```python
+# payment_providers.py
+class StripePaymentProvider:
+    def create_payment_intent(self, order, payment_method):
+        """Створення платежу з 3DS"""
+        intent = stripe.PaymentIntent.create(
+            amount=int(order.total * 100),
+            currency='uah',
+            payment_method=payment_method,
+            customer=order.user.stripe_customer_id,
+            metadata={
+                'order_id': order.id,
+                'user_id': order.user.id
+            },
+            # Обов'язкова 3DS аутентифікація
+            payment_method_options={
+                'card': {
+                    'request_three_d_secure': 'required'
+                }
+            }
+        )
+        return intent
+    
+    def handle_3ds_challenge(self, payment_intent_id):
+        """Обробка 3DS challenge flow"""
+        intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+        
+        if intent.status == 'requires_action':
+            return {
+                'requires_action': True,
+                'client_secret': intent.client_secret
+            }
+        
+        return {'requires_action': False}
+```
+
+### 6.2 Державна машина станів
+```python
+# payment_states.py
+class PaymentStateMachine:
+    """FSM для Order/Payment/Subscription"""
+    
+    TRANSITIONS = {
+        'order': {
+            'draft': ['pending'],
+            'pending': ['processing', 'cancelled'],
+            'processing': ['completed', 'failed'],
+            'completed': [],
+            'failed': ['pending'],
+            'cancelled': []
+        },
+        'payment': {
+            'created': ['processing'],
+            'processing': ['requires_action', 'succeeded', 'failed'],
+            'requires_action': ['succeeded', 'failed'],
+            'succeeded': ['refunded'],
+            'failed': [],
+            'refunded': []
+        },
+        'subscription': {
+            'trialing': ['active', 'cancelled'],
+            'active': ['past_due', 'cancelled', 'paused'],
+            'past_due': ['active', 'cancelled'],
+            'paused': ['active', 'cancelled'],
+            'cancelled': ['expired'],
+            'expired': []
+        }
+    }
+    
+    def transition(self, obj, to_state):
+        """Перевірка та виконання переходу"""
+        current_state = obj.status
+        allowed = self.TRANSITIONS[obj._meta.model_name][current_state]
+        
+        if to_state not in allowed:
+            raise InvalidTransition(
+                f"Cannot transition from {current_state} to {to_state}"
+            )
+        
+        obj.status = to_state
+        obj.save()
+        
+        # Тригер подій
+        self.trigger_events(obj, current_state, to_state)
+```
+
+### 6.3 Webhooks обробка
+```python
+# webhook_handlers.py
+class StripeWebhookHandler:
+    def handle_webhook(self, payload, signature):
+        """Ідемпотентна обробка webhook"""
+        # 1. Перевірка підпису
+        event = stripe.Webhook.construct_event(
+            payload, signature, settings.STRIPE_WEBHOOK_SECRET
+        )
+        
+        # 2. Перевірка на дублікат
+        if WebhookEvent.objects.filter(event_id=event['id']).exists():
+            return {'status': 'duplicate'}
+        
+        # 3. Збереження події
+        webhook_event = WebhookEvent.objects.create(
+            event_id=event['id'],
+            event_type=event['type'],
+            payload=event
+        )
+        
+        # 4. Обробка за типом
+        handlers = {
+            'payment_intent.succeeded': self.handle_payment_success,
+            'payment_intent.failed': self.handle_payment_failed,
+            'customer.subscription.updated': self.handle_subscription_update,
+            'customer.subscription.deleted': self.handle_subscription_cancel,
+        }
+        
+        handler = handlers.get(event['type'])
+        if handler:
+            handler(event['data']['object'])
+        
+        return {'status': 'processed'}
+```
+
+### 6.4 Купони та промокоди
+```python
+# coupon_service.py
+class CouponService:
+    def validate_coupon(self, code, cart_total, user):
+        """Комплексна валідація купону"""
+        try:
+            coupon = Coupon.objects.get(
+                code=code.upper(),
+                is_active=True
+            )
+        except Coupon.DoesNotExist:
+            return {'valid': False, 'error': 'Промокод не знайдено'}
+        
+        # Перевірки
+        now = timezone.now()
+        if now < coupon.valid_from or now > coupon.valid_until:
+            return {'valid': False, 'error': 'Промокод не діє в цей період'}
+        
+        if cart_total < coupon.min_amount:
+            return {
+                'valid': False, 
+                'error': f'Мінімальна сума замовлення: {coupon.min_amount} ₴'
+            }
+        
+        if coupon.max_uses and coupon.used_count >= coupon.max_uses:
+            return {'valid': False, 'error': 'Промокод вичерпав ліміт використань'}
+        
+        if coupon.once_per_user and user.is_authenticated:
+            if CouponUsage.objects.filter(coupon=coupon, user=user).exists():
+                return {'valid': False, 'error': 'Ви вже використовували цей промокод'}
+        
+        # Розрахунок знижки
+        if coupon.discount_type == 'percentage':
+            discount = cart_total * (coupon.discount_value / 100)
+        else:
+            discount = coupon.discount_value
+        
+        return {
+            'valid': True,
+            'discount': discount,
+            'coupon': coupon
+        }
+```
+
+---
+
+## 7. ІВЕНТ-МЕНЕДЖМЕНТ
+
+### 7.1 Система квитків
+```python
+# event_tickets.py
+class EventTicketService:
+    def create_ticket(self, event, user, payment=None, use_balance=False):
+        """Створення квитка з QR-кодом"""
+        # 1. Перевірка квоти
+        if event.tickets_sold >= event.max_attendees:
+            raise EventSoldOut("Всі квитки продані")
+        
+        # 2. Створення квитка
+        ticket_number = self.generate_ticket_number()
+        ticket = EventTicket.objects.create(
+            event=event,
+            user=user,
+            ticket_number=ticket_number,
+            payment=payment,
+            used_balance=use_balance
+        )
+        
+        # 3. Генерація QR
+        qr_data = {
+            'ticket_id': ticket.id,
+            'event_id': event.id,
+            'user_id': user.id,
+            'hash': self.generate_secure_hash(ticket)
+        }
+        ticket.qr_code = self.generate_qr_code(qr_data)
+        ticket.save()
+        
+        # 4. Оновлення лічильника
+        event.tickets_sold = F('tickets_sold') + 1
+        event.save()
+        
+        # 5. Відправка квитка
+        send_ticket_email.delay(ticket.id)
+        
+        return ticket
+```
+
+### 7.2 Баланс квитків Pro-Vision
+```python
+# subscription_benefits.py
+class ProVisionBenefits:
+    """Управління балансом квитків для підписників"""
+    
+    TICKET_BALANCE = {
+        '1_month': 1,
+        '3_months': 4,
+        '12_months': 20
+    }
+    
+    def grant_monthly_tickets(self, subscription):
+        """Щомісячне нарахування квитків"""
+        if subscription.plan.is_pro_vision:
+            balance = self.TICKET_BALANCE.get(subscription.plan.duration, 0)
+            
+            TicketBalance.objects.create(
+                user=subscription.user,
+                subscription=subscription,
+                amount=balance,
+                expires_at=subscription.end_date
+            )
+    
+    def use_ticket_balance(self, user, event):
+        """Використання квитка з балансу"""
+        available = TicketBalance.objects.filter(
+            user=user,
+            amount__gt=0,
+            expires_at__gt=timezone.now()
+        ).order_by('expires_at')
+        
+        if not available.exists():
+            return False
+        
+        # Використання найстаршого балансу
+        balance = available.first()
+        balance.amount = F('amount') - 1
+        balance.save()
+        
+        # Логування використання
+        TicketUsage.objects.create(
+            balance=balance,
+            event=event,
+            used_at=timezone.now()
+        )
+        
+        return True
+```
+
+### 7.3 QR чек-ін
+```python
+# event_checkin.py
+class EventCheckInService:
+    def validate_qr(self, qr_data):
+        """Валідація QR-коду на вході"""
+        try:
+            # 1. Розпакування даних
+            data = json.loads(base64.b64decode(qr_data))
+            
+            # 2. Перевірка підпису
+            if not self.verify_hash(data):
+                return {'valid': False, 'error': 'Невірний QR-код'}
+            
+            # 3. Пошук квитка
+            ticket = EventTicket.objects.get(
+                id=data['ticket_id'],
+                event_id=data['event_id'],
+                user_id=data['user_id']
+            )
+            
+            # 4. Перевірка статусу
+            if ticket.status == 'used':
+                return {
+                    'valid': False, 
+                    'error': 'Квиток вже використаний',
+                    'used_at': ticket.used_at
+                }
+            
+            # 5. Відмітка використання
+            ticket.status = 'used'
+            ticket.used_at = timezone.now()
+            ticket.save()
+            
+            return {
+                'valid': True,
+                'user': ticket.user.profile.full_name,
+                'event': ticket.event.title
+            }
+            
+        except (EventTicket.DoesNotExist, json.JSONDecodeError):
+            return {'valid': False, 'error': 'Квиток не знайдено'}
+```
+
+---
+
+## 8. AI-АГЕНТ
+
+### 8.1 Архітектура AI системи
+```python
+# ai_architecture.py
+class AIAgentService:
+    def __init__(self):
+        self.llm_client = OpenAIClient()  # або інший LLM
+        self.vector_store = ChromaDB()     # векторна БД
+        self.knowledge_base = KnowledgeBase()
+        
+    def process_query(self, query, user):
+        """Обробка запиту з урахуванням прав доступу"""
+        # 1. Визначення контексту користувача
+        user_context = self.get_user_context(user)
+        
+        # 2. Векторний пошук в базі знань
+        relevant_docs = self.vector_store.similarity_search(
+            query=query,
+            filter=self.get_access_filter(user),
+            k=5
+        )
+        
+        # 3. Формування промпту з контекстом
+        prompt = self.build_prompt(
+            query=query,
+            context=relevant_docs,
+            user_level=user_context['access_level']
+        )
+        
+        # 4. Отримання відповіді від LLM
+        response = self.llm_client.generate(prompt)
+        
+        # 5. Постобробка та гейтинг
+        filtered_response = self.apply_content_gating(
+            response=response,
+            user_level=user_context['access_level']
+        )
+        
+        # 6. Логування
+        AIQueryLog.objects.create(
+            user=user,
+            query=query,
+            response=filtered_response,
+            context_docs=relevant_docs
+        )
+        
+        return filtered_response
+```
+
+### 8.2 Рівні доступу до AI
+```python
+# ai_access_levels.py
+class AIAccessPolicy:
+    """Політика доступу до відповідей AI"""
+    
+    POLICIES = {
+        'guest': {
+            'allowed_topics': ['general', 'public'],
+            'max_response_length': 200,
+            'include_links': False,
+            'cta_message': 'Зареєструйтесь для повного доступу'
+        },
+        'registered': {
+            'allowed_topics': ['general', 'public', 'basic'],
+            'max_response_length': 500,
+            'include_links': True,
+            'show_previews': True,
+            'cta_message': 'Оформіть підписку для експертних відповідей'
+        },
+        'subscriber_l1': {
+            'allowed_topics': ['all'],
+            'max_response_length': 1000,
+            'include_links': True,
+            'show_content': ['basic', 'intermediate']
+        },
+        'subscriber_l2': {
+            'allowed_topics': ['all'],
+            'max_response_length': 2000,
+            'include_links': True,
+            'show_content': ['all']
+        },
+        'admin': {
+            'allowed_topics': ['all'],
+            'max_response_length': None,
+            'include_links': True,
+            'show_content': ['all'],
+            'debug_mode': True
+        }
+    }
+    
+    def filter_response(self, response, user_level):
+        """Фільтрація відповіді згідно з рівнем доступу"""
+        policy = self.POLICIES.get(user_level, self.POLICIES['guest'])
+        
+        # Обрізання довжини
+        if policy['max_response_length']:
+            response = response[:policy['max_response_length']]
+        
+        # Видалення посилань на платний контент
+        if not policy.get('include_links'):
+            response = self.remove_premium_links(response)
+        
+        # Додавання CTA
+        if policy.get('cta_message'):
+            response += f"\n\n💡 {policy['cta_message']}"
+        
+        return response
+```
+
+### 8.3 Векторне індексування
+```python
+# vector_indexing.py
+class ContentIndexer:
+    """Індексування матеріалів для AI пошуку"""
+    
+    def index_course(self, course):
+        """Індексування курсу з метаданими"""
+        # 1. Розбиття на чанки
+        chunks = []
+        
+        # Індексуємо опис
+        chunks.append({
+            'content': course.description,
+            'metadata': {
+                'type': 'course',
+                'id': course.id,
+                'title': course.title,
+                'access_level': course.access_level,
+                'tags': list(course.tags.values_list('name', flat=True))
+            }
+        })
+        
+        # Індексуємо уроки
+        for lesson in course.lessons.all():
+            if lesson.content_type == 'article':
+                lesson_chunks = self.split_text(lesson.article_content)
+                for chunk in lesson_chunks:
+                    chunks.append({
+                        'content': chunk,
+                        'metadata': {
+                            'type': 'lesson',
+                            'course_id': course.id,
+                            'lesson_id': lesson.id,
+                            'access_level': course.access_level
+                        }
+                    })
+        
+        # 2. Векторизація
+        embeddings = self.embedding_model.encode(
+            [c['content'] for c in chunks]
+        )
+        
+        # 3. Збереження в векторну БД
+        self.vector_store.add(
+            embeddings=embeddings,
+            metadatas=[c['metadata'] for c in chunks],
+            ids=[f"{c['metadata']['type']}_{c['metadata']['id']}" for c in chunks]
+        )
+```
+
+---
+
+## 9. PWA ТА СПОВІЩЕННЯ
+
+### 9.1 PWA конфігурація
+```javascript
+// manifest.json
+{
+    "name": "Play Vision",
+    "short_name": "PlayVision",
+    "description": "Освітня платформа для футбольних фахівців",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ff6b35",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/static/icons/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["education", "sports"],
+    "lang": "uk-UA"
+}
+```
+
+### 9.2 Service Worker
+```javascript
+// service-worker.js
+const CACHE_NAME = 'playvision-v1';
+const STATIC_CACHE = 'static-v1';
+const DYNAMIC_CACHE = 'dynamic-v1';
+
+// Кешування лише публічних ресурсів
+const CACHEABLE_PATHS = [
+    '/',
+    '/about/',
+    '/contacts/',
+    '/static/css/main.css',
+    '/static/js/main.js',
+    '/static/icons/'
+];
+
+// Офлайн сторінка
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(STATIC_CACHE).then(cache => {
+            return cache.addAll(CACHEABLE_PATHS);
+        })
+    );
+});
+
+// Стратегія кешування
+self.addEventListener('fetch', event => {
+    const { request } = event;
+    const url = new URL(request.url);
+    
+    // Ніколи не кешувати приватний контент
+    if (url.pathname.includes('/account/') || 
+        url.pathname.includes('/api/') ||
+        url.pathname.includes('/media/protected/')) {
+        event.respondWith(fetch(request));
+        return;
+    }
+    
+    // Cache-first для статики
+    if (url.pathname.startsWith('/static/')) {
+        event.respondWith(
+            caches.match(request).then(response => {
+                return response || fetch(request).then(fetchResponse => {
+                    return caches.open(DYNAMIC_CACHE).then(cache => {
+                        cache.put(request, fetchResponse.clone());
+                        return fetchResponse;
+                    });
+                });
+            })
+        );
+        return;
+    }
+    
+    // Network-first для HTML
+    event.respondWith(
+        fetch(request).catch(() => {
+            return caches.match(request);
+        })
+    );
+});
+```
+
+### 9.3 Push-сповіщення
+```python
+# push_notifications.py
+class PushNotificationService:
+    """Сервіс push-сповіщень з підтримкою iOS PWA"""
+    
+    def setup_vapid(self):
+        """Налаштування VAPID ключів"""
+        if not settings.VAPID_PRIVATE_KEY:
+            vapid = Vapid()
+            vapid.generate_keys()
+            # Зберегти в settings
+        
+    def subscribe_user(self, user, subscription_info):
+        """Підписка користувача на push"""
+        PushSubscription.objects.update_or_create(
+            user=user,
+            defaults={
+                'endpoint': subscription_info['endpoint'],
+                'p256dh': subscription_info['keys']['p256dh'],
+                'auth': subscription_info['keys']['auth'],
+                'is_active': True
+            }
+        )
+    
+    def send_push(self, user, title, body, data=None):
+        """Відправка push-сповіщення"""
+        subscriptions = PushSubscription.objects.filter(
+            user=user,
+            is_active=True
+        )
+        
+        for subscription in subscriptions:
+            try:
+                webpush(
+                    subscription_info={
+                        'endpoint': subscription.endpoint,
+                        'keys': {
+                            'p256dh': subscription.p256dh,
+                            'auth': subscription.auth
+                        }
+                    },
+                    data=json.dumps({
+                        'title': title,
+                        'body': body,
+                        'icon': '/static/icons/icon-192x192.png',
+                        'badge': '/static/icons/badge-72x72.png',
+                        'data': data or {},
+                        'actions': [
+                            {'action': 'open', 'title': 'Відкрити'},
+                            {'action': 'close', 'title': 'Закрити'}
+                        ]
+                    }),
+                    vapid_private_key=settings.VAPID_PRIVATE_KEY,
+                    vapid_claims={
+                        'sub': f'mailto:{settings.DEFAULT_FROM_EMAIL}'
+                    }
+                )
+            except WebPushException as e:
+                # Деактивація невалідної підписки
+                if e.response.status_code == 410:
+                    subscription.is_active = False
+                    subscription.save()
+```
+
+### 9.4 iOS Safari специфіка
+```javascript
+// ios-pwa-helper.js
+class iOSPWAHelper {
+    constructor() {
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        this.isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches;
+    }
+    
+    init() {
+        if (this.isIOS && !this.isInStandaloneMode) {
+            this.showInstallPrompt();
+        }
+        
+        if (this.isIOS && this.isInStandaloneMode) {
+            this.enablePushNotifications();
+        }
+    }
+    
+    showInstallPrompt() {
+        // Показати інструкцію додавання на домашній екран
+        const prompt = document.createElement('div');
+        prompt.className = 'ios-install-prompt';
+        prompt.innerHTML = `
+            <p>Встановіть Play Vision на домашній екран:</p>
+            <ol>
+                <li>Натисніть <img src="/static/icons/ios-share.svg" alt="Share"></li>
+                <li>Виберіть "На екран Домівка"</li>
+            </ol>
+            <button onclick="this.parentElement.remove()">Закрити</button>
+        `;
+        document.body.appendChild(prompt);
+    }
+    
+    enablePushNotifications() {
+        // Push працює тільки в standalone режимі на iOS
+        if ('Notification' in window && 'serviceWorker' in navigator) {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    this.subscribeToPush();
+                }
+            });
+        }
+    }
+}
+```
+
+---
+
+## 10. АДМІНКА ТА АНАЛІТИКА
+
+### 10.1 CMS функціонал
+```python
+# cms/admin.py
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'price', 'is_featured', 'created_at']
+    list_filter = ['category', 'difficulty', 'is_featured', 'is_free']
+    search_fields = ['title', 'description']
+    
+    fieldsets = (
+        ('Основна інформація', {
+            'fields': ('title', 'slug', 'description', 'category', 'tags')
+        }),
+        ('Ціна та доступ', {
+            'fields': ('price', 'is_free', 'requires_subscription', 'subscription_tiers')
+        }),
+        ('Контент-гейтинг', {
+            'fields': ('has_preview', 'preview_duration', 'gated_blocks'),
+            'classes': ('collapse',)
+        }),
+        ('SEO', {
+            'fields': ('meta_title', 'meta_description', 'og_image'),
+            'classes': ('collapse',)
+        })
+    )
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.annotate(
+            students_count=Count('enrollments'),
+            avg_rating=Avg('reviews__rating')
+        )
+```
+
+### 10.2 GatedBlock в CMS
+```python
+# cms/models.py
+class GatedBlock(models.Model):
+    """Налаштування контент-гейтингу для блоків"""
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    
+    # Правила доступу
+    access_rules = models.JSONField(default=dict)
+    # {
+    #     "subscription_required": true,
+    #     "allowed_tiers": ["l1", "l2", "l3"],
+    #     "preview_allowed": true,
+    #     "preview_percentage": 10
+    # }
+    
+    # CTA налаштування
+    cta_text = models.CharField(max_length=200)
+    cta_button_text = models.CharField(max_length=50)
+    cta_link = models.CharField(max_length=200)
+    
+    class Meta:
+        unique_together = ['content_type', 'object_id']
+```
+
+### 10.3 Pixel Manager
+```python
+# analytics/pixel_manager.py
+class PixelManager:
+    """Централізоване управління пікселями"""
+    
+    EVENTS = {
+        'view_item': {
+            'ga4': 'view_item',
+            'meta': 'ViewContent',
+            'tiktok': 'ViewContent'
+        },
+        'add_to_cart': {
+            'ga4': 'add_to_cart',
+            'meta': 'AddToCart',
+            'tiktok': 'AddToCart'
+        },
+        'begin_checkout': {
+            'ga4': 'begin_checkout',
+            'meta': 'InitiateCheckout',
+            'tiktok': 'InitiateCheckout'
+        },
+        'purchase': {
+            'ga4': 'purchase',
+            'meta': 'Purchase',
+            'tiktok': 'CompletePayment'
+        },
+        'subscribe': {
+            'ga4': 'sign_up',
+            'meta': 'Subscribe',
+            'tiktok': 'Subscribe'
+        }
+    }
+    
+    def get_enabled_pixels(self):
+        """Отримання активних пікселів"""
+        return PixelConfig.objects.filter(is_enabled=True)
+    
+    def track_event(self, event_name, parameters, user=None):
+        """Трекінг події на всіх платформах"""
+        pixels = self.get_enabled_pixels()
+        
+        for pixel in pixels:
+            if pixel.platform == 'ga4':
+                self.track_ga4(event_name, parameters)
+            elif pixel.platform == 'meta':
+                self.track_meta(event_name, parameters, user)
+            elif pixel.platform == 'tiktok':
+                self.track_tiktok(event_name, parameters)
+    
+    def track_server_side(self, event_name, parameters, user):
+        """Server-side трекінг для конверсій"""
+        # Meta Conversions API
+        if self.is_enabled('meta'):
+            self.meta_capi.track(
+                event_name=self.EVENTS[event_name]['meta'],
+                event_time=int(time.time()),
+                user_data={
+                    'email_hash': hashlib.sha256(user.email.encode()).hexdigest(),
+                    'phone_hash': hashlib.sha256(user.phone.encode()).hexdigest() if user.phone else None,
+                    'client_ip_address': parameters.get('ip_address'),
+                    'client_user_agent': parameters.get('user_agent')
+                },
+                custom_data=parameters
+            )
+```
+
+### 10.4 Звіти та метрики
+```python
+# analytics/reports.py
+class ReportGenerator:
+    """Генератор звітів для адмінки"""
+    
+    def sales_report(self, date_from, date_to):
+        """Звіт продажів"""
+        return {
+            'revenue': Payment.objects.filter(
+                status='completed',
+                created_at__range=[date_from, date_to]
+            ).aggregate(total=Sum('amount'))['total'] or 0,
+            
+            'orders_count': Order.objects.filter(
+                status='completed',
+                created_at__range=[date_from, date_to]
+            ).count(),
+            
+            'avg_order_value': Order.objects.filter(
+                status='completed',
+                created_at__range=[date_from, date_to]
+            ).aggregate(avg=Avg('total'))['avg'] or 0,
+            
+            'top_products': Course.objects.annotate(
+                sales=Count('orderitem', filter=Q(
+                    orderitem__order__status='completed',
+                    orderitem__order__created_at__range=[date_from, date_to]
+                ))
+            ).order_by('-sales')[:10],
+            
+            'conversion_funnel': self.calculate_funnel(date_from, date_to)
+        }
+    
+    def calculate_funnel(self, date_from, date_to):
+        """Розрахунок конверсійної воронки"""
+        period_filter = Q(created_at__range=[date_from, date_to])
+        
+        visitors = PageView.objects.filter(period_filter).values('session_id').distinct().count()
+        cart_adds = CartEvent.objects.filter(period_filter, event_type='add').values('user').distinct().count()
+        checkouts = Order.objects.filter(period_filter).values('user').distinct().count()
+        purchases = Order.objects.filter(period_filter, status='completed').values('user').distinct().count()
+        
+        return {
+            'visitors': visitors,
+            'cart_adds': cart_adds,
+            'cart_add_rate': (cart_adds / visitors * 100) if visitors else 0,
+            'checkouts': checkouts,
+            'checkout_rate': (checkouts / cart_adds * 100) if cart_adds else 0,
+            'purchases': purchases,
+            'purchase_rate': (purchases / checkouts * 100) if checkouts else 0,
+            'overall_conversion': (purchases / visitors * 100) if visitors else 0
+        }
+```
+
+---
+
+## 11. БЕЗПЕКА
+
+### 11.1 Налаштування безпеки
+```python
+# settings/security.py
+
+# HTTPS та HSTS
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Cookies
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+
+# CSP
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "'nonce-{nonce}'",
+    "https://js.stripe.com",
+    "https://www.googletagmanager.com",
+)
+CSP_STYLE_SRC = (
+    "'self'",
+    "'unsafe-inline'",  # Для inline стилів
+)
+CSP_IMG_SRC = (
+    "'self'",
+    "data:",
+    "https:",
+)
+CSP_CONNECT_SRC = (
+    "'self'",
+    "https://api.stripe.com",
+    "https://www.google-analytics.com",
+)
+CSP_FRAME_SRC = (
+    "'self'",
+    "https://js.stripe.com",
+    "https://www.youtube.com",
+)
+
+# Rate limiting
+RATELIMIT_ENABLE = True
+RATELIMIT_VIEW = '10/m'  # 10 запитів на хвилину для views
+RATELIMIT_LOGIN = '5/m'  # 5 спроб входу на хвилину
+```
+
+### 11.2 Middleware безпеки
+```python
+# security/middleware.py
+class SecurityHeadersMiddleware:
+    """Додаткові заголовки безпеки"""
+    
+    def __init__(self, get_response):
+        self.get_response = get_response
+    
+    def __call__(self, request):
+        response = self.get_response(request)
+        
+        # Додаткові заголовки
+        response['X-Content-Type-Options'] = 'nosniff'
+        response['X-Frame-Options'] = 'DENY'
+        response['X-XSS-Protection'] = '1; mode=block'
+        response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+        response['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
+        
+        return response
+
+class RateLimitMiddleware:
+    """Rate limiting для критичних endpoints"""
+    
+    LIMITS = {
+        '/auth/login/': '5/m',
+        '/auth/register/': '3/m',
+        '/api/': '100/m',
+        '/checkout/': '10/m'
+    }
+    
+    def __init__(self, get_response):
+        self.get_response = get_response
+        self.cache = caches['default']
+    
+    def __call__(self, request):
+        for path, limit in self.LIMITS.items():
+            if request.path.startswith(path):
+                key = f"ratelimit:{request.META.get('REMOTE_ADDR')}:{path}"
+                
+                try:
+                    current = self.cache.incr(key)
+                except ValueError:
+                    self.cache.set(key, 1, 60)  # 1 хвилина
+                    current = 1
+                
+                max_requests = int(limit.split('/')[0])
+                
+                if current > max_requests:
+                    return HttpResponse(
+                        'Rate limit exceeded', 
+                        status=429,
+                        content_type='text/plain'
+                    )
+        
+        return self.get_response(request)
+```
+
+### 11.3 Захист від SSRF
+```python
+# security/validators.py
+class URLValidator:
+    """Валідація URL для захисту від SSRF"""
+    
+    BLOCKED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+        '0.0.0.0',
+        '169.254.169.254',  # AWS metadata
+    ]
+    
+    BLOCKED_SCHEMES = ['file', 'ftp', 'gopher']
+    
+    def validate_url(self, url):
+        """Перевірка URL на безпеку"""
+        parsed = urlparse(url)
+        
+        # Перевірка схеми
+        if parsed.scheme in self.BLOCKED_SCHEMES:
+            raise ValidationError(f"Заборонена схема: {parsed.scheme}")
+        
+        # Перевірка хоста
+        hostname = parsed.hostname
+        if not hostname:
+            raise ValidationError("Невірний URL")
+        
+        # Блокування локальних адрес
+        if hostname in self.BLOCKED_HOSTS:
+            raise ValidationError(f"Заборонений хост: {hostname}")
+        
+        # Перевірка IP адрес
+        try:
+            ip = ipaddress.ip_address(hostname)
+            if ip.is_private or ip.is_loopback:
+                raise ValidationError("Приватні IP адреси заборонені")
+        except ValueError:
+            # Не IP адреса, це нормально
+            pass
+        
+        return True
+```
+
+### 11.4 Логування безпеки
+```python
+# security/logging.py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'security': {
+            'format': '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'handlers': {
+        'security_file': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/var/log/playvision/security.log',
+            'maxBytes': 1024 * 1024 * 100,  # 100MB
+            'backupCount': 10,
+            'formatter': 'security',
+        },
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'sentry_sdk.integrations.logging.SentryHandler',
+        },
+    },
+    'loggers': {
+        'security': {
+            'handlers': ['security_file', 'sentry'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['security_file'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
+
+# Аудит подій
+class SecurityAuditLog:
+    """Логування критичних дій"""
+    
+    @staticmethod
+    def log_login(user, ip_address, user_agent, success=True):
+        AuditLog.objects.create(
+            user=user if success else None,
+            action='login',
+            success=success,
+            ip_address=ip_address,
+            user_agent=user_agent,
+            metadata={
+                'username': user.username if user else 'unknown'
+            }
+        )
+    
+    @staticmethod
+    def log_payment(user, amount, payment_method, success=True):
+        AuditLog.objects.create(
+            user=user,
+            action='payment',
+            success=success,
+            metadata={
+                'amount': str(amount),
+                'method': payment_method,
+                'timestamp': timezone.now().isoformat()
+            }
+        )
+```
+
+---
+
+## 12. ТЕСТУВАННЯ
+
+### 12.1 Unit тести
+```python
+# tests/test_payments.py
+class PaymentTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email='test@example.com',
+            password='testpass123'
+        )
+        self.course = Course.objects.create(
+            title='Test Course',
+            price=100.00
+        )
+    
+    def test_create_payment_intent(self):
+        """Тест створення платіжного наміру"""
+        order = Order.objects.create(
+            user=self.user,
+            total=100.00
+        )
+        
+        service = StripePaymentProvider()
+        intent = service.create_payment_intent(order, 'pm_test_123')
+        
+        self.assertIsNotNone(intent)
+        self.assertEqual(intent.amount, 10000)  # в копійках
+        self.assertEqual(intent.metadata['order_id'], str(order.id))
+    
+    def test_3ds_challenge_required(self):
+        """Тест обробки 3DS challenge"""
+        # Створюємо payment intent що вимагає 3DS
+        intent = stripe.PaymentIntent.create(
+            amount=10000,
+            currency='uah',
+            payment_method='pm_card_threeDSecureRequired',
+            confirm=True
+        )
+        
+        service = StripePaymentProvider()
+        result = service.handle_3ds_challenge(intent.id)
+        
+        self.assertTrue(result['requires_action'])
+        self.assertIsNotNone(result['client_secret'])
+```
+
+### 12.2 Інтеграційні тести
+```python
+# tests/test_integration.py
+class SubscriptionFlowTest(TransactionTestCase):
+    """Тест повного флоу підписки"""
+    
+    def test_subscription_purchase_flow(self):
+        # 1. Реєстрація користувача
+        response = self.client.post('/auth/register/', {
+            'email': 'newuser@example.com',
+            'password': 'StrongPass123!',
+            'agree_terms': True
+        })
+        self.assertEqual(response.status_code, 302)
+        
+        # 2. Вибір плану
+        response = self.client.get('/pricing/')
+        self.assertContains(response, 'Оберіть план')
+        
+        # 3. Додавання в кошик
+        plan = Plan.objects.get(duration='1_month')
+        response = self.client.post('/api/cart/add/', {
+            'item_type': 'subscription',
+            'item_id': plan.id
+        })
+        self.assertEqual(response.status_code, 200)
+        
+        # 4. Чекаут
+        response = self.client.post('/checkout/', {
+            'payment_method': 'pm_card_visa',
+            'agree_terms': True
+        })
+        
+        # 5. Обробка webhook
+        webhook_data = {
+            'type': 'payment_intent.succeeded',
+            'data': {
+                'object': {
+                    'id': 'pi_test_123',
+                    'metadata': {'order_id': '1'}
+                }
+            }
+        }
+        
+        response = self.client.post(
+            '/webhooks/payment/',
+            data=json.dumps(webhook_data),
+            content_type='application/json',
+            HTTP_STRIPE_SIGNATURE='test_sig'
+        )
+        
+        # 6. Перевірка активації підписки
+        user = User.objects.get(email='newuser@example.com')
+        self.assertTrue(user.subscriptions.filter(status='active').exists())
+```
+
+### 12.3 E2E тести
+```javascript
+// tests/e2e/test_paywall.js
+describe('Content Paywall Flow', () => {
+    it('should show preview and then paywall', async () => {
+        // 1. Відкриваємо курс без авторизації
+        await page.goto('/hub/course/python-basics/');
+        
+        // 2. Перевіряємо наявність preview кнопки
+        const previewBtn = await page.$('.preview-button');
+        expect(previewBtn).toBeTruthy();
+        
+        // 3. Клікаємо preview
+        await previewBtn.click();
+        
+        // 4. Чекаємо 20 секунд відео
+        await page.waitForTimeout(20000);
+        
+        // 5. Перевіряємо появу paywall
+        const paywall = await page.$('.paywall-overlay');
+        expect(paywall).toBeTruthy();
+        
+        // 6. Перевіряємо CTA кнопки
+        const ctaButtons = await page.$$('.paywall-cta button');
+        expect(ctaButtons.length).toBeGreaterThan(0);
+        
+        // 7. Клікаємо "Вступити в клуб"
+        await ctaButtons[0].click();
+        
+        // 8. Перевіряємо редірект на реєстрацію
+        await page.waitForNavigation();
+        expect(page.url()).toContain('/auth/register/');
+    });
+});
+```
+
+### 12.4 Тести продуктивності
+```python
+# tests/test_performance.py
+class PerformanceTest(TestCase):
+    def test_lighthouse_scores(self):
+        """Перевірка Lighthouse метрик"""
+        urls = ['/', '/hub/', '/events/', '/pricing/']
+        
+        for url in urls:
+            result = run_lighthouse(url)
+            
+            # Перевірка метрик
+            self.assertGreaterEqual(
+                result['performance'], 90,
+                f"Performance score for {url} is too low"
+            )
+            self.assertGreaterEqual(
+                result['accessibility'], 90,
+                f"Accessibility score for {url} is too low"
+            )
+            self.assertGreaterEqual(
+                result['best-practices'], 90,
+                f"Best practices score for {url} is too low"
+            )
+            self.assertGreaterEqual(
+                result['seo'], 90,
+                f"SEO score for {url} is too low"
+            )
+```
+
+### 12.5 Acceptance критерії
+
+#### Реєстрація та авторизація
+- [ ] Користувач може зареєструватись через email/телефон
+- [ ] Працює OAuth через Google/Telegram/TikTok
+- [ ] Відправляється код верифікації
+- [ ] Працює відновлення паролю
+- [ ] Rate limiting блокує брутфорс
+
+#### Контент та paywall
+- [ ] Гість бачить blur + замок на платному контенті
+- [ ] Preview відео грає 20 секунд
+- [ ] Preview PDF показує 10%
+- [ ] CTA кнопки ведуть на правильні сторінки
+- [ ] Після оплати контент розблоковується
+
+#### Платежі
+- [ ] 3DS challenge працює коректно
+- [ ] Webhook обробляються ідемпотентно
+- [ ] Підписка активується після оплати
+- [ ] Автопролонгація працює
+- [ ] Скасування підписки працює
+
+#### PWA
+- [ ] Додається на домашній екран
+- [ ] Працює в offline для публічних сторінок
+- [ ] Push-сповіщення доставляються
+- [ ] На iOS показується інструкція встановлення
+
+---
+
+## 13. ПЛАН ВИПУСКІВ
+
+### 13.1 Етап 1: Фундамент (4 тижні)
+**Мета**: Базова інфраструктура та публічні сторінки
+
+#### Завдання
+1. **Налаштування проєкту**
+   - Django проєкт структура
+   - Docker конфігурація
+   - CI/CD pipeline
+   - Базові моделі User, Profile
+
+2. **Публічні сторінки**
+   - Головна з hero-каруселлю
+   - Про нас, Контакти
+   - Базова навігація
+   - Responsive дизайн
+
+3. **Авторизація**
+   - Реєстрація/вхід
+   - Email верифікація
+   - OAuth інтеграція
+   - Відновлення паролю
+
+4. **PWA каркас**
+   - Service Worker
+   - Manifest.json
+   - Офлайн сторінка
+   - Базове кешування
+
+#### Артефакти
+- Працюючий сайт на staging
+- Документація API
+- Тести для auth flows
+
+#### Критерії приймання
+- Всі публічні сторінки доступні
+- Реєстрація та вхід працюють
+- Mobile responsive
+- Lighthouse > 80
+
+### 13.2 Етап 2: Монетизація (6 тижнів)
+**Мета**: Хаб знань, платежі, підписки
+
+#### Завдання
+1. **Хаб знань**
+   - Моделі Course, Material
+   - Каталог з фільтрами
+   - Пошук та теги
+   - Детальні сторінки
+
+2. **Контент-гейтинг**
+   - Paywall компоненти
+   - Preview логіка
+   - Перевірка доступу
+   - CTA блоки
+
+3. **Кошик та чекаут**
+   - Session/DB кошик
+   - Промокоди
+   - Форма чекауту
+   - UI/UX анімації
+
+4. **Платіжна система**
+   - Stripe інтеграція
+   - 3DS обробка
+   - Webhook endpoints
+   - Платіжні моделі
+
+5. **Підписки**
+   - 4 рівні планів
+   - Автопролонгація
+   - Управління в кабінеті
+   - Email нотифікації
+
+6. **Аналітика**
+   - GA4, Meta Pixel
+   - Внутрішні метрики
+   - Конверсійні воронки
+   - Server-side events
+
+#### Артефакти
+- Повний цикл покупки
+- Документація платежів
+- Тести E2E для checkout
+
+#### Критерії приймання
+- Можна купити курс
+- Підписка активується
+- 3DS працює
+- Контент блокується/розблоковується
+
+### 13.3 Етап 3: Розширення (6 тижнів)
+**Мета**: Повний функціонал та оптимізація
+
+#### Завдання
+1. **Особистий кабінет**
+   - Всі розділи кабінету
+   - Управління профілем
+   - Історія та прогрес
+   - Програма лояльності
+
+2. **Івенти**
+   - Календар подій
+   - Реєстрація/квитки
+   - QR check-in
+   - Баланс квитків
+
+3. **AI-агент**
+   - Інтеграція LLM
+   - Векторна БД
+   - Контекстний пошук
+   - Рівні доступу
+
+4. **Медіа захист**
+   - HLS streaming
+   - Водяні знаки
+   - Підписані URL
+   - CDN інтеграція
+
+5. **Push-сповіщення**
+   - VAPID setup
+   - Підписки користувачів
+   - iOS підтримка
+   - Сегментація
+
+6. **CMS розширення**
+   - Повна адмінка
+   - Звіти та метрики
+   - A/B тести
+   - SEO tools
+
+#### Артефакти
+- Повнофункціональна платформа
+- Документація для контент-менеджерів
+- Performance оптимізація
+
+#### Критерії приймання
+- Всі features працюють
+- Lighthouse > 90
+- WCAG 2.1 AA
+- Безпека пройдена
+
+### 13.4 Ризики та мітигація
+
+| Ризик | Ймовірність | Вплив | Мітигація |
+|-------|-------------|-------|-----------|
+| Затримка платіжної інтеграції | Середня | Високий | Ранній початок, тестовий акаунт Stripe |
+| Проблеми з iOS PWA | Висока | Середній | Fallback на web версію, детальні інструкції |
+| Складність AI інтеграції | Середня | Середній | Поетапне впровадження, почати з простого FAQ |
+| Performance issues | Низька | Високий | Профілювання, кешування, CDN з початку |
+| Безпека медіа контенту | Середня | Високий | Консультація експертів, готові рішення |
+
+### 13.5 Команда та ролі
+
+**Core Team**:
+- Tech Lead (1) - архітектура, код-рев'ю
+- Backend Dev (2) - Django, API, платежі
+- Frontend Dev (2) - UI/UX, JS, PWA
+- DevOps (1) - інфраструктура, CI/CD
+- QA Engineer (1) - тестування, автоматизація
+
+**Extended Team**:
+- UI/UX Designer - дизайн, прототипи
+- Content Manager - наповнення, тести
+- Security Consultant - аудит, рекомендації
+- Marketing - аналітика, пікселі
+
+---
+
+## ПІДСУМОК
+
+Цей план забезпечує поетапну розробку повнофункціональної освітньої платформи Play Vision з фокусом на:
+
+1. **Безпеку** - захист контенту, платежів, даних
+2. **Монетизацію** - гнучка система підписок та продажів
+3. **UX** - зручний інтерфейс, швидкість, mobile-first
+4. **Масштабованість** - готовність до росту та розширення
+
+Ключові технічні рішення:
+- Django як надійний backend
+- Progressive Enhancement для frontend
+- Stripe для безпечних платежів
+- HLS + водяні знаки для захисту відео
+- PWA для mobile experience
+
+План розрахований на 16 тижнів активної розробки з можливістю поетапного запуску функціоналу.

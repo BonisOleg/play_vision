@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Vision - Повне дерево сайту</title>
+    
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: none;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #FF5722;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .title {
+            color: #FF5722;
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+        .section-title {
+            color: #E64A19;
+            font-size: 1.8em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .subsection-title {
+            color: #BF360C;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .tree-structure {
+            font-family: 'SF Mono', Monaco, monospace;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #FF5722;
+            white-space: pre-wrap;
+            font-size: 0.9em;
+            line-height: 1.4;
+            overflow-x: auto;
+        }
+        .url-path {
+            background: #e3f2fd;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #1565c0;
+        }
+        .description {
+            margin: 15px 0;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+        .emoji {
+            font-size: 1.1em;
+        }
+        .feature-list {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .feature-item {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+        .highlight {
+            background: #fff3e0;
+            padding: 15px;
+            border-left: 4px solid #FF9800;
+            margin: 20px 0;
+        }
+        @media print {
+            body { font-size: 11pt; }
+            .section { page-break-inside: avoid; }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="header"><h1 class="title">ПОВНЕ ДЕРЕВО САЙТУ PLAY VISION</h1></div>
+<div class="section"><h2 class="section-title">Схематичне та текстове представлення всієї структури</h2>
+<br>
+<hr style="margin: 30px 0; border: 1px solid #eee;">
+<br>
+<div class="section"><h2 class="section-title">🌳 ЗАГАЛЬНА СТРУКТУРА САЙТУ</h2>
+<br>
+<div class="tree-structure">
+PLAY VISION (/)
+├── 🌐 ПУБЛІЧНІ СТОРІНКИ
+├── 🔐 АВТОРИЗАЦІЯ
+├── 📚 ХАБ ЗНАНЬ  
+├── 🎪 ІВЕНТИ
+├── 👨‍🏫 МЕНТОР-КОУЧІНГ
+├── 👤 ОСОБИСТИЙ КАБІНЕТ
+├── 💰 КОМЕРЦІЙНІ СТОРІНКИ
+├── 🔧 API ENDPOINTS
+└── ⚙️ АДМІНІСТРУВАННЯ
+
+</div>
+<br>
+<hr style="margin: 30px 0; border: 1px solid #eee;">
+<br>
+<div class="section"><h2 class="section-title">📋 ДЕТАЛЬНЕ ДЕРЕВО З URL ТА ОПИСОМ</h2>
+<br>
+<h3 class="subsection-title">🌐 ПУБЛІЧНІ СТОРІНКИ</h3>
+<div class="description"><strong>Доступ:</strong> Всі користувачі  </div>
+<div class="description"><strong>Мета:</strong> Інформування та залучення відвідувачів</div>
+<br>
+<div class="tree-structure">
+📍 / (Головна сторінка)
+├── 🎠 Hero-карусель (4 слайди)
+├── 📖 Курси та освітні програми (6 курсів)
+├── 📅 Календар івентів
+├── 👨‍🏫 Ментор-коучінг (схема 6 напрямків)
+├── 👥 Обличчя компанії (4 експерти)
+└── 🎯 CTA "Доєднатись"
+
+📍 /about/ (Про Play Vision)
+├── 🎯 Місія компанії
+├── 💎 Цінності (гексагональна схема)
+├── 🔺 Футбольний трикутник (гравець-тренер-батьки)
+└── 🤝 Партнери
+
+📍 /contacts/ (Контакти)
+├── 📧 Форма зворотного зв'язку
+├── 📍 Адреса та контакти
+└── 🗺️ Карта розташування
+
+📍 /legal/ (Юридичні сторінки)
+├── 📍 /legal/privacy/ (Політика приватності)
+├── 📍 /legal/terms/ (Умови використання)
+└── 📍 /legal/cookies/ (Політика cookies)
+</div>
+<br>
+<h3 class="subsection-title">🔐 АВТОРИЗАЦІЯ ТА РЕЄСТРАЦІЯ</h3>
+<div class="description"><strong>Доступ:</strong> Неавторизовані користувачі  </div>
+<div class="description"><strong>Мета:</strong> Вхід та створення акаунтів</div>
+<br>
+<div class="tree-structure">
+📍 /auth/register/ (Реєстрація)
+├── 📧 Email або номер телефону
+├── 🔒 Пароль (мін. 8 символів)
+├── ✅ Згода на обробку даних
+├── 📬 Згода на розсилку (опціонально)
+├── 🌐 OAuth: Google, Telegram, TikTok
+└── 🤖 Віджет чат-бота
+
+📍 /auth/login/ (Вхід)
+├── 📧 Email або номер телефону
+├── 🔒 Пароль
+├── 👁️ Показати/приховати пароль
+├── 🌐 OAuth: Google, Telegram, TikTok
+└── 🔄 Відновлення паролю
+
+📍 /auth/logout/ (Вихід)
+└── 🔚 Завершення сесії
+
+📍 /auth/password-reset/ (Відновлення паролю)
+├── 📧 Введення email/номеру
+├── 📱 Отримання коду SMS/email
+├── 🔢 Введення коду підтвердження
+└── 🔒 Встановлення нового паролю
+
+📍 /auth/verify/<code>/ (Верифікація)
+├── ✅ Підтвердження email
+└── ✅ Підтвердження телефону
+</div>
+<br>
+<h3 class="subsection-title">📚 ХАБ ЗНАНЬ</h3>
+<div class="description"><strong>Доступ:</strong> Всі (контент обмежений підпискою)  </div>
+<div class="description"><strong>Мета:</strong> Навчальні матеріали та курси</div>
+<br>
+<div class="tree-structure">
+📍 /hub/ (Каталог курсів)
+├── 🔝 Постійний банер "Оформи підписку"
+├── 💬 Цитати експертів (карусель)
+├── ⭐ Головні матеріали (5-7 ключових)
+├── 🎯 Всі продукти (мозаїка)
+│   ├── 💰 Ціна
+│   ├── 📝 Опис та тривалість
+│   ├── 🏷️ Теги та індикатори
+│   ├── 🎖️ Позначки: топ, новинка, для вас
+│   └── ❤️ Улюблені
+├── 🔍 Пошукова стрічка
+├── 🎛️ Фільтри
+│   ├── 👤 За напрямками (тренер, гравець, батьки, тощо)
+│   ├── 📹 За типом (відео, PDF, стаття)
+│   ├── 📊 За складністю (початковий, середній, експертний)
+│   └── ⏱️ За тривалістю
+└── 🆘 Віджет підтримки
+
+📍 /hub/course/<slug>/ (Деталі курсу)
+├── 📖 Повна інформація про курс
+├── 👁️ Передперегляд (20 сек відео / 10% PDF)
+├── 🔒 Paywall блок (blur + замочок)
+├── 💡 Рекомендовані курси
+├── 🛒 CTA кнопки
+│   ├── "Оформити підписку" → /pricing/
+│   ├── "Купити" → /checkout/
+│   └── "Увійти" → /auth/login/
+└── ❤️ Додати в улюблені
+
+📍 /hub/search/ (Результати пошуку)
+├── 🔍 Пошук за назвою, автором, тегами
+├── 📊 Автокомпліт
+└── 📄 Результати з пагінацією
+</div>
+<br>
+<h3 class="subsection-title">🎪 ІВЕНТИ</h3>
+<div class="description"><strong>Доступ:</strong> Всі (реєстрація для авторизованих)  </div>
+<div class="description"><strong>Мета:</strong> Організація та участь в івентах</div>
+<br>
+<div class="tree-structure">
+📍 /events/ (Список івентів)
+├── 📅 Календарний вигляд
+├── 🎭 Типи івентів:
+│   ├── 👨‍💼 Форум футбольних фахівців
+│   ├── 👨‍👩‍👧‍👦 Форум футбольних батьків
+│   ├── 🏢 Стажування в професійних клубах
+│   ├── 🔧 Практичні семінари і хакатони
+│   ├── 🧠 Воркшопи зі спортивної психології
+│   ├── ⚽ Селекційні табори
+│   └── 💻 Онлайн-теорії і вебінари
+├── 🎨 Фільтри по типу подій
+└── 📍 Локація та час
+
+📍 /events/<slug>/ (Деталі івенту)
+├── 📋 Повна інформація
+├── 🖼️ Галерея фото з минулих івентів
+├── 📅 Програма та спікери
+├── 📍 Локація та час
+├── 🎫 Кнопка "КУПИТИ КВИТОК"
+└── 🏆 Pro-Vision: баланс квитків
+
+📍 /events/<slug>/register/ (Реєстрація на івент)
+├── 📝 Форма реєстрації
+├── 💳 Вибір способу оплати
+├── 🎫 Списання з балансу квитків (Pro-Vision)
+├── 📧 Підтвердження email/SMS
+└── 📱 Генерація QR-коду
+</div>
+<br>
+<h3 class="subsection-title">👨‍🏫 МЕНТОР-КОУЧІНГ</h3>
+<div class="description"><strong>Доступ:</strong> Всі (бронювання для авторизованих)  </div>
+<div class="description"><strong>Мета:</strong> Персональний коучінг та консультації</div>
+<br>
+<div class="tree-structure">
+📍 /mentor-coaching/ (Огляд програми)
+├── 🧠 Ігровий інтелект
+│   └── 📊 Аналіз ігор, формування відеонарізок
+├── 💪 Фізика
+│   └── 🏃‍♂️ Координація, постановка, профілактика травм
+├── ⚽ Техніка
+│   └── 🎯 Доведення до автоматизму, корекція помилок
+├── 🧘 Ментальність
+│   └── 😌 Контроль емоцій, впевненість, мотивація
+├── 🏠 Життя і побут
+│   └── 💰 Медіаграмотність, планування режиму
+└── 💊 Здоров'я
+    └── 🥗 Нутриціологія, відновлення, медсупровід
+
+📍 /mentor-coaching/book/<mentor_id>/ (Бронювання сесії)
+├── 👨‍🏫 Вибір ментора
+├── 📅 Календар доступних слотів
+├── 📝 Форма з вибором теми
+├── 💻 Створення Zoom кімнати
+└── 💳 Оплата сесії
+</div>
+<br>
+<h3 class="subsection-title">👤 ОСОБИСТИЙ КАБІНЕТ</h3>
+<div class="description"><strong>Доступ:</strong> Тільки авторизовані користувачі  </div>
+<div class="description"><strong>Мета:</strong> Управління акаунтом та навчанням</div>
+<br>
+<div class="tree-structure">
+📍 /account/ (Дашборд)
+├── 📊 Огляд активної підписки
+├── 📚 Останні куплені курси
+├── 🎪 Upcoming івенти
+└── 📈 Прогрес навчання
+
+📍 /account/profile/ (Профіль)
+├── 👤 Особиста інформація
+│   ├── 📝 ФІО, дата народження
+│   ├── 💼 Професія/спеціальність
+│   ├── 🖼️ Аватар (завантаження/кроп)
+│   └── 🎯 Найважливіші напрямки
+├── 🔐 Методи входу (email, телефон, соцмережі)
+├── 🔒 Зміна паролю
+├── ✅ Індикатор верифікації
+└── 🎁 Заохочення за заповнення (через 5 хв)
+
+📍 /account/subscription/ (Підписка)
+├── 📅 Інформація про план
+│   ├── 📆 Дати початку та закінчення
+│   ├── 🎁 Привілеї та статус
+│   └── 💰 Вартість та періодичність
+├── 🔄 Кнопка "Змінити підписку"
+├── 🛑 Скасування підписки
+└── 📊 4 рівні планів з економією
+
+📍 /account/files/ (Мої файли)
+├── 📚 Доступні матеріали
+├── 💰 Індикатор покупки (окремо придбані)
+├── ⭐ Улюблені (зірочка)
+├── 📱 Офлайн доступ (потенційне скачування)
+├── 📊 Прогрес перегляду (30%, 41%, тощо)
+└── ▶️ Кнопка "Переглянути"
+
+📍 /account/payments/ (Історія платежів)
+├── 💳 Всі транзакції в хронологічному порядку
+├── 📅 Дата, сума, спосіб оплати, статус
+├── 🔄 Кнопка "Повторити" для підписок
+└── 📄 Завантаження чеків
+
+📍 /account/loyalty/ (Програма лояльності)
+├── 🏆 Поточний рівень (Bronze, Silver, Gold, Platinum)
+├── 📊 Прогрес-бар "120/200 балів до Silver"
+├── 💸 Поточна знижка (% на товари)
+├── 🎯 Потенційна знижка (наступний рівень)
+└── 📈 Залежність від активності та підписки
+</div>
+<br>
+<h3 class="subsection-title">💰 КОМЕРЦІЙНІ СТОРІНКИ</h3>
+<div class="description"><strong>Доступ:</strong> Всі (функції для авторизованих)  </div>
+<div class="description"><strong>Мета:</strong> Монетизація та продажі</div>
+<br>
+<div class="tree-structure">
+📍 /pricing/ (Тарифи підписок)
+├── 💳 4 картки планів
+│   ├── 📅 Місячний
+│   ├── 📅 3 місяці
+│   └── 📅 Річний
+├── 💰 Інформація на картці
+│   ├── 💵 Ціна (головна сума)
+│   ├── ⏱️ Термін дії
+│   ├── 🎁 Основні бенефіти
+│   ├── 🏷️ Badge: "Найпопулярніший", "Максимальна економія"
+│   └── 📊 Автоматичний розрахунок економії (%)
+└── 🎯 CTA кнопки → чекаут
+
+📍 /cart/ (Кошик)
+├── 📱 Фіксований sidebar праворуч
+├── 🎬 Анімація формування при додаванні
+├── 📦 Список товарів
+│   ├── 📝 Назва матеріалу
+│   ├── 💰 Ціна
+│   ├── 🗑️ Кнопка видалення
+│   └── 🖼️ Мініатюра
+├── 💡 Блок "Ідеальний додаток до кошика"
+│   ├── 📚 1-2 рекомендованих матеріали
+│   └── 🧠 Логіка добору за категоріями/тегами
+├── 🎫 Промокод
+│   ├── 📝 Поле для введення
+│   ├── ✅ Кнопка "Застосувати"
+│   └── 🚦 Валідація з повідомленнями
+└── 💰 Підсумок (товари + знижка + сума)
+
+📍 /checkout/ (Оформлення замовлення)
+├── 📝 Форма даних клієнта
+├── 💳 Способи оплати
+│   ├── 💳 Банківські картки (3D Secure)
+│   ├── 🍏 Apple Pay
+│   └── 🤖 Google Pay
+├── 🎫 Поле промокод з валідацією
+├── ✅ Згода з офертою
+└── 🔒 Кнопка "Підтвердити оплату"
+
+📍 /checkout/success/ (Успішна оплата)
+├── 🎉 Повідомлення: "Вітаємо, підписка активна до [дата]"
+├── 🏠 Автоперехід в кабінет
+└── 📧 Відправка чека на email
+
+📍 /checkout/cancel/ (Скасована оплата)
+├── ❌ Червоний банер з поясненням
+├── 🔄 Кнопка "Спробувати ще раз"
+└── 📞 Варіанти підтримки
+</div>
+<br>
+<h3 class="subsection-title">🔧 API ENDPOINTS</h3>
+<div class="description"><strong>Доступ:</strong> AJAX запити з фронтенду  </div>
+<div class="description"><strong>Мета:</strong> Динамічний функціонал без перезавантаження сторінки</div>
+<br>
+<div class="tree-structure">
+📍 /api/cart/ (Кошик API)
+├── 📍 /api/cart/add/ (POST)
+│   └── ➕ Додавання товару в кошик
+├── 📍 /api/cart/remove/ (DELETE)
+│   └── ➖ Видалення товару з кошика
+└── 📍 /api/cart/update/ (PATCH)
+    └── 🔄 Оновлення кількості
+
+📍 /api/search/ (Пошук API)
+├── 📍 /api/search/autocomplete/?q=<query> (GET)
+│   └── 🔍 Автокомпліт для dropdown
+└── 📊 JSON відповідь зі списком курсів
+
+📍 /api/favorites/ (Улюблені API)
+├── 📍 /api/favorites/toggle/ (POST)
+│   └── ❤️ Додавання/видалення з улюблених
+└── 🔄 Тогл стан іконки серця
+
+📍 /api/course/<id>/progress/ (Прогрес API)
+├── 📍 POST оновлення прогресу
+└── 📊 Відстеження перегляду відео/читання
+
+📍 /api/coupon/validate/ (Валідація промокоду)
+├── 📍 POST код + сума кошика
+└── 🚦 Результат валідації з знижкою
+</div>
+<br>
+<h3 class="subsection-title">⚙️ АДМІНІСТРУВАННЯ</h3>
+<div class="description"><strong>Доступ:</strong> Тільки staff/admin користувачі  </div>
+<div class="description"><strong>Мета:</strong> Управління контентом та системою</div>
+<br>
+<div class="tree-structure">
+📍 /admin/ (Django Admin)
+├── 👥 Користувачі та групи
+├── 📚 Курси та матеріали
+├── 🎪 Івенти та квитки
+├── 💰 Платежі та підписки
+└── 📊 Логи та безпека
+
+📍 /admin/cms/ (CMS панель)
+├── 📝 Керування контентом
+│   ├── 📚 Матеріали/Курси (CRUD, теги, ціни)
+│   ├── 🎪 Івенти (квоти, спікери, QR-чек-ін)
+│   ├── 💳 Плани (ціни, бенефіти, баланс квитків)
+│   └── 🎫 Купони/Акції (знижки, ліміти)
+├── 👥 Користувачі/Ролі (доступи, блокування)
+├── 🏆 Лояльність (пороги, відсотки)
+├── 🤖 AI-База знань (FAQ, позначки)
+├── 🔍 SEO (мета-теги, sitemap)
+├── 📱 PWA (кольори, іконки)
+└── 📊 Звіти (продажі/конверсії/ARPPU)
+
+📍 /admin/analytics/ (Аналітика)
+├── 📈 Дашборд з метриками
+├── 💰 Звіти продажів
+├── 📊 Конверсії та воронки
+├── 👥 Активність користувачів
+└── 📱 PWA статистика
+
+📍 /webhooks/ (Зовнішні інтеграції)
+├── 📍 /webhooks/payment/ (POST)
+│   └── 💳 Обробка статусів платежів від Stripe
+└── 📍 /webhooks/email/ (POST)
+    └── 📧 Bounce/complaint від email провайдера
+</div>
+<br>
+<hr style="margin: 30px 0; border: 1px solid #eee;">
+<br>
+<div class="section"><h2 class="section-title">🎯 КЛЮЧОВІ ОСОБЛИВОСТІ АРХІТЕКТУРИ</h2>
+<br>
+<h3 class="subsection-title">🔐 БЕЗПЕКА</h3>
+<div class="feature-item">• **Rate limiting** на всіх формах</div>
+<div class="feature-item">• **CSRF/XSS захист**</div>
+<div class="feature-item">• **3D Secure** для платежів</div>
+<div class="feature-item">• **Підписані URL** для відео контенту</div>
+<div class="feature-item">• **CSP headers** для скриптів</div>
+<br>
+<h3 class="subsection-title">📱 МОБІЛЬНА АДАПТАЦІЯ</h3>
+<div class="feature-item">• **Progressive Web App** (PWA)</div>
+<div class="feature-item">• **Service Worker** для кешування</div>
+<div class="feature-item">• **Responsive design** всіх сторінок</div>
+<div class="feature-item">• **Touch-friendly** інтерфейс</div>
+<div class="feature-item">• **iOS Safari** оптимізація</div>
+<br>
+<h3 class="subsection-title">🎭 ПЕРСОНАЛІЗАЦІЯ</h3>
+<div class="feature-item">• **Рекомендації** на основі інтересів</div>
+<div class="feature-item">• **Програма лояльності** з рівнями</div>
+<div class="feature-item">• **Персональний прогрес** навчання</div>
+<div class="feature-item">• **Улюблені матеріали**</div>
+<div class="feature-item">• **Історія перегляду**</div>
+<br>
+<h3 class="subsection-title">📊 АНАЛІТИКА</h3>
+<div class="feature-item">• **Google Analytics 4** події</div>
+<div class="feature-item">• **Meta Pixel** відстеження</div>
+<div class="feature-item">• **Внутрішня аналітика** поведінки</div>
+<div class="feature-item">• **Конверсійні воронки**</div>
+<div class="feature-item">• **A/B тестування** готовність</div>
+<br>
+<h3 class="subsection-title">💰 МОНЕТИЗАЦІЯ</h3>
+<div class="feature-item">• **4 рівні підписок** з автопролонгацією</div>
+<div class="feature-item">• **Разові покупки** курсів</div>
+<div class="feature-item">• **Система купонів** та знижок</div>
+<div class="feature-item">• **Pro-Vision баланс** квитків на івенти</div>
+<div class="feature-item">• **Програма лояльності** з % знижками</div>
+<br>
+<hr style="margin: 30px 0; border: 1px solid #eee;">
+<br>
+<div class="section"><h2 class="section-title">📈 МАСШТАБОВАНІСТЬ ТА РОЗВИТОК</h2>
+<br>
+<h3 class="subsection-title">🔄 ГОТОВНІСТЬ ДО РОЗШИРЕННЯ</h3>
+<div class="feature-item">• **Мікросервісна архітектура** можливість</div>
+<div class="feature-item">• **API-first підхід** для інтеграцій</div>
+<div class="feature-item">• **Мультимовність** (uk/en готовність)</div>
+<div class="feature-item">• **CDN інтеграція** для медіа файлів</div>
+<div class="feature-item">• **Kubernetes деплой** готовність</div>
+<br>
+<h3 class="subsection-title">🎯 МАЙБУТНІ ФУНКЦІЇ</h3>
+<div class="feature-item">• **Мобільний додаток** через API</div>
+<div class="feature-item">• **Офлайн режим** для курсів</div>
+<div class="feature-item">• **Live стрімінги** івентів</div>
+<div class="feature-item">• **AR/VR контент** підтримка</div>
+<div class="feature-item">• **Blockchain сертифікати** готовність</div>
+<br>
+<hr style="margin: 30px 0; border: 1px solid #eee;">
+<br>
+<div class="description"><strong>💡 ПІДСУМОК:</strong> Архітектура спроектована як повноцінна екосистема навчання з можливістю масштабування від стартапу до enterprise рівня з підтримкою 100,000+ користувачів.</div>
+<br>
+<br>
+</body>
+</html>
