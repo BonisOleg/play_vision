@@ -41,6 +41,12 @@ LOCAL_APPS = [
     'apps.content',
     'apps.cart',
     'apps.events',
+    'apps.loyalty.apps.LoyaltyConfig',
+    'apps.mentoring.apps.MentoringConfig',
+    'apps.ai.apps.AiConfig',
+    'apps.analytics.apps.AnalyticsConfig',
+    'apps.notifications.apps.NotificationsConfig',
+    'apps.cms.apps.CmsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
