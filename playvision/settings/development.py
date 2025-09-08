@@ -7,6 +7,15 @@ from .base import *
 DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
+# Add custom middleware for development testing
+MIDDLEWARE += [
+    'playvision.middleware.SecurityHeadersMiddleware',
+    'playvision.middleware.AnalyticsMiddleware',
+]
+
+# Maintenance mode (disabled by default)
+MAINTENANCE_MODE = False
+
 # Database for development
 DATABASES = {
     'default': {

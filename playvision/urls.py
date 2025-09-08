@@ -35,6 +35,7 @@ urlpatterns = [
     path('api/v1/cart/', include('apps.cart.api_urls')),
     
     # HTMX endpoints
+    path('htmx/', include('apps.core.htmx_urls')),
     path('htmx/cart/', include('apps.cart.htmx_urls')),
     
     # Video Security (НОВИЙ)
