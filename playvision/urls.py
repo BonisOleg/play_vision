@@ -16,7 +16,9 @@ urlpatterns = [
     
     # User authentication and accounts
     path('auth/', include('apps.accounts.urls')),
-    path('account/', include(('apps.accounts.urls', 'accounts'), namespace='account')),  # Alternative URL for account pages
+    
+    # Personal cabinet (separate namespace to avoid conflicts)
+    path('account/', include('apps.accounts.cabinet_urls', namespace='cabinet')),
     
     # Main content
     path('hub/', include('apps.content.urls')),
@@ -34,6 +36,9 @@ urlpatterns = [
     
     # HTMX endpoints
     path('htmx/cart/', include('apps.cart.htmx_urls')),
+    
+    # Video Security (НОВИЙ)
+    path('video-security/', include('apps.video_security.urls')),
 ]
 
 # Serve media files in development

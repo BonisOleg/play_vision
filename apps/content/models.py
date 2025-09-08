@@ -159,6 +159,15 @@ class Material(models.Model):
     preview_seconds = models.PositiveIntegerField(default=20, help_text='Preview duration for video')
     preview_percentage = models.PositiveIntegerField(default=10, help_text='Preview percentage for PDF/article')
     
+    # Secure Video (нові поля для захищеного відео)
+    secure_video_enabled = models.BooleanField(default=False, 
+                                             help_text='Використовувати захищену доставку відео')
+    s3_video_key = models.CharField(max_length=500, blank=True,
+                                  help_text='Ключ відео в S3 bucket')
+    video_access_token = models.CharField(max_length=100, blank=True,
+                                        help_text='Поточний токен доступу')
+    token_expires_at = models.DateTimeField(null=True, blank=True)
+    
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -177,6 +186,26 @@ class Material(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+    
+    def get_video_url(self, user=None):
+        """Універсальний метод отримання URL відео"""
+        if self.secure_video_enabled and user:
+            # Новий захищений спосіб з безпечним імпортом
+            try:
+                # Використовуємо пізній імпорт для уникнення циклічного імпорту
+                from django.apps import apps
+                if apps.is_installed('apps.video_security'):
+                    from apps.video_security.services import SecureVideoService
+                    return SecureVideoService.get_secure_url(self, user)
+            except (ImportError, AttributeError, apps.AppRegistryNotReady):
+                # Fallback якщо video_security не встановлений або є проблеми з імпортом
+                pass
+        
+        # Старий спосіб (fallback) для зворотної сумісності
+        if self.video_file and self.video_file.name:
+            return self.video_file.url
+        
+        return None
 
 
 class UserCourseProgress(models.Model):

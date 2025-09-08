@@ -29,6 +29,50 @@ class AboutView(TemplateView):
     template_name = 'pages/about.html'
 
 
+class ComingSoonView(TemplateView):
+    """Coming soon page for future features"""
+    template_name = 'pages/coming_soon.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        page = self.request.GET.get('page', 'feature')
+        
+        # Content for different coming soon pages
+        coming_soon_content = {
+            'mentoring': {
+                'title': 'Ментор-коучінг',
+                'subtitle': 'Персональний розвиток з експертами',
+                'description': 'Незабаром ви зможете отримати персональні консультації від топових тренерів та аналітиків.',
+                'features': [
+                    'Індивідуальні сесії з тренерами',
+                    'Аналіз ваших матчів',
+                    'Персональний план розвитку',
+                    'Доступ до закритої спільноти'
+                ]
+            },
+            'subscription': {
+                'title': 'Підписка Pro-Vision',
+                'subtitle': 'Безлімітний доступ до знань',
+                'description': 'Отримайте доступ до всіх курсів, ексклюзивних матеріалів та спеціальних івентів.',
+                'features': [
+                    'Доступ до всіх курсів',
+                    'Пріоритетна реєстрація на івенти',
+                    'Ексклюзивні матеріали',
+                    'Закрита спільнота підписників'
+                ]
+            }
+        }
+        
+        context['content'] = coming_soon_content.get(page, {
+            'title': 'Незабаром',
+            'subtitle': 'Працюємо над новими можливостями',
+            'description': 'Ця функція знаходиться в розробці. Слідкуйте за оновленнями!',
+            'features': []
+        })
+        
+        return context
+
+
 class ContactView(FormView):
     """Contact page view"""
     template_name = 'pages/contacts.html'

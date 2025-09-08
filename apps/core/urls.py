@@ -10,6 +10,7 @@ urlpatterns = [
     path('contacts/', views.ContactView.as_view(), name='contacts'),
     path('pricing/', views.PricingView.as_view(), name='pricing'),
     path('search/', views.SearchView.as_view(), name='search'),
+    path('coming-soon/', views.ComingSoonView.as_view(), name='coming_soon'),
     
     # Legal pages
     path('legal/<slug:slug>/', views.LegalPageView.as_view(), name='legal'),

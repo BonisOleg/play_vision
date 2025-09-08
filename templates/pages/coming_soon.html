@@ -1,0 +1,148 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ content.title }} - Play Vision{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Coming Soon Section -->
+    <section class="coming-soon">
+        <div class="coming-soon-content">
+            <h1>{{ content.title }}</h1>
+            <h2>{{ content.subtitle }}</h2>
+            <p class="lead">{{ content.description }}</p>
+
+            {% if content.features %}
+            <div class="features-preview">
+                <h3>Що вас чекає:</h3>
+                <ul class="features-list">
+                    {% for feature in content.features %}
+                    <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Notify Me Form -->
+            <div class="notify-form">
+                <h3>Дізнайтесь першими</h3>
+                <p>Залиште свій email і ми повідомимо вас, коли функція буде готова:</p>
+
+                <form method="post" class="notify-email-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Ваш email" required>
+                        <button type="submit" class="btn btn-primary">Повідомити мене</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Back to Home -->
+            <div class="back-home">
+                <a href="{% url 'core:home' %}" class="btn btn-outline">Повернутися на головну</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .coming-soon {
+        text-align: center;
+        padding: var(--spacing-xxl) 0;
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .coming-soon-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .coming-soon h1 {
+        font-size: 3rem;
+        margin-bottom: var(--spacing-md);
+        color: var(--color-primary);
+    }
+
+    .coming-soon h2 {
+        font-size: 1.5rem;
+        color: var(--color-text-light);
+        margin-bottom: var(--spacing-lg);
+        font-weight: 400;
+    }
+
+    .lead {
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-xl);
+        color: var(--color-text);
+    }
+
+    .features-preview {
+        background: var(--color-bg-gray);
+        padding: var(--spacing-lg);
+        border-radius: 8px;
+        margin: var(--spacing-xl) 0;
+    }
+
+    .features-list {
+        list-style: none;
+        padding: 0;
+        margin: var(--spacing-md) 0 0;
+    }
+
+    .features-list li {
+        padding: var(--spacing-sm) 0;
+        position: relative;
+        padding-left: var(--spacing-lg);
+    }
+
+    .features-list li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--color-primary);
+        font-weight: bold;
+    }
+
+    .notify-form {
+        background: white;
+        padding: var(--spacing-xl);
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        margin: var(--spacing-xl) 0;
+    }
+
+    .notify-email-form .form-group {
+        display: flex;
+        gap: var(--spacing-sm);
+        max-width: 400px;
+        margin: var(--spacing-md) auto 0;
+    }
+
+    .notify-email-form input {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .back-home {
+        margin-top: var(--spacing-xl);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .coming-soon h1 {
+            font-size: 2rem;
+        }
+
+        .notify-email-form .form-group {
+            flex-direction: column;
+        }
+
+        .features-preview,
+        .notify-form {
+            padding: var(--spacing-md);
+        }
+    }
+</style>
+{% endblock %}

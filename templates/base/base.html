@@ -52,9 +52,9 @@
                         class="navbar-link hub-link {% if 'hub' in request.path %}active{% endif %}">
                         Хаб знань
                     </a>
-                    <a href="#" class="navbar-link">Івенти</a>
-                    <a href="#" class="navbar-link">Ментор-коучінг</a>
-                    <a href="#" class="btn btn-primary">Підписка</a>
+                    <a href="{% url 'events:event_list' %}" class="navbar-link">Івенти</a>
+                    <a href="{% url 'core:coming_soon' %}?page=mentoring" class="navbar-link">Ментор-коучінг</a>
+                    <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">Підписка</a>
                 </div>
 
                 <!-- User Menu -->
@@ -95,9 +95,9 @@
                 <a href="{% url 'core:home' %}" class="mobile-menu-link">Головна</a>
                 <a href="{% url 'core:about' %}" class="mobile-menu-link">Про Play Vision</a>
                 <a href="{% url 'content:course_list' %}" class="mobile-menu-link">Хаб знань</a>
-                <a href="#" class="mobile-menu-link">Івенти</a>
-                <a href="#" class="mobile-menu-link">Ментор-коучінг</a>
-                <a href="#" class="mobile-menu-link">Підписка</a>
+                <a href="{% url 'events:event_list' %}" class="mobile-menu-link">Івенти</a>
+                <a href="{% url 'core:coming_soon' %}?page=mentoring" class="mobile-menu-link">Ментор-коучінг</a>
+                <a href="{% url 'core:coming_soon' %}?page=subscription" class="mobile-menu-link">Підписка</a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'accounts:profile' %}" class="mobile-menu-link">Мій кабінет</a>
                 <a href="{% url 'accounts:logout' %}" class="mobile-menu-link">Вийти</a>

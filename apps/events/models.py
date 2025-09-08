@@ -269,10 +269,20 @@ class EventTicket(models.Model):
         """Generate unique ticket number"""
         import random
         import string
-        while True:
+        
+        # Обмежуємо кількість спроб для безпеки
+        max_attempts = 100
+        for attempt in range(max_attempts):
             number = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
             if not EventTicket.objects.filter(ticket_number=number).exists():
                 return number
+        
+        # Якщо не змогли згенерувати унікальний номер за 100 спроб
+        # використовуємо більш довгий номер з timestamp
+        import time
+        timestamp_suffix = str(int(time.time()))[-4:]  # Останні 4 цифри timestamp
+        number = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4)) + timestamp_suffix
+        return number
     
     def generate_qr_code(self):
         """Generate QR code for ticket"""

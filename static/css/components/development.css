@@ -1,0 +1,294 @@
+/* Development and Placeholder Styles */
+
+/* Development Notices */
+.development-notice {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border: 1px solid #ffeaa7;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
+}
+
+.development-notice p {
+    margin: 0.5rem 0;
+    color: #856404;
+    font-weight: 500;
+}
+
+.development-notice p:first-child {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Content Under Development */
+.content-incomplete::before {
+    content: "⚠️ КОНТЕНТ НЕ ЗАВЕРШЕНО";
+    display: block;
+    background: #ff9800;
+    color: white;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+/* Placeholder Cards */
+.placeholder-card {
+    background: white;
+    border: 2px dashed #e0e0e0;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #666;
+    margin: 2rem 0;
+    transition: all 0.3s ease;
+}
+
+.placeholder-card:hover {
+    border-color: #ff6b35;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.1);
+}
+
+.placeholder-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+.placeholder-card h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.placeholder-card p {
+    color: #666;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+}
+
+/* Example Content */
+.example-payment {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+.example-payment h4 {
+    color: #ff6b35;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.payment-item-example {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.payment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-type {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.25rem;
+}
+
+.payment-date {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.payment-amount {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.amount {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* No Content States */
+.no-content {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 2rem;
+}
+
+.no-subscription-notice {
+    background: #f0f8ff;
+    border: 1px solid #cce7ff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.no-subscription-notice p {
+    margin-bottom: 1rem;
+    color: #0066cc;
+}
+
+/* Tier Cards for Loyalty */
+.tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.tier-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 2px solid;
+    transition: transform 0.3s ease;
+}
+
+.tier-card:hover {
+    transform: translateY(-4px);
+}
+
+.tier-card.bronze {
+    border-color: #cd7f32;
+    background: linear-gradient(135deg, #fff, #faf8f5);
+}
+
+.tier-card.silver {
+    border-color: #c0c0c0;
+    background: linear-gradient(135deg, #fff, #f8f8f8);
+}
+
+.tier-card.gold {
+    border-color: #ffd700;
+    background: linear-gradient(135deg, #fff, #fffbf0);
+}
+
+.tier-card.platinum {
+    border-color: #e5e4e2;
+    background: linear-gradient(135deg, #fff, #f5f5f5);
+}
+
+.tier-card h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.tier-card p {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+/* Earning Ways */
+.earning-ways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.earning-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.earning-item:hover {
+    border-color: #ff6b35;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1);
+}
+
+.earning-item .icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.earning-item .content h4 {
+    margin: 0 0 0.25rem 0;
+    color: #333;
+}
+
+.earning-item .content p {
+    margin: 0;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .placeholder-card {
+        padding: 2rem 1rem;
+    }
+
+    .placeholder-icon {
+        font-size: 3rem;
+    }
+
+    .payment-item-example {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .payment-amount {
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .tiers-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .earning-ways {
+        grid-template-columns: 1fr;
+    }
+}

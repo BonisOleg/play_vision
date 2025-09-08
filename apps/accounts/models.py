@@ -30,7 +30,7 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []  # Username не обов'язковий, оскільки може бути null
     
     class Meta:
         db_table = 'users'

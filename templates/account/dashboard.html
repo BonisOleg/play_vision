@@ -1,0 +1,190 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Дашборд - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/development.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="account-layout">
+        <!-- Sidebar Navigation -->
+        <nav class="account-sidebar">
+            <div class="account-user-info">
+                <div class="user-avatar">
+                    {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="Аватар">
+                    {% else %}
+                    <div class="avatar-placeholder">{{ user.first_name|first|default:user.email|first }}</div>
+                    {% endif %}
+                </div>
+                <div class="user-details">
+                    <h3>{{ user.profile.full_name|default:user.email }}</h3>
+                    {% if active_subscription %}
+                    <span class="subscription-badge">{{ active_subscription.plan.name }}</span>
+                    {% else %}
+                    <span class="subscription-badge free">Безкоштовний</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <ul class="account-nav">
+                <li><a href="{% url 'cabinet:dashboard' %}" class="active">📊 Дашборд</a></li>
+                <li><a href="{% url 'cabinet:profile' %}">👤 Профіль</a></li>
+                <li><a href="{% url 'cabinet:subscription' %}">💎 Підписка</a></li>
+                <li><a href="{% url 'cabinet:files' %}">📁 Мої файли</a></li>
+                <li><a href="{% url 'cabinet:courses' %}">🎓 Мої курси</a></li>
+                <li><a href="{% url 'cabinet:events' %}">🎪 Мої івенти</a></li>
+                <li><a href="{% url 'cabinet:payments' %}">💳 Платежі</a></li>
+                <li><a href="{% url 'cabinet:loyalty' %}">⭐ Лояльність</a></li>
+                <li><a href="{% url 'cabinet:settings' %}">⚙️ Налаштування</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="account-main">
+            <div class="account-header">
+                <h1>Дашборд</h1>
+                {% if under_development %}
+                <div class="development-notice">
+                    <p>🚧 Розділ знаходиться в розробці</p>
+                    <p>Функціонал буде доступний найближчим часом</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Profile Completion Alert -->
+            {% if not profile_complete %}
+            <div class="completion-alert">
+                <h3>🎯 Завершіть налаштування профілю</h3>
+                <p>Заповніть профіль для персональних рекомендацій та бонусів</p>
+                <a href="{% url 'cabinet:profile_edit' %}" class="btn btn-primary">Заповнити профіль</a>
+            </div>
+            {% endif %}
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-content">
+                        <h3>{{ stats.total_courses }}</h3>
+                        <p>Всього курсів</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3>{{ stats.completed_courses }}</h3>
+                        <p>Завершено курсів</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🎪</div>
+                    <div class="stat-content">
+                        <h3>{{ stats.upcoming_events }}</h3>
+                        <p>Upcoming івенти</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">💳</div>
+                    <div class="stat-content">
+                        <h3>{{ stats.total_payments }}</h3>
+                        <p>Успішних платежів</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Content -->
+            <div class="dashboard-grid">
+                <!-- Recent Courses -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Останні курси</h3>
+                        <a href="{% url 'cabinet:courses' %}">Всі курси →</a>
+                    </div>
+                    <div class="card-content">
+                        {% if recent_courses %}
+                        {% for progress in recent_courses %}
+                        <div class="course-item">
+                            <div class="course-info">
+                                <h4>{{ progress.course.title }}</h4>
+                                <p>Прогрес: {{ progress.progress_percentage|floatformat:0 }}%</p>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ progress.progress_percentage }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="no-content">Курси ще не розпочато</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Subscription Info -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Моя підписка</h3>
+                        <a href="{% url 'cabinet:subscription' %}">Керувати →</a>
+                    </div>
+                    <div class="card-content">
+                        {% if active_subscription %}
+                        <div class="subscription-info">
+                            <h4>{{ active_subscription.plan.name }}</h4>
+                            <p>Діє до: {{ active_subscription.end_date|date:"d.m.Y" }}</p>
+                            <div class="features">
+                                {% for feature in active_subscription.plan.features %}
+                                <span class="feature-tag">{{ feature }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="no-subscription">
+                            <p>Немає активної підписки</p>
+                            <a href="{% url 'pricing' %}" class="btn btn-primary">Оформити підписку</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Найближчі івенти</h3>
+                        <a href="{% url 'cabinet:events' %}">Всі івенти →</a>
+                    </div>
+                    <div class="card-content">
+                        {% if upcoming_events %}
+                        {% for ticket in upcoming_events %}
+                        <div class="event-item">
+                            <div class="event-date">
+                                <span class="day">{{ ticket.event.start_datetime|date:"d" }}</span>
+                                <span class="month">{{ ticket.event.start_datetime|date:"M" }}</span>
+                            </div>
+                            <div class="event-info">
+                                <h4>{{ ticket.event.title }}</h4>
+                                <p>{{ ticket.event.start_datetime|date:"H:i" }}</p>
+                                <span class="status-{{ ticket.status }}">{{ ticket.get_status_display }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="no-content">Немає зареєстрованих івентів</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/pages/account.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}Демо захищеного відео - Play Vision{% endblock %}
+
+{% block extra_css %}
+<style>
+    .demo-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    .secure-video-container {
+        position: relative;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 2rem 0;
+    }
+
+    .secure-video,
+    .preview-video {
+        width: 100%;
+        height: auto;
+        max-height: 450px;
+        display: none;
+    }
+
+    .security-features {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .feature-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .feature-list li:last-child {
+        border-bottom: none;
+    }
+
+    .feature-list li::before {
+        content: '✅';
+        margin-right: 0.5rem;
+    }
+
+    .demo-controls {
+        display: flex;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+    }
+
+    .status-indicator {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: 500;
+        margin: 0.5rem 0;
+    }
+
+    .status-enabled {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .status-disabled {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="demo-container">
+    <h1>🛡️ Демо захищеного відео</h1>
+    <p>Тестування системи захищеної доставки відео з водяними знаками та контролем доступу.</p>
+
+    <!-- Статус системи -->
+    <div class="status-indicator {% if security_enabled %}status-enabled{% else %}status-disabled{% endif %}">
+        {% if security_enabled %}
+        ✅ Система захисту відео УВІМКНЕНА
+        {% else %}
+        ⚠️ Система захисту відео ВИМКНЕНА (fallback режим)
+        {% endif %}
+    </div>
+
+    <!-- Демо відео -->
+    <div class="secure-video-container" data-material-id="1" data-has-access="true"
+        data-user-email="{{ user.email|default:'demo@example.com' }}">
+
+        <video controls class="secure-video" style="display: none;">
+            <p>Ваш браузер не підтримує відео.</p>
+        </video>
+
+        <!-- Fallback для тестування -->
+        <div style="background: #333; color: white; padding: 2rem; text-align: center;">
+            <h3>🎬 Демо відео</h3>
+            <p>Тут буде відображатися захищене відео з водяними знаками</p>
+            <p>Email: {{ user.email|default:'demo@example.com' }}</p>
+            <p>Час: <span id="current-time"></span></p>
+        </div>
+    </div>
+
+    <!-- Контроли для тестування -->
+    <div class="demo-controls">
+        <button class="btn btn-primary"
+            onclick="SecureVideo.loadSecureVideo(document.querySelector('.secure-video-container'), 1)">
+            🔄 Перезавантажити відео
+        </button>
+        <button class="btn btn-outline" onclick="testSecurityFeatures()">
+            🧪 Тестувати захист
+        </button>
+        <button class="btn btn-outline" onclick="showSecurityLog()">
+            📊 Лог безпеки
+        </button>
+    </div>
+
+    <!-- Інформація про функції захисту -->
+    <div class="security-features">
+        <h3>🔒 Активні засоби захисту:</h3>
+        <ul class="feature-list">
+            <li><strong>Водяні знаки:</strong> Персональні мітки з email та часом</li>
+            <li><strong>Захист від правого кліку:</strong> Блокування контекстного меню</li>
+            <li><strong>Захист від copy/paste:</strong> Заборона копіювання відео</li>
+            <li><strong>Захист від drag & drop:</strong> Неможливо перетягнути відео</li>
+            <li><strong>Клавіатурний захист:</strong> Блокування F12, Ctrl+Shift+I та інших</li>
+            <li><strong>Захист від DevTools:</strong> Виявлення відкритих інструментів розробника</li>
+            <li><strong>Тимчасові токени:</strong> URL з обмеженим часом життя</li>
+            <li><strong>Аналіз поведінки:</strong> Виявлення підозрілої активності</li>
+            <li><strong>Логування подій:</strong> Детальний запис усіх дій користувача</li>
+        </ul>
+    </div>
+
+    <!-- Технічна інформація -->
+    <div class="security-features">
+        <h3>⚙️ Технічна інформація:</h3>
+        <ul style="list-style: disc; padding-left: 2rem;">
+            <li><strong>Версія системи:</strong> Play Vision Video Security v1.0</li>
+            <li><strong>Метод захисту:</strong> HMAC-SHA256 токени + Behavior Analysis</li>
+            <li><strong>Час життя токенів:</strong> {{ token_lifetime|default:3600 }} секунд</li>
+            <li><strong>Захищене сховище:</strong> {% if aws_enabled %}AWS S3{% else %}Локальні файли{% endif %}</li>
+            <li><strong>Watermark:</strong> Динамічний, рухомий</li>
+        </ul>
+    </div>
+
+    <!-- Лог подій -->
+    <div id="security-log" style="display: none;" class="security-features">
+        <h3>📋 Лог подій безпеки:</h3>
+        <div id="log-content"
+            style="font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto; background: #f1f3f4; padding: 1rem; border-radius: 4px;">
+            Лог буде відображатися тут...
+        </div>
+    </div>
+</div>
+
+<script>
+    // Оновлення часу
+    function updateTime() {
+        document.getElementById('current-time').textContent = new Date().toLocaleString('uk-UA');
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Тестування функцій захисту
+    function testSecurityFeatures() {
+        alert('🧪 Тестування захисту:\n\n' +
+            '1. Спробуйте клікнути правою кнопкою на відео\n' +
+            '2. Натисніть F12 або Ctrl+Shift+I\n' +
+            '3. Спробуйте перетягнути відео\n' +
+            '4. Натисніть Print Screen\n\n' +
+            'Всі ці дії мають бути заблоковані та зафіксовані в лозі.');
+    }
+
+    // Показ логу безпеки
+    let logVisible = false;
+    function showSecurityLog() {
+        const logDiv = document.getElementById('security-log');
+        logVisible = !logVisible;
+        logDiv.style.display = logVisible ? 'block' : 'none';
+
+        if (logVisible) {
+            // Імітація логу (в реальності буде з сервера)
+            const logContent = document.getElementById('log-content');
+            logContent.innerHTML = `
+[${new Date().toISOString()}] INFO: Secure video system initialized<br>
+[${new Date().toISOString()}] INFO: User ${document.querySelector('[data-user-email]').dataset.userEmail} accessed material ID 1<br>
+[${new Date().toISOString()}] SECURITY: Watermark applied with dynamic positioning<br>
+[${new Date().toISOString()}] SECURITY: Video protection layer activated<br>
+[${new Date().toISOString()}] SECURITY: Global security monitoring started<br>
+<span style="color: #28a745;">[READY] All security systems operational</span>
+        `;
+        }
+    }
+
+    // Розширене логування для демо
+    const originalLogSecurityEvent = window.SecureVideo?.logSecurityEvent;
+    if (originalLogSecurityEvent) {
+        window.SecureVideo.logSecurityEvent = function (materialId, eventType, data = {}) {
+            originalLogSecurityEvent.call(this, materialId, eventType, data);
+
+            // Додаємо до демо логу
+            const logContent = document.getElementById('log-content');
+            if (logContent && logVisible) {
+                const timestamp = new Date().toISOString();
+                const logEntry = `[${timestamp}] SECURITY: ${eventType} on material ${materialId}`;
+                logContent.innerHTML += `<br><span style="color: #dc3545;">${logEntry}</span>`;
+                logContent.scrollTop = logContent.scrollHeight;
+            }
+        };
+    }
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Підключаємо наш JavaScript ПІСЛЯ main.js -->
+<script src="{% static 'video_security/js/secure_video.js' %}"></script>
+{% endblock %}

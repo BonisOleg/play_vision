@@ -41,12 +41,13 @@ LOCAL_APPS = [
     'apps.content',
     'apps.cart',
     'apps.events',
-    'apps.loyalty.apps.LoyaltyConfig',
-    'apps.mentoring.apps.MentoringConfig',
-    'apps.ai.apps.AiConfig',
-    'apps.analytics.apps.AnalyticsConfig',
-    'apps.notifications.apps.NotificationsConfig',
-    'apps.cms.apps.CmsConfig',
+    'apps.loyalty',  # Стандартизована назва
+    'apps.mentoring',  # Стандартизована назва
+    'apps.ai',  # Стандартизована назва
+    'apps.analytics',  # Стандартизована назва
+    'apps.notifications',  # Стандартизована назва
+    'apps.cms',  # Стандартизована назва
+    'apps.video_security',  # Стандартизована назва
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -242,3 +243,13 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+# Video Security settings (НОВІ налаштування)
+VIDEO_SECURITY_ENABLED = config('VIDEO_SECURITY_ENABLED', default=False, cast=bool)
+VIDEO_TOKEN_LIFETIME = config('VIDEO_TOKEN_LIFETIME', default=3600, cast=int)  # 1 година
+
+# AWS S3 settings (опціонально для захищених відео)
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-central-1')

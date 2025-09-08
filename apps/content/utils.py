@@ -76,13 +76,35 @@ def get_user_accessible_courses(user):
         subscription_tiers = list(active_subscriptions.values_list('plan__slug', flat=True))
         
         # Get courses available for these tiers
-        subscription_courses = Course.objects.filter(
-            requires_subscription=True,
-            is_published=True
-        ).filter(
-            models.Q(subscription_tiers__len=0) |  # No tier restrictions
-            models.Q(subscription_tiers__overlap=subscription_tiers)  # Tier matches
-        )
+        from django.db import connection
+        
+        if connection.vendor == 'postgresql':
+            # PostgreSQL specific operations
+            subscription_courses = Course.objects.filter(
+                requires_subscription=True,
+                is_published=True
+            ).filter(
+                models.Q(subscription_tiers__len=0) |  # No tier restrictions
+                models.Q(subscription_tiers__overlap=subscription_tiers)  # Tier matches
+            )
+        else:
+            # SQLite compatible version
+            subscription_courses = Course.objects.filter(
+                requires_subscription=True,
+                is_published=True
+            )
+            
+            # Фільтрування в Python для SQLite
+            filtered_courses = []
+            for course in subscription_courses:
+                # Якщо немає обмежень по рівнях підписки
+                if not course.subscription_tiers:
+                    filtered_courses.append(course.id)
+                # Або якщо є перетин з доступними рівнями
+                elif any(tier in course.subscription_tiers for tier in subscription_tiers):
+                    filtered_courses.append(course.id)
+            
+            subscription_courses = Course.objects.filter(id__in=filtered_courses)
         
         # Combine all accessible courses
         accessible_courses = accessible_courses | purchased_courses | subscription_courses

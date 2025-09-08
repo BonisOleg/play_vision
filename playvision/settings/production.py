@@ -31,7 +31,6 @@ CSRF_COOKIE_SECURE = True
 
 # Static files - WhiteNoise configuration
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_COMPRESS_OFFLINE = True
 
 # Email

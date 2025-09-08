@@ -1,0 +1,142 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Програма лояльності - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/development.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="account-layout">
+        <!-- Sidebar Navigation -->
+        {% include 'account/partials/sidebar.html' %}
+
+        <!-- Main Content -->
+        <main class="account-main">
+            <div class="account-header">
+                <h1>Програма лояльності</h1>
+                {% if under_development %}
+                <div class="development-notice">
+                    <p>🚧 Розділ знаходиться в розробці</p>
+                    <p>Тут буде система балів та знижок для постійних клієнтів</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Current Status -->
+            <div class="loyalty-status">
+                <div class="status-card">
+                    <div class="tier-badge tier-{{ loyalty_account.tier|lower }}">
+                        {{ loyalty_account.tier }}
+                    </div>
+                    <h2>Ваш рівень: {{ loyalty_account.tier }}</h2>
+                    <p class="points">{{ loyalty_account.points }} балів</p>
+                    <p class="discount">Знижка: {{ current_tier_info.discount }}%</p>
+                </div>
+            </div>
+
+            <!-- Progress to Next Tier -->
+            {% if next_tier_info %}
+            <div class="progress-section">
+                <h3>Прогрес до рівня {{ next_tier_info.tier }}</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ progress_percentage }}%"></div>
+                    </div>
+                    <div class="progress-text">
+                        {% if points_needed > 0 %}
+                        Потрібно ще {{ points_needed }} балів
+                        {% else %}
+                        Готово до підвищення!
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Tier Benefits -->
+            <div class="benefits-section">
+                <h3>Ваші переваги</h3>
+                <div class="benefits-grid">
+                    {% for discount in available_discounts %}
+                    <div class="benefit-card {% if discount.active %}active{% endif %}">
+                        <h4>{{ discount.title }}</h4>
+                        <p>{{ discount.description }}</p>
+                        {% if discount.active %}
+                        <span class="status active">Активно</span>
+                        {% else %}
+                        <span class="status inactive">Недоступно</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Tier Explanation -->
+            <div class="tiers-explanation">
+                <h3>Рівні лояльності</h3>
+                <div class="tiers-grid">
+                    <div class="tier-card bronze">
+                        <h4>Bronze</h4>
+                        <p>0+ балів</p>
+                        <p>Знижка: 0%</p>
+                    </div>
+                    <div class="tier-card silver">
+                        <h4>Silver</h4>
+                        <p>200+ балів</p>
+                        <p>Знижка: 5%</p>
+                    </div>
+                    <div class="tier-card gold">
+                        <h4>Gold</h4>
+                        <p>500+ балів</p>
+                        <p>Знижка: 10%</p>
+                    </div>
+                    <div class="tier-card platinum">
+                        <h4>Platinum</h4>
+                        <p>1000+ балів</p>
+                        <p>Знижка: 15%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Earn Points -->
+            <div class="earn-points-section">
+                <h3>Як заробляти бали</h3>
+                <div class="earning-ways">
+                    <div class="earning-item">
+                        <span class="icon">🛒</span>
+                        <div class="content">
+                            <h4>Покупки</h4>
+                            <p>1 бал за кожний $1 витрачений</p>
+                        </div>
+                    </div>
+                    <div class="earning-item">
+                        <span class="icon">📝</span>
+                        <div class="content">
+                            <h4>Заповнення профілю</h4>
+                            <p>50 балів за повний профіль</p>
+                        </div>
+                    </div>
+                    <div class="earning-item">
+                        <span class="icon">🎓</span>
+                        <div class="content">
+                            <h4>Завершення курсів</h4>
+                            <p>10-30 балів за курс</p>
+                        </div>
+                    </div>
+                    <div class="earning-item">
+                        <span class="icon">📅</span>
+                        <div class="content">
+                            <h4>Відвідування івентів</h4>
+                            <p>20 балів за кожний івент</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
