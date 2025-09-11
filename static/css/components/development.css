@@ -1,6 +1,3 @@
-/* Development and Placeholder Styles */
-
-/* Development Notices */
 .development-notice {
     background: linear-gradient(135deg, #fff3cd, #ffeaa7);
     border: 1px solid #ffeaa7;
@@ -22,7 +19,6 @@
     font-weight: 600;
 }
 
-/* Content Under Development */
 .content-incomplete::before {
     content: "⚠️ КОНТЕНТ НЕ ЗАВЕРШЕНО";
     display: block;
@@ -36,7 +32,6 @@
     border-radius: 4px;
 }
 
-/* Placeholder Cards */
 .placeholder-card {
     background: white;
     border: 2px dashed #e0e0e0;
@@ -73,7 +68,6 @@
     margin: 0 auto 1.5rem;
 }
 
-/* Example Content */
 .example-payment {
     background: #f8f9fa;
     border-radius: 8px;
@@ -150,7 +144,6 @@
     color: #721c24;
 }
 
-/* No Content States */
 .no-content {
     text-align: center;
     color: #999;
@@ -172,7 +165,6 @@
     color: #0066cc;
 }
 
-/* Tier Cards for Loyalty */
 .tiers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -223,7 +215,6 @@
     color: #666;
 }
 
-/* Earning Ways */
 .earning-ways {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -262,7 +253,6 @@
     font-size: 0.875rem;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .placeholder-card {
         padding: 2rem 1rem;

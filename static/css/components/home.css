@@ -1,19 +1,13 @@
-/* Home Page - Optimized Fullscreen Sections */
-
-/* Fullscreen Section Base */
 .fullscreen-section {
     height: calc(100vh - 80px);
-    /* 80px = header height */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
     min-height: 600px;
-    /* Fallback minimum height */
 }
 
-/* Background Support */
 .section-bg {
     position: absolute;
     top: 0;
@@ -23,13 +17,7 @@
     z-index: -2;
 }
 
-.section-bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
+.section-bg-image,
 .section-bg-video {
     width: 100%;
     height: 100%;
@@ -45,10 +33,8 @@
     height: 100%;
     z-index: -1;
     background: rgba(0, 0, 0, 0.4);
-    /* Default dark overlay */
 }
 
-/* Overlay variants */
 .section-overlay--light {
     background: rgba(255, 255, 255, 0.9);
 }
@@ -65,7 +51,6 @@
     background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(255, 107, 53, 0.8) 100%);
 }
 
-/* Section Content */
 .section-content {
     position: relative;
     z-index: 1;
@@ -75,7 +60,6 @@
     padding: 0 var(--spacing-md);
 }
 
-/* HERO SECTION */
 .hero-section {
     color: white;
     text-align: center;
@@ -152,13 +136,10 @@
     border-radius: 6px;
 }
 
-/* DIRECTIONS SECTION */
 .directions-section {
     background: var(--color-bg);
     text-align: center;
 }
-
-/* Section title styles inherited from main.css */
 
 .directions-grid {
     display: grid;
@@ -207,7 +188,6 @@
     line-height: 1.6;
 }
 
-/* COURSES SECTION */
 .courses-section {
     background: var(--color-bg-gray);
 }
@@ -297,7 +277,6 @@
     text-decoration: underline;
 }
 
-/* EXPERTS SECTION */
 .experts-section {
     background: var(--color-bg);
 }
@@ -381,7 +360,6 @@
     text-decoration: underline;
 }
 
-/* VALUES SECTION */
 .values-section {
     background: var(--color-bg-gray);
     text-align: center;
@@ -435,7 +413,6 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* CTA SECTION */
 .cta-section {
     background: var(--color-bg);
     text-align: center;
@@ -500,7 +477,6 @@
     color: var(--color-primary);
 }
 
-/* Desktop optimization for experts grid */
 @media (min-width: 1200px) {
     .experts-grid {
         gap: var(--spacing-xl);
@@ -509,7 +485,6 @@
     }
 }
 
-/* Optimized Responsive Design */
 @media (max-width: 1024px) {
     .fullscreen-section {
         height: auto;
@@ -617,7 +592,6 @@
     }
 }
 
-/* iOS Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
     .fullscreen-section {
         height: -webkit-calc(100vh - 80px);
@@ -638,7 +612,6 @@
     }
 }
 
-/* Animation utilities */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -654,5 +627,3 @@
 .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
 }
-
-/* Natural scrolling - no scroll hijacking */

@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-
-    // Initialize Alpine.js data for hero slider if exists
     if (typeof Alpine !== 'undefined' && document.querySelector('.hero-section')) {
-        // Auto-advance hero slider with better performance
         const heroSlider = {
             currentSlide: 0,
             maxSlides: 4,
@@ -39,12 +36,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
 
-        // Start slider only if hero section is visible
         const heroSection = document.querySelector('.hero-section');
         if (heroSection) {
             heroSlider.start();
 
-            // Add click listeners to dots
             const dots = document.querySelectorAll('.slider-dot');
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
@@ -54,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Optimized intersection observer for animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '50px 0px'
@@ -64,24 +58,18 @@ document.addEventListener('DOMContentLoaded', function () {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-fade-in-up');
-                // Unobserve after animation to improve performance
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Observe sections for animations (exclude CTA section to prevent flickering)
     const sections = document.querySelectorAll('.fullscreen-section:not(.cta-section)');
     sections.forEach(section => {
         observer.observe(section);
     });
 
-    // Removed scroll hijacking - let browser handle natural scrolling
-
-    // Handle video loading optimization
     const heroVideo = document.querySelector('.section-bg-video');
     if (heroVideo) {
-        // Only autoplay on desktop and if user prefers motion
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const isMobile = window.innerWidth < 768;
 
@@ -90,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
             heroVideo.pause();
         }
 
-        // Preload only on fast connections
         if ('connection' in navigator) {
             const connection = navigator.connection;
             if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
@@ -100,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Simplified image loading for remaining lazy images
     const lazyImages = document.querySelectorAll('img[data-src]');
     if (lazyImages.length > 0) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -121,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
         if (typeof heroSlider !== 'undefined' && heroSlider.stop) {
             heroSlider.stop();
@@ -129,6 +114,5 @@ document.addEventListener('DOMContentLoaded', function () {
         if (typeof observer !== 'undefined') {
             observer.disconnect();
         }
-        // imageObserver cleanup handled within its scope
     });
 });
