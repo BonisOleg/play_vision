@@ -11,6 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Security
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-temp-key-change-in-production')
 DEBUG = config('DEBUG', default=True, cast=bool)
+if not DEBUG:
+    DEBUG = True  # Force DEBUG for development
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
 # Application definition

@@ -1,10 +1,8 @@
-<svg class="icon">
-    <use xlink:href="#icon-cart"></use>
-</svg>
-<span class="cart-count">{{ cart_count|default:0 }}</span>
+<!-- HTMX Cart Count Template -->
+<span class="cart-count" id="cart-count">{{ cart_count }}</span>
 
 {% if message %}
-<script>
-    PlayVision.showMessage('{{ message }}', 'success');
-</script>
+<div class="htmx-message success" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
+    {{ message }}
+</div>
 {% endif %}

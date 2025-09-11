@@ -1,0 +1,407 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Хаб знань - Play Vision{% endblock %}
+
+{% block meta_description %}Освітні курси та матеріали для футбольних фахівців. Професійні знання від найкращих
+експертів в галузі.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/hub.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/search.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="hub-container">
+    <!-- Subscription Banner -->
+    <div class="subscription-banner">
+        <div class="container">
+            <div class="subscription-banner-content">
+                <h2>Оформи підписку, стань частиною спільноти фахівців!</h2>
+                <p>Отримай доступ до всіх курсів та матеріалів від провідних експертів</p>
+                <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">
+                    Оформити підписку
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expert Quotes Carousel -->
+    <section class="expert-quotes">
+        <div class="container">
+            <div class="quotes-carousel" x-data="quotesCarousel()">
+                <div class="quote-slide" x-show="currentQuote === 0" x-transition>
+                    <div class="quote-content">
+                        <img src="{% static 'images/icon-placeholder.svg' %}" alt="Пеп Гвардіола" class="expert-photo">
+                        <blockquote>
+                            "Я люблю людей, які прагнуть навчатися щодня."
+                        </blockquote>
+                        <cite>Пеп Гвардіола</cite>
+                    </div>
+                </div>
+
+                <div class="quote-slide" x-show="currentQuote === 1" x-transition>
+                    <div class="quote-content">
+                        <img src="{% static 'images/icon-placeholder.svg' %}" alt="Юрген Клопп" class="expert-photo">
+                        <blockquote>
+                            "Футбол - це спорт для розумних людей, які можуть грати просто."
+                        </blockquote>
+                        <cite>Юрген Клопп</cite>
+                    </div>
+                </div>
+
+                <div class="quote-slide" x-show="currentQuote === 2" x-transition>
+                    <div class="quote-content">
+                        <img src="{% static 'images/icon-placeholder.svg' %}" alt="Джозе Моурінью" class="expert-photo">
+                        <blockquote>
+                            "Знання - це те, що відрізняє хороших тренерів від великих."
+                        </blockquote>
+                        <cite>Джозе Моурінью</cite>
+                    </div>
+                </div>
+
+                <!-- Navigation dots -->
+                <div class="quote-nav">
+                    <button @click="setQuote(0)" :class="{'active': currentQuote === 0}"></button>
+                    <button @click="setQuote(1)" :class="{'active': currentQuote === 1}"></button>
+                    <button @click="setQuote(2)" :class="{'active': currentQuote === 2}"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Materials -->
+    <section class="main-materials">
+        <div class="container">
+            <h2 class="section-title">Головні матеріали</h2>
+
+            <div class="materials-carousel" x-data="materialsCarousel()">
+                <div class="carousel-wrapper">
+                    <div class="carousel-content" :style="`transform: translateX(-${currentSlide * 100}%)`">
+                        {% for course in featured_courses %}
+                        <div class="material-slide">
+                            <div class="material-card">
+                                <div class="material-image">
+                                    {% if course.thumbnail %}
+                                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                    {% else %}
+                                    <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
+                                    {% endif %}
+                                    <div class="material-overlay">
+                                        <span class="difficulty-badge difficulty-{{ course.difficulty }}">
+                                            {{ course.get_difficulty_display }}
+                                        </span>
+                                        {% if course.is_featured %}
+                                        <span class="featured-badge">топ-продажів</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="material-content">
+                                    <h3>{{ course.title }}</h3>
+                                    <p>{{ course.short_description }}</p>
+                                    <div class="material-meta">
+                                        <span class="duration">{{ course.duration_display }}</span>
+                                        <span class="price">{{ course.price }}₴</span>
+                                    </div>
+                                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
+                                        Огляд курсу
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="material-slide">
+                            <div class="no-content">
+                                <p>Головні матеріали будуть додані найближчим часом</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% if featured_courses|length > 1 %}
+                <div class="carousel-nav">
+                    <button @click="prevSlide()" class="nav-btn nav-prev">‹</button>
+                    <button @click="nextSlide()" class="nav-btn nav-next">›</button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- All Products -->
+    <section class="all-products">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="section-title">Усі продукти</h2>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <form method="get" class="search-form" id="searchForm">
+                        <input type="text" name="q" placeholder="Пошук за назвою, автором або тегами..."
+                            value="{{ request.GET.q }}" class="search-input">
+                        <button type="submit" class="search-btn">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="products-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar" x-data="{ filtersOpen: false }">
+                    <div class="filters-header">
+                        <h3>Фільтрувати</h3>
+                        <button class="mobile-filters-toggle" @click="filtersOpen = !filtersOpen">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="filters-content" :class="{'mobile-open': filtersOpen}">
+                        <form method="get" id="filterForm">
+                            {% if request.GET.q %}
+                            <input type="hidden" name="q" value="{{ request.GET.q }}">
+                            {% endif %}
+
+                            <!-- Category Filter -->
+                            <div class="filter-group">
+                                <h4>За напрямками</h4>
+                                <div class="filter-options">
+                                    {% for category in categories %}
+                                    <label class="filter-option">
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
+                                        <span>{{ category.name }}</span>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Difficulty Filter -->
+                            <div class="filter-group">
+                                <h4>Рівень складності</h4>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="difficulty" value="beginner" {% if current_difficulty == 'beginner' %}checked{% endif %}>
+                                        <span>Початковий</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="difficulty" value="intermediate" {% if current_difficulty == 'intermediate' %}checked{% endif %}>
+                                        <span>Середній</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="difficulty" value="advanced" {% if current_difficulty == 'advanced' %}checked{% endif %}>
+                                        <span>Експертний</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Price Filter -->
+                            <div class="filter-group">
+                                <h4>Тип доступу</h4>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="price" value="free" {% if current_price == 'free' %}checked{% endif %}>
+                                        <span>Безкоштовний</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="price" value="paid" {% if current_price == 'paid' %}checked{% endif %}>
+                                        <span>Платний</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Duration Filter -->
+                            <div class="filter-group">
+                                <h4>Тривалість</h4>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="duration" value="short">
+                                        <span>До 30 хв</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="duration" value="medium">
+                                        <span>30-60 хв</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="duration" value="long">
+                                        <span>60+ хв</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filter-actions">
+                                <button type="submit" class="btn btn-primary">Застосувати</button>
+                                <a href="{% url 'content:course_list' %}" class="btn btn-outline">Скинути</a>
+                            </div>
+                        </form>
+                    </div>
+                </aside>
+
+                <!-- Products Grid -->
+                <main class="products-content">
+                    <!-- Sort Options -->
+                    <div class="sort-bar">
+                        <div class="sort-options">
+                            <label for="sort">Сортувати за:</label>
+                            <select name="sort" id="sort" class="sort-select">
+                                <option value="-created_at" {% if current_sort == '-created_at' %}selected{% endif %}>
+                                    Новіші спочатку
+                                </option>
+                                <option value="title" {% if current_sort == 'title' %}selected{% endif %}>
+                                    За назвою А-Я
+                                </option>
+                                <option value="-title" {% if current_sort == '-title' %}selected{% endif %}>
+                                    За назвою Я-А
+                                </option>
+                                <option value="price" {% if current_sort == 'price' %}selected{% endif %}>
+                                    За ціною (зростання)
+                                </option>
+                                <option value="-price" {% if current_sort == '-price' %}selected{% endif %}>
+                                    За ціною (спадання)
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="results-count">
+                            Знайдено: {{ paginator.count }} курсів
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-grid">
+                        {% for course in courses %}
+                        <article class="product-card">
+                            <div class="product-image">
+                                {% if course.thumbnail %}
+                                <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                {% else %}
+                                <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
+                                {% endif %}
+
+                                <div class="product-overlay">
+                                    <div class="product-badges">
+                                        {% if course.is_featured %}
+                                        <span class="badge badge-top">топ-продажів</span>
+                                        {% endif %}
+                                        {% if course.is_free %}
+                                        <span class="badge badge-free">безкоштовно</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Favorite Button -->
+                                    {% if user.is_authenticated %}
+                                    <button class="favorite-btn {% if course.id in user_favorites %}active{% endif %}"
+                                        data-course-id="{{ course.id }}"
+                                        hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none"
+                                        hx-trigger="click">
+                                        <svg class="icon" viewBox="0 0 24 24">
+                                            <path
+                                                d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                                        </svg>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="product-content">
+                                <div class="product-meta">
+                                    <span class="category">{{ course.category.name }}</span>
+                                    <span class="difficulty difficulty-{{ course.difficulty }}">
+                                        {{ course.get_difficulty_display }}
+                                    </span>
+                                </div>
+
+                                <h3 class="product-title">
+                                    <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
+                                </h3>
+
+                                <p class="product-description">{{ course.short_description }}</p>
+
+                                <div class="product-details">
+                                    <span class="duration">{{ course.duration_display }}</span>
+                                    <div class="price">
+                                        {% if course.is_free %}
+                                        <span class="price-free">Безкоштовно</span>
+                                        {% else %}
+                                        <span class="price-amount">{{ course.price }}₴</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="product-tags">
+                                    {% for tag in course.tags.all|slice:":3" %}
+                                    <span class="tag">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="product-actions">
+                                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
+                                        Переглянути
+                                    </a>
+                                    {% if not user.is_authenticated %}
+                                    <small class="access-hint">Увійдіть для доступу</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </article>
+                        {% empty %}
+                        <div class="no-results">
+                            <h3>Нічого не знайдено</h3>
+                            <p>Спробуйте змінити параметри пошуку або фільтрування</p>
+                            <a href="{% url 'content:course_list' %}" class="btn btn-outline">
+                                Показати всі курси
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if is_paginated %}
+                    <div class="pagination-wrapper">
+                        <div class="pagination">
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">Перша</a>
+                            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">‹</a>
+                            {% endif %}
+
+                            <span class="page-info">
+                                Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+                            </span>
+
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">›</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">Остання</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </main>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Support Widget -->
+<div class="support-widget">
+    <button class="support-btn" x-data="{ open: false }" @click="open = !open">
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
+        </svg>
+        <span class="support-text">Підтримка</span>
+    </button>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/hub.js' %}"></script>
+<script src="{% static 'js/search-autocomplete.js' %}"></script>
+{% endblock %}

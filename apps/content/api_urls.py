@@ -1,33 +1,21 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from . import api_views
-
-router = DefaultRouter()
-router.register(r'categories', api_views.CategoryViewSet)
-router.register(r'tags', api_views.TagViewSet)
-router.register(r'courses', api_views.CourseViewSet)
 
 app_name = 'content_api'
 
 urlpatterns = [
-    path('', include(router.urls)),
+    # Material progress tracking
+    path('material/progress/', api_views.MaterialProgressAPIView.as_view(), name='material_progress'),
     
-    # Course materials
-    path('courses/<slug:course_slug>/materials/', 
-         api_views.MaterialViewSet.as_view({'get': 'list'}), 
-         name='course_materials'),
-    path('courses/<slug:course_slug>/materials/<int:pk>/', 
-         api_views.MaterialViewSet.as_view({'get': 'retrieve'}), 
-         name='material_detail'),
+    # Course progress tracking  
+    path('course/<int:course_id>/progress/', api_views.CourseProgressAPIView.as_view(), name='course_progress'),
     
-    # Search
-    path('search/', api_views.SearchAPIView.as_view(), name='search'),
+    # Search suggestions
+    path('search/suggestions/', api_views.SearchSuggestionsAPIView.as_view(), name='search_suggestions'),
     
-    # User features
-    path('favorites/', api_views.FavoritesAPIView.as_view(), name='favorites'),
-    path('progress/', api_views.ProgressAPIView.as_view(), name='progress'),
-    path('recommendations/', api_views.RecommendationsAPIView.as_view(), name='recommendations'),
+    # User favorites
+    path('favorites/', api_views.UserFavoritesAPIView.as_view(), name='user_favorites'),
     
-    # Statistics
-    path('stats/', api_views.StatsAPIView.as_view(), name='stats'),
+    # Course analytics (admin)
+    path('course/<int:course_id>/analytics/', api_views.CourseAnalyticsAPIView.as_view(), name='course_analytics'),
 ]

@@ -1,0 +1,300 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+{% if search_query %}
+Результати пошуку "{{ search_query }}" - Play Vision
+{% else %}
+Пошук - Play Vision
+{% endif %}
+{% endblock %}
+
+{% block meta_description %}
+{% if search_query %}
+Результати пошуку "{{ search_query }}" у хабі знань Play Vision
+{% else %}
+Пошук курсів та матеріалів у хабі знань Play Vision
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/hub.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/search.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="search-results-container">
+    <div class="container">
+        <!-- Search Header -->
+        <section class="search-header">
+            <nav class="breadcrumb">
+                <a href="{% url 'content:course_list' %}">Хаб знань</a>
+                <span>/</span>
+                <span>Результати пошуку</span>
+            </nav>
+
+            {% if search_query %}
+            <h1 class="search-title">Результати пошуку "{{ search_query }}"</h1>
+            <p class="search-subtitle">Знайдено {{ paginator.count }} курсів</p>
+            {% else %}
+            <h1 class="search-title">Пошук курсів</h1>
+            <p class="search-subtitle">Введіть запит для пошуку</p>
+            {% endif %}
+
+            <!-- Search Form -->
+            <div class="search-form-wrapper">
+                <form method="get" class="search-form" action="{% url 'content:course_search' %}">
+                    <div class="search-input-group">
+                        <input type="text" name="q" value="{{ search_query }}"
+                            placeholder="Пошук за назвою, автором або тегами..." class="search-input"
+                            autocomplete="off">
+                        <button type="submit" class="search-btn">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {% if search_query %}
+                    <div class="search-actions">
+                        <a href="{% url 'content:course_list' %}" class="btn btn-outline">
+                            Переглянути всі курси
+                        </a>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </section>
+
+        <!-- Search Results -->
+        {% if search_query %}
+        <section class="search-results">
+            {% if courses %}
+            <!-- Results Grid -->
+            <div class="results-grid">
+                {% for course in courses %}
+                <article class="result-card">
+                    <div class="result-image">
+                        {% if course.thumbnail %}
+                        <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                        {% else %}
+                        <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
+                        {% endif %}
+
+                        <div class="result-overlay">
+                            <div class="result-badges">
+                                {% if course.is_featured %}
+                                <span class="badge badge-featured">топ-продажів</span>
+                                {% endif %}
+                                {% if course.is_free %}
+                                <span class="badge badge-free">безкоштовно</span>
+                                {% endif %}
+                                <span class="badge badge-difficulty difficulty-{{ course.difficulty }}">
+                                    {{ course.get_difficulty_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="result-meta">
+                            <span class="category">{{ course.category.name }}</span>
+                            <span class="duration">{{ course.duration_display }}</span>
+                        </div>
+
+                        <h3 class="result-title">
+                            <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
+                        </h3>
+
+                        <p class="result-description">{{ course.short_description }}</p>
+
+                        <div class="result-tags">
+                            {% for tag in course.tags.all|slice:":3" %}
+                            <span class="tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="result-footer">
+                            <div class="price">
+                                {% if course.is_free %}
+                                <span class="price-free">Безкоштовно</span>
+                                {% else %}
+                                <span class="price-amount">{{ course.price }}₴</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="result-actions">
+                                <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
+                                    Переглянути
+                                </a>
+
+                                {% if user.is_authenticated %}
+                                <button class="favorite-btn {% if course.id in user_favorites %}active{% endif %}"
+                                    data-course-id="{{ course.id }}"
+                                    hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                                    </svg>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <div class="pagination-wrapper">
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                    <a href="?q={{ search_query }}&page=1" class="page-link">Перша</a>
+                    <a href="?q={{ search_query }}&page={{ page_obj.previous_page_number }}" class="page-link">‹</a>
+                    {% endif %}
+
+                    <span class="page-info">
+                        Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a href="?q={{ search_query }}&page={{ page_obj.next_page_number }}" class="page-link">›</a>
+                    <a href="?q={{ search_query }}&page={{ page_obj.paginator.num_pages }}"
+                        class="page-link">Остання</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <!-- No Results -->
+            <div class="no-results">
+                <div class="no-results-icon">🔍</div>
+                <h3>Нічого не знайдено</h3>
+                <p>За запитом "{{ search_query }}" курсів не знайдено</p>
+
+                <div class="search-suggestions">
+                    <h4>Спробуйте:</h4>
+                    <ul>
+                        <li>Перевірити правопис</li>
+                        <li>Використати більш загальні терміни</li>
+                        <li>Скористатися фільтрами в каталозі</li>
+                    </ul>
+                </div>
+
+                <div class="no-results-actions">
+                    <a href="{% url 'content:course_list' %}" class="btn btn-primary">
+                        Переглянути всі курси
+                    </a>
+                    <button class="btn btn-outline" onclick="document.querySelector('.search-input').focus()">
+                        Новий пошук
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        <!-- Popular Searches / Suggestions -->
+        {% if not search_query or not courses %}
+        <section class="search-suggestions-section">
+            <h2>Популярні пошукові запити</h2>
+            <div class="suggestion-tags">
+                <a href="{% url 'content:course_search' %}?q=тактика" class="suggestion-tag">тактика</a>
+                <a href="{% url 'content:course_search' %}?q=аналітика" class="suggestion-tag">аналітика</a>
+                <a href="{% url 'content:course_search' %}?q=тренер" class="suggestion-tag">тренер</a>
+                <a href="{% url 'content:course_search' %}?q=психологія" class="suggestion-tag">психологія</a>
+                <a href="{% url 'content:course_search' %}?q=фізична підготовка" class="suggestion-tag">фізична
+                    підготовка</a>
+                <a href="{% url 'content:course_search' %}?q=скаутинг" class="suggestion-tag">скаутинг</a>
+                <a href="{% url 'content:course_search' %}?q=менеджмент" class="suggestion-tag">менеджмент</a>
+                <a href="{% url 'content:course_search' %}?q=нутриціологія" class="suggestion-tag">нутриціологія</a>
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Enhanced search functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.querySelector('.search-input');
+        const searchForm = document.querySelector('.search-form');
+
+        // Auto-focus search input
+        if (searchInput && !searchInput.value) {
+            searchInput.focus();
+        }
+
+        // Highlight search terms in results
+        const searchQuery = '{{ search_query|escapejs }}';
+        if (searchQuery) {
+            highlightSearchTerms(searchQuery);
+        }
+
+        // Handle suggestion clicks
+        const suggestionTags = document.querySelectorAll('.suggestion-tag');
+        suggestionTags.forEach(tag => {
+            tag.addEventListener('click', function (e) {
+                e.preventDefault();
+                const query = this.textContent.trim();
+                searchInput.value = query;
+                searchForm.submit();
+            });
+        });
+
+        // Track search analytics
+        if (searchQuery) {
+            trackSearchEvent(searchQuery, {{ paginator.count }});
+    }
+});
+
+    function highlightSearchTerms(query) {
+        const terms = query.toLowerCase().split(' ').filter(term => term.length > 2);
+        const elements = document.querySelectorAll('.result-title, .result-description');
+
+        elements.forEach(element => {
+            let html = element.innerHTML;
+            terms.forEach(term => {
+                const regex = new RegExp(`(${term})`, 'gi');
+                html = html.replace(regex, '<mark>$1</mark>');
+            });
+            element.innerHTML = html;
+        });
+    }
+
+    function trackSearchEvent(query, resultCount) {
+        // Google Analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'search', {
+                search_term: query,
+                results_count: resultCount
+            });
+        }
+
+        // Meta Pixel
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Search', {
+                search_string: query,
+                content_category: 'courses'
+            });
+        }
+    }
+
+    // CSS for highlighted search terms
+    const style = document.createElement('style');
+    style.textContent = `
+    mark {
+        background: rgba(255, 107, 53, 0.2);
+        color: inherit;
+        padding: 0;
+        border-radius: 2px;
+    }
+`;
+    document.head.appendChild(style);
+</script>
+{% endblock %}

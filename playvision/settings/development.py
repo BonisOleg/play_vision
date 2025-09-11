@@ -3,9 +3,9 @@ Development settings for Play Vision project
 """
 from .base import *
 
-# Development overrides
+# Development overrides - FORCE DEBUG ON
 DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '*']
 
 # Add custom middleware for development testing
 MIDDLEWARE += [

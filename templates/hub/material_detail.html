@@ -1,0 +1,359 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ material.title }} - {{ material.course.title }} - Play Vision{% endblock %}
+
+{% block meta_description %}{{ material.title }} - навчальний матеріал з курсу {{ material.course.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/hub.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/material-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="material-detail-container">
+    <!-- Material Header -->
+    <section class="material-header">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="{% url 'content:course_list' %}">Хаб знань</a>
+                <span>/</span>
+                <a href="{{ material.course.get_absolute_url }}">{{ material.course.title }}</a>
+                <span>/</span>
+                <span>{{ material.title }}</span>
+            </nav>
+
+            <div class="material-info">
+                <div class="material-type-badge">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        {% if material.content_type == 'video' %}
+                        <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+                        {% elif material.content_type == 'pdf' %}
+                        <path
+                            d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
+                        {% elif material.content_type == 'article' %}
+                        <path
+                            d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19Z" />
+                        {% endif %}
+                    </svg>
+                    <span>{{ material.get_content_type_display }}</span>
+                </div>
+
+                <h1 class="material-title">{{ material.title }}</h1>
+
+                {% if material.content_type == 'video' and material.video_duration_seconds %}
+                <div class="material-duration">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
+                    </svg>
+                    <span>{{ material.video_duration_seconds|floatformat:0 }} секунд</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Material Content -->
+    <section class="material-content-section">
+        <div class="container">
+            <div class="material-layout">
+                <!-- Main Content Area -->
+                <main class="material-main">
+                    <div class="content-wrapper">
+                        {% if material.content_type == 'video' %}
+                        <!-- Video Content -->
+                        <div class="video-container"
+                            x-data="{ videoLoaded: false, hasAccess: {{ has_access|yesno:'true,false' }} }">
+                            {% if has_access %}
+                            <!-- Full Video Access -->
+                            <div class="video-player">
+                                <video id="mainVideo" controls controlsList="nodownload" oncontextmenu="return false;"
+                                    data-course-id="{{ material.course.id }}" data-material-id="{{ material.id }}"
+                                    @loadedmetadata="videoLoaded = true">
+                                    <source src="{{ material.get_video_url:user }}" type="video/mp4">
+                                    <p>Ваш браузер не підтримує відтворення відео.</p>
+                                </video>
+
+                                <!-- Video Overlay with Watermark -->
+                                <div class="video-overlay" x-show="videoLoaded">
+                                    <div class="watermark">
+                                        {{ user.email }} • {{ user.id }} • Play Vision
+                                    </div>
+                                </div>
+
+                                <!-- Video Controls Enhancement -->
+                                <div class="video-controls-enhancement">
+                                    <button class="speed-control" onclick="changePlaybackSpeed()">1x</button>
+                                    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+                                </div>
+                            </div>
+                            {% else %}
+                            <!-- Preview or Locked Content -->
+                            <div class="video-preview">
+                                {% if material.is_preview %}
+                                <!-- 20-second Preview -->
+                                <div class="preview-container">
+                                    <video id="previewVideo" controls controlsList="nodownload noremoteplayback"
+                                        oncontextmenu="return false;" onended="showPaywall()">
+                                        {% if material.video_file %}
+                                        <source src="{{ material.video_file.url }}" type="video/mp4">
+                                        {% endif %}
+                                        <p>Ваш браузер не підтримує відтворення відео.</p>
+                                    </video>
+
+                                    <div class="preview-timer" id="previewTimer" style="display: none;">
+                                        <span id="timeLeft">20</span> секунд залишилося
+                                    </div>
+                                </div>
+                                {% else %}
+                                <!-- Completely Locked -->
+                                <div class="locked-content">
+                                    <div class="locked-overlay">
+                                        <div class="lock-icon">🔒</div>
+                                        <h3>Контент заблоковано</h3>
+                                        <p>Цей матеріал доступний тільки з підпискою або після покупки курсу</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% elif material.content_type == 'pdf' %}
+                        <!-- PDF Content -->
+                        <div class="pdf-container">
+                            {% if has_access %}
+                            <!-- Full PDF Access -->
+                            <div class="pdf-viewer">
+                                <iframe src="{{ material.pdf_file.url }}" width="100%" height="800px"
+                                    style="border: none;">
+                                    <p>Ваш браузер не підтримує перегляд PDF.
+                                        <a href="{{ material.pdf_file.url }}" target="_blank">Завантажити файл</a>
+                                    </p>
+                                </iframe>
+
+                                <!-- PDF Watermark Overlay -->
+                                <div class="pdf-watermark">
+                                    {{ user.email }} • Play Vision
+                                </div>
+                            </div>
+                            {% else %}
+                            <!-- PDF Preview or Locked -->
+                            <div class="pdf-preview">
+                                {% if material.is_preview %}
+                                <div class="preview-pages">
+                                    <p>📄 Передперегляд: перші {{ material.preview_percentage }}% документа</p>
+                                    <!-- This would show limited pages -->
+                                    <div class="preview-content">
+                                        <p>Попередній перегляд PDF недоступний. Оформіть підписку для повного доступу.
+                                        </p>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="locked-content">
+                                    <div class="locked-overlay">
+                                        <div class="lock-icon">🔒</div>
+                                        <h3>PDF заблоковано</h3>
+                                        <p>Цей документ доступний тільки з підпискою або після покупки курсу</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% elif material.content_type == 'article' %}
+                        <!-- Article Content -->
+                        <div class="article-container">
+                            {% if has_access %}
+                            <!-- Full Article Access -->
+                            <article class="article-content">
+                                {{ material.article_content|linebreaks }}
+                            </article>
+                            {% else %}
+                            <!-- Article Preview or Locked -->
+                            <div class="article-preview">
+                                {% if material.is_preview and material.article_content %}
+                                <article class="preview-content">
+                                    {% load content_filters %}
+                                    {{ material.article_content|truncate_chars:material.preview_percentage|linebreaks }}
+
+                                    <div class="preview-fade">
+                                        <div class="fade-overlay"></div>
+                                        <div class="preview-notice">
+                                            <p>📖 Показано {{ material.preview_percentage }}% статті</p>
+                                        </div>
+                                    </div>
+                                </article>
+                                {% else %}
+                                <div class="locked-content">
+                                    <div class="locked-overlay">
+                                        <div class="lock-icon">🔒</div>
+                                        <h3>Стаття заблокована</h3>
+                                        <p>Цей матеріал доступний тільки з підпискою або після покупки курсу</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <!-- CTA Section for Non-Access Users -->
+                        {% if not has_access %}
+                        <div class="paywall-cta">
+                            <div class="cta-content">
+                                <h3>Хочете отримати повний доступ?</h3>
+                                <p>Оформіть підписку або купіть курс окремо</p>
+
+                                <div class="cta-actions">
+                                    {% if not user.is_authenticated %}
+                                    <a href="{% url 'accounts:register' %}?next={{ request.get_full_path }}"
+                                        class="btn btn-primary btn-large">
+                                        Вступити в клуб
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'core:coming_soon' %}?page=subscription"
+                                        class="btn btn-primary btn-large">
+                                        Оформити підписку
+                                    </a>
+                                    <span class="or-divider">або</span>
+                                    <a href="{{ material.course.get_absolute_url }}" class="btn btn-outline btn-large">
+                                        Купити курс за {{ material.course.price }}₴
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </main>
+
+                <!-- Sidebar -->
+                <aside class="material-sidebar">
+                    <!-- Course Progress -->
+                    {% if progress %}
+                    <div class="progress-widget">
+                        <h3>Прогрес курсу</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ progress.progress_percentage }}%"></div>
+                        </div>
+                        <p>{{ progress.progress_percentage|floatformat:0 }}% завершено</p>
+
+                        <div class="progress-stats">
+                            <span>{{ progress.materials_completed.count }} з {{ material.course.materials.count }}
+                                матеріалів</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Course Materials Navigation -->
+                    <div class="materials-nav">
+                        <h3>Матеріали курсу</h3>
+                        <div class="materials-list">
+                            {% for course_material in material.course.materials.all %}
+                            <div
+                                class="material-nav-item {% if course_material == material %}current{% endif %} {% if progress and course_material in progress.materials_completed.all %}completed{% endif %}">
+                                <div class="material-icon">
+                                    {% if course_material.content_type == 'video' %}
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+                                    </svg>
+                                    {% elif course_material.content_type == 'pdf' %}
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
+                                    </svg>
+                                    {% elif course_material.content_type == 'article' %}
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19Z" />
+                                    </svg>
+                                    {% endif %}
+                                </div>
+
+                                <div class="material-info">
+                                    {% if has_access %}
+                                    <a
+                                        href="{% url 'content:material_detail' course_slug=material.course.slug material_slug=course_material.slug %}">
+                                        {{ course_material.title }}
+                                    </a>
+                                    {% else %}
+                                    <span>{{ course_material.title }}</span>
+                                    <span class="locked-hint">🔒</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Navigation Controls -->
+                    <div class="nav-controls">
+                        {% if previous_material and has_access %}
+                        <a href="{% url 'content:material_detail' course_slug=material.course.slug material_slug=previous_material.slug %}"
+                            class="nav-btn nav-prev">
+                            ← Попередній
+                        </a>
+                        {% endif %}
+
+                        {% if next_material and has_access %}
+                        <a href="{% url 'content:material_detail' course_slug=material.course.slug material_slug=next_material.slug %}"
+                            class="nav-btn nav-next">
+                            Наступний →
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    <!-- Back to Course -->
+                    <div class="back-to-course">
+                        <a href="{{ material.course.get_absolute_url }}" class="btn btn-outline">
+                            ← Назад до курсу
+                        </a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Paywall Modal -->
+<div id="paywallModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>🔒 Передперегляд завершено</h3>
+            <button class="modal-close" onclick="closePaywallModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Щоб продовжити перегляд, оформіть підписку або купіть курс</p>
+            <div class="modal-actions">
+                {% if not user.is_authenticated %}
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary">Вступити в клуб</a>
+                {% else %}
+                <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">Оформити підписку</a>
+                <a href="{{ material.course.get_absolute_url }}" class="btn btn-outline">Купити курс</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/material-detail.js' %}"></script>
+<script>
+    // Initialize material with access information
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeMaterial({
+            hasAccess: {{ has_access| yesno: 'true,false' }},
+        isPreview: {{ material.is_preview | yesno: 'true,false' }},
+        contentType: '{{ material.content_type }}',
+        materialId: {{ material.id }},
+        courseId: {{ material.course.id }},
+        previewSeconds: {{ material.preview_seconds }},
+        userId: {% if user.is_authenticated %}{ { user.id } } {% else %} null{% endif %}
+    });
+});
+</script>
+{% endblock %}

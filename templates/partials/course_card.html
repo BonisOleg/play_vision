@@ -1,0 +1,95 @@
+<!-- Course Card Partial Template -->
+<article class="course-card">
+    <div class="course-image">
+        {% if course.thumbnail %}
+        <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+        {% else %}
+        <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
+        {% endif %}
+
+        <div class="course-overlay">
+            <div class="course-badges">
+                {% if course.is_featured %}
+                <span class="badge badge-featured">топ-продажів</span>
+                {% endif %}
+                {% if course.is_free %}
+                <span class="badge badge-free">безкоштовно</span>
+                {% endif %}
+                <span class="badge badge-difficulty difficulty-{{ course.difficulty }}">
+                    {{ course.get_difficulty_display }}
+                </span>
+            </div>
+
+            {% if show_favorites and user.is_authenticated %}
+            <button class="favorite-btn {% if is_favorite %}active{% endif %}" data-course-id="{{ course.id }}"
+                hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path
+                        d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                </svg>
+            </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="course-content">
+        <div class="course-meta">
+            <span class="category">{{ course.category.name }}</span>
+            <span class="duration">{{ course.duration_display }}</span>
+        </div>
+
+        <h3 class="course-title">
+            <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
+        </h3>
+
+        <p class="course-description">{{ course.short_description }}</p>
+
+        {% if show_progress and progress %}
+        <div class="course-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ progress.progress_percentage }}%"></div>
+            </div>
+            <span class="progress-text">{{ progress.progress_percentage|floatformat:0 }}% завершено</span>
+        </div>
+        {% endif %}
+
+        <div class="course-details">
+            <div class="price">
+                {% if course.is_free %}
+                <span class="price-free">Безкоштовно</span>
+                {% else %}
+                <span class="price-amount">{{ course.price }}₴</span>
+                {% endif %}
+            </div>
+
+            <div class="access-indicator">
+                {% if access_status == 'full' %}
+                <span class="access-full">Доступний</span>
+                {% elif access_status == 'preview' %}
+                <span class="access-preview">Передперегляд</span>
+                {% else %}
+                <span class="access-locked">Заблокований</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="course-tags">
+            {% for tag in course.tags.all|slice:":3" %}
+            <span class="tag">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="course-actions">
+            <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
+                Переглянути
+            </a>
+
+            {% if access_status != 'full' and not course.is_free and user.is_authenticated %}
+            <button class="btn btn-outline btn-sm" hx-post="{% url 'cart_htmx:add_to_cart' %}"
+                hx-vals='{"item_type": "course", "item_id": "{{ course.id }}"}' hx-swap="none">
+                Купити
+            </button>
+            {% endif %}
+        </div>
+    </div>
+</article>

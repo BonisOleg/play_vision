@@ -56,6 +56,12 @@ class CourseListView(ListView):
         from .models import Category
         context['categories'] = Category.objects.filter(is_active=True)
         
+        # Add featured courses for main materials section
+        context['featured_courses'] = Course.objects.filter(
+            is_published=True,
+            is_featured=True
+        ).select_related('category').prefetch_related('tags')[:6]
+        
         # Add current filters
         context['current_category'] = self.request.GET.get('category')
         context['current_difficulty'] = self.request.GET.get('difficulty')
@@ -69,6 +75,8 @@ class CourseListView(ListView):
                 course__in=context['courses']
             ).values_list('course_id', flat=True)
             context['user_favorites'] = list(favorites)
+        else:
+            context['user_favorites'] = []
         
         return context
 
@@ -169,36 +177,49 @@ class MaterialDetailView(LoginRequiredMixin, DetailView):
             slug=material_slug
         )
         
-        # Check access
-        if not check_user_course_access(self.request.user, material.course):
-            # Redirect to course page if no access
-            return redirect('content:course_detail', slug=course_slug)
-        
         return material
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         material = self.object
+        user = self.request.user
         
-        # Update progress
-        progress, created = UserCourseProgress.objects.get_or_create(
-            user=self.request.user,
-            course=material.course
-        )
-        progress.materials_completed.add(material)
-        progress.last_accessed = timezone.now()
-        progress.update_progress()
+        # Check access
+        context['has_access'] = check_user_course_access(user, material.course)
+        
+        # Get progress if user has access and is authenticated
+        if user.is_authenticated and context['has_access']:
+            progress, created = UserCourseProgress.objects.get_or_create(
+                user=user,
+                course=material.course
+            )
+            context['progress'] = progress
+        elif user.is_authenticated:
+            # User doesn't have access but might have some progress
+            try:
+                progress = UserCourseProgress.objects.get(
+                    user=user,
+                    course=material.course
+                )
+                context['progress'] = progress
+            except UserCourseProgress.DoesNotExist:
+                context['progress'] = None
+        else:
+            context['progress'] = None
         
         # Get next/previous materials
         all_materials = list(material.course.materials.all().order_by('order'))
-        current_index = all_materials.index(material)
+        try:
+            current_index = all_materials.index(material)
+            
+            if current_index > 0:
+                context['previous_material'] = all_materials[current_index - 1]
+            if current_index < len(all_materials) - 1:
+                context['next_material'] = all_materials[current_index + 1]
+        except ValueError:
+            # Material not found in list
+            pass
         
-        if current_index > 0:
-            context['previous_material'] = all_materials[current_index - 1]
-        if current_index < len(all_materials) - 1:
-            context['next_material'] = all_materials[current_index + 1]
-        
-        context['progress'] = progress
         return context
 
 
