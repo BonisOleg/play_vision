@@ -4,6 +4,10 @@
 {% block title %}Демо захищеного відео - Play Vision{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'video_security/css/demo.css' %}">
+{% endblock %}
+
+{% block extra_css %}
 <style>
     .demo-container {
         max-width: 800px;
@@ -99,12 +103,12 @@
     <div class="secure-video-container" data-material-id="1" data-has-access="true"
         data-user-email="{{ user.email|default:'demo@example.com' }}">
 
-        <video controls class="secure-video" style="display: none;">
+        <video controls class="secure-video secure-video-hidden">
             <p>Ваш браузер не підтримує відео.</p>
         </video>
 
         <!-- Fallback для тестування -->
-        <div style="background: #333; color: white; padding: 2rem; text-align: center;">
+        <div class="demo-fallback">
             <h3>🎬 Демо відео</h3>
             <p>Тут буде відображатися захищене відео з водяними знаками</p>
             <p>Email: {{ user.email|default:'demo@example.com' }}</p>
@@ -145,7 +149,7 @@
     <!-- Технічна інформація -->
     <div class="security-features">
         <h3>⚙️ Технічна інформація:</h3>
-        <ul style="list-style: disc; padding-left: 2rem;">
+        <ul class="technical-info-list">
             <li><strong>Версія системи:</strong> Play Vision Video Security v1.0</li>
             <li><strong>Метод захисту:</strong> HMAC-SHA256 токени + Behavior Analysis</li>
             <li><strong>Час життя токенів:</strong> {{ token_lifetime|default:3600 }} секунд</li>
@@ -155,10 +159,9 @@
     </div>
 
     <!-- Лог подій -->
-    <div id="security-log" style="display: none;" class="security-features">
+    <div id="security-log" class="security-features security-log-hidden">
         <h3>📋 Лог подій безпеки:</h3>
-        <div id="log-content"
-            style="font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto; background: #f1f3f4; padding: 1rem; border-radius: 4px;">
+        <div id="log-content" class="log-content">
             Лог буде відображатися тут...
         </div>
     </div>
@@ -187,7 +190,7 @@
     function showSecurityLog() {
         const logDiv = document.getElementById('security-log');
         logVisible = !logVisible;
-        logDiv.style.display = logVisible ? 'block' : 'none';
+        logDiv.classList.toggle('security-log-hidden', !logVisible);
 
         if (logVisible) {
             // Імітація логу (в реальності буде з сервера)
@@ -198,7 +201,7 @@
 [${new Date().toISOString()}] SECURITY: Watermark applied with dynamic positioning<br>
 [${new Date().toISOString()}] SECURITY: Video protection layer activated<br>
 [${new Date().toISOString()}] SECURITY: Global security monitoring started<br>
-<span style="color: #28a745;">[READY] All security systems operational</span>
+<span class="log-ready">[READY] All security systems operational</span>
         `;
         }
     }
@@ -214,7 +217,7 @@
             if (logContent && logVisible) {
                 const timestamp = new Date().toISOString();
                 const logEntry = `[${timestamp}] SECURITY: ${eventType} on material ${materialId}`;
-                logContent.innerHTML += `<br><span style="color: #dc3545;">${logEntry}</span>`;
+                logContent.innerHTML += `<br><span class="log-security">${logEntry}</span>`;
                 logContent.scrollTop = logContent.scrollHeight;
             }
         };

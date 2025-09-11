@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Backgrounds - Play Vision</title>
+    <style>
+        /* Import main styles */
+        @import url('../css/main.css');
+        @import url('../css/components/home.css');
+
+        /* Demo styles */
+        .demo-section {
+            height: 60vh;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            position: relative;
+        }
+
+        .demo-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        .demo-title {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .demo-content-white {
+            color: white;
+            text-align: center;
+        }
+
+        .demo-content-dark {
+            color: #333;
+            text-align: center;
+        }
+
+        .demo-footer {
+            padding: 20px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        .demo-link {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .demo-gradient {
+            background: linear-gradient(135deg, #ff6b35 0%, #1a1a1a 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="demo-title">Demo Backgrounds for Play Vision</h1>
+
+    <!-- Demo 1: Image with dark overlay -->
+    <div class="demo-section fullscreen-section">
+        <div class="demo-label">Image + Dark Overlay</div>
+        <div class="section-bg">
+            <img class="section-bg-image"
+                src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&h=1080&fit=crop"
+                alt="Football">
+        </div>
+        <div class="section-overlay section-overlay--dark"></div>
+        <div class="section-content">
+            <h2 class="demo-content-white">Sample Content</h2>
+        </div>
+    </div>
+
+    <!-- Demo 2: Video background -->
+    <div class="demo-section fullscreen-section">
+        <div class="demo-label">Video Background (with fallback)</div>
+        <div class="section-bg">
+            <video class="section-bg-video" autoplay muted loop>
+                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_360x240_1mb.mp4" type="video/mp4">
+                <img class="section-bg-image"
+                    src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1920&h=1080&fit=crop"
+                    alt="Fallback">
+            </video>
+        </div>
+        <div class="section-overlay section-overlay--gradient"></div>
+        <div class="section-content">
+            <h2 class="demo-content-white">Video Background</h2>
+        </div>
+    </div>
+
+    <!-- Demo 3: Gradient background -->
+    <div class="demo-section fullscreen-section demo-gradient">
+        <div class="demo-label">Pure Gradient</div>
+        <div class="section-content">
+            <h2 class="demo-content-white">Gradient Background</h2>
+        </div>
+    </div>
+
+    <!-- Demo 4: Light overlay -->
+    <div class="demo-section fullscreen-section">
+        <div class="demo-label">Image + Light Overlay</div>
+        <div class="section-bg">
+            <img class="section-bg-image"
+                src="https://images.unsplash.com/photo-1589952283406-b53eb238ac52?w=1920&h=1080&fit=crop" alt="Stadium">
+        </div>
+        <div class="section-overlay section-overlay--light"></div>
+        <div class="section-content">
+            <h2 class="demo-content-dark">Light Overlay Content</h2>
+        </div>
+    </div>
+
+    <!-- Demo 5: Primary color overlay -->
+    <div class="demo-section fullscreen-section">
+        <div class="demo-label">Image + Primary Overlay</div>
+        <div class="section-bg">
+            <img class="section-bg-image"
+                src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=1920&h=1080&fit=crop" alt="Training">
+        </div>
+        <div class="section-overlay section-overlay--primary"></div>
+        <div class="section-content">
+            <h2 class="demo-content-white">Primary Color Overlay</h2>
+        </div>
+    </div>
+
+    <div class="demo-footer">
+        <h3>Як використовувати:</h3>
+        <p>1. Замініть URL зображень на ваші власні</p>
+        <p>2. Додайте відео у папку static/videos/</p>
+        <p>3. Налаштуйте оверлеї під ваш контент</p>
+        <p>4. Скопіюйте код в ваш шаблон home.html</p>
+
+        <a href="../images/README_BACKGROUNDS.md" class="demo-link">📖 Повна
+            документація</a>
+    </div>
+</body>
+
+</html>

@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize message auto-hide
     initializeMessages();
+
+    // Initialize progress bars
+    initializeProgressBars();
 });
 
 // HTMX Configuration
@@ -217,8 +220,21 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Progress bars initialization
+function initializeProgressBars() {
+    // Set width for progress bars based on data-progress attribute
+    const progressFills = document.querySelectorAll('.progress-fill[data-progress]');
+    progressFills.forEach(fill => {
+        const progress = fill.getAttribute('data-progress');
+        if (progress) {
+            fill.style.width = progress + '%';
+        }
+    });
+}
+
 // Export functions for use in other scripts
 window.PlayVision = {
     showMessage,
-    getCookie
+    getCookie,
+    initializeProgressBars
 };

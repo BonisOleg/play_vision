@@ -44,7 +44,7 @@
                 <h3>Прогрес до рівня {{ next_tier_info.tier }}</h3>
                 <div class="progress-bar-container">
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ progress_percentage }}%"></div>
+                        <div class="progress-fill" data-progress="{{ progress_percentage }}"></div>
                     </div>
                     <div class="progress-text">
                         {% if points_needed > 0 %}

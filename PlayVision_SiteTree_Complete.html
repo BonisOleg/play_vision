@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Vision - Повне дерево сайту</title>
-    
+
     <style>
         @page {
             size: A4;
             margin: 2cm;
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: #333;
             max-width: none;
         }
+
         .header {
             text-align: center;
             border-bottom: 3px solid #FF5722;
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
+
         .title {
             color: #FF5722;
             font-size: 2.5em;
             margin: 0;
         }
+
         .subtitle {
             color: #666;
             font-size: 1.2em;
             margin-top: 10px;
         }
+
         .section {
             margin: 30px 0;
             page-break-inside: avoid;
         }
+
         .section-title {
             color: #E64A19;
             font-size: 1.8em;
@@ -43,12 +50,14 @@
             padding-bottom: 8px;
             margin-bottom: 15px;
         }
+
         .subsection-title {
             color: #BF360C;
             font-size: 1.4em;
             margin-top: 25px;
             margin-bottom: 10px;
         }
+
         .tree-structure {
             font-family: 'SF Mono', Monaco, monospace;
             background: #f9f9f9;
@@ -60,6 +69,7 @@
             line-height: 1.4;
             overflow-x: auto;
         }
+
         .url-path {
             background: #e3f2fd;
             padding: 3px 6px;
@@ -68,122 +78,144 @@
             font-size: 0.9em;
             color: #1565c0;
         }
+
         .description {
             margin: 15px 0;
             padding: 15px;
             background: #fafafa;
             border-radius: 6px;
         }
+
         .emoji {
             font-size: 1.1em;
         }
+
         .feature-list {
             margin: 10px 0;
             padding-left: 20px;
         }
+
         .feature-item {
             margin: 8px 0;
             padding: 5px 0;
         }
+
         .highlight {
             background: #fff3e0;
             padding: 15px;
             border-left: 4px solid #FF9800;
             margin: 20px 0;
         }
+
         @media print {
-            body { font-size: 11pt; }
-            .section { page-break-inside: avoid; }
+            body {
+                font-size: 11pt;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+
+        .doc-separator {
+            margin: 30px 0;
+            border: 1px solid #eee;
         }
     </style>
-    
+
 </head>
+
 <body>
-    <div class="header"><h1 class="title">ПОВНЕ ДЕРЕВО САЙТУ PLAY VISION</h1></div>
-<div class="section"><h2 class="section-title">Схематичне та текстове представлення всієї структури</h2>
-<br>
-<hr style="margin: 30px 0; border: 1px solid #eee;">
-<br>
-<div class="section"><h2 class="section-title">🌳 ЗАГАЛЬНА СТРУКТУРА САЙТУ</h2>
-<br>
-<div class="tree-structure">
-PLAY VISION (/)
-├── 🌐 ПУБЛІЧНІ СТОРІНКИ
-├── 🔐 АВТОРИЗАЦІЯ
-├── 📚 ХАБ ЗНАНЬ  
-├── 🎪 ІВЕНТИ
-├── 👨‍🏫 МЕНТОР-КОУЧІНГ
-├── 👤 ОСОБИСТИЙ КАБІНЕТ
-├── 💰 КОМЕРЦІЙНІ СТОРІНКИ
-├── 🔧 API ENDPOINTS
-└── ⚙️ АДМІНІСТРУВАННЯ
+    <div class="header">
+        <h1 class="title">ПОВНЕ ДЕРЕВО САЙТУ PLAY VISION</h1>
+    </div>
+    <div class="section">
+        <h2 class="section-title">Схематичне та текстове представлення всієї структури</h2>
+        <br>
+        <hr class="doc-separator">
+        <br>
+        <div class="section">
+            <h2 class="section-title">🌳 ЗАГАЛЬНА СТРУКТУРА САЙТУ</h2>
+            <br>
+            <div class="tree-structure">
+                PLAY VISION (/)
+                ├── 🌐 ПУБЛІЧНІ СТОРІНКИ
+                ├── 🔐 АВТОРИЗАЦІЯ
+                ├── 📚 ХАБ ЗНАНЬ
+                ├── 🎪 ІВЕНТИ
+                ├── 👨‍🏫 МЕНТОР-КОУЧІНГ
+                ├── 👤 ОСОБИСТИЙ КАБІНЕТ
+                ├── 💰 КОМЕРЦІЙНІ СТОРІНКИ
+                ├── 🔧 API ENDPOINTS
+                └── ⚙️ АДМІНІСТРУВАННЯ
 
-</div>
-<br>
-<hr style="margin: 30px 0; border: 1px solid #eee;">
-<br>
-<div class="section"><h2 class="section-title">📋 ДЕТАЛЬНЕ ДЕРЕВО З URL ТА ОПИСОМ</h2>
-<br>
-<h3 class="subsection-title">🌐 ПУБЛІЧНІ СТОРІНКИ</h3>
-<div class="description"><strong>Доступ:</strong> Всі користувачі  </div>
-<div class="description"><strong>Мета:</strong> Інформування та залучення відвідувачів</div>
-<br>
-<div class="tree-structure">
-📍 / (Головна сторінка)
-├── 🎠 Hero-карусель (4 слайди)
-├── 📖 Курси та освітні програми (6 курсів)
-├── 📅 Календар івентів
-├── 👨‍🏫 Ментор-коучінг (схема 6 напрямків)
-├── 👥 Обличчя компанії (4 експерти)
-└── 🎯 CTA "Доєднатись"
+            </div>
+            <br>
+            <hr class="doc-separator">
+            <br>
+            <div class="section">
+                <h2 class="section-title">📋 ДЕТАЛЬНЕ ДЕРЕВО З URL ТА ОПИСОМ</h2>
+                <br>
+                <h3 class="subsection-title">🌐 ПУБЛІЧНІ СТОРІНКИ</h3>
+                <div class="description"><strong>Доступ:</strong> Всі користувачі </div>
+                <div class="description"><strong>Мета:</strong> Інформування та залучення відвідувачів</div>
+                <br>
+                <div class="tree-structure">
+                    📍 / (Головна сторінка)
+                    ├── 🎠 Hero-карусель (4 слайди)
+                    ├── 📖 Курси та освітні програми (6 курсів)
+                    ├── 📅 Календар івентів
+                    ├── 👨‍🏫 Ментор-коучінг (схема 6 напрямків)
+                    ├── 👥 Обличчя компанії (4 експерти)
+                    └── 🎯 CTA "Доєднатись"
 
-📍 /about/ (Про Play Vision)
-├── 🎯 Місія компанії
-├── 💎 Цінності (гексагональна схема)
-├── 🔺 Футбольний трикутник (гравець-тренер-батьки)
-└── 🤝 Партнери
+                    📍 /about/ (Про Play Vision)
+                    ├── 🎯 Місія компанії
+                    ├── 💎 Цінності (гексагональна схема)
+                    ├── 🔺 Футбольний трикутник (гравець-тренер-батьки)
+                    └── 🤝 Партнери
 
-📍 /contacts/ (Контакти)
-├── 📧 Форма зворотного зв'язку
-├── 📍 Адреса та контакти
-└── 🗺️ Карта розташування
+                    📍 /contacts/ (Контакти)
+                    ├── 📧 Форма зворотного зв'язку
+                    ├── 📍 Адреса та контакти
+                    └── 🗺️ Карта розташування
 
-📍 /legal/ (Юридичні сторінки)
-├── 📍 /legal/privacy/ (Політика приватності)
-├── 📍 /legal/terms/ (Умови використання)
-└── 📍 /legal/cookies/ (Політика cookies)
-</div>
-<br>
-<h3 class="subsection-title">🔐 АВТОРИЗАЦІЯ ТА РЕЄСТРАЦІЯ</h3>
-<div class="description"><strong>Доступ:</strong> Неавторизовані користувачі  </div>
-<div class="description"><strong>Мета:</strong> Вхід та створення акаунтів</div>
-<br>
-<div class="tree-structure">
-📍 /auth/register/ (Реєстрація)
-├── 📧 Email або номер телефону
-├── 🔒 Пароль (мін. 8 символів)
-├── ✅ Згода на обробку даних
-├── 📬 Згода на розсилку (опціонально)
-├── 🌐 OAuth: Google, Telegram, TikTok
-└── 🤖 Віджет чат-бота
+                    📍 /legal/ (Юридичні сторінки)
+                    ├── 📍 /legal/privacy/ (Політика приватності)
+                    ├── 📍 /legal/terms/ (Умови використання)
+                    └── 📍 /legal/cookies/ (Політика cookies)
+                </div>
+                <br>
+                <h3 class="subsection-title">🔐 АВТОРИЗАЦІЯ ТА РЕЄСТРАЦІЯ</h3>
+                <div class="description"><strong>Доступ:</strong> Неавторизовані користувачі </div>
+                <div class="description"><strong>Мета:</strong> Вхід та створення акаунтів</div>
+                <br>
+                <div class="tree-structure">
+                    📍 /auth/register/ (Реєстрація)
+                    ├── 📧 Email або номер телефону
+                    ├── 🔒 Пароль (мін. 8 символів)
+                    ├── ✅ Згода на обробку даних
+                    ├── 📬 Згода на розсилку (опціонально)
+                    ├── 🌐 OAuth: Google, Telegram, TikTok
+                    └── 🤖 Віджет чат-бота
 
-📍 /auth/login/ (Вхід)
-├── 📧 Email або номер телефону
-├── 🔒 Пароль
-├── 👁️ Показати/приховати пароль
-├── 🌐 OAuth: Google, Telegram, TikTok
-└── 🔄 Відновлення паролю
+                    📍 /auth/login/ (Вхід)
+                    ├── 📧 Email або номер телефону
+                    ├── 🔒 Пароль
+                    ├── 👁️ Показати/приховати пароль
+                    ├── 🌐 OAuth: Google, Telegram, TikTok
+                    └── 🔄 Відновлення паролю
 
-📍 /auth/logout/ (Вихід)
-└── 🔚 Завершення сесії
+                    📍 /auth/logout/ (Вихід)
+                    └── 🔚 Завершення сесії
 
-📍 /auth/password-reset/ (Відновлення паролю)
-├── 📧 Введення email/номеру
-├── 📱 Отримання коду SMS/email
-├── 🔢 Введення коду підтвердження
-└── 🔒 Встановлення нового паролю
+                    📍 /auth/password-reset/ (Відновлення паролю)
+                    ├── 📧 Введення email/номеру
+                    ├── 📱 Отримання коду SMS/email
+                    ├── 🔢 Введення коду підтвердження
+                    └── 🔒 Встановлення нового паролю
 
-📍 /auth/verify/<code>/ (Верифікація)
+                    📍 /auth/verify/<code>/ (Верифікація)
 ├── ✅ Підтвердження email
 └── ✅ Підтвердження телефону
 </div>
@@ -469,7 +501,7 @@ PLAY VISION (/)
     └── 📧 Bounce/complaint від email провайдера
 </div>
 <br>
-<hr style="margin: 30px 0; border: 1px solid #eee;">
+<hr class="doc-separator">
 <br>
 <div class="section"><h2 class="section-title">🎯 КЛЮЧОВІ ОСОБЛИВОСТІ АРХІТЕКТУРИ</h2>
 <br>
@@ -508,7 +540,7 @@ PLAY VISION (/)
 <div class="feature-item">• **Pro-Vision баланс** квитків на івенти</div>
 <div class="feature-item">• **Програма лояльності** з % знижками</div>
 <br>
-<hr style="margin: 30px 0; border: 1px solid #eee;">
+<hr class="doc-separator">
 <br>
 <div class="section"><h2 class="section-title">📈 МАСШТАБОВАНІСТЬ ТА РОЗВИТОК</h2>
 <br>
@@ -526,7 +558,7 @@ PLAY VISION (/)
 <div class="feature-item">• **AR/VR контент** підтримка</div>
 <div class="feature-item">• **Blockchain сертифікати** готовність</div>
 <br>
-<hr style="margin: 30px 0; border: 1px solid #eee;">
+<hr class="doc-separator">
 <br>
 <div class="description"><strong>💡 ПІДСУМОК:</strong> Архітектура спроектована як повноцінна екосистема навчання з можливістю масштабування від стартапу до enterprise рівня з підтримкою 100,000+ користувачів.</div>
 <br>

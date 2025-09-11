@@ -16,11 +16,15 @@ class ContactForm(forms.Form):
 
 class HomeView(TemplateView):
     """Home page view"""
-    template_name = 'pages/home_simple.html'
+    template_name = 'pages/home.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['welcome_message'] = 'Ласкаво просимо до Play Vision!'
+        
+        # Add dummy data for demo purposes
+        context['featured_courses'] = []  # Will be populated from database later
+        
         return context
 
 

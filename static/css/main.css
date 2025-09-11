@@ -99,6 +99,16 @@ h6 {
     font-size: 1rem;
 }
 
+/* Section titles with shadows for better readability */
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-primary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 a {
     color: var(--color-primary);
     text-decoration: none;
@@ -230,8 +240,9 @@ a:hover {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     text-decoration: none;
+    will-change: transform;
 }
 
 .btn:hover {
@@ -329,7 +340,6 @@ a:hover {
 /* Main Content */
 .main {
     min-height: calc(100vh - 200px);
-    padding: var(--spacing-xl) 0;
 }
 
 /* Footer */
@@ -372,6 +382,8 @@ a:hover {
     border-top: 1px solid var(--color-border);
     color: var(--color-text-light);
 }
+
+/* Component imports - loaded per page basis for performance */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -506,4 +518,9 @@ a:hover {
     .grid-cols-4 {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+/* Utility classes */
+.svg-icons-hidden {
+    display: none;
 }

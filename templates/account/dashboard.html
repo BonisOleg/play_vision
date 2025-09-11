@@ -117,7 +117,7 @@
                                 <p>Прогрес: {{ progress.progress_percentage|floatformat:0 }}%</p>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: {{ progress.progress_percentage }}%"></div>
+                                <div class="progress-fill" data-progress="{{ progress.progress_percentage }}"></div>
                             </div>
                         </div>
                         {% endfor %}
