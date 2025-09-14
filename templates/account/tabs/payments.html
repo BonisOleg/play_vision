@@ -98,15 +98,15 @@
                 </div>
                 <div class="col-actions">
                     {% if payment.status == 'succeeded' %}
-                    <button class="btn-action" onclick="downloadReceipt({{ payment.id }})">
+                    <button class="btn-action" data-action="downloadReceipt" data-payment-id="{{ payment.id }}">
                         Чек
                     </button>
                     {% elif payment.status == 'pending' %}
-                    <button class="btn-action" onclick="checkPaymentStatus({{ payment.id }})">
+                    <button class="btn-action" data-action="checkPaymentStatus" data-payment-id="{{ payment.id }}">
                         Перевірити
                     </button>
                     {% elif payment.status == 'failed' %}
-                    <button class="btn-action" onclick="retryPayment({{ payment.id }})">
+                    <button class="btn-action" data-action="retryPayment" data-payment-id="{{ payment.id }}">
                         Повторити
                     </button>
                     {% endif %}
@@ -118,7 +118,7 @@
         <!-- Пагінація (якщо потрібно) -->
         {% if recent_payments.count >= 10 %}
         <div class="pagination-container">
-            <button class="btn-load-more" onclick="loadMorePayments()">
+            <button class="btn-load-more" data-action="loadMorePayments">
                 Завантажити ще
             </button>
         </div>
@@ -163,7 +163,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h3>Деталі платежу</h3>
-            <button class="modal-close" onclick="closePaymentDetailsModal()">&times;</button>
+            <button class="modal-close" data-action="closePaymentDetailsModal">&times;</button>
         </div>
         <div class="modal-body">
             <div id="payment-details-content">

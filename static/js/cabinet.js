@@ -4,6 +4,7 @@
 
 class Cabinet {
     constructor() {
+        this.isProcessing = false; // Флаг для запобігання одночасним запитам
         this.init();
     }
 
@@ -22,6 +23,14 @@ class Cabinet {
         if (profileForm) {
             profileForm.addEventListener('submit', this.handleProfileSubmit.bind(this));
         }
+
+        // Обробники для кнопок з data-action атрибутами
+        document.addEventListener('click', (e) => {
+            if (e.target.hasAttribute('data-action')) {
+                e.preventDefault();
+                this.handleDataAction(e.target);
+            }
+        });
 
         // Кнопки інтересів
         document.querySelectorAll('.interest-tag').forEach(tag => {
@@ -92,11 +101,9 @@ class Cabinet {
         if (!isMainCabinet) {
             const activeTab = localStorage.getItem('cabinet-active-tab');
             if (activeTab && document.querySelector(`[href*="${activeTab}"]`)) {
-                // Переходимо на збережену вкладку тільки якщо не на головній сторінці
-                const targetLink = document.querySelector(`[href*="${activeTab}"]`);
-                if (targetLink) {
-                    window.location.href = targetLink.href;
-                }
+                // ЗАБОРОНЯЄМО автоматичну навігацію - це викликає перезагрузку!
+                // Замість цього показуємо відповідну вкладку без перезагрузки
+                console.log('Збережена вкладка:', activeTab);
             }
         }
 
@@ -214,9 +221,12 @@ class Cabinet {
 
             if (!modal) return;
 
-            // Показати модальне вікно
-            modal.style.display = 'flex';
-            modalContent.innerHTML = '<div class="loading">Завантаження...</div>';
+            // Запобігаємо конфліктам з HTMX - додаємо затримку
+            setTimeout(() => {
+                // Показати модальне вікно
+                modal.style.display = 'flex';
+                modalContent.innerHTML = '<div class="loading">Завантаження...</div>';
+            }, 50);
 
             // Завантажити контент матеріалу
             const response = await fetch(`/hub/material/${materialId}/view/`);
@@ -226,8 +236,10 @@ class Cabinet {
                 modalTitle.textContent = data.title;
                 modalContent.innerHTML = data.content;
 
-                // Оновити прогрес якщо потрібно
-                this.updateMaterialProgress(materialId, true);
+                // Оновити прогрес якщо потрібно (з затримкою)
+                setTimeout(() => {
+                    this.updateMaterialProgress(materialId, true);
+                }, 100);
             } else {
                 modalContent.innerHTML = '<div class="error">Помилка завантаження матеріалу</div>';
             }
@@ -254,6 +266,10 @@ class Cabinet {
     }
 
     async toggleFavorite(courseId) {
+        // Запобігання повторним кликам
+        if (this.isProcessing) return;
+        this.isProcessing = true;
+
         try {
             const response = await fetch('/account/api/toggle-favorite/', {
                 method: 'POST',
@@ -267,8 +283,10 @@ class Cabinet {
             const result = await response.json();
 
             if (result.success) {
-                // Оновити іконку улюбленого
-                this.updateFavoriteIcon(courseId, result.is_favorite);
+                // Оновити іконку улюбленого (з затримкою для плавності)
+                setTimeout(() => {
+                    this.updateFavoriteIcon(courseId, result.is_favorite);
+                }, 50);
                 this.showNotification(result.message, 'success');
             } else {
                 this.showNotification(result.message, 'error');
@@ -277,10 +295,19 @@ class Cabinet {
         } catch (error) {
             console.error('Помилка оновлення улюбленого:', error);
             this.showNotification('Помилка мережі', 'error');
+        } finally {
+            // Дозволити наступні дії через 500ms
+            setTimeout(() => {
+                this.isProcessing = false;
+            }, 500);
         }
     }
 
     async toggleCompleted(materialId, isCompleted) {
+        // Запобігання повторним кликам
+        if (this.isProcessing) return;
+        this.isProcessing = true;
+
         try {
             const response = await fetch('/account/api/material-progress/', {
                 method: 'POST',
@@ -294,9 +321,11 @@ class Cabinet {
             const result = await response.json();
 
             if (result.success) {
-                // Оновити UI
-                this.updateMaterialCompletedState(materialId, result.completed);
-                this.updateCourseProgress(materialId, result.course_progress);
+                // Оновити UI (з затримкою)
+                setTimeout(() => {
+                    this.updateMaterialCompletedState(materialId, result.completed);
+                    this.updateCourseProgress(materialId, result.course_progress);
+                }, 100);
                 this.showNotification(result.message, 'success');
             } else {
                 this.showNotification(result.message, 'error');
@@ -305,21 +334,39 @@ class Cabinet {
         } catch (error) {
             console.error('Помилка оновлення прогресу:', error);
             this.showNotification('Помилка мережі', 'error');
+        } finally {
+            // Дозволити наступні дії через 500ms
+            setTimeout(() => {
+                this.isProcessing = false;
+            }, 500);
         }
     }
 
     // === ПЛАТЕЖІ ===
 
     async downloadReceipt(paymentId) {
+        // Запобігання повторним кликам
+        if (this.isProcessing) return;
+        this.isProcessing = true;
+
         try {
             window.open(`/payments/receipt/${paymentId}/`, '_blank');
+            this.showNotification('Чек завантажується...', 'info');
         } catch (error) {
             console.error('Помилка завантаження чеку:', error);
             this.showNotification('Помилка завантаження чеку', 'error');
+        } finally {
+            setTimeout(() => {
+                this.isProcessing = false;
+            }, 1000);
         }
     }
 
     async checkPaymentStatus(paymentId) {
+        // Запобігання повторним кликам
+        if (this.isProcessing) return;
+        this.isProcessing = true;
+
         try {
             const response = await fetch(`/payments/status/${paymentId}/`);
             const result = await response.json();
@@ -332,10 +379,18 @@ class Cabinet {
         } catch (error) {
             console.error('Помилка перевірки статусу:', error);
             this.showNotification('Помилка перевірки статусу', 'error');
+        } finally {
+            setTimeout(() => {
+                this.isProcessing = false;
+            }, 500);
         }
     }
 
     async retryPayment(paymentId) {
+        // Запобігання повторним кликам
+        if (this.isProcessing) return;
+        this.isProcessing = true;
+
         try {
             const response = await fetch(`/payments/retry/${paymentId}/`, {
                 method: 'POST',
@@ -347,7 +402,9 @@ class Cabinet {
             const result = await response.json();
 
             if (result.success) {
-                window.location.href = result.payment_url;
+                // Відкриваємо в новому вікні замість перенаправлення
+                window.open(result.payment_url, '_blank');
+                this.showNotification('Перенаправлення на оплату...', 'info');
             } else {
                 this.showNotification('Помилка повторної оплати', 'error');
             }
@@ -355,6 +412,10 @@ class Cabinet {
         } catch (error) {
             console.error('Помилка повторної оплати:', error);
             this.showNotification('Помилка мережі', 'error');
+        } finally {
+            setTimeout(() => {
+                this.isProcessing = false;
+            }, 1000);
         }
     }
 
@@ -617,60 +678,46 @@ class Cabinet {
     }
 
     showNotification(message, type = 'info') {
+        // Знайти або створити контейнер для повідомлень
+        let container = document.getElementById('notifications-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'notifications-container';
+            container.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 1060; pointer-events: none;';
+            document.body.appendChild(container);
+        }
+
         // Створити елемент повідомлення
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <span class="notification-message">${message}</span>
-            <button class="notification-close">&times;</button>
+        notification.style.cssText = `
+            background: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : type === 'warning' ? '#ffc107' : '#17a2b8'};
+            min-width: 300px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            transform: translateX(100%);
+            pointer-events: auto;
         `;
 
-        // Додати стилі якщо ще немає
-        if (!document.querySelector('#notification-styles')) {
-            const styles = document.createElement('style');
-            styles.id = 'notification-styles';
-            styles.textContent = `
-                .notification {
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: white;
-                    border-radius: 8px;
-                    padding: 15px 20px;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                    border-left: 4px solid #007bff;
-                    z-index: 1060;
-                    min-width: 300px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    transition: all 0.3s ease;
-                    transform: translateX(100%);
-                }
-                .notification-success { border-left-color: #28a745; }
-                .notification-error { border-left-color: #dc3545; }
-                .notification-warning { border-left-color: #ffc107; }
-                .notification-info { border-left-color: #17a2b8; }
-                .notification-close {
-                    background: none;
-                    border: none;
-                    font-size: 18px;
-                    cursor: pointer;
-                    margin-left: 15px;
-                    color: #6c757d;
-                }
-                .notification.show {
-                    transform: translateX(0);
-                }
-            `;
-            document.head.appendChild(styles);
-        }
+        notification.innerHTML = `
+            <span class="notification-message">${message}</span>
+            <button class="notification-close" style="background: none; border: none; font-size: 18px; cursor: pointer; margin-left: 15px; color: #6c757d;">&times;</button>
+        `;
 
-        // Додати на сторінку
-        document.body.appendChild(notification);
+        // Додати в контейнер (не в body напряму)
+        container.appendChild(notification);
 
         // Показати з анімацією
-        setTimeout(() => notification.classList.add('show'), 100);
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
 
         // Закриття по кліку
         notification.querySelector('.notification-close').addEventListener('click', () => {
@@ -686,7 +733,7 @@ class Cabinet {
     }
 
     hideNotification(notification) {
-        notification.classList.remove('show');
+        notification.style.transform = 'translateX(100%)';
         setTimeout(() => {
             if (notification.parentNode) {
                 notification.parentNode.removeChild(notification);
@@ -785,7 +832,8 @@ class Cabinet {
 
             if (data.success) {
                 this.showMessage(data.message, 'success');
-                setTimeout(() => location.reload(), 1500);
+                // ЗАБОРОНЯЄМО перезагрузку - оновлюємо UI локально
+                this.updateSubscriptionUI(data);
             } else {
                 this.showMessage(data.error || 'Помилка при скасуванні підписки', 'error');
             }
@@ -809,7 +857,8 @@ class Cabinet {
 
             if (data.success) {
                 this.showMessage(data.message, 'success');
-                setTimeout(() => location.reload(), 1500);
+                // ЗАБОРОНЯЄМО перезагрузку - оновлюємо UI локально
+                this.updateSubscriptionUI(data);
             } else {
                 this.showMessage(data.error || 'Помилка при поновленні підписки', 'error');
             }
@@ -834,11 +883,8 @@ class Cabinet {
 
             if (data.success) {
                 this.showMessage(data.message, 'success');
-                if (data.redirect_url) {
-                    setTimeout(() => window.location.href = data.redirect_url, 1500);
-                } else {
-                    setTimeout(() => location.reload(), 1500);
-                }
+                // ЗАБОРОНЯЄМО перезагрузку - оновлюємо UI локально
+                this.updateSubscriptionUI(data);
             } else {
                 this.showMessage(data.error || 'Помилка при зміні підписки', 'error');
             }
@@ -849,6 +895,10 @@ class Cabinet {
     }
 
     async addLoyaltyPoints(points = 50, reason = 'Тестове нарахування') {
+        // Запобігання повторним кликам
+        if (this.isProcessing) return;
+        this.isProcessing = true;
+
         try {
             const response = await fetch('/account/loyalty/add-points/', {
                 method: 'POST',
@@ -871,7 +921,8 @@ class Cabinet {
                 }
 
                 if (data.tier_changed) {
-                    setTimeout(() => location.reload(), 2000);
+                    // ЗАБОРОНЯЄМО перезагрузку - оновлюємо лояльність локально
+                    this.updateLoyaltyUI(data);
                 }
             } else {
                 this.showMessage(data.error || 'Помилка при додаванні балів', 'error');
@@ -879,6 +930,11 @@ class Cabinet {
         } catch (error) {
             console.error('Error:', error);
             this.showMessage('Помилка мережі', 'error');
+        } finally {
+            // Дозволити наступні дії через 1 секунду
+            setTimeout(() => {
+                this.isProcessing = false;
+            }, 1000);
         }
     }
 
@@ -927,17 +983,171 @@ class Cabinet {
     }
 
     downloadMaterial(materialId) {
+        // Запобігання повторним кликам
+        if (this.isProcessing) return;
+        this.isProcessing = true;
+
         const downloadUrl = `/account/download/${materialId}/`;
 
-        // Створюємо невидиме посилання для завантаження
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = '';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // Використовуємо window.open замість маніпуляцій з DOM
+        window.open(downloadUrl, '_blank');
 
-        this.showMessage('Завантаження розпочато...', 'info');
+        this.showNotification('Завантаження розпочато...', 'info');
+
+        // Дозволити наступні дії через 1 секунду
+        setTimeout(() => {
+            this.isProcessing = false;
+        }, 1000);
+    }
+
+    // === ОБРОБНИК DATA-ACTION ===
+
+    handleDataAction(element) {
+        const action = element.getAttribute('data-action');
+
+        switch (action) {
+            case 'toggleFavorite':
+                const courseId = element.getAttribute('data-course-id');
+                this.toggleFavorite(courseId);
+                break;
+
+            case 'viewMaterial':
+                const materialId = element.getAttribute('data-material-id');
+                this.viewMaterial(materialId);
+                break;
+
+            case 'downloadMaterial':
+                const downloadMaterialId = element.getAttribute('data-material-id');
+                this.downloadMaterial(downloadMaterialId);
+                break;
+
+            case 'toggleCompleted':
+                const toggleMaterialId = element.getAttribute('data-material-id');
+                const isCompleted = element.getAttribute('data-completed') === 'true';
+                this.toggleCompleted(toggleMaterialId, isCompleted);
+                break;
+
+            case 'markCourseComplete':
+                const markCourseId = element.getAttribute('data-course-id');
+                this.markCourseComplete(markCourseId);
+                break;
+
+            case 'downloadReceipt':
+                const paymentId = element.getAttribute('data-payment-id');
+                this.downloadReceipt(paymentId);
+                break;
+
+            case 'checkPaymentStatus':
+                const checkPaymentId = element.getAttribute('data-payment-id');
+                this.checkPaymentStatus(checkPaymentId);
+                break;
+
+            case 'retryPayment':
+                const retryPaymentId = element.getAttribute('data-payment-id');
+                this.retryPayment(retryPaymentId);
+                break;
+
+            case 'addLoyaltyPoints':
+                const points = element.getAttribute('data-points');
+                const reason = element.getAttribute('data-reason');
+                this.addLoyaltyPoints(points, reason);
+                break;
+
+            case 'cancelSubscription':
+                this.cancelSubscription();
+                break;
+
+            case 'renewSubscription':
+                this.renewSubscription();
+                break;
+
+            case 'changeSubscriptionPlan':
+                const planId = element.getAttribute('data-plan-id');
+                this.changeSubscriptionPlan(planId);
+                break;
+
+            case 'closeMaterialModal':
+                this.closeMaterialModal();
+                break;
+
+            case 'closePaymentDetailsModal':
+                this.closePaymentDetailsModal();
+                break;
+
+            case 'loadMorePayments':
+                this.loadMorePayments();
+                break;
+
+            default:
+                console.warn('Невідома дія:', action);
+        }
+    }
+
+    // === ЛОКАЛЬНЕ ОНОВЛЕННЯ UI ===
+
+    updateSubscriptionUI(data) {
+        // Оновлюємо інформацію про підписку без перезагрузки
+        if (data.subscription_status) {
+            const statusElements = document.querySelectorAll('.subscription-status');
+            statusElements.forEach(el => {
+                el.textContent = data.subscription_status;
+                el.className = `subscription-status status-${data.subscription_status.toLowerCase()}`;
+            });
+        }
+
+        if (data.expires_at) {
+            const expiryElements = document.querySelectorAll('.subscription-expiry');
+            expiryElements.forEach(el => {
+                el.textContent = data.expires_at;
+            });
+        }
+
+        // Оновлюємо кнопки підписки
+        if (data.can_cancel !== undefined) {
+            const cancelBtns = document.querySelectorAll('.btn-cancel-subscription');
+            cancelBtns.forEach(btn => {
+                btn.style.display = data.can_cancel ? 'block' : 'none';
+            });
+        }
+
+        if (data.can_renew !== undefined) {
+            const renewBtns = document.querySelectorAll('.btn-renew-subscription');
+            renewBtns.forEach(btn => {
+                btn.style.display = data.can_renew ? 'block' : 'none';
+            });
+        }
+    }
+
+    updateLoyaltyUI(data) {
+        // Оновлюємо інформацію про лояльність без перезагрузки
+        if (data.new_points !== undefined) {
+            const pointsElements = document.querySelectorAll('.tier-points, .loyalty-points .points-value');
+            pointsElements.forEach(el => {
+                el.textContent = `${data.new_points} балів`;
+            });
+        }
+
+        if (data.new_tier) {
+            const tierElements = document.querySelectorAll('.tier-name');
+            tierElements.forEach(el => {
+                el.textContent = data.new_tier.name;
+                el.className = `tier-name tier-${data.new_tier.name.toLowerCase()}`;
+            });
+        }
+
+        if (data.progress_percentage !== undefined) {
+            const progressBars = document.querySelectorAll('.loyalty-tab .progress-fill');
+            progressBars.forEach(bar => {
+                bar.style.width = `${data.progress_percentage}%`;
+            });
+        }
+
+        // Показуємо повідомлення про зміну рівня
+        if (data.tier_changed && data.new_tier) {
+            setTimeout(() => {
+                this.showNotification(`🎉 Вітаємо! Ви досягли рівня ${data.new_tier.name}!`, 'success');
+            }, 1000);
+        }
     }
 }
 
@@ -1027,13 +1237,42 @@ function markCourseComplete(courseId) {
     }
 }
 
-// Ініціалізація при завантаженні сторінки
+// Ініціалізація тільки на сторінках кабінету
 document.addEventListener('DOMContentLoaded', () => {
-    window.cabinet = new Cabinet();
+    // Перевіряємо чи ми на сторінці кабінету
+    const isCabinetPage = window.location.pathname.startsWith('/account/') ||
+        document.querySelector('.cabinet-wrapper') !== null;
+
+    if (isCabinetPage) {
+        window.cabinet = new Cabinet();
+    }
 });
 
 // Функція для очищення localStorage кабінету (для тестування)
 function clearCabinetStorage() {
     localStorage.removeItem('cabinet-active-tab');
     console.log('Cabinet localStorage cleared');
+}
+
+// Глобальна функція для очищення всього кешу кабінету
+function resetCabinetCache() {
+    clearCabinetStorage();
+
+    // Очищуємо processing flag якщо застряг
+    if (window.cabinet) {
+        window.cabinet.isProcessing = false;
+    }
+
+    // Закриваємо всі модальні вікна
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
+
+    // Очищуємо notifications контейнер
+    const notificationsContainer = document.getElementById('notifications-container');
+    if (notificationsContainer) {
+        notificationsContainer.innerHTML = '';
+    }
+
+    console.log('Весь кеш кабінету очищено');
 }

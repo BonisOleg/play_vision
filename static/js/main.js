@@ -29,6 +29,26 @@ function initializeHTMX() {
             }
         }
     });
+
+    // Захист Alpine.js компонентів від HTMX
+    document.body.addEventListener('htmx:beforeSwap', function (event) {
+        // Не дозволяємо HTMX переписувати навігацію з Alpine.js
+        if (event.detail.target.closest('.header') ||
+            event.detail.target.classList.contains('mobile-menu') ||
+            event.detail.target.hasAttribute('x-data') ||
+            event.detail.target.querySelector('[x-data]')) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    // Захист при завантаженні сторінки
+    document.body.addEventListener('htmx:load', function (event) {
+        // Переініціалізуємо Alpine.js компоненти якщо потрібно
+        if (window.Alpine && event.detail.elt.querySelector('[x-data]')) {
+            window.Alpine.initTree(event.detail.elt);
+        }
+    });
 }
 
 function initializePWA() {
@@ -69,7 +89,11 @@ function initializePWA() {
 }
 
 function initializeCart() {
-    htmx.trigger(document.querySelector('.cart-icon'), 'load');
+    // Ініціалізуємо корзину тільки якщо вона існує
+    const cartIcon = document.querySelector('.cart-icon');
+    if (cartIcon) {
+        htmx.trigger(cartIcon, 'load');
+    }
 
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('add-to-cart')) {
@@ -96,7 +120,8 @@ function initializeCart() {
                 .then(data => {
                     if (data.success) {
                         showMessage(data.message, 'success');
-                        htmx.trigger(document.body, 'cartUpdated');
+                        // Тригеримо тільки корзину, не весь body
+                        htmx.trigger(document.querySelector('.cart-icon'), 'cartUpdated');
                     } else {
                         showMessage(data.error || 'Помилка додавання в кошик', 'error');
                     }
@@ -244,8 +269,17 @@ function initializeDropdownMenu() {
     });
 }
 
+// Функція для відновлення Alpine.js після HTMX оновлень
+function restoreAlpineComponents() {
+    if (window.Alpine) {
+        // Переініціалізуємо Alpine.js на всій сторінці
+        window.Alpine.initTree(document.body);
+    }
+}
+
 window.PlayVision = {
     showMessage,
     getCookie,
-    initializeProgressBars
+    initializeProgressBars,
+    restoreAlpineComponents
 };

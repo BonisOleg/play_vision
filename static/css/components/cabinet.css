@@ -75,7 +75,13 @@
 
 /* Форма профілю */
 .profile-form {
-    space-y: 20px;
+    display: flex;
+    flex-direction: column;
+    /* Відступи між дочірніми елементами через селектор нижче */
+}
+
+.profile-form>*+* {
+    margin-top: 20px;
 }
 
 .form-group {
@@ -683,7 +689,13 @@
 }
 
 .benefits-list {
-    space-y: 8px;
+    display: flex;
+    flex-direction: column;
+    /* Відступи між дочірніми елементами через селектор нижче */
+}
+
+.benefits-list>*+* {
+    margin-top: 8px;
 }
 
 .benefit-item {
@@ -919,7 +931,13 @@
 }
 
 .tiers-list {
-    space-y: 15px;
+    display: flex;
+    flex-direction: column;
+    /* Відступи між дочірніми елементами через селектор нижче */
+}
+
+.tiers-list>*+* {
+    margin-top: 15px;
 }
 
 .tier-item {
@@ -1028,7 +1046,13 @@
 }
 
 .transactions-list {
-    space-y: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Відступи між дочірніми елементами через селектор нижче */
+}
+
+.transactions-list>*+* {
+    margin-top: 10px;
 }
 
 .transaction-item {
@@ -1493,6 +1517,8 @@
     .form-control {
         border-radius: 8px;
         -webkit-appearance: none;
+        appearance: none;
+        /* Стандартна властивість для сумісності */
     }
 
     .tab-content {

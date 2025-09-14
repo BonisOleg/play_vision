@@ -8,8 +8,8 @@
             <div class="material-header">
                 <h4 class="material-title">{{ material.title }}</h4>
                 <div class="material-type">{{ material.content_type }}</div>
-                <button class="favorite-btn {% if material.is_favorite %}active{% endif %}"
-                    onclick="toggleFavorite({{ material.course_id }})">
+                <button class="favorite-btn {% if material.is_favorite %}active{% endif %}" data-action="toggleFavorite"
+                    data-course-id="{{ material.course_id }}">
                     <span class="star-icon">★</span>
                 </button>
             </div>
@@ -24,12 +24,13 @@
 
             <!-- Дії -->
             <div class="material-actions">
-                <button class="btn-action btn-primary" onclick="viewMaterial({{ material.id }})">
+                <button class="btn-action btn-primary" data-action="viewMaterial" data-material-id="{{ material.id }}">
                     Переглянути
                 </button>
 
                 {% if material.can_download %}
-                <button class="btn-action btn-secondary" onclick="downloadMaterial({{ material.id }})">
+                <button class="btn-action btn-secondary" data-action="downloadMaterial"
+                    data-material-id="{{ material.id }}">
                     В офлайн
                 </button>
                 {% else %}
@@ -38,8 +39,9 @@
                 </button>
                 {% endif %}
 
-                <button class="btn-action btn-outline"
-                    onclick="toggleCompleted({{ material.id }}, {{ material.is_completed|yesno:'true,false' }})">
+                <button class="btn-action btn-outline" data-action="toggleCompleted"
+                    data-material-id="{{ material.id }}"
+                    data-completed="{{ material.is_completed|yesno:'true,false' }}">
                     {% if material.is_completed %}
                     Переглянуто
                     {% else %}
@@ -103,8 +105,8 @@
                 </div>
             </div>
             <div class="course-actions">
-                {% if course.progress_percentage < 100 %} <button class="btn-primary"
-                    onclick="markCourseComplete({{ course.id }})">
+                {% if course.progress_percentage < 100 %} <button class="btn-primary" data-action="markCourseComplete"
+                    data-course-id="{{ course.id }}">
                     Позначити завершеним
                     </button>
                     {% else %}
@@ -131,7 +133,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h3 id="modal-title">Назва матеріалу</h3>
-            <button class="modal-close" onclick="closeMaterialModal()">&times;</button>
+            <button class="modal-close" data-action="closeMaterialModal">&times;</button>
         </div>
         <div class="modal-body">
             <div id="material-content">
