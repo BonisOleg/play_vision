@@ -12,141 +12,23 @@
 {% endblock %}
 
 {% block extra_head %}
-<!-- Hub JS needs to load before Alpine.js initializes -->
+<!-- Hub page specific setup -->
 <script>
-    // Define Alpine.js data functions before Alpine loads
-    window.quotesCarousel = function () {
-        return {
-            currentQuote: 0,
-            quotes: 5,
-            autoPlay: true,
-            interval: null,
-            touchStartX: 0,
+    // Minimal bootstrap code for this page
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if external dependencies are loaded
+        const dependencies = ['quotesCarousel', 'materialsCarousel', 'intervalManager', 'DOMUtils'];
+        const missing = dependencies.filter(dep => !window[dep]);
 
-            init() {
-                this.startAutoPlay();
-                this.$el.addEventListener('mouseenter', () => this.stopAutoPlay());
-                this.$el.addEventListener('mouseleave', () => this.startAutoPlay());
-                // Add keyboard support
-                this.$el.addEventListener('keydown', (e) => this.handleKeyboard(e));
-            },
+        if (missing.length > 0) {
+            console.warn('Hub dependencies not loaded:', missing);
+            // Graceful fallback - disable functionality rather than break
+            return;
+        }
 
-            setQuote(index) {
-                if (index >= 0 && index < this.quotes) {
-                    this.currentQuote = index;
-                    this.restartAutoPlay();
-                }
-            },
-
-            nextQuote() {
-                this.currentQuote = (this.currentQuote + 1) % this.quotes;
-            },
-
-            prevQuote() {
-                this.currentQuote = (this.currentQuote - 1 + this.quotes) % this.quotes;
-            },
-
-            handleSwipe(deltaX) {
-                const threshold = 50;
-                if (Math.abs(deltaX) > threshold) {
-                    if (deltaX > 0) {
-                        this.prevQuote();
-                    } else {
-                        this.nextQuote();
-                    }
-                    this.restartAutoPlay();
-                }
-            },
-
-            handleKeyboard(e) {
-                switch (e.key) {
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        this.prevQuote();
-                        this.restartAutoPlay();
-                        break;
-                    case 'ArrowRight':
-                        e.preventDefault();
-                        this.nextQuote();
-                        this.restartAutoPlay();
-                        break;
-                    case ' ':
-                    case 'Enter':
-                        e.preventDefault();
-                        this.autoPlay ? this.stopAutoPlay() : this.startAutoPlay();
-                        break;
-                }
-            },
-
-            startAutoPlay() {
-                if (this.autoPlay) {
-                    this.interval = setInterval(() => {
-                        this.nextQuote();
-                    }, 8000); // Reduced to 8 seconds for more quotes
-                }
-            },
-
-            stopAutoPlay() {
-                if (this.interval) {
-                    clearInterval(this.interval);
-                    this.interval = null;
-                }
-            },
-
-            restartAutoPlay() {
-                this.stopAutoPlay();
-                setTimeout(() => this.startAutoPlay(), 1000); // 1 second delay after manual interaction
-            }
-        };
-    };
-
-    window.materialsCarousel = function () {
-        return {
-            currentSlide: 0,
-            totalSlides: 0,
-            autoPlay: true,
-            interval: null,
-
-            init() {
-                this.totalSlides = this.$el.querySelectorAll('.material-slide').length;
-                if (this.totalSlides > 1) {
-                    this.startAutoPlay();
-                    this.$el.addEventListener('mouseenter', () => this.stopAutoPlay());
-                    this.$el.addEventListener('mouseleave', () => this.startAutoPlay());
-                }
-            },
-
-            nextSlide() {
-                this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-                this.restartAutoPlay();
-            },
-
-            prevSlide() {
-                this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
-                this.restartAutoPlay();
-            },
-
-            startAutoPlay() {
-                if (this.autoPlay && this.totalSlides > 1) {
-                    this.interval = setInterval(() => {
-                        this.nextSlide();
-                    }, 20000);
-                }
-            },
-
-            stopAutoPlay() {
-                if (this.interval) {
-                    clearInterval(this.interval);
-                    this.interval = null;
-                }
-            },
-
-            restartAutoPlay() {
-                this.stopAutoPlay();
-                this.startAutoPlay();
-            }
-        };
-    };
+        // All dependencies loaded - Alpine.js will handle the rest
+        console.log('Hub page dependencies loaded successfully');
+    });
 </script>
 {% endblock %}
 

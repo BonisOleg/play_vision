@@ -9,7 +9,7 @@ function quotesCarousel() {
         currentQuote: 0,
         quotes: 3, // Total number of quotes
         autoPlay: true,
-        interval: null,
+        intervalKey: null,
 
         init() {
             this.startAutoPlay();
@@ -28,17 +28,17 @@ function quotesCarousel() {
         },
 
         startAutoPlay() {
-            if (this.autoPlay) {
-                this.interval = setInterval(() => {
+            if (this.autoPlay && window.intervalManager) {
+                this.intervalKey = window.intervalManager.setInterval(() => {
                     this.nextQuote();
-                }, 15000); // 15 seconds
+                }, 15000, 'quotes_carousel'); // 15 seconds
             }
         },
 
         stopAutoPlay() {
-            if (this.interval) {
-                clearInterval(this.interval);
-                this.interval = null;
+            if (this.intervalKey && window.intervalManager) {
+                window.intervalManager.clearInterval(this.intervalKey);
+                this.intervalKey = null;
             }
         },
 
@@ -55,7 +55,7 @@ function materialsCarousel() {
         currentSlide: 0,
         totalSlides: 0,
         autoPlay: true,
-        interval: null,
+        intervalKey: null,
 
         init() {
             this.totalSlides = this.$el.querySelectorAll('.material-slide').length;
@@ -78,17 +78,17 @@ function materialsCarousel() {
         },
 
         startAutoPlay() {
-            if (this.autoPlay && this.totalSlides > 1) {
-                this.interval = setInterval(() => {
+            if (this.autoPlay && this.totalSlides > 1 && window.intervalManager) {
+                this.intervalKey = window.intervalManager.setInterval(() => {
                     this.nextSlide();
-                }, 20000); // 20 seconds as specified in requirements
+                }, 20000, 'materials_carousel'); // 20 seconds as specified in requirements
             }
         },
 
         stopAutoPlay() {
-            if (this.interval) {
-                clearInterval(this.interval);
-                this.interval = null;
+            if (this.intervalKey && window.intervalManager) {
+                window.intervalManager.clearInterval(this.intervalKey);
+                this.intervalKey = null;
             }
         },
 

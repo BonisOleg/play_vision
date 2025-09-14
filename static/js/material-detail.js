@@ -46,9 +46,12 @@ function initializeVideoFunctionality() {
  */
 function initializeFullVideoAccess(video) {
     // Update watermark position periodically
-    let watermarkUpdateInterval = setInterval(() => {
-        updateWatermarkPosition();
-    }, 30000); // Every 30 seconds
+    let watermarkUpdateInterval;
+    if (window.intervalManager) {
+        watermarkUpdateInterval = window.intervalManager.setInterval(() => {
+            updateWatermarkPosition();
+        }, 30000, 'watermark_update'); // Every 30 seconds
+    }
 
     // Progress tracking
     video.addEventListener('timeupdate', () => {
@@ -65,7 +68,9 @@ function initializeFullVideoAccess(video) {
 
     // Clean up on page unload
     window.addEventListener('beforeunload', () => {
-        clearInterval(watermarkUpdateInterval);
+        if (watermarkUpdateInterval && window.intervalManager) {
+            window.intervalManager.clearInterval(watermarkUpdateInterval);
+        }
     });
 }
 
@@ -80,14 +85,16 @@ function initializePreviewVideo(video) {
     video.addEventListener('play', () => {
         if (timerElement) timerElement.style.display = 'block';
 
-        videoTimer = setInterval(() => {
-            previewTimeLeft--;
-            if (timeLeftElement) timeLeftElement.textContent = previewTimeLeft;
+        if (window.intervalManager) {
+            videoTimer = window.intervalManager.setInterval(() => {
+                previewTimeLeft--;
+                if (timeLeftElement) timeLeftElement.textContent = previewTimeLeft;
 
-            if (previewTimeLeft <= 0) {
-                endPreview(video);
-            }
-        }, 1000);
+                if (previewTimeLeft <= 0) {
+                    endPreview(video);
+                }
+            }, 1000, 'preview_timer');
+        }
 
         // Track preview start
         trackEvent('preview_start', {
@@ -158,42 +165,60 @@ function addVideoProtection(video) {
     video.setAttribute('disablePictureInPicture', 'true');
 
     // Monitor for developer tools (basic detection)
-    detectDevTools();
+    const devToolsCleanup = detectDevTools();
+
+    // Store cleanup function for later use
+    if (window.materialDetailCleanup) {
+        window.materialDetailCleanup.push(devToolsCleanup);
+    } else {
+        window.materialDetailCleanup = [devToolsCleanup];
+    }
 }
 
 /**
- * Basic developer tools detection
+ * Basic developer tools detection with proper cleanup
  */
 function detectDevTools() {
     let devtools = {
         open: false,
-        orientation: null
+        orientation: null,
+        intervalKey: null
     };
 
-    setInterval(() => {
-        const heightThreshold = window.outerHeight - window.innerHeight > 200;
-        const widthThreshold = window.outerWidth - window.innerWidth > 200;
+    if (window.intervalManager) {
+        devtools.intervalKey = window.intervalManager.setInterval(() => {
+            const heightThreshold = window.outerHeight - window.innerHeight > 200;
+            const widthThreshold = window.outerWidth - window.innerWidth > 200;
 
-        if (heightThreshold || widthThreshold) {
-            if (!devtools.open) {
-                devtools.open = true;
+            if (heightThreshold || widthThreshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
 
-                // Track developer tools usage
-                trackEvent('devtools_detected', {
-                    material_id: materialConfig.materialId,
-                    user_id: materialConfig.userId
-                });
+                    // Track developer tools usage
+                    trackEvent('devtools_detected', {
+                        material_id: materialConfig.materialId,
+                        user_id: materialConfig.userId
+                    });
 
-                // Optional: Pause video or show warning
-                const video = document.getElementById('mainVideo');
-                if (video && !video.paused) {
-                    video.pause();
+                    // Optional: Pause video or show warning
+                    const video = document.getElementById('mainVideo');
+                    if (video && !video.paused) {
+                        video.pause();
+                    }
                 }
+            } else {
+                devtools.open = false;
             }
-        } else {
-            devtools.open = false;
+        }, 1000, 'devtools_detection');
+    }
+
+    // Return cleanup function
+    return function cleanup() {
+        if (devtools.intervalKey && window.intervalManager) {
+            window.intervalManager.clearInterval(devtools.intervalKey);
+            devtools.intervalKey = null;
         }
-    }, 1000);
+    };
 }
 
 /**
@@ -318,9 +343,18 @@ class MaterialProgressTracker {
     }
 
     startProgressTracking() {
-        this.progressUpdateInterval = setInterval(() => {
-            this.updateProgress();
-        }, 30000); // Every 30 seconds
+        if (window.intervalManager) {
+            this.progressUpdateInterval = window.intervalManager.setInterval(() => {
+                this.updateProgress();
+            }, 30000, 'material_progress_tracking'); // Every 30 seconds
+        }
+    }
+
+    cleanup() {
+        if (this.progressUpdateInterval && window.intervalManager) {
+            window.intervalManager.clearInterval(this.progressUpdateInterval);
+            this.progressUpdateInterval = null;
+        }
     }
 
     updateProgress() {
@@ -343,6 +377,9 @@ class MaterialProgressTracker {
             if (totalTime >= this.minWatchTime) {
                 this.sendProgressUpdate(totalTime, true);
             }
+
+            // Clean up intervals to prevent memory leaks
+            this.cleanup();
         });
     }
 
@@ -566,6 +603,30 @@ function trackEvent(eventName, parameters = {}) {
     // Internal analytics
     console.log('Analytics Event:', eventName, parameters);
 }
+
+/**
+ * Global cleanup handler for all material detail intervals and timers
+ */
+window.addEventListener('beforeunload', () => {
+    // Cleanup all stored cleanup functions
+    if (window.materialDetailCleanup) {
+        window.materialDetailCleanup.forEach(cleanup => {
+            if (typeof cleanup === 'function') {
+                try {
+                    cleanup();
+                } catch (error) {
+                    console.warn('Cleanup function error:', error);
+                }
+            }
+        });
+        window.materialDetailCleanup = [];
+    }
+
+    // Cleanup progress tracker if exists
+    if (progressTracker && typeof progressTracker.cleanup === 'function') {
+        progressTracker.cleanup();
+    }
+});
 
 /**
  * Handle modal clicks outside content

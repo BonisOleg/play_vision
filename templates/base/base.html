@@ -209,6 +209,11 @@
     </svg>
 
     <!-- Scripts -->
+    <!-- Core utilities - load first -->
+    <script src="{% static 'js/interval-manager.js' %}"></script>
+    <script src="{% static 'js/dom-utils.js' %}"></script>
+    <script src="{% static 'js/api-utils.js' %}"></script>
+    <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
