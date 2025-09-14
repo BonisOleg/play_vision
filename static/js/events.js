@@ -116,7 +116,6 @@ function eventCalendar() {
                     location_short: 'Онлайн',
                     price: 1290,
                     is_free: false,
-                    url: '/events/forum-fff-5/',
                     event_type: 'forum'
                 },
                 {
@@ -128,7 +127,6 @@ function eventCalendar() {
                     location_short: 'Онлайн',
                     price: 890,
                     is_free: false,
-                    url: '/events/masterclass-xg/',
                     event_type: 'masterclass'
                 },
                 {
@@ -140,7 +138,6 @@ function eventCalendar() {
                     location_short: 'Онлайн',
                     price: 0,
                     is_free: true,
-                    url: '/events/roundtable-academies/',
                     event_type: 'seminar'
                 },
                 {
@@ -152,7 +149,6 @@ function eventCalendar() {
                     location_short: 'Онлайн',
                     price: 450,
                     is_free: false,
-                    url: '/events/tactics-analysis/',
                     event_type: 'seminar'
                 },
                 {
@@ -164,7 +160,6 @@ function eventCalendar() {
                     location_short: 'Київ',
                     price: 500,
                     is_free: false,
-                    url: '/events/psychology-workshop/',
                     event_type: 'workshop'
                 },
                 {
@@ -176,7 +171,6 @@ function eventCalendar() {
                     location_short: 'Львів',
                     price: 750,
                     is_free: false,
-                    url: '/events/coaches-training/',
                     event_type: 'masterclass'
                 }
             ];
@@ -237,7 +231,9 @@ function eventCalendar() {
                         ...template,
                         id: `test_${weekId}_${dayIndex}_${eventIndex}`,
                         start_datetime: eventDateTime.toISOString(),
-                        available_tickets: template.is_free ? null : Math.floor(15 + (seed % 40)) // 15-55 tickets
+                        available_tickets: template.is_free ? null : Math.floor(15 + (seed % 40)), // 15-55 tickets
+                        url: '#', // Safe placeholder URL for test events
+                        is_test_event: true
                     });
 
                     console.log(`📅 Added event: ${template.title} on ${eventDate.toDateString()} at ${template.time}`);
@@ -401,11 +397,16 @@ function eventCalendar() {
                 if (formattedEvents.length > 0) {
                     sidebarContainer.innerHTML = formattedEvents.map(event => `
                         <li class="upcoming-event">
-                            <a href="${event.url}" class="upcoming-link">
+                            <a href="${event.is_test_event ? '#' : (event.url || '#')}" 
+                               onclick="${event.is_test_event ? 'return false;' : ''}"
+                               class="upcoming-link ${event.is_test_event ? 'upcoming-link--demo' : ''}">
                                 <div class="upcoming-event-info">
-                                    <h4 class="upcoming-event-title">${event.title}</h4>
+                                    <h4 class="upcoming-event-title">
+                                        ${event.is_test_event ? '🎯 ' : ''}${event.title}
+                                    </h4>
                                     <p class="upcoming-event-meta">
                                         ${event.formatted_date} • ${event.time}
+                                        ${event.is_test_event ? ' • ДЕМО' : ''}
                                     </p>
                                 </div>
                                 <div class="upcoming-event-badge">
@@ -440,6 +441,32 @@ function eventCalendar() {
         showAllDayEvents(day) {
             console.log('Show all events for day:', day);
             // Could open modal with all day events
+        },
+
+        showTestEventInfo(event) {
+            // Show info about test event
+            const eventDate = new Date(event.start_datetime);
+            const formattedDate = eventDate.toLocaleDateString('uk-UA', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            const message = `
+🎯 ДЕМО ПОДІЯ
+
+📅 ${event.title}
+🗓️ ${formattedDate} о ${event.time}
+📍 ${event.location}
+💰 ${event.is_free ? 'Безкоштовно' : event.price + '₴'}
+
+Це демонстраційна подія для прикладу роботи календаря.
+Реальні події будуть доступні після створення в адмін-панелі.
+            `;
+
+            alert(message);
+            console.log('📍 Demo event clicked:', event);
         },
 
         selectDay(day, index) {

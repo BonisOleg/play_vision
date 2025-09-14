@@ -80,12 +80,15 @@
 
                     <div class="day-events">
                         <template x-for="event in day.events.slice(0, 3)" :key="event.id">
-                            <a :href="event.url" class="event-card" :class="{ 
+                            <a :href="event.is_test_event ? '#' : event.url"
+                                @click="event.is_test_event ? $event.preventDefault() || showTestEventInfo(event) : null"
+                                class="event-card" :class="{ 
                                    'event-card--forum': event.type === 'forum',
                                    'event-card--masterclass': event.type === 'masterclass',
                                    'event-card--seminar': event.type === 'seminar',
                                    'event-card--free': event.is_free,
-                                   'event-card--sold-out': event.is_sold_out
+                                   'event-card--sold-out': event.is_sold_out,
+                                   'event-card--test': event.is_test_event
                                }" @mouseenter="showEventPreview(event)" @mouseleave="hideEventPreview()">
 
                                 <div class="event-type-badge" x-text="event.type_display"></div>
