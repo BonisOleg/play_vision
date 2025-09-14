@@ -90,7 +90,7 @@
                 <!-- User Menu -->
                 <div class="navbar-actions">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'accounts:profile' %}" class="navbar-icon">
+                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon">
                         <svg class="icon">
                             <use xlink:href="#icon-user"></use>
                         </svg>
@@ -129,7 +129,7 @@
                 <a href="{% url 'core:coming_soon' %}?page=mentoring" class="mobile-menu-link">Ментор-коучінг</a>
                 <a href="{% url 'core:coming_soon' %}?page=subscription" class="mobile-menu-link">Підписка</a>
                 {% if user.is_authenticated %}
-                <a href="{% url 'accounts:profile' %}" class="mobile-menu-link">Мій кабінет</a>
+                <a href="{% url 'cabinet:dashboard' %}" class="mobile-menu-link">Мій кабінет</a>
                 <a href="{% url 'accounts:logout' %}" class="mobile-menu-link">Вийти</a>
                 {% else %}
                 <a href="{% url 'accounts:login' %}" class="mobile-menu-link">Вхід</a>

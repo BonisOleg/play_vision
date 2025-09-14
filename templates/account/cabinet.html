@@ -97,23 +97,32 @@
         <div class="cabinet-right">
             <!-- Навігація по вкладках -->
             <nav class="cabinet-tabs">
-                <a href="?tab=subscription" class="tab-link {% if active_tab == 'subscription' %}active{% endif %}">
+                <a href="{% url 'cabinet:profile' %}"
+                    class="tab-link {% if active_tab == 'profile' %}active{% endif %}">
+                    Профіль
+                </a>
+                <a href="{% url 'cabinet:subscription' %}"
+                    class="tab-link {% if active_tab == 'subscription' %}active{% endif %}">
                     Підписка
                 </a>
-                <a href="?tab=payments" class="tab-link {% if active_tab == 'payments' %}active{% endif %}">
-                    Історія оплат
-                </a>
-                <a href="?tab=files" class="tab-link {% if active_tab == 'files' %}active{% endif %}">
+                <a href="{% url 'cabinet:files' %}" class="tab-link {% if active_tab == 'files' %}active{% endif %}">
                     Мої файли
                 </a>
-                <a href="?tab=loyalty" class="tab-link {% if active_tab == 'loyalty' %}active{% endif %}">
+                <a href="{% url 'cabinet:loyalty' %}"
+                    class="tab-link {% if active_tab == 'loyalty' %}active{% endif %}">
                     Програма лояльності
+                </a>
+                <a href="{% url 'cabinet:payments' %}"
+                    class="tab-link {% if active_tab == 'payments' %}active{% endif %}">
+                    Історія оплат
                 </a>
             </nav>
 
             <!-- Контент вкладок -->
             <div class="tab-content">
-                {% if active_tab == 'subscription' %}
+                {% if active_tab == 'profile' %}
+                {% include 'account/tabs/profile.html' %}
+                {% elif active_tab == 'subscription' %}
                 {% include 'account/tabs/subscription.html' %}
                 {% elif active_tab == 'files' %}
                 {% include 'account/tabs/files.html' %}

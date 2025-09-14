@@ -235,6 +235,311 @@
     overflow-y: auto;
 }
 
+/* === ВКЛАДКА ПРОФІЛЮ === */
+.profile-tab {
+    max-width: 800px;
+}
+
+.profile-tab .tab-header {
+    margin-bottom: 30px;
+}
+
+.profile-tab .tab-header h2 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.profile-tab .tab-header p {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.profile-info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+.profile-avatar-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-avatar-large,
+.profile-avatar-placeholder-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-avatar-placeholder-large {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+.profile-basic-info h3 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    font-size: 20px;
+}
+
+.profile-email {
+    margin: 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.profile-phone {
+    margin: 5px 0 0 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.profile-status {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.verified {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-stat-card .stat-icon {
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.profile-stat-card .stat-info h4 {
+    margin: 0;
+    font-size: 24px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.profile-stat-card .stat-info p {
+    margin: 5px 0 0 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-detail-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+.profile-detail-card h4 {
+    margin: 0 0 20px 0;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item label {
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.detail-item span {
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.profile-interests {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+.profile-interests h4 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.interests-display {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.interest-badge {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.profile-quick-actions {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+.profile-quick-actions h4 {
+    margin: 0 0 20px 0;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.quick-action-btn:hover {
+    background: #e9ecef;
+    text-decoration: none;
+    color: #2c3e50;
+    transform: translateY(-1px);
+}
+
+.action-icon {
+    font-size: 18px;
+}
+
+/* Мобільна адаптація для профілю */
+@media (max-width: 768px) {
+    .profile-avatar-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .profile-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .profile-stat-card {
+        padding: 15px;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .profile-details-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-stat-card .stat-info h4 {
+        font-size: 20px;
+    }
+}
+
 /* === ЗАГАЛЬНІ КОМПОНЕНТИ === */
 
 /* Інформаційні картки */
@@ -1233,5 +1538,257 @@
 
     .table-row:hover {
         background: #333;
+    }
+}
+
+/* Нові стилі для кнопок та компонентів */
+
+/* Кнопки керування підпискою */
+.subscription-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.subscription-actions .btn-primary,
+.subscription-actions .btn-secondary {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+}
+
+.subscription-actions .btn-primary {
+    background: #007bff;
+    color: white;
+    border: none;
+}
+
+.subscription-actions .btn-primary:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.subscription-actions .btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+}
+
+.subscription-actions .btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Плани підписки */
+.plans-grid .btn-select-plan {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.plans-grid .btn-select-plan:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Тестові кнопки лояльності */
+.test-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.test-actions .btn-primary,
+.test-actions .btn-secondary {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.test-actions .btn-primary {
+    background: #28a745;
+    color: white;
+}
+
+.test-actions .btn-primary:hover {
+    background: #218838;
+}
+
+.test-actions .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.test-actions .btn-secondary:hover {
+    background: #5a6268;
+}
+
+.test-note {
+    margin: 10px 0 0 0;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Курси секція */
+.courses-section {
+    margin-top: 40px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.courses-section h2 {
+    margin-bottom: 25px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.course-card {
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.course-info h4 {
+    margin-bottom: 15px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.course-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.course-progress .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.course-progress .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    transition: width 0.5s ease;
+}
+
+.course-progress .progress-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6c757d;
+    min-width: 35px;
+}
+
+.course-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.course-actions .btn-primary {
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.course-actions .btn-primary:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+}
+
+.course-actions .btn-success {
+    padding: 8px 16px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Адаптивність для нових компонентів */
+@media (max-width: 768px) {
+    .subscription-actions {
+        flex-direction: column;
+    }
+
+    .subscription-actions .btn-primary,
+    .subscription-actions .btn-secondary {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .test-actions {
+        flex-direction: column;
+    }
+
+    .test-actions .btn-primary,
+    .test-actions .btn-secondary {
+        width: 100%;
+    }
+
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .courses-section {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .course-progress {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .course-progress .progress-text {
+        align-self: flex-end;
     }
 }

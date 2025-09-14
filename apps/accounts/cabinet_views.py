@@ -28,7 +28,7 @@ class CabinetView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        tab = kwargs.get('tab', self.request.GET.get('tab', 'subscription'))
+        tab = kwargs.get('tab', self.request.GET.get('tab', 'profile'))
         
         # Загальна інформація користувача
         context['active_tab'] = tab
@@ -159,6 +159,23 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         
         context['materials'] = materials_data
         context['accessible_courses'] = accessible_courses
+        
+        # Підготувати дані курсів з прогресом
+        courses_data = []
+        for course in accessible_courses:
+            progress = progress_map.get(course.id)
+            progress_percentage = progress.progress_percentage if progress else 0
+            
+            courses_data.append({
+                'id': course.id,
+                'title': course.title,
+                'progress_percentage': progress_percentage,
+                'is_completed': progress.completed if progress else False,
+                'total_materials': course.materials.count(),
+                'completed_materials': progress.materials_completed.count() if progress else 0
+            })
+        
+        context['user_courses'] = courses_data
         
         # Статистика файлів
         context['files_stats'] = {
@@ -445,3 +462,199 @@ class DownloadMaterialView(LoginRequiredMixin, View):
         # TODO: Додати перевірку індивідуальних покупок
         
         return False
+
+
+class CancelSubscriptionView(LoginRequiredMixin, View):
+    """View для скасування підписки"""
+    
+    def post(self, request):
+        try:
+            # Знаходимо активну підписку
+            active_subscription = request.user.subscriptions.filter(
+                status='active',
+                end_date__gte=timezone.now()
+            ).first()
+            
+            if not active_subscription:
+                return JsonResponse({'error': 'Активна підписка не знайдена'}, status=404)
+            
+            # Скасовуємо підписку
+            active_subscription.status = 'cancelled'
+            active_subscription.cancelled_at = timezone.now()
+            active_subscription.auto_renew = False
+            active_subscription.save()
+            
+            messages.success(request, 'Підписку успішно скасовано')
+            return JsonResponse({
+                'success': True,
+                'message': 'Підписку скасовано. Доступ залишиться до кінця оплаченого періоду.'
+            })
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+class RenewSubscriptionView(LoginRequiredMixin, View):
+    """View для поновлення підписки"""
+    
+    def post(self, request):
+        try:
+            # Знаходимо скасовану підписку
+            subscription = request.user.subscriptions.filter(
+                status='cancelled',
+                end_date__gte=timezone.now()
+            ).first()
+            
+            if not subscription:
+                return JsonResponse({'error': 'Підписка для поновлення не знайдена'}, status=404)
+            
+            # Поновлюємо підписку
+            subscription.status = 'active'
+            subscription.cancelled_at = None
+            subscription.auto_renew = True
+            subscription.save()
+            
+            messages.success(request, 'Підписку успішно поновлено')
+            return JsonResponse({
+                'success': True,
+                'message': 'Підписку поновлено. Автоматичне поновлення увімкнено.'
+            })
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+class ChangeSubscriptionView(LoginRequiredMixin, View):
+    """View для зміни плану підписки"""
+    
+    def post(self, request):
+        try:
+            plan_id = request.POST.get('plan_id')
+            if not plan_id:
+                return JsonResponse({'error': 'Не вказано план підписки'}, status=400)
+            
+            new_plan = get_object_or_404(Plan, id=plan_id, is_active=True)
+            
+            # Знаходимо активну підписку
+            active_subscription = request.user.subscriptions.filter(
+                status='active',
+                end_date__gte=timezone.now()
+            ).first()
+            
+            if active_subscription:
+                # Оновлюємо існуючу підписку
+                active_subscription.plan = new_plan
+                active_subscription.save()
+                message = f'План підписки змінено на "{new_plan.name}"'
+            else:
+                # Створюємо нову підписку
+                Subscription.objects.create(
+                    user=request.user,
+                    plan=new_plan,
+                    status='active',
+                    start_date=timezone.now(),
+                    end_date=timezone.now() + timedelta(days=30),
+                    auto_renew=True
+                )
+                message = f'Оформлено підписку "{new_plan.name}"'
+            
+            messages.success(request, message)
+            return JsonResponse({
+                'success': True,
+                'message': message,
+                'redirect_url': '/account/'
+            })
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+class AddLoyaltyPointsView(LoginRequiredMixin, View):
+    """View для додавання балів лояльності (тестовий)"""
+    
+    def post(self, request):
+        try:
+            points = int(request.POST.get('points', 50))
+            reason = request.POST.get('reason', 'Тестове нарахування балів')
+            
+            # Отримуємо або створюємо аккаунт лояльності
+            loyalty_account, created = LoyaltyAccount.objects.get_or_create(
+                user=request.user,
+                defaults={
+                    'points': 0,
+                    'lifetime_points': 0,
+                    'current_tier': LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first()
+                }
+            )
+            
+            # Додаємо бали
+            old_points = loyalty_account.points
+            loyalty_account.add_points(points, 'earned', reason)
+            
+            # Перевіряємо зміну рівня
+            tier_changed = loyalty_account.current_tier != loyalty_account.get_tier_for_points(old_points)
+            
+            message = f'Додано {points} балів!'
+            if tier_changed:
+                message += f' Вітаємо з досягненням рівня "{loyalty_account.current_tier.name}"!'
+            
+            messages.success(request, message)
+            return JsonResponse({
+                'success': True,
+                'message': message,
+                'new_points': loyalty_account.points,
+                'tier_changed': tier_changed
+            })
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+class MarkCourseCompleteView(LoginRequiredMixin, View):
+    """View для позначення курсу як завершеного"""
+    
+    def post(self, request):
+        try:
+            course_id = request.POST.get('course_id')
+            if not course_id:
+                return JsonResponse({'error': 'Не вказано ID курсу'}, status=400)
+            
+            course = get_object_or_404(Course, id=course_id)
+            
+            # Оновлюємо прогрес користувача
+            progress, created = UserCourseProgress.objects.get_or_create(
+                user=request.user,
+                course=course,
+                defaults={
+                    'progress_percentage': 100,
+                    'completed': True,
+                    'completed_at': timezone.now()
+                }
+            )
+            
+            if not progress.completed:
+                progress.progress_percentage = 100
+                progress.completed = True
+                progress.completed_at = timezone.now()
+                progress.save()
+                
+                # Додаємо бали лояльності за завершення курсу
+                try:
+                    loyalty_account = request.user.loyalty_account
+                    loyalty_account.add_points(100, 'course_completion', f'Завершення курсу "{course.title}"')
+                except LoyaltyAccount.DoesNotExist:
+                    pass
+                
+                message = f'Курс "{course.title}" позначено як завершений! +100 балів лояльності'
+            else:
+                message = f'Курс "{course.title}" вже був завершений'
+            
+            messages.success(request, message)
+            return JsonResponse({
+                'success': True,
+                'message': message,
+                'completed': True
+            })
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)

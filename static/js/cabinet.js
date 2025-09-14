@@ -85,16 +85,30 @@ class Cabinet {
 
     setupTabSwitching() {
         // Збереження активної вкладки в localStorage
-        const activeTab = localStorage.getItem('cabinet-active-tab');
-        if (activeTab && document.querySelector(`[href*="${activeTab}"]`)) {
-            window.location.hash = activeTab;
+        // Але НЕ переходимо автоматично якщо користувач на головній сторінці кабінету
+        const currentPath = window.location.pathname;
+        const isMainCabinet = currentPath === '/account/' || currentPath === '/account';
+
+        if (!isMainCabinet) {
+            const activeTab = localStorage.getItem('cabinet-active-tab');
+            if (activeTab && document.querySelector(`[href*="${activeTab}"]`)) {
+                // Переходимо на збережену вкладку тільки якщо не на головній сторінці
+                const targetLink = document.querySelector(`[href*="${activeTab}"]`);
+                if (targetLink) {
+                    window.location.href = targetLink.href;
+                }
+            }
         }
 
         // Збереження при зміні вкладки
         document.querySelectorAll('.tab-link').forEach(link => {
             link.addEventListener('click', (e) => {
-                const tab = new URL(link.href).searchParams.get('tab');
-                if (tab) {
+                // Витягуємо назву вкладки з URL (останній сегмент шляху)
+                const url = new URL(link.href);
+                const pathSegments = url.pathname.split('/').filter(segment => segment);
+                const tab = pathSegments[pathSegments.length - 1]; // остання частина шляху
+
+                if (tab && ['profile', 'subscription', 'payments', 'files', 'loyalty'].includes(tab)) {
                     localStorage.setItem('cabinet-active-tab', tab);
                 }
             });
@@ -750,6 +764,181 @@ class Cabinet {
             }
         });
     }
+
+    // Нові методи для кнопок кабінету
+
+    async cancelSubscription() {
+        if (!confirm('Ви впевнені, що хочете скасувати підписку?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/account/subscription/cancel/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': this.getCSRFToken()
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showMessage(data.message, 'success');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                this.showMessage(data.error || 'Помилка при скасуванні підписки', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.showMessage('Помилка мережі', 'error');
+        }
+    }
+
+    async renewSubscription() {
+        try {
+            const response = await fetch('/account/subscription/renew/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': this.getCSRFToken()
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showMessage(data.message, 'success');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                this.showMessage(data.error || 'Помилка при поновленні підписки', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.showMessage('Помилка мережі', 'error');
+        }
+    }
+
+    async changeSubscriptionPlan(planId) {
+        try {
+            const response = await fetch('/account/subscription/change/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': this.getCSRFToken()
+                },
+                body: `plan_id=${planId}`
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showMessage(data.message, 'success');
+                if (data.redirect_url) {
+                    setTimeout(() => window.location.href = data.redirect_url, 1500);
+                } else {
+                    setTimeout(() => location.reload(), 1500);
+                }
+            } else {
+                this.showMessage(data.error || 'Помилка при зміні підписки', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.showMessage('Помилка мережі', 'error');
+        }
+    }
+
+    async addLoyaltyPoints(points = 50, reason = 'Тестове нарахування') {
+        try {
+            const response = await fetch('/account/loyalty/add-points/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': this.getCSRFToken()
+                },
+                body: `points=${points}&reason=${encodeURIComponent(reason)}`
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showMessage(data.message, 'success');
+
+                // Оновлюємо відображення балів
+                const pointsElement = document.querySelector('.loyalty-points .points-value');
+                if (pointsElement) {
+                    pointsElement.textContent = data.new_points;
+                }
+
+                if (data.tier_changed) {
+                    setTimeout(() => location.reload(), 2000);
+                }
+            } else {
+                this.showMessage(data.error || 'Помилка при додаванні балів', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.showMessage('Помилка мережі', 'error');
+        }
+    }
+
+    async markCourseComplete(courseId) {
+        try {
+            const response = await fetch('/account/course/complete/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': this.getCSRFToken()
+                },
+                body: `course_id=${courseId}`
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showMessage(data.message, 'success');
+
+                // Оновлюємо кнопку
+                const button = document.querySelector(`[onclick*="markCourseComplete(${courseId})"]`);
+                if (button) {
+                    button.textContent = 'Завершено';
+                    button.disabled = true;
+                    button.classList.add('completed');
+                }
+
+                // Оновлюємо прогрес бар
+                const progressBar = document.querySelector(`[data-course-id="${courseId}"] .progress-fill`);
+                if (progressBar) {
+                    progressBar.style.width = '100%';
+                }
+
+                // Оновлюємо відсоток
+                const progressText = document.querySelector(`[data-course-id="${courseId}"] .progress-text`);
+                if (progressText) {
+                    progressText.textContent = '100%';
+                }
+            } else {
+                this.showMessage(data.error || 'Помилка при позначенні курсу', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.showMessage('Помилка мережі', 'error');
+        }
+    }
+
+    downloadMaterial(materialId) {
+        const downloadUrl = `/account/download/${materialId}/`;
+
+        // Створюємо невидиме посилання для завантаження
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = '';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        this.showMessage('Завантаження розпочато...', 'info');
+    }
 }
 
 // Глобальні функції для onclick handlers
@@ -807,7 +996,44 @@ function closePaymentDetailsModal() {
     }
 }
 
+// Нові глобальні функції для кнопок кабінету
+function cancelSubscription() {
+    if (window.cabinet) {
+        window.cabinet.cancelSubscription();
+    }
+}
+
+function renewSubscription() {
+    if (window.cabinet) {
+        window.cabinet.renewSubscription();
+    }
+}
+
+function changeSubscriptionPlan(planId) {
+    if (window.cabinet) {
+        window.cabinet.changeSubscriptionPlan(planId);
+    }
+}
+
+function addLoyaltyPoints(points, reason) {
+    if (window.cabinet) {
+        window.cabinet.addLoyaltyPoints(points, reason);
+    }
+}
+
+function markCourseComplete(courseId) {
+    if (window.cabinet) {
+        window.cabinet.markCourseComplete(courseId);
+    }
+}
+
 // Ініціалізація при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', () => {
     window.cabinet = new Cabinet();
 });
+
+// Функція для очищення localStorage кабінету (для тестування)
+function clearCabinetStorage() {
+    localStorage.removeItem('cabinet-active-tab');
+    console.log('Cabinet localStorage cleared');
+}

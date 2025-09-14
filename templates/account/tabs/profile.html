@@ -1,0 +1,152 @@
+<!-- Вкладка Профіль -->
+<div class="profile-tab">
+    <div class="tab-header">
+        <h2>Мій профіль</h2>
+        <p>Керуйте своїми особистими даними та налаштуваннями</p>
+    </div>
+
+    <div class="profile-content">
+        <!-- Основна інформація профілю -->
+        <div class="profile-info-card">
+            <div class="profile-avatar-section">
+                {% if user_profile and user_profile.avatar %}
+                <img src="{{ user_profile.avatar.url }}" alt="Аватар" class="profile-avatar-large">
+                {% else %}
+                <div class="profile-avatar-placeholder-large">
+                    {{ user.first_name|first|default:user.email|first|upper }}
+                </div>
+                {% endif %}
+                <div class="profile-basic-info">
+                    <h3>{{ user_profile.full_name|default:user.email }}</h3>
+                    <p class="profile-email">{{ user.email }}</p>
+                    {% if user.phone %}
+                    <p class="profile-phone">{{ user.phone }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="profile-status">
+                {% if user.is_email_verified %}
+                <span class="status-badge verified">Email підтверджено</span>
+                {% else %}
+                <span class="status-badge pending">Email очікує підтвердження</span>
+                {% endif %}
+
+                {% if user.phone %}
+                {% if user.is_phone_verified %}
+                <span class="status-badge verified">Телефон підтверджено</span>
+                {% else %}
+                <span class="status-badge pending">Телефон очікує підтвердження</span>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Статистика користувача -->
+        <div class="profile-stats-grid">
+            <div class="profile-stat-card">
+                <div class="stat-icon">🎓</div>
+                <div class="stat-info">
+                    <h4>{{ user_courses|length|default:0 }}</h4>
+                    <p>Активних курсів</p>
+                </div>
+            </div>
+
+            <div class="profile-stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <h4>{{ files_stats.completed_materials|default:0 }}</h4>
+                    <p>Завершено матеріалів</p>
+                </div>
+            </div>
+
+            <div class="profile-stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-info">
+                    <h4>{{ loyalty_account.points|default:0 }}</h4>
+                    <p>Балів лояльності</p>
+                </div>
+            </div>
+
+            <div class="profile-stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-info">
+                    <h4>{{ user.date_joined|timesince|truncatewords:1 }}</h4>
+                    <p>З нами</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Додаткова інформація профілю -->
+        {% if user_profile %}
+        <div class="profile-details-grid">
+            <div class="profile-detail-card">
+                <h4>Особиста інформація</h4>
+                <div class="detail-item">
+                    <label>Повне ім'я:</label>
+                    <span>{{ user_profile.full_name|default:"Не вказано" }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Дата народження:</label>
+                    <span>{{ user_profile.birth_date|date:"d.m.Y"|default:"Не вказано" }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Професія:</label>
+                    <span>{{ user_profile.profession|default:"Не вказано" }}</span>
+                </div>
+            </div>
+
+            <div class="profile-detail-card">
+                <h4>Налаштування</h4>
+                <div class="detail-item">
+                    <label>Дата реєстрації:</label>
+                    <span>{{ user.date_joined|date:"d.m.Y H:i" }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Останній вхід:</label>
+                    <span>{{ user.last_login|date:"d.m.Y H:i"|default:"Ніколи" }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Часовий пояс:</label>
+                    <span>Europe/Kiev</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Інтереси/теги -->
+        {% if user_profile and user_profile.interests.all %}
+        <div class="profile-interests">
+            <h4>Мої інтереси</h4>
+            <div class="interests-display">
+                {% for interest in user_profile.interests.all %}
+                <span class="interest-badge">{{ interest.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Швидкі дії -->
+        <div class="profile-quick-actions">
+            <h4>Швидкі дії</h4>
+            <div class="quick-actions-grid">
+                <a href="{% url 'cabinet:subscription' %}" class="quick-action-btn">
+                    <span class="action-icon">💎</span>
+                    <span class="action-text">Керувати підпискою</span>
+                </a>
+                <a href="{% url 'cabinet:files' %}" class="quick-action-btn">
+                    <span class="action-icon">📁</span>
+                    <span class="action-text">Мої файли</span>
+                </a>
+                <a href="{% url 'cabinet:loyalty' %}" class="quick-action-btn">
+                    <span class="action-icon">⭐</span>
+                    <span class="action-text">Програма лояльності</span>
+                </a>
+                <a href="{% url 'cabinet:payments' %}" class="quick-action-btn">
+                    <span class="action-icon">💳</span>
+                    <span class="action-text">Історія платежів</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

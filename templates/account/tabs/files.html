@@ -77,11 +77,51 @@
         <h3>Поки що немає доступних файлів</h3>
         {% if not active_subscription %}
         <p>Оформіть підписку для доступу до ексклюзивних матеріалів</p>
-        <a href="{% url 'pricing' %}" class="btn-primary">Оформити підписку</a>
+        <a href="{% url 'core:pricing' %}" class="btn-primary">Оформити підписку</a>
         {% else %}
         <p>Почніть вивчати курси в нашому Хабі знань</p>
         <a href="{% url 'content:course_list' %}" class="btn-primary">Перейти до курсів</a>
         {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Секція курсів з тестовими функціями -->
+<div class="courses-section">
+    <h2>Мої курси</h2>
+    {% if user_courses %}
+    <div class="courses-grid">
+        {% for course in user_courses %}
+        <div class="course-card" data-course-id="{{ course.id }}">
+            <div class="course-info">
+                <h4>{{ course.title }}</h4>
+                <div class="course-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ course.progress_percentage|default:0 }}%"></div>
+                    </div>
+                    <span class="progress-text">{{ course.progress_percentage|default:0 }}%</span>
+                </div>
+            </div>
+            <div class="course-actions">
+                {% if course.progress_percentage < 100 %} <button class="btn-primary"
+                    onclick="markCourseComplete({{ course.id }})">
+                    Позначити завершеним
+                    </button>
+                    {% else %}
+                    <button class="btn-success" disabled>
+                        Завершено
+                    </button>
+                    {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>Курси не знайдені</h3>
+        <p>Почніть вивчати курси в нашому Хабі знань</p>
+        <a href="{% url 'content:course_list' %}" class="btn-primary">Перейти до курсів</a>
     </div>
     {% endif %}
 </div>
