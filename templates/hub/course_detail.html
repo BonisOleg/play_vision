@@ -127,7 +127,7 @@
                                     Оформити підписку
                                 </a>
                                 <span class="or-divider">або</span>
-                                <button class="btn btn-outline btn-large" hx-post="{% url 'cart_htmx:add_to_cart' %}"
+                                <button class="btn btn-outline btn-large" hx-post="{% url 'htmx:cart:add_to_cart' %}"
                                     hx-vals='{"item_type": "course", "item_id": "{{ course.id }}"}' hx-trigger="click"
                                     hx-swap="none">
                                     Купити за {{ course.price }}₴
@@ -288,7 +288,7 @@
                 <a href="{% url 'accounts:register' %}" class="btn btn-primary">Вступити в клуб</a>
                 {% else %}
                 <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">Оформити підписку</a>
-                <button class="btn btn-outline" hx-post="{% url 'cart_htmx:add_to_cart' %}"
+                <button class="btn btn-outline" hx-post="{% url 'htmx:cart:add_to_cart' %}"
                     hx-vals='{"item_type": "course", "item_id": "{{ course.id }}"}'>
                     Купити за {{ course.price }}₴
                 </button>

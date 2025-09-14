@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeCart();
     initializeMessages();
     initializeProgressBars();
+    initializeDropdownMenu();
 });
 
 function initializeHTMX() {
@@ -190,6 +191,45 @@ function initializeProgressBars() {
         const progress = fill.getAttribute('data-progress');
         if (progress) {
             fill.style.width = progress + '%';
+        }
+    });
+}
+
+function initializeDropdownMenu() {
+    // Handle click on active Events link
+    const eventsLink = document.querySelector('.navbar-dropdown .navbar-link');
+    const dropdownContainer = document.querySelector('.navbar-dropdown');
+
+    if (eventsLink && dropdownContainer) {
+        eventsLink.addEventListener('click', function (e) {
+            // Only prevent default if we're already on the events page
+            if (this.classList.contains('active')) {
+                e.preventDefault();
+                dropdownContainer.classList.toggle('dropdown-open');
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!dropdownContainer.contains(e.target)) {
+                dropdownContainer.classList.remove('dropdown-open');
+            }
+        });
+    }
+
+    // Prevent only problematic empty hash links from scrolling to top
+    // But allow clicks on calendar and filter elements
+    document.addEventListener('click', function (e) {
+        // Don't interfere with calendar days, filter options, or event cards
+        if (e.target.closest('.calendar-day') ||
+            e.target.closest('.filter-option') ||
+            e.target.closest('.event-card')) {
+            return;
+        }
+
+        const link = e.target.closest('a');
+        if (link && (link.getAttribute('href') === '#' || link.getAttribute('href') === '')) {
+            e.preventDefault();
         }
     });
 }

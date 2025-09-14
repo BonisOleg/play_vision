@@ -11,6 +11,145 @@
 <link rel="stylesheet" href="{% static 'css/components/search.css' %}">
 {% endblock %}
 
+{% block extra_head %}
+<!-- Hub JS needs to load before Alpine.js initializes -->
+<script>
+    // Define Alpine.js data functions before Alpine loads
+    window.quotesCarousel = function () {
+        return {
+            currentQuote: 0,
+            quotes: 5,
+            autoPlay: true,
+            interval: null,
+            touchStartX: 0,
+
+            init() {
+                this.startAutoPlay();
+                this.$el.addEventListener('mouseenter', () => this.stopAutoPlay());
+                this.$el.addEventListener('mouseleave', () => this.startAutoPlay());
+                // Add keyboard support
+                this.$el.addEventListener('keydown', (e) => this.handleKeyboard(e));
+            },
+
+            setQuote(index) {
+                if (index >= 0 && index < this.quotes) {
+                    this.currentQuote = index;
+                    this.restartAutoPlay();
+                }
+            },
+
+            nextQuote() {
+                this.currentQuote = (this.currentQuote + 1) % this.quotes;
+            },
+
+            prevQuote() {
+                this.currentQuote = (this.currentQuote - 1 + this.quotes) % this.quotes;
+            },
+
+            handleSwipe(deltaX) {
+                const threshold = 50;
+                if (Math.abs(deltaX) > threshold) {
+                    if (deltaX > 0) {
+                        this.prevQuote();
+                    } else {
+                        this.nextQuote();
+                    }
+                    this.restartAutoPlay();
+                }
+            },
+
+            handleKeyboard(e) {
+                switch (e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        this.prevQuote();
+                        this.restartAutoPlay();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        this.nextQuote();
+                        this.restartAutoPlay();
+                        break;
+                    case ' ':
+                    case 'Enter':
+                        e.preventDefault();
+                        this.autoPlay ? this.stopAutoPlay() : this.startAutoPlay();
+                        break;
+                }
+            },
+
+            startAutoPlay() {
+                if (this.autoPlay) {
+                    this.interval = setInterval(() => {
+                        this.nextQuote();
+                    }, 8000); // Reduced to 8 seconds for more quotes
+                }
+            },
+
+            stopAutoPlay() {
+                if (this.interval) {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                }
+            },
+
+            restartAutoPlay() {
+                this.stopAutoPlay();
+                setTimeout(() => this.startAutoPlay(), 1000); // 1 second delay after manual interaction
+            }
+        };
+    };
+
+    window.materialsCarousel = function () {
+        return {
+            currentSlide: 0,
+            totalSlides: 0,
+            autoPlay: true,
+            interval: null,
+
+            init() {
+                this.totalSlides = this.$el.querySelectorAll('.material-slide').length;
+                if (this.totalSlides > 1) {
+                    this.startAutoPlay();
+                    this.$el.addEventListener('mouseenter', () => this.stopAutoPlay());
+                    this.$el.addEventListener('mouseleave', () => this.startAutoPlay());
+                }
+            },
+
+            nextSlide() {
+                this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+                this.restartAutoPlay();
+            },
+
+            prevSlide() {
+                this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+                this.restartAutoPlay();
+            },
+
+            startAutoPlay() {
+                if (this.autoPlay && this.totalSlides > 1) {
+                    this.interval = setInterval(() => {
+                        this.nextSlide();
+                    }, 20000);
+                }
+            },
+
+            stopAutoPlay() {
+                if (this.interval) {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                }
+            },
+
+            restartAutoPlay() {
+                this.stopAutoPlay();
+                this.startAutoPlay();
+            }
+        };
+    };
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="hub-container">
     <!-- Subscription Banner -->
@@ -27,44 +166,119 @@
     </div>
 
     <!-- Expert Quotes Carousel -->
-    <section class="expert-quotes">
+    <section class="expert-quotes" role="region" aria-label="Цитати експертів">
         <div class="container">
-            <div class="quotes-carousel" x-data="quotesCarousel()">
+            <h2 class="section-title">Що кажуть експерти</h2>
+
+            <div class="quotes-carousel" x-data="quotesCarousel()"
+                @touchstart="$event.touches[0] && (touchStartX = $event.touches[0].clientX)"
+                @touchend="$event.changedTouches[0] && handleSwipe($event.changedTouches[0].clientX - touchStartX)">
+
                 <div class="quote-slide" x-show="currentQuote === 0" x-transition>
                     <div class="quote-content">
-                        <img src="{% static 'images/icon-placeholder.svg' %}" alt="Пеп Гвардіола" class="expert-photo">
+                        <div class="expert-avatar">
+                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Пеп Гвардіола"
+                                class="expert-photo">
+                            <div class="expert-info">
+                                <span class="expert-name">Пеп Гвардіола</span>
+                                <span class="expert-role">Тренер "Манчестер Сіті"</span>
+                            </div>
+                        </div>
                         <blockquote>
-                            "Я люблю людей, які прагнуть навчатися щодня."
+                            "Навчання ніколи не закінчується. Кожен день ми можемо дізнатися щось нове, що зробить нас
+                            кращими тренерами і людьми."
                         </blockquote>
-                        <cite>Пеп Гвардіола</cite>
                     </div>
                 </div>
 
                 <div class="quote-slide" x-show="currentQuote === 1" x-transition>
                     <div class="quote-content">
-                        <img src="{% static 'images/icon-placeholder.svg' %}" alt="Юрген Клопп" class="expert-photo">
+                        <div class="expert-avatar">
+                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Юрген Клопп"
+                                class="expert-photo">
+                            <div class="expert-info">
+                                <span class="expert-name">Юрген Клопп</span>
+                                <span class="expert-role">Тренер "Ліверпуль"</span>
+                            </div>
+                        </div>
                         <blockquote>
-                            "Футбол - це спорт для розумних людей, які можуть грати просто."
+                            "Футбол - це спорт для розумних людей, які можуть грати просто. Але щоб грати просто,
+                            потрібно багато знати."
                         </blockquote>
-                        <cite>Юрген Клопп</cite>
                     </div>
                 </div>
 
                 <div class="quote-slide" x-show="currentQuote === 2" x-transition>
                     <div class="quote-content">
-                        <img src="{% static 'images/icon-placeholder.svg' %}" alt="Джозе Моурінью" class="expert-photo">
+                        <div class="expert-avatar">
+                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Джозе Моурінью"
+                                class="expert-photo">
+                            <div class="expert-info">
+                                <span class="expert-name">Джозе Моурінью</span>
+                                <span class="expert-role">Досвідчений тренер</span>
+                            </div>
+                        </div>
                         <blockquote>
-                            "Знання - це те, що відрізняє хороших тренерів від великих."
+                            "Знання та досвід - це те, що відрізняє хороших тренерів від великих. Ніколи не припиняйте
+                            вчитися."
                         </blockquote>
-                        <cite>Джозе Моурінью</cite>
+                    </div>
+                </div>
+
+                <div class="quote-slide" x-show="currentQuote === 3" x-transition>
+                    <div class="quote-content">
+                        <div class="expert-avatar">
+                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Карло Анчелотті"
+                                class="expert-photo">
+                            <div class="expert-info">
+                                <span class="expert-name">Карло Анчелотті</span>
+                                <span class="expert-role">Тренер "Реал Мадрид"</span>
+                            </div>
+                        </div>
+                        <blockquote>
+                            "Справжня майстерність приходить з постійного вдосконалення. Кожна помилка - це можливість
+                            навчитися."
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="quote-slide" x-show="currentQuote === 4" x-transition>
+                    <div class="quote-content">
+                        <div class="expert-avatar">
+                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Арсен Венгер"
+                                class="expert-photo">
+                            <div class="expert-info">
+                                <span class="expert-name">Арсен Венгер</span>
+                                <span class="expert-role">Легендарний тренер</span>
+                            </div>
+                        </div>
+                        <blockquote>
+                            "Найважливіше в футболі - це розуміння гри. А розуміння приходить тільки через навчання та
+                            практику."
+                        </blockquote>
                     </div>
                 </div>
 
                 <!-- Navigation dots -->
-                <div class="quote-nav">
-                    <button @click="setQuote(0)" :class="{'active': currentQuote === 0}"></button>
-                    <button @click="setQuote(1)" :class="{'active': currentQuote === 1}"></button>
-                    <button @click="setQuote(2)" :class="{'active': currentQuote === 2}"></button>
+                <div class="quote-nav" role="tablist">
+                    <button @click="setQuote(0)" :class="{'active': currentQuote === 0}" role="tab"
+                        :aria-selected="currentQuote === 0" aria-label="Цитата 1 з 5"></button>
+                    <button @click="setQuote(1)" :class="{'active': currentQuote === 1}" role="tab"
+                        :aria-selected="currentQuote === 1" aria-label="Цитата 2 з 5"></button>
+                    <button @click="setQuote(2)" :class="{'active': currentQuote === 2}" role="tab"
+                        :aria-selected="currentQuote === 2" aria-label="Цитата 3 з 5"></button>
+                    <button @click="setQuote(3)" :class="{'active': currentQuote === 3}" role="tab"
+                        :aria-selected="currentQuote === 3" aria-label="Цитата 4 з 5"></button>
+                    <button @click="setQuote(4)" :class="{'active': currentQuote === 4}" role="tab"
+                        :aria-selected="currentQuote === 4" aria-label="Цитата 5 з 5"></button>
+                </div>
+
+                <!-- Navigation arrows for accessibility -->
+                <div class="quote-arrows">
+                    <button @click="setQuote(currentQuote > 0 ? currentQuote - 1 : 4)" class="arrow-btn arrow-prev"
+                        aria-label="Попередня цитата">‹</button>
+                    <button @click="setQuote(currentQuote < 4 ? currentQuote + 1 : 0)" class="arrow-btn arrow-next"
+                        aria-label="Наступна цитата">›</button>
                 </div>
             </div>
         </div>
@@ -139,31 +353,53 @@
                 <div class="search-container">
                     <form method="get" class="search-form" id="searchForm">
                         <input type="text" name="q" placeholder="Пошук за назвою, автором або тегами..."
-                            value="{{ request.GET.q }}" class="search-input">
+                            value="{{ request.GET.q }}" class="search-input" autocomplete="off">
                         <button type="submit" class="search-btn">
                             <svg class="icon" viewBox="0 0 24 24">
                                 <path
                                     d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
                             </svg>
                         </button>
+                        <!-- Search Suggestions Container -->
+                        <div class="search-suggestions" style="display: none;" aria-hidden="true"></div>
                     </form>
                 </div>
             </div>
 
             <div class="products-layout">
                 <!-- Filters Sidebar -->
-                <aside class="filters-sidebar" x-data="{ filtersOpen: false }">
+                <aside class="filters-sidebar" x-data="{ 
+                    filtersOpen: false,
+                    activeFilters: {
+                        category: '{{ current_category|default:"" }}',
+                        difficulty: '{{ current_difficulty|default:"" }}',
+                        price: '{{ current_price|default:"" }}',
+                        duration: '{{ current_duration|default:"" }}'
+                    },
+                    hasActiveFilters() {
+                        return Object.values(this.activeFilters).some(value => value !== '');
+                    },
+                    clearAllFilters() {
+                        this.activeFilters = { category: '', difficulty: '', price: '', duration: '' };
+                        window.location.href = '{% url " content:course_list" %}{% if request.GET.q %}?q={{
+                    request.GET.q }}{% endif %}'; } }" role="complementary" aria-label="Фільтри курсів">
                     <div class="filters-header">
                         <h3>Фільтрувати</h3>
-                        <button class="mobile-filters-toggle" @click="filtersOpen = !filtersOpen">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
-                            </svg>
-                        </button>
+                        <div class="filters-controls">
+                            <span x-show="hasActiveFilters()" class="active-filters-count"
+                                x-text="'Активних: ' + Object.values(activeFilters).filter(v => v !== '').length"></span>
+                            <button class="mobile-filters-toggle" @click="filtersOpen = !filtersOpen"
+                                :aria-expanded="filtersOpen" aria-controls="filters-content">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                                </svg>
+                                <span class="sr-only">Відкрити фільтри</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="filters-content" :class="{'mobile-open': filtersOpen}">
-                        <form method="get" id="filterForm">
+                    <div class="filters-content" id="filters-content" :class="{'mobile-open': filtersOpen}">
+                        <form method="get" id="filterForm" @submit="filtersOpen = false">
                             {% if request.GET.q %}
                             <input type="hidden" name="q" value="{{ request.GET.q }}">
                             {% endif %}
@@ -174,7 +410,8 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                            current_category|default:''==category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -186,15 +423,18 @@
                                 <h4>Рівень складності</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="beginner" {% if current_difficulty == 'beginner' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="beginner" {% if
+                                            current_difficulty|default:''=='beginner' %}checked{% endif %}>
                                         <span>Початковий</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="intermediate" {% if current_difficulty == 'intermediate' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="intermediate" {% if
+                                            current_difficulty|default:''=='intermediate' %}checked{% endif %}>
                                         <span>Середній</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="advanced" {% if current_difficulty == 'advanced' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="advanced" {% if
+                                            current_difficulty|default:''=='advanced' %}checked{% endif %}>
                                         <span>Експертний</span>
                                     </label>
                                 </div>
@@ -205,11 +445,13 @@
                                 <h4>Тип доступу</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="price" value="free" {% if current_price == 'free' %}checked{% endif %}>
+                                        <input type="radio" name="price" value="free" {% if
+                                            current_price|default:''=='free' %}checked{% endif %}>
                                         <span>Безкоштовний</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="price" value="paid" {% if current_price == 'paid' %}checked{% endif %}>
+                                        <input type="radio" name="price" value="paid" {% if
+                                            current_price|default:''=='paid' %}checked{% endif %}>
                                         <span>Платний</span>
                                     </label>
                                 </div>
@@ -235,8 +477,38 @@
                             </div>
 
                             <div class="filter-actions">
-                                <button type="submit" class="btn btn-primary">Застосувати</button>
-                                <a href="{% url 'content:course_list' %}" class="btn btn-outline">Скинути</a>
+                                <button type="submit" class="btn btn-primary">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                    </svg>
+                                    Застосувати
+                                </button>
+                                <button type="button" @click="clearAllFilters()" class="btn btn-outline"
+                                    x-show="hasActiveFilters()">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                    </svg>
+                                    Скинути все
+                                </button>
+                                <a href="{% url 'content:course_list' %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}"
+                                    class="btn btn-ghost" x-show="!hasActiveFilters()">
+                                    Скинути
+                                </a>
+                            </div>
+
+                            <!-- Quick Filter Tags -->
+                            <div class="quick-filters" x-show="hasActiveFilters()">
+                                <h5>Активні фільтри:</h5>
+                                <div class="filter-tags">
+                                    <template x-for="[key, value] in Object.entries(activeFilters)" :key="key">
+                                        <span x-show="value !== ''" class="filter-tag"
+                                            @click="activeFilters[key] = ''; $refs.filterForm.submit()">
+                                            <span x-text="value"></span>
+                                            <button type="button">×</button>
+                                        </span>
+                                    </template>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -249,19 +521,20 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort == '-created_at' %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
+                                    %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort == 'title' %}selected{% endif %}>
+                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}>
                                     За назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort == '-title' %}selected{% endif %}>
+                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}>
                                     За назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort == 'price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort == '-price' %}selected{% endif %}>
+                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}>
                                     За ціною (спадання)
                                 </option>
                             </select>

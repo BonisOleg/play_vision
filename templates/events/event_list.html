@@ -1,0 +1,501 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Івенти - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/events.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="events-container">
+    <!-- Календар подій на тиждень -->
+    <section class="event-calendar">
+        <h2 class="calendar-title">Календар подій (7–10 днів)</h2>
+
+        <div class="calendar-grid">
+            <!-- Тестові дані для календаря -->
+            <div class="calendar-day calendar-day--active">
+                <div class="day-header">
+                    <h3 class="day-title">8 Пн</h3>
+                </div>
+                <div class="day-events">
+                    <a href="{% url 'events:event_detail' 'forum-fff-5' %}" class="event-card event-card--featured">
+                        <h4 class="event-title">Форум FFF 5</h4>
+                        <p class="event-time">18:00 - онлайн</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="calendar-day">
+                <div class="day-header">
+                    <h3 class="day-title">9 Вт</h3>
+                </div>
+                <div class="day-events">
+                    <a href="{% url 'events:event_detail' 'masterclass-xg' %}" class="event-card">
+                        <h4 class="event-title">Майстер-клас XG</h4>
+                        <p class="event-time">19:00 - онлайн</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="calendar-day">
+                <div class="day-header">
+                    <h3 class="day-title">10 Ср</h3>
+                </div>
+                <div class="day-events">
+                    <a href="{% url 'events:event_detail' 'roundtable-academies' %}" class="event-card">
+                        <h4 class="event-title">Круглий стіл: Академії</h4>
+                        <p class="event-time">17:00 - онлайн</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="calendar-day">
+                <div class="day-header">
+                    <h3 class="day-title">11 Чт</h3>
+                </div>
+                <div class="day-events">
+                    <a href="{% url 'events:event_detail' 'forum-fff-6' %}" class="event-card">
+                        <h4 class="event-title">Старт курсу ЗФП</h4>
+                        <p class="event-time">10:00 - онлайн</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="calendar-day">
+                <div class="day-header">
+                    <h3 class="day-title">12 Пт</h3>
+                </div>
+                <div class="day-events">
+                    <a href="{% url 'events:event_detail' 'qa-scout' %}" class="event-card">
+                        <h4 class="event-title">Q&A зі скаутом</h4>
+                        <p class="event-time">18:30 - онлайн</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="calendar-day">
+                <div class="day-header">
+                    <h3 class="day-title">13 Сб</h3>
+                </div>
+                <div class="day-events">
+                    <a href="#" class="event-card">
+                        <h4 class="event-title">Практикум GPS</h4>
+                        <p class="event-time">12:00 - офлайн</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="calendar-day">
+                <div class="day-header">
+                    <h3 class="day-title">14 Нд</h3>
+                </div>
+                <div class="day-events">
+                    <a href="#" class="event-card">
+                        <h4 class="event-title">Менторинг 1:1</h4>
+                        <p class="event-time">15:00 - онлайн</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="calendar-day">
+                <div class="day-header">
+                    <h3 class="day-title">15 Пн</h3>
+                </div>
+                <div class="day-events">
+                    <a href="{% url 'events:event_detail' 'internship-dynamo' %}" class="event-card">
+                        <h4 class="event-title">Форум батьків</h4>
+                        <p class="event-time">17:00 - офлайн</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Фільтри та список подій -->
+    <section class="events-section">
+        <div class="events-header">
+            <h1 class="page-title">Івенти</h1>
+            <p class="page-subtitle">Всі доступні офлайн та онлайн події Play Vision</p>
+        </div>
+
+        <div class="events-content">
+            <!-- Бокова панель з фільтрами -->
+            <aside class="events-sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Найближчі події</h3>
+                    <ul class="upcoming-events">
+                        <li class="upcoming-event">
+                            <a href="{% url 'events:event_detail' 'forum-fff-5' %}" class="upcoming-link">
+                                <span class="event-name">Форум футбольних фахівців 5</span>
+                                <span class="event-date">8 вер • 18:00</span>
+                                <span class="event-badge event-badge--online">онлайн</span>
+                            </a>
+                        </li>
+                        <li class="upcoming-event">
+                            <a href="{% url 'events:event_detail' 'forum-fff-6' %}" class="upcoming-link">
+                                <span class="event-name">Форум футбольних фахівців 6</span>
+                                <span class="event-date">листопад</span>
+                                <span class="event-badge event-badge--hybrid">гібрид</span>
+                            </a>
+                        </li>
+                        <li class="upcoming-event">
+                            <a href="{% url 'events:event_detail' 'internship-dynamo' %}" class="upcoming-link">
+                                <span class="event-name">Стажування у ФК Динамо</span>
+                                <span class="event-date">15 вер • 10:00</span>
+                                <span class="event-badge event-badge--offline">офлайн</span>
+                            </a>
+                        </li>
+                        <li class="upcoming-event">
+                            <a href="{% url 'events:event_detail' 'forum-parents-2' %}" class="upcoming-link">
+                                <span class="event-name">Форум футбольних батьків 2</span>
+                                <span class="event-date">20 вер • 17:00</span>
+                                <span class="event-badge event-badge--hybrid">гібрид</span>
+                            </a>
+                        </li>
+                        <li class="upcoming-event">
+                            <a href="{% url 'events:event_detail' 'lecture-psychology' %}" class="upcoming-link">
+                                <span class="event-name">Лекція з психологом</span>
+                                <span class="event-date">22 вер • 19:00</span>
+                                <span class="event-badge event-badge--online">онлайн</span>
+                            </a>
+                        </li>
+                        <li class="upcoming-event">
+                            <a href="{% url 'events:event_detail' 'masterclass-xg' %}" class="upcoming-link">
+                                <span class="event-name">Майстер-клас xG</span>
+                                <span class="event-date">30 вер • 19:00</span>
+                                <span class="event-badge event-badge--online">онлайн</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Тип події</h3>
+                    <div class="filter-group">
+                        <label class="filter-option">
+                            <input type="checkbox" name="event_type" value="forum">
+                            <span>Форум</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="event_type" value="webinar">
+                            <span>Вебінар</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="event_type" value="workshop">
+                            <span>Майстер-клас</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="event_type" value="internship">
+                            <span>Стажування</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="event_type" value="seminar">
+                            <span>Семінар</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="event_type" value="conference">
+                            <span>Конференція</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Формат</h3>
+                    <div class="filter-group">
+                        <label class="filter-option">
+                            <input type="radio" name="format" value="all" checked>
+                            <span>Всі формати</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="format" value="online">
+                            <span>Онлайн</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="format" value="offline">
+                            <span>Офлайн</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="format" value="hybrid">
+                            <span>Гібрид</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Список подій -->
+            <div class="events-main">
+                <div class="events-grid">
+                    {% for event in events %}
+                    <article class="event-item">
+                        <a href="{% url 'events:event_detail' event.slug %}" class="event-link">
+                            {% if event.thumbnail %}
+                            <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}" class="event-image">
+                            {% else %}
+                            <div class="event-image-placeholder">
+                                <svg class="placeholder-icon" width="60" height="60" fill="currentColor">
+                                    <use xlink:href="#icon-calendar"></use>
+                                </svg>
+                            </div>
+                            {% endif %}
+
+                            <div class="event-content">
+                                <div class="event-meta">
+                                    <span class="event-type">{{ event.get_event_type_display }}</span>
+                                    <span class="event-date">{{ event.start_datetime|date:"d.m.Y H:i" }}</span>
+                                </div>
+
+                                <h3 class="event-title">{{ event.title }}</h3>
+                                <p class="event-description">{{ event.short_description }}</p>
+
+                                <div class="event-footer">
+                                    <div class="event-info">
+                                        {% if event.is_online %}
+                                        <span class="event-location">
+                                            <svg class="icon icon--small" width="16" height="16">
+                                                <use xlink:href="#icon-globe"></use>
+                                            </svg>
+                                            Онлайн
+                                        </span>
+                                        {% else %}
+                                        <span class="event-location">
+                                            <svg class="icon icon--small" width="16" height="16">
+                                                <use xlink:href="#icon-location"></use>
+                                            </svg>
+                                            {{ event.location }}
+                                        </span>
+                                        {% endif %}
+
+                                        {% if event.is_free %}
+                                        <span class="event-price event-price--free">Безкоштовно</span>
+                                        {% else %}
+                                        <span class="event-price">{{ event.price }} ₴</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <button class="btn btn--primary btn--small">Детальніше</button>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    {% empty %}
+                    <!-- Тестові картки подій -->
+                    <article class="event-item">
+                        <a href="{% url 'events:event_detail' 'forum-fff-5' %}" class="event-link">
+                            <div class="event-image-placeholder">
+                                <svg class="placeholder-icon" width="60" height="60" fill="currentColor">
+                                    <use xlink:href="#icon-calendar"></use>
+                                </svg>
+                            </div>
+
+                            <div class="event-content">
+                                <div class="event-meta">
+                                    <span class="event-type">Форум</span>
+                                    <span class="event-date">08.09.2024 18:00</span>
+                                </div>
+
+                                <h3 class="event-title">Форум футбольних фахівців 5</h3>
+                                <p class="event-description">Щорічна онлайн-подія для тренерів, аналітиків, менеджерів
+                                    та психологів</p>
+
+                                <div class="event-footer">
+                                    <div class="event-info">
+                                        <span class="event-location">
+                                            <svg class="icon icon--small" width="16" height="16">
+                                                <use xlink:href="#icon-globe"></use>
+                                            </svg>
+                                            Онлайн
+                                        </span>
+                                        <span class="event-price">1290 ₴</span>
+                                    </div>
+
+                                    <button class="btn btn--primary btn--small">Детальніше</button>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="event-item">
+                        <a href="{% url 'events:event_detail' 'masterclass-xg' %}" class="event-link">
+                            <div class="event-image-placeholder">
+                                <svg class="placeholder-icon" width="60" height="60" fill="currentColor">
+                                    <use xlink:href="#icon-calendar"></use>
+                                </svg>
+                            </div>
+
+                            <div class="event-content">
+                                <div class="event-meta">
+                                    <span class="event-type">Майстер-клас</span>
+                                    <span class="event-date">09.09.2024 19:00</span>
+                                </div>
+
+                                <h3 class="event-title">Майстер-клас xG: аналіз очікуваних голів</h3>
+                                <p class="event-description">Практичний майстер-клас з використання метрики xG в аналізі
+                                    матчів</p>
+
+                                <div class="event-footer">
+                                    <div class="event-info">
+                                        <span class="event-location">
+                                            <svg class="icon icon--small" width="16" height="16">
+                                                <use xlink:href="#icon-globe"></use>
+                                            </svg>
+                                            Онлайн
+                                        </span>
+                                        <span class="event-price">890 ₴</span>
+                                    </div>
+
+                                    <button class="btn btn--primary btn--small">Детальніше</button>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="event-item">
+                        <a href="{% url 'events:event_detail' 'roundtable-academies' %}" class="event-link">
+                            <div class="event-image-placeholder">
+                                <svg class="placeholder-icon" width="60" height="60" fill="currentColor">
+                                    <use xlink:href="#icon-calendar"></use>
+                                </svg>
+                            </div>
+
+                            <div class="event-content">
+                                <div class="event-meta">
+                                    <span class="event-type">Семінар</span>
+                                    <span class="event-date">10.09.2024 17:00</span>
+                                </div>
+
+                                <h3 class="event-title">Круглий стіл: Розвиток академій в Україні</h3>
+                                <p class="event-description">Обговорення актуальних питань розвитку футбольних академій
+                                </p>
+
+                                <div class="event-footer">
+                                    <div class="event-info">
+                                        <span class="event-location">
+                                            <svg class="icon icon--small" width="16" height="16">
+                                                <use xlink:href="#icon-globe"></use>
+                                            </svg>
+                                            Онлайн
+                                        </span>
+                                        <span class="event-price event-price--free">Безкоштовно</span>
+                                    </div>
+
+                                    <button class="btn btn--primary btn--small">Детальніше</button>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="event-item">
+                        <a href="{% url 'events:event_detail' 'internship-dynamo' %}" class="event-link">
+                            <div class="event-image-placeholder">
+                                <svg class="placeholder-icon" width="60" height="60" fill="currentColor">
+                                    <use xlink:href="#icon-calendar"></use>
+                                </svg>
+                            </div>
+
+                            <div class="event-content">
+                                <div class="event-meta">
+                                    <span class="event-type">Стажування</span>
+                                    <span class="event-date">15.09.2024 10:00</span>
+                                </div>
+
+                                <h3 class="event-title">Стажування у ФК "Динамо" Київ</h3>
+                                <p class="event-description">Практичне стажування в академії провідного клубу України
+                                </p>
+
+                                <div class="event-footer">
+                                    <div class="event-info">
+                                        <span class="event-location">
+                                            <svg class="icon icon--small" width="16" height="16">
+                                                <use xlink:href="#icon-location"></use>
+                                            </svg>
+                                            м. Київ
+                                        </span>
+                                        <span class="event-price">3500 ₴</span>
+                                    </div>
+
+                                    <button class="btn btn--primary btn--small">Детальніше</button>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+
+                <!-- Пагінація -->
+                {% if is_paginated %}
+                <nav class="pagination">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link pagination-link--prev">
+                        <svg class="icon" width="20" height="20">
+                            <use xlink:href="#icon-arrow-left"></use>
+                        </svg>
+                        Попередня
+                    </a>
+                    {% endif %}
+
+                    <div class="pagination-numbers">
+                        {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <span class="pagination-current">{{ num }}</span>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
+                            href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                            {% endif %}
+                            {% endfor %}
+                    </div>
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-link pagination-link--next">
+                        Наступна
+                        <svg class="icon" width="20" height="20">
+                            <use xlink:href="#icon-arrow-right"></use>
+                        </svg>
+                    </a>
+                    {% endif %}
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- SVG спрайт для іконок -->
+<svg style="display: none;">
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2" />
+        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" />
+        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" />
+        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" />
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+        <line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" fill="none"
+            stroke="currentColor" stroke-width="2" />
+    </symbol>
+    <symbol id="icon-location" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2" />
+        <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2" />
+    </symbol>
+    <symbol id="icon-calendar-empty" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-dasharray="3 3" />
+        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" />
+        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" />
+        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" />
+    </symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+        <line x1="19" y1="12" x2="5" y2="12" stroke="currentColor" stroke-width="2" />
+        <polyline points="12 19 5 12 12 5" fill="none" stroke="currentColor" stroke-width="2" />
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+        <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" />
+        <polyline points="12 5 19 12 12 19" fill="none" stroke="currentColor" stroke-width="2" />
+    </symbol>
+</svg>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/events.js' %}"></script>
+{% endblock %}

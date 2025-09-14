@@ -114,11 +114,13 @@ class HubFilters {
 
         // Auto-submit on filter change
         const filterInputs = filterForm.querySelectorAll('input[type="radio"]');
+        const debouncedSubmit = this.debounce(() => {
+            filterForm.submit();
+        }, 300);
+
         filterInputs.forEach(input => {
             input.addEventListener('change', () => {
-                this.debounce(() => {
-                    filterForm.submit();
-                }, 300)();
+                debouncedSubmit();
             });
         });
 
@@ -177,9 +179,223 @@ class HubFilters {
     }
 
     handleSearchSuggestions(query) {
-        // Implementation for search suggestions
-        // This could be enhanced with actual AJAX calls to get suggestions
-        console.log('Search query:', query);
+        // Enhanced search suggestions with autocomplete
+        if (query.length < 2) {
+            this.hideSuggestions();
+            return;
+        }
+
+        // Show loading state
+        this.showSuggestionsLoading();
+
+        // Simulate API call with timeout (replace with actual AJAX)
+        setTimeout(() => {
+            const suggestions = this.generateSuggestions(query);
+            this.displaySuggestions(suggestions, query);
+        }, 200);
+    }
+
+    generateSuggestions(query) {
+        // Mock suggestions - replace with actual API call
+        const mockSuggestions = [
+            { type: 'course', title: 'Python для початківців', category: 'Програмування' },
+            { type: 'course', title: 'Data Science з Python', category: 'Аналітика' },
+            { type: 'course', title: 'Web-розробка з Django', category: 'Веб-розробка' },
+            { type: 'material', title: 'Вступ до алгоритмів', category: 'Комп\'ютерні науки' },
+            { type: 'material', title: 'Основи дизайну', category: 'Дизайн' }
+        ];
+
+        return mockSuggestions.filter(item =>
+            item.title.toLowerCase().includes(query.toLowerCase()) ||
+            item.category.toLowerCase().includes(query.toLowerCase())
+        ).slice(0, 5);
+    }
+
+    displaySuggestions(suggestions, query) {
+        let suggestionsContainer = document.getElementById('search-suggestions');
+
+        if (!suggestionsContainer) {
+            suggestionsContainer = this.createSuggestionsContainer();
+        }
+
+        if (suggestions.length === 0) {
+            suggestionsContainer.innerHTML = `
+                <div class="suggestion-item no-results">
+                    <span class="suggestion-text">Результатів не знайдено для "${query}"</span>
+                </div>
+            `;
+        } else {
+            suggestionsContainer.innerHTML = suggestions.map((item, index) => `
+                <div class="suggestion-item" data-index="${index}" data-type="${item.type}">
+                    <span class="suggestion-icon">${item.type === 'course' ? '📚' : '📄'}</span>
+                    <div class="suggestion-content">
+                        <span class="suggestion-title">${this.highlightQuery(item.title, query)}</span>
+                        <span class="suggestion-category">${item.category}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            suggestionsContainer.querySelectorAll('.suggestion-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const title = item.querySelector('.suggestion-title').textContent;
+                    this.selectSuggestion(title);
+                });
+            });
+        }
+
+        suggestionsContainer.classList.add('visible');
+    }
+
+    createSuggestionsContainer() {
+        const container = document.createElement('div');
+        container.id = 'search-suggestions';
+        container.className = 'search-suggestions-container';
+
+        const searchInput = document.querySelector('.search-input');
+        const searchWrapper = searchInput.closest('.search-input-wrapper') || searchInput.parentElement;
+        searchWrapper.style.position = 'relative';
+        searchWrapper.appendChild(container);
+
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .search-suggestions-container {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                border: 1px solid var(--hub-border);
+                border-top: none;
+                border-radius: 0 0 var(--hub-radius) var(--hub-radius);
+                box-shadow: var(--hub-shadow);
+                z-index: 100;
+                max-height: 300px;
+                overflow-y: auto;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: all 0.2s ease;
+                pointer-events: none;
+            }
+            
+            .search-suggestions-container.visible {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: all;
+            }
+            
+            .suggestion-item {
+                display: flex;
+                align-items: center;
+                padding: 0.75rem;
+                cursor: pointer;
+                border-bottom: 1px solid #f0f0f0;
+                transition: background 0.2s ease;
+            }
+            
+            .suggestion-item:hover,
+            .suggestion-item.highlighted {
+                background: var(--hub-bg-gray);
+            }
+            
+            .suggestion-item.no-results {
+                color: var(--hub-text-light);
+                cursor: default;
+            }
+            
+            .suggestion-icon {
+                margin-right: 0.75rem;
+                font-size: 1.2rem;
+            }
+            
+            .suggestion-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .suggestion-title {
+                font-weight: 500;
+                color: var(--hub-text);
+                margin-bottom: 0.25rem;
+            }
+            
+            .suggestion-category {
+                font-size: 0.85rem;
+                color: var(--hub-text-light);
+            }
+            
+            .suggestion-title mark {
+                background: var(--hub-primary);
+                color: white;
+                padding: 0.1rem 0.2rem;
+                border-radius: 2px;
+            }
+            
+            .search-suggestions-loading {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1rem;
+                color: var(--hub-text-light);
+            }
+        `;
+
+        if (!document.querySelector('#search-suggestions-styles')) {
+            style.id = 'search-suggestions-styles';
+            document.head.appendChild(style);
+        }
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-input-wrapper')) {
+                this.hideSuggestions();
+            }
+        });
+
+        return container;
+    }
+
+    showSuggestionsLoading() {
+        let suggestionsContainer = document.getElementById('search-suggestions');
+
+        if (!suggestionsContainer) {
+            suggestionsContainer = this.createSuggestionsContainer();
+        }
+
+        suggestionsContainer.innerHTML = `
+            <div class="search-suggestions-loading">
+                <span>🔍 Пошук...</span>
+            </div>
+        `;
+        suggestionsContainer.classList.add('visible');
+    }
+
+    hideSuggestions() {
+        const suggestionsContainer = document.getElementById('search-suggestions');
+        if (suggestionsContainer) {
+            suggestionsContainer.classList.remove('visible');
+        }
+    }
+
+    selectSuggestion(title) {
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+            searchInput.value = title;
+            this.hideSuggestions();
+
+            // Submit the form
+            const form = searchInput.closest('form');
+            if (form) {
+                form.submit();
+            }
+        }
+    }
+
+    highlightQuery(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
     }
 
     handleFavoriteClick(e, btn) {
@@ -524,6 +740,8 @@ class HubAccessibility {
     }
 }
 
+// Alpine.js components are now defined inline in the template
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all components
@@ -564,3 +782,7 @@ window.HubKnowledgeBase = {
     HubPerformance,
     HubAccessibility
 };
+
+// Make Alpine.js functions globally available
+window.quotesCarousel = quotesCarousel;
+window.materialsCarousel = materialsCarousel;

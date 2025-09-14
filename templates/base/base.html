@@ -23,6 +23,8 @@
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 
+    {% block extra_head %}{% endblock %}
+
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js"></script>
 </head>
@@ -52,7 +54,35 @@
                         class="navbar-link hub-link {% if 'hub' in request.path %}active{% endif %}">
                         Хаб знань
                     </a>
-                    <a href="{% url 'events:event_list' %}" class="navbar-link">Івенти</a>
+                    <div class="navbar-dropdown">
+                        <a href="{% url 'events:event_list' %}"
+                            class="navbar-link {% if 'events' in request.path %}active{% endif %}">
+                            Івенти
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-header">Найближчі події</div>
+                            {% for event in upcoming_events_menu %}
+                            <a href="{% url 'events:event_detail' event.slug %}" class="dropdown-item">
+                                <div class="dropdown-item-content">
+                                    <div class="dropdown-item-title">{{ event.title }}</div>
+                                    <div class="dropdown-item-meta">
+                                        <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{
+                                            event.start_datetime|date:"H:i" }}</span>
+                                        <span class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
+                                            {% if event.is_online %}онлайн{% else %}офлайн{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                            {% empty %}
+                            <div class="dropdown-empty">Немає запланованих подій</div>
+                            {% endfor %}
+                            <div class="dropdown-divider"></div>
+                            <a href="{% url 'events:event_list' %}" class="dropdown-item dropdown-item--all">
+                                Всі події →
+                            </a>
+                        </div>
+                    </div>
                     <a href="{% url 'core:coming_soon' %}?page=mentoring" class="navbar-link">Ментор-коучінг</a>
                     <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">Підписка</a>
                 </div>

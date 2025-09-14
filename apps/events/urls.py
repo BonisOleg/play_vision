@@ -10,7 +10,7 @@ urlpatterns = [
     path('<slug:slug>/', views.EventDetailView.as_view(), name='event_detail'),
     
     # Registration actions
-    path('<slug:slug>/register/', views.register_for_event, name='register'),
+    path('<slug:slug>/register/', views.event_register, name='register'),
     path('<slug:slug>/waitlist/', views.join_waitlist, name='join_waitlist'),
     path('<slug:slug>/cancel/', views.cancel_registration, name='cancel_registration'),
     path('<slug:slug>/feedback/', views.submit_feedback, name='submit_feedback'),

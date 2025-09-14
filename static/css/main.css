@@ -182,6 +182,133 @@ a:hover {
     font-weight: 600;
 }
 
+/* Dropdown menu */
+.navbar-dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 350px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    padding: 8px;
+    margin-top: 8px;
+    z-index: 200;
+    max-height: 80vh;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+/* Show dropdown on hover */
+.navbar-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Show dropdown when has class */
+.navbar-dropdown.dropdown-open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-header {
+    padding: 12px 16px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.dropdown-item:hover {
+    background: var(--color-bg-gray);
+    text-decoration: none;
+}
+
+.dropdown-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dropdown-item-title {
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+.dropdown-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+.dropdown-item-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.dropdown-item-badge--online,
+.dropdown-item-badge--webinar {
+    background: rgba(76, 175, 80, 0.1);
+    color: #388E3C;
+}
+
+.dropdown-item-badge--offline,
+.dropdown-item-badge--seminar,
+.dropdown-item-badge--workshop {
+    background: rgba(255, 87, 34, 0.1);
+    color: #D84315;
+}
+
+.dropdown-item-badge--hybrid,
+.dropdown-item-badge--forum {
+    background: rgba(255, 193, 7, 0.1);
+    color: #F57C00;
+}
+
+.dropdown-divider {
+    margin: 8px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.dropdown-item--all {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.dropdown-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--color-text-light);
+}
+
 .navbar-icon {
     display: flex;
     align-items: center;

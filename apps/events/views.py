@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 import json
 
-from .models import Event, EventTicket, EventWaitlist, EventFeedback, Speaker
+from .models import Event, EventTicket, EventWaitlist, EventFeedback, Speaker, EventRegistration
 from apps.subscriptions.models import TicketBalance
 
 
@@ -476,3 +476,67 @@ def submit_feedback(request, slug):
         messages.error(request, 'Помилка в заповненні форми відгуку')
     
     return redirect('events:event_detail', slug=slug)
+
+
+def event_register(request, slug):
+    """Register for an event"""
+    event = get_object_or_404(Event, slug=slug, status='published')
+    
+    if not request.user.is_authenticated:
+        messages.error(request, 'Необхідно увійти для реєстрації')
+        return redirect('accounts:login')
+    
+    if request.method == 'POST':
+        # Check if already registered
+        if EventTicket.objects.filter(event=event, user=request.user).exists():
+            messages.info(request, 'Ви вже зареєстровані на цю подію')
+            return redirect('events:event_detail', slug=slug)
+        
+        # Check capacity
+        if event.tickets_sold >= event.max_attendees:
+            messages.error(request, 'На жаль, всі місця зайняті')
+            return redirect('events:event_detail', slug=slug)
+        
+        # Get form data
+        name = request.POST.get('name', request.user.get_full_name() or request.user.username)
+        email = request.POST.get('email', request.user.email)
+        phone = request.POST.get('phone', '')
+        
+        # Create ticket
+        ticket = EventTicket.objects.create(
+            event=event,
+            user=request.user,
+            price=event.price if not event.is_free else 0,
+            ticket_number=f"EVT{event.id:04d}{request.user.id:04d}"
+        )
+        
+        # Create registration
+        EventRegistration.objects.create(
+            event=event,
+            user=request.user,
+            ticket=ticket,
+            attendee_name=name,
+            attendee_email=email,
+            attendee_phone=phone,
+            company=request.POST.get('company', ''),
+            position=request.POST.get('position', ''),
+            notes=request.POST.get('expectations', '')
+        )
+        
+        # Update tickets sold
+        event.tickets_sold += 1
+        event.save()
+        
+        messages.success(request, 'Ви успішно зареєструвалися на подію!')
+        
+        # If paid event, redirect to payment
+        if not event.is_free:
+            return redirect('payments:checkout', item_type='ticket', item_id=ticket.id)
+        
+        return redirect('events:event_detail', slug=slug)
+    
+    # GET request - show registration form
+    context = {
+        'event': event
+    }
+    return render(request, 'events/event_registration_form.html', context)

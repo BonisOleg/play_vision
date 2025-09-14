@@ -88,6 +88,17 @@
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.expert-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .expert-photo {
@@ -96,6 +107,30 @@
     border-radius: 50%;
     object-fit: cover;
     box-shadow: var(--hub-shadow);
+    transition: transform 0.3s ease;
+}
+
+.expert-photo:hover {
+    transform: scale(1.05);
+}
+
+.expert-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.expert-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--hub-primary);
+}
+
+.expert-role {
+    font-size: 0.9rem;
+    color: var(--hub-text-light);
+    font-style: italic;
 }
 
 .quote-content blockquote {
@@ -133,6 +168,58 @@
 .quote-nav button.active,
 .quote-nav button:hover {
     background: var(--hub-primary);
+}
+
+/* Quote navigation arrows */
+.quote-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.arrow-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--hub-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: all;
+    box-shadow: var(--hub-shadow);
+    margin: 0 1rem;
+}
+
+.arrow-btn:hover {
+    background: var(--hub-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.arrow-btn:focus {
+    outline: 2px solid var(--hub-primary);
+    outline-offset: 2px;
+}
+
+.arrow-btn:active {
+    transform: scale(0.95);
+}
+
+/* Hide arrows on mobile to avoid interference with touch gestures */
+@media (max-width: 768px) {
+    .quote-arrows {
+        display: none;
+    }
 }
 
 /* ===== MAIN MATERIALS ===== */
@@ -386,6 +473,22 @@
     background: var(--hub-bg-gray);
 }
 
+.filters-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.active-filters-count {
+    font-size: 0.85rem;
+    color: var(--hub-primary);
+    font-weight: 600;
+    background: rgba(255, 107, 53, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
 .filters-header h3 {
     margin: 0;
     font-size: 1.1rem;
@@ -446,6 +549,73 @@
     flex: 1;
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.filter-actions .btn .icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Quick Filters */
+.quick-filters {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hub-border);
+}
+
+.quick-filters h5 {
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+    color: var(--hub-text-light);
+    font-weight: 500;
+}
+
+.filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--hub-primary);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-tag:hover {
+    background: var(--hub-primary-dark);
+    transform: translateY(-1px);
+}
+
+.filter-tag button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.filter-tag button:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* ===== PRODUCTS CONTENT ===== */
@@ -887,7 +1057,6 @@
     }
 
     .filters-content {
-        display: none;
         position: absolute;
         top: 100%;
         left: 0;
@@ -896,9 +1065,13 @@
         box-shadow: var(--hub-shadow);
         border-radius: 0 0 var(--hub-radius) var(--hub-radius);
         z-index: 10;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
     }
 
     .filters-content.mobile-open {
+        max-height: 500px;
         display: block;
     }
 
@@ -1346,7 +1519,276 @@
     }
 }
 
-/* Reduced motion for accessibility */
+/* ===== iOS SAFARI SPECIFIC OPTIMIZATIONS ===== */
+@supports (-webkit-touch-callout: none) {
+
+    /* Fix for iOS Safari viewport units */
+    .hub-container {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+
+    /* Smooth scrolling for iOS */
+    .scroll-content,
+    .carousel-content,
+    .filters-content {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Fix for iOS zoom on input focus */
+    input,
+    textarea,
+    select {
+        font-size: 16px;
+    }
+
+    /* Fix for iOS button appearance */
+    .btn,
+    .search-btn,
+    .filter-btn,
+    .nav-btn,
+    .mobile-filters-toggle,
+    .filter-option input,
+    .sort-select {
+        -webkit-appearance: none;
+        border-radius: var(--hub-radius);
+    }
+
+    /* Fix backdrop filter for iOS */
+    .subscription-banner,
+    .material-nav {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Fix for iOS touch targets */
+    .material-card,
+    .filter-btn,
+    .sort-btn,
+    .nav-btn,
+    .filter-option,
+    .quote-nav button,
+    .arrow-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Improve touch responsiveness */
+    .material-card,
+    .product-card,
+    .filter-option,
+    .suggestion-tag,
+    .filter-tag {
+        -webkit-tap-highlight-color: rgba(255, 107, 53, 0.2);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    /* Prevent text size adjustment */
+    body {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    /* Fix sticky positioning on iOS */
+    .subscription-banner,
+    .filters-sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+    }
+
+    /* Improve scroll performance */
+    .carousel-wrapper,
+    .materials-carousel,
+    .quotes-carousel {
+        will-change: transform;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+}
+
+/* ===== ENHANCED MOBILE RESPONSIVE ===== */
+@media (max-width: 480px) {
+
+    /* Extra small mobile optimizations */
+    .subscription-banner-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .subscription-banner h2 {
+        font-size: 1.25rem;
+    }
+
+    .expert-quotes {
+        padding: 2rem 0;
+    }
+
+    .quote-slide {
+        padding: 1rem;
+    }
+
+    .quote-content blockquote {
+        font-size: 1.1rem;
+    }
+
+    .expert-photo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .materials-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+
+    .material-card-content {
+        padding: 1rem;
+    }
+
+    .material-card-title {
+        font-size: 1rem;
+    }
+
+    .search-filters {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .search-input-wrapper {
+        flex: 1;
+    }
+
+    .filter-group {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Remove hover effects on touch devices */
+    .material-card:hover,
+    .product-card:hover,
+    .result-card:hover {
+        transform: none;
+        box-shadow: var(--hub-shadow);
+    }
+
+    .nav-btn:hover,
+    .filter-btn:hover,
+    .sort-btn:hover {
+        transform: none;
+        background: var(--hub-bg-gray);
+    }
+
+    .suggestion-tag:hover {
+        transform: none;
+        background: var(--hub-primary);
+        color: white;
+    }
+
+    /* Increase touch targets */
+    .carousel-nav {
+        padding: 1rem;
+    }
+
+    .nav-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+    }
+
+    .favorite-btn,
+    .share-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* ===== LANDSCAPE MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) and (orientation: landscape) {
+    .subscription-banner {
+        padding: 1rem 0;
+    }
+
+    .subscription-banner h2 {
+        font-size: 1.2rem;
+    }
+
+    .expert-quotes {
+        padding: 2rem 0;
+    }
+
+    .main-materials {
+        padding: 2rem 0;
+    }
+
+    .materials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===== HIGH DPI DISPLAYS ===== */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+    .expert-photo,
+    .instructor-avatar {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --hub-bg: #1a1a1a;
+        --hub-bg-gray: #2d2d2d;
+        --hub-text: #e0e0e0;
+        --hub-text-light: #a0a0a0;
+        --hub-border: #404040;
+        --hub-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        --hub-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .material-card,
+    .product-card,
+    .result-card,
+    .sidebar-card {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #e0e0e0;
+    }
+
+    .material-card-title,
+    .product-title,
+    .result-title {
+        color: #ffffff;
+    }
+
+    .subscription-banner {
+        background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        border-bottom: 1px solid #404040;
+    }
+
+    .search-input,
+    .filter-select {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #e0e0e0;
+    }
+
+    .search-input::placeholder {
+        color: #a0a0a0;
+    }
+}
+
+/* ===== REDUCED MOTION FOR ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
