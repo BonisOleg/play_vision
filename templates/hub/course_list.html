@@ -363,7 +363,8 @@
 
             <div class="products-layout">
                 <!-- Filters Sidebar -->
-                <aside class="filters-sidebar" x-data="{ 
+                <aside class="filters-sidebar"
+                    x-data="{ 
                     filtersOpen: false,
                     activeFilters: {
                         category: '{{ current_category|default:"" }}',
@@ -375,9 +376,9 @@
                         return Object.values(this.activeFilters).some(value => value !== '');
                     },
                     clearAllFilters() {
-                        this.activeFilters = { category: '', difficulty: '', price: '', duration: '' };
-                        window.location.href = '{% url " content:course_list" %}{% if request.GET.q %}?q={{
-                    request.GET.q }}{% endif %}'; } }" role="complementary" aria-label="Фільтри курсів">
+                        this.activeFilters = { category: '', difficulty: '', price: '', duration: '' }; window.location.href = '{% url "
+                    content:course_list" %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}'; } }"
+                    role="complementary" aria-label="Фільтри курсів">
                     <div class="filters-header">
                         <h3>Фільтрувати</h3>
                         <div class="filters-controls">
@@ -405,8 +406,7 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
-                                            current_category|default:''==category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -418,18 +418,15 @@
                                 <h4>Рівень складності</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="beginner" {% if
-                                            current_difficulty|default:''=='beginner' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="beginner" {% if current_difficulty|default:'' == 'beginner' %}checked{% endif %}>
                                         <span>Початковий</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="intermediate" {% if
-                                            current_difficulty|default:''=='intermediate' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="intermediate" {% if current_difficulty|default:'' == 'intermediate' %}checked{% endif %}>
                                         <span>Середній</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="advanced" {% if
-                                            current_difficulty|default:''=='advanced' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="advanced" {% if current_difficulty|default:'' == 'advanced' %}checked{% endif %}>
                                         <span>Експертний</span>
                                     </label>
                                 </div>
@@ -440,13 +437,11 @@
                                 <h4>Тип доступу</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="price" value="free" {% if
-                                            current_price|default:''=='free' %}checked{% endif %}>
+                                        <input type="radio" name="price" value="free" {% if current_price|default:'' == 'free' %}checked{% endif %}>
                                         <span>Безкоштовний</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="price" value="paid" {% if
-                                            current_price|default:''=='paid' %}checked{% endif %}>
+                                        <input type="radio" name="price" value="paid" {% if current_price|default:'' == 'paid' %}checked{% endif %}>
                                         <span>Платний</span>
                                     </label>
                                 </div>
@@ -516,20 +511,19 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
-                                    %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}>
+                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}>
                                     За назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}>
+                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}>
                                     За назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}>
+                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}>
                                     За ціною (спадання)
                                 </option>
                             </select>
