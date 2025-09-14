@@ -34,15 +34,22 @@ function initCalendar() {
     console.log('Found calendar days:', calendarDays.length);
 
     calendarDays.forEach((day, index) => {
-        // Primary click handler
+        // Use click with debouncing to prevent double execution
+        let isHandled = false;
+
         day.addEventListener('click', function (e) {
+            if (isHandled) return;
+            isHandled = true;
+
+            // Reset flag after short delay
+            setTimeout(() => { isHandled = false; }, 300);
+
             handleCalendarDayClick(this, index, e);
         });
 
-        // Touch support for mobile
+        // Prevent touchend conflicts on mobile
         day.addEventListener('touchend', function (e) {
-            e.preventDefault();
-            handleCalendarDayClick(this, index, e);
+            e.preventDefault(); // Prevent click event firing after touchend
         });
 
         // Add pointer cursor to indicate clickability
@@ -80,12 +87,8 @@ function initCalendar() {
                 if (eventCard.href && eventCard.href !== '#' && eventCard.href !== window.location.href) {
                     console.log('🔗 Navigating to:', eventCard.href);
 
-                    // Add loading visual feedback
-                    dayElement.style.opacity = '0.6';
-
-                    setTimeout(() => {
-                        window.location.href = eventCard.href;
-                    }, 150);
+                    // Direct navigation without delay to prevent conflicts
+                    window.location.href = eventCard.href;
                 } else {
                     console.log('⚠️ No valid link found for event');
                 }
@@ -95,10 +98,24 @@ function initCalendar() {
         }
     }
 
-    // Auto-scroll to active day on load
+    // Auto-scroll to active day on load (only if not visible)
     const activeDay = document.querySelector('.calendar-day--active');
     if (activeDay) {
-        activeDay.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        const rect = activeDay.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.left >= 0 &&
+            rect.bottom <= window.innerHeight &&
+            rect.right <= window.innerWidth;
+
+        if (!isVisible) {
+            // Use requestAnimationFrame to prevent layout conflicts
+            requestAnimationFrame(() => {
+                activeDay.scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'center',
+                    block: 'nearest'
+                });
+            });
+        }
     }
 }
 

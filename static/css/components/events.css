@@ -59,13 +59,13 @@
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    will-change: box-shadow, background-color;
     cursor: pointer;
     min-width: 160px;
 }
 
 .calendar-day:hover {
-    transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
@@ -216,12 +216,13 @@
     background: var(--event-accent);
     border-radius: 8px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, padding-left 0.2s ease;
+    will-change: background-color, padding-left;
 }
 
 .upcoming-link:hover {
     background: var(--event-border);
-    transform: translateX(4px);
+    padding-left: 16px;
 }
 
 .event-name {
@@ -306,26 +307,19 @@
     accent-color: var(--event-primary);
 }
 
-/* Calendar day click styles */
-.calendar-day {
-    transition: all 0.2s ease;
-}
-
-.calendar-day:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+/* Calendar day click styles - уже визначено вище */
 
 /* Event card styles */
 .event-card {
     text-decoration: none;
     color: inherit;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, opacity 0.2s ease;
+    will-change: color, opacity;
 }
 
 .event-card:hover {
     color: var(--event-primary);
-    transform: scale(1.02);
+    opacity: 0.9;
 }
 
 .event-card .event-title,
@@ -355,12 +349,13 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    transition: box-shadow 0.2s ease, opacity 0.2s ease;
+    will-change: box-shadow, opacity;
 }
 
 .event-item:hover {
-    transform: translateY(-4px);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    opacity: 0.95;
 }
 
 .event-link {
@@ -737,12 +732,13 @@
     padding: 20px;
     background: var(--event-accent);
     border-radius: 16px;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    will-change: background-color, box-shadow;
 }
 
 .speaker-card:hover {
     background: var(--event-border);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .speaker-photo,
@@ -798,12 +794,13 @@
     background: var(--event-accent);
     border-radius: 12px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    will-change: background-color, box-shadow;
 }
 
 .next-event-card:hover {
     background: var(--event-border);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .next-event-title {
@@ -1008,7 +1005,8 @@
     text-decoration: none;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    will-change: background-color, box-shadow;
 }
 
 .btn--primary {
@@ -1018,7 +1016,7 @@
 
 .btn--primary:hover {
     background: #C91A20;
-    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(201, 26, 32, 0.3);
 }
 
 .btn--secondary {
