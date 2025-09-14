@@ -1,5 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 from . import views
 
 app_name = 'accounts'
@@ -20,13 +21,11 @@ urlpatterns = [
     path('verify/email/<str:code>/', views.VerifyEmailView.as_view(), name='verify_email'),
     path('verify/phone/<str:code>/', views.VerifyPhoneView.as_view(), name='verify_phone'),
     
-    # Profile
-    path('profile/', views.ProfileView.as_view(), name='profile'),
-    path('profile/edit/', views.ProfileEditView.as_view(), name='profile_edit'),
-    
-    # Additional profile sections
-    path('subscription/', views.SubscriptionView.as_view(), name='subscription'),
-    path('courses/', views.MyCoursesView.as_view(), name='my_courses'),
-    path('events/', views.MyEventsView.as_view(), name='my_events'),
-    path('settings/', views.SettingsView.as_view(), name='settings'),
+    # Redirects from old URLs to new cabinet
+    path('profile/', RedirectView.as_view(pattern_name='cabinet:profile', permanent=True), name='profile'),
+    path('profile/edit/', RedirectView.as_view(pattern_name='cabinet:profile', permanent=True), name='profile_edit'),
+    path('subscription/', RedirectView.as_view(pattern_name='cabinet:subscription', permanent=True), name='subscription'),
+    path('courses/', RedirectView.as_view(pattern_name='cabinet:courses', permanent=True), name='my_courses'),
+    path('events/', RedirectView.as_view(pattern_name='cabinet:events', permanent=True), name='my_events'),
+    path('settings/', RedirectView.as_view(pattern_name='cabinet:settings', permanent=True), name='settings'),
 ]

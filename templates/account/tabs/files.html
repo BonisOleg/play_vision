@@ -1,0 +1,102 @@
+<!-- Вкладка "Мої файли" -->
+<div class="files-tab">
+    {% if materials %}
+    <div class="materials-grid">
+        {% for material in materials %}
+        <div class="material-card" data-material-id="{{ material.id }}">
+            <!-- Заголовок матеріалу -->
+            <div class="material-header">
+                <h4 class="material-title">{{ material.title }}</h4>
+                <div class="material-type">{{ material.content_type }}</div>
+                <button class="favorite-btn {% if material.is_favorite %}active{% endif %}"
+                    onclick="toggleFavorite({{ material.course_id }})">
+                    <span class="star-icon">★</span>
+                </button>
+            </div>
+
+            <!-- Прогрес бар -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ material.progress }}%"></div>
+                </div>
+                <div class="progress-text">{{ material.progress|floatformat:0 }}%</div>
+            </div>
+
+            <!-- Дії -->
+            <div class="material-actions">
+                <button class="btn-action btn-primary" onclick="viewMaterial({{ material.id }})">
+                    Переглянути
+                </button>
+
+                {% if material.can_download %}
+                <button class="btn-action btn-secondary" onclick="downloadMaterial({{ material.id }})">
+                    В офлайн
+                </button>
+                {% else %}
+                <button class="btn-action btn-secondary disabled" disabled>
+                    В офлайн
+                </button>
+                {% endif %}
+
+                <button class="btn-action btn-outline"
+                    onclick="toggleCompleted({{ material.id }}, {{ material.is_completed|yesno:'true,false' }})">
+                    {% if material.is_completed %}
+                    Переглянуто
+                    {% else %}
+                    Позначити
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Статистика -->
+    <div class="files-stats">
+        <div class="stat-item">
+            <span class="stat-number">{{ files_stats.total_materials }}</span>
+            <span class="stat-label">Всього матеріалів</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{{ files_stats.completed_materials }}</span>
+            <span class="stat-label">Завершено</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{{ files_stats.in_progress_materials }}</span>
+            <span class="stat-label">В процесі</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">{{ files_stats.favorite_courses }}</span>
+            <span class="stat-label">Улюблених</span>
+        </div>
+    </div>
+    {% else %}
+    <!-- Порожній стан -->
+    <div class="empty-state">
+        <div class="empty-icon">📁</div>
+        <h3>Поки що немає доступних файлів</h3>
+        {% if not active_subscription %}
+        <p>Оформіть підписку для доступу до ексклюзивних матеріалів</p>
+        <a href="{% url 'pricing' %}" class="btn-primary">Оформити підписку</a>
+        {% else %}
+        <p>Почніть вивчати курси в нашому Хабі знань</p>
+        <a href="{% url 'content:course_list' %}" class="btn-primary">Перейти до курсів</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Модальне вікно для перегляду матеріалу -->
+<div id="material-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-title">Назва матеріалу</h3>
+            <button class="modal-close" onclick="closeMaterialModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="material-content">
+                <!-- Тут буде завантажуватися контент матеріалу -->
+            </div>
+        </div>
+    </div>
+</div>

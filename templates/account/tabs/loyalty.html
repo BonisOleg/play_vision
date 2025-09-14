@@ -1,0 +1,156 @@
+<!-- Вкладка програми лояльності -->
+<div class="loyalty-tab">
+    <div class="loyalty-cards">
+        <!-- Поточний рівень -->
+        <div class="info-card">
+            <h3>Рівень</h3>
+            <div class="tier-info">
+                {% if current_tier %}
+                <div class="tier-name tier-{{ current_tier.name|lower }}">
+                    {{ current_tier.name }}
+                </div>
+                <div class="tier-points">
+                    {{ loyalty_account.points }} балів
+                </div>
+                {% else %}
+                <div class="tier-name tier-bronze">
+                    Bronze
+                </div>
+                <div class="tier-points">
+                    0 балів
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Прогрес рівня -->
+        <div class="info-card">
+            <h3>Прогрес рівня</h3>
+            {% if next_tier %}
+            <div class="progress-info">
+                <div class="progress-text">
+                    {{ loyalty_account.points }}/{{ next_tier.points_required }} балів до {{ next_tier.name }}
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ progress_percentage }}%"></div>
+                    </div>
+                </div>
+                <div class="progress-remaining">
+                    {% if points_needed > 0 %}
+                    Потрібно ще {{ points_needed }} балів
+                    {% else %}
+                    Готово до підвищення!
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="progress-info">
+                <div class="progress-text max-tier">
+                    Максимальний рівень досягнуто
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Знижка -->
+        <div class="info-card">
+            <h3>Знижка</h3>
+            <div class="discount-info">
+                <div class="current-discount">
+                    <span class="discount-label">Поточна:</span>
+                    <span class="discount-value">{{ discounts.current }}%</span>
+                </div>
+                {% if discounts.potential > discounts.current %}
+                <div class="potential-discount">
+                    <span class="discount-label">Потенційна:</span>
+                    <span class="discount-value">{{ discounts.potential }}%</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Рівні лояльності -->
+    <div class="loyalty-tiers">
+        <h3>Рівні лояльності</h3>
+        <div class="tiers-list">
+            {% for tier in all_tiers %}
+            <div class="tier-item {% if current_tier and tier.id == current_tier.id %}current{% endif %}">
+                <div class="tier-badge tier-{{ tier.name|lower }}">
+                    {{ tier.name }}
+                </div>
+                <div class="tier-details">
+                    <div class="tier-requirements">
+                        {% if tier.points_required == 0 %}
+                        Початковий рівень
+                        {% else %}
+                        {{ tier.points_required }}+ балів
+                        {% endif %}
+                    </div>
+                    <div class="tier-benefits">
+                        <span class="benefit">Знижка {{ tier.discount_percentage }}%</span>
+                        {% for benefit in tier.benefits %}
+                        <span class="benefit">{{ benefit }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if current_tier and tier.id == current_tier.id %}
+                <div class="tier-status current">Поточний</div>
+                {% elif tier.points_required <= loyalty_account.points %} <div class="tier-status achieved">Досягнуто
+            </div>
+            {% else %}
+            <div class="tier-status locked">Заблоковано</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Як заробляти бали -->
+<div class="earning-ways">
+    <h3>Як заробляти бали</h3>
+    <div class="ways-grid">
+        <div class="way-item">
+            <div class="way-icon">🛒</div>
+            <h4>Покупки</h4>
+            <p>1 бал за кожну $1 витрачену</p>
+        </div>
+        <div class="way-item">
+            <div class="way-icon">📝</div>
+            <h4>Заповнення профілю</h4>
+            <p>50 балів за повний профіль</p>
+        </div>
+        <div class="way-item">
+            <div class="way-icon">🎓</div>
+            <h4>Завершення курсів</h4>
+            <p>10-30 балів за курс</p>
+        </div>
+        <div class="way-item">
+            <div class="way-icon">📅</div>
+            <h4>Відвідування івентів</h4>
+            <p>20 балів за кожний івент</p>
+        </div>
+    </div>
+</div>
+
+<!-- Історія балів -->
+{% if recent_transactions %}
+<div class="points-history">
+    <h3>Останні нарахування</h3>
+    <div class="transactions-list">
+        {% for transaction in recent_transactions %}
+        <div class="transaction-item">
+            <div class="transaction-info">
+                <div class="transaction-reason">{{ transaction.reason }}</div>
+                <div class="transaction-date">{{ transaction.created_at|date:"d.m.Y H:i" }}</div>
+            </div>
+            <div class="transaction-points {% if transaction.points > 0 %}positive{% else %}negative{% endif %}">
+                {% if transaction.points > 0 %}+{% endif %}{{ transaction.points }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+</div>

@@ -21,7 +21,7 @@ class CustomLoginView(LoginView):
         next_url = self.request.GET.get('next')
         if next_url:
             return next_url
-        return reverse_lazy('accounts:profile')
+        return reverse_lazy('cabinet:dashboard')
 
 
 class RegisterView(CreateView):
@@ -29,7 +29,7 @@ class RegisterView(CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = 'auth/register.html'
-    success_url = reverse_lazy('accounts:profile')
+    success_url = reverse_lazy('cabinet:dashboard')
     
     def form_valid(self, form):
         response = super().form_valid(form)

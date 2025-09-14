@@ -1,0 +1,122 @@
+<!-- Вкладка підписки -->
+<div class="subscription-tab">
+    <div class="subscription-cards">
+        <!-- Поточний план -->
+        <div class="info-card">
+            <h3>Поточний план</h3>
+            {% if active_subscription %}
+            <div class="plan-info">
+                <div class="plan-name">{{ active_subscription.plan.name }} — ${{ active_subscription.plan.price }}</div>
+                <div class="plan-period">
+                    {% if active_subscription.plan.duration == '1_month' %}
+                    Місячна підписка
+                    {% elif active_subscription.plan.duration == '3_months' %}
+                    3 місяці
+                    {% elif active_subscription.plan.duration == '12_months' %}
+                    Річна підписка
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="plan-info">
+                <div class="plan-name no-plan">Немає активного плану</div>
+                <div class="plan-period">Оформіть підписку для доступу до контенту</div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Статус -->
+        <div class="info-card">
+            <h3>Статус</h3>
+            {% if active_subscription %}
+            <div class="status-info">
+                <div class="status-badge active">Активна</div>
+                <div class="status-details">
+                    Наступне списання:<br>
+                    <strong>{{ next_payment_date|date:"d.m.Y" }}</strong>
+                </div>
+            </div>
+            {% else %}
+            <div class="status-info">
+                <div class="status-badge inactive">Неактивна</div>
+                <div class="status-details">
+                    Оформіть підписку для<br>
+                    доступу до контенту
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Переваги -->
+        <div class="info-card">
+            <h3>Переваги</h3>
+            <div class="benefits-list">
+                {% if active_subscription %}
+                <div class="benefit-item">
+                    <span class="benefit-icon">✓</span>
+                    <span>Безлімітний перегляд</span>
+                </div>
+                <div class="benefit-item">
+                    <span class="benefit-icon">✓</span>
+                    <span>5–15% знижки на матеріали</span>
+                </div>
+                <div class="benefit-item">
+                    <span class="benefit-icon">✓</span>
+                    <span>Ексклюзивні матеріали (для Pro)</span>
+                </div>
+                {% else %}
+                <div class="benefit-item inactive">
+                    <span class="benefit-icon">×</span>
+                    <span>Обмежений доступ</span>
+                </div>
+                <div class="benefit-item inactive">
+                    <span class="benefit-icon">×</span>
+                    <span>Без знижок</span>
+                </div>
+                <div class="benefit-item inactive">
+                    <span class="benefit-icon">×</span>
+                    <span>Тільки безкоштовний контент</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка зміни підписки -->
+    <div class="subscription-actions">
+        {% if active_subscription %}
+        <button class="btn-change-subscription">Змінити підписку</button>
+        {% else %}
+        <a href="{% url 'pricing' %}" class="btn-change-subscription">Оформити підписку</a>
+        {% endif %}
+    </div>
+
+    <!-- Доступні плани (якщо немає активної підписки) -->
+    {% if not active_subscription and available_plans %}
+    <div class="available-plans">
+        <h3>Доступні плани</h3>
+        <div class="plans-grid">
+            {% for plan in available_plans %}
+            <div class="plan-card {% if plan.is_popular %}popular{% endif %}">
+                {% if plan.is_popular %}
+                <div class="plan-badge">Найпопулярніший</div>
+                {% endif %}
+                <h4>{{ plan.name }}</h4>
+                <div class="plan-price">
+                    <span class="price">${{ plan.price }}</span>
+                    <span class="period">/ {{ plan.get_duration_display }}</span>
+                </div>
+                <ul class="plan-features">
+                    {% for feature in plan.features %}
+                    <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'payments:create_subscription' plan.slug %}" class="btn-select-plan">
+                    Обрати план
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>

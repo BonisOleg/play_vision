@@ -1,8 +1,2 @@
 <!-- HTMX Cart Count Template -->
 <span class="cart-count" id="cart-count">{{ cart_count }}</span>
-
-{% if message %}
-<div class="htmx-message success" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
-    {{ message }}
-</div>
-{% endif %}

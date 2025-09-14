@@ -1,0 +1,140 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Кабінет користувача - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/cabinet.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cabinet-wrapper">
+    <div class="cabinet-container">
+        <!-- Ліва частина: профіль та форма -->
+        <div class="cabinet-left">
+            <div class="profile-section">
+                <!-- Аватар -->
+                <div class="profile-avatar">
+                    {% if user_profile and user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="Аватар" class="avatar-img">
+                    {% else %}
+                    <div class="avatar-placeholder">
+                        {{ user.first_name|first|default:user.email|first|upper }}
+                    </div>
+                    {% endif %}
+                    <button class="avatar-upload-btn" onclick="document.getElementById('avatar-input').click()">
+                        Завантажити фото
+                    </button>
+                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                </div>
+
+                <!-- Форма профілю -->
+                <form class="profile-form" id="profile-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="first_name">ПІБ</label>
+                        <input type="text" id="first_name" name="first_name" class="form-control"
+                            placeholder="Ім'я Прізвище"
+                            value="{{ user_profile.first_name|default:'' }} {{ user_profile.last_name|default:'' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birth_date">Дата народження</label>
+                        <input type="date" id="birth_date" name="birth_date" class="form-control"
+                            value="{{ user_profile.birth_date|date:'Y-m-d'|default:'' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profession">Професія/спеціальність</label>
+                        <input type="text" id="profession" name="profession" class="form-control"
+                            placeholder="Тренер / Аналітик / Психолог" value="{{ user_profile.profession|default:'' }}">
+                        <span class="profession-badge">Sports Knowledge Shop</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
+                            <span class="verification-badge verified">верифіковано</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="+380..."
+                                value="{{ user.phone|default:'' }}">
+                            <span class="verification-badge">очікує</span>
+                        </div>
+                    </div>
+
+                    <div class="password-section">
+                        <div class="form-group">
+                            <label for="new_password">Новий пароль</label>
+                            <input type="password" id="new_password" name="new_password" class="form-control"
+                                placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_password">Підтвердити пароль</label>
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control"
+                                placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <div class="interests-section">
+                        <label>Напрямки (інтереси)</label>
+                        <div class="interests-tags">
+                            <span class="interest-tag active">Аналітика</span>
+                            <span class="interest-tag active">Тренерство</span>
+                            <span class="interest-tag active">Психологія</span>
+                            <span class="interest-tag">Харчування</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-save">Зберти зміни</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Права частина: вкладки та контент -->
+        <div class="cabinet-right">
+            <!-- Навігація по вкладках -->
+            <nav class="cabinet-tabs">
+                <a href="?tab=subscription" class="tab-link {% if active_tab == 'subscription' %}active{% endif %}">
+                    Підписка
+                </a>
+                <a href="?tab=payments" class="tab-link {% if active_tab == 'payments' %}active{% endif %}">
+                    Історія оплат
+                </a>
+                <a href="?tab=files" class="tab-link {% if active_tab == 'files' %}active{% endif %}">
+                    Мої файли
+                </a>
+                <a href="?tab=loyalty" class="tab-link {% if active_tab == 'loyalty' %}active{% endif %}">
+                    Програма лояльності
+                </a>
+            </nav>
+
+            <!-- Контент вкладок -->
+            <div class="tab-content">
+                {% if active_tab == 'subscription' %}
+                {% include 'account/tabs/subscription.html' %}
+                {% elif active_tab == 'files' %}
+                {% include 'account/tabs/files.html' %}
+                {% elif active_tab == 'loyalty' %}
+                {% include 'account/tabs/loyalty.html' %}
+                {% elif active_tab == 'payments' %}
+                {% include 'account/tabs/payments.html' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Фіксована кнопка зв'язку/чату -->
+    <div class="support-button">
+        <button class="support-btn">
+            Зв'язок / Бот
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/cabinet.js' %}"></script>
+{% endblock %}

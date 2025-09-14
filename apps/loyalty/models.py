@@ -65,6 +65,51 @@ class LoyaltyAccount(models.Model):
             return self.current_tier.discount_percentage
         return 0
     
+    def update_tier(self):
+        """Update tier based on current points"""
+        new_tier = LoyaltyTier.get_tier_for_points(self.points)
+        if new_tier and new_tier != self.current_tier:
+            old_tier = self.current_tier
+            self.current_tier = new_tier
+            self.tier_achieved_at = timezone.now()
+            self.save()
+            
+            # Створити транзакцію для нарахування бонусних балів за досягнення рівня
+            if old_tier and new_tier.points_required > old_tier.points_required:
+                bonus_points = 10  # Бонус за підвищення рівня
+                self.add_points(
+                    bonus_points, 
+                    'tier_achievement', 
+                    f'Бонус за досягнення рівня {new_tier.name}'
+                )
+            
+            return True
+        return False
+    
+    def add_points(self, points, transaction_type='earned', reason=''):
+        """Add points and create transaction"""
+        self.points += points
+        self.lifetime_points += points
+        self.save()
+        
+        # Створити транзакцію
+        PointTransaction.objects.create(
+            account=self,
+            points=points,
+            transaction_type=transaction_type,
+            reason=reason,
+            balance_after=self.points
+        )
+        
+        # Перевірити зміну рівня (without recursion)
+        new_tier = LoyaltyTier.get_tier_for_points(self.points)
+        if new_tier and new_tier != self.current_tier:
+            self.current_tier = new_tier
+            self.tier_achieved_at = timezone.now()
+            self.save()
+        
+        return self.points
+    
     def get_next_tier(self):
         """Get next tier to achieve"""
         if not self.current_tier:
