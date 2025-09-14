@@ -24,20 +24,30 @@
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-calendar"></use>
                         </svg>
-                        <span>{{ event.start_datetime|date:"d F Y" }} • {{ event.start_datetime|date:"H:i" }}</span>
+                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{
+                            event.start_datetime|date:"H:i" }}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-location"></use>
                         </svg>
-                        <span>{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{% endif %}</span>
+                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{%
+                            endif %}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-language"></use>
                         </svg>
-                        <span>Мова: укр + англ</span>
+                        <span class="meta-text">Мова: укр + англ</span>
                     </div>
+                    {% if event.duration_minutes %}
+                    <div class="meta-item">
+                        <svg class="icon" width="20" height="20">
+                            <use xlink:href="#icon-clock"></use>
+                        </svg>
+                        <span class="meta-text">Тривалість: {{ event.duration_minutes }} хв</span>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -373,6 +383,10 @@
             stroke-width="2" />
         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke="currentColor"
             stroke-width="2" />
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+        <polyline points="12,6 12,12 16,14" fill="none" stroke="currentColor" stroke-width="2" />
     </symbol>
 </svg>
 {% endblock %}

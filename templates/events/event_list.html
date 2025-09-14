@@ -9,107 +9,132 @@
 
 {% block content %}
 <div class="events-container">
-    <!-- Календар подій на тиждень -->
-    <section class="event-calendar">
-        <h2 class="calendar-title">Календар подій (7–10 днів)</h2>
-
-        <div class="calendar-grid">
-            <!-- Тестові дані для календаря -->
-            <div class="calendar-day calendar-day--active">
-                <div class="day-header">
-                    <h3 class="day-title">8 Пн</h3>
-                </div>
-                <div class="day-events">
-                    <a href="{% url 'events:event_detail' 'forum-fff-5' %}" class="event-card event-card--featured">
-                        <h4 class="event-title">Форум FFF 5</h4>
-                        <p class="event-time">18:00 - онлайн</p>
-                    </a>
-                </div>
+    <!-- Календар подій з фільтрами -->
+    <section class="event-calendar" x-data="eventCalendar()">
+        <div class="calendar-header">
+            <div class="calendar-title-section">
+                <h2 class="calendar-title">Календар подій</h2>
+                <p class="calendar-subtitle">Переглядайте події за днями та фільтруйте за типом</p>
             </div>
 
-            <div class="calendar-day">
-                <div class="day-header">
-                    <h3 class="day-title">9 Вт</h3>
-                </div>
-                <div class="day-events">
-                    <a href="{% url 'events:event_detail' 'masterclass-xg' %}" class="event-card">
-                        <h4 class="event-title">Майстер-клас XG</h4>
-                        <p class="event-time">19:00 - онлайн</p>
-                    </a>
-                </div>
+            <!-- Фільтри календаря -->
+            <div class="calendar-filters">
+                <select x-model="selectedType" @change="filterEvents()" class="filter-select">
+                    <option value="all">Всі типи подій</option>
+                    {% for type_value, type_display in event_types %}
+                    <option value="{{ type_value }}">{{ type_display }}</option>
+                    {% endfor %}
+                </select>
+
+                <select x-model="selectedFormat" @change="filterEvents()" class="filter-select">
+                    <option value="all">Всі формати</option>
+                    <option value="online">Тільки онлайн</option>
+                    <option value="offline">Тільки офлайн</option>
+                    <option value="hybrid">Гібридні</option>
+                </select>
+
+                <button @click="resetFilters()" class="btn btn--outline btn--small"
+                    x-show="selectedType !== 'all' || selectedFormat !== 'all'">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                    Скинути
+                </button>
             </div>
 
-            <div class="calendar-day">
-                <div class="day-header">
-                    <h3 class="day-title">10 Ср</h3>
-                </div>
-                <div class="day-events">
-                    <a href="{% url 'events:event_detail' 'roundtable-academies' %}" class="event-card">
-                        <h4 class="event-title">Круглий стіл: Академії</h4>
-                        <p class="event-time">17:00 - онлайн</p>
-                    </a>
-                </div>
+            <!-- Навігація по датах -->
+            <div class="calendar-navigation">
+                <button @click="previousWeek()" class="nav-btn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                </button>
+                <span class="current-period" x-text="currentPeriodText"></span>
+                <button @click="nextWeek()" class="nav-btn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M9 18l6-6-6-6" />
+                    </svg>
+                </button>
+                <button @click="goToToday()" class="btn btn--ghost btn--small">Сьогодні</button>
             </div>
+        </div>
 
-            <div class="calendar-day">
-                <div class="day-header">
-                    <h3 class="day-title">11 Чт</h3>
-                </div>
-                <div class="day-events">
-                    <a href="{% url 'events:event_detail' 'forum-fff-6' %}" class="event-card">
-                        <h4 class="event-title">Старт курсу ЗФП</h4>
-                        <p class="event-time">10:00 - онлайн</p>
-                    </a>
-                </div>
-            </div>
+        <div class="calendar-grid" x-ref="calendarGrid">
+            <template x-for="(day, index) in visibleDays" :key="day.date">
+                <div class="calendar-day" :class="{ 
+                         'calendar-day--today': day.isToday,
+                         'calendar-day--has-events': day.events.length > 0,
+                         'calendar-day--past': day.isPast,
+                         'calendar-day--weekend': day.isWeekend
+                     }" @click="selectDay(day, index)">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <span class="day-number" x-text="day.dayNumber"></span>
+                            <span class="day-name" x-text="day.dayName"></span>
+                        </div>
+                        <div class="events-indicator" x-show="day.events.length > 0">
+                            <span class="events-count" x-text="day.events.length + ' події'"></span>
+                        </div>
+                    </div>
 
-            <div class="calendar-day">
-                <div class="day-header">
-                    <h3 class="day-title">12 Пт</h3>
-                </div>
-                <div class="day-events">
-                    <a href="{% url 'events:event_detail' 'qa-scout' %}" class="event-card">
-                        <h4 class="event-title">Q&A зі скаутом</h4>
-                        <p class="event-time">18:30 - онлайн</p>
-                    </a>
-                </div>
-            </div>
+                    <div class="day-events">
+                        <template x-for="event in day.events.slice(0, 3)" :key="event.id">
+                            <a :href="event.url" class="event-card" :class="{ 
+                                   'event-card--forum': event.type === 'forum',
+                                   'event-card--masterclass': event.type === 'masterclass',
+                                   'event-card--seminar': event.type === 'seminar',
+                                   'event-card--free': event.is_free,
+                                   'event-card--sold-out': event.is_sold_out
+                               }" @mouseenter="showEventPreview(event)" @mouseleave="hideEventPreview()">
 
-            <div class="calendar-day">
-                <div class="day-header">
-                    <h3 class="day-title">13 Сб</h3>
-                </div>
-                <div class="day-events">
-                    <a href="#" class="event-card">
-                        <h4 class="event-title">Практикум GPS</h4>
-                        <p class="event-time">12:00 - офлайн</p>
-                    </a>
-                </div>
-            </div>
+                                <div class="event-type-badge" x-text="event.type_display"></div>
 
-            <div class="calendar-day">
-                <div class="day-header">
-                    <h3 class="day-title">14 Нд</h3>
-                </div>
-                <div class="day-events">
-                    <a href="#" class="event-card">
-                        <h4 class="event-title">Менторинг 1:1</h4>
-                        <p class="event-time">15:00 - онлайн</p>
-                    </a>
-                </div>
-            </div>
+                                <div class="event-main-info">
+                                    <h4 class="event-title" x-text="event.title"></h4>
+                                    <div class="event-meta">
+                                        <div class="event-time-price">
+                                            <span class="event-time" x-text="event.time"></span>
+                                            <span class="event-location" x-text="event.location_short"></span>
+                                        </div>
+                                        <div class="event-price-info">
+                                            <span class="event-price"
+                                                x-text="event.is_free ? 'Безкоштовно' : event.price + '₴'"></span>
+                                        </div>
+                                    </div>
+                                </div>
 
-            <div class="calendar-day">
-                <div class="day-header">
-                    <h3 class="day-title">15 Пн</h3>
+                                <div class="event-capacity" x-show="event.available_tickets">
+                                    <span x-text="event.available_tickets + ' місць'"></span>
+                                </div>
+                            </a>
+                        </template>
+
+                        <div x-show="day.events.length > 3" class="more-events-indicator">
+                            <button @click.stop="showAllDayEvents(day)" class="more-events-btn">
+                                <span x-text="'+ ще ' + (day.events.length - 3)"></span>
+                            </button>
+                        </div>
+
+                        <div x-show="day.events.length === 0" class="no-events-day">
+                            <div class="no-events-content">
+                                <svg class="no-events-icon" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                                        fill="none" stroke="currentColor" stroke-width="2" opacity="0.3" />
+                                </svg>
+                                <span>Подій немає</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="day-events">
-                    <a href="{% url 'events:event_detail' 'internship-dynamo' %}" class="event-card">
-                        <h4 class="event-title">Форум батьків</h4>
-                        <p class="event-time">17:00 - офлайн</p>
-                    </a>
-                </div>
-            </div>
+            </template>
+        </div>
+
+        <!-- Завантаження -->
+        <div x-show="loading" class="calendar-loading">
+            <div class="loading-spinner"></div>
+            <p>Завантаження подій...</p>
         </div>
     </section>
 
@@ -125,103 +150,160 @@
             <aside class="events-sidebar">
                 <div class="sidebar-section">
                     <h3 class="sidebar-title">Найближчі події</h3>
-                    <ul class="upcoming-events">
-                        <li class="upcoming-event">
-                            <a href="{% url 'events:event_detail' 'forum-fff-5' %}" class="upcoming-link">
-                                <span class="event-name">Форум футбольних фахівців 5</span>
-                                <span class="event-date">8 вер • 18:00</span>
-                                <span class="event-badge event-badge--online">онлайн</span>
-                            </a>
-                        </li>
-                        <li class="upcoming-event">
-                            <a href="{% url 'events:event_detail' 'forum-fff-6' %}" class="upcoming-link">
-                                <span class="event-name">Форум футбольних фахівців 6</span>
-                                <span class="event-date">листопад</span>
-                                <span class="event-badge event-badge--hybrid">гібрид</span>
-                            </a>
-                        </li>
-                        <li class="upcoming-event">
-                            <a href="{% url 'events:event_detail' 'internship-dynamo' %}" class="upcoming-link">
-                                <span class="event-name">Стажування у ФК Динамо</span>
-                                <span class="event-date">15 вер • 10:00</span>
-                                <span class="event-badge event-badge--offline">офлайн</span>
-                            </a>
-                        </li>
-                        <li class="upcoming-event">
-                            <a href="{% url 'events:event_detail' 'forum-parents-2' %}" class="upcoming-link">
-                                <span class="event-name">Форум футбольних батьків 2</span>
-                                <span class="event-date">20 вер • 17:00</span>
-                                <span class="event-badge event-badge--hybrid">гібрид</span>
-                            </a>
-                        </li>
-                        <li class="upcoming-event">
-                            <a href="{% url 'events:event_detail' 'lecture-psychology' %}" class="upcoming-link">
-                                <span class="event-name">Лекція з психологом</span>
-                                <span class="event-date">22 вер • 19:00</span>
-                                <span class="event-badge event-badge--online">онлайн</span>
-                            </a>
-                        </li>
-                        <li class="upcoming-event">
-                            <a href="{% url 'events:event_detail' 'masterclass-xg' %}" class="upcoming-link">
-                                <span class="event-name">Майстер-клас xG</span>
-                                <span class="event-date">30 вер • 19:00</span>
-                                <span class="event-badge event-badge--online">онлайн</span>
-                            </a>
-                        </li>
+                    <ul class="upcoming-events" x-ref="upcomingEventsContainer">
+                        <!-- Dynamic events populated by JavaScript -->
                     </ul>
                 </div>
 
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">Тип події</h3>
-                    <div class="filter-group">
-                        <label class="filter-option">
-                            <input type="checkbox" name="event_type" value="forum">
-                            <span>Форум</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="event_type" value="webinar">
-                            <span>Вебінар</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="event_type" value="workshop">
-                            <span>Майстер-клас</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="event_type" value="internship">
-                            <span>Стажування</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="event_type" value="seminar">
-                            <span>Семінар</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="event_type" value="conference">
-                            <span>Конференція</span>
-                        </label>
-                    </div>
-                </div>
+                <!-- Enhanced Filters -->
+                <form method="get" action="{% url 'events:event_list' %}" class="filters-form" x-data="eventFilters()">
 
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">Формат</h3>
-                    <div class="filter-group">
-                        <label class="filter-option">
-                            <input type="radio" name="format" value="all" checked>
-                            <span>Всі формати</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="format" value="online">
-                            <span>Онлайн</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="format" value="offline">
-                            <span>Офлайн</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="format" value="hybrid">
-                            <span>Гібрид</span>
-                        </label>
+                    <!-- Search Filter -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Пошук подій</h3>
+                        <div class="search-group">
+                            <input type="text" name="search" placeholder="Назва події або спікер..."
+                                value="{{ current_search }}" class="search-input">
+                            <button type="submit" class="search-btn">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <path d="m21 21-4.35-4.35" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                </div>
+
+                    <!-- Event Type Filter -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Тип події</h3>
+                        <div class="filter-group">
+                            {% for type_value, type_display in event_types %}
+                            <label class="filter-option">
+                                <input type="checkbox" name="event_type" value="{{ type_value }}" {% if type_value in current_types %}checked{% endif %}>
+                                <span class="filter-checkmark"></span>
+                                <span class="filter-label">{{ type_display }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Format Filter -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Формат проведення</h3>
+                        <div class="filter-group">
+                            <label class="filter-option">
+                                <input type="radio" name="format" value="all" {% if current_format == 'all' or not current_format %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Всі формати</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="format" value="online" {% if current_format == 'online' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Онлайн</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="format" value="offline" {% if current_format == 'offline' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Офлайн</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="format" value="hybrid" {% if current_format == 'hybrid' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Гібрид</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Date Range Filter -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Період</h3>
+                        <div class="filter-group">
+                            <label class="filter-option">
+                                <input type="radio" name="date_range" value="all" {% if current_date_range == 'all' or not current_date_range %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Всі події</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="date_range" value="today" {% if current_date_range == 'today' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Сьогодні</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="date_range" value="week" {% if current_date_range == 'week' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Цей тиждень</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="date_range" value="month" {% if current_date_range == 'month' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Цей місяць</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">Ціна</h3>
+                        <div class="filter-group">
+                            <label class="filter-option">
+                                <input type="radio" name="price" value="all" {% if current_price == 'all' or not current_price %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Всі події</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="price" value="free" {% if current_price == 'free' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Безкоштовні</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="price" value="paid" {% if current_price == 'paid' %}checked{% endif %}>
+                                <span class="filter-radio"></span>
+                                <span class="filter-label">Платні</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Filter Actions -->
+                    <div class="filter-actions">
+                        <button type="submit" class="btn btn--primary btn--full">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            Застосувати фільтри
+                        </button>
+
+                        <a href="{% url 'events:event_list' %}" class="btn btn--outline btn--full">
+                            Скинути всі
+                        </a>
+                    </div>
+
+                    <!-- Active Filters Display -->
+                    <div class="active-filters" x-show="hasActiveFilters()">
+                        <h4 class="active-filters-title">Активні фільтри:</h4>
+                        <div class="filter-tags">
+                            {% if current_search %}
+                            <span class="filter-tag">
+                                Пошук: {{ current_search }}
+                                <button type="button" @click="clearSearch()">×</button>
+                            </span>
+                            {% endif %}
+
+                            {% for type_display in current_types_display %}
+                            <span class="filter-tag">
+                                {{ type_display }}
+                                <button type="button">×</button>
+                            </span>
+                            {% endfor %}
+
+                            {% if current_format and current_format != 'all' %}
+                            <span class="filter-tag">
+                                Формат: {{ current_format|capfirst }}
+                                <button type="button">×</button>
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
             </aside>
 
             <!-- Список подій -->
@@ -439,7 +521,7 @@
                         {% for num in page_obj.paginator.page_range %}
                         {% if page_obj.number == num %}
                         <span class="pagination-current">{{ num }}</span>
-                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}<a
                             href="?page={{ num }}" class="pagination-link">{{ num }}</a>
                             {% endif %}
                             {% endfor %}

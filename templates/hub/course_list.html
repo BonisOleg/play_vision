@@ -47,6 +47,119 @@
         </div>
     </div>
 
+    <!-- Upcoming Events Section -->
+    <section class="upcoming-events-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Найближчі події</h2>
+                <p>Приєднуйтеся до наших вебінарів, майстер-класів та форумів</p>
+                <a href="{% url 'events:event_list' %}" class="view-all-link">
+                    Переглянути всі події
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="events-grid">
+                {% for event in upcoming_events_menu|slice:":3" %}
+                <article class="event-card">
+                    <div class="event-image">
+                        {% if event.thumbnail %}
+                        <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+                        {% else %}
+                        <div class="event-image-placeholder">
+                            <svg class="event-icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+                            </svg>
+                        </div>
+                        {% endif %}
+
+                        <div class="event-overlay">
+                            <span class="event-type-badge">{{ event.get_event_type_display }}</span>
+                            {% if event.is_free %}
+                            <span class="event-price-badge free">Безкоштовно</span>
+                            {% else %}
+                            <span class="event-price-badge">{{ event.price }}₴</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span class="event-date">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path
+                                        d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+                                </svg>
+                                {{ event.start_datetime|date:"d.m.Y" }}
+                            </span>
+                            <span class="event-time">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z" />
+                                </svg>
+                                {{ event.start_datetime|date:"H:i" }}
+                            </span>
+                            <span class="event-location">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    {% if event.is_online %}
+                                    <path
+                                        d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z" />
+                                    {% else %}
+                                    <path
+                                        d="M12,2C15.31,2 18,4.66 18,7.95C18,12.41 12,19 12,19S6,12.41 6,7.95C6,4.66 8.69,2 12,2M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6Z" />
+                                    {% endif %}
+                                </svg>
+                                {% if event.is_online %}Онлайн{% else %}{{ event.location }}{% endif %}
+                            </span>
+                        </div>
+
+                        <h3 class="event-title">
+                            <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+                        </h3>
+
+                        <p class="event-description">{{ event.short_description|truncatechars:120 }}</p>
+
+                        <div class="event-footer">
+                            {% if event.available_tickets > 0 %}
+                            <span class="tickets-available">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path
+                                        d="M17,21H7A2,2 0 0,1 5,19V5A2,2 0 0,1 7,3H17A2,2 0 0,1 19,5V19A2,2 0 0,1 17,21M17,19V5H7V19H17M8,7H16V9H8V7M8,11H16V13H8V11M8,15H13V17H8V15Z" />
+                                </svg>
+                                {{ event.available_tickets }} місць
+                            </span>
+                            {% else %}
+                            <span class="tickets-sold-out">Розпродано</span>
+                            {% endif %}
+
+                            <a href="{{ event.get_absolute_url }}" class="btn btn-primary btn-small">
+                                Детальніше
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                {% empty %}
+                <div class="no-events">
+                    <div class="no-events-content">
+                        <svg class="no-events-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+                        </svg>
+                        <h3>Найближчих подій поки немає</h3>
+                        <p>Слідкуйте за оновленнями календаря подій</p>
+                        <a href="{% url 'events:event_list' %}" class="btn btn-outline">
+                            Переглянути всі події
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
     <!-- Expert Quotes Carousel -->
     <section class="expert-quotes" role="region" aria-label="Цитати експертів">
         <div class="container">
