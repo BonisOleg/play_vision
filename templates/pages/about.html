@@ -1,0 +1,235 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Про Play Vision - Освітня платформа для футбольних фахівців{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="about-container">
+
+    <!-- Subscription CTA Section -->
+    <section class="subscription-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Оформи підписку, стань частиною спільноти фахівців!</h2>
+                <a href="{% url 'core:pricing' %}" class="btn btn-primary">Переглянути тарифи</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <div class="mission-text">
+                    <h1 class="mission-title">Про Play Vision</h1>
+                    <p class="mission-description">
+                        Екосистема Play Vision побудована за принципом «футбольного трикутника»,
+                        в якому взаємодіють три суб'єкти: <strong>гравець, тренер і батьки</strong>.
+                    </p>
+                    <p class="mission-subtitle">
+                        Системне впровадження освітніх програм для всіх учасників футбольного
+                        середовища — ключ до глибинних змін і справжньої трансформації
+                        футбольної індустрії України.
+                    </p>
+                </div>
+                <div class="mission-visual">
+                    <div class="play-vision-logo">
+                        <div class="logo-container">
+                            <h2 class="logo-text">PLAY VISION</h2>
+                            <div class="logo-subtitle">
+                                <span class="football-icon">⚽</span>
+                                «Футбольний трикутник»
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Football Triangle Section -->
+    <section class="triangle-section">
+        <div class="container">
+            <h2 class="section-title">Футбольний трикутник</h2>
+            <div class="triangle-container">
+                <div class="triangle-visual">
+                    <!-- Main Triangle Shape -->
+                    <div class="triangle-shape">
+                        <svg viewBox="0 0 400 350" class="triangle-svg">
+                            <!-- Gradient definition -->
+                            <defs>
+                                <linearGradient id="triangleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:0.1" />
+                                    <stop offset="50%" style="stop-color:#ff6b35;stop-opacity:0.05" />
+                                    <stop offset="100%" style="stop-color:#ff6b35;stop-opacity:0.1" />
+                                </linearGradient>
+                                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#ff6b35"
+                                        flood-opacity="0.2" />
+                                </filter>
+                            </defs>
+
+                            <!-- Triangle background -->
+                            <polygon points="200,40 80,280 320,280" class="triangle-fill" stroke-width="4"
+                                stroke-linejoin="round" filter="url(#shadow)" />
+
+                            <!-- Inner connection lines -->
+                            <line x1="200" y1="40" x2="140" y2="160" class="triangle-inner-line" />
+                            <line x1="200" y1="40" x2="260" y2="160" class="triangle-inner-line" />
+                            <line x1="140" y1="160" x2="260" y2="160" class="triangle-inner-line" />
+                            <line x1="140" y1="160" x2="200" y2="280" class="triangle-inner-line" />
+                            <line x1="260" y1="160" x2="200" y2="280" class="triangle-inner-line" />
+
+                            <!-- Bidirectional arrows -->
+                            <g class="triangle-arrows-group">
+                                <!-- Top to Left arrow -->
+                                <polygon points="170,100 180,95 180,105" class="triangle-arrow" />
+                                <polygon points="170,120 160,115 160,125" class="triangle-arrow" />
+
+                                <!-- Top to Right arrow -->
+                                <polygon points="230,100 220,95 220,105" class="triangle-arrow" />
+                                <polygon points="230,120 240,115 240,125" class="triangle-arrow" />
+
+                                <!-- Left to Right arrow -->
+                                <polygon points="180,160 175,150 175,170" class="triangle-arrow" />
+                                <polygon points="220,160 225,150 225,170" class="triangle-arrow" />
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Labels positioned around triangle -->
+                    <div class="triangle-labels">
+                        <div class="triangle-label triangle-label--top">
+                            <span class="label-text">ГРАВЕЦЬ</span>
+                        </div>
+                        <div class="triangle-label triangle-label--left">
+                            <span class="label-text">ТРЕНЕР</span>
+                        </div>
+                        <div class="triangle-label triangle-label--right">
+                            <span class="label-text">БАТЬКИ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title">Наші цінності</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-circle">
+                        <span class="value-text">Мотивація</span>
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-circle">
+                        <span class="value-text">Інтуїція</span>
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-circle">
+                        <span class="value-text">Допитливість</span>
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-circle">
+                        <span class="value-text">Прагматизм</span>
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-circle">
+                        <span class="value-text">Оптимізм</span>
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-circle">
+                        <span class="value-text">Спільнота</span>
+                    </div>
+                </div>
+            </div>
+            <p class="values-description">
+                Ми поєднуємо мотивацію та прагматизм із допитливістю і інтуїцією.
+                Опираємось на спільноту практиків і відкритих знань.
+            </p>
+        </div>
+    </section>
+
+    <!-- Knowledge Hub Section -->
+    <section class="knowledge-hub-section">
+        <div class="container">
+            <h2 class="section-title hub-title">Хаб знань</h2>
+
+            <!-- Expert Quotes Carousel -->
+            <div class="quotes-carousel" x-data="quotesCarousel()">
+                <div class="quote-container">
+                    <template x-for="(quote, index) in quotes" :key="index">
+                        <div class="quote-slide" x-show="currentQuote === index" x-transition:enter="slide-in"
+                            x-transition:leave="slide-out">
+                            <div class="quote-content">
+                                <div class="quote-text" x-text="quote.text"></div>
+                                <div class="quote-author">
+                                    <div class="author-avatar">
+                                        <img :src="quote.avatar" :alt="quote.name" loading="lazy">
+                                    </div>
+                                    <div class="author-info">
+                                        <div class="author-name" x-text="quote.name"></div>
+                                        <div class="author-title" x-text="quote.title"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="carousel-indicators">
+                    <template x-for="(quote, index) in quotes" :key="index">
+                        <button class="indicator-dot" :class="{ 'active': currentQuote === index }"
+                            @click="currentQuote = index"></button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Main Materials Carousel -->
+            <div class="main-materials">
+                <h3 class="materials-title">Головні матеріали</h3>
+                <div class="materials-carousel" x-data="materialsCarousel()">
+                    <div class="materials-container">
+                        <template x-for="(material, index) in materials" :key="index">
+                            <div class="material-slide" x-show="currentMaterial === index" x-transition:enter="slide-in"
+                                x-transition:leave="slide-out">
+                                <div class="material-card">
+                                    <div class="material-image">
+                                        <img :src="material.image" :alt="material.title" loading="lazy">
+                                        <div class="material-badge" x-text="material.badge"></div>
+                                    </div>
+                                    <div class="material-content">
+                                        <h4 class="material-title" x-text="material.title"></h4>
+                                        <p class="material-description" x-text="material.description"></p>
+                                        <div class="material-meta">
+                                            <span class="material-duration" x-text="material.duration"></span>
+                                            <span class="material-price" x-text="material.price"></span>
+                                        </div>
+                                        <a href="#" class="btn btn-primary">Переглянути</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/about.js' %}" defer></script>
+{% endblock %}

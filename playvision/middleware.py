@@ -22,6 +22,23 @@ class SecurityHeadersMiddleware(MiddlewareMixin):
         return response
 
 
+class NoCacheMiddleware(MiddlewareMixin):
+    """Disable caching in development mode to prevent template issues"""
+    
+    def process_response(self, request, response):
+        from django.conf import settings
+        
+        # Only apply in DEBUG mode
+        if settings.DEBUG:
+            response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+            response['Pragma'] = 'no-cache'
+            response['Expires'] = '0'
+            response['Last-Modified'] = ''
+            response['ETag'] = ''
+        
+        return response
+
+
 class BasicRateLimitMiddleware(MiddlewareMixin):
     """Basic rate limiting middleware"""
     

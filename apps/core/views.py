@@ -3,6 +3,8 @@ from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib import messages
 from django import forms
+from django.conf import settings
+from django.utils import timezone
 
 
 class ContactForm(forms.Form):
@@ -268,3 +270,16 @@ class HealthCheckView(TemplateView):
         
         status_code = 200 if status['status'] == 'ok' else 503
         return JsonResponse(status, status=status_code)
+
+
+class TemplateDebugView(TemplateView):
+    """Debug view to test template processing"""
+    template_name = 'debug_test.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'debug': settings.DEBUG,
+            'test_datetime': timezone.now(),
+        })
+        return context
