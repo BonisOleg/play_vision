@@ -187,4 +187,8 @@
 
 {% block extra_js %}
 <script src="{% static 'js/pages/account.js' %}"></script>
+<script src="{% static 'js/components/ai-chat.js' %}"></script>
 {% endblock %}
+
+<!-- AI Cabinet Widget -->
+{% include 'ai/widgets/cabinet_widget.html' %}

@@ -10,10 +10,11 @@ services:
     runtime: python
     region: frankfurt
     buildCommand: "./build.sh"
-    startCommand: "gunicorn playvision.wsgi:application"
+    startCommand: "gunicorn playvision.wsgi:application --bind 0.0.0.0:$PORT"
+    plan: starter
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11
+        value: 3.11.9
       - key: DJANGO_ENV
         value: production
       - key: DATABASE_URL
@@ -23,7 +24,34 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: .onrender.com
+        value: .onrender.com,playvision.onrender.com
       - key: DISABLE_COLLECTSTATIC
         value: 0
+      - key: DEBUG
+        value: 'False'
+      - key: DJANGO_SETTINGS_MODULE
+        value: playvision.settings.production
+      # Optional email settings
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: 587
+      - key: EMAIL_USE_TLS
+        value: 'True'
+      # AI Assistant settings
+      - key: AI_ENABLED
+        value: 'True'
+      - key: AI_MAX_TOKENS
+        value: 500
+      - key: AI_TEMPERATURE
+        value: 0.7
+      
+      # Add these manually in Render dashboard:
+      # EMAIL_HOST_USER - your email
+      # EMAIL_HOST_PASSWORD - your app password
+      # STRIPE_PUBLISHABLE_KEY - your Stripe key
+      # STRIPE_SECRET_KEY - your Stripe secret
+      # STRIPE_WEBHOOK_SECRET - your webhook secret
+      # OPENAI_API_KEY - your OpenAI API key (sk-proj-...)
+      # ANTHROPIC_API_KEY - your Anthropic API key (sk-ant-...)
     autoDeploy: true

@@ -1,0 +1,58 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Завантаження бази знань - AI Configuration{% endblock %}
+
+{% block content %}
+<div class="app-ai">
+    <h1>Завантаження бази знань AI</h1>
+
+    <div class="module">
+        <h2>Поточний стан бази знань</h2>
+        <table>
+            <tr>
+                <th>Всього записів:</th>
+                <td>{{ total_entries }}</td>
+            </tr>
+            <tr>
+                <th>Проіндексовано:</th>
+                <td>{{ indexed_entries }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="module">
+        <h2>Завантаження з файлів</h2>
+        <p>
+            Ця функція завантажить всі .md та .txt файли з директорії
+            <code>ai_knowledge_base/</code> в базу знань AI.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="submit-row">
+                <input type="submit" value="Завантажити базу знань" class="default"
+                    onclick="return confirm('Ви впевнені? Це може зайняти кілька хвилин.');">
+                <a href="../" class="button cancel-link">Скасувати</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="module">
+        <h2>Інструкції</h2>
+        <ol>
+            <li>Розмістіть .md або .txt файли в директорії <code>ai_knowledge_base/</code></li>
+            <li>Файли повинні бути в кодуванні UTF-8</li>
+            <li>Назва файлу визначає рівень доступу:
+                <ul>
+                    <li><code>public_*.md</code> - для всіх</li>
+                    <li><code>subscriber_*.md</code> - для підписників</li>
+                    <li><code>premium_*.md</code> - преміум контент</li>
+                    <li>Інші файли - для зареєстрованих користувачів</li>
+                </ul>
+            </li>
+            <li>Натисніть "Завантажити базу знань"</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}

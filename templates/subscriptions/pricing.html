@@ -1,0 +1,118 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Підписка - Play Vision{% endblock %}
+
+{% block meta_description %}Оберіть підписку Play Vision для доступу до всіх курсів та матеріалів від провідних
+футбольних експертів.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/pricing.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="pricing-container">
+    <div class="container">
+        <!-- Header -->
+        <section class="pricing-header">
+            <h1 class="pricing-title">Оберіть свій план підписки</h1>
+            <p class="pricing-subtitle">Отримайте доступ до всіх курсів та матеріалів від провідних експертів футболу
+            </p>
+        </section>
+
+        <!-- Plans Grid -->
+        <section class="pricing-plans">
+            <div class="plans-grid">
+                {% for plan in plans %}
+                <div class="plan-card {% if plan.is_popular %}plan-card--popular{% endif %}">
+                    {% if plan.is_popular %}
+                    <div class="plan-badge">Найпопулярніший</div>
+                    {% endif %}
+
+                    <div class="plan-header">
+                        <h3 class="plan-name">{{ plan.name }}</h3>
+                        <div class="plan-price">
+                            <span class="plan-currency">$</span>
+                            <span class="plan-amount">{{ plan.price }}</span>
+                            <span class="plan-period">/{{ plan.get_duration_display }}</span>
+                        </div>
+                    </div>
+
+                    <div class="plan-features">
+                        <ul>
+                            {% for feature in plan.features %}
+                            <li>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="plan-actions">
+                        {% if current_subscription %}
+                        {% if current_subscription.plan == plan %}
+                        <button class="btn btn-current" disabled>Поточний план</button>
+                        {% else %}
+                        <form method="post" action="{% url 'subscriptions:subscribe' plan.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Змінити план</button>
+                        </form>
+                        {% endif %}
+                        {% else %}
+                        <form method="post" action="{% url 'subscriptions:subscribe' plan.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Обрати план</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="plans-empty">
+                    <p>Плани підписки тимчасово недоступні</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="pricing-faq">
+            <h2>Часті запитання</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Чи можу я скасувати підписку?</h4>
+                    <p>Так, ви можете скасувати підписку в будь-який момент у своєму особистому кабінеті.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Чи зберігається доступ після скасування?</h4>
+                    <p>Доступ зберігається до кінця оплаченого періоду.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Чи можна змінити план?</h4>
+                    <p>Так, ви можете підвищити або понизити план в будь-який момент.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Які способи оплати доступні?</h4>
+                    <p>Банківські картки, Apple Pay, Google Pay та інші популярні методи.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add subscription to cart via AJAX
+    document.addEventListener('DOMContentLoaded', function () {
+        const forms = document.querySelectorAll('form[action*="subscribe"]');
+
+        forms.forEach(form => {
+            form.addEventListener('submit', function (e) {
+                const button = form.querySelector('button[type="submit"]');
+                if (button) {
+                    button.disabled = true;
+                    button.textContent = 'Додаємо...';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

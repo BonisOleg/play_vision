@@ -406,7 +406,8 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                            current_category|default:''==category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -418,15 +419,18 @@
                                 <h4>Рівень складності</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="beginner" {% if current_difficulty|default:'' == 'beginner' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="beginner" {% if
+                                            current_difficulty|default:''=='beginner' %}checked{% endif %}>
                                         <span>Початковий</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="intermediate" {% if current_difficulty|default:'' == 'intermediate' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="intermediate" {% if
+                                            current_difficulty|default:''=='intermediate' %}checked{% endif %}>
                                         <span>Середній</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="advanced" {% if current_difficulty|default:'' == 'advanced' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="advanced" {% if
+                                            current_difficulty|default:''=='advanced' %}checked{% endif %}>
                                         <span>Експертний</span>
                                     </label>
                                 </div>
@@ -437,11 +441,13 @@
                                 <h4>Тип доступу</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="price" value="free" {% if current_price|default:'' == 'free' %}checked{% endif %}>
+                                        <input type="radio" name="price" value="free" {% if
+                                            current_price|default:''=='free' %}checked{% endif %}>
                                         <span>Безкоштовний</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="price" value="paid" {% if current_price|default:'' == 'paid' %}checked{% endif %}>
+                                        <input type="radio" name="price" value="paid" {% if
+                                            current_price|default:''=='paid' %}checked{% endif %}>
                                         <span>Платний</span>
                                     </label>
                                 </div>
@@ -511,19 +517,20 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
+                                    %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}>
+                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}>
                                     За назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}>
+                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}>
                                     За назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}>
+                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}>
                                     За ціною (спадання)
                                 </option>
                             </select>
@@ -666,4 +673,8 @@
 {% block extra_js %}
 <script src="{% static 'js/hub.js' %}"></script>
 <script src="{% static 'js/search-autocomplete.js' %}"></script>
+<script src="{% static 'js/components/ai-chat.js' %}"></script>
 {% endblock %}
+
+<!-- AI Hub Widget -->
+{% include 'ai/widgets/hub_widget.html' %}

@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}AI Помічник - Play Vision{% endblock %}
+
+{% block meta_description %}Штучний інтелект Play Vision - отримайте миттєві відповіді на питання про футбол, курси та
+розвиток кар'єри.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/ai-chat.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ai-chat-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="ai-chat-header">
+            <div class="ai-avatar">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M12 1v6m0 6v6" />
+                    <path d="m21 12-6-3-6 3-6-3" />
+                    <path d="m21 12-6 3-6-3-6 3" />
+                    <path d="M12 1l6 3v6l-6 3-6-3V4z" />
+                </svg>
+            </div>
+            <div class="ai-info">
+                <h1 class="ai-title">AI Помічник Play Vision</h1>
+                <p class="ai-subtitle">Ваш персональний експерт з футболу та освіти</p>
+            </div>
+        </div>
+
+        {% if not ai_enabled %}
+        <div class="ai-maintenance">
+            <div class="maintenance-icon">🚧</div>
+            <h3>AI помічник тимчасово недоступний</h3>
+            <p>{{ maintenance_message|default:"Ведуться технічні роботи. Спробуйте пізніше." }}</p>
+        </div>
+        {% else %}
+
+        <!-- Chat Interface -->
+        <div class="ai-chat-interface">
+            <!-- Messages Container -->
+            <div class="ai-messages" id="ai-messages">
+                <div class="ai-message ai-message--bot">
+                    <div class="ai-message-avatar">🤖</div>
+                    <div class="ai-message-content">
+                        <p>Привіт! Я AI помічник Play Vision. Можу відповісти на питання про футбол, курси, підписки та
+                            багато іншого. Про що хочете дізнатися?</p>
+                    </div>
+                </div>
+
+                <!-- Recent queries for authenticated users -->
+                {% if recent_queries %}
+                <div class="ai-recent-queries">
+                    <h4>Ваші останні запитання:</h4>
+                    {% for query in recent_queries %}
+                    <button class="ai-recent-query" data-query="{{ query.query }}">
+                        {{ query.query|truncatechars:60 }}
+                    </button>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Input Form -->
+            <div class="ai-input-container">
+                <form class="ai-input-form" id="ai-form">
+                    {% csrf_token %}
+                    <div class="ai-input-wrapper">
+                        <textarea class="ai-input" id="ai-input" placeholder="Введіть ваше запитання..." rows="1"
+                            maxlength="500"></textarea>
+                        <button type="submit" class="ai-send-btn" id="ai-send" aria-label="Надіслати">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13" />
+                                <polygon points="22,2 15,22 11,13 2,9" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="ai-input-counter">
+                        <span id="char-counter">0</span>/500
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Suggested Questions -->
+        <div class="ai-suggestions">
+            <h3>Популярні запитання:</h3>
+            <div class="ai-suggestions-grid">
+                {% for question in suggested_questions %}
+                <button class="ai-suggestion-btn" data-question="{{ question }}">
+                    {{ question }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/components/ai-chat.js' %}"></script>
+{% endblock %}

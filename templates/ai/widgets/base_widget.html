@@ -1,0 +1,58 @@
+<!-- AI WIDGET BASE TEMPLATE -->
+<div class="ai-widget" data-ai-widget="{{ widget_type }}" data-widget-id="{{ widget_type }}">
+    <div class="ai-widget-header">
+        <div class="ai-widget-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 1v6m0 6v6" />
+                <path d="m21 12-6-3-6 3-6-3" />
+                <path d="m21 12-6 3-6-3-6 3" />
+            </svg>
+        </div>
+        <span class="ai-widget-title">AI Помічник</span>
+        <button class="ai-widget-toggle" data-widget-toggle aria-label="Згорнути/розгорнути">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18,15 12,9 6,15" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="ai-widget-body" data-widget-body>
+        <!-- Chat Messages -->
+        <div class="ai-widget-messages" id="widget-messages-{{ widget_type }}">
+            <div class="ai-widget-message ai-widget-message--bot">
+                <div class="ai-message-content">
+                    {% block welcome_message %}
+                    Привіт! Чим можу допомогти?
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Suggestions -->
+        {% if suggestions %}
+        <div class="ai-widget-suggestions">
+            {% for suggestion in suggestions %}
+            <button class="ai-widget-suggestion" data-suggestion="{{ suggestion }}">
+                {{ suggestion }}
+            </button>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Input -->
+        <div class="ai-widget-input">
+            <form class="ai-widget-form" data-widget-form>
+                {% csrf_token %}
+                <input type="text" class="ai-widget-input-field"
+                    placeholder="{{ placeholder|default:'Введіть запитання...' }}" maxlength="300" data-widget-input>
+                <button type="submit" class="ai-widget-send" data-widget-send aria-label="Надіслати">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22,2 15,22 11,13 2,9" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

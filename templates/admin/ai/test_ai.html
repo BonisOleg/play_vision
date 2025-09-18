@@ -1,0 +1,137 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Тестування AI - AI Configuration{% endblock %}
+
+{% block extrahead %}
+<style>
+    .ai-test-form {
+        margin: 20px 0;
+    }
+
+    .ai-test-input {
+        width: 100%;
+        max-width: 500px;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .ai-test-response {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .ai-test-meta {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .ai-loading {
+        display: none;
+        color: #007cba;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="app-ai">
+    <h1>Тестування AI помічника</h1>
+
+    <div class="module">
+        <h2>Тестовий запит</h2>
+
+        <form class="ai-test-form" id="ai-test-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <label for="test_query">Запит до AI:</label>
+                <input type="text" name="test_query" id="test_query" class="ai-test-input"
+                    placeholder="Наприклад: Що таке Play Vision?" required>
+            </div>
+
+            <div class="submit-row">
+                <input type="submit" value="Надіслати запит" class="default">
+                <span class="ai-loading" id="ai-loading">Обробка запиту...</span>
+            </div>
+        </form>
+
+        <div id="ai-response-container" style="display: none;">
+            <h3>Відповідь AI:</h3>
+            <div class="ai-test-response" id="ai-response"></div>
+            <div class="ai-test-meta" id="ai-meta"></div>
+        </div>
+    </div>
+
+    <div class="module">
+        <h2>Підказки для тестування</h2>
+        <ul>
+            <li><strong>"Що таке Play Vision?"</strong> - базова інформація</li>
+            <li><strong>"Як зареєструватися?"</strong> - процедури реєстрації</li>
+            <li><strong>"Які курси доступні?"</strong> - каталог курсів</li>
+            <li><strong>"Скільки коштує підписка?"</strong> - ціни та плани</li>
+            <li><strong>"Як працює програма лояльності?"</strong> - система балів</li>
+        </ul>
+    </div>
+
+    <div class="module">
+        <h2>Статус системи</h2>
+        <p><strong>API Provider:</strong> Перевірте налаштування в AI Configuration</p>
+        <p><strong>База знань:</strong> <a href="../load-knowledge/">Завантажити файли</a></p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('ai-test-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const query = document.getElementById('test_query').value;
+        const loading = document.getElementById('ai-loading');
+        const responseContainer = document.getElementById('ai-response-container');
+        const responseEl = document.getElementById('ai-response');
+        const metaEl = document.getElementById('ai-meta');
+
+        // Show loading
+        loading.style.display = 'inline';
+        responseContainer.style.display = 'none';
+
+        try {
+            const response = await fetch('test-ai/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: new URLSearchParams({ test_query: query })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                responseEl.textContent = data.response;
+                metaEl.innerHTML = `
+                <strong>Час відгуку:</strong> ${data.response_time}мс<br>
+                <strong>Джерела:</strong> ${data.sources.join(', ') || 'Немає'}
+            `;
+                responseContainer.style.display = 'block';
+            } else {
+                responseEl.textContent = `Помилка: ${data.error || 'Невідома помилка'}`;
+                metaEl.textContent = '';
+                responseContainer.style.display = 'block';
+            }
+        } catch (error) {
+            responseEl.textContent = `Помилка з'єднання: ${error.message}`;
+            metaEl.textContent = '';
+            responseContainer.style.display = 'block';
+        } finally {
+            loading.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

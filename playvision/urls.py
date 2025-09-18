@@ -24,7 +24,11 @@ urlpatterns = [
     path('hub/', include('apps.content.urls')),
     path('events/', include('apps.events.urls')),
     
+    # AI Assistant
+    path('ai/', include('apps.ai.urls')),
+    
     # Commerce
+    path('', include('apps.subscriptions.urls')),  # Include pricing at root level
     path('cart/', include('apps.cart.urls')),
     path('payments/', include('apps.payments.urls')),
     

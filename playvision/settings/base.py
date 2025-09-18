@@ -261,3 +261,10 @@ AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='')
 AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-central-1')
+
+# AI Assistant settings
+OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
+ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
+AI_ENABLED = config('AI_ENABLED', default=True, cast=bool)
+AI_MAX_TOKENS = config('AI_MAX_TOKENS', default=500, cast=int)
+AI_TEMPERATURE = config('AI_TEMPERATURE', default=0.7, cast=float)
