@@ -1,0 +1,26 @@
+<!-- Play Vision PWA Icon Placeholder -->
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#ff6b35" rx="80"/>
+  
+  <!-- Play Vision Logo -->
+  <g transform="translate(126, 126)">
+    <!-- Outer circle -->
+    <circle cx="130" cy="130" r="120" fill="none" stroke="white" stroke-width="12"/>
+    
+    <!-- Inner play triangle -->
+    <polygon points="100,80 100,180 180,130" fill="white"/>
+    
+    <!-- Vision eye -->
+    <circle cx="200" cy="100" r="25" fill="white"/>
+    <circle cx="200" cy="100" r="12" fill="#ff6b35"/>
+    
+    <!-- Text -->
+    <text x="130" y="220" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="bold">
+      PLAY
+    </text>
+    <text x="130" y="250" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="bold">
+      VISION
+    </text>
+  </g>
+</svg>

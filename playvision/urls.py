@@ -37,6 +37,7 @@ urlpatterns = [
     path('api/v1/content/', include('apps.content.api_urls')),
     path('api/v1/events/', include('apps.events.api_urls')),
     path('api/v1/cart/', include('apps.cart.api_urls')),
+    path('api/v1/notifications/', include('apps.notifications.api_urls')),
     
     # HTMX endpoints
     path('htmx/', include('apps.core.htmx_urls')),

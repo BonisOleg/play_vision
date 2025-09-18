@@ -16,6 +16,9 @@ python manage.py migrate
 # Load AI knowledge base
 python manage.py load_knowledge_base
 
+# Note: PWA icons are placeholders - replace with real Play Vision logos
+echo "📱 PWA icons generated (replace placeholders with real logos)"
+
 # Create superuser if doesn't exist
 python manage.py shell << END
 from django.contrib.auth import get_user_model

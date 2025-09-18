@@ -268,3 +268,19 @@ ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
 AI_ENABLED = config('AI_ENABLED', default=True, cast=bool)
 AI_MAX_TOKENS = config('AI_MAX_TOKENS', default=500, cast=int)
 AI_TEMPERATURE = config('AI_TEMPERATURE', default=0.7, cast=float)
+
+# PWA Settings
+PWA_ENABLED = config('PWA_ENABLED', default=True, cast=bool)
+PWA_APP_NAME = 'Play Vision'
+PWA_APP_DESCRIPTION = 'Освітня платформа для футбольних фахівців'
+PWA_APP_THEME_COLOR = '#ff6b35'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_START_URL = '/'
+PWA_APP_SCOPE = '/'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_ORIENTATION = 'portrait-primary'
+
+# Push Notifications (VAPID) settings
+VAPID_PRIVATE_KEY = config('VAPID_PRIVATE_KEY', default='')
+VAPID_PUBLIC_KEY = config('VAPID_PUBLIC_KEY', default='')
+VAPID_EMAIL = config('VAPID_EMAIL', default=DEFAULT_FROM_EMAIL)

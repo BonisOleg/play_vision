@@ -1,0 +1,271 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Встановити додаток - Play Vision{% endblock %}
+
+{% block meta_description %}Встановіть Play Vision як додаток на ваш пристрій для кращого досвіду навчання та швидкого
+доступу до курсів.{% endblock %}
+
+{% block extra_css %}
+<style>
+    .install-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .install-header {
+        text-align: center;
+        margin-bottom: var(--spacing-xxl);
+    }
+
+    .install-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto var(--spacing-lg);
+        background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: white;
+    }
+
+    .install-steps {
+        background: white;
+        border-radius: 12px;
+        padding: var(--spacing-xl);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .install-step {
+        display: flex;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+        align-items: flex-start;
+    }
+
+    .install-step:last-child {
+        margin-bottom: 0;
+    }
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        background: var(--color-primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .step-content h3 {
+        margin-bottom: var(--spacing-xs);
+        color: var(--color-text);
+    }
+
+    .step-content p {
+        color: var(--color-text-light);
+        line-height: 1.6;
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--spacing-lg);
+        margin-top: var(--spacing-xl);
+    }
+
+    .benefit-card {
+        background: white;
+        padding: var(--spacing-lg);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .benefit-icon {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    @media (max-width: 768px) {
+        .install-container {
+            padding: var(--spacing-lg) var(--spacing-sm);
+        }
+
+        .install-steps {
+            padding: var(--spacing-lg);
+        }
+
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="install-container">
+    <div class="install-header">
+        <div class="install-icon">📱</div>
+        <h1>Встановіть Play Vision як додаток</h1>
+        <p>Отримайте швидкий доступ до курсів та AI помічника прямо з домашнього екрану</p>
+    </div>
+
+    {% if device_type == 'ios' %}
+    <!-- iOS Instructions -->
+    <div class="install-steps">
+        <h2>Інструкції для iPhone/iPad</h2>
+
+        <div class="install-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Відкрийте Safari</h3>
+                <p>Play Vision підтримує встановлення тільки через браузер Safari на iOS пристроях.</p>
+            </div>
+        </div>
+
+        <div class="install-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Натисніть кнопку "Поділитися"</h3>
+                <p>Знайдіть іконку поділитися в нижній панелі Safari (квадрат зі стрілкою вгору).</p>
+            </div>
+        </div>
+
+        <div class="install-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Виберіть "На екран «Домівка»"</h3>
+                <p>Прокрутіть вниз та знайдіть опцію "На екран «Домівка»" з іконкою плюса.</p>
+            </div>
+        </div>
+
+        <div class="install-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h3>Натисніть "Додати"</h3>
+                <p>Підтвердіть встановлення. Play Vision з'явиться на вашому домашньому екрані.</p>
+            </div>
+        </div>
+    </div>
+
+    {% elif device_type == 'android' %}
+    <!-- Android Instructions -->
+    <div class="install-steps">
+        <h2>Інструкції для Android</h2>
+
+        <div class="install-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Відкрийте Chrome</h3>
+                <p>Переконайтеся що використовуєте останню версію Google Chrome.</p>
+            </div>
+        </div>
+
+        <div class="install-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Знайдіть кнопку "Встановити"</h3>
+                <p>Chrome автоматично покаже кнопку встановлення в адресному рядку або внизу екрану.</p>
+            </div>
+        </div>
+
+        <div class="install-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Підтвердіть встановлення</h3>
+                <p>Натисніть "Встановити" у спливаючому вікні. Додаток з'явиться серед ваших програм.</p>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- Desktop Instructions -->
+    <div class="install-steps">
+        <h2>Інструкції для комп'ютера</h2>
+
+        <div class="install-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Використовуйте Chrome або Edge</h3>
+                <p>PWA підтримується в сучасних браузерах на Windows, macOS та Linux.</p>
+            </div>
+        </div>
+
+        <div class="install-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Кнопка встановлення</h3>
+                <p>Шукайте іконку встановлення в адресному рядку або натисніть меню браузера → "Встановити Play Vision".
+                </p>
+            </div>
+        </div>
+
+        <div class="install-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Запуск як додаток</h3>
+                <p>Після встановлення Play Vision з'явиться в меню програм та буде працювати як нативний додаток.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Benefits -->
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <div class="benefit-icon">⚡</div>
+            <h3>Швидший запуск</h3>
+            <p>Миттєвий доступ з домашнього екрану без відкриття браузера</p>
+        </div>
+
+        <div class="benefit-card">
+            <div class="benefit-icon">📱</div>
+            <h3>Нативний досвід</h3>
+            <p>Повноекранний режим та нативна навігація</p>
+        </div>
+
+        <div class="benefit-card">
+            <div class="benefit-icon">🔔</div>
+            <h3>Push-сповіщення</h3>
+            <p>Отримуйте сповіщення про нові курси та івенти</p>
+        </div>
+
+        <div class="benefit-card">
+            <div class="benefit-icon">💾</div>
+            <h3>Офлайн доступ</h3>
+            <p>Основні функції працюють навіть без інтернету</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Автоматичне визначення можливості встановлення
+    document.addEventListener('DOMContentLoaded', () => {
+        // Перевірити чи вже встановлено
+        if (window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true) {
+
+            // Додаток вже встановлений
+            const container = document.querySelector('.install-container');
+            container.innerHTML = `
+            <div class="install-header">
+                <div class="install-icon">✅</div>
+                <h1>Додаток встановлений!</h1>
+                <p>Play Vision успішно встановлено як PWA додаток</p>
+                <a href="/" class="btn btn-primary">Перейти до навчання</a>
+            </div>
+        `;
+        }
+    });
+</script>
+{% endblock %}

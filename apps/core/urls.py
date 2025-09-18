@@ -12,6 +12,10 @@ urlpatterns = [
     path('search/', views.SearchView.as_view(), name='search'),
     path('coming-soon/', views.ComingSoonView.as_view(), name='coming_soon'),
     
+    # PWA pages
+    path('pwa/offline/', views.PWAOfflineView.as_view(), name='pwa_offline'),
+    path('pwa/install/', views.PWAInstallView.as_view(), name='pwa_install'),
+    
     # Legal pages
     path('legal/<slug:slug>/', views.LegalPageView.as_view(), name='legal'),
     

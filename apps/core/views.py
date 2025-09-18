@@ -283,3 +283,34 @@ class TemplateDebugView(TemplateView):
             'test_datetime': timezone.now(),
         })
         return context
+
+
+class PWAOfflineView(TemplateView):
+    """PWA Offline fallback page"""
+    template_name = 'pwa/offline.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_pwa'] = True
+        return context
+
+
+class PWAInstallView(TemplateView):
+    """PWA Installation instructions page"""
+    template_name = 'pwa/install.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Визначити тип пристрою
+        user_agent = self.request.META.get('HTTP_USER_AGENT', '').lower()
+        
+        if 'iphone' in user_agent or 'ipad' in user_agent:
+            context['device_type'] = 'ios'
+        elif 'android' in user_agent:
+            context['device_type'] = 'android'
+        else:
+            context['device_type'] = 'desktop'
+        
+        context['is_pwa'] = True
+        return context

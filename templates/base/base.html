@@ -12,9 +12,42 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 
-    <!-- PWA -->
+    <!-- PWA Complete Configuration -->
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <meta name="theme-color" content="#ff6b35">
+    <meta name="application-name" content="Play Vision">
+
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Play Vision">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#ff6b35">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon-180x180.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'icons/apple-touch-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'icons/apple-touch-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'icons/apple-touch-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'icons/apple-touch-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'icons/apple-touch-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'icons/apple-touch-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'icons/apple-touch-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'icons/apple-touch-icon-57x57.png' %}">
+
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)"
+        href="{% static 'splash/iphone12.png' %}">
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)"
+        href="{% static 'splash/iphone12-pro-max.png' %}">
+    <link rel="apple-touch-startup-image"
+        media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+        href="{% static 'splash/ipad.png' %}">
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -229,6 +262,9 @@
     <script src="{% static 'js/api-utils.js' %}"></script>
     <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
+    <!-- PWA Functionality -->
+    <script src="{% static 'js/pwa.js' %}"></script>
+
     <!-- Cart functionality for all pages -->
     {% if user.is_authenticated %}
     <script src="{% static 'js/core/cart-header.js' %}"></script>

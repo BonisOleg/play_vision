@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Офлайн режим - Play Vision</title>
+    <meta name="theme-color" content="#ff6b35">
+    <meta name="description" content="Play Vision працює офлайн. Деякі функції недоступні без інтернету.">
+
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Play Vision">
+
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="manifest" href="/static/manifest.json">
+
+    <style>
+        :root {
+            --color-primary: #ff6b35;
+            --color-primary-dark: #e55a2b;
+            --color-text: #333;
+            --color-text-light: #666;
+            --color-bg: #ffffff;
+            --color-bg-gray: #f5f5f5;
+            --color-border: #e0e0e0;
+            --color-success: #4caf50;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-xxl: 3rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--color-bg-gray) 0%, white 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+        }
+
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            padding: var(--spacing-xxl);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--color-border);
+        }
+
+        .offline-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--spacing-lg);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .offline-title {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        .offline-description {
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+            color: var(--color-text-light);
+            font-size: 1rem;
+        }
+
+        .offline-features {
+            background: var(--color-bg-gray);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            text-align: left;
+        }
+
+        .offline-features h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.125rem;
+            text-align: center;
+        }
+
+        .offline-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .offline-features li {
+            padding: var(--spacing-sm) 0;
+            position: relative;
+            padding-left: var(--spacing-lg);
+            color: var(--color-text);
+        }
+
+        .offline-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: 600;
+        }
+
+        .offline-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .connection-status {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .connection-status.online {
+            background: rgba(76, 175, 80, 0.1);
+            color: #388e3c;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .connection-status.offline {
+            background: rgba(255, 152, 0, 0.1);
+            color: #f57c00;
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+
+        .connection-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .offline-container {
+                padding: var(--spacing-lg);
+                margin: var(--spacing-sm);
+            }
+
+            .offline-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+
+            .offline-title {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                min-width: 180px;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">
+            📡
+        </div>
+
+        <h1 class="offline-title">Офлайн режим</h1>
+
+        <p class="offline-description">
+            Ви переглядаєте збережену версію Play Vision.
+            Деякі функції недоступні без підключення до інтернету.
+        </p>
+
+        <div class="offline-features">
+            <h3>Доступно офлайн:</h3>
+            <ul>
+                <li>Перегляд збережених сторінок</li>
+                <li>Основна навігація</li>
+                <li>Інформація про курси</li>
+                <li>AI віджети (базовий режим)</li>
+            </ul>
+        </div>
+
+        <div class="offline-actions">
+            <button class="btn" onclick="window.location.reload()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23,4 23,10 17,10" />
+                    <path d="M20.49,15a9,9,0,1,1-2.12-9.36L23,10" />
+                </svg>
+                Спробувати знову
+            </button>
+
+            <a href="/" class="btn btn-outline">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3,9l9-7 9,7v11a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2z" />
+                    <polyline points="9,22 9,12 15,12 15,22" />
+                </svg>
+                На головну
+            </a>
+        </div>
+
+        <div class="connection-status" id="connection-status">
+            <div class="connection-indicator"></div>
+            <span id="connection-text">Перевірка з'єднання...</span>
+        </div>
+    </div>
+
+    <script>
+        // Моніторинг підключення
+        function updateConnectionStatus() {
+            const status = document.getElementById('connection-status');
+            const text = document.getElementById('connection-text');
+
+            if (navigator.onLine) {
+                status.className = 'connection-status online';
+                text.textContent = 'З\'єднання активне';
+
+                // Спробувати перезавантажити через 2 секунди
+                setTimeout(() => {
+                    fetch('/', { method: 'HEAD', cache: 'no-cache' })
+                        .then(() => {
+                            text.textContent = 'З\'єднання відновлено! Перезавантаження...';
+                            setTimeout(() => window.location.reload(), 1000);
+                        })
+                        .catch(() => {
+                            text.textContent = 'З\'єднання нестабільне';
+                        });
+                }, 2000);
+            } else {
+                status.className = 'connection-status offline';
+                text.textContent = 'Немає підключення';
+            }
+        }
+
+        // Event listeners
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+
+        // Початкова перевірка
+        updateConnectionStatus();
+
+        // Періодична перевірка кожні 30 секунд
+        setInterval(() => {
+            if (navigator.onLine) {
+                fetch('/', { method: 'HEAD', cache: 'no-cache' })
+                    .then(() => {
+                        document.getElementById('connection-text').textContent = 'З\'єднання відновлено! Оновлення...';
+                        setTimeout(() => window.location.reload(), 1000);
+                    })
+                    .catch(() => {
+                        console.log('Still offline');
+                    });
+            }
+        }, 30000);
+
+        // Smooth animations
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.offline-container').style.animation = 'fadeInUp 0.5s ease';
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+
+</html>

@@ -29,3 +29,6 @@ botocore==1.34.162
 # AI/ML dependencies (опціонально)
 openai==1.51.2
 anthropic==0.34.2
+
+# PWA Push Notifications (опціонально)
+pywebpush==1.14.1
