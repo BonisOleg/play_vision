@@ -56,8 +56,31 @@
                 {% endif %}
             </div>
 
+            <!-- Email Verification Alert for Phone-only Users -->
+            {% if user.phone_registered_at and user.needs_email_verification %}
+            <div class="completion-alert completion-alert--warning">
+                <h3>⚠️ Додайте Email адресу</h3>
+                <p>Ваш доступ через телефон діє тільки {{ user.days_since_phone_registration|add:"-3"|default:"3" }}
+                    дні.
+                    Додайте email для повного доступу.</p>
+                <a href="{% url 'accounts:add_email' %}" class="btn btn-warning">Додати Email</a>
+            </div>
+            {% endif %}
+
+            <!-- Email Verification Alert for Email Users -->
+            {% if user.email and not user.is_email_verified and not user.phone_registered_at %}
+            <div class="completion-alert completion-alert--info">
+                <h3>📧 Підтвердіть Email адресу</h3>
+                <p>Підтвердіть ваш email {{ user.email }} для повного доступу до всіх функцій.</p>
+                <div class="btn-group">
+                    <a href="{% url 'accounts:verify_email_universal' %}" class="btn btn-primary">Ввести код</a>
+                    <a href="{% url 'cabinet:settings' %}" class="btn btn-outline">Відправити новий код</a>
+                </div>
+            </div>
+            {% endif %}
+
             <!-- Profile Completion Alert -->
-            {% if not profile_complete %}
+            {% if not profile_complete and user.is_email_verified %}
             <div class="completion-alert">
                 <h3>🎯 Завершіть налаштування профілю</h3>
                 <p>Заповніть профіль для персональних рекомендацій та бонусів</p>

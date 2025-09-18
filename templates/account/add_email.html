@@ -1,0 +1,86 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Додати Email - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="account-layout">
+        <!-- Sidebar Navigation -->
+        <nav class="account-sidebar">
+            <div class="account-user-info">
+                <div class="user-avatar">
+                    {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="Аватар">
+                    {% else %}
+                    <div class="avatar-placeholder">{{ user.phone|first|default:"U" }}</div>
+                    {% endif %}
+                </div>
+                <div class="user-details">
+                    <h3>{{ user.phone }}</h3>
+                    <span class="subscription-badge free">Тимчасовий доступ</span>
+                    <p class="text-small text-warning">
+                        Залишилось днів: {{ user.days_left|default:"3" }}
+                    </p>
+                </div>
+            </div>
+
+            <ul class="account-nav">
+                <li><a href="{% url 'cabinet:dashboard' %}">📊 Дашборд</a></li>
+                <li><a href="{% url 'accounts:add_email' %}" class="active">📧 Додати Email</a></li>
+                <li><a href="{% url 'cabinet:settings' %}">⚙️ Налаштування</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="account-main">
+            <div class="account-header">
+                <h1>Додати Email адресу</h1>
+                <p>Щоб не втратити доступ до акаунту, додайте та підтвердіть email адресу</p>
+            </div>
+
+            <div class="auth-card">
+                <div class="alert alert-warning">
+                    <strong>⚠️ Важливо!</strong>
+                    Ваш доступ через номер телефону діє тільки 3 дні.
+                    Додайте email, щоб отримати повний доступ до платформи.
+                </div>
+
+                <form method="post" class="auth-form">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">Email адреса</label>
+                        {{ form.email }}
+                        {% if form.email.help_text %}
+                        <small class="form-text text-muted">{{ form.email.help_text }}</small>
+                        {% endif %}
+                        {% if form.email.errors %}
+                        <div class="error-message">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full">
+                        Додати Email
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Після додавання email ми відправимо код підтвердження на вказану адресу.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

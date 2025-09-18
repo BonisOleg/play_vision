@@ -164,3 +164,53 @@ class AnalyticsMiddleware(MiddlewareMixin):
         if x_forwarded_for:
             return x_forwarded_for.split(',')[0]
         return request.META.get('REMOTE_ADDR')
+
+
+class PhoneRegistrationMiddleware(MiddlewareMixin):
+    """Middleware for handling phone-only registration limits and reminders"""
+    
+    def process_request(self, request):
+        # Check phone registration limits before processing request
+        if request.user.is_authenticated:
+            return self.handle_phone_registration_limits(request)
+        return None
+    
+    def handle_phone_registration_limits(self, request):
+        """Handle 3-day phone registration limits and reminders"""
+        user = request.user
+        
+        # Skip if user has verified email OR never registered via phone
+        if user.is_email_verified or not user.phone_registered_at:
+            return None
+        
+        # Check if phone registration expired
+        if user.phone_registration_expired:
+            from django.contrib.auth import logout
+            from django.contrib import messages
+            from django.shortcuts import redirect
+            
+            messages.error(request, 
+                'Ваш 3-денний пробний період закінчився. Будь ласка, зареєструйтесь знову та підтвердіть email.')
+            logout(request)
+            return redirect('accounts:login')
+        
+        # Add reminder message ONLY for phone-only registration users
+        if user.needs_email_verification:
+            from django.contrib import messages
+            days_left = 3 - user.days_since_phone_registration
+            
+            # Check if we haven't already added this message
+            storage = messages.get_messages(request)
+            existing_messages = [str(m) for m in storage]
+            reminder_exists = any('Додайте email' in msg for msg in existing_messages)
+            
+            # Only show on specific pages to avoid spam
+            show_on_pages = ['/account/', '/cabinet/', '/hub/', '/events/']
+            should_show = any(request.path.startswith(page) for page in show_on_pages)
+            
+            if not reminder_exists and should_show:
+                messages.warning(request, 
+                    f'⚠️ Додайте email в особистому кабінеті та підтвердіть його. '
+                    f'Залишилось днів: {days_left}')
+        
+        return None

@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Підтвердіть Email - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/account.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="account-layout">
+        <!-- Sidebar Navigation -->
+        <nav class="account-sidebar">
+            <div class="account-user-info">
+                <div class="user-avatar">
+                    {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="Аватар">
+                    {% else %}
+                    <div class="avatar-placeholder">{{ user.email|first|default:"U" }}</div>
+                    {% endif %}
+                </div>
+                <div class="user-details">
+                    <h3>{{ user.email|default:user.phone }}</h3>
+                    <span class="subscription-badge free">Очікує підтвердження</span>
+                </div>
+            </div>
+
+            <ul class="account-nav">
+                <li><a href="{% url 'cabinet:dashboard' %}">📊 Дашборд</a></li>
+                <li><a href="{% url 'accounts:verify_email_form' %}" class="active">✉️ Підтвердити Email</a></li>
+                <li><a href="{% url 'cabinet:settings' %}">⚙️ Налаштування</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="account-main">
+            <div class="account-header">
+                <h1>Підтвердіть Email адресу</h1>
+                <p>Ми відправили код підтвердження на {{ user.email }}</p>
+            </div>
+
+            <div class="auth-card">
+                {% if is_phone_only_user %}
+                <div class="alert alert-warning">
+                    <strong>⚠️ Важливо!</strong>
+                    Підтвердіть email для отримання повного доступу.
+                    Код відправлено на {{ user.email }}.
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <strong>📧 Перевірте пошту!</strong>
+                    Код підтвердження відправлено на {{ user.email }}.
+                    Перевірте також папку "Спам".
+                </div>
+                {% endif %}
+
+                <form method="post" class="auth-form">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.code.id_for_label }}">Код підтвердження</label>
+                        {{ form.code }}
+                        {% if form.code.errors %}
+                        <div class="error-message">{{ form.code.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full">
+                        Підтвердити Email
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Не отримали код? <a href="{% url 'accounts:add_email' %}">Відправити знову</a></p>
+                    <p>Код дійсний протягом 15 хвилин.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

@@ -21,6 +21,11 @@ urlpatterns = [
     path('verify/email/<str:code>/', views.VerifyEmailView.as_view(), name='verify_email'),
     path('verify/phone/<str:code>/', views.VerifyPhoneView.as_view(), name='verify_phone'),
     
+    # Email management
+    path('add-email/', views.AddEmailView.as_view(), name='add_email'),
+    path('verify-email-form/', views.VerifyEmailFormView.as_view(), name='verify_email_form'),
+    path('verify-email/', views.VerifyEmailFormView.as_view(), name='verify_email_universal'),
+    
     # Redirects from old URLs to new cabinet
     path('profile/', RedirectView.as_view(pattern_name='cabinet:profile', permanent=True), name='profile'),
     path('profile/edit/', RedirectView.as_view(pattern_name='cabinet:profile', permanent=True), name='profile_edit'),

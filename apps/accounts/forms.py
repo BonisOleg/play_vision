@@ -7,9 +7,20 @@ from .models import User, Profile
 class CustomUserCreationForm(UserCreationForm):
     """Custom user registration form"""
     email = forms.EmailField(
+        required=False,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'Email'
+        })
+    )
+    phone = forms.CharField(
+        required=False,
+        max_length=20,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control form-input--phone',
+            'placeholder': 'XX XXX XX XX',
+            'pattern': '[0-9]{9}',
+            'maxlength': '9'
         })
     )
     password1 = forms.CharField(
@@ -32,7 +43,7 @@ class CustomUserCreationForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2')
+        fields = ('email', 'phone', 'password1', 'password2')
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -40,15 +51,48 @@ class CustomUserCreationForm(UserCreationForm):
         if 'username' in self.fields:
             del self.fields['username']
     
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        phone = cleaned_data.get('phone')
+        
+        # Require either email or phone
+        if not email and not phone:
+            raise ValidationError('Вкажіть email або номер телефону')
+        
+        # Format phone number
+        if phone:
+            phone = '+380' + phone.strip()
+            cleaned_data['phone'] = phone
+        
+        return cleaned_data
+    
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if email and User.objects.filter(email=email).exists():
             raise ValidationError('Користувач з таким email вже існує')
         return email
     
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone:
+            # Format phone number
+            if not phone.startswith('+380'):
+                phone = '+380' + phone.strip()
+            
+            # Check if phone already exists
+            if User.objects.filter(phone=phone).exists():
+                raise ValidationError('Користувач з таким номером телефону вже існує')
+        return phone
+    
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.username = user.email  # Use email as username
+        
+        # Set phone_registered_at if registering with phone only
+        if user.phone and not user.email:
+            from django.utils import timezone
+            user.phone_registered_at = timezone.now()
+        
         if commit:
             user.save()
         return user
@@ -236,6 +280,29 @@ class VerificationCodeForm(forms.Form):
             'placeholder': 'Код підтвердження'
         })
     )
+
+
+class AddEmailForm(forms.Form):
+    """Form to add email to phone-only accounts"""
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Введіть ваш email'
+        }),
+        help_text='Ми відправимо код підтвердження на цю адресу'
+    )
+    
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            # Check if email is already taken by another user
+            if User.objects.filter(email=email).exclude(id=self.user.id if self.user else None).exists():
+                raise ValidationError('Цей email вже використовується іншим користувачем')
+        return email
 
 
 class DeleteAccountForm(forms.Form):

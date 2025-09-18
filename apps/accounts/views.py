@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.db import models
 from datetime import timedelta
 from .models import User, Profile, VerificationCode
-from .forms import CustomUserCreationForm, ProfileForm
+from .forms import CustomUserCreationForm, ProfileForm, AddEmailForm, VerificationCodeForm
 
 
 class CustomLoginView(LoginView):
@@ -37,30 +37,38 @@ class RegisterView(CreateView):
         # Create user profile
         Profile.objects.create(user=self.object)
         
-        # Send verification email
-        self.send_verification_email()
+        # Handle verification based on registration type
+        self.handle_verification()
         
         # Auto login
         login(self.request, self.object)
         
-        messages.success(self.request, 'Вітаємо! Ваш акаунт успішно створено.')
+        # Success message based on registration type
+        if self.object.email and not self.object.phone_registered_at:
+            messages.success(self.request, 'Вітаємо! Перевірте email для підтвердження акаунту.')
+        elif self.object.phone_registered_at:
+            days_left = 3
+            messages.success(self.request, 
+                f'Вітаємо! У вас є {days_left} дні для додавання email. '
+                f'Додайте email в особистому кабінеті для повного доступу.')
+        else:
+            messages.success(self.request, 'Вітаємо! Ваш акаунт успішно створено.')
+        
         return response
     
-    def send_verification_email(self):
-        """Send email verification code"""
-        import random
-        code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
-        
-        VerificationCode.objects.create(
-            user=self.object,
-            code=code,
-            code_type='email',
-            expires_at=timezone.now() + timedelta(minutes=15)
-        )
-        
-        # TODO: Send actual email
-        # For now, just show in console
-        print(f"Verification code for {self.object.email}: {code}")
+    def handle_verification(self):
+        """Handle verification based on registration type"""
+        if self.object.email and not self.object.phone_registered_at:
+            # Email registration - send verification code
+            from .services import EmailService
+            success = EmailService.send_email_verification_code(self.object)
+            if not success:
+                messages.warning(self.request, 
+                    'Помилка відправки email. Ви можете запросити новий код в налаштуваннях.')
+        elif self.object.phone_registered_at:
+            # Phone registration - show reminder about email
+            messages.warning(self.request, 
+                '⚠️ Не забудьте додати email в особистому кабінеті для повного доступу!')
 
 
 class PasswordResetView(View):
@@ -406,19 +414,24 @@ class SettingsView(LoginRequiredMixin, TemplateView):
             messages.warning(request, 'Телефон вже підтверджений')
             return redirect('accounts:settings')
         
-        # Generate and send verification code
-        import random
-        code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+        # Handle email verification
+        if code_type == 'email':
+            if not request.user.email:
+                messages.error(request, 'Спочатку додайте email адресу')
+                return redirect('accounts:settings')
+            
+            # Send email verification using EmailService
+            from .services import EmailService
+            success = EmailService.send_email_verification_code(request.user)
+            
+            if success:
+                messages.success(request, 'Код підтвердження відправлено на ваш email')
+            else:
+                messages.error(request, 'Помилка відправки email. Спробуйте пізніше.')
         
-        VerificationCode.objects.create(
-            user=request.user,
-            code=code,
-            code_type=code_type,
-            expires_at=timezone.now() + timedelta(minutes=15)
-        )
-        
-        # TODO: Send actual email/SMS
-        messages.success(request, f'Код підтвердження відправлено на ваш {code_type}')
+        # Handle phone verification (not implemented yet)
+        elif code_type == 'phone':
+            messages.info(request, 'SMS відправка поки не реалізована')
         
         return redirect('accounts:settings')
 
@@ -619,3 +632,102 @@ class LoyaltyView(LoginRequiredMixin, TemplateView):
         
         context['under_development'] = True
         return context
+
+
+class AddEmailView(LoginRequiredMixin, View):
+    """View for adding email to phone-only accounts"""
+    template_name = 'account/add_email.html'
+    
+    def get(self, request):
+        # Redirect if user already has verified email
+        if request.user.is_email_verified:
+            messages.info(request, 'Ваш email вже підтверджений.')
+            return redirect('cabinet:settings')
+        
+        form = AddEmailForm(user=request.user)
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request):
+        form = AddEmailForm(request.POST, user=request.user)
+        
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            
+            # Update user email
+            request.user.email = email
+            request.user.save()
+            
+            # Send verification code
+            from .services import EmailService
+            success = EmailService.send_email_verification_code(request.user)
+            
+            if success:
+                messages.success(request, 
+                    f'Код підтвердження відправлено на {email}. Перевірте поштову скриньку.')
+                return redirect('accounts:verify_email_form')
+            else:
+                messages.error(request, 
+                    'Помилка відправки email. Спробуйте пізніше.')
+        
+        return render(request, self.template_name, {'form': form})
+
+
+class VerifyEmailFormView(LoginRequiredMixin, View):
+    """Universal view for email verification form"""
+    template_name = 'account/verify_email_form.html'
+    
+    def get(self, request):
+        if request.user.is_email_verified:
+            messages.info(request, 'Ваш email вже підтверджений.')
+            return redirect('cabinet:dashboard')
+        
+        form = VerificationCodeForm()
+        context = {
+            'form': form,
+            'is_phone_only_user': bool(request.user.phone_registered_at)
+        }
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = VerificationCodeForm(request.POST)
+        
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            
+            try:
+                verification = VerificationCode.objects.get(
+                    user=request.user,
+                    code=code,
+                    code_type='email',
+                    used_at__isnull=True
+                )
+                
+                if verification.is_expired:
+                    messages.error(request, 'Код верифікації закінчився. Запросіть новий.')
+                    return render(request, self.template_name, {'form': form})
+                
+                # Mark as verified
+                request.user.is_email_verified = True
+                
+                # Remove phone-only status if it was phone registration
+                if request.user.phone_registered_at:
+                    request.user.phone_registered_at = None
+                    success_message = 'Email успішно підтверджено! Тепер у вас повний доступ без обмежень.'
+                else:
+                    success_message = 'Email успішно підтверджено!'
+                
+                request.user.save()
+                verification.used_at = timezone.now()
+                verification.save()
+                
+                messages.success(request, success_message)
+                return redirect('cabinet:dashboard')
+                    
+            except VerificationCode.DoesNotExist:
+                messages.error(request, 'Невірний код верифікації.')
+        
+        context = {
+            'form': form,
+            'is_phone_only_user': bool(request.user.phone_registered_at)
+        }
+        return render(request, self.template_name, context)

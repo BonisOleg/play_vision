@@ -21,10 +21,11 @@ class User(AbstractUser):
         blank=True,
         null=True
     )
-    email = models.EmailField('email address', unique=True)
-    phone = models.CharField(max_length=20, blank=True, help_text='Phone number in international format')
+    email = models.EmailField('email address', unique=True, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, unique=True, null=True, help_text='Phone number in international format')
     is_email_verified = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
+    phone_registered_at = models.DateTimeField(null=True, blank=True, help_text='Date when user registered with phone only')
     stripe_customer_id = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,7 +39,37 @@ class User(AbstractUser):
         verbose_name_plural = 'Users'
     
     def __str__(self):
-        return self.email
+        return self.email or self.phone or f"User {self.id}"
+    
+    def save(self, *args, **kwargs):
+        # Ensure we have either email or phone
+        if not self.email and not self.phone:
+            raise ValueError("User must have either email or phone")
+        
+        # Set username to email or phone
+        if self.email:
+            self.username = self.email
+        elif self.phone:
+            self.username = self.phone
+        
+        super().save(*args, **kwargs)
+    
+    @property
+    def days_since_phone_registration(self):
+        """Get days since phone-only registration"""
+        if not self.phone_registered_at:
+            return 0
+        return (timezone.now() - self.phone_registered_at).days
+    
+    @property
+    def phone_registration_expired(self):
+        """Check if 3-day phone registration period has expired"""
+        return self.phone_registered_at and self.days_since_phone_registration >= 3
+    
+    @property
+    def needs_email_verification(self):
+        """Check if user needs to add and verify email"""
+        return bool(self.phone_registered_at and not self.is_email_verified)
     
     def has_active_subscription(self):
         """Check if user has active subscription"""
