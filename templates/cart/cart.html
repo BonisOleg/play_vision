@@ -1,0 +1,192 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Кошик - Play Vision{% endblock %}
+
+{% block meta_description %}Кошик покупок Play Vision. Оформлення замовлення курсів та підписок.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <!-- ОСНОВНА ЧАСТИНА КОШИКА -->
+    <div class="cart-main">
+        <div class="cart-header">
+            Кошик
+        </div>
+
+        <div class="cart-items">
+            {% if cart_items %}
+            {% for item in cart_items %}
+            <div class="cart-item" data-item-id="{{ item.id }}">
+                <div class="cart-item-thumbnail">
+                    {% if item.thumbnail_url %}
+                    <img src="{{ item.thumbnail_url }}" alt="{{ item.item_name }}" loading="lazy">
+                    {% else %}
+                    Обкл.
+                    {% endif %}
+                </div>
+
+                <div class="cart-item-content">
+                    <div class="cart-item-header">
+                        <div class="cart-item-info">
+                            <h3 class="cart-item-title">{{ item.item_name }}</h3>
+
+                            {% if item.get_content_type_display %}
+                            <div class="cart-item-type">{{ item.get_content_type_display }}</div>
+                            {% endif %}
+
+                            {% if item.get_display_tags %}
+                            <div class="cart-item-tags">
+                                {% for tag in item.get_display_tags %}
+                                <span class="cart-item-tag">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {% if item.get_display_badges %}
+                            <div class="cart-item-badges">
+                                {% for badge in item.get_display_badges %}
+                                <span
+                                    class="cart-item-badge {% if badge == 'топ-продажів' %}cart-item-badge--top{% elif badge == 'новинка' %}cart-item-badge--new{% endif %}">
+                                    {{ badge }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <button class="cart-item-remove" data-action="remove" data-item-id="{{ item.id }}"
+                            aria-label="Видалити {{ item.item_name }}">
+                            Видалити
+                        </button>
+                    </div>
+
+                    <div class="cart-item-controls">
+                        <div class="cart-item-quantity">
+                            <button class="cart-quantity-btn" data-action="decrease" data-item-id="{{ item.id }}"
+                                aria-label="Зменшити кількість">−</button>
+                            <input type="number" class="cart-quantity-input" value="{{ item.quantity }}" min="1"
+                                readonly aria-label="Кількість">
+                            <button class="cart-quantity-btn" data-action="increase" data-item-id="{{ item.id }}"
+                                aria-label="Збільшити кількість">+</button>
+                        </div>
+
+                        <div class="cart-item-price">${{ item.get_total }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- РЕКОМЕНДАЦІЇ -->
+            {% if recommendations %}
+            <div class="cart-recommendations">
+                <div class="cart-recommendation-title">Ідеальний додаток до кошика</div>
+                {% for rec in recommendations %}
+                <div class="cart-recommendation-item">
+                    <div class="cart-recommendation-info">
+                        <div class="cart-recommendation-name">{{ rec.title }}</div>
+                        <div class="cart-recommendation-meta">{{ rec.short_description|truncatechars:60 }}</div>
+                        <div class="cart-recommendation-badge">для вас</div>
+                    </div>
+                    <div class="cart-recommendation-price">${{ rec.price }}</div>
+                    <button class="cart-recommendation-add" data-action="add-recommendation"
+                        data-course-id="{{ rec.id }}" data-course-title="{{ rec.title }}">
+                        + Додати
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- ПРОМОКОД -->
+            <div class="cart-coupon">
+                <input type="text" class="cart-coupon-input" placeholder="Введіть промокод" id="coupon-input" {% if
+                    applied_coupon %}value="{{ applied_coupon.code }}" disabled{% endif %}>
+                <button class="cart-coupon-btn" id="apply-coupon" {% if applied_coupon %}disabled{% endif %}>
+                    {% if applied_coupon %}Застосовано{% else %}Застосувати{% endif %}
+                </button>
+            </div>
+
+            {% if applied_coupon %}
+            <div class="cart-coupon-applied">
+                <span>Промокод "{{ applied_coupon.code }}" застосовано</span>
+                <button class="cart-coupon-remove" data-action="remove-coupon">Скасувати</button>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="cart-empty">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path
+                        d="M3 3h2l.4 2m0 0h13.1m-13.1 0L7 13h10.5a1 1 0 0 0 1-.8L21 6H5.4M7 13L5.4 5H3m4 8v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" />
+                    <circle cx="9" cy="20" r="1" />
+                    <circle cx="20" cy="20" r="1" />
+                </svg>
+                <p>Ваш кошик порожній</p>
+                <a href="{% url 'content:course_list' %}" class="btn btn-primary">Перейти до курсів</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ПІДСУМОК -->
+    {% if cart_items %}
+    <div class="cart-summary">
+        <h3 class="cart-summary-title">Підсумок</h3>
+
+        <div class="cart-summary-line">
+            <span>Проміжна сума</span>
+            <span class="cart-summary-amount" data-subtotal>${{ cart_subtotal|floatformat:2 }}</span>
+        </div>
+
+        <div class="cart-summary-line cart-summary-discount">
+            <span>Знижка</span>
+            <span class="cart-summary-amount" data-discount>-${{ cart_discount|floatformat:2 }}</span>
+        </div>
+
+        <div class="cart-summary-line">
+            <span>Чайові авторам</span>
+            <span class="cart-summary-amount" data-tips>${{ cart_tips|floatformat:2 }}</span>
+        </div>
+
+        <div class="cart-summary-total">
+            <span>До сплати</span>
+            <span data-total>${{ cart_total|floatformat:2 }}</span>
+        </div>
+
+        <!-- ПРОПОЗИЦІЯ ПІДПИСКИ -->
+        {% if show_suggestion %}
+        <div class="cart-subscription-suggestion">
+            <div class="cart-subscription-suggestion-text">
+                Розгляньте <a href="{% url 'subscriptions:pricing' %}" class="cart-subscription-link">{{
+                    suggestion_data.message }}</a> —
+                це може бути вигідніше, ніж разові покупки.
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="cart-actions">
+            <a href="{% url 'payments:checkout' %}" class="cart-checkout-btn">
+                Перейти до оплати
+            </a>
+
+            <a href="{% url 'content:course_list' %}" class="cart-continue-btn">
+                Продовжити покупки
+            </a>
+        </div>
+
+        <div class="cart-agreement">
+            Натискаючи «Перейти до оплати», ви погоджуєтесь з
+            <a href="{% url 'core:legal' slug='terms' %}" target="_blank">Офертою</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/components/cart.js' %}"></script>
+{% endblock %}

@@ -319,6 +319,10 @@ a:hover {
     position: relative;
 }
 
+.cart-icon {
+    position: relative;
+}
+
 .cart-icon .cart-count {
     position: absolute;
     top: -4px;
@@ -331,6 +335,12 @@ a:hover {
     border-radius: 10px;
     min-width: 20px;
     text-align: center;
+    line-height: 1;
+}
+
+.cart-icon .cart-count:empty,
+.cart-icon .cart-count[data-cart-count="0"] {
+    display: none;
 }
 
 .icon {

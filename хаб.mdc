@@ -1,0 +1,1200 @@
+# ПЛАН РЕАЛІЗАЦІЇ КОШИКА PLAY VISION
+## Детальний план впровадження згідно скріншотів
+
+---
+
+## 📋 АНАЛІЗ ПОТОЧНОГО СТАНУ
+
+### ✅ ЩО ВЖЕ Є:
+- `Cart` та `CartItem` моделі з базовим функціоналом
+- `CartService` з логікою додавання/видалення
+- `CartView`, `AddToCartView`, `RemoveFromCartView`
+- Базові API endpoints для AJAX операцій
+- Система рекомендацій `CartRecommendation`
+
+### ❌ ЩО ПОТРІБНО ДОРОБИТИ:
+- Повний редизайн шаблону кошика
+- Додавання полів для тегів, badges, типів контенту
+- Система чайових для авторів
+- Покращена система промокодів
+- Підписочні пропозиції в кошику
+- Мобільна адаптація
+
+---
+
+## 🎯 ЕТАП 1: РОЗШИРЕННЯ МОДЕЛЕЙ (БЕЗ ЛАМАННЯ ФУНКЦІОНАЛУ)
+
+### 1.1 Доробка моделі CartItem
+```python
+# apps/cart/models.py - ДОДАТИ поля:
+
+class CartItem(models.Model):
+    # ... існуючі поля ...
+    
+    # ДОДАТКОВІ ПОЛЯ (нові)
+    content_type_display = models.CharField(max_length=50, blank=True, 
+                                          help_text='VIDEO • 95 ХВ, PDF, etc')
+    thumbnail_url = models.URLField(blank=True, help_text='Product thumbnail')
+    
+    # Metadata з реального об'єкта (JSON для гнучкості)
+    item_metadata = models.JSONField(default=dict, help_text='Tags, badges, etc')
+    # Приклад: {"tags": ["тренер", "аналітик"], "badges": ["топ-продажів"], "duration": "95 хв"}
+    
+    def get_display_tags(self):
+        """Отримати теги для відображення"""
+        return self.item_metadata.get('tags', [])
+    
+    def get_display_badges(self):
+        """Отримати badges для відображення"""
+        return self.item_metadata.get('badges', [])
+    
+    def get_content_type_display(self):
+        """Отримати тип контенту для відображення"""
+        if self.content_type_display:
+            return self.content_type_display
+        
+        # Fallback до автоматичної генерації
+        item_obj = self.get_item_object()
+        if hasattr(item_obj, 'get_content_type_display'):
+            return item_obj.get_content_type_display()
+        return ''
+```
+
+### 1.2 Розширення моделі Cart
+```python
+# apps/cart/models.py - ДОДАТИ поля:
+
+class Cart(models.Model):
+    # ... існуючі поля ...
+    
+    # НОВІ ПОЛЯ
+    applied_coupon = models.ForeignKey('payments.Coupon', null=True, blank=True, 
+                                     on_delete=models.SET_NULL)
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    tips_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, 
+                                    help_text='Чайові авторам')
+    
+    def get_subtotal(self):
+        """Проміжна сума без знижок"""
+        return sum(item.get_total() for item in self.items.all())
+    
+    def get_total_with_discount(self):
+        """Сума зі знижкою"""
+        subtotal = self.get_subtotal()
+        return subtotal - self.discount_amount + self.tips_amount
+    
+    def get_discount_percentage(self):
+        """Відсоток знижки"""
+        subtotal = self.get_subtotal()
+        if subtotal > 0:
+            return round((self.discount_amount / subtotal) * 100, 1)
+        return 0
+```
+
+### 1.3 Міграція
+```bash
+# Створити міграцію без ламання функціоналу
+python manage.py makemigrations cart --name add_cart_display_fields
+python manage.py migrate
+```
+
+---
+
+## 🎯 ЕТАП 2: ДОРОБКА СЕРВІСІВ
+
+### 2.1 Розширення CartService
+```python
+# apps/cart/services.py - ДОРОБИТИ методи:
+
+class CartService:
+    # ... існуючі методи ...
+    
+    def add_course(self, course, quantity=1):
+        """Додавання курсу з повними метаданими"""
+        # Генерація метаданих з курсу
+        metadata = {
+            'tags': list(course.tags.values_list('name', flat=True)),
+            'badges': self._get_course_badges(course),
+            'duration': f"{course.duration_minutes} хв" if course.duration_minutes else '',
+            'difficulty': course.get_difficulty_display()
+        }
+        
+        content_type_display = self._get_course_content_type(course)
+        
+        item, created = self.cart.items.get_or_create(
+            item_type='course',
+            item_id=course.id,
+            defaults={
+                'item_name': course.title,
+                'price': course.price,
+                'quantity': quantity,
+                'content_type_display': content_type_display,
+                'thumbnail_url': course.thumbnail.url if course.thumbnail else '',
+                'item_metadata': metadata
+            }
+        )
+        
+        if not created:
+            item.quantity += quantity
+            item.save()
+        
+        return item
+    
+    def _get_course_badges(self, course):
+        """Генерація badges для курсу"""
+        badges = []
+        if course.is_featured:
+            badges.append('топ-продажів')
+        if course.created_at > timezone.now() - timedelta(days=30):
+            badges.append('новинка')
+        return badges
+    
+    def _get_course_content_type(self, course):
+        """Генерація типу контенту"""
+        materials = course.materials.all()
+        if materials.filter(content_type='video').exists():
+            total_duration = sum(m.video_duration_seconds for m in materials if m.video_duration_seconds)
+            minutes = total_duration // 60
+            return f"VIDEO • {minutes} ХВ"
+        elif materials.filter(content_type='pdf').exists():
+            return "PDF"
+        elif materials.filter(content_type='article').exists():
+            return "СТАТТЯ"
+        return "КУРС"
+    
+    def apply_coupon(self, coupon_code):
+        """Застосування промокоду"""
+        from apps.payments.models import Coupon
+        
+        try:
+            coupon = Coupon.objects.get(code=coupon_code.upper(), is_active=True)
+            if not coupon.is_valid:
+                return False, "Промокод недійсний або закінчився"
+            
+            subtotal = self.cart.get_subtotal()
+            if subtotal < coupon.min_amount:
+                return False, f"Мінімальна сума замовлення: ${coupon.min_amount}"
+            
+            # Розрахунок знижки
+            if coupon.discount_type == 'percentage':
+                discount = subtotal * (coupon.discount_value / 100)
+            else:
+                discount = coupon.discount_value
+            
+            self.cart.applied_coupon = coupon
+            self.cart.discount_amount = min(discount, subtotal)  # Не більше суми замовлення
+            self.cart.save()
+            
+            return True, f"Промокод застосовано! Знижка: ${self.cart.discount_amount}"
+            
+        except Coupon.DoesNotExist:
+            return False, "Промокод не знайдено"
+    
+    def set_tips(self, tips_amount):
+        """Встановлення чайових"""
+        if tips_amount >= 0:
+            self.cart.tips_amount = Decimal(str(tips_amount))
+            self.cart.save()
+            return True
+        return False
+```
+
+### 2.2 Новий SubscriptionSuggestionService
+```python
+# apps/cart/services.py - ДОРОБИТИ:
+
+class SubscriptionSuggestionService:
+    def get_suggestion_data(self, cart):
+        """Отримати дані для пропозиції підписки"""
+        from apps.subscriptions.models import Plan
+        
+        cart_total = cart.get_subtotal()
+        
+        # Знайти найкращий план
+        suggested_plan = Plan.objects.filter(
+            is_active=True,
+            price__lte=cart_total * 1.2  # До 20% дорожче від кошика
+        ).order_by('-price').first()
+        
+        if not suggested_plan:
+            suggested_plan = Plan.objects.filter(is_active=True).order_by('price').first()
+        
+        if suggested_plan:
+            savings = cart_total - suggested_plan.price
+            return {
+                'show_suggestion': True,
+                'plan': suggested_plan,
+                'message': f"передплату за ${suggested_plan.price}/3 міс",
+                'savings': max(savings, 0),
+                'description': "це може бути вигідніше, ніж разові покупки."
+            }
+        
+        return {'show_suggestion': False}
+```
+
+---
+
+## 🎯 ЕТАП 3: СТВОРЕННЯ CSS КОМПОНЕНТІВ
+
+### 3.1 Створення cart.css (БЕЗ !important)
+```css
+/* static/css/components/cart.css */
+
+/* КАРТКА КОШИКА */
+.cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--spacing-xl);
+}
+
+.cart-header {
+    background: var(--color-primary);
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: 8px 8px 0 0;
+    margin: calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg)) 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.cart-items {
+    background: white;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+}
+
+/* ТОВАР В КОШИКУ */
+.cart-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-thumbnail {
+    width: 80px;
+    height: 80px;
+    background: var(--color-bg-gray);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    flex-shrink: 0;
+}
+
+.cart-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.cart-item-header {
+    display: flex;
+    justify-content: between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-sm);
+}
+
+.cart-item-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.3;
+}
+
+.cart-item-type {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.cart-item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.cart-item-tag {
+    background: var(--color-bg-gray);
+    color: var(--color-text);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.cart-item-badges {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.cart-item-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+.cart-item-badge--top {
+    background: rgba(244, 67, 54, 0.1);
+    color: #d32f2f;
+}
+
+.cart-item-badge--new {
+    background: rgba(76, 175, 80, 0.1);
+    color: #388e3c;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--spacing-sm);
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: var(--color-bg-gray);
+    border-radius: 20px;
+    padding: 4px;
+}
+
+.cart-quantity-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cart-quantity-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.cart-quantity-input {
+    border: none;
+    background: transparent;
+    text-align: center;
+    width: 40px;
+    font-weight: 600;
+}
+
+.cart-item-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.cart-item-remove {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    transition: opacity 0.2s ease;
+}
+
+.cart-item-remove:hover {
+    opacity: 0.7;
+}
+
+/* РЕКОМЕНДАЦІЇ */
+.cart-recommendations {
+    background: var(--color-bg-gray);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.cart-recommendation-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.cart-recommendation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: white;
+    border-radius: 6px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.cart-recommendation-info {
+    flex: 1;
+}
+
+.cart-recommendation-name {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.cart-recommendation-meta {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.cart-recommendation-price {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-right: var(--spacing-sm);
+}
+
+.cart-recommendation-add {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cart-recommendation-add:hover {
+    background: var(--color-primary-dark);
+}
+
+/* ПРОМОКОД */
+.cart-coupon {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-lg) 0;
+}
+
+.cart-coupon-input {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.cart-coupon-input::placeholder {
+    color: var(--color-text-light);
+}
+
+.cart-coupon-btn {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cart-coupon-btn:hover {
+    background: var(--color-primary-dark);
+}
+
+/* ПІДСУМОК */
+.cart-summary {
+    background: white;
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.cart-summary-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+}
+
+.cart-summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+}
+
+.cart-summary-line.cart-summary-discount .cart-summary-amount {
+    color: var(--color-success);
+}
+
+.cart-summary-total {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-md) 0;
+    border-top: 1px solid var(--color-border);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.cart-subscription-suggestion {
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    text-align: center;
+}
+
+.cart-subscription-suggestion-text {
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.4;
+}
+
+.cart-subscription-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.cart-checkout-btn {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cart-checkout-btn:hover {
+    background: var(--color-primary-dark);
+}
+
+.cart-continue-btn {
+    background: white;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cart-continue-btn:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.cart-agreement {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-top: var(--spacing-md);
+}
+
+/* МОБІЛЬНА АДАПТАЦІЯ */
+@media (max-width: 768px) {
+    .cart-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-md);
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .cart-item-thumbnail {
+        width: 100%;
+        height: 60px;
+    }
+    
+    .cart-item-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+    
+    .cart-summary {
+        position: static;
+        order: -1;
+    }
+    
+    .cart-coupon {
+        flex-direction: column;
+    }
+}
+```
+
+---
+
+## 🎯 ЕТАП 4: СТВОРЕННЯ ШАБЛОНУ
+
+### 4.1 Повний шаблон кошика
+```html
+<!-- templates/cart/cart.html -->
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Кошик - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <!-- ОСНОВНА ЧАСТИНА КОШИКА -->
+    <div class="cart-main">
+        <div class="cart-items">
+            <div class="cart-header">
+                Кошик
+            </div>
+            
+            {% if cart_items %}
+                {% for item in cart_items %}
+                <div class="cart-item" data-item-id="{{ item.id }}">
+                    <div class="cart-item-thumbnail">
+                        {% if item.thumbnail_url %}
+                        <img src="{{ item.thumbnail_url }}" alt="{{ item.item_name }}">
+                        {% else %}
+                        Обкл.
+                        {% endif %}
+                    </div>
+                    
+                    <div class="cart-item-content">
+                        <div class="cart-item-header">
+                            <div>
+                                <h3 class="cart-item-title">{{ item.item_name }}</h3>
+                                
+                                {% if item.get_content_type_display %}
+                                <div class="cart-item-type">{{ item.get_content_type_display }}</div>
+                                {% endif %}
+                                
+                                {% if item.get_display_tags %}
+                                <div class="cart-item-tags">
+                                    {% for tag in item.get_display_tags %}
+                                    <span class="cart-item-tag">{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                
+                                {% if item.get_display_badges %}
+                                <div class="cart-item-badges">
+                                    {% for badge in item.get_display_badges %}
+                                    <span class="cart-item-badge cart-item-badge--{% if badge == 'топ-продажів' %}top{% elif badge == 'новинка' %}new{% endif %}">
+                                        {{ badge }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <button class="cart-item-remove" data-action="remove" data-item-id="{{ item.id }}">
+                                Видалити
+                            </button>
+                        </div>
+                        
+                        <div class="cart-item-controls">
+                            <div class="cart-item-quantity">
+                                <button class="cart-quantity-btn" data-action="decrease" data-item-id="{{ item.id }}">−</button>
+                                <input type="number" class="cart-quantity-input" value="{{ item.quantity }}" min="1" readonly>
+                                <button class="cart-quantity-btn" data-action="increase" data-item-id="{{ item.id }}">+</button>
+                            </div>
+                            
+                            <div class="cart-item-price">${{ item.get_total }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <!-- РЕКОМЕНДАЦІЇ -->
+                {% if recommendations %}
+                <div class="cart-recommendations">
+                    <div class="cart-recommendation-title">Ідеальний додаток до кошика</div>
+                    {% for rec in recommendations %}
+                    <div class="cart-recommendation-item">
+                        <div class="cart-recommendation-info">
+                            <div class="cart-recommendation-name">{{ rec.title }}</div>
+                            <div class="cart-recommendation-meta">{{ rec.short_description }}</div>
+                        </div>
+                        <div class="cart-recommendation-price">${{ rec.price }}</div>
+                        <button class="cart-recommendation-add" data-action="add-recommendation" data-course-id="{{ rec.id }}">
+                            + Додати
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- ПРОМОКОД -->
+                <div class="cart-coupon">
+                    <input type="text" class="cart-coupon-input" placeholder="Введіть промокод" id="coupon-input">
+                    <button class="cart-coupon-btn" id="apply-coupon">Застосувати</button>
+                </div>
+                
+            {% else %}
+                <div class="cart-empty">
+                    <p>Ваш кошик порожній</p>
+                    <a href="{% url 'content:course_list' %}" class="btn btn-primary">Перейти до курсів</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- ПІДСУМОК -->
+    {% if cart_items %}
+    <div class="cart-summary">
+        <h3 class="cart-summary-title">Підсумок</h3>
+        
+        <div class="cart-summary-line">
+            <span>Проміжна сума</span>
+            <span class="cart-summary-amount">${{ cart.get_subtotal }}</span>
+        </div>
+        
+        <div class="cart-summary-line cart-summary-discount">
+            <span>Знижка</span>
+            <span class="cart-summary-amount">-${{ cart.discount_amount|default:0 }}</span>
+        </div>
+        
+        <div class="cart-summary-line">
+            <span>Чайові авторам</span>
+            <span class="cart-summary-amount">${{ cart.tips_amount|default:0 }}</span>
+        </div>
+        
+        <div class="cart-summary-total">
+            <span>До сплати</span>
+            <span>${{ cart.get_total_with_discount }}</span>
+        </div>
+        
+        <!-- ПРОПОЗИЦІЯ ПІДПИСКИ -->
+        {% if show_suggestion %}
+        <div class="cart-subscription-suggestion">
+            <div class="cart-subscription-suggestion-text">
+                Розгляньте <a href="{% url 'subscriptions:pricing' %}" class="cart-subscription-link">{{ suggestion_data.message }}</a> — 
+                це може бути вигідніше, ніж разові покупки.
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="cart-actions">
+            <button class="cart-checkout-btn" onclick="window.location.href='{% url 'payments:checkout' %}'">
+                Перейти до оплати
+            </button>
+            
+            <button class="cart-continue-btn" onclick="window.location.href='{% url 'content:course_list' %}'">
+                Продовжити покупки
+            </button>
+        </div>
+        
+        <div class="cart-agreement">
+            Натискаючи «Перейти до оплати», ви погоджуєтесь з Офертою
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/components/cart.js' %}"></script>
+{% endblock %}
+```
+
+---
+
+## 🎯 ЕТАП 5: JAVASCRIPT ФУНКЦІОНАЛ
+
+### 5.1 Інтерактивність кошика
+```javascript
+// static/js/components/cart.js
+
+class Cart {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        // Обробники подій
+        document.addEventListener('click', this.handleClick.bind(this));
+        document.getElementById('apply-coupon')?.addEventListener('click', this.applyCoupon.bind(this));
+    }
+    
+    handleClick(e) {
+        const action = e.target.dataset.action;
+        const itemId = e.target.dataset.itemId;
+        
+        switch(action) {
+            case 'increase':
+                this.updateQuantity(itemId, 1);
+                break;
+            case 'decrease':
+                this.updateQuantity(itemId, -1);
+                break;
+            case 'remove':
+                this.removeItem(itemId);
+                break;
+            case 'add-recommendation':
+                this.addRecommendation(e.target.dataset.courseId);
+                break;
+        }
+    }
+    
+    async updateQuantity(itemId, change) {
+        try {
+            const response = await fetch(`/api/v1/cart/update/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken()
+                },
+                body: JSON.stringify({
+                    item_id: itemId,
+                    quantity_change: change
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                this.updateCartDisplay(data);
+            } else {
+                this.showError(data.message);
+            }
+        } catch (error) {
+            this.showError('Помилка оновлення кошика');
+        }
+    }
+    
+    async removeItem(itemId) {
+        try {
+            const response = await fetch(`/cart/remove/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': this.getCSRFToken()
+                }
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                // Видалити елемент з DOM
+                document.querySelector(`[data-item-id="${itemId}"]`).remove();
+                this.updateSummary(data);
+                this.showSuccess(data.message);
+            } else {
+                this.showError(data.message);
+            }
+        } catch (error) {
+            this.showError('Помилка видалення товару');
+        }
+    }
+    
+    async applyCoupon() {
+        const code = document.getElementById('coupon-input').value.trim();
+        if (!code) return;
+        
+        try {
+            const response = await fetch(`/api/v1/cart/apply-coupon/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken()
+                },
+                body: JSON.stringify({ code })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                this.updateSummary(data);
+                this.showSuccess(data.message);
+                document.getElementById('coupon-input').value = '';
+            } else {
+                this.showError(data.message);
+            }
+        } catch (error) {
+            this.showError('Помилка застосування промокоду');
+        }
+    }
+    
+    updateCartDisplay(data) {
+        // Оновити лічильники, суми, тощо
+        if (data.cart_total !== undefined) {
+            document.querySelector('.cart-summary-total span:last-child').textContent = `$${data.cart_total}`;
+        }
+    }
+    
+    updateSummary(data) {
+        // Оновити підсумок
+        const summaryElements = {
+            subtotal: document.querySelector('.cart-summary-line:nth-child(1) .cart-summary-amount'),
+            discount: document.querySelector('.cart-summary-discount .cart-summary-amount'),
+            total: document.querySelector('.cart-summary-total span:last-child')
+        };
+        
+        if (data.subtotal !== undefined && summaryElements.subtotal) {
+            summaryElements.subtotal.textContent = `$${data.subtotal}`;
+        }
+        if (data.discount !== undefined && summaryElements.discount) {
+            summaryElements.discount.textContent = `-$${data.discount}`;
+        }
+        if (data.total !== undefined && summaryElements.total) {
+            summaryElements.total.textContent = `$${data.total}`;
+        }
+    }
+    
+    showSuccess(message) {
+        this.showNotification(message, 'success');
+    }
+    
+    showError(message) {
+        this.showNotification(message, 'error');
+    }
+    
+    showNotification(message, type) {
+        // Створити тост-повідомлення
+        const toast = document.createElement('div');
+        toast.className = `message message-${type}`;
+        toast.innerHTML = `
+            ${message}
+            <button class="message-close">&times;</button>
+        `;
+        
+        const container = document.querySelector('.messages') || this.createMessagesContainer();
+        container.appendChild(toast);
+        
+        // Автовидалення
+        setTimeout(() => toast.remove(), 5000);
+        
+        // Видалення по кліку
+        toast.querySelector('.message-close').addEventListener('click', () => toast.remove());
+    }
+    
+    createMessagesContainer() {
+        const container = document.createElement('div');
+        container.className = 'messages';
+        document.body.appendChild(container);
+        return container;
+    }
+    
+    getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+    }
+}
+
+// Ініціалізація
+document.addEventListener('DOMContentLoaded', () => {
+    new Cart();
+});
+```
+
+---
+
+## 🎯 ЕТАП 6: API ENDPOINTS
+
+### 6.1 Додаткові API методи
+```python
+# apps/cart/api_views.py - ДОДАТИ нові endpoints:
+
+class CartUpdateQuantityAPIView(CartMixin, APIView):
+    """Оновлення кількості товару"""
+    
+    def post(self, request):
+        cart = self.get_cart()
+        item_id = request.data.get('item_id')
+        quantity_change = int(request.data.get('quantity_change', 0))
+        
+        try:
+            item = cart.items.get(id=item_id)
+            new_quantity = item.quantity + quantity_change
+            
+            if new_quantity <= 0:
+                item.delete()
+                message = f"{item.item_name} видалено з кошика"
+            else:
+                item.quantity = new_quantity
+                item.save()
+                message = f"Кількість оновлено"
+            
+            return Response({
+                'success': True,
+                'message': message,
+                'cart_total': float(cart.get_total_with_discount()),
+                'subtotal': float(cart.get_subtotal()),
+                'discount': float(cart.discount_amount)
+            })
+            
+        except CartItem.DoesNotExist:
+            return Response({
+                'success': False,
+                'message': 'Товар не знайдено'
+            }, status=404)
+
+class CartApplyCouponAPIView(CartMixin, APIView):
+    """Застосування промокоду"""
+    
+    def post(self, request):
+        cart = self.get_cart()
+        code = request.data.get('code', '').strip()
+        
+        if not code:
+            return Response({
+                'success': False,
+                'message': 'Введіть промокод'
+            })
+        
+        cart_service = CartService(request)
+        success, message = cart_service.apply_coupon(code)
+        
+        return Response({
+            'success': success,
+            'message': message,
+            'cart_total': float(cart.get_total_with_discount()),
+            'subtotal': float(cart.get_subtotal()),
+            'discount': float(cart.discount_amount)
+        })
+```
+
+### 6.2 Оновлення URL
+```python
+# apps/cart/api_urls.py - ДОДАТИ:
+
+urlpatterns = [
+    # ... існуючі ...
+    path('update/', CartUpdateQuantityAPIView.as_view(), name='cart_update'),
+    path('apply-coupon/', CartApplyCouponAPIView.as_view(), name='apply_coupon'),
+]
+```
+
+---
+
+## 🎯 ЕТАП 7: ДОРОБКА МОДЕЛЕЙ КОНТЕНТУ
+
+### 7.1 Методи для відображення в кошику
+```python
+# apps/content/models.py - ДОДАТИ методи:
+
+class Course(models.Model):
+    # ... існуючі поля ...
+    
+    def get_content_type_display(self):
+        """Отримати тип контенту для відображення в кошику"""
+        materials = self.materials.all()
+        
+        video_materials = materials.filter(content_type='video')
+        if video_materials.exists():
+            total_duration = sum(m.video_duration_seconds for m in video_materials if m.video_duration_seconds)
+            minutes = total_duration // 60
+            return f"VIDEO • {minutes} ХВ"
+        
+        if materials.filter(content_type='pdf').exists():
+            return "PDF"
+        
+        if materials.filter(content_type='article').exists():
+            return "СТАТТЯ"
+        
+        return "КУРС"
+    
+    def get_cart_badges(self):
+        """Отримати badges для кошика"""
+        badges = []
+        if self.is_featured:
+            badges.append('топ-продажів')
+        if self.created_at > timezone.now() - timedelta(days=30):
+            badges.append('новинка')
+        return badges
+    
+    def get_cart_tags(self):
+        """Отримати теги для кошика"""
+        return list(self.tags.values_list('name', flat=True))
+```
+
+---
+
+## 🎯 ЕТАП 8: ТЕСТУВАННЯ ТА ОПТИМІЗАЦІЯ
+
+### 8.1 Мобільне тестування
+- ✅ Перевірити адаптацію на різних розмірах екрану
+- ✅ Тестування на iOS Safari (особливості touch events)
+- ✅ Перевірити доступність (accessibility)
+
+### 8.2 Продуктивність
+- ✅ Мінімізувати кількість AJAX запитів
+- ✅ Оптимізувати CSS (без !important)
+- ✅ Lazy loading зображень
+
+### 8.3 UX тестування
+- ✅ Швидкість відгуку на дії користувача
+- ✅ Зрозумілість повідомлень про помилки
+- ✅ Плавність анімацій
+
+---
+
+## 🎯 ЕТАП 9: ФІНАЛЬНА ІНТЕГРАЦІЯ
+
+### 9.1 Підключення до основного додатку
+```python
+# playvision/urls.py - переконатись що є:
+path('cart/', include('apps.cart.urls')),
+path('api/v1/cart/', include('apps.cart.api_urls')),
+```
+
+### 9.2 Оновлення base template
+```html
+<!-- templates/base/base.html - в хедері -->
+<a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon">
+    <!-- SVG іконка кошика -->
+    <span class="cart-count" data-cart-count>{{ cart.get_items_count|default:0 }}</span>
+</a>
+```
+
+---
+
+## ✅ ЧЕКЛИСТ ГОТОВНОСТІ
+
+### Backend:
+- [ ] Міграції моделей виконані
+- [ ] CartService з новими методами
+- [ ] API endpoints додані
+- [ ] Тестування API
+
+### Frontend:
+- [ ] CSS компоненти створені
+- [ ] HTML шаблон готовий
+- [ ] JavaScript функціонал
+- [ ] Мобільна адаптація
+
+### Інтеграція:
+- [ ] URL маршрути налаштовані
+- [ ] Кошик інтегрований в header
+- [ ] Тестування повного флоу
+- [ ] Cross-browser сумісність
+
+---
+
+## 🚀 ПЛАН ЗАПУСКУ
+
+1. **Тиждень 1**: Етапи 1-3 (моделі, сервіси, CSS)
+2. **Тиждень 2**: Етапи 4-6 (шаблони, JS, API)
+3. **Тиждень 3**: Етапи 7-8 (доробка, тестування)
+4. **Тиждень 4**: Етап 9 (інтеграція, запуск)
+
+**Результат**: Повністю функціональний кошик згідно дизайну зі скріншотів, без конфліктів з існуючим кодом.

@@ -3,35 +3,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from .models import Cart, CartItem
+from .services import CartService
 from apps.content.models import Course
 from apps.subscriptions.models import Plan
 
 
-class CartMixin:
-    """Mixin to get or create cart for API views"""
-    
-    def get_cart(self, request):
-        if request.user.is_authenticated:
-            cart, created = Cart.objects.get_or_create(user=request.user)
-        else:
-            cart_id = request.session.get('cart_id')
-            if cart_id:
-                try:
-                    cart = Cart.objects.get(id=cart_id, user=None)
-                except Cart.DoesNotExist:
-                    cart = Cart.objects.create()
-                    request.session['cart_id'] = cart.id
-            else:
-                cart = Cart.objects.create()
-                request.session['cart_id'] = cart.id
-        return cart
-
-
-class CartAddAPIView(CartMixin, APIView):
+class CartAddAPIView(APIView):
     """Add item to cart via API"""
     
     def post(self, request):
-        cart = self.get_cart(request)
+        cart_service = CartService(request)
         item_type = request.data.get('item_type')
         item_id = request.data.get('item_id')
         quantity = request.data.get('quantity', 1)
@@ -45,24 +26,28 @@ class CartAddAPIView(CartMixin, APIView):
         try:
             if item_type == 'course':
                 course = Course.objects.get(id=item_id, is_published=True)
-                cart.add_course(course, quantity)
-                item_name = course.title
+                success, message = cart_service.add_course(course, quantity)
             elif item_type == 'subscription':
                 plan = Plan.objects.get(id=item_id, is_active=True)
-                cart.add_subscription(plan)
-                item_name = plan.name
+                success, message = cart_service.add_subscription(plan)
             else:
                 return Response(
                     {'error': 'Invalid item type'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
-            return Response({
-                'success': True,
-                'message': f'{item_name} додано в кошик',
-                'cart_count': cart.get_items_count(),
-                'cart_total': float(cart.get_total())
-            })
+            if success:
+                return Response({
+                    'success': True,
+                    'message': message,
+                    'cart_count': cart_service.get_items_count(),
+                    'cart_total': float(cart_service.cart.get_total_with_discount())
+                })
+            else:
+                return Response(
+                    {'error': message},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
             
         except (Course.DoesNotExist, Plan.DoesNotExist):
             return Response(
@@ -71,11 +56,11 @@ class CartAddAPIView(CartMixin, APIView):
             )
 
 
-class CartRemoveAPIView(CartMixin, APIView):
+class CartRemoveAPIView(APIView):
     """Remove item from cart via API"""
     
     def post(self, request):
-        cart = self.get_cart(request)
+        cart_service = CartService(request)
         item_id = request.data.get('item_id')
         
         if not item_id:
@@ -84,30 +69,27 @@ class CartRemoveAPIView(CartMixin, APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        try:
-            item = cart.items.get(id=item_id)
-            item_name = item.item_name
-            item.delete()
-            
+        success, message = cart_service.remove_item(item_id)
+        
+        if success:
             return Response({
                 'success': True,
-                'message': f'{item_name} видалено з кошика',
-                'cart_count': cart.get_items_count(),
-                'cart_total': float(cart.get_total())
+                'message': message,
+                'cart_count': cart_service.get_items_count(),
+                'cart_total': float(cart_service.cart.get_total_with_discount())
             })
-            
-        except CartItem.DoesNotExist:
+        else:
             return Response(
-                {'error': 'Item not found in cart'},
+                {'error': message},
                 status=status.HTTP_404_NOT_FOUND
             )
 
 
-class CartUpdateAPIView(CartMixin, APIView):
+class CartUpdateAPIView(APIView):
     """Update cart item quantity via API"""
     
     def post(self, request):
-        cart = self.get_cart(request)
+        cart_service = CartService(request)
         item_id = request.data.get('item_id')
         quantity = request.data.get('quantity')
         
@@ -117,37 +99,60 @@ class CartUpdateAPIView(CartMixin, APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        try:
-            item = cart.items.get(id=item_id)
-            
-            if quantity <= 0:
-                item.delete()
-                message = f'{item.item_name} видалено з кошика'
-            else:
-                item.quantity = quantity
-                item.save()
-                message = f'Кількість оновлено'
-            
+        success, message = cart_service.update_quantity(item_id, int(quantity))
+        
+        if success:
             return Response({
                 'success': True,
                 'message': message,
-                'cart_count': cart.get_items_count(),
-                'cart_total': float(cart.get_total())
+                'cart_count': cart_service.get_items_count(),
+                'cart_total': float(cart_service.cart.get_total_with_discount())
             })
-            
-        except CartItem.DoesNotExist:
+        else:
             return Response(
-                {'error': 'Item not found in cart'},
-                status=status.HTTP_404_NOT_FOUND
+                {'error': message},
+                status=status.HTTP_400_BAD_REQUEST
             )
 
 
-class CartCountAPIView(CartMixin, APIView):
+class CartCountAPIView(APIView):
     """Get cart items count"""
     
     def get(self, request):
-        cart = self.get_cart(request)
+        cart_service = CartService(request)
         return Response({
-            'count': cart.get_items_count(),
-            'total': float(cart.get_total())
+            'count': cart_service.get_items_count(),
+            'total': float(cart_service.cart.get_total_with_discount())
         })
+
+
+class CartApplyCouponAPIView(APIView):
+    """Apply coupon to cart via API"""
+    
+    def post(self, request):
+        cart_service = CartService(request)
+        coupon_code = request.data.get('code', '').strip()
+        
+        if not coupon_code:
+            return Response(
+                {'error': 'Coupon code is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        success, message = cart_service.apply_coupon(coupon_code)
+        
+        response_data = {
+            'success': success,
+            'message': message
+        }
+        
+        if success:
+            cart = cart_service.cart
+            response_data.update({
+                'subtotal': float(cart.get_subtotal()),
+                'discount': float(cart.discount_amount),
+                'total': float(cart.get_total_with_discount()),
+                'discount_percentage': cart.get_discount_percentage()
+            })
+        
+        return Response(response_data)

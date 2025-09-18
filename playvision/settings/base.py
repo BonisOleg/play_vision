@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'apps.events.context_processors.upcoming_events',
+                'apps.cart.context_processors.cart_context',
             ],
         },
     },

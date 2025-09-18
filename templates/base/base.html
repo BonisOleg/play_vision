@@ -73,7 +73,8 @@
                                 <div class="dropdown-item-content">
                                     <div class="dropdown-item-title">{{ event.title }}</div>
                                     <div class="dropdown-item-meta">
-                                        <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{ event.start_datetime|date:"H:i" }}</span>
+                                        <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{
+                                            event.start_datetime|date:"H:i" }}</span>
                                         <span class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
                                             {% if event.is_online %}онлайн{% else %}офлайн{% endif %}
                                         </span>
@@ -96,9 +97,23 @@
                 <!-- User Menu -->
                 <div class="navbar-actions">
                     {% if user.is_authenticated %}
+                    <!-- Кошик для авторизованих користувачів -->
+                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon" aria-label="Кошик">
+                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M3 3h2l.4 2m0 0h13.1m-13.1 0L7 13h10.5a1 1 0 0 0 1-.8L21 6H5.4M7 13L5.4 5H3m4 8v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" />
+                            <circle cx="9" cy="20" r="1" />
+                            <circle cx="20" cy="20" r="1" />
+                        </svg>
+                        <span class="cart-count" data-cart-count>{{ cart_items_count|default:0 }}</span>
+                    </a>
+
                     <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon">
-                        <svg class="icon">
-                            <use xlink:href="#icon-user"></use>
+                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
                         </svg>
                         <span class="sr-only">Кабінет</span>
                     </a>
@@ -107,19 +122,13 @@
                     <a href="{% url 'accounts:register' %}" class="btn btn-outline">Реєстрація</a>
                     {% endif %}
 
-                    <!-- Cart -->
-                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon"
-                        hx-get="{% url 'htmx:cart:cart_count' %}" hx-trigger="load, cartUpdated" hx-swap="innerHTML">
-                        <svg class="icon">
-                            <use xlink:href="#icon-cart"></use>
-                        </svg>
-                        <span class="cart-count">0</span>
-                    </a>
-
                     <!-- Mobile Menu Toggle -->
-                    <button class="mobile-menu-toggle" @click="mobileMenuOpen = !mobileMenuOpen">
-                        <svg class="icon">
-                            <use xlink:href="#icon-menu"></use>
+                    <button class="mobile-menu-toggle" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Меню">
+                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
                         </svg>
                     </button>
                 </div>
@@ -220,6 +229,11 @@
     <script src="{% static 'js/api-utils.js' %}"></script>
     <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
+    <!-- Cart functionality for all pages -->
+    {% if user.is_authenticated %}
+    <script src="{% static 'js/core/cart-header.js' %}"></script>
+    {% endif %}
+
     {% block extra_js %}{% endblock %}
 </body>
 

@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.utils import timezone
 from django.db import transaction
+from datetime import timedelta
 from apps.subscriptions.models import Plan
 from apps.content.models import Course
 from .models import Cart, CartItem
@@ -52,7 +53,7 @@ class CartService:
         return cart
     
     def add_course(self, course, quantity=1):
-        """Add course to cart"""
+        """Add course to cart with full metadata"""
         # Check if user already has access to this course
         if self.user and self.user.has_course_access(course):
             return False, "У вас вже є доступ до цього курсу"
@@ -61,8 +62,64 @@ class CartService:
         if not course.is_published:
             return False, "Курс недоступний для покупки"
         
-        item = self.cart.add_course(course, quantity)
+        # Generate display metadata
+        metadata = {
+            'tags': list(course.tags.values_list('name', flat=True)),
+            'badges': self._get_course_badges(course),
+            'duration': f"{course.duration_minutes} хв" if course.duration_minutes else '',
+            'difficulty': course.get_difficulty_display() if hasattr(course, 'get_difficulty_display') else ''
+        }
+        
+        content_type_display = self._get_course_content_type(course)
+        thumbnail_url = course.thumbnail.url if hasattr(course, 'thumbnail') and course.thumbnail else ''
+        
+        # Add to cart with metadata
+        item, created = self.cart.items.get_or_create(
+            item_type='course',
+            item_id=course.id,
+            defaults={
+                'item_name': course.title,
+                'price': course.price,
+                'quantity': quantity,
+                'content_type_display': content_type_display,
+                'thumbnail_url': thumbnail_url,
+                'item_metadata': metadata
+            }
+        )
+        
+        if not created:
+            item.quantity += quantity
+            # Update metadata in case course was updated
+            item.content_type_display = content_type_display
+            item.thumbnail_url = thumbnail_url
+            item.item_metadata = metadata
+            item.save()
+        
         return True, f"Курс '{course.title}' додано до кошика"
+    
+    def _get_course_badges(self, course):
+        """Generate badges for course"""
+        badges = []
+        if hasattr(course, 'is_featured') and course.is_featured:
+            badges.append('топ-продажів')
+        if hasattr(course, 'created_at') and course.created_at > timezone.now() - timedelta(days=30):
+            badges.append('новинка')
+        return badges
+    
+    def _get_course_content_type(self, course):
+        """Generate content type display for course"""
+        if hasattr(course, 'materials'):
+            materials = course.materials.all()
+            video_materials = materials.filter(content_type='video')
+            if video_materials.exists():
+                total_duration = sum(m.video_duration_seconds for m in video_materials if m.video_duration_seconds)
+                minutes = total_duration // 60
+                return f"VIDEO • {minutes} ХВ"
+            elif materials.filter(content_type='pdf').exists():
+                return "PDF"
+            elif materials.filter(content_type='article').exists():
+                return "СТАТТЯ"
+        return "КУРС"
     
     def add_subscription(self, plan):
         """Add subscription plan to cart"""
@@ -153,20 +210,44 @@ class CartService:
             return False, "Промокод не знайдено"
         
         # Validate coupon
-        if not coupon.can_be_used_by(self.user):
+        if hasattr(coupon, 'can_be_used_by') and not coupon.can_be_used_by(self.user):
             return False, "Цей промокод не може бути використаний"
         
-        cart_total = self.get_total()
-        if cart_total < coupon.min_amount:
-            return False, f"Мінімальна сума замовлення: {coupon.min_amount} ₴"
+        # Check if coupon is valid
+        if not coupon.is_valid:
+            return False, "Промокод недійсний або закінчився"
+        
+        subtotal = self.cart.get_subtotal()
+        if subtotal < coupon.min_amount:
+            return False, f"Мінімальна сума замовлення: ${coupon.min_amount}"
         
         # Calculate discount
         if coupon.discount_type == 'percentage':
-            discount = cart_total * (coupon.discount_value / 100)
+            discount = subtotal * (coupon.discount_value / 100)
         else:
-            discount = min(coupon.discount_value, cart_total)
+            discount = min(coupon.discount_value, subtotal)
         
-        return True, f"Промокод застосовано! Знижка: {discount:.0f} ₴"
+        # Apply to cart
+        self.cart.applied_coupon = coupon
+        self.cart.discount_amount = discount
+        self.cart.save()
+        
+        return True, f"Промокод застосовано! Знижка: ${discount:.2f}"
+    
+    def remove_coupon(self):
+        """Remove applied coupon"""
+        self.cart.applied_coupon = None
+        self.cart.discount_amount = 0
+        self.cart.save()
+        return True, "Промокод скасовано"
+    
+    def set_tips(self, tips_amount):
+        """Set tips amount for authors"""
+        if tips_amount >= 0:
+            self.cart.tips_amount = Decimal(str(tips_amount))
+            self.cart.save()
+            return True, f"Чайові встановлено: ${tips_amount:.2f}"
+        return False, "Некоректна сума чайових"
     
     def get_recommendations(self):
         """Get product recommendations based on cart contents"""
@@ -322,93 +403,33 @@ class SubscriptionSuggestionService:
         """
         Get data for subscription suggestion display
         """
-        cart_total = cart.get_total()
+        cart_total = cart.get_subtotal()  # Використовуємо subtotal
         cart_items_count = cart.items.filter(item_type='course').count()
         
-        # Get active plans ordered by duration
-        plans = Plan.objects.filter(is_active=True).order_by('duration_months')
-        
-        suggestion = {
-            'cart_total': cart_total,
-            'cart_items_count': cart_items_count,
-            'plans': [],
-            'show_suggestion': True
-        }
-        
-        for plan in plans:
-            plan_data = {
-                'id': plan.id,
-                'name': plan.name,
-                'duration': plan.get_duration_display(),
-                'total_price': plan.price,
-                'monthly_price': plan.monthly_price,
-                'savings_percentage': plan.savings_percentage,
-                'features': plan.features,
-                'badge_text': plan.badge_text,
-                'is_popular': plan.is_popular,
-                'is_best_value': plan.duration_months == 12,  # Annual plan is best value
-            }
-            
-            # Calculate how much user saves vs buying courses individually
-            if cart_total > plan.price:
-                plan_data['saves_vs_cart'] = cart_total - plan.price
-                plan_data['saves_percentage'] = int(((cart_total - plan.price) / cart_total) * 100)
-            else:
-                plan_data['saves_vs_cart'] = 0
-                plan_data['saves_percentage'] = 0
-            
-            suggestion['plans'].append(plan_data)
-        
-        # Mark suggestion as shown
-        cart.suggestion_shown = True
-        cart.suggestion_shown_at = timezone.now()
-        cart.save()
-        
-        return suggestion
-    
-    def get_comparison_text(self, cart_total, plan):
-        """
-        Get comparison text for UI
-        """
-        if cart_total > plan.price:
-            savings = cart_total - plan.price
-            return f"Заощадь {savings:.0f} ₴ оформивши підписку {plan.name}"
+        # Знайти найкращий план для пропозиції
+        # Приоритет: 3-місячний план якщо вартість кошика > $20
+        if cart_total >= 20:
+            suggested_plan = Plan.objects.filter(
+                duration='3_months', 
+                is_active=True
+            ).first()
         else:
-            extra = plan.price - cart_total
-            return f"Отримай доступ до всіх курсів доплативши лише {extra:.0f} ₴"
-    
-    def calculate_recommended_plan(self, cart):
-        """
-        Calculate which plan to recommend based on cart contents
-        """
-        cart_total = cart.get_total()
-        plans = Plan.objects.filter(is_active=True).order_by('price')
+            # Інакше місячний план
+            suggested_plan = Plan.objects.filter(
+                duration='1_month',
+                is_active=True  
+            ).first()
         
-        # Find the plan that gives best value
-        best_plan = None
-        best_value_score = 0
-        
-        for plan in plans:
-            # Calculate value score
-            if cart_total > plan.price:
-                # User saves money with subscription
-                value_score = (cart_total - plan.price) / plan.price
-            else:
-                # User gets more content for slightly more money
-                extra_cost = plan.price - cart_total
-                if extra_cost < cart_total * Decimal('0.3'):  # Within 30% extra
-                    value_score = 1 / (1 + extra_cost / cart_total)
-                else:
-                    value_score = 0
+        if suggested_plan:
+            # Розрахунок економії
+            potential_savings = max(cart_total - suggested_plan.price, 0)
             
-            # Boost score for longer plans
-            if plan.duration_months >= 12:
-                value_score *= 1.5
-            elif plan.duration_months >= 3:
-                value_score *= 1.2
-            
-            if value_score > best_value_score:
-                best_value_score = value_score
-                best_plan = plan
+            return {
+                'show_suggestion': True,
+                'plan': suggested_plan,
+                'message': f"передплату за ${suggested_plan.price}/{suggested_plan.get_duration_display()}",
+                'savings': potential_savings,
+                'description': "це може бути вигідніше, ніж разові покупки."
+            }
         
-        return best_plan
+        return {'show_suggestion': False}
