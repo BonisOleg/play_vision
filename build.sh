@@ -42,7 +42,8 @@ python manage.py migrate
 echo "🤖 Loading AI knowledge base..."
 python manage.py load_knowledge_base || echo "⚠️ AI knowledge base loading failed, continuing..."
 
-echo "👤 Creating initial data..."
+echo "👤 Creating demo data..."
 python manage.py setup_initial_data || echo "⚠️ Initial data setup failed, continuing..."
+python manage.py create_content_data || echo "⚠️ Content data creation failed, continuing..."
 
 echo "🎉 Build completed successfully!"
