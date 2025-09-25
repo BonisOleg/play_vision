@@ -9,8 +9,8 @@ services:
     name: playvision
     runtime: python
     region: frankfurt
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn playvision.wsgi:application --bind 0.0.0.0:$PORT"
+    buildCommand: "chmod +x build.sh && ./build.sh"
+    startCommand: "gunicorn playvision.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
     plan: starter
     envVars:
       - key: PYTHON_VERSION
@@ -24,7 +24,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: .onrender.com,playvision.onrender.com
+        value: ".onrender.com,playvision.onrender.com"
       - key: DISABLE_COLLECTSTATIC
         value: 0
       - key: DEBUG
