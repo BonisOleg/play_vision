@@ -103,8 +103,7 @@
 
             <!-- ПРОМОКОД -->
             <div class="cart-coupon">
-                <input type="text" class="cart-coupon-input" placeholder="Введіть промокод" id="coupon-input" {% if
-                    applied_coupon %}value="{{ applied_coupon.code }}" disabled{% endif %}>
+                <input type="text" class="cart-coupon-input" placeholder="Введіть промокод" id="coupon-input" {% if applied_coupon %}value="{{ applied_coupon.code }}" disabled{% endif %}>
                 <button class="cart-coupon-btn" id="apply-coupon" {% if applied_coupon %}disabled{% endif %}>
                     {% if applied_coupon %}Застосовано{% else %}Застосувати{% endif %}
                 </button>
