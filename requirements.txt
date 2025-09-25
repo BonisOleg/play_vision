@@ -32,3 +32,6 @@ anthropic==0.34.2
 
 # PWA Push Notifications (опціонально)
 pywebpush==1.14.1
+
+# Payments (Stripe)
+stripe==7.9.0

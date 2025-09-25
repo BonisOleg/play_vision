@@ -1,4 +1,3 @@
-import stripe
 import json
 import hashlib
 import hmac
@@ -12,8 +11,13 @@ from .models import Payment, Order, OrderItem, WebhookEvent, Coupon, CouponUsage
 
 User = get_user_model()
 
-# Configure Stripe
-stripe.api_key = settings.STRIPE_SECRET_KEY
+# Optional Stripe configuration
+try:
+    import stripe
+    stripe.api_key = getattr(settings, 'STRIPE_SECRET_KEY', '')
+    STRIPE_AVAILABLE = bool(settings.STRIPE_SECRET_KEY)
+except ImportError:
+    STRIPE_AVAILABLE = False
 
 
 class PaymentService:
