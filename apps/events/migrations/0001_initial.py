@@ -12,6 +12,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('content', '0001_initial'),
+        ('payments', '0001_initial'),
     ]
 
     operations = [
@@ -38,16 +40,19 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('published_at', models.DateTimeField(blank=True, null=True)),
+                ('banner_image', models.ImageField(blank=True, upload_to='event_banners/')),
                 ('is_featured', models.BooleanField(default=False)),
-                ('requires_approval', models.BooleanField(default=False)),
+                ('requires_approval', models.BooleanField(default=False, help_text='Чи потрібне підтвердження реєстрації')),
+                ('send_reminders', models.BooleanField(default=True)),
                 ('meta_title', models.CharField(blank=True, max_length=200)),
                 ('meta_description', models.TextField(blank=True, max_length=300)),
+                ('organizer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='organized_events', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name': 'Event',
                 'verbose_name_plural': 'Events',
                 'db_table': 'events',
-                'ordering': ['-start_datetime'],
+                'ordering': ['start_datetime'],
             },
         ),
         migrations.CreateModel(
@@ -114,9 +119,18 @@ class Migration(migrations.Migration):
             name='speakers',
             field=models.ManyToManyField(blank=True, related_name='events', to='events.speaker'),
         ),
+        migrations.AddField(
+            model_name='event',
+            name='tags',
+            field=models.ManyToManyField(blank=True, related_name='events', to='content.tag'),
+        ),
         migrations.AlterUniqueTogether(
             name='eventregistration',
             unique_together={('user', 'event')},
+        ),
+        migrations.AddIndex(
+            model_name='event',
+            index=models.Index(fields=['slug'], name='events_slug_idx'),
         ),
         migrations.AddIndex(
             model_name='event',
@@ -124,7 +138,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name='event',
-            index=models.Index(fields=['event_type'], name='events_event_type_idx'),
+            index=models.Index(fields=['event_type', 'status'], name='events_event_type_status_idx'),
         ),
         migrations.AddIndex(
             model_name='eventregistration',
