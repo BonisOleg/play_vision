@@ -19,18 +19,21 @@ django.setup()
 from django.db import connection
 try:
     with connection.cursor() as cursor:
-        # Drop events-related tables if they exist
+        # Drop ALL events-related tables including ManyToMany tables
+        cursor.execute('DROP TABLE IF EXISTS events_speakers CASCADE;')
+        cursor.execute('DROP TABLE IF EXISTS events_tags CASCADE;')
         cursor.execute('DROP TABLE IF EXISTS events CASCADE;')
         cursor.execute('DROP TABLE IF EXISTS speakers CASCADE;')
         cursor.execute('DROP TABLE IF EXISTS event_registrations CASCADE;')
         cursor.execute('DROP TABLE IF EXISTS event_tickets CASCADE;')
-        print('✅ Successfully dropped existing events tables')
+        # Also clean up any Django migration tracking
+        cursor.execute(\"DELETE FROM django_migrations WHERE app = 'events';\")
+        print('✅ Successfully dropped ALL events-related tables and migration records')
 except Exception as e:
     print(f'⚠️ Drop tables failed (probably OK): {e}')
 " || echo "Drop tables script failed, continuing..."
 
-echo "🗄️ Force resetting migrations state..."
-python manage.py migrate --fake events zero || echo "Events app not in migration table yet"
+echo "🗄️ Migration state already reset in drop tables script..."
 
 echo "🗄️ Running migrations..."
 python manage.py migrate
