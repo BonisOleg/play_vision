@@ -193,15 +193,18 @@ class SearchView(TemplateView):
             is_published=True
         ).distinct()[:10]
         
-        # Search events
-        events = Event.objects.filter(
-            Q(title__icontains=query) |
-            Q(description__icontains=query) |
-            Q(speakers__first_name__icontains=query) |
-            Q(speakers__last_name__icontains=query),
-            status='published',
-            start_datetime__gte=timezone.now()
-        ).distinct()[:10]
+        # Search events (with error handling)
+        try:
+            events = Event.objects.filter(
+                Q(title__icontains=query) |
+                Q(description__icontains=query) |
+                Q(speakers__first_name__icontains=query) |
+                Q(speakers__last_name__icontains=query),
+                status='published',
+                start_datetime__gte=timezone.now()
+            ).distinct()[:10]
+        except Exception:
+            events = Event.objects.none()
         
         return {
             'courses': courses,
@@ -230,7 +233,10 @@ class SitemapView(TemplateView):
         from django.utils import timezone
         
         context['courses'] = Course.objects.filter(is_published=True)
-        context['events'] = Event.objects.filter(status='published')
+        try:
+            context['events'] = Event.objects.filter(status='published')
+        except Exception:
+            context['events'] = Event.objects.none()
         context['last_modified'] = timezone.now()
         
         return context

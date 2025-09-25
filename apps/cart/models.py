@@ -173,8 +173,11 @@ class CartItem(models.Model):
             from apps.subscriptions.models import Plan
             return Plan.objects.filter(id=self.item_id).first()
         elif self.item_type == 'event_ticket':
-            from apps.events.models import Event
-            return Event.objects.filter(id=self.item_id).first()
+            try:
+                from apps.events.models import Event
+                return Event.objects.filter(id=self.item_id).first()
+            except Exception:
+                return None
         return None
     
     def get_display_tags(self):
