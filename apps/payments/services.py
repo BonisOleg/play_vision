@@ -26,10 +26,16 @@ class PaymentService:
     """
     
     def __init__(self):
-        self.stripe = stripe
+        if STRIPE_AVAILABLE:
+            self.stripe = stripe
+        else:
+            self.stripe = None
     
     def create_payment_intent(self, order, payment_method_id=None, customer_id=None):
         """Create Stripe payment intent with 3DS"""
+        if not STRIPE_AVAILABLE or not self.stripe:
+            raise Exception("Stripe is not configured or available")
+        
         try:
             intent_data = {
                 'amount': int(order.total * 100),  # Convert to cents
