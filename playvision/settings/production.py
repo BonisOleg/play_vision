@@ -57,7 +57,9 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Static files - WhiteNoise configuration
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-WHITENOISE_COMPRESS_OFFLINE = True
+# Temporarily disable compression for debugging staticfiles issues
+WHITENOISE_COMPRESS_OFFLINE = False
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['*']
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
