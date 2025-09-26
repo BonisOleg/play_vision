@@ -64,10 +64,7 @@ class CustomUserCreationForm(UserCreationForm):
         # Handle empty phone - set to None instead of empty string
         if not phone or not phone.strip():
             cleaned_data['phone'] = None
-        else:
-            # Format phone number
-            phone = '+380' + phone.strip()
-            cleaned_data['phone'] = phone
+        # Phone formatting is handled in clean_phone(), no need to do it here
         
         # Handle empty email - set to None instead of empty string
         if not email or not email.strip():
@@ -88,9 +85,15 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         if phone and phone.strip():  # Check if phone is not empty or whitespace
-            # Format phone number
+            # Clean the phone number (remove spaces, dashes, etc.)
+            phone = phone.strip().replace(' ', '').replace('-', '').replace('(', '').replace(')', '')
+            
+            # Add prefix only if not present
             if not phone.startswith('+380'):
-                phone = '+380' + phone.strip()
+                # Remove any existing +380 or 380 prefix to avoid duplication
+                if phone.startswith('380'):
+                    phone = phone[3:]
+                phone = '+380' + phone
             
             # Check if phone already exists
             if User.objects.filter(phone=phone).exists():

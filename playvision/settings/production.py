@@ -61,8 +61,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 WHITENOISE_COMPRESS_OFFLINE = False
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['*']
 
-# Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# Email - временно используем консольный бэкенд для отладки
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  
+# TODO: Настроить нормальный SMTP после получения учетных данных
 
 # Logging for production
 LOGGING = {

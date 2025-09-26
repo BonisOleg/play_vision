@@ -23,4 +23,7 @@ urlpatterns = [
     path('robots.txt', views.RobotsView.as_view(), name='robots'),
     path('sitemap.xml', views.SitemapView.as_view(), name='sitemap'),
     path('health/', views.HealthCheckView.as_view(), name='health_check'),
+    
+    # PWA Service Worker
+    path('sw.js', views.ServiceWorkerView.as_view(), name='service_worker'),
 ]

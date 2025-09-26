@@ -40,7 +40,8 @@ class RegisterView(CreateView):
         # Handle verification based on registration type
         self.handle_verification()
         
-        # Auto login
+        # Auto login with specific backend
+        self.object.backend = 'apps.accounts.backends.EmailBackend'
         login(self.request, self.object)
         
         # Success message based on registration type

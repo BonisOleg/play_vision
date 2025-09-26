@@ -42,6 +42,12 @@ class User(AbstractUser):
         return self.email or self.phone or f"User {self.id}"
     
     def save(self, *args, **kwargs):
+        # Convert empty strings to None for unique fields
+        if self.email == '':
+            self.email = None
+        if self.phone == '':
+            self.phone = None
+        
         # Ensure we have either email or phone
         if not self.email and not self.phone:
             raise ValueError("User must have either email or phone")

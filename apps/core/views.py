@@ -1,10 +1,12 @@
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, View
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib import messages
 from django import forms
 from django.conf import settings
 from django.utils import timezone
+from django.http import HttpResponse, FileResponse
+import os
 
 
 class ContactForm(forms.Form):
@@ -320,3 +322,28 @@ class PWAInstallView(TemplateView):
         
         context['is_pwa'] = True
         return context
+
+
+class ServiceWorkerView(View):
+    """Serve Service Worker from root path"""
+    
+    def get(self, request, *args, **kwargs):
+        """Serve sw.js file with proper headers"""
+        sw_path = os.path.join(settings.BASE_DIR, 'sw.js')
+        
+        if os.path.exists(sw_path):
+            response = FileResponse(
+                open(sw_path, 'rb'),
+                content_type='application/javascript'
+            )
+            # Add Service Worker specific headers
+            response['Cache-Control'] = 'no-cache'
+            response['Service-Worker-Allowed'] = '/'
+            return response
+        
+        # Fallback if file not found
+        return HttpResponse(
+            'Service Worker not found',
+            status=404,
+            content_type='text/plain'
+        )
