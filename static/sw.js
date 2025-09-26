@@ -353,13 +353,16 @@ async function syncAIQueries() {
             if (response.ok) {
                 await removePendingAIQuery(query.id);
 
+                // Спочатку отримуємо JSON дані
+                const responseData = await response.json();
+
                 // Повідомити головний thread про відповідь
                 const clients = await self.clients.matchAll();
                 clients.forEach(client => {
                     client.postMessage({
                         type: 'AI_RESPONSE_SYNCED',
                         queryId: query.id,
-                        response: await response.json()
+                        response: responseData
                     });
                 });
             }
