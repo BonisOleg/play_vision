@@ -57,6 +57,17 @@ class RegisterView(CreateView):
         
         return response
     
+    def form_invalid(self, form):
+        """Handle form validation errors with detailed logging"""
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        logger.error("🚨 FORM VALIDATION FAILED!")
+        logger.error(f"📝 POST data: {dict(self.request.POST.lists())}")
+        logger.error(f"❌ Form errors: {form.errors.as_json()}")
+        
+        return super().form_invalid(form)
+    
     def handle_verification(self):
         """Handle verification based on registration type"""
         if self.object.email and not self.object.phone_registered_at:

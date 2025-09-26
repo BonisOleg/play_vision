@@ -357,7 +357,7 @@ class PWAManager {
             try {
                 const vapidResponse = await fetch('/api/v1/notifications/vapid-key/');
                 const vapidData = await vapidResponse.json();
-                vapidPublicKey = vapidData.public_key;
+                vapidPublicKey = vapidData.publicKey;
             } catch (e) {
                 console.warn('[PWA] Could not get VAPID key from server, using default');
                 // Mock ключ для тестування (треба замінити в production)
@@ -374,6 +374,7 @@ class PWAManager {
             });
 
             // Відправити підписку на сервер
+            const subscriptionJSON = subscription.toJSON();
             const response = await fetch('/api/v1/notifications/push/subscribe/', {
                 method: 'POST',
                 headers: {
@@ -381,7 +382,9 @@ class PWAManager {
                     'X-CSRFToken': this.getCSRFToken()
                 },
                 body: JSON.stringify({
-                    subscription: subscription.toJSON()
+                    endpoint: subscriptionJSON.endpoint,
+                    p256dh: subscriptionJSON.keys.p256dh,
+                    auth: subscriptionJSON.keys.auth
                 })
             });
 

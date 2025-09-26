@@ -73,6 +73,9 @@ function initFormValidation() {
 
     forms.forEach(form => {
         form.addEventListener('submit', function (e) {
+            // Clear existing server errors
+            clearServerErrors(this);
+
             if (!validateForm(this)) {
                 e.preventDefault();
                 return false;
@@ -165,15 +168,15 @@ function validateInput(input) {
 function showError(input, message) {
     input.classList.add('error');
 
-    // Remove existing error message
-    const existingError = input.parentElement.querySelector('.form-error');
+    // Remove existing client error message
+    const existingError = input.parentElement.querySelector('.form-error.client-error');
     if (existingError) {
         existingError.remove();
     }
 
     // Add new error message
     const errorDiv = document.createElement('div');
-    errorDiv.className = 'form-error';
+    errorDiv.className = 'form-error client-error';
     errorDiv.textContent = message;
     input.parentElement.appendChild(errorDiv);
 }
@@ -397,3 +400,28 @@ if (messages) {
         }, 500);
     }, 5000);
 }
+
+// Clear server-side validation errors
+function clearServerErrors(form) {
+    // Remove Django form errors (but keep client-side errors)
+    const serverErrors = form.querySelectorAll('.form-error:not(.client-error)');
+    serverErrors.forEach(error => error.remove());
+
+    // Remove error classes from inputs with server errors
+    const inputsWithServerErrors = form.querySelectorAll('input.error');
+    inputsWithServerErrors.forEach(input => {
+        // Only remove error class if it's not a current client validation error
+        if (!input.value.trim() === false) { // If field has content
+            input.classList.remove('error');
+        }
+    });
+}
+
+// Initialize server error handling on page load
+document.addEventListener('DOMContentLoaded', function () {
+    // Mark existing server errors (from Django) differently 
+    const serverErrors = document.querySelectorAll('.form-error');
+    serverErrors.forEach(error => {
+        error.classList.add('server-error');
+    });
+});

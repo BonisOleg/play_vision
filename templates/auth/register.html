@@ -24,9 +24,24 @@
             <form method="post" action="{% url 'accounts:register' %}" id="registerForm">
                 {% csrf_token %}
 
+                <!-- Django form non-field errors -->
+                {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                    <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
                 <div class="form-tab form-tab--active" data-tab="email">
                     <div class="form-group">
-                        <input type="email" name="email" class="form-input" placeholder="Адреса пошти" required>
+                        <input type="email" name="email" class="form-input{% if form.email.errors %} error{% endif %}"
+                            placeholder="Адреса пошти" value="{{ form.email.value|default:'' }}" required>
+                        {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                        <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
 
@@ -34,33 +49,65 @@
                     <div class="form-group">
                         <div class="phone-input-wrapper">
                             <span class="phone-prefix">+380</span>
-                            <input type="tel" name="phone" class="form-input form-input--phone"
-                                placeholder="XX XXX XX XX" pattern="[0-9]{9}" maxlength="9">
+                            <input type="tel" name="phone"
+                                class="form-input form-input--phone{% if form.phone.errors %} error{% endif %}"
+                                placeholder="XX XXX XX XX" pattern="[0-9]{9}" maxlength="9"
+                                value="{{ form.phone.value|default:'' }}">
                         </div>
+                        {% if form.phone.errors %}
+                        {% for error in form.phone.errors %}
+                        <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <input type="password" name="password1" class="form-input" placeholder="Введіть пароль" required>
+                    <input type="password" name="password1"
+                        class="form-input{% if form.password1.errors %} error{% endif %}" placeholder="Введіть пароль"
+                        required>
+                    {% if form.password1.errors %}
+                    {% for error in form.password1.errors %}
+                    <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
-                    <input type="password" name="password2" class="form-input" placeholder="Підтвердіть пароль"
-                        required>
+                    <input type="password" name="password2"
+                        class="form-input{% if form.password2.errors %} error{% endif %}"
+                        placeholder="Підтвердіть пароль" required>
+                    {% if form.password2.errors %}
+                    {% for error in form.password2.errors %}
+                    <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" name="agree_terms" required>
+                        <input type="checkbox" name="agree_terms" {% if form.agree_terms.value %}checked{% endif %}
+                            required>
                         <span>Я погоджуюсь з умовами оферти та обробкою персональних даних</span>
                     </label>
+                    {% if form.agree_terms.errors %}
+                    {% for error in form.agree_terms.errors %}
+                    <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" name="subscribe_news">
+                        <input type="checkbox" name="subscribe_news" {% if form.subscribe_news.value %}checked{% endif
+                            %}>
                         <span>Я хочу отримувати розсилку новин</span>
                     </label>
+                    {% if form.subscribe_news.errors %}
+                    {% for error in form.subscribe_news.errors %}
+                    <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
 
                 <button type="submit" class="btn btn--primary btn--full btn--large">

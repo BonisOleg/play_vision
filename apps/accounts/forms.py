@@ -40,6 +40,11 @@ class CustomUserCreationForm(UserCreationForm):
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         label='Я погоджуюся з умовами використання та політикою приватності'
     )
+    subscribe_news = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        label='Я хочу отримувати розсилку новин'
+    )
     
     class Meta:
         model = User
