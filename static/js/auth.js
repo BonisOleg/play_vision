@@ -73,10 +73,15 @@ function initFormValidation() {
 
     forms.forEach(form => {
         form.addEventListener('submit', function (e) {
+            console.log('🚀 FORM SUBMIT STARTED');
+
             if (!validateForm(this)) {
+                console.log('❌ VALIDATION FAILED - preventing submit');
                 e.preventDefault();
                 return false;
             }
+
+            console.log('✅ VALIDATION PASSED - submitting form');
 
             // Add loading state
             const submitButton = this.querySelector('button[type="submit"]');

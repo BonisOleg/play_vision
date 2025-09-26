@@ -32,7 +32,8 @@ class PWAManager {
     }
 
     async registerServiceWorker() {
-        if ('serviceWorker' in navigator) {
+        // Service Worker DISABLED until registration issue is fixed
+        if (false && 'serviceWorker' in navigator) {
             try {
                 const registration = await navigator.serviceWorker.register('/static/sw.js', {
                     scope: '/'

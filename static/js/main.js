@@ -52,7 +52,8 @@ function initializeHTMX() {
 }
 
 function initializePWA() {
-    if ('serviceWorker' in navigator) {
+    // Service Worker DISABLED until registration issue is fixed
+    if (false && 'serviceWorker' in navigator) {
         navigator.serviceWorker.register('/static/sw.js')
             .then(registration => console.log('Service Worker registered'))
             .catch(error => console.error('Service Worker registration failed:', error));
