@@ -31,16 +31,7 @@ class RegisterView(CreateView):
     template_name = 'auth/register.html'
     success_url = reverse_lazy('cabinet:dashboard')
     
-    def form_invalid(self, form):
-        """Debug form validation errors"""
-        print(f"🚨 FORM VALIDATION FAILED!")
-        print(f"📝 POST data: {dict(self.request.POST)}")
-        print(f"❌ Form errors: {form.errors.as_json()}")
-        return super().form_invalid(form)
-    
     def form_valid(self, form):
-        print(f"✅ FORM VALIDATION PASSED!")
-        print(f"📝 Cleaned data: {form.cleaned_data}")
         response = super().form_valid(form)
         
         # Create user profile

@@ -61,20 +61,27 @@ class CustomUserCreationForm(UserCreationForm):
         if not agree_terms:
             raise ValidationError('Необхідно погодитися з умовами використання')
         
-        # Require either email or phone
-        if not email and not phone:
-            raise ValidationError('Вкажіть email або номер телефону')
-        
-        # Format phone number
-        if phone:
+        # Handle empty phone - set to None instead of empty string
+        if not phone or not phone.strip():
+            cleaned_data['phone'] = None
+        else:
+            # Format phone number
             phone = '+380' + phone.strip()
             cleaned_data['phone'] = phone
+        
+        # Handle empty email - set to None instead of empty string
+        if not email or not email.strip():
+            cleaned_data['email'] = None
+        
+        # Require either email or phone
+        if not cleaned_data.get('email') and not cleaned_data.get('phone'):
+            raise ValidationError('Вкажіть email або номер телефону')
         
         return cleaned_data
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if email and User.objects.filter(email=email).exists():
+        if email and email.strip() and User.objects.filter(email=email).exists():
             raise ValidationError('Користувач з таким email вже існує')
         return email
     
@@ -89,18 +96,10 @@ class CustomUserCreationForm(UserCreationForm):
             if User.objects.filter(phone=phone).exists():
                 raise ValidationError('Користувач з таким номером телефону вже існує')
             return phone
-        return ''  # Return empty string for empty phone
+        return None  # Return None for empty phone
     
     def save(self, commit=True):
         user = super().save(commit=False)
-        
-        # Handle empty phone field - save as NULL instead of empty string
-        if not user.phone or not user.phone.strip():
-            user.phone = None
-        
-        # Handle empty email field - save as NULL instead of empty string  
-        if not user.email or not user.email.strip():
-            user.email = None
         
         # Set phone_registered_at if registering with phone only
         if user.phone and not user.email:
