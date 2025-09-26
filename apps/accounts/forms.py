@@ -58,8 +58,12 @@ class CustomUserCreationForm(UserCreationForm):
     
     def clean(self):
         cleaned_data = super().clean()
-        email = cleaned_data.get('email')
-        phone = cleaned_data.get('phone')
+        
+        # Перевіряємо початкові дані з POST, а не cleaned_data
+        # Оскільки cleaned_data може бути пустим якщо clean_email() кинув помилку
+        raw_email = self.data.get('email', '').strip()
+        raw_phone = self.data.get('phone', '').strip()
+        
         agree_terms = cleaned_data.get('agree_terms')
         
         # Check if user agreed to terms
@@ -67,16 +71,17 @@ class CustomUserCreationForm(UserCreationForm):
             raise ValidationError('Необхідно погодитися з умовами використання')
         
         # Handle empty phone - set to None instead of empty string
+        phone = cleaned_data.get('phone')
         if not phone or not phone.strip():
             cleaned_data['phone'] = None
-        # Phone formatting is handled in clean_phone(), no need to do it here
         
-        # Handle empty email - set to None instead of empty string
+        # Handle empty email - set to None instead of empty string  
+        email = cleaned_data.get('email')
         if not email or not email.strip():
             cleaned_data['email'] = None
         
-        # Require either email or phone
-        if not cleaned_data.get('email') and not cleaned_data.get('phone'):
+        # Require either email or phone (перевіряємо raw дані, не cleaned)
+        if not raw_email and not raw_phone:
             raise ValidationError('Вкажіть email або номер телефону')
         
         return cleaned_data
