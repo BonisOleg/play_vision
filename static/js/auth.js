@@ -73,23 +73,10 @@ function initFormValidation() {
 
     forms.forEach(form => {
         form.addEventListener('submit', function (e) {
-            console.log('🔍 DEBUG: Form submit triggered');
-
-            // Get all form data
-            const formData = new FormData(this);
-            const data = {};
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-            console.log('📝 DEBUG: Form data being submitted:', data);
-
             if (!validateForm(this)) {
-                console.log('❌ DEBUG: Form validation FAILED on frontend');
                 e.preventDefault();
                 return false;
             }
-
-            console.log('✅ DEBUG: Form validation PASSED on frontend');
 
             // Add loading state
             const submitButton = this.querySelector('button[type="submit"]');
@@ -114,14 +101,11 @@ function initFormValidation() {
 }
 
 function validateForm(form) {
-    console.log('🔍 DEBUG: Validating form...');
     const inputs = form.querySelectorAll('input[required]');
     let isValid = true;
 
     inputs.forEach(input => {
-        console.log(`🔍 DEBUG: Validating ${input.name}: "${input.value}", required: ${input.required}`);
         if (!validateInput(input)) {
-            console.log(`❌ DEBUG: Validation failed for ${input.name}`);
             isValid = false;
         }
     });
@@ -132,15 +116,11 @@ function validateForm(form) {
         const password2 = form.querySelector('input[name="password2"]');
 
         if (password1 && password2 && password1.value !== password2.value) {
-            console.log('❌ DEBUG: Passwords do not match');
             showError(password2, 'Паролі не співпадають');
             isValid = false;
-        } else if (password1 && password2) {
-            console.log('✅ DEBUG: Passwords match');
         }
     }
 
-    console.log(`🔍 DEBUG: Form validation result: ${isValid ? 'PASSED' : 'FAILED'}`);
     return isValid;
 }
 

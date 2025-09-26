@@ -80,7 +80,7 @@ class CustomUserCreationForm(UserCreationForm):
     
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
-        if phone:
+        if phone and phone.strip():  # Check if phone is not empty or whitespace
             # Format phone number
             if not phone.startswith('+380'):
                 phone = '+380' + phone.strip()
@@ -88,10 +88,19 @@ class CustomUserCreationForm(UserCreationForm):
             # Check if phone already exists
             if User.objects.filter(phone=phone).exists():
                 raise ValidationError('Користувач з таким номером телефону вже існує')
-        return phone
+            return phone
+        return ''  # Return empty string for empty phone
     
     def save(self, commit=True):
         user = super().save(commit=False)
+        
+        # Handle empty phone field - save as NULL instead of empty string
+        if not user.phone or not user.phone.strip():
+            user.phone = None
+        
+        # Handle empty email field - save as NULL instead of empty string  
+        if not user.email or not user.email.strip():
+            user.email = None
         
         # Set phone_registered_at if registering with phone only
         if user.phone and not user.email:
