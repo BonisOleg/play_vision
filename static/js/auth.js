@@ -51,20 +51,18 @@ function updateFormRequirements(activeTab) {
     if (activeTab === 'email') {
         if (emailInput) {
             emailInput.required = true;
-            emailInput.disabled = false;
         }
         if (phoneInput) {
             phoneInput.required = false;
-            phoneInput.disabled = true;
+            phoneInput.value = ''; // Очистити замість disabled
         }
     } else if (activeTab === 'phone') {
         if (emailInput) {
             emailInput.required = false;
-            emailInput.disabled = true;
+            emailInput.value = ''; // Очистити замість disabled
         }
         if (phoneInput) {
             phoneInput.required = true;
-            phoneInput.disabled = false;
         }
     }
 }
@@ -103,7 +101,7 @@ function initFormValidation() {
 }
 
 function validateForm(form) {
-    const inputs = form.querySelectorAll('input[required]:not(:disabled)');
+    const inputs = form.querySelectorAll('input[required]');
     let isValid = true;
 
     inputs.forEach(input => {

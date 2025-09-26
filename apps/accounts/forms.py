@@ -55,6 +55,11 @@ class CustomUserCreationForm(UserCreationForm):
         cleaned_data = super().clean()
         email = cleaned_data.get('email')
         phone = cleaned_data.get('phone')
+        agree_terms = cleaned_data.get('agree_terms')
+        
+        # Check if user agreed to terms
+        if not agree_terms:
+            raise ValidationError('Необхідно погодитися з умовами використання')
         
         # Require either email or phone
         if not email and not phone:
