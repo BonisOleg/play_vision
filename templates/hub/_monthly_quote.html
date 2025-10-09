@@ -1,0 +1,35 @@
+<!-- Monthly Expert Quote -->
+<section class="monthly-quote-section">
+    <div class="container">
+        <h2 class="section-title">Цитата місяця</h2>
+
+        {% if monthly_quote %}
+        <div class="quote-card">
+            <div class="quote-header">
+                {% if monthly_quote.expert_photo %}
+                <img src="{{ monthly_quote.expert_photo.url }}" alt="{{ monthly_quote.expert_name }}"
+                    class="quote-avatar">
+                {% else %}
+                <div class="quote-avatar-placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </div>
+                {% endif %}
+                <div class="quote-expert-info">
+                    <h3 class="quote-expert-name">{{ monthly_quote.expert_name }}</h3>
+                    <p class="quote-expert-role">{{ monthly_quote.expert_role }}</p>
+                </div>
+            </div>
+            <blockquote class="quote-text">
+                "{{ monthly_quote.quote_text }}"
+            </blockquote>
+        </div>
+        {% else %}
+        <div class="no-quote">
+            <p>Цитату місяця ще не додано. Додайте через адмін-панель.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>

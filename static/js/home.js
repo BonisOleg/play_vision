@@ -1,118 +1,102 @@
-document.addEventListener('DOMContentLoaded', function () {
-    if (typeof Alpine !== 'undefined' && document.querySelector('.hero-section')) {
-        const heroSlider = {
-            currentSlide: 0,
-            maxSlides: 4,
-            interval: null,
+/**
+ * Home Page Components
+ */
 
-            start() {
-                this.interval = setInterval(() => {
-                    this.nextSlide();
-                }, 5000);
+// Hero Carousel (7 слайдів)
+function heroCarousel() {
+    return {
+        currentSlide: 0,
+        slides: [
+            {
+                title: 'Продуктивна практика у футбольних клубах',
+                subtitle: 'Реальні кейси, стажування та менторинг з професіоналами індустрії',
+                ctaUrl: '/about/'
             },
-
-            stop() {
-                if (this.interval) {
-                    clearInterval(this.interval);
-                    this.interval = null;
-                }
+            {
+                title: 'Ми відкрились!',
+                subtitle: 'Приєднуйтесь до спільноти футбольних професіоналів України',
+                ctaUrl: '/about/'
             },
-
-            nextSlide() {
-                this.currentSlide = (this.currentSlide + 1) % this.maxSlides;
-                this.updateDots();
+            {
+                title: 'Івенти',
+                subtitle: 'Вебінари, майстер-класи та форуми від міжнародних експертів',
+                ctaUrl: '/events/'
             },
-
-            goToSlide(index) {
-                this.currentSlide = index;
-                this.updateDots();
+            {
+                title: 'Хаб знань — долучайся першим',
+                subtitle: 'Ексклюзивні курси та матеріали для розвитку футбольних фахівців',
+                ctaUrl: '/hub/'
             },
-
-            updateDots() {
-                const dots = document.querySelectorAll('.slider-dot');
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === this.currentSlide);
-                });
+            {
+                title: 'Ментор-коучинг',
+                subtitle: 'Індивідуальний підхід до комплексного розвитку кожного футболіста',
+                ctaUrl: '/mentor-coaching/'
+            },
+            {
+                title: 'Про нас',
+                subtitle: 'Дізнайтеся більше про нашу місію, цінності та команду експертів',
+                ctaUrl: '/about/'
+            },
+            {
+                title: 'Напрямки діяльності',
+                subtitle: '4 ключових напрямки для професійного зростання у футболі',
+                ctaUrl: '/about/#directions'
             }
-        };
+        ],
 
-        const heroSection = document.querySelector('.hero-section');
-        if (heroSection) {
-            heroSlider.start();
+        init() {
+            // Автопрокрутка кожні 5 секунд
+            setInterval(() => {
+                this.nextSlide();
+            }, 5000);
+        },
 
-            const dots = document.querySelectorAll('.slider-dot');
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    heroSlider.goToSlide(index);
-                });
-            });
+        nextSlide() {
+            this.currentSlide = (this.currentSlide + 1) % this.slides.length;
         }
-    }
-
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '50px 0px'
     };
+}
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in-up');
-                observer.unobserve(entry.target);
+// Courses Carousel (6 курсів)
+function coursesCarousel() {
+    return {
+        currentIndex: 0,
+        slidesPerView: 3,
+        totalSlides: 6,
+
+        get slideWidth() {
+            return 100 / this.slidesPerView;
+        },
+
+        get maxIndex() {
+            return Math.max(0, this.totalSlides - this.slidesPerView);
+        },
+
+        init() {
+            this.updateSlidesPerView();
+            window.addEventListener('resize', () => this.updateSlidesPerView());
+        },
+
+        updateSlidesPerView() {
+            if (window.innerWidth < 768) {
+                this.slidesPerView = 1;
+            } else if (window.innerWidth < 1024) {
+                this.slidesPerView = 2;
+            } else {
+                this.slidesPerView = 3;
             }
-        });
-    }, observerOptions);
+        },
 
-    const sections = document.querySelectorAll('.fullscreen-section:not(.cta-section)');
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+        nextSlide() {
+            if (this.currentIndex < this.maxIndex) {
+                this.currentIndex++;
+            }
+        },
 
-    const heroVideo = document.querySelector('.section-bg-video');
-    if (heroVideo) {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const isMobile = window.innerWidth < 768;
-
-        if (prefersReducedMotion || isMobile) {
-            heroVideo.removeAttribute('autoplay');
-            heroVideo.pause();
-        }
-
-        if ('connection' in navigator) {
-            const connection = navigator.connection;
-            if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
-                heroVideo.removeAttribute('preload');
-                heroVideo.preload = 'none';
+        prevSlide() {
+            if (this.currentIndex > 0) {
+                this.currentIndex--;
             }
         }
-    }
-
-    const lazyImages = document.querySelectorAll('img[data-src]');
-    if (lazyImages.length > 0) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                    }
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        lazyImages.forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-
-    window.addEventListener('beforeunload', () => {
-        if (typeof heroSlider !== 'undefined' && heroSlider.stop) {
-            heroSlider.stop();
-        }
-        if (typeof observer !== 'undefined') {
-            observer.disconnect();
-        }
-    });
-});
+    };
+}

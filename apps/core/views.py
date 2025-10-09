@@ -24,10 +24,13 @@ class HomeView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['welcome_message'] = 'Ласкаво просимо до Play Vision!'
         
-        # Add dummy data for demo purposes
-        context['featured_courses'] = []  # Will be populated from database later
+        # Featured courses для каруселі (6 курсів)
+        from apps.content.models import Course
+        context['featured_courses'] = Course.objects.filter(
+            is_published=True,
+            is_featured=True
+        ).select_related('category').prefetch_related('tags')[:6]
         
         return context
 

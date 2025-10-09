@@ -257,7 +257,7 @@ function eventCalendar() {
                 date.setDate(this.currentWeekStart.getDate() + i);
                 date.setHours(0, 0, 0, 0);
 
-                // Find events for this specific date
+                // Find events for this specific date (ОБМЕЖЕННЯ: ТІЛЬКИ 1 ПОДІЯ)
                 const dayEvents = this.allEvents.filter(event => {
                     const eventDate = new Date(event.start_datetime);
                     eventDate.setHours(0, 0, 0, 0);
@@ -268,7 +268,7 @@ function eventCalendar() {
                     }
 
                     return match;
-                });
+                }).slice(0, 1);
 
                 // Apply filters
                 const filteredEvents = dayEvents.filter(event => {
