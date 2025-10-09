@@ -262,6 +262,12 @@ function initSocialAuth() {
 
 // Show notification
 function showNotification(message, type = 'info') {
+    // Використовуємо нову централізовану систему якщо доступна
+    if (window.notify && typeof window.notify.show === 'function') {
+        return window.notify.show(message, type);
+    }
+
+    // Fallback на стару систему (для сумісності)
     const existingNotification = document.querySelector('.auth-notification');
     if (existingNotification) {
         existingNotification.remove();

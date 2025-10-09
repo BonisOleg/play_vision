@@ -425,6 +425,12 @@ function trackEvent(eventName, parameters = {}) {
 }
 
 function showToast(message, type = 'info') {
+    // Використовуємо нову централізовану систему якщо доступна
+    if (window.notify && typeof window.notify.show === 'function') {
+        return window.notify.show(message, type, 3000);
+    }
+
+    // Fallback на стару систему (для сумісності)
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.textContent = message;

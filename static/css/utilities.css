@@ -1,0 +1,128 @@
+/**
+ * UTILITIES - Допоміжні класи
+ * Використовуються для швидкої стилізації без inline styles
+ */
+
+/* === VISIBILITY === */
+.is-hidden {
+    display: none;
+}
+
+.is-visible {
+    display: block;
+}
+
+/* === LOADING STATES === */
+.is-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: wait;
+}
+
+.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* === FLEX UTILITIES === */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.gap-sm {
+    gap: var(--spacing-sm);
+}
+
+.gap-md {
+    gap: var(--spacing-md);
+}
+
+.gap-lg {
+    gap: var(--spacing-lg);
+}
+
+/* === TEXT ALIGNMENT === */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* === SPACING UTILITIES (optional) === */
+.mt-sm {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-md {
+    margin-top: var(--spacing-md);
+}
+
+.mt-lg {
+    margin-top: var(--spacing-lg);
+}
+
+.mb-sm {
+    margin-bottom: var(--spacing-sm);
+}
+
+.mb-md {
+    margin-bottom: var(--spacing-md);
+}
+
+.mb-lg {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* === POSITION HELPERS === */
+.pos-relative {
+    position: relative;
+}
+
+.pos-absolute {
+    position: absolute;
+}
+
+.pos-fixed {
+    position: fixed;
+}
+
+.pos-sticky {
+    position: sticky;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .mobile-hidden {
+        display: none;
+    }
+
+    .mobile-visible {
+        display: block;
+    }
+}
+
+@media (min-width: 769px) {
+    .desktop-hidden {
+        display: none;
+    }
+
+    .desktop-visible {
+        display: block;
+    }
+}

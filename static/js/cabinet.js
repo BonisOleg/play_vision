@@ -678,7 +678,12 @@ class Cabinet {
     }
 
     showNotification(message, type = 'info') {
-        // Знайти або створити контейнер для повідомлень
+        // Використовуємо нову централізовану систему якщо доступна
+        if (window.notify && typeof window.notify.show === 'function') {
+            return window.notify.show(message, type);
+        }
+
+        // Fallback на стару систему (для сумісності)
         let container = document.getElementById('notifications-container');
         if (!container) {
             container = document.createElement('div');

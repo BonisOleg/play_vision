@@ -326,7 +326,12 @@ class Cart {
     }
 
     showToast(message, type = 'info') {
-        // Видалити попередні тости
+        // Використовуємо нову централізовану систему якщо доступна
+        if (window.notify && typeof window.notify.show === 'function') {
+            return window.notify.show(message, type);
+        }
+
+        // Fallback на стару систему (для сумісності)
         const existingToasts = document.querySelectorAll('.cart-toast');
         existingToasts.forEach(toast => toast.remove());
 

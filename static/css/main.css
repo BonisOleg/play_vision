@@ -19,6 +19,37 @@
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-xxl: 3rem;
+
+    /* === НОВІ UTILITIES (2025-10-09) === */
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Z-index scale */
+    --z-base: 1;
+    --z-sticky: 100;
+    --z-dropdown: 200;
+    --z-fab: 999;
+    --z-modal: 1000;
+    --z-toast: 1100;
+
+    /* Layout */
+    --layout-nav-height: 80px;
+    --layout-sidebar-width: 280px;
+    --layout-container-max: 1200px;
 }
 
 @media (prefers-color-scheme: dark) {

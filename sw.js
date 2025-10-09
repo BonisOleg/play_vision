@@ -3,9 +3,9 @@
  * Повна реалізація PWA функціоналу згідно MainPlan.mdc та tz.mdc
  */
 
-const CACHE_NAME = 'playvision-v1.2';
-const STATIC_CACHE = 'playvision-static-v1';
-const DYNAMIC_CACHE = 'playvision-dynamic-v1';
+const CACHE_NAME = 'playvision-v1.3';
+const STATIC_CACHE = 'playvision-static-v1.3';
+const DYNAMIC_CACHE = 'playvision-dynamic-v1.3';
 
 // Публічні ресурси для кешування (згідно MainPlan.mdc)
 const CACHEABLE_PATHS = [
@@ -120,7 +120,12 @@ self.addEventListener('install', event => {
             return cache.addAll([
                 '/',
                 '/static/css/main.css',
+                '/static/css/utilities.css',
+                '/static/css/animations.css',
+                '/static/css/accessibility.css',
+                '/static/css/components/notifications.css',
                 '/static/js/main.js',
+                '/static/js/shared/notifications.js',
                 '/static/manifest.json',
                 '/pwa/offline/',
                 '/static/icons/icon-192x192.png'
