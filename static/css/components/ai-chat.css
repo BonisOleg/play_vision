@@ -586,3 +586,347 @@
         transition: none;
     }
 }
+
+/* ========================================== */
+/* GLOBAL AI FAB (Floating Action Button) */
+/* ========================================== */
+
+.ai-fab-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+}
+
+.ai-fab {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    border: none;
+    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: white;
+}
+
+.ai-fab:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.5);
+}
+
+.ai-fab:active {
+    transform: translateY(-2px);
+}
+
+.ai-fab-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.ai-fab-text {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ai-fab-tooltip {
+    position: absolute;
+    bottom: 50%;
+    right: calc(100% + 12px);
+    transform: translateY(50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.ai-fab-container:hover .ai-fab-tooltip {
+    opacity: 1;
+}
+
+/* ========================================== */
+/* AI MINI CHAT WIDGET */
+/* ========================================== */
+
+.ai-mini-chat {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 380px;
+    max-width: calc(100vw - 48px);
+    max-height: 600px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    z-index: 998;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.ai-mini-chat.active {
+    display: flex;
+}
+
+.ai-mini-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+}
+
+.ai-mini-chat-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.ai-mini-chat-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.ai-mini-chat-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.ai-mini-chat-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.ai-mini-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ai-mini-message {
+    max-width: 80%;
+    padding: 12px;
+    border-radius: 12px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.ai-mini-message--bot {
+    background: white;
+    border: 1px solid var(--color-border);
+    align-self: flex-start;
+}
+
+.ai-mini-message--user {
+    background: var(--color-primary);
+    color: white;
+    align-self: flex-end;
+}
+
+.ai-mini-message--typing {
+    background: white;
+    border: 1px solid var(--color-border);
+    padding: 12px 20px;
+    display: flex;
+    gap: 4px;
+}
+
+.ai-typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    animation: typing 1.4s infinite;
+}
+
+.ai-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.ai-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+
+    0%,
+    60%,
+    100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-6px);
+    }
+}
+
+.ai-mini-chat-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: white;
+    border-top: 1px solid var(--color-border);
+}
+
+.ai-mini-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.ai-mini-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.ai-mini-send {
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.ai-mini-send:hover {
+    background: var(--color-primary-dark);
+}
+
+.ai-mini-send:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.ai-mini-chat-footer {
+    padding: 12px;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+    background: #fafafa;
+}
+
+.ai-mini-full-link {
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.ai-mini-full-link:hover {
+    text-decoration: underline;
+}
+
+.ai-mini-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border);
+}
+
+.ai-mini-rate {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.ai-mini-rate:hover {
+    border-color: var(--color-primary);
+    background: rgba(255, 107, 53, 0.05);
+}
+
+.ai-mini-rate.rated {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================== */
+/* MOBILE RESPONSIVE */
+/* ========================================== */
+
+@media (max-width: 480px) {
+    .ai-fab {
+        width: 56px;
+        height: 56px;
+    }
+
+    .ai-fab-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .ai-fab-container {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .ai-mini-chat {
+        bottom: 84px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+        max-width: none;
+    }
+
+    .ai-fab-tooltip {
+        display: none;
+    }
+}
+
+/* TABLET */
+@media (min-width: 481px) and (max-width: 768px) {
+    .ai-mini-chat {
+        width: 360px;
+    }
+}
+
+/* ========================================== */
+/* ACCESSIBILITY */
+/* ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ai-fab,
+    .ai-mini-chat {
+        transition-duration: 0.01ms;
+    }
+
+    .ai-typing-dot {
+        animation-duration: 0.01ms;
+    }
+}
