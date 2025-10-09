@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.forms import TextInput
-from .models import Category, Tag, Course, Material, UserCourseProgress, Favorite
+from .models import Category, Tag, Course, Material, UserCourseProgress, Favorite, MonthlyQuote
 
 
 @admin.register(Category)
@@ -21,9 +21,15 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'created_at')
+    list_display = ('name', 'slug', 'tag_type', 'display_order', 'created_at')
+    list_filter = ('tag_type',)
     search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
+    ordering = ('tag_type', 'display_order', 'name')
+    
+    fieldsets = (
+        (None, {'fields': ('name', 'slug', 'tag_type', 'display_order')}),
+    )
 
 
 class MaterialInline(admin.TabularInline):
@@ -149,3 +155,31 @@ class FavoriteAdmin(admin.ModelAdmin):
     search_fields = ('user__email', 'course__title')
     raw_id_fields = ('user', 'course')
     readonly_fields = ('created_at',)
+
+
+@admin.register(MonthlyQuote)
+class MonthlyQuoteAdmin(admin.ModelAdmin):
+    list_display = ['expert_name', 'expert_role', 'month', 'is_active', 'views_count']
+    list_filter = ['is_active', 'month']
+    search_fields = ['expert_name', 'expert_role', 'quote_text']
+    date_hierarchy = 'month'
+    readonly_fields = ['views_count', 'last_displayed_at', 'created_at', 'updated_at']
+    
+    fieldsets = (
+        ('Експерт', {
+            'fields': ('expert_name', 'expert_role', 'expert_photo')
+        }),
+        ('Цитата', {
+            'fields': ('quote_text', 'month', 'is_active')
+        }),
+        ('Статистика', {
+            'fields': ('views_count', 'last_displayed_at', 'created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def save_model(self, request, obj, form, change):
+        # Очистити кеш при збереженні
+        from django.core.cache import cache
+        cache.delete('current_monthly_quote')
+        super().save_model(request, obj, form, change)

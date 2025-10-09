@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/home-additions.css' %}">
 <link rel="preload" href="{% static 'images/cta-bg.jpg' %}" as="image">
 {% endblock %}
 
@@ -12,7 +13,7 @@
 <div class="fullscreen-container">
 
     <!-- 1. HERO SECTION -->
-    <section class="fullscreen-section hero-section" x-data="{ currentSlide: 0 }">
+    <section class="fullscreen-section hero-section" x-data="heroCarousel()">
         <!-- Background Video/Image -->
         <div class="section-bg">
             <video class="section-bg-video" muted loop preload="metadata">
@@ -24,54 +25,76 @@
         </div>
         <div class="section-overlay section-overlay--gradient"></div>
 
-        <div class="section-content">
+        <div class="section-content hero-with-frame">
             <div class="hero-badge">ГОЛОВНЕ ЗАРАЗ</div>
-            <h1 class="hero-title">Продуктивна практика у футбольних клубах</h1>
-            <p class="hero-subtitle">Реальні кейси, стажування та менторинг з професіоналами індустрії.</p>
+            <h1 class="hero-title" x-text="slides[currentSlide].title"></h1>
+            <p class="hero-subtitle" x-text="slides[currentSlide].subtitle"></p>
 
             <div class="hero-buttons">
-                <a href="{% url 'core:about' %}" class="btn btn-primary">Дізнатись більше</a>
-                <a href="{% url 'events:event_list' %}" class="btn btn-outline hero-btn-outline">Переглянути події</a>
+                <a :href="slides[currentSlide].ctaUrl" class="btn btn-primary">Дізнатись більше</a>
             </div>
 
             <div class="hero-slider-dots">
-                <button class="slider-dot active" @click="currentSlide = 0"></button>
-                <button class="slider-dot" @click="currentSlide = 1"></button>
-                <button class="slider-dot" @click="currentSlide = 2"></button>
-                <button class="slider-dot" @click="currentSlide = 3"></button>
+                <template x-for="(slide, index) in slides" :key="index">
+                    <button class="slider-dot" :class="{'active': currentSlide === index}" @click="currentSlide = index"
+                        :aria-label="'Слайд ' + (index + 1)"></button>
+                </template>
             </div>
         </div>
     </section>
 
-    <!-- 2. DIRECTIONS SECTION -->
-    <section class="fullscreen-section directions-section">
-        <!-- Background Image -->
+    <!-- 2. FEATURED COURSES CAROUSEL -->
+    <section class="fullscreen-section featured-courses-section">
         <div class="section-bg">
-            <img class="section-bg-image" src="{% static 'images/directions-bg.jpg' %}" alt="Напрямки">
+            <img class="section-bg-image" src="{% static 'images/courses-bg.jpg' %}" alt="Курси">
         </div>
         <div class="section-overlay section-overlay--light"></div>
 
         <div class="section-content">
-            <h2 class="section-title">Три головних напрямки</h2>
+            <h2 class="section-title">6 найголовніших курсів</h2>
 
-            <div class="directions-grid">
-                <div class="direction-card">
-                    <div class="direction-icon">🏆</div>
-                    <h3 class="direction-title">Ментор-коучінг</h3>
-                    <p class="direction-description">Еко система розвитку гравця з комплексним підходом</p>
+            <div class="featured-carousel-container" x-data="coursesCarousel()">
+                <button class="carousel-btn carousel-btn-prev" @click="prevSlide()" :disabled="currentIndex === 0"
+                    aria-label="Попередній курс">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                </button>
+
+                <div class="featured-carousel">
+                    <div class="carousel-track" :style="`transform: translateX(-${currentIndex * slideWidth}%)`">
+                        {% for course in featured_courses %}
+                        <div class="carousel-slide">
+                            <div class="featured-card">
+                                <div class="featured-image">
+                                    {% if course.thumbnail %}
+                                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                    {% else %}
+                                    <div class="image-placeholder"></div>
+                                    {% endif %}
+                                </div>
+                                <div class="featured-content">
+                                    <span class="featured-category">{{ course.category.name }}</span>
+                                    <h3 class="featured-title">{{ course.title }}</h3>
+                                    <p class="featured-description">{{ course.short_description|truncatewords:15 }}</p>
+                                    <a href="{{ course.get_absolute_url }}" class="featured-link">
+                                        Детальніше →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="no-courses">Курси скоро з'являться</p>
+                        {% endfor %}
+                    </div>
                 </div>
 
-                <div class="direction-card">
-                    <div class="direction-icon">📚</div>
-                    <h3 class="direction-title">Хаб знань</h3>
-                    <p class="direction-description">Онлайн портал знань</p>
-                </div>
-
-                <div class="direction-card">
-                    <div class="direction-icon">👥</div>
-                    <h3 class="direction-title">ФФФ</h3>
-                    <p class="direction-description">Форум футбольних фахівців, де ти знайдеш свою спільноту</p>
-                </div>
+                <button class="carousel-btn carousel-btn-next" @click="nextSlide()" :disabled="currentIndex >= maxIndex"
+                    aria-label="Наступний курс">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6" />
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
@@ -129,6 +152,51 @@
         </div>
     </section>
 
+    <!-- 3. MENTOR-COACHING ECOSYSTEM -->
+    <section class="fullscreen-section mentor-coaching-section">
+        <div class="section-bg">
+            <img class="section-bg-image" src="{% static 'images/mentor-bg.jpg' %}" alt="Ментор-коучинг">
+        </div>
+        <div class="section-overlay section-overlay--dark"></div>
+
+        <div class="section-content">
+            <h2 class="section-title">Ментор-коучинг</h2>
+            <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
+
+            <div class="ecosystem-diagram">
+                <div class="ecosystem-center">
+                    <img src="{% static 'images/playvision-logo.svg' %}" alt="Play Vision" class="center-logo">
+                </div>
+
+                <div class="ecosystem-item ecosystem-item-1">
+                    <div class="item-icon">📅</div>
+                    <h4>Івенти</h4>
+                </div>
+
+                <div class="ecosystem-item ecosystem-item-2">
+                    <div class="item-icon">👨‍🏫</div>
+                    <h4>Ментор-коучинг</h4>
+                </div>
+
+                <div class="ecosystem-item ecosystem-item-3">
+                    <div class="item-icon">📚</div>
+                    <h4>Хаб знань</h4>
+                </div>
+
+                <div class="ecosystem-item ecosystem-item-4">
+                    <div class="item-icon">💡</div>
+                    <h4>Інновації і технології</h4>
+                </div>
+            </div>
+
+            <div class="mentor-cta">
+                <a href="/mentor-coaching/" class="btn btn-primary btn-large">
+                    Дізнатись більше про ментор-коучинг
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- 4. EXPERTS SECTION -->
     <section class="fullscreen-section experts-section">
         <!-- Background Image -->
@@ -138,8 +206,9 @@
         <div class="section-overlay section-overlay--light"></div>
 
         <div class="section-content">
-            <h2 class="section-title">З ким ти працюєш</h2>
-            <p class="experts-subtitle">Міжнародні експерти та науковці: дизайн сесій, фізіологія, скаутинг, медицина.
+            <h2 class="section-title">Команда професіоналів</h2>
+            <p class="experts-subtitle">Міжнародні експерти, які створюють освітні програми та супроводжують ваш
+                розвиток
             </p>
 
             <div class="experts-grid">
@@ -178,60 +247,9 @@
         </div>
     </section>
 
-    <!-- 5. VALUES SECTION -->
-    <section class="fullscreen-section values-section">
-        <!-- Background Image -->
-        <div class="section-bg">
-            <img class="section-bg-image" data-src="{% static 'images/values-bg.jpg' %}" alt="Цінності" loading="lazy">
-        </div>
-        <div class="section-overlay section-overlay--light"></div>
-
-        <div class="section-content">
-            <h2 class="section-title">Наша структура та цінності</h2>
-            <p class="values-description">
-                Ми поєднуємо мотивацію та прагматизм із допитливістю і інтуїцією.
-                Опираємось на спільноту практиків і відкритих знань.
-            </p>
-
-            <div class="values-grid">
-                <div class="value-item">
-                    <div class="value-circle">
-                        <span class="value-text">Мотивація</span>
-                    </div>
-                </div>
-
-                <div class="value-item">
-                    <div class="value-circle">
-                        <span class="value-text">Інтуїція</span>
-                    </div>
-                </div>
-
-                <div class="value-item">
-                    <div class="value-circle">
-                        <span class="value-text">Допитливість</span>
-                    </div>
-                </div>
-
-                <div class="value-item">
-                    <div class="value-circle">
-                        <span class="value-text">Прагматизм</span>
-                    </div>
-                </div>
-
-                <div class="value-item">
-                    <div class="value-circle">
-                        <span class="value-text">Оптимізм</span>
-                    </div>
-                </div>
-
-                <div class="value-item">
-                    <div class="value-circle">
-                        <span class="value-text">Спільнота</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% comment %}
+    <!-- 5. VALUES SECTION - ВИДАЛЕНО ЗА ВИМОГОЮ КЛІЄНТА -->
+    {% endcomment %}
 
     <!-- 6. CTA SECTION -->
     <section class="fullscreen-section cta-section">
@@ -251,6 +269,10 @@
     </section>
 
 </div>
+
+<!-- Scroll Popup -->
+{% include 'partials/scroll-popup.html' %}
+
 {% endblock %}
 
 {% block extra_js %}

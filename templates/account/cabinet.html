@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/cabinet.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/cabinet-additions.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -80,15 +81,21 @@
 
                     <div class="interests-section">
                         <label>Напрямки (інтереси)</label>
-                        <div class="interests-tags">
-                            <span class="interest-tag active">Аналітика</span>
-                            <span class="interest-tag active">Тренерство</span>
-                            <span class="interest-tag active">Психологія</span>
-                            <span class="interest-tag">Харчування</span>
+                        <div class="interests-list">
+                            {% for interest in interests %}
+                            <label class="interest-item">
+                                <input type="checkbox" name="interests" value="{{ interest.id }}" {% if interest in
+                                    user.profile.interests.all %}checked{% endif %}>
+                                <span class="interest-label">
+                                    <span class="interest-number">{{ forloop.counter }}.</span>
+                                    {{ interest.name }}
+                                </span>
+                            </label>
+                            {% endfor %}
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-save">Зберти зміни</button>
+                    <button type="submit" class="btn-save">ЗБЕРЕГТИ</button>
                 </form>
             </div>
         </div>

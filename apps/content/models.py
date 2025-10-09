@@ -33,17 +33,36 @@ class Category(models.Model):
 
 class Tag(models.Model):
     """
-    Content tags
+    Content tags and user interests
     """
+    TAG_TYPE_CHOICES = [
+        ('interest', 'Інтерес користувача'),
+        ('category', 'Категорія контенту'),
+        ('general', 'Загальний тег'),
+    ]
+    
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
+    tag_type = models.CharField(
+        max_length=20, 
+        choices=TAG_TYPE_CHOICES, 
+        default='general',
+        db_index=True
+    )
+    display_order = models.PositiveIntegerField(
+        default=0, 
+        help_text='Порядок відображення (для interest type)'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         db_table = 'tags'
         verbose_name = 'Tag'
         verbose_name_plural = 'Tags'
-        ordering = ['name']
+        ordering = ['display_order', 'name']
+        indexes = [
+            models.Index(fields=['tag_type', 'display_order']),
+        ]
     
     def __str__(self):
         return self.name
@@ -73,6 +92,23 @@ class Course(models.Model):
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES)
     duration_minutes = models.PositiveIntegerField(help_text='Duration in minutes')
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    # Training specialization
+    training_specialization = models.CharField(
+        max_length=30,
+        choices=[
+            ('', 'Загальний'),
+            ('goalkeeper', 'Тренер воротарів'),
+            ('youth', 'Дитячий тренер'),
+            ('fitness', 'Тренер ЗФП'),
+            ('professional', 'Тренер професійних команд'),
+        ],
+        blank=True,
+        default='',
+        verbose_name='Спеціалізація тренера',
+        help_text='Застосовується тільки для курсів категорії "Тренерство"',
+        db_index=True
+    )
     
     # Access control
     is_featured = models.BooleanField(default=False)
@@ -260,3 +296,89 @@ class Favorite(models.Model):
     
     def __str__(self):
         return f"{self.user.email} - {self.course.title}"
+
+
+class MonthlyQuote(models.Model):
+    """
+    Цитата експерта місяця (показується в Хабі знань)
+    """
+    expert_name = models.CharField(max_length=100, verbose_name='Імʼя експерта')
+    expert_role = models.CharField(max_length=150, verbose_name='Посада/роль')
+    expert_photo = models.ImageField(
+        upload_to='experts/monthly_quotes/', 
+        blank=True,
+        verbose_name='Фото експерта'
+    )
+    quote_text = models.TextField(verbose_name='Текст цитати')
+    
+    # Місяць - завжди перше число місяця
+    month = models.DateField(
+        unique=True,
+        verbose_name='Місяць',
+        help_text='Завжди 1-е число місяця (напр. 2025-10-01)'
+    )
+    is_active = models.BooleanField(
+        default=True, 
+        verbose_name='Активна',
+        help_text='Тільки одна цитата може бути активною для поточного місяця'
+    )
+    
+    # Статистика
+    views_count = models.PositiveIntegerField(default=0)
+    last_displayed_at = models.DateTimeField(null=True, blank=True)
+    
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'monthly_quotes'
+        verbose_name = 'Цитата місяця'
+        verbose_name_plural = 'Цитати місяця'
+        ordering = ['-month']
+        indexes = [
+            models.Index(fields=['-month', 'is_active']),
+        ]
+    
+    def __str__(self):
+        return f"{self.expert_name} - {self.month.strftime('%B %Y')}"
+    
+    @classmethod
+    def get_current_quote(cls):
+        """
+        Отримати цитату поточного місяця з кешуванням
+        """
+        from django.core.cache import cache
+        
+        cache_key = 'current_monthly_quote'
+        quote = cache.get(cache_key)
+        
+        if not quote:
+            today = timezone.now().date()
+            current_month_start = today.replace(day=1)
+            
+            quote = cls.objects.filter(
+                month=current_month_start,
+                is_active=True
+            ).first()
+            
+            if quote:
+                # Кешувати до кінця місяця (31 день max)
+                cache.set(cache_key, quote, 60*60*24*31)
+                
+                # Оновити статистику
+                quote.views_count += 1
+                quote.last_displayed_at = timezone.now()
+                quote.save(update_fields=['views_count', 'last_displayed_at'])
+        
+        return quote
+    
+    def save(self, *args, **kwargs):
+        # Завжди встановлювати перше число місяця
+        if self.month:
+            self.month = self.month.replace(day=1)
+        super().save(*args, **kwargs)
+        
+        # Очистити кеш при збереженні
+        from django.core.cache import cache
+        cache.delete('current_monthly_quote')

@@ -34,6 +34,12 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         context['active_tab'] = tab
         context['user_profile'] = getattr(user, 'profile', None)
         
+        # Додати інтереси для форми
+        from apps.content.models import Tag
+        context['interests'] = Tag.objects.filter(
+            tag_type='interest'
+        ).order_by('display_order')
+        
         # Активна підписка
         active_subscription = user.subscriptions.filter(
             status='active',
@@ -277,9 +283,35 @@ class UpdateProfileView(LoginRequiredMixin, View):
             for field, value in data.items():
                 setattr(profile, field, value)
             
-            # Обробити аватар якщо завантажений
+            # Покращена обробка аватара
             if 'avatar' in request.FILES:
-                profile.avatar = request.FILES['avatar']
+                avatar = request.FILES['avatar']
+                
+                # Валідація розміру (5MB)
+                MAX_SIZE = 5 * 1024 * 1024
+                if avatar.size > MAX_SIZE:
+                    return JsonResponse({
+                        'success': False,
+                        'message': 'Файл занадто великий. Максимум 5MB'
+                    }, status=400)
+                
+                # Валідація типу
+                ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+                content_type = avatar.content_type.lower()
+                if content_type not in ALLOWED_TYPES:
+                    return JsonResponse({
+                        'success': False,
+                        'message': 'Дозволені формати: JPEG, PNG, WEBP'
+                    }, status=400)
+                
+                # Видалити старий аватар
+                if profile.avatar:
+                    try:
+                        profile.avatar.delete(save=False)
+                    except Exception:
+                        pass
+                
+                profile.avatar = avatar
             
             # Обробити інтереси
             if 'interests' in request.POST:

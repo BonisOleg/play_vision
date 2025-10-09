@@ -1,0 +1,42 @@
+<!-- Scroll Popup Component -->
+<div id="scroll-popup" x-data="scrollPopup()" x-show="showPopup" x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 transform scale-90" x-transition:enter-end="opacity-100 transform scale-100"
+    x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 transform scale-100"
+    x-transition:leave-end="opacity-0 transform scale-90" class="scroll-popup" style="display: none;">
+
+    <div class="popup-overlay" @click="closePopup()"></div>
+
+    <div class="popup-card">
+        <button class="popup-close" @click="closePopup()" aria-label="Закрити">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+
+        <div class="popup-content">
+            <h2>Готовий приєднатись до спільноти Play vision?</h2>
+
+            {% if user.is_authenticated %}
+            <p>Оформи підписку та отримай <strong>+30 балів лояльності</strong>!</p>
+            <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary btn-large">
+                Перейти до підписки
+            </a>
+            {% else %}
+            <p>Зареєструйся та отримай <strong>10% знижку</strong> на першу покупку!</p>
+            <form @submit.prevent="handleRegister" class="popup-form">
+                <input type="email" x-model="formData.email" placeholder="Ваш email" required class="form-input">
+                <input type="password" x-model="formData.password" placeholder="Пароль (мін. 8 символів)" required
+                    minlength="8" class="form-input">
+                <button type="submit" class="btn btn-primary btn-large" :disabled="loading">
+                    <span x-show="!loading">Зареєструватись</span>
+                    <span x-show="loading">Завантаження...</span>
+                </button>
+            </form>
+            <p class="popup-footer">
+                Вже є акаунт? <a href="{% url 'accounts:login' %}">Увійти</a>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</div>

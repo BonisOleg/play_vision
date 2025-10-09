@@ -1,0 +1,339 @@
+/* Loyalty Rules Page - БЕЗ ДУБЛІВ та !important */
+
+.loyalty-rules-container {
+    min-height: 100vh;
+    background: var(--color-bg-gray);
+    padding: var(--spacing-xxl) 0;
+}
+
+/* Header */
+.rules-header {
+    text-align: center;
+    padding: var(--spacing-xxl);
+    background: white;
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.rules-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+}
+
+.rules-header p {
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Navigation */
+.rules-nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+    padding: var(--spacing-lg);
+    background: white;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.rules-nav-link {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: var(--transition-base);
+}
+
+.rules-nav-link:hover {
+    background: var(--color-primary);
+    color: white;
+    text-decoration: none;
+}
+
+/* Content */
+.rules-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.rules-section {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xxl);
+}
+
+.rules-section h2 {
+    font-size: 1.75rem;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 3px solid var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-text p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+}
+
+.section-text ul {
+    margin: var(--spacing-lg) 0;
+    padding-left: var(--spacing-xl);
+}
+
+.section-text li {
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Earning Ways */
+.earning-ways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.earning-way {
+    background: var(--color-bg-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: var(--transition-base);
+}
+
+.earning-way:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.way-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.earning-way h3 {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.way-amount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.way-detail {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+/* Tiers Showcase */
+.tiers-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.tier-showcase-card {
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+    border: 3px solid;
+    transition: var(--transition-base);
+}
+
+.tier-showcase-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.tier-bronze {
+    border-color: #cd7f32;
+    background: linear-gradient(135deg, #fff5ee 0%, #ffeedd 100%);
+}
+
+.tier-silver {
+    border-color: #c0c0c0;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+}
+
+.tier-gold {
+    border-color: #ffd700;
+    background: linear-gradient(135deg, #fffacd 0%, #ffeaa7 100%);
+}
+
+.tier-platinum {
+    border-color: #e5e4e2;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.tier-badge-large {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+}
+
+.tier-requirement {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+}
+
+.tier-discount-large {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1;
+}
+
+.tier-discount-label {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-top: var(--spacing-xs);
+}
+
+/* Benefits Grid */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.benefit-card {
+    background: var(--color-bg-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.benefit-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.benefit-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+/* Terms Info */
+.terms-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.info-box {
+    background: var(--color-bg-gray);
+    border-left: 4px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+}
+
+.info-box h3 {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.info-box p {
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+.info-box strong {
+    color: var(--color-primary);
+}
+
+/* CTA */
+.rules-cta {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xxl);
+    text-align: center;
+    margin: var(--spacing-xxl) 0;
+}
+
+.rules-cta h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.rules-cta p {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-xl);
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.back-to-cabinet {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+}
+
+.back-to-cabinet a {
+    font-weight: 600;
+    transition: var(--transition-base);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .rules-header {
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+
+    .rules-header h1 {
+        font-size: 2rem;
+    }
+
+    .rules-nav {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .rules-section {
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+
+    .earning-ways,
+    .tiers-showcase,
+    .benefits-grid,
+    .terms-info {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .cta-buttons .btn {
+        width: 100%;
+    }
+}
+
+/* iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .tier-showcase-card {
+        -webkit-tap-highlight-color: transparent;
+    }
+}

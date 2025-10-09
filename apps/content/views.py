@@ -25,22 +25,23 @@ class CourseListView(ListView):
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
         
-        # Difficulty filter
-        difficulty = self.request.GET.get('difficulty')
-        if difficulty:
-            queryset = queryset.filter(difficulty=difficulty)
-        
         # Tag filter
         tag = self.request.GET.get('tag')
         if tag:
             queryset = queryset.filter(tags__slug=tag)
         
-        # Price filter
-        price_filter = self.request.GET.get('price')
-        if price_filter == 'free':
-            queryset = queryset.filter(is_free=True)
-        elif price_filter == 'paid':
-            queryset = queryset.filter(is_free=False)
+        # Interest filter (для тегів типу interest)
+        interest = self.request.GET.get('interest')
+        if interest:
+            queryset = queryset.filter(
+                tags__slug=interest,
+                tags__tag_type='interest'
+            ).distinct()
+        
+        # Training specialization filter
+        training_type = self.request.GET.get('training_type')
+        if training_type:
+            queryset = queryset.filter(training_specialization=training_type)
         
         # Sorting
         sort = self.request.GET.get('sort', '-created_at')
@@ -53,8 +54,13 @@ class CourseListView(ListView):
         context = super().get_context_data(**kwargs)
         
         # Add categories for filter
-        from .models import Category
+        from .models import Category, Tag, MonthlyQuote
         context['categories'] = Category.objects.filter(is_active=True)
+        
+        # Add interests (замість загальних тегів)
+        context['interests'] = Tag.objects.filter(
+            tag_type='interest'
+        ).order_by('display_order')
         
         # Add featured courses for main materials section
         context['featured_courses'] = Course.objects.filter(
@@ -62,10 +68,13 @@ class CourseListView(ListView):
             is_featured=True
         ).select_related('category').prefetch_related('tags')[:6]
         
+        # Add monthly quote
+        context['monthly_quote'] = MonthlyQuote.get_current_quote()
+        
         # Add current filters
-        context['current_category'] = self.request.GET.get('category')
-        context['current_difficulty'] = self.request.GET.get('difficulty')
-        context['current_price'] = self.request.GET.get('price')
+        context['current_category'] = self.request.GET.get('category', '')
+        context['current_interest'] = self.request.GET.get('interest', '')
+        context['current_training_type'] = self.request.GET.get('training_type', '')
         context['current_sort'] = self.request.GET.get('sort', '-created_at')
         
         # Check user favorites

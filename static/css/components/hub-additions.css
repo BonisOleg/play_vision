@@ -1,0 +1,202 @@
+/* Hub Additions - Зміни за скріншотами */
+
+/* Banner Close Button */
+.subscription-banner {
+    position: relative;
+}
+
+.banner-close {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-lg);
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: var(--transition-base);
+    padding: var(--spacing-xs);
+    line-height: 1;
+    z-index: 10;
+}
+
+.banner-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Monthly Quote Section */
+.monthly-quote-section {
+    padding: var(--spacing-xxl) 0;
+    background: var(--hub-bg-gray);
+}
+
+.quote-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xxl);
+    box-shadow: var(--hub-shadow);
+}
+
+.quote-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.quote-avatar,
+.quote-avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.quote-avatar-placeholder {
+    background: var(--hub-bg-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--hub-text-light);
+}
+
+.quote-expert-info {
+    flex: 1;
+}
+
+.quote-expert-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--hub-text);
+    margin-bottom: var(--spacing-xs);
+}
+
+.quote-expert-role {
+    font-size: 0.9rem;
+    color: var(--hub-text-light);
+    margin: 0;
+}
+
+.quote-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--hub-text);
+    font-style: italic;
+    margin: 0;
+    padding-left: var(--spacing-xl);
+    border-left: 4px solid var(--hub-primary);
+}
+
+.no-quote {
+    text-align: center;
+    padding: var(--spacing-xxl);
+    color: var(--hub-text-light);
+}
+
+/* Featured Product Badge */
+.material-card.featured-product {
+    border: 3px solid var(--hub-primary);
+    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.2);
+}
+
+.top-product-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--hub-primary);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 5;
+}
+
+/* Scrollable Filters */
+.filters-scrollable {
+    max-height: 70vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--hub-primary) var(--hub-bg-gray);
+}
+
+.filters-scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filters-scrollable::-webkit-scrollbar-track {
+    background: var(--hub-bg-gray);
+    border-radius: var(--radius-sm);
+}
+
+.filters-scrollable::-webkit-scrollbar-thumb {
+    background: var(--hub-primary);
+    border-radius: var(--radius-sm);
+}
+
+.filters-scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--hub-primary-dark);
+}
+
+/* Filter Toggle Button */
+.filter-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--hub-text);
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.filter-toggle:hover {
+    color: var(--hub-primary);
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon.rotated {
+    transform: rotate(180deg);
+}
+
+/* Sub-filters */
+.sub-filters {
+    margin-top: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+    border-left: 2px solid var(--hub-border);
+}
+
+.sub-option {
+    font-size: 0.9rem;
+    padding: var(--spacing-sm) 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .quote-card {
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+
+    .quote-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .quote-text {
+        font-size: 1rem;
+        padding-left: var(--spacing-lg);
+    }
+}

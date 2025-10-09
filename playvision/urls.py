@@ -31,6 +31,7 @@ urlpatterns = [
     path('', include('apps.subscriptions.urls')),  # Include pricing at root level
     path('cart/', include('apps.cart.urls')),
     path('payments/', include('apps.payments.urls')),
+    path('loyalty/', include('apps.loyalty.urls')),
     
     # API endpoints (v1)
     path('api/v1/accounts/', include('apps.accounts.api_urls')),
