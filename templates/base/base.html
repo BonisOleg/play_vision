@@ -136,9 +136,22 @@
 
                 <!-- User Menu -->
                 <div class="navbar-actions">
+                    <!-- AI Помічник (показується на мобільних замість кошика) -->
+                    <a href="{% url 'ai:chat' %}" class="navbar-icon navbar-ai-mobile" aria-label="AI Помічник">
+                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="3" />
+                            <path d="M12 1v6m0 6v6" />
+                            <path d="m21 12-6-3-6 3-6-3" />
+                            <path d="m21 12-6 3-6-3-6 3" />
+                        </svg>
+                        <span class="sr-only">AI Помічник</span>
+                    </a>
+
                     {% if user.is_authenticated %}
-                    <!-- Кошик для авторизованих користувачів -->
-                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon" aria-label="Кошик">
+                    <!-- Кошик (тільки на десктопі) -->
+                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon navbar-desktop-only"
+                        aria-label="Кошик">
                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path
@@ -149,7 +162,7 @@
                         <span class="cart-count" data-cart-count>{{ cart_items_count|default:0 }}</span>
                     </a>
 
-                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon">
+                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon navbar-desktop-only">
                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -158,8 +171,8 @@
                         <span class="sr-only">Кабінет</span>
                     </a>
                     {% else %}
-                    <a href="{% url 'accounts:login' %}" class="navbar-link">Вхід</a>
-                    <a href="{% url 'accounts:register' %}" class="btn btn-outline">Реєстрація</a>
+                    <a href="{% url 'accounts:login' %}" class="navbar-link navbar-desktop-only">Вхід</a>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-outline navbar-desktop-only">Реєстрація</a>
                     {% endif %}
                 </div>
             </nav>

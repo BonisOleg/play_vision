@@ -501,11 +501,30 @@ a:hover {
     color: var(--color-text-light);
 }
 
+/* Показувати тільки на мобільних */
+.navbar-ai-mobile {
+    display: none;
+}
+
 @media (max-width: 768px) {
 
-    /* Приховати десктопну навігацію та дії */
-    .navbar-menu,
+    /* Приховати десктопну навігацію */
+    .navbar-menu {
+        display: none;
+    }
+
+    /* Показати navbar-actions, але контролювати що в них */
     .navbar-actions {
+        display: flex;
+    }
+
+    /* Показати AI помічника на мобільних */
+    .navbar-ai-mobile {
+        display: flex;
+    }
+
+    /* Сховати десктопні елементи на мобільних */
+    .navbar-desktop-only {
         display: none;
     }
 

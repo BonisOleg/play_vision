@@ -105,7 +105,7 @@ class PWAManager {
         // Стилі кнопки
         button.style.cssText = `
             position: fixed;
-            bottom: 20px;
+            bottom: 100px;
             left: 20px;
             background: var(--color-primary);
             color: white;
@@ -123,6 +123,11 @@ class PWAManager {
             transition: all 0.3s ease;
             font-family: inherit;
         `;
+
+        // На мобільних пристроях підняти ще вище
+        if (window.innerWidth <= 768) {
+            button.style.bottom = '100px';
+        }
 
         return button;
     }
