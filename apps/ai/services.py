@@ -50,7 +50,7 @@ class AIAgentService:
         else:
             return MockLLMClient()  # Fallback для тестування
     
-    def process_query(self, query: str, user=None, session_id: str = None) -> Dict[str, Any]:
+    def process_query(self, query: str, user=None, session_id: str = None, queries_count: int = 1) -> Dict[str, Any]:
         """
         Обробка запиту користувача до AI
         """
@@ -75,16 +75,32 @@ class AIAgentService:
                 limit=5
             )
             
-            # 3. Формування промпту
-            prompt = self._build_prompt(query, relevant_docs, access_level)
+            # 2.1. Перевірка релевантності результатів
+            best_score = max([d['score'] for d in relevant_docs]) if relevant_docs else 0
+            has_good_sources = best_score > 0.15  # Знижено для кращого покриття нашої бази
+            
+            # 3. Формування промпту (наша база ЧИ загальна LLM)
+            if has_good_sources:
+                # Є хороші джерела в НАШІЙ базі знань
+                prompt = self._build_prompt(query, relevant_docs, access_level)
+            else:
+                # Немає в базі - використати загальні знання LLM
+                prompt = self._build_general_prompt(query, access_level)
+                relevant_docs = []  # Очистити джерела для логування
             
             # 4. Отримання відповіді від LLM
             llm_response = self.llm_client.generate(prompt)
             
-            # 5. Фільтрація контенту згідно рівня доступу
+            # 5. Фільтрація контенту згідно рівня доступу + форматування + CTA
             filtered_response = self.access_policy.filter_response(
-                llm_response, access_level
+                llm_response.get('response', ''),  # Витягти текст з dict
+                access_level,
+                sources=relevant_docs,
+                queries_count=queries_count
             )
+            
+            # 5.1. Додавання дисклеймерів (health/legal/financial)
+            filtered_response = DisclaimerManager.add_disclaimer(query, filtered_response)
             
             # 6. Логування запиту
             response_time = int((time.time() - start_time) * 1000)
@@ -140,14 +156,14 @@ class AIAgentService:
         """Формування промпту для LLM"""
         # Отримати шаблон промпту
         template = AIPromptTemplate.objects.filter(
-            template_type='main',
+            name='main',
             is_active=True
         ).first()
         
         if not template:
             template_content = self._get_default_prompt_template()
         else:
-            template_content = template.content
+            template_content = template.user_prompt_template
         
         # Формування контексту з документів
         context_text = ""
@@ -166,6 +182,28 @@ class AIAgentService:
         )
         
         return prompt
+    
+    def _build_general_prompt(self, query: str, access_level: str) -> str:
+        """
+        Промпт без контексту з бази знань - для загальних питань
+        Використовується коли немає релевантних джерел у нашій базі
+        """
+        return f"""Ти - AI помічник Play Vision, освітньої платформи для футбольних фахівців.
+
+Користувач запитує: {query}
+
+Рівень доступу: {access_level}
+
+Інструкції:
+1. Відповідай українською мовою
+2. Дай корисну загальну відповідь (максимум 4-6 абзаців)
+3. Структура: Суть → Кроки/Поради → Що очікувати
+4. Будь конкретним, без "води"
+5. Якщо тема футбольна - згадай що Play Vision може мати курси/матеріали на цю тему
+6. Уникай медичних та юридичних порад
+7. Тон: спокійний, партнерський, як досвідчений навігатор
+
+Відповідь:"""
     
     def _get_default_prompt_template(self) -> str:
         """Базовий шаблон промпту"""
@@ -341,17 +379,87 @@ class AIAccessPolicy:
         }
     }
     
-    def filter_response(self, response: str, access_level: str) -> str:
-        """Фільтрація відповіді згідно рівня доступу"""
+    def filter_response(self, response: str, access_level: str, sources: List = None, queries_count: int = 1) -> str:
+        """
+        Фільтрація + форматування відповіді згідно вимог клієнта
+        - Обмеження до 4-6 абзаців
+        - Додавання джерел
+        - Динамічний CTA
+        """
         policy = self.POLICIES.get(access_level, self.POLICIES['guest'])
         
-        # Обрізка довжини
+        # 1. ФОРМАТУВАННЯ: Обрізати до 4-6 абзаців
+        paragraphs = [p.strip() for p in response.split('\n\n') if p.strip()]
+        if len(paragraphs) > 6:
+            paragraphs = paragraphs[:6]
+            paragraphs[-1] += "..."
+        response = '\n\n'.join(paragraphs)
+        
+        # 2. Обмеження довжини (додаткове для безпеки)
         if policy.get('max_response_length') and len(response) > policy['max_response_length']:
             response = response[:policy['max_response_length']] + "..."
         
-        # Додавання CTA повідомлення
-        if policy.get('cta_message'):
-            response += f"\n\n{policy['cta_message']}"
+        # 3. ДОДАТИ ДЖЕРЕЛА (якщо є з нашої бази)
+        if sources and len(sources) > 0:
+            response += "\n\n📚 **Джерела з бази Play Vision:**"
+            for source in sources[:3]:  # Максимум 3 джерела
+                response += f"\n• {source['title']}"
+        
+        # 4. ДИНАМІЧНИЙ CTA
+        cta = self._get_dynamic_cta(access_level, bool(sources), queries_count)
+        if cta:
+            response += cta
+        
+        return response
+    
+    def _get_dynamic_cta(self, access_level: str, has_sources: bool, queries_count: int) -> str:
+        """Динамічний CTA на основі контексту"""
+        
+        # Підписники - без CTA
+        if access_level in ['subscriber_l1', 'subscriber_l2', 'admin']:
+            return ""
+        
+        # Перші 1-2 запити - без CTA (не нав'язуємось)
+        if queries_count < 2:
+            return ""
+        
+        # Якщо є джерела з нашої бази - прямий CTA з посиланням
+        if has_sources:
+            return "\n\n💎 **Детальніше в наших курсах**\nДоступні за підпискою C-Vision або окремо від 399 грн\n👉 Переглянути тарифи: /pricing/"
+        
+        # М'який CTA без джерел
+        if access_level == 'guest':
+            return "\n\n💡 Зареєструйтесь для більш детальних відповідей та доступу до експертних матеріалів"
+        else:  # registered
+            return "\n\n💡 Підписка відкриває доступ до всіх курсів та експертних консультацій"
+
+
+class DisclaimerManager:
+    """
+    Автоматичні дисклеймери для відповідей
+    Додає попередження якщо питання стосується здоров'я, права чи фінансів
+    """
+    
+    HEALTH_KEYWORDS = ['біль', 'травма', 'втома', 'хвороба', 'лікар', 'медицин', 'болить', 'операція']
+    LEGAL_KEYWORDS = ['контракт', 'договір', 'права', 'закон', 'юрист', 'судов', 'позов']
+    FINANCIAL_KEYWORDS = ['гроші', 'оплата', 'ціна', 'кредит', 'позика', 'інвестиц', 'податк']
+    
+    @staticmethod
+    def add_disclaimer(query: str, response: str) -> str:
+        """Додати дисклеймер якщо потрібно"""
+        query_lower = query.lower()
+        
+        # Перевірка на здоров'я/медицину
+        if any(word in query_lower for word in DisclaimerManager.HEALTH_KEYWORDS):
+            response += "\n\n⚠️ **Важливо:** Це освітня інформація, не медична порада. При болях, травмах чи будь-яких проблемах зі здоров'ям - обов'язково до лікаря!"
+        
+        # Перевірка на юридичні питання
+        elif any(word in query_lower for word in DisclaimerManager.LEGAL_KEYWORDS):
+            response += "\n\n⚠️ **Важливо:** Юридичні питання індивідуальні. Для офіційних консультацій зверніться до спортивного юриста."
+        
+        # Перевірка на фінансові питання
+        elif any(word in query_lower for word in DisclaimerManager.FINANCIAL_KEYWORDS):
+            response += "\n\n⚠️ **Важливо:** Фінансові рішення індивідуальні. Консультуйтесь з фінансовим радником."
         
         return response
 

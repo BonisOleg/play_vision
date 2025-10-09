@@ -61,10 +61,17 @@ class AIAskAPIView(View):
             ai_service = AIAgentService()
             session_id = request.session.session_key or request.session.create()
             
+            # Трекінг кількості запитів в сесії
+            from django.core.cache import cache
+            cache_key = f"ai_queries_{session_id}"
+            queries_count = cache.get(cache_key, 0) + 1
+            cache.set(cache_key, queries_count, timeout=3600)  # 1 година
+            
             result = ai_service.process_query(
                 query=query,
                 user=request.user if request.user.is_authenticated else None,
-                session_id=session_id
+                session_id=session_id,
+                queries_count=queries_count
             )
             
             return JsonResponse(result)
