@@ -879,19 +879,11 @@
 /* MOBILE RESPONSIVE */
 /* ========================================== */
 
-@media (max-width: 480px) {
-    .ai-fab {
-        width: 56px;
-        height: 56px;
-    }
+@media (max-width: 768px) {
 
-    .ai-fab-icon {
-        width: 24px;
-        height: 24px;
-    }
-
+    /* Підняти AI FAB над нижньою навігацією */
     .ai-fab-container {
-        bottom: 16px;
+        bottom: 80px;
         right: 16px;
     }
 
@@ -901,6 +893,18 @@
         left: 16px;
         width: auto;
         max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-fab {
+        width: 56px;
+        height: 56px;
+    }
+
+    .ai-fab-icon {
+        width: 24px;
+        height: 24px;
     }
 
     .ai-fab-tooltip {

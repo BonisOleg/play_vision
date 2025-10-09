@@ -5,7 +5,7 @@
 
 class CartHeader {
     constructor() {
-        this.cartCounter = document.querySelector('[data-cart-count]');
+        this.cartCounters = document.querySelectorAll('[data-cart-count]');
         this.cartIcon = document.querySelector('.cart-icon');
         this.init();
     }
@@ -34,27 +34,28 @@ class CartHeader {
     }
 
     updateCounter(count) {
-        if (this.cartCounter) {
-            this.cartCounter.textContent = count || 0;
-            this.cartCounter.setAttribute('data-cart-count', count || 0);
+        // Оновити всі бейджі кошика (header + mobile bottom nav)
+        this.cartCounters.forEach(counter => {
+            counter.textContent = count || 0;
+            counter.setAttribute('data-cart-count', count || 0);
 
             // Анімація при зміні
             if (count > 0) {
-                this.cartCounter.style.display = 'inline';
-                this.animateCounter();
+                counter.style.display = 'inline';
+                this.animateCounterElement(counter);
             } else {
-                this.cartCounter.style.display = 'none';
+                counter.style.display = 'none';
             }
-        }
+        });
     }
 
-    animateCounter() {
-        if (this.cartCounter && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            this.cartCounter.style.transform = 'scale(1.3)';
-            this.cartCounter.style.transition = 'transform 0.2s ease';
+    animateCounterElement(counter) {
+        if (counter && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            counter.style.transform = 'scale(1.3)';
+            counter.style.transition = 'transform 0.2s ease';
 
             setTimeout(() => {
-                this.cartCounter.style.transform = 'scale(1)';
+                counter.style.transform = 'scale(1)';
             }, 200);
         }
     }

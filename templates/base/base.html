@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="{% static 'css/utilities.css' %}">
     <link rel="stylesheet" href="{% static 'css/animations.css' %}">
     <link rel="stylesheet" href="{% static 'css/accessibility.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/mobile-bottom-nav.css' %}">
     {% block extra_css %}{% endblock %}
 
     <!-- HTMX -->
@@ -77,7 +78,7 @@
     <a href="#main-content" class="skip-link">Перейти до основного контенту</a>
 
     <!-- Header -->
-    <header class="header" x-data="{ mobileMenuOpen: false }">
+    <header class="header">
         <div class="container">
             <nav class="navbar">
                 <!-- Logo -->
@@ -160,35 +161,8 @@
                     <a href="{% url 'accounts:login' %}" class="navbar-link">Вхід</a>
                     <a href="{% url 'accounts:register' %}" class="btn btn-outline">Реєстрація</a>
                     {% endif %}
-
-                    <!-- Mobile Menu Toggle -->
-                    <button class="mobile-menu-toggle" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Меню">
-                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <line x1="3" y1="6" x2="21" y2="6" />
-                            <line x1="3" y1="12" x2="21" y2="12" />
-                            <line x1="3" y1="18" x2="21" y2="18" />
-                        </svg>
-                    </button>
                 </div>
             </nav>
-
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" x-show="mobileMenuOpen" x-transition>
-                <a href="{% url 'core:home' %}" class="mobile-menu-link">Головна</a>
-                <a href="{% url 'core:about' %}" class="mobile-menu-link">Про Play Vision</a>
-                <a href="{% url 'content:course_list' %}" class="mobile-menu-link">Хаб знань</a>
-                <a href="{% url 'events:event_list' %}" class="mobile-menu-link">Івенти</a>
-                <a href="{% url 'core:coming_soon' %}?page=mentoring" class="mobile-menu-link">Ментор-коучінг</a>
-                <a href="{% url 'core:coming_soon' %}?page=subscription" class="mobile-menu-link">Підписка</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'cabinet:dashboard' %}" class="mobile-menu-link">Мій кабінет</a>
-                <a href="{% url 'accounts:logout' %}" class="mobile-menu-link">Вийти</a>
-                {% else %}
-                <a href="{% url 'accounts:login' %}" class="mobile-menu-link">Вхід</a>
-                <a href="{% url 'accounts:register' %}" class="mobile-menu-link">Реєстрація</a>
-                {% endif %}
-            </div>
         </div>
     </header>
 
@@ -330,6 +304,9 @@
     <!-- AI Global Scripts -->
     <link rel="stylesheet" href="{% static 'css/components/ai-chat.css' %}">
     <script src="{% static 'js/components/ai-global.js' %}"></script>
+
+    <!-- Mobile Bottom Navigation -->
+    {% include 'partials/mobile-bottom-nav.html' %}
 
     {% block extra_js %}{% endblock %}
 </body>
