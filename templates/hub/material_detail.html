@@ -29,7 +29,7 @@
                 <div class="progress-info">
                     <span class="progress-text">Прогрес курсу: {{ progress.progress_percentage|floatformat:0 }}%</span>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ progress.progress_percentage }}%"></div>
+                        <div class="progress-fill" data-progress="{{ progress.progress_percentage }}"></div>
                     </div>
                 </div>
                 {% endif %}
@@ -367,48 +367,62 @@
 
 {% block extra_js %}
 <script src="{% static 'js/material-detail.js' %}"></script>
+<script id="material-data" type="application/json">
+{
+    "id": {{ material.id }},
+    "courseSlug": "{{ material.course.slug }}",
+    "slug": "{{ material.slug }}",
+    "contentType": "{{ material.content_type }}",
+    "hasAccess": {% if has_access %}true{% else %}false{% endif %},
+    "isPreview": {% if material.is_preview and not has_access %}true{% else %}false{% endif %}
+}
+</script>
 <script>
-    // Initialize material with data
-    window.materialData = {
-        id: {{ material.id }},
-    courseSlug: '{{ material.course.slug }}',
-        slug: '{{ material.slug }}',
-            contentType: '{{ material.content_type }}',
-                hasAccess: {% if has_access %} true{% else %} false{% endif %},
-    isPreview: {% if material.is_preview and not has_access %} true{% else %} false{% endif %}
-};
+    // Initialize material with data from JSON
+    window.materialData = JSON.parse(document.getElementById('material-data').textContent);
+
+    // Set progress bar width from data attribute
+    document.addEventListener('DOMContentLoaded', function () {
+        const progressFill = document.querySelector('.progress-fill');
+        if (progressFill && progressFill.dataset.progress) {
+            progressFill.style.width = progressFill.dataset.progress + '%';
+        }
+    });
 
     // Mark material as completed
     function markAsCompleted() {
-        fetch('{% url "content:update_progress" pk=material.course.pk %}', {
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+        const updateUrl = '{% url "content:update_progress" pk=material.course.pk %}';
+
+        fetch(updateUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                'X-CSRFToken': csrfToken ? csrfToken.value : ''
             },
             body: JSON.stringify({
-                material_id: {{ material.id }},
-            action: 'complete'
+                material_id: window.materialData.id,
+                action: 'complete'
+            })
         })
-    })
-    .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.querySelector('.btn[onclick="markAsCompleted()"]').disabled = true;
-                document.querySelector('.btn[onclick="markAsCompleted()"]').textContent = '✓ Завершено';
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector('.btn[onclick="markAsCompleted()"]').disabled = true;
+                    document.querySelector('.btn[onclick="markAsCompleted()"]').textContent = '✓ Завершено';
 
-                // Update progress
-                if (data.progress_percentage) {
-                    document.getElementById('updatedProgress').textContent = data.progress_percentage + '%';
-                    document.querySelector('.progress-fill').style.width = data.progress_percentage + '%';
+                    // Update progress
+                    if (data.progress_percentage) {
+                        document.getElementById('updatedProgress').textContent = data.progress_percentage + '%';
+                        document.querySelector('.progress-fill').style.width = data.progress_percentage + '%';
+                    }
+
+                    // Show modal
+                    document.getElementById('progressModal').style.display = 'flex';
                 }
-
-                // Show modal
-                document.getElementById('progressModal').style.display = 'flex';
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
     function closeProgressModal() {
         document.getElementById('progressModal').style.display = 'none';

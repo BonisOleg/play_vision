@@ -84,8 +84,7 @@
                         <div class="interests-list">
                             {% for interest in interests %}
                             <label class="interest-item">
-                                <input type="checkbox" name="interests" value="{{ interest.id }}" {% if interest in
-                                    user.profile.interests.all %}checked{% endif %}>
+                                <input type="checkbox" name="interests" value="{{ interest.id }}" {% if interest in user.profile.interests.all %}checked{% endif %}>
                                 <span class="interest-label">
                                     <span class="interest-number">{{ forloop.counter }}.</span>
                                     {{ interest.name }}
