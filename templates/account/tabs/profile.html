@@ -77,42 +77,6 @@
             </div>
         </div>
 
-        <!-- Додаткова інформація профілю -->
-        {% if user_profile %}
-        <div class="profile-details-grid">
-            <div class="profile-detail-card">
-                <h4>Особиста інформація</h4>
-                <div class="detail-item">
-                    <label>Повне ім'я:</label>
-                    <span>{{ user_profile.full_name|default:"Не вказано" }}</span>
-                </div>
-                <div class="detail-item">
-                    <label>Дата народження:</label>
-                    <span>{{ user_profile.birth_date|date:"d.m.Y"|default:"Не вказано" }}</span>
-                </div>
-                <div class="detail-item">
-                    <label>Професія:</label>
-                    <span>{{ user_profile.profession|default:"Не вказано" }}</span>
-                </div>
-            </div>
-
-            <div class="profile-detail-card">
-                <h4>Налаштування</h4>
-                <div class="detail-item">
-                    <label>Дата реєстрації:</label>
-                    <span>{{ user.date_joined|date:"d.m.Y H:i" }}</span>
-                </div>
-                <div class="detail-item">
-                    <label>Останній вхід:</label>
-                    <span>{{ user.last_login|date:"d.m.Y H:i"|default:"Ніколи" }}</span>
-                </div>
-                <div class="detail-item">
-                    <label>Часовий пояс:</label>
-                    <span>Europe/Kiev</span>
-                </div>
-            </div>
-        </div>
-        {% endif %}
 
         <!-- Інтереси/теги -->
         {% if user_profile and user_profile.interests.all %}

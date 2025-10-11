@@ -51,6 +51,26 @@
     background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(255, 107, 53, 0.8) 100%);
 }
 
+/* Hero with border style */
+.hero-section.hero-bordered .section-overlay {
+    background: transparent;
+}
+
+.hero-section.hero-bordered .section-content {
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 3rem;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .hero-section.hero-bordered .section-content {
+        padding: 2rem;
+        border-width: 2px;
+    }
+}
+
 .section-content {
     position: relative;
     z-index: 1;
@@ -626,4 +646,121 @@
 
 .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
+}
+
+/* Mentor-Coaching Hexagons */
+.ecosystem-subtitle {
+    text-align: center;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+.hexagons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+}
+
+.hexagon {
+    position: relative;
+    width: 150px;
+    height: 173px;
+    margin: 0 auto;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hexagon:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.hexagon-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 1rem;
+    color: white;
+    text-align: center;
+}
+
+.hexagon-icon {
+    margin-bottom: 0.5rem;
+}
+
+.hexagon h4 {
+    font-size: 0.875rem;
+    margin: 0;
+    font-weight: 600;
+    color: white;
+}
+
+.hexagon-motivation {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+}
+
+.hexagon-intuition {
+    background: linear-gradient(135deg, #004e89 0%, #006bb3 100%);
+}
+
+.hexagon-society {
+    background: linear-gradient(135deg, #f77f00 0%, #ff9500 100%);
+}
+
+.hexagon-curiosity {
+    background: linear-gradient(135deg, #06d6a0 0%, #2de2b5 100%);
+}
+
+.hexagon-pragmatism {
+    background: linear-gradient(135deg, #8338ec 0%, #9d5eff 100%);
+}
+
+.hexagon-optimism {
+    background: linear-gradient(135deg, #ff006e 0%, #ff3385 100%);
+}
+
+@media (max-width: 768px) {
+    .hexagons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .hexagon {
+        width: 120px;
+        height: 138px;
+    }
+
+    .hexagon h4 {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hexagons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .hexagon {
+        width: 100px;
+        height: 115px;
+    }
+
+    .hexagon-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hexagon h4 {
+        font-size: 0.7rem;
+    }
 }

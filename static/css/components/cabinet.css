@@ -1133,7 +1133,7 @@
 .table-header,
 .table-row {
     display: grid;
-    grid-template-columns: 120px 1fr 100px 100px 80px;
+    grid-template-columns: 120px 1fr 100px 120px;
     gap: 20px;
     padding: 15px 20px;
     align-items: center;

@@ -271,10 +271,10 @@
 </section> -->
 {% endcomment %}
 
-    <!-- Educational Products -->
-    <section class="main-materials">
-        <div class="container">
-            <h2 class="section-title">Освітні продукти</h2>
+<!-- Educational Products -->
+<section class="main-materials">
+    <div class="container">
+        <h2 class="section-title">Освітні продукти</h2>
 
         <div class="materials-carousel" x-data="materialsCarousel()">
             <div class="carousel-wrapper">
@@ -368,7 +368,8 @@
                         return Object.values(this.activeFilters).some(value => value !== '');
                     },
                     clearAllFilters() {
-                        this.activeFilters = { category: '', difficulty: '', price: '', duration: '' }; window.location.href = '{% url "content:course_list" %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}'; } }"
+                        this.activeFilters = { category: '', difficulty: '', price: '', duration: '' }; window.location.href = '{% url "
+                content:course_list" %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}'; } }"
                 role="complementary" aria-label="Фільтри курсів">
                 <div class="filters-header">
                     <h3>Фільтрувати</h3>
@@ -385,7 +386,8 @@
                     </div>
                 </div>
 
-                    <div class="filters-content filters-scrollable" id="filters-content" :class="{'mobile-open': filtersOpen}">
+                <div class="filters-content filters-scrollable" id="filters-content"
+                    :class="{'mobile-open': filtersOpen}">
                     <form method="get" id="filterForm" @submit="filtersOpen = false">
                         {% if request.GET.q %}
                         <input type="hidden" name="q" value="{{ request.GET.q }}">
@@ -397,7 +399,8 @@
                             <div class="filter-options">
                                 {% for category in categories %}
                                 <label class="filter-option">
-                                    <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                    <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                        current_category|default:''==category.slug %}checked{% endif %}>
                                     <span>{{ category.name }}</span>
                                 </label>
                                 {% endfor %}
@@ -407,18 +410,15 @@
                         <!-- Тренерство з під-фільтрами -->
                         <div class="filter-group" x-data="{ expanded: false }">
                             <h4>
-                                <button type="button" 
-                                        class="filter-toggle"
-                                        @click="expanded = !expanded">
+                                <button type="button" class="filter-toggle" @click="expanded = !expanded">
                                     <span>Тренерство</span>
-                                    <svg class="toggle-icon" 
-                                         :class="{'rotated': expanded}"
-                                         width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M6 9l6 6 6-6"/>
+                                    <svg class="toggle-icon" :class="{'rotated': expanded}" width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M6 9l6 6 6-6" />
                                     </svg>
                                 </button>
                             </h4>
-                            
+
                             <div class="sub-filters" x-show="expanded" x-collapse>
                                 <label class="filter-option sub-option">
                                     <input type="checkbox" name="training_type" value="goalkeeper">
@@ -450,6 +450,22 @@
                                 <label class="filter-option">
                                     <input type="checkbox" name="interest" value="management">
                                     <span>Менеджмент</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="interest" value="psychology">
+                                    <span>Спортивна психологія</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="interest" value="nutrition">
+                                    <span>Нутриціологія</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="interest" value="player">
+                                    <span>Футболіст</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="interest" value="parent">
+                                    <span>Батько</span>
                                 </label>
                             </div>
                         </div>
@@ -499,19 +515,20 @@
                     <div class="sort-options">
                         <label for="sort">Сортувати за:</label>
                         <select name="sort" id="sort" class="sort-select">
-                            <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
+                            <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
+                                %}selected{% endif %}>
                                 Новіші спочатку
                             </option>
-                            <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
+                            <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
                                 назвою А-Я
                             </option>
-                            <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
+                            <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
                                 назвою Я-А
                             </option>
-                            <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
+                            <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
                                 За ціною (зростання)
                             </option>
-                            <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
+                            <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
                                 ціною (спадання)
                             </option>
                         </select>

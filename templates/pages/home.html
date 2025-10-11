@@ -13,7 +13,7 @@
 <div class="fullscreen-container">
 
     <!-- 1. HERO SECTION -->
-    <section class="fullscreen-section hero-section" x-data="heroCarousel()">
+    <section class="fullscreen-section hero-section hero-bordered" x-data="heroCarousel()">
         <!-- Background Video/Image -->
         <div class="section-bg">
             <video class="section-bg-video" muted loop preload="metadata">
@@ -163,29 +163,77 @@
             <h2 class="section-title">Ментор-коучинг</h2>
             <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
 
-            <div class="ecosystem-diagram">
-                <div class="ecosystem-center">
-                    <img src="{% static 'images/playvision-logo.svg' %}" alt="Play Vision" class="center-logo">
+            <div class="hexagons-grid">
+                <div class="hexagon hexagon-motivation">
+                    <div class="hexagon-inner">
+                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>
+                        <h4>Ментальність</h4>
+                    </div>
                 </div>
 
-                <div class="ecosystem-item ecosystem-item-1">
-                    <div class="item-icon">📅</div>
-                    <h4>Івенти</h4>
+                <div class="hexagon hexagon-intuition">
+                    <div class="hexagon-inner">
+                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path
+                                d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                        <h4>Життя та побут</h4>
+                    </div>
                 </div>
 
-                <div class="ecosystem-item ecosystem-item-2">
-                    <div class="item-icon">👨‍🏫</div>
-                    <h4>Ментор-коучинг</h4>
+                <div class="hexagon hexagon-society">
+                    <div class="hexagon-inner">
+                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
+                            <circle cx="12" cy="12" r="2" />
+                            <circle cx="6" cy="6" r="2" />
+                            <circle cx="18" cy="6" r="2" />
+                            <circle cx="6" cy="18" r="2" />
+                            <circle cx="18" cy="18" r="2" />
+                            <line x1="12" y1="12" x2="6" y2="6" stroke="white" stroke-width="2" />
+                            <line x1="12" y1="12" x2="18" y2="6" stroke="white" stroke-width="2" />
+                            <line x1="12" y1="12" x2="6" y2="18" stroke="white" stroke-width="2" />
+                            <line x1="12" y1="12" x2="18" y2="18" stroke="white" stroke-width="2" />
+                        </svg>
+                        <h4>Техніка</h4>
+                    </div>
                 </div>
 
-                <div class="ecosystem-item ecosystem-item-3">
-                    <div class="item-icon">📚</div>
-                    <h4>Хаб знань</h4>
+                <div class="hexagon hexagon-curiosity">
+                    <div class="hexagon-inner">
+                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <h4>Здоров'я та звички</h4>
+                    </div>
                 </div>
 
-                <div class="ecosystem-item ecosystem-item-4">
-                    <div class="item-icon">💡</div>
-                    <h4>Інновації і технології</h4>
+                <div class="hexagon hexagon-pragmatism">
+                    <div class="hexagon-inner">
+                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
+                            stroke-width="2">
+                            <path d="M12 10l3-3m-3 3l-3-3m3 3v8" />
+                            <circle cx="12" cy="18" r="3" />
+                        </svg>
+                        <h4>Ігровий інтелект</h4>
+                    </div>
+                </div>
+
+                <div class="hexagon hexagon-optimism">
+                    <div class="hexagon-inner">
+                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
+                            stroke-width="2">
+                            <path
+                                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+                        </svg>
+                        <h4>Фізика</h4>
+                    </div>
                 </div>
             </div>
 

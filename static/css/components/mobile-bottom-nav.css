@@ -80,15 +80,15 @@
     display: none;
 }
 
-/* ===== MOBILE RESPONSIVE ===== */
-@media (max-width: 768px) {
+/* ===== MOBILE & TABLET RESPONSIVE ===== */
+@media (max-width: 1024px) {
     .mobile-bottom-nav {
         display: flex;
     }
 }
 
-/* ===== TABLET (PORTRAIT) ===== */
-@media (min-width: 481px) and (max-width: 768px) {
+/* ===== TABLET (PORTRAIT & LANDSCAPE) ===== */
+@media (min-width: 481px) and (max-width: 1024px) {
     .mobile-bottom-nav .nav-item {
         min-height: 60px;
         gap: 6px;
@@ -101,17 +101,6 @@
 
     .mobile-bottom-nav .nav-label {
         font-size: 12px;
-    }
-}
-
-/* ===== TABLET LANDSCAPE - HIDE ===== */
-@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
-    .mobile-bottom-nav {
-        display: none;
-    }
-
-    .main {
-        padding-bottom: 0;
     }
 }
 

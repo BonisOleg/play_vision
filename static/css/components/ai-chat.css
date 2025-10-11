@@ -876,12 +876,12 @@
 }
 
 /* ========================================== */
-/* MOBILE RESPONSIVE */
+/* MOBILE & TABLET RESPONSIVE */
 /* ========================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
-    /* Сховати AI FAB на мобільних (він тепер в header) */
+    /* Сховати AI FAB на мобільних і планшетах (він тепер в header) */
     .ai-fab-container {
         display: none;
     }
@@ -904,13 +904,6 @@
 
     .ai-fab-tooltip {
         display: none;
-    }
-}
-
-/* TABLET */
-@media (min-width: 481px) and (max-width: 768px) {
-    .ai-mini-chat {
-        width: 360px;
     }
 }
 

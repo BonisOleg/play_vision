@@ -823,6 +823,36 @@
     padding: 1.5rem;
 }
 
+/* Horizontal scroll for filters */
+.filters-scrollable {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+}
+
+.filters-scrollable::-webkit-scrollbar {
+    height: 8px;
+}
+
+.filters-scrollable::-webkit-scrollbar-track {
+    background: var(--color-bg-gray);
+    border-radius: 4px;
+}
+
+.filters-scrollable::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 4px;
+}
+
+.filters-scrollable .filter-group {
+    flex: 0 0 auto;
+    min-width: 220px;
+}
+
 .filter-group {
     margin-bottom: 2rem;
 }

@@ -501,12 +501,12 @@ a:hover {
     color: var(--color-text-light);
 }
 
-/* Показувати тільки на мобільних */
+/* Показувати тільки на мобільних і планшетах */
 .navbar-ai-mobile {
     display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
     /* Приховати десктопну навігацію */
     .navbar-menu {
@@ -518,12 +518,12 @@ a:hover {
         display: flex;
     }
 
-    /* Показати AI помічника на мобільних */
+    /* Показати AI помічника на мобільних і планшетах */
     .navbar-ai-mobile {
         display: flex;
     }
 
-    /* Сховати десктопні елементи на мобільних */
+    /* Сховати десктопні елементи на мобільних і планшетах */
     .navbar-desktop-only {
         display: none;
     }
@@ -634,7 +634,7 @@ a:hover {
     grid-template-columns: repeat(4, 1fr);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
 
     .grid-cols-2,
     .grid-cols-3,
@@ -643,10 +643,14 @@ a:hover {
     }
 }
 
-@media (min-width: 768px) and (max-width: 992px) {
+@media (min-width: 481px) and (max-width: 1024px) {
 
     .grid-cols-3,
     .grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-cols-2 {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -727,4 +731,16 @@ a:hover {
     background: var(--color-primary);
     color: white;
     text-decoration: none;
+}
+
+/* Mobile adaptations */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 0.875rem;
+    }
+
+    .navbar-brand span {
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
 }
