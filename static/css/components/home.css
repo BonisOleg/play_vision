@@ -648,37 +648,56 @@
     animation: fadeInUp 0.6s ease-out;
 }
 
-/* Mentor-Coaching Hexagons */
+/* Mentor-Coaching Hexagons - Honeycomb Pattern */
 .ecosystem-subtitle {
     text-align: center;
     font-size: 1.5rem;
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     font-weight: 400;
 }
 
 .hexagons-grid {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    max-width: 900px;
+    grid-template-columns: repeat(3, 180px);
+    grid-auto-rows: 104px;
+    gap: 1rem 1.5rem;
+    justify-content: center;
+    max-width: 700px;
     margin: 3rem auto;
-    padding: 2rem;
 }
 
 .hexagon {
     position: relative;
-    width: 150px;
-    height: 173px;
-    margin: 0 auto;
+    width: 180px;
+    height: 208px;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hexagon:nth-child(2),
+.hexagon:nth-child(5) {
+    grid-column-start: 2;
+}
+
+.hexagon:nth-child(3),
+.hexagon:nth-child(6) {
+    grid-column-start: 3;
+}
+
+.hexagon:nth-child(4),
+.hexagon:nth-child(5),
+.hexagon:nth-child(6) {
+    margin-top: -104px;
 }
 
 .hexagon:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2);
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .hexagon-inner {
@@ -687,20 +706,24 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: 1rem;
+    padding: 1.5rem;
     color: white;
     text-align: center;
+    gap: 0.75rem;
 }
 
 .hexagon-icon {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .hexagon h4 {
-    font-size: 0.875rem;
+    font-size: 1rem;
     margin: 0;
-    font-weight: 600;
+    font-weight: 700;
     color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.3;
 }
 
 .hexagon-motivation {
@@ -727,11 +750,75 @@
     background: linear-gradient(135deg, #ff006e 0%, #ff3385 100%);
 }
 
+@media (max-width: 992px) {
+    .hexagons-grid {
+        grid-template-columns: repeat(3, 160px);
+        grid-auto-rows: 92px;
+        gap: 0.75rem 1rem;
+    }
+
+    .hexagon {
+        width: 160px;
+        height: 184px;
+    }
+
+    .hexagon:nth-child(4),
+    .hexagon:nth-child(5),
+    .hexagon:nth-child(6) {
+        margin-top: -92px;
+    }
+
+    .hexagon h4 {
+        font-size: 0.9rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hexagons-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
+        grid-template-columns: repeat(2, 140px);
+        grid-auto-rows: 80px;
+        gap: 0.5rem;
+    }
+
+    .hexagon {
+        width: 140px;
+        height: 161px;
+    }
+
+    .hexagon:nth-child(2),
+    .hexagon:nth-child(3),
+    .hexagon:nth-child(5),
+    .hexagon:nth-child(6) {
+        grid-column-start: auto;
+    }
+
+    .hexagon:nth-child(3),
+    .hexagon:nth-child(4),
+    .hexagon:nth-child(5),
+    .hexagon:nth-child(6) {
+        margin-top: -80px;
+    }
+
+    .hexagon-inner {
         padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    .hexagon-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .hexagon h4 {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hexagons-grid {
+        grid-template-columns: repeat(2, 120px);
+        grid-auto-rows: 69px;
+        gap: 0.5rem;
     }
 
     .hexagon {
@@ -739,25 +826,20 @@
         height: 138px;
     }
 
-    .hexagon h4 {
-        font-size: 0.75rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hexagons-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+    .hexagon:nth-child(3),
+    .hexagon:nth-child(4),
+    .hexagon:nth-child(5),
+    .hexagon:nth-child(6) {
+        margin-top: -69px;
     }
 
-    .hexagon {
-        width: 100px;
-        height: 115px;
+    .hexagon-inner {
+        padding: 0.75rem;
     }
 
     .hexagon-icon {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
 
     .hexagon h4 {

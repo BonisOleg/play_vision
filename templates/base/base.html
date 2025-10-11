@@ -256,8 +256,6 @@
     <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
     <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
-    <!-- PWA Functionality -->
-    <script src="{% static 'js/pwa.js' %}"></script>
 
     <!-- Cart functionality for all pages -->
     {% if user.is_authenticated %}
@@ -267,58 +265,6 @@
     <!-- Scroll Popup -->
     <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
     <script src="{% static 'js/scroll-popup.js' %}"></script>
-
-    <!-- AI Assistant Global Widget -->
-    <div class="ai-fab-container">
-        <button class="ai-fab" id="ai-fab-btn" aria-label="AI Помічник">
-            <svg class="ai-fab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M12 1v6m0 6v6" />
-                <path d="m21 12-6-3-6 3-6-3" />
-                <path d="m21 12-6 3-6-3-6 3" />
-            </svg>
-            <span class="ai-fab-text">AI</span>
-        </button>
-        <div class="ai-fab-tooltip">Запитати AI помічника</div>
-    </div>
-
-    <!-- AI Chat Mini Widget -->
-    <div class="ai-mini-chat" id="ai-mini-chat">
-        <div class="ai-mini-chat-header">
-            <span class="ai-mini-chat-title">AI Помічник Play Vision</span>
-            <button class="ai-mini-chat-close" id="ai-mini-chat-close" aria-label="Закрити">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-            </button>
-        </div>
-        <div class="ai-mini-chat-body">
-            <div class="ai-mini-chat-messages" id="ai-mini-chat-messages">
-                <div class="ai-mini-message ai-mini-message--bot">
-                    Привіт! Я AI помічник Play Vision. Чим можу допомогти?
-                </div>
-            </div>
-            <div class="ai-mini-chat-input">
-                <input type="text" class="ai-mini-input" id="ai-mini-input" placeholder="Введіть запитання..."
-                    maxlength="300">
-                <button class="ai-mini-send" id="ai-mini-send" aria-label="Надіслати">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="22" y1="2" x2="11" y2="13" />
-                        <polygon points="22,2 15,22 11,13 2,9" />
-                    </svg>
-                </button>
-            </div>
-            <div class="ai-mini-chat-footer">
-                <a href="{% url 'ai:chat' %}" class="ai-mini-full-link">Відкрити повний чат →</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- AI Global Scripts -->
-    <link rel="stylesheet" href="{% static 'css/components/ai-chat.css' %}">
-    <script src="{% static 'js/components/ai-global.js' %}"></script>
 
     <!-- Mobile Bottom Navigation -->
     {% include 'partials/mobile-bottom-nav.html' %}

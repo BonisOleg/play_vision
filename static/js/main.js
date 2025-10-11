@@ -58,34 +58,12 @@ function initializePWA() {
             .catch(error => console.error('Service Worker registration failed:', error));
     }
 
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-
-        const installButton = document.getElementById('pwa-install-button');
-        if (installButton) {
-            installButton.style.display = 'block';
-            installButton.addEventListener('click', () => {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted PWA install');
-                    }
-                    deferredPrompt = null;
-                });
-            });
-        }
-    });
-
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-
-    if (isIOS && !isStandalone) {
-        setTimeout(() => {
-            showIOSInstallPrompt();
-        }, 5000);
-    }
+    // PWA Install - DISABLED per client request
+    // let deferredPrompt;
+    // window.addEventListener('beforeinstallprompt', (e) => {
+    //     e.preventDefault();
+    //     deferredPrompt = e;
+    // });
 }
 
 function initializeCart() {
@@ -173,27 +151,14 @@ function createMessagesContainer() {
     return container;
 }
 
-function showIOSInstallPrompt() {
-    const existingPrompt = document.getElementById('ios-install-prompt');
-    if (existingPrompt) return;
-
-    const prompt = document.createElement('div');
-    prompt.id = 'ios-install-prompt';
-    prompt.className = 'ios-install-prompt';
-    prompt.innerHTML = `
-        <div class="ios-install-content">
-            <h3>Встановіть Play Vision</h3>
-            <p>Додайте додаток на домашній екран для кращого досвіду:</p>
-            <ol>
-                <li>Натисніть кнопку "Поділитись" <span class="ios-share-icon">⬆</span></li>
-                <li>Виберіть "На екран Домівка"</li>
-            </ol>
-            <button onclick="this.parentElement.parentElement.remove()" class="btn btn-outline">Закрити</button>
-        </div>
-    `;
-
-    document.body.appendChild(prompt);
-}
+// PWA Install Prompt - DISABLED per client request
+// function showIOSInstallPrompt() {
+//     const existingPrompt = document.getElementById('ios-install-prompt');
+//     if (existingPrompt) return;
+//     const prompt = document.createElement('div');
+//     prompt.id = 'ios-install-prompt';
+//     document.body.appendChild(prompt);
+// }
 
 function getCookie(name) {
     let cookieValue = null;
