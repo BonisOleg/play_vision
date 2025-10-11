@@ -1,6 +1,14 @@
 /**
  * ACCESSIBILITY - Доступність
- * Focus management, skip links, high contrast, screen readers
+ * Focus management, skip links, high contrast, screen readers,
+ * reduced motion support, touch device improvements, iOS fixes
+ * 
+ * WCAG 2.1 AA Compliance:
+ * - Focus indicators
+ * - Touch target sizes (44x44px minimum)
+ * - Color contrast ratios
+ * - Motion reduction
+ * - Screen reader support
  */
 
 /* === FOCUS STYLES === */
@@ -47,7 +55,8 @@ select:focus-visible {
 }
 
 /* === SCREEN READER ONLY === */
-.sr-only {
+.sr-only,
+.visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -59,26 +68,60 @@ select:focus-visible {
     border: 0;
 }
 
+/* Show on focus (for skip links) */
+.sr-only-focusable:focus,
+.visually-hidden-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
 /* === HIGH CONTRAST MODE === */
 @media (prefers-contrast: high) {
-    .btn {
-        border: 2px solid currentColor;
-    }
 
-    .card {
-        border: 2px solid var(--color-border);
+    /* Stronger borders for better visibility */
+    .btn,
+    .card,
+    .event-card,
+    .course-card,
+    .notification {
+        border: 2px solid currentColor !important;
     }
 
     .badge {
         border: 1px solid currentColor;
     }
 
-    .notification {
-        border: 2px solid currentColor;
-    }
-
+    /* Underline all links */
     a {
         text-decoration: underline;
+    }
+
+    /* Increase contrast for form elements */
+    input,
+    textarea,
+    select {
+        border: 2px solid currentColor;
+        background: var(--color-bg);
+    }
+
+    /* Better focus indicators */
+    *:focus-visible {
+        outline: 3px solid currentColor !important;
+        outline-offset: 3px !important;
+    }
+
+    /* Stronger text shadows for better readability */
+    .hero-title,
+    h1,
+    h2,
+    h3 {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
 }
 
@@ -88,41 +131,109 @@ select:focus-visible {
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms;
-        animation-iteration-count: 1;
-        transition-duration: 0.01ms;
-        scroll-behavior: auto;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 
-    /* Зберегти opacity transitions для feedback */
+    /* Remove all transforms and complex animations */
+    .animate-fade-in,
+    .animate-fade-out,
+    .animate-slide-in-right,
+    .animate-slide-out-right,
+    .animate-spin,
+    .animate-pulse,
+    .animate-fade-in-up,
+    .animate-typing {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    /* Disable parallax scrolling */
+    .parallax {
+        transform: none !important;
+    }
+
+    /* Instant card animations */
+    .card,
+    .event-card,
+    .course-card {
+        transition: none !important;
+        transform: none !important;
+    }
+
+    /* Disable smooth scrolling */
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    /* Keep minimal opacity transitions for better UX */
     button,
     a,
-    input {
-        transition-property: opacity;
-        transition-duration: 0.15s;
+    input,
+    .btn {
+        transition-property: opacity !important;
+        transition-duration: 0.15s !important;
+    }
+
+    /* Disable loading animations */
+    .spinner,
+    .loading-animation,
+    .skeleton-loading {
+        animation: none !important;
+    }
+
+    /* Disable video autoplay */
+    video[autoplay] {
+        animation-play-state: paused !important;
     }
 }
 
 /* === TOUCH DEVICE IMPROVEMENTS === */
 @media (hover: none) and (pointer: coarse) {
 
-    /* Збільшені touch targets */
-    .btn {
+    /* Збільшені touch targets згідно WCAG 2.5.5 */
+    .btn,
+    button,
+    a.btn {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 16px;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
         min-height: 44px;
         min-width: 44px;
     }
 
-    button,
-    a,
-    input[type="checkbox"],
-    input[type="radio"] {
+    /* Better spacing for touch */
+    .nav-links a,
+    .mobile-nav a {
+        padding: 12px 16px;
         min-height: 44px;
     }
 
     /* Видалити hover effects на touch devices */
     .card:hover,
-    .btn:hover {
+    .btn:hover,
+    .event-card:hover,
+    .course-card:hover {
         transform: none;
+    }
+
+    /* Add active states for better feedback */
+    .btn:active,
+    button:active {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
+
+    /* Better scroll handling */
+    .scroll-container {
+        scroll-snap-type: x mandatory;
+        scroll-snap-align: start;
     }
 }
 
@@ -130,11 +241,13 @@ select:focus-visible {
 @supports (-webkit-touch-callout: none) {
 
     /* Fix for iOS viewport units */
-    .fullscreen-section {
+    .fullscreen-section,
+    .hero-section,
+    .vh-100 {
         min-height: -webkit-fill-available;
     }
 
-    /* Fix for iOS input zoom */
+    /* Fix for iOS input zoom - prevent zoom on focus */
     input,
     textarea,
     select {
@@ -151,5 +264,24 @@ select:focus-visible {
     a,
     .btn {
         -webkit-tap-highlight-color: rgba(255, 107, 53, 0.2);
+    }
+
+    /* Fix for iOS safe area */
+    .mobile-bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* Fix iOS rubber band scrolling */
+    body {
+        position: fixed;
+        width: 100%;
+        overscroll-behavior-y: none;
+    }
+
+    /* But allow scrolling in main container */
+    .main-content {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: 100vh;
     }
 }

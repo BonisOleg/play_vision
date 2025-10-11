@@ -595,17 +595,7 @@
     line-height: 1;
 }
 
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
+/* slideInRight animation moved to animations.css */
 
 /* LOADING СТАНИ */
 .cart-item-loading {
@@ -623,15 +613,7 @@
     margin: 0 auto;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
+/* spin animation moved to animations.css */
 
 /* ДОСТУПНІСТЬ */
 .cart-item-remove:focus,

@@ -1,6 +1,7 @@
 /**
  * ANIMATIONS - Всі @keyframes анімації
  * Консолідовано з різних component файлів для уникнення дублікатів
+ * Оновлено: використання CSS custom properties для duration
  */
 
 /* === FADE ANIMATIONS === */
@@ -146,25 +147,61 @@
     }
 }
 
+/* === ADDITIONAL ANIMATIONS === */
+@keyframes typing {
+
+    0%,
+    60%,
+    100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
+}
+
 /* === HELPER CLASSES === */
 .animate-fade-in {
-    animation: fadeIn var(--transition-base, 0.3s ease);
+    animation: fadeIn var(--transition-base, 0.3s) ease;
+    will-change: opacity;
 }
 
 .animate-fade-out {
-    animation: fadeOut var(--transition-base, 0.3s ease);
+    animation: fadeOut var(--transition-base, 0.3s) ease;
+    will-change: opacity;
 }
 
 .animate-slide-in-right {
-    animation: slideInRight var(--transition-base, 0.3s ease);
+    animation: slideInRight var(--transition-base, 0.3s) ease;
+    will-change: transform, opacity;
 }
 
 .animate-slide-out-right {
-    animation: slideOutRight var(--transition-base, 0.3s ease);
+    animation: slideOutRight var(--transition-base, 0.3s) ease;
+    will-change: transform, opacity;
 }
 
 .animate-spin {
     animation: spin 1s linear infinite;
+    will-change: transform;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp var(--transition-base, 0.3s) ease;
+    will-change: transform, opacity;
+}
+
+.animate-typing {
+    animation: typing 1.4s infinite ease-in-out;
+    will-change: transform, opacity;
 }
 
 /* === REDUCED MOTION SUPPORT === */

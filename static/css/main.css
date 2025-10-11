@@ -1,66 +1,10 @@
+/* Design tokens are imported from design-tokens.css */
+/* Legacy support - these will be gradually removed */
 :root {
-    --color-primary: #ff6b35;
-    --color-primary-dark: #e55a2b;
-    --color-secondary: #1a1a1a;
-    --color-text: #333;
-    --color-text-light: #666;
-    --color-bg: #ffffff;
-    --color-bg-gray: #f5f5f5;
-    --color-border: #e0e0e0;
-    --color-success: #4caf50;
-    --color-error: #f44336;
-    --color-warning: #ff9800;
-    --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-size-base: 16px;
-    --line-height-base: 1.6;
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-xxl: 3rem;
-
-    /* === НОВІ UTILITIES (2025-10-09) === */
-    /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
-
-    /* Transitions */
-    --transition-fast: 0.15s ease;
-    --transition-base: 0.3s ease;
-    --transition-slow: 0.5s ease;
-
-    /* Border radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-full: 9999px;
-
-    /* Z-index scale */
-    --z-base: 1;
-    --z-sticky: 100;
-    --z-dropdown: 200;
-    --z-fab: 999;
-    --z-modal: 1000;
-    --z-toast: 1100;
-
-    /* Layout */
-    --layout-nav-height: 80px;
-    --layout-sidebar-width: 280px;
-    --layout-container-max: 1200px;
+    /* All tokens now in design-tokens.css */
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-bg: #1a1a1a;
-        --color-bg-gray: #2a2a2a;
-        --color-text: #f0f0f0;
-        --color-text-light: #aaa;
-        --color-border: #444;
-    }
-}
+/* Dark mode handled in design-tokens.css */
 
 *,
 *::before,

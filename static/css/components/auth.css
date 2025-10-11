@@ -1,26 +1,18 @@
 /* Auth Styles */
 
+/* Auth specific colors - using global tokens where possible */
 :root {
     --auth-primary: #E31E24;
-    --auth-secondary: #1A1A1A;
-    --auth-background: #F5F5F5;
-    --auth-card-bg: #FFFFFF;
-    --auth-border: #E0E0E0;
-    --auth-text: #333333;
-    --auth-text-light: #666666;
-    --auth-error: #F44336;
-    --auth-success: #4CAF50;
-    --auth-focus: #2196F3;
+    /* Keep specific brand color for auth */
     --auth-google: #4285F4;
     --auth-telegram: #0088CC;
     --auth-tiktok: #000000;
-    --auth-shadow: rgba(0, 0, 0, 0.1);
 }
 
 /* Container */
 .auth-container {
     min-height: 100vh;
-    background: var(--auth-background);
+    background: var(--color-bg-gray);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,26 +21,16 @@
 
 /* Card */
 .auth-card {
-    background: var(--auth-card-bg);
+    background: var(--color-bg);
     border-radius: 20px;
-    box-shadow: 0 4px 20px var(--auth-shadow);
+    box-shadow: var(--shadow-md);
     width: 100%;
     max-width: 480px;
     padding: 40px;
     animation: fadeInUp 0.5s ease;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* fadeInUp animation moved to animations.css */
 
 /* Header */
 .auth-header {
@@ -59,21 +41,21 @@
 .auth-title {
     font-size: 32px;
     font-weight: 700;
-    color: var(--auth-secondary);
+    color: var(--color-secondary);
     margin-bottom: 12px;
     line-height: 1.2;
 }
 
 .auth-subtitle {
     font-size: 18px;
-    color: var(--auth-text-light);
+    color: var(--color-text-light);
     line-height: 1.5;
 }
 
 /* Tabs */
 .auth-tabs {
     display: flex;
-    background: var(--auth-background);
+    background: var(--color-bg-gray);
     border-radius: 12px;
     padding: 4px;
     margin-bottom: 30px;
@@ -86,16 +68,16 @@
     background: transparent;
     font-size: 16px;
     font-weight: 600;
-    color: var(--auth-text-light);
+    color: var(--color-text-light);
     cursor: pointer;
     border-radius: 8px;
     transition: all 0.3s ease;
 }
 
 .auth-tab--active {
-    background: var(--auth-card-bg);
+    background: var(--color-bg);
     color: var(--auth-primary);
-    box-shadow: 0 2px 8px var(--auth-shadow);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Form */
@@ -114,47 +96,47 @@
 .form-input {
     width: 100%;
     padding: 16px 20px;
-    border: 2px solid var(--auth-border);
+    border: 2px solid var(--color-border);
     border-radius: 12px;
     font-size: 16px;
-    background: var(--auth-background);
+    background: var(--color-bg-gray);
     transition: all 0.3s ease;
-    color: var(--auth-text);
+    color: var(--color-text);
 }
 
 .form-input:focus {
     outline: none;
-    border-color: var(--auth-focus);
-    background: var(--auth-card-bg);
+    border-color: var(--color-info);
+    background: var(--color-bg);
 }
 
 .form-input::placeholder {
-    color: var(--auth-text-light);
+    color: var(--color-text-light);
 }
 
 /* Phone Input */
 .phone-input-wrapper {
     display: flex;
     align-items: center;
-    background: var(--auth-background);
-    border: 2px solid var(--auth-border);
+    background: var(--color-bg-gray);
+    border: 2px solid var(--color-border);
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
 }
 
 .phone-input-wrapper:focus-within {
-    border-color: var(--auth-focus);
-    background: var(--auth-card-bg);
+    border-color: var(--color-info);
+    background: var(--color-bg);
 }
 
 .phone-prefix {
     padding: 16px 12px 16px 20px;
     font-size: 16px;
     font-weight: 600;
-    color: var(--auth-text);
+    color: var(--color-text);
     background: transparent;
-    border-right: 1px solid var(--auth-border);
+    border-right: 1px solid var(--color-border);
 }
 
 .form-input--phone {
@@ -174,7 +156,7 @@
     align-items: flex-start;
     cursor: pointer;
     font-size: 14px;
-    color: var(--auth-text);
+    color: var(--color-text);
     line-height: 1.5;
 }
 
@@ -248,8 +230,8 @@
 .auth-divider span {
     position: relative;
     padding: 0 20px;
-    background: var(--auth-card-bg);
-    color: var(--auth-text-light);
+    background: var(--color-bg);
+    color: var(--color-text-light);
     font-size: 14px;
 }
 
@@ -265,8 +247,8 @@
     width: 80px;
     height: 80px;
     border-radius: 20px;
-    border: 2px solid var(--auth-border);
-    background: var(--auth-card-bg);
+    border: 2px solid var(--color-border);
+    background: var(--color-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -310,12 +292,12 @@
 
 .auth-footer-text {
     font-size: 16px;
-    color: var(--auth-text);
+    color: var(--color-text);
     margin-bottom: 16px;
 }
 
 .auth-link {
-    color: var(--auth-text-light);
+    color: var(--color-text-light);
     text-decoration: none;
     font-size: 14px;
     transition: color 0.3s ease;
@@ -346,7 +328,7 @@
     margin-bottom: 12px;
     font-size: 15px;
     animation: slideInRight 0.3s ease;
-    box-shadow: 0 2px 8px var(--auth-shadow);
+    box-shadow: var(--shadow-sm);
 }
 
 @keyframes slideInRight {
@@ -362,28 +344,28 @@
 }
 
 .message--error {
-    background: var(--auth-error);
+    background: var(--color-error);
     color: white;
 }
 
 .message--success {
-    background: var(--auth-success);
+    background: var(--color-success);
     color: white;
 }
 
 .message--info {
-    background: var(--auth-focus);
+    background: var(--color-info);
     color: white;
 }
 
 /* Form Validation */
 .form-input.error {
-    border-color: var(--auth-error);
+    border-color: var(--color-error);
 }
 
 .form-error {
     font-size: 14px;
-    color: var(--auth-error);
+    color: var(--color-error);
     margin-top: 8px;
 }
 
@@ -409,11 +391,7 @@
     animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
+/* spin animation moved to animations.css */
 
 /* Mobile Responsive */
 @media (max-width: 576px) {
@@ -481,7 +459,8 @@
         --auth-border: #3A3A3A;
         --auth-text: #E0E0E0;
         --auth-text-light: #B0B0B0;
-        --auth-shadow: rgba(0, 0, 0, 0.5);
+        /* shadow handled by global tokens */
+        ;
     }
 
     .form-input {

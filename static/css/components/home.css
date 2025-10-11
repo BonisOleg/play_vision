@@ -32,23 +32,23 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: rgba(0, 0, 0, 0.4);
+    background: var(--shadow-alpha-40);
 }
 
 .section-overlay--light {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--white-alpha-90);
 }
 
 .section-overlay--dark {
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--shadow-alpha-60);
 }
 
 .section-overlay--primary {
-    background: rgba(255, 107, 53, 0.8);
+    background: var(--color-primary-alpha-80);
 }
 
 .section-overlay--gradient {
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(255, 107, 53, 0.8) 100%);
+    background: linear-gradient(135deg, var(--color-secondary-alpha-80) 0%, var(--color-primary-alpha-80) 100%);
 }
 
 /* Hero with border style */
@@ -57,11 +57,11 @@
 }
 
 .hero-section.hero-bordered .section-content {
-    border: 3px solid rgba(255, 255, 255, 0.9);
+    border: 3px solid var(--white-alpha-90);
     border-radius: 12px;
     padding: 3rem;
     backdrop-filter: blur(8px);
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--shadow-alpha-30);
 }
 
 @media (max-width: 768px) {
@@ -106,7 +106,7 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 4px 8px var(--shadow-alpha-80), 0 2px 4px var(--shadow-alpha-60);
 }
 
 .hero-subtitle {
@@ -116,7 +116,7 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 2px 4px var(--shadow-alpha-70);
 }
 
 .hero-buttons {
@@ -172,7 +172,7 @@
     background: white;
     border-radius: 16px;
     padding: var(--spacing-xxl);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px var(--shadow-alpha-10);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid var(--color-border);
     will-change: transform;
@@ -180,7 +180,7 @@
 
 .direction-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 16px 48px var(--shadow-alpha-15);
 }
 
 .direction-icon {
@@ -200,7 +200,7 @@
     font-weight: 600;
     margin-bottom: var(--spacing-md);
     color: var(--color-text);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px var(--shadow-alpha-30);
 }
 
 .direction-description {
@@ -241,14 +241,14 @@
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px var(--shadow-alpha-10);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform;
 }
 
 .course-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px var(--shadow-alpha-15);
 }
 
 .course-image {
@@ -274,7 +274,7 @@
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
     color: var(--color-text);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px var(--shadow-alpha-30);
 }
 
 .course-description {
@@ -309,7 +309,7 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px var(--shadow-alpha-30);
 }
 
 .experts-grid {
@@ -324,7 +324,7 @@
     border-radius: 16px;
     padding: var(--spacing-lg);
     text-align: center;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px var(--shadow-alpha-10);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform;
     height: 100%;
@@ -334,7 +334,7 @@
 
 .expert-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px var(--shadow-alpha-15);
 }
 
 .expert-photo {
@@ -353,7 +353,7 @@
     margin-bottom: var(--spacing-xs);
     color: var(--color-text);
     line-height: 1.3;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px var(--shadow-alpha-30);
 }
 
 .expert-specialization {
@@ -391,7 +391,7 @@
     line-height: 1.6;
     max-width: 800px;
     margin: 0 auto var(--spacing-xxl);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px var(--shadow-alpha-30);
 }
 
 .values-grid {
@@ -416,21 +416,21 @@
     align-items: center;
     justify-content: center;
     margin-bottom: var(--spacing-md);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px var(--shadow-alpha-10);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform;
 }
 
 .value-circle:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px var(--shadow-alpha-15);
 }
 
 .value-text {
     font-weight: 600;
     color: var(--color-text);
     text-align: center;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px var(--shadow-alpha-30);
 }
 
 .cta-section {
@@ -444,7 +444,7 @@
     font-weight: 700;
     margin-bottom: var(--spacing-xl);
     color: white;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 4px 8px var(--shadow-alpha-80), 0 2px 4px var(--shadow-alpha-60);
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -469,7 +469,7 @@
     display: inline-flex;
     align-items: center;
     font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px var(--shadow-alpha-40);
 }
 
 .cta-section .btn-primary:hover {
@@ -478,7 +478,7 @@
 }
 
 .cta-section .btn-outline {
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--shadow-alpha-30);
     color: white;
     border: 2px solid white;
     font-weight: 600;
@@ -489,7 +489,7 @@
     align-items: center;
     font-size: 1rem;
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px var(--shadow-alpha-40);
 }
 
 .cta-section .btn-outline:hover {
@@ -632,27 +632,13 @@
     }
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out;
-}
+/* fadeInUp animation moved to animations.css */
 
 /* Mentor-Coaching Hexagons - Honeycomb Pattern */
 .ecosystem-subtitle {
     text-align: center;
     font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--white-alpha-90);
     margin-bottom: 4rem;
     font-weight: 400;
 }
@@ -675,7 +661,7 @@
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px var(--shadow-alpha-30);
 }
 
 .hexagon:nth-child(2),
@@ -696,7 +682,7 @@
 
 .hexagon:hover {
     transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 35px var(--shadow-alpha-50);
     z-index: 10;
 }
 
@@ -714,7 +700,7 @@
 
 .hexagon-icon {
     margin-bottom: 0;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 2px 4px var(--shadow-alpha-30));
 }
 
 .hexagon h4 {
@@ -722,32 +708,32 @@
     margin: 0;
     font-weight: 700;
     color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px var(--shadow-alpha-30);
     line-height: 1.3;
 }
 
 .hexagon-motivation {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
 }
 
 .hexagon-intuition {
-    background: linear-gradient(135deg, #004e89 0%, #006bb3 100%);
+    background: linear-gradient(135deg, var(--color-blue-dark) 0%, var(--color-blue) 100%);
 }
 
 .hexagon-society {
-    background: linear-gradient(135deg, #f77f00 0%, #ff9500 100%);
+    background: linear-gradient(135deg, var(--color-orange-dark) 0%, var(--color-orange) 100%);
 }
 
 .hexagon-curiosity {
-    background: linear-gradient(135deg, #06d6a0 0%, #2de2b5 100%);
+    background: linear-gradient(135deg, var(--color-green) 0%, var(--color-green-light) 100%);
 }
 
 .hexagon-pragmatism {
-    background: linear-gradient(135deg, #8338ec 0%, #9d5eff 100%);
+    background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-purple-light) 100%);
 }
 
 .hexagon-optimism {
-    background: linear-gradient(135deg, #ff006e 0%, #ff3385 100%);
+    background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-pink-light) 100%);
 }
 
 @media (max-width: 992px) {
