@@ -102,9 +102,7 @@ class Cart {
                 // Видалити елемент з DOM з анімацією
                 const item = document.querySelector(`[data-item-id="${itemId}"]`);
                 if (item) {
-                    item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateX(-100%)';
+                    item.classList.add('cart-item-removing');
 
                     setTimeout(() => {
                         item.remove();
@@ -414,19 +412,13 @@ class CartAnimations {
     static addToCartAnimation(button) {
         // Анімація додавання в кошик (літаюча іконка)
         const icon = document.createElement('div');
+        icon.className = 'flying-cart-icon';
         icon.innerHTML = '🛒';
-        icon.style.cssText = `
-            position: fixed;
-            font-size: 20px;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        `;
 
-        // Позиція кнопки
+        // Позиція кнопки (динамічна через CSS variables)
         const buttonRect = button.getBoundingClientRect();
-        icon.style.left = buttonRect.left + 'px';
-        icon.style.top = buttonRect.top + 'px';
+        icon.style.setProperty('--start-x', buttonRect.left + 'px');
+        icon.style.setProperty('--start-y', buttonRect.top + 'px');
 
         document.body.appendChild(icon);
 
@@ -436,10 +428,9 @@ class CartAnimations {
             const cartRect = cartIcon.getBoundingClientRect();
 
             requestAnimationFrame(() => {
-                icon.style.left = cartRect.left + 'px';
-                icon.style.top = cartRect.top + 'px';
-                icon.style.transform = 'scale(0)';
-                icon.style.opacity = '0';
+                icon.style.setProperty('--end-x', cartRect.left + 'px');
+                icon.style.setProperty('--end-y', cartRect.top + 'px');
+                icon.classList.add('flying');
             });
         }
 
@@ -448,7 +439,7 @@ class CartAnimations {
             if (icon.parentNode) {
                 icon.remove();
             }
-        }, 800);
+        }, 650);
     }
 }
 

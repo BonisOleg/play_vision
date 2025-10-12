@@ -263,11 +263,7 @@
     flex-wrap: wrap;
 }
 
-/* Buttons */
-.btn-large {
-    padding: 1rem 2rem;
-    font-size: 1.125rem;
-}
+/* Button sizes видалено - тепер у main.css */
 
 /* Responsive */
 @media (max-width: 768px) {

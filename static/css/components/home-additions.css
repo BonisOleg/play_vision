@@ -133,6 +133,11 @@
     color: var(--color-text);
     margin-bottom: var(--spacing-sm);
     line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .featured-description {
@@ -265,20 +270,7 @@
     margin-top: var(--spacing-xl);
 }
 
-/* Кнопки розмірів (додати до глобальних) */
-.btn-large {
-    padding: var(--spacing-md) var(--spacing-xl);
-    font-size: 1.125rem;
-}
-
-.btn-small {
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: 0.875rem;
-}
-
-.btn-block {
-    width: 100%;
-}
+/* Button sizes видалено - тепер у main.css */
 
 /* Responsive для Homepage */
 @media (max-width: 1024px) {

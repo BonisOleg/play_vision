@@ -4,6 +4,44 @@
     min-height: calc(100vh - 160px);
 }
 
+/* === INTERACTION STATES === */
+/* Triangle highlighted state */
+.triangle-svg.triangle-highlighted {
+    filter: drop-shadow(0 16px 32px rgba(255, 107, 53, 0.4));
+}
+
+.triangle-svg.triangle-highlighted .triangle-inner-line {
+    opacity: 1;
+    stroke-width: 3;
+}
+
+/* Label clicked state */
+.triangle-label.label-clicked {
+    transform: scale(0.95);
+}
+
+/* Touch active state */
+.triangle-point.touch-active,
+.value-circle.touch-active,
+.material-card.touch-active {
+    transform: scale(0.95);
+}
+
+/* Animate in class */
+.animate-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Lazy loaded images */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
 /* Subscription CTA Section */
 .subscription-cta {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);

@@ -108,7 +108,13 @@ class CartHeader {
     }
 
     static showMessage(message, type = 'info') {
-        // Спрощена система повідомлень
+        // Використовуємо глобальну систему повідомлень якщо є
+        if (window.PlayVision && window.PlayVision.showMessage) {
+            window.PlayVision.showMessage(message, type);
+            return;
+        }
+
+        // Fallback якщо глобальної системи немає
         const existing = document.querySelector('.cart-header-message');
         if (existing) existing.remove();
 
@@ -116,23 +122,12 @@ class CartHeader {
         messageEl.className = `cart-header-message cart-header-message--${type}`;
         messageEl.textContent = message;
 
-        messageEl.style.cssText = `
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: ${type === 'error' ? '#f44336' : '#4caf50'};
-            color: white;
-            padding: 12px 16px;
-            border-radius: 6px;
-            z-index: 1000;
-            font-size: 14px;
-            max-width: 300px;
-            animation: slideInRight 0.3s ease;
-        `;
-
         document.body.appendChild(messageEl);
 
-        setTimeout(() => messageEl.remove(), 3000);
+        setTimeout(() => {
+            messageEl.classList.add('message-fade-out');
+            setTimeout(() => messageEl.remove(), 300);
+        }, 3000);
     }
 
     static getCSRFToken() {

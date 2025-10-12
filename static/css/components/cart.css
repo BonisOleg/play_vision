@@ -1,6 +1,25 @@
 /* КОШИК PLAY VISION */
 /* Компонент кошика згідно дизайну скріншотів */
 
+/* === FLYING CART ICON ANIMATION === */
+.flying-cart-icon {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 9999;
+    left: var(--start-x, 0);
+    top: var(--start-y, 0);
+    opacity: 1;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.flying-cart-icon.flying {
+    left: var(--end-x, 0);
+    top: var(--end-y, 0);
+    transform: scale(0);
+    opacity: 0;
+}
+
 .cart-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -49,10 +68,17 @@
     gap: var(--spacing-md);
     padding: var(--spacing-lg);
     border-bottom: 1px solid var(--color-border);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .cart-item:last-child {
     border-bottom: none;
+}
+
+/* Анімація видалення */
+.cart-item-removing {
+    opacity: 0;
+    transform: translateX(-100%);
 }
 
 .cart-item-thumbnail {

@@ -213,13 +213,8 @@
     margin-bottom: 1.5rem;
 }
 
-.btn-large {
-    width: 100%;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-}
+/* Button sizes видалено - тепер у main.css */
+/* Для width: 100% використовуємо клас .btn-block */
 
 .purchase-options {
     display: flex;
@@ -654,10 +649,7 @@
         gap: 0.5rem;
     }
 
-    .btn-large {
-        padding: 0.875rem 1.5rem;
-        font-size: 1rem;
-    }
+    /* Button mobile адаптація вже у main.css */
 
     .course-materials,
     .related-courses {
@@ -751,10 +743,7 @@
         playsinline: true;
     }
 
-    .btn-large {
-        font-size: 16px;
-        /* Prevents zoom on iOS */
-    }
+    /* iOS zoom prevention вже у main.css через min-height */
 }
 
 /* High contrast mode support */

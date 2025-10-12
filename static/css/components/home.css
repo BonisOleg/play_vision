@@ -281,6 +281,11 @@
     margin-bottom: var(--spacing-sm);
     color: var(--color-text);
     text-shadow: 0 2px 4px var(--shadow-alpha-30);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .course-description {
@@ -363,6 +368,9 @@
     color: var(--color-text);
     line-height: 1.3;
     text-shadow: 0 2px 4px var(--shadow-alpha-30);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .expert-specialization {

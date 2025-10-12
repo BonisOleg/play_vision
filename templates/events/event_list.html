@@ -10,7 +10,7 @@
 {% block content %}
 <div class="events-container">
     <!-- Календар подій з фільтрами -->
-    <section class="event-calendar" x-data="eventCalendar()">
+    <section class="event-calendar">
         <div class="calendar-header">
             <div class="calendar-title-section">
                 <h2 class="calendar-title">Календар подій</h2>
@@ -19,22 +19,24 @@
 
             <!-- Фільтри календаря -->
             <div class="calendar-filters">
-                <select x-model="selectedType" @change="filterEvents()" class="filter-select">
+                <select name="event_type" class="filter-select">
                     <option value="all">Всі типи подій</option>
                     {% for type_value, type_display in event_types %}
-                    <option value="{{ type_value }}">{{ type_display }}</option>
+                    <option value="{{ type_value }}" {% if request.GET.type == type_value %}selected{% endif %}>{{ type_display }}</option>
                     {% endfor %}
                 </select>
 
-                <select x-model="selectedFormat" @change="filterEvents()" class="filter-select">
+                <select name="event_format" class="filter-select">
                     <option value="all">Всі формати</option>
-                    <option value="online">Тільки онлайн</option>
-                    <option value="offline">Тільки офлайн</option>
-                    <option value="hybrid">Гібридні</option>
+                    <option value="online" {% if request.GET.format == 'online' %}selected{% endif %}>Тільки онлайн
+                    </option>
+                    <option value="offline" {% if request.GET.format == 'offline' %}selected{% endif %}>Тільки офлайн
+                    </option>
+                    <option value="hybrid" {% if request.GET.format == 'hybrid' %}selected{% endif %}>Гібридні</option>
                 </select>
 
-                <button @click="resetFilters()" class="btn btn--outline btn--small"
-                    x-show="selectedType !== 'all' || selectedFormat !== 'all'">
+                <button data-action="reset-filters"
+                    class="btn btn--outline btn--small {% if not request.GET.type and not request.GET.format %}is-hidden{% endif %}">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path
                             d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -45,99 +47,24 @@
 
             <!-- Навігація по датах -->
             <div class="calendar-navigation">
-                <button @click="previousWeek()" class="nav-btn">
+                <button data-action="prev-week" class="nav-btn">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M15 18l-6-6 6-6" />
                     </svg>
                 </button>
-                <span class="current-period" x-text="currentPeriodText"></span>
-                <button @click="nextWeek()" class="nav-btn">
+                <span class="current-period"></span>
+                <button data-action="next-week" class="nav-btn">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M9 18l6-6-6-6" />
                     </svg>
                 </button>
-                <button @click="goToToday()" class="btn btn--ghost btn--small">Сьогодні</button>
+                <button data-action="go-today" class="btn btn--ghost btn--small">Сьогодні</button>
             </div>
         </div>
 
-        <div class="calendar-grid" x-ref="calendarGrid">
-            <template x-for="(day, index) in visibleDays" :key="day.date">
-                <div class="calendar-day" :class="{ 
-                         'calendar-day--today': day.isToday,
-                         'calendar-day--has-events': day.events.length > 0,
-                         'calendar-day--past': day.isPast,
-                         'calendar-day--weekend': day.isWeekend
-                     }" @click="selectDay(day, index)">
-                    <div class="day-header">
-                        <div class="day-info">
-                            <span class="day-number" x-text="day.dayNumber"></span>
-                            <span class="day-name" x-text="day.dayName"></span>
-                        </div>
-                        <div class="events-indicator" x-show="day.events.length > 0">
-                            <span class="events-count" x-text="day.events.length + ' події'"></span>
-                        </div>
-                    </div>
-
-                    <div class="day-events">
-                        <template x-for="event in day.events.slice(0, 1)" :key="event.id">
-                            <a :href="event.is_test_event ? '#' : event.url"
-                                @click="event.is_test_event ? $event.preventDefault() || showTestEventInfo(event) : null"
-                                class="event-card" :class="{ 
-                                   'event-card--forum': event.type === 'forum',
-                                   'event-card--masterclass': event.type === 'masterclass',
-                                   'event-card--seminar': event.type === 'seminar',
-                                   'event-card--free': event.is_free,
-                                   'event-card--sold-out': event.is_sold_out,
-                                   'event-card--test': event.is_test_event
-                               }" @mouseenter="showEventPreview(event)" @mouseleave="hideEventPreview()">
-
-                                <div class="event-type-badge" x-text="event.type_display"></div>
-
-                                <div class="event-main-info">
-                                    <h4 class="event-title" x-text="event.title"></h4>
-                                    <div class="event-meta">
-                                        <div class="event-time-price">
-                                            <span class="event-time" x-text="event.time"></span>
-                                            <span class="event-location" x-text="event.location_short"></span>
-                                        </div>
-                                        <div class="event-price-info">
-                                            <span class="event-price"
-                                                x-text="event.is_free ? 'Безкоштовно' : event.price + '₴'"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="event-capacity" x-show="event.available_tickets">
-                                    <span x-text="event.available_tickets + ' місць'"></span>
-                                </div>
-                            </a>
-                        </template>
-
-                        <div x-show="day.events.length > 1" class="more-events-indicator">
-                            <button @click.stop="showAllDayEvents(day)" class="more-events-btn">
-                                <span x-text="'+ ще ' + (day.events.length - 1)"></span>
-                            </button>
-                        </div>
-
-                        <div x-show="day.events.length === 0" class="no-events-day">
-                            <div class="no-events-content">
-                                <svg class="no-events-icon" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                                        fill="none" stroke="currentColor" stroke-width="2" opacity="0.3" />
-                                </svg>
-                                <span>Подій немає</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </div>
-
-        <!-- Завантаження -->
-        <div x-show="loading" class="calendar-loading">
-            <div class="loading-spinner"></div>
-            <p>Завантаження подій...</p>
+        <!-- Календар видалено - використовується список подій нижче -->
+        <div class="calendar-notice">
+            <p>Події представлені списком з фільтрами нижче</p>
         </div>
     </section>
 
@@ -153,13 +80,13 @@
             <aside class="events-sidebar">
                 <div class="sidebar-section">
                     <h3 class="sidebar-title">Найближчі події</h3>
-                    <ul class="upcoming-events" x-ref="upcomingEventsContainer">
+                    <ul class="upcoming-events">
                         <!-- Dynamic events populated by JavaScript -->
                     </ul>
                 </div>
 
                 <!-- Enhanced Filters -->
-                <form method="get" action="{% url 'events:event_list' %}" class="filters-form" x-data="eventFilters()">
+                <form method="get" action="{% url 'events:event_list' %}" class="filters-form">
 
                     <!-- Search Filter -->
                     <div class="sidebar-section">
@@ -263,13 +190,14 @@
                     </div>
 
                     <!-- Active Filters Display -->
-                    <div class="active-filters" x-show="hasActiveFilters()">
+                    <div
+                        class="active-filters {% if not current_search and not current_types and not current_format or current_format == 'all' %}is-hidden{% endif %}">
                         <h4 class="active-filters-title">Активні фільтри:</h4>
                         <div class="filter-tags">
                             {% if current_search %}
                             <span class="filter-tag">
                                 Пошук: {{ current_search }}
-                                <button type="button" @click="clearSearch()">×</button>
+                                <a href="{% url 'events:event_list' %}" class="filter-tag-close">×</a>
                             </span>
                             {% endif %}
 

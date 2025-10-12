@@ -48,7 +48,6 @@
     background: var(--color-primary);
     border-radius: var(--radius-full);
     transition: width var(--transition-base);
-    will-change: width;
 }
 
 /* === LOADING STATES === */

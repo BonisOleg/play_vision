@@ -1,10 +1,13 @@
-// About page JavaScript functionality
+/**
+ * About Page Functionality
+ * Vanilla JS без Alpine.js, без конфліктів з CSS
+ */
 
-// Expert quotes carousel
-function quotesCarousel() {
-    return {
-        currentQuote: 0,
-        quotes: [
+class QuotesCarousel {
+    constructor(element) {
+        this.element = element;
+        this.currentQuote = 0;
+        this.quotes = [
             {
                 text: "Найважливіше в футболі — це не фізичні дані, а розуміння гри та прийняття правильних рішень.",
                 name: "Dr. Fabian Otte",
@@ -29,30 +32,43 @@ function quotesCarousel() {
                 title: "Лікар спортивної медицини",
                 avatar: "/static/images/experts/raphael-villatore.jpg"
             }
-        ],
+        ];
 
-        init() {
-            // Auto-rotate quotes every 10 seconds as specified in requirements
-            setInterval(() => {
-                this.nextQuote();
-            }, 10000);
-        },
+        this.init();
+    }
 
-        nextQuote() {
-            this.currentQuote = (this.currentQuote + 1) % this.quotes.length;
-        },
+    init() {
+        this.render();
+        setInterval(() => this.nextQuote(), 10000);
+    }
 
-        prevQuote() {
-            this.currentQuote = this.currentQuote === 0 ? this.quotes.length - 1 : this.currentQuote - 1;
-        }
+    render() {
+        const quote = this.quotes[this.currentQuote];
+        const textEl = this.element.querySelector('.quote-text');
+        const nameEl = this.element.querySelector('.quote-name');
+        const titleEl = this.element.querySelector('.quote-title');
+
+        if (textEl) textEl.textContent = quote.text;
+        if (nameEl) nameEl.textContent = quote.name;
+        if (titleEl) titleEl.textContent = quote.title;
+    }
+
+    nextQuote() {
+        this.currentQuote = (this.currentQuote + 1) % this.quotes.length;
+        this.render();
+    }
+
+    prevQuote() {
+        this.currentQuote = this.currentQuote === 0 ? this.quotes.length - 1 : this.currentQuote - 1;
+        this.render();
     }
 }
 
-// Main materials carousel
-function materialsCarousel() {
-    return {
-        currentMaterial: 0,
-        materials: [
+class MaterialsCarousel {
+    constructor(element) {
+        this.element = element;
+        this.currentMaterial = 0;
+        this.materials = [
             {
                 title: "Тренерські принципи",
                 description: "Основи ефективного коучингу та методології тренувального процесу від провідних експертів світу.",
@@ -93,29 +109,38 @@ function materialsCarousel() {
                 price: "₴800",
                 badge: "Рекомендуємо"
             }
-        ],
+        ];
 
-        init() {
-            // Auto-rotate materials every 20 seconds
-            setInterval(() => {
-                this.nextMaterial();
-            }, 20000);
-        },
+        this.init();
+    }
 
-        nextMaterial() {
-            this.currentMaterial = (this.currentMaterial + 1) % this.materials.length;
-        },
+    init() {
+        this.render();
+        setInterval(() => this.nextMaterial(), 20000);
+    }
 
-        prevMaterial() {
-            this.currentMaterial = this.currentMaterial === 0 ? this.materials.length - 1 : this.currentMaterial - 1;
-        }
+    render() {
+        const material = this.materials[this.currentMaterial];
+        const titleEl = this.element.querySelector('.material-title');
+        const descEl = this.element.querySelector('.material-description');
+
+        if (titleEl) titleEl.textContent = material.title;
+        if (descEl) descEl.textContent = material.description;
+    }
+
+    nextMaterial() {
+        this.currentMaterial = (this.currentMaterial + 1) % this.materials.length;
+        this.render();
+    }
+
+    prevMaterial() {
+        this.currentMaterial = this.currentMaterial === 0 ? this.materials.length - 1 : this.currentMaterial - 1;
+        this.render();
     }
 }
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('About page loaded');
-
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -145,98 +170,47 @@ document.addEventListener('DOMContentLoaded', function () {
     }, observerOptions);
 
     // Observe sections for animations
-    document.querySelectorAll('.mission-section, .triangle-section, .values-section, .knowledge-hub-section').forEach(section => {
-        observer.observe(section);
-    });
+    const sections = document.querySelectorAll('.mission-section, .triangle-section, .values-section, .knowledge-hub-section');
+    sections.forEach(section => observer.observe(section));
 
-    // Triangle interaction effects
+    // Triangle interaction effects - використовуємо CSS класи замість маніпуляції style
     const triangleSvg = document.querySelector('.triangle-svg');
     const triangleLabels = document.querySelectorAll('.triangle-label');
 
-    // Add hover effects to triangle labels
     triangleLabels.forEach(label => {
         label.addEventListener('mouseenter', function () {
-            triangleSvg.style.filter = 'drop-shadow(0 16px 32px rgba(255, 107, 53, 0.4))';
-
-            // Highlight corresponding part of triangle
-            const triangleInnerLines = triangleSvg.querySelectorAll('.triangle-inner-line');
-            triangleInnerLines.forEach(line => {
-                line.style.opacity = '1';
-                line.style.strokeWidth = '3';
-            });
+            triangleSvg?.classList.add('triangle-highlighted');
         });
 
         label.addEventListener('mouseleave', function () {
-            triangleSvg.style.filter = '';
-
-            const triangleInnerLines = triangleSvg.querySelectorAll('.triangle-inner-line');
-            triangleInnerLines.forEach(line => {
-                line.style.opacity = '';
-                line.style.strokeWidth = '';
-            });
+            triangleSvg?.classList.remove('triangle-highlighted');
         });
 
-        // Add click interaction
+        // Touch feedback через CSS класи
         label.addEventListener('click', function () {
-            // Add click ripple effect
-            this.style.transform = 'scale(0.95)';
+            this.classList.add('label-clicked');
             setTimeout(() => {
-                this.style.transform = '';
+                this.classList.remove('label-clicked');
             }, 150);
         });
     });
 
-    // Value circles animation on scroll
+    // Value circles animation on scroll - використовуємо CSS класи
     const valueCircles = document.querySelectorAll('.value-circle');
     const valueObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    entry.target.classList.add('animate-fade-in-up');
                 }, index * 100);
             }
         });
     }, { threshold: 0.3 });
 
-    valueCircles.forEach(circle => {
-        valueObserver.observe(circle);
-    });
-});
+    valueCircles.forEach(circle => valueObserver.observe(circle));
 
-// Add CSS animations dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .animate-in {
-        animation: fadeInUp 0.8s ease-out forwards;
-    }
-    
-    /* Lazy loading for images */
-    img[loading="lazy"] {
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-    
-    img[loading="lazy"].loaded {
-        opacity: 1;
-    }
-`;
-document.head.appendChild(style);
-
-// Lazy loading for images
-document.addEventListener('DOMContentLoaded', function () {
+    // Lazy loading for images
     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-
     const imageObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -249,36 +223,39 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    lazyImages.forEach(img => {
-        imageObserver.observe(img);
-    });
-});
+    lazyImages.forEach(img => imageObserver.observe(img));
 
-// Fallback images for experts (if images don't exist)
-document.addEventListener('DOMContentLoaded', function () {
+    // Fallback images for experts
     const expertImages = document.querySelectorAll('.author-avatar img');
-
     expertImages.forEach(img => {
         img.addEventListener('error', function () {
             this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiNmNWY1ZjUiLz4KPHN2ZyB4PSIxNSIgeT0iMTAiIHdpZHRoPSIzMCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjOTk5Ij4KPHA+aDpwYXRoIGQ9Ik0xMiAxMmMyLjIxIDAgNC0xLjc5IDQtNHMtMS43OS00LTQtNC00IDEuNzktNCA0IDEuNzkgNCA0IDR6bTAgMmMtMi42NyAwLTggMS4zNC04IDRtMTIgNGMwLTIuNjctNS4zMy00LTgtNHoiLz4KPC9zdmc+';
         });
     });
-});
 
-// Mobile menu enhancements for touch devices
-if ('ontouchstart' in window) {
-    document.addEventListener('DOMContentLoaded', function () {
-        // Add touch-friendly interactions
+    // Touch device optimization - використовуємо CSS класи
+    if ('ontouchstart' in window) {
         const touchElements = document.querySelectorAll('.triangle-point, .value-circle, .material-card');
 
         touchElements.forEach(element => {
             element.addEventListener('touchstart', function () {
-                this.style.transform = this.style.transform + ' scale(0.95)';
+                this.classList.add('touch-active');
             });
 
             element.addEventListener('touchend', function () {
-                this.style.transform = this.style.transform.replace(' scale(0.95)', '');
+                this.classList.remove('touch-active');
             });
         });
-    });
-}
+    }
+
+    // Ініціалізуємо карусель якщо є
+    const quotesElement = document.querySelector('.quotes-carousel');
+    if (quotesElement) {
+        new QuotesCarousel(quotesElement);
+    }
+
+    const materialsElement = document.querySelector('.materials-carousel');
+    if (materialsElement) {
+        new MaterialsCarousel(materialsElement);
+    }
+});

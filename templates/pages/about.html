@@ -166,60 +166,49 @@
         <div class="container">
             <h2 class="section-title hub-title">Хаб знань</h2>
 
-            <!-- Expert Quotes Carousel -->
-            <div class="quotes-carousel" x-data="quotesCarousel()">
+            <!-- Expert Quotes - статична версія -->
+            <div class="quotes-carousel">
                 <div class="quote-container">
-                    <template x-for="(quote, index) in quotes" :key="index">
-                        <div class="quote-slide" x-show="currentQuote === index" x-transition:enter="slide-in"
-                            x-transition:leave="slide-out">
-                            <div class="quote-content">
-                                <div class="quote-text" x-text="quote.text"></div>
-                                <div class="quote-author">
-                                    <div class="author-avatar">
-                                        <img :src="quote.avatar" :alt="quote.name" loading="lazy">
-                                    </div>
-                                    <div class="author-info">
-                                        <div class="author-name" x-text="quote.name"></div>
-                                        <div class="author-title" x-text="quote.title"></div>
-                                    </div>
+                    <div class="quote-slide active">
+                        <div class="quote-content">
+                            <div class="quote-text">Найважливіше в футболі — це не фізичні дані, а розуміння гри та
+                                прийняття правильних рішень.</div>
+                            <div class="quote-author">
+                                <div class="author-avatar">
+                                    <img src="{% static 'images/experts/fabian-otte.jpg' %}" alt="Dr. Fabian Otte"
+                                        loading="lazy">
+                                </div>
+                                <div class="author-info">
+                                    <div class="author-name">Dr. Fabian Otte</div>
+                                    <div class="author-title">Фахівець з розвитку навичок</div>
                                 </div>
                             </div>
                         </div>
-                    </template>
-                </div>
-                <div class="carousel-indicators">
-                    <template x-for="(quote, index) in quotes" :key="index">
-                        <button class="indicator-dot" :class="{ 'active': currentQuote === index }"
-                            @click="currentQuote = index"></button>
-                    </template>
+                    </div>
                 </div>
             </div>
 
             <!-- Main Materials Carousel -->
+            <!-- Main Materials - спрощено без Alpine.js -->
             <div class="main-materials">
                 <h3 class="materials-title">Головні матеріали</h3>
-                <div class="materials-carousel" x-data="materialsCarousel()">
-                    <div class="materials-container">
-                        <template x-for="(material, index) in materials" :key="index">
-                            <div class="material-slide" x-show="currentMaterial === index" x-transition:enter="slide-in"
-                                x-transition:leave="slide-out">
-                                <div class="material-card">
-                                    <div class="material-image">
-                                        <img :src="material.image" :alt="material.title" loading="lazy">
-                                        <div class="material-badge" x-text="material.badge"></div>
-                                    </div>
-                                    <div class="material-content">
-                                        <h4 class="material-title" x-text="material.title"></h4>
-                                        <p class="material-description" x-text="material.description"></p>
-                                        <div class="material-meta">
-                                            <span class="material-duration" x-text="material.duration"></span>
-                                            <span class="material-price" x-text="material.price"></span>
-                                        </div>
-                                        <a href="#" class="btn btn-primary">Переглянути</a>
-                                    </div>
-                                </div>
+                <div class="materials-grid">
+                    <div class="material-card">
+                        <div class="material-image">
+                            <img src="{% static 'images/courses/coaching-principles.jpg' %}" alt="Тренерські принципи"
+                                loading="lazy">
+                            <div class="material-badge">Топ продажів</div>
+                        </div>
+                        <div class="material-content">
+                            <h4 class="material-title">Тренерські принципи</h4>
+                            <p class="material-description">Основи ефективного коучингу та методології тренувального
+                                процесу</p>
+                            <div class="material-meta">
+                                <span class="material-duration">8 годин</span>
+                                <span class="material-price">₴1,200</span>
                             </div>
-                        </template>
+                            <a href="{% url 'content:course_list' %}" class="btn btn-primary">Переглянути</a>
+                        </div>
                     </div>
                 </div>
             </div>

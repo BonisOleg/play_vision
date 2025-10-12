@@ -14,33 +14,14 @@
 {% endblock %}
 
 {% block extra_head %}
-<!-- Hub page specific setup -->
-<script>
-    // Minimal bootstrap code for this page
-    document.addEventListener('DOMContentLoaded', function () {
-        // Check if external dependencies are loaded
-        const dependencies = ['quotesCarousel', 'materialsCarousel', 'intervalManager', 'DOMUtils'];
-        const missing = dependencies.filter(dep => !window[dep]);
-
-        if (missing.length > 0) {
-            console.warn('Hub dependencies not loaded:', missing);
-            // Graceful fallback - disable functionality rather than break
-            return;
-        }
-
-        // All dependencies loaded - Alpine.js will handle the rest
-        console.log('Hub page dependencies loaded successfully');
-    });
-</script>
+<!-- Hub page без Alpine.js -->
 {% endblock %}
 
 {% block content %}
 <div class="hub-container">
     <!-- Subscription Banner -->
-    <div class="subscription-banner" id="subscription-banner" x-data="{ visible: true }" x-show="visible">
-
-        <button class="banner-close" @click="visible = false; localStorage.setItem('banner_closed', 'true')"
-            aria-label="Закрити">
+    <div class="subscription-banner" id="subscription-banner">
+        <button class="banner-close" aria-label="Закрити">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -176,498 +157,377 @@
 
     {% include 'hub/_monthly_quote.html' %}
 
-    {% comment %}
-    <!-- СТАРІ ЦИТАТИ - ЗАКОМЕНТОВАНО -->
-    <!--<div class="quote-slide" x-show="currentQuote === 1" x-transition>
-                    <div class="quote-content">
-                        <div class="expert-avatar">
-                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Юрген Клопп"
-                                class="expert-photo">
-                            <div class="expert-info">
-                                <span class="expert-name">Юрген Клопп</span>
-                                <span class="expert-role">Тренер "Ліверпуль"</span>
+    {% comment %} СТАРІ ЦИТАТИ ВИДАЛЕНО {% endcomment %}
+
+    <!-- Educational Products -->
+    <section class="main-materials">
+        <div class="container">
+            <h2 class="section-title">Освітні продукти</h2>
+
+            <div class="materials-carousel">
+                <div class="carousel-wrapper">
+                    <div class="carousel-content">
+                        {% for course in featured_courses %}
+                        <div class="material-slide">
+                            <div class="material-card">
+                                <div class="material-image">
+                                    {% if course.thumbnail %}
+                                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                    {% else %}
+                                    <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
+                                    {% endif %}
+                                    <div class="material-overlay">
+                                        <span class="difficulty-badge difficulty-{{ course.difficulty }}">
+                                            {{ course.get_difficulty_display }}
+                                        </span>
+                                        {% if course.is_featured %}
+                                        <span class="featured-badge">топ-продажів</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="material-content">
+                                    <h3>{{ course.title }}</h3>
+                                    <p>{{ course.short_description }}</p>
+                                    <div class="material-meta">
+                                        <span class="duration">{{ course.duration_display }}</span>
+                                        <span class="price">{{ course.price }}₴</span>
+                                    </div>
+                                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
+                                        Огляд курсу
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <blockquote>
-                            "Футбол - це спорт для розумних людей, які можуть грати просто. Але щоб грати просто,
-                            потрібно багато знати."
-                        </blockquote>
+                        {% empty %}
+                        <div class="material-slide">
+                            <div class="no-content">
+                                <p>Головні матеріали будуть додані найближчим часом</p>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
 
-                <div class="quote-slide" x-show="currentQuote === 2" x-transition>
-                    <div class="quote-content">
-                        <div class="expert-avatar">
-                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Джозе Моурінью"
-                                class="expert-photo">
-                            <div class="expert-info">
-                                <span class="expert-name">Джозе Моурінью</span>
-                                <span class="expert-role">Досвідчений тренер</span>
-                            </div>
-                        </div>
-                        <blockquote>
-                            "Знання та досвід - це те, що відрізняє хороших тренерів від великих. Ніколи не припиняйте
-                            вчитися."
-                        </blockquote>
-                    </div>
+                {% if featured_courses|length > 1 %}
+                <div class="carousel-nav">
+                    <button class="nav-btn nav-prev">‹</button>
+                    <button class="nav-btn nav-next">›</button>
                 </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 
-                <div class="quote-slide" x-show="currentQuote === 3" x-transition>
-                    <div class="quote-content">
-                        <div class="expert-avatar">
-                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Карло Анчелотті"
-                                class="expert-photo">
-                            <div class="expert-info">
-                                <span class="expert-name">Карло Анчелотті</span>
-                                <span class="expert-role">Тренер "Реал Мадрид"</span>
-                            </div>
-                        </div>
-                        <blockquote>
-                            "Справжня майстерність приходить з постійного вдосконалення. Кожна помилка - це можливість
-                            навчитися."
-                        </blockquote>
-                    </div>
+    <!-- All Products -->
+    <section class="all-products">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="section-title">Усі продукти</h2>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <form method="get" class="search-form" id="searchForm">
+                        <input type="text" name="q" placeholder="Пошук за назвою, автором або тегами..."
+                            value="{{ request.GET.q }}" class="search-input" autocomplete="off">
+                        <button type="submit" class="search-btn">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                            </svg>
+                        </button>
+                        <!-- Search Suggestions Container -->
+                        <div class="search-suggestions is-hidden" aria-hidden="true"></div>
+                    </form>
                 </div>
+            </div>
 
-                <div class="quote-slide" x-show="currentQuote === 4" x-transition>
-                    <div class="quote-content">
-                        <div class="expert-avatar">
-                            <img src="{% static 'images/icon-placeholder.svg' %}" alt="Арсен Венгер"
-                                class="expert-photo">
-                            <div class="expert-info">
-                                <span class="expert-name">Арсен Венгер</span>
-                                <span class="expert-role">Легендарний тренер</span>
-                            </div>
+            <div class="products-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar" role="complementary" aria-label="Фільтри курсів">
+                    <div class="filters-header">
+                        <h3>Фільтрувати</h3>
+                        <div class="filters-controls">
+                            <span class="active-filters-count is-hidden"></span>
+                            <button class="mobile-filters-toggle" aria-expanded="false" aria-controls="filters-content">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                                </svg>
+                                <span class="sr-only">Відкрити фільтри</span>
+                            </button>
                         </div>
-                        <blockquote>
-                            "Найважливіше в футболі - це розуміння гри. А розуміння приходить тільки через навчання та
-                            практику."
-                        </blockquote>
                     </div>
-                </div>
 
-                <!-- Navigation dots -->
-    <div class="quote-nav" role="tablist">
-        <button @click="setQuote(0)" :class="{'active': currentQuote === 0}" role="tab"
-            :aria-selected="currentQuote === 0" aria-label="Цитата 1 з 5"></button>
-        <button @click="setQuote(1)" :class="{'active': currentQuote === 1}" role="tab"
-            :aria-selected="currentQuote === 1" aria-label="Цитата 2 з 5"></button>
-        <button @click="setQuote(2)" :class="{'active': currentQuote === 2}" role="tab"
-            :aria-selected="currentQuote === 2" aria-label="Цитата 3 з 5"></button>
-        <button @click="setQuote(3)" :class="{'active': currentQuote === 3}" role="tab"
-            :aria-selected="currentQuote === 3" aria-label="Цитата 4 з 5"></button>
-        <button @click="setQuote(4)" :class="{'active': currentQuote === 4}" role="tab"
-            :aria-selected="currentQuote === 4" aria-label="Цитата 5 з 5"></button>
-    </div>
+                    <div class="filters-content filters-scrollable" id="filters-content">
+                        <form method="get" id="filterForm">
+                            {% if request.GET.q %}
+                            <input type="hidden" name="q" value="{{ request.GET.q }}">
+                            {% endif %}
 
-    <!-- Navigation arrows for accessibility -->
-    <div class="quote-arrows">
-        <button @click="setQuote(currentQuote > 0 ? currentQuote - 1 : 4)" class="arrow-btn arrow-prev"
-            aria-label="Попередня цитата">‹</button>
-        <button @click="setQuote(currentQuote < 4 ? currentQuote + 1 : 0)" class="arrow-btn arrow-next"
-            aria-label="Наступна цитата">›</button>
-    </div>
-</div>
-</div>
-</section> -->
-{% endcomment %}
+                            <!-- Category Filter -->
+                            <div class="filter-group">
+                                <h4>За напрямками</h4>
+                                <div class="filter-options">
+                                    {% for category in categories %}
+                                    <label class="filter-option">
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                        <span>{{ category.name }}</span>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
 
-<!-- Educational Products -->
-<section class="main-materials">
-    <div class="container">
-        <h2 class="section-title">Освітні продукти</h2>
+                            <!-- Тренерство з під-фільтрами -->
+                            <div class="filter-group">
+                                <h4>
+                                    <button type="button" class="filter-toggle">
+                                        <span>Тренерство</span>
+                                        <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M6 9l6 6 6-6" />
+                                        </svg>
+                                    </button>
+                                </h4>
 
-        <div class="materials-carousel" x-data="materialsCarousel()">
-            <div class="carousel-wrapper">
-                <div class="carousel-content" :style="`transform: translateX(-${currentSlide * 100}%)`">
-                    {% for course in featured_courses %}
-                    <div class="material-slide">
-                        <div class="material-card">
-                            <div class="material-image">
+                                <div class="sub-filters is-hidden">
+                                    <label class="filter-option sub-option">
+                                        <input type="checkbox" name="training_type" value="goalkeeper">
+                                        <span>Тренер воротарів</span>
+                                    </label>
+                                    <label class="filter-option sub-option">
+                                        <input type="checkbox" name="training_type" value="youth">
+                                        <span>Дитячий тренер</span>
+                                    </label>
+                                    <label class="filter-option sub-option">
+                                        <input type="checkbox" name="training_type" value="fitness">
+                                        <span>Тренер ЗФП</span>
+                                    </label>
+                                    <label class="filter-option sub-option">
+                                        <input type="checkbox" name="training_type" value="professional">
+                                        <span>Тренер професійних команд</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Інші напрямки -->
+                            <div class="filter-group">
+                                <h4>Інші напрямки</h4>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="interest" value="analytics">
+                                        <span>Аналітика і скаутинг</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="interest" value="management">
+                                        <span>Менеджмент</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="interest" value="psychology">
+                                        <span>Спортивна психологія</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="interest" value="nutrition">
+                                        <span>Нутриціологія</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="interest" value="player">
+                                        <span>Футболіст</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="interest" value="parent">
+                                        <span>Батько</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filter-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                    </svg>
+                                    Застосувати
+                                </button>
+                                <button type="button" data-action="clear-filters" class="btn btn-outline is-hidden">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                                    </svg>
+                                    Скинути все
+                                </button>
+                                <a href="{% url 'content:course_list' %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}"
+                                    class="btn btn-ghost">
+                                    Скинути
+                                </a>
+                            </div>
+
+                            <!-- Quick Filter Tags -->
+                            <div class="quick-filters is-hidden">
+                                <h5>Активні фільтри:</h5>
+                                <div class="filter-tags">
+                                    <!-- Динамічно генеруються через JS -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </aside>
+
+                <!-- Products Grid -->
+                <main class="products-content">
+                    <!-- Sort Options -->
+                    <div class="sort-bar">
+                        <div class="sort-options">
+                            <label for="sort">Сортувати за:</label>
+                            <select name="sort" id="sort" class="sort-select">
+                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
+                                    Новіші спочатку
+                                </option>
+                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
+                                    назвою А-Я
+                                </option>
+                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
+                                    назвою Я-А
+                                </option>
+                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
+                                    За ціною (зростання)
+                                </option>
+                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
+                                    ціною (спадання)
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="results-count">
+                            Знайдено: {{ paginator.count }} курсів
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-grid">
+                        {% for course in courses %}
+                        <article class="product-card">
+                            <div class="product-image">
                                 {% if course.thumbnail %}
                                 <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
                                 {% else %}
                                 <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
                                 {% endif %}
-                                <div class="material-overlay">
-                                    <span class="difficulty-badge difficulty-{{ course.difficulty }}">
+
+                                <div class="product-overlay">
+                                    <div class="product-badges">
+                                        {% if course.is_featured %}
+                                        <span class="badge badge-top">топ-продажів</span>
+                                        {% endif %}
+                                        {% if course.is_free %}
+                                        <span class="badge badge-free">безкоштовно</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Favorite Button -->
+                                    {% if user.is_authenticated %}
+                                    <button class="favorite-btn {% if course.id in user_favorites %}active{% endif %}"
+                                        data-course-id="{{ course.id }}"
+                                        hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none"
+                                        hx-trigger="click">
+                                        <svg class="icon" viewBox="0 0 24 24">
+                                            <path
+                                                d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                                        </svg>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="product-content">
+                                <div class="product-meta">
+                                    <span class="category">{{ course.category.name }}</span>
+                                    <span class="difficulty difficulty-{{ course.difficulty }}">
                                         {{ course.get_difficulty_display }}
                                     </span>
-                                    {% if course.is_featured %}
-                                    <span class="featured-badge">топ-продажів</span>
+                                </div>
+
+                                <h3 class="product-title">
+                                    <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
+                                </h3>
+
+                                <p class="product-description">{{ course.short_description }}</p>
+
+                                <div class="product-details">
+                                    <span class="duration">{{ course.duration_display }}</span>
+                                    <div class="price">
+                                        {% if course.is_free %}
+                                        <span class="price-free">Безкоштовно</span>
+                                        {% else %}
+                                        <span class="price-amount">{{ course.price }}₴</span>
+                                        {% endif %}
+                                        {% if course_points and not course.is_free %}
+                                        {% with points=course_points|get_item:course.id %}
+                                        {% if points and points > 0 %}
+                                        <span class="loyalty-points">+{{ points }} балів</span>
+                                        {% endif %}
+                                        {% endwith %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="product-tags">
+                                    {% for tag in course.tags.all|slice:":3" %}
+                                    <span class="tag">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="product-actions">
+                                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
+                                        Переглянути
+                                    </a>
+                                    {% if not user.is_authenticated %}
+                                    <small class="access-hint">Увійдіть для доступу</small>
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="material-content">
-                                <h3>{{ course.title }}</h3>
-                                <p>{{ course.short_description }}</p>
-                                <div class="material-meta">
-                                    <span class="duration">{{ course.duration_display }}</span>
-                                    <span class="price">{{ course.price }}₴</span>
-                                </div>
-                                <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
-                                    Огляд курсу
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="material-slide">
-                        <div class="no-content">
-                            <p>Головні матеріали будуть додані найближчим часом</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            {% if featured_courses|length > 1 %}
-            <div class="carousel-nav">
-                <button @click="prevSlide()" class="nav-btn nav-prev">‹</button>
-                <button @click="nextSlide()" class="nav-btn nav-next">›</button>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</section>
-
-<!-- All Products -->
-<section class="all-products">
-    <div class="container">
-        <div class="products-header">
-            <h2 class="section-title">Усі продукти</h2>
-
-            <!-- Search Bar -->
-            <div class="search-container">
-                <form method="get" class="search-form" id="searchForm">
-                    <input type="text" name="q" placeholder="Пошук за назвою, автором або тегами..."
-                        value="{{ request.GET.q }}" class="search-input" autocomplete="off">
-                    <button type="submit" class="search-btn">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                        </svg>
-                    </button>
-                    <!-- Search Suggestions Container -->
-                    <div class="search-suggestions is-hidden" aria-hidden="true"></div>
-                </form>
-            </div>
-        </div>
-
-        <div class="products-layout">
-            <!-- Filters Sidebar -->
-            <aside class="filters-sidebar"
-                x-data="{ 
-                    filtersOpen: false,
-                    activeFilters: {
-                        category: '{{ current_category|default:"" }}',
-                        difficulty: '{{ current_difficulty|default:"" }}',
-                        price: '{{ current_price|default:"" }}',
-                        duration: '{{ current_duration|default:"" }}'
-                    },
-                    hasActiveFilters() {
-                        return Object.values(this.activeFilters).some(value => value !== '');
-                    },
-                    clearAllFilters() {
-                        this.activeFilters = { category: '', difficulty: '', price: '', duration: '' }; window.location.href = '{% url "
-                content:course_list" %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}'; } }"
-                role="complementary" aria-label="Фільтри курсів">
-                <div class="filters-header">
-                    <h3>Фільтрувати</h3>
-                    <div class="filters-controls">
-                        <span x-show="hasActiveFilters()" class="active-filters-count"
-                            x-text="'Активних: ' + Object.values(activeFilters).filter(v => v !== '').length"></span>
-                        <button class="mobile-filters-toggle" @click="filtersOpen = !filtersOpen"
-                            :aria-expanded="filtersOpen" aria-controls="filters-content">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
-                            </svg>
-                            <span class="sr-only">Відкрити фільтри</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="filters-content filters-scrollable" id="filters-content"
-                    :class="{'mobile-open': filtersOpen}">
-                    <form method="get" id="filterForm" @submit="filtersOpen = false">
-                        {% if request.GET.q %}
-                        <input type="hidden" name="q" value="{{ request.GET.q }}">
-                        {% endif %}
-
-                        <!-- Category Filter -->
-                        <div class="filter-group">
-                            <h4>За напрямками</h4>
-                            <div class="filter-options">
-                                {% for category in categories %}
-                                <label class="filter-option">
-                                    <input type="radio" name="category" value="{{ category.slug }}" {% if
-                                        current_category|default:''==category.slug %}checked{% endif %}>
-                                    <span>{{ category.name }}</span>
-                                </label>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                        <!-- Тренерство з під-фільтрами -->
-                        <div class="filter-group" x-data="{ expanded: false }">
-                            <h4>
-                                <button type="button" class="filter-toggle" @click="expanded = !expanded">
-                                    <span>Тренерство</span>
-                                    <svg class="toggle-icon" :class="{'rotated': expanded}" width="16" height="16"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M6 9l6 6 6-6" />
-                                    </svg>
-                                </button>
-                            </h4>
-
-                            <div class="sub-filters" x-show="expanded" x-collapse>
-                                <label class="filter-option sub-option">
-                                    <input type="checkbox" name="training_type" value="goalkeeper">
-                                    <span>Тренер воротарів</span>
-                                </label>
-                                <label class="filter-option sub-option">
-                                    <input type="checkbox" name="training_type" value="youth">
-                                    <span>Дитячий тренер</span>
-                                </label>
-                                <label class="filter-option sub-option">
-                                    <input type="checkbox" name="training_type" value="fitness">
-                                    <span>Тренер ЗФП</span>
-                                </label>
-                                <label class="filter-option sub-option">
-                                    <input type="checkbox" name="training_type" value="professional">
-                                    <span>Тренер професійних команд</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Інші напрямки -->
-                        <div class="filter-group">
-                            <h4>Інші напрямки</h4>
-                            <div class="filter-options">
-                                <label class="filter-option">
-                                    <input type="checkbox" name="interest" value="analytics">
-                                    <span>Аналітика і скаутинг</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" name="interest" value="management">
-                                    <span>Менеджмент</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" name="interest" value="psychology">
-                                    <span>Спортивна психологія</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" name="interest" value="nutrition">
-                                    <span>Нутриціологія</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" name="interest" value="player">
-                                    <span>Футболіст</span>
-                                </label>
-                                <label class="filter-option">
-                                    <input type="checkbox" name="interest" value="parent">
-                                    <span>Батько</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="filter-actions">
-                            <button type="submit" class="btn btn-primary">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                                </svg>
-                                Застосувати
-                            </button>
-                            <button type="button" @click="clearAllFilters()" class="btn btn-outline"
-                                x-show="hasActiveFilters()">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path
-                                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-                                </svg>
-                                Скинути все
-                            </button>
-                            <a href="{% url 'content:course_list' %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}"
-                                class="btn btn-ghost" x-show="!hasActiveFilters()">
-                                Скинути
+                        </article>
+                        {% empty %}
+                        <div class="no-results">
+                            <h3>Нічого не знайдено</h3>
+                            <p>Спробуйте змінити параметри пошуку або фільтрування</p>
+                            <a href="{% url 'content:course_list' %}" class="btn btn-outline">
+                                Показати всі курси
                             </a>
                         </div>
-
-                        <!-- Quick Filter Tags -->
-                        <div class="quick-filters" x-show="hasActiveFilters()">
-                            <h5>Активні фільтри:</h5>
-                            <div class="filter-tags">
-                                <template x-for="[key, value] in Object.entries(activeFilters)" :key="key">
-                                    <span x-show="value !== ''" class="filter-tag"
-                                        @click="activeFilters[key] = ''; $refs.filterForm.submit()">
-                                        <span x-text="value"></span>
-                                        <button type="button">×</button>
-                                    </span>
-                                </template>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </aside>
-
-            <!-- Products Grid -->
-            <main class="products-content">
-                <!-- Sort Options -->
-                <div class="sort-bar">
-                    <div class="sort-options">
-                        <label for="sort">Сортувати за:</label>
-                        <select name="sort" id="sort" class="sort-select">
-                            <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
-                                %}selected{% endif %}>
-                                Новіші спочатку
-                            </option>
-                            <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
-                                назвою А-Я
-                            </option>
-                            <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
-                                назвою Я-А
-                            </option>
-                            <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
-                                За ціною (зростання)
-                            </option>
-                            <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
-                                ціною (спадання)
-                            </option>
-                        </select>
+                        {% endfor %}
                     </div>
 
-                    <div class="results-count">
-                        Знайдено: {{ paginator.count }} курсів
-                    </div>
-                </div>
-
-                <!-- Products Grid -->
-                <div class="products-grid">
-                    {% for course in courses %}
-                    <article class="product-card">
-                        <div class="product-image">
-                            {% if course.thumbnail %}
-                            <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
-                            {% else %}
-                            <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
+                    <!-- Pagination -->
+                    {% if is_paginated %}
+                    <div class="pagination-wrapper">
+                        <div class="pagination">
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">Перша</a>
+                            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">‹</a>
                             {% endif %}
 
-                            <div class="product-overlay">
-                                <div class="product-badges">
-                                    {% if course.is_featured %}
-                                    <span class="badge badge-top">топ-продажів</span>
-                                    {% endif %}
-                                    {% if course.is_free %}
-                                    <span class="badge badge-free">безкоштовно</span>
-                                    {% endif %}
-                                </div>
+                            <span class="page-info">
+                                Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+                            </span>
 
-                                <!-- Favorite Button -->
-                                {% if user.is_authenticated %}
-                                <button class="favorite-btn {% if course.id in user_favorites %}active{% endif %}"
-                                    data-course-id="{{ course.id }}"
-                                    hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none"
-                                    hx-trigger="click">
-                                    <svg class="icon" viewBox="0 0 24 24">
-                                        <path
-                                            d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
-                                    </svg>
-                                </button>
-                                {% endif %}
-                            </div>
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">›</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                                class="page-link">Остання</a>
+                            {% endif %}
                         </div>
-
-                        <div class="product-content">
-                            <div class="product-meta">
-                                <span class="category">{{ course.category.name }}</span>
-                                <span class="difficulty difficulty-{{ course.difficulty }}">
-                                    {{ course.get_difficulty_display }}
-                                </span>
-                            </div>
-
-                            <h3 class="product-title">
-                                <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
-                            </h3>
-
-                            <p class="product-description">{{ course.short_description }}</p>
-
-                            <div class="product-details">
-                                <span class="duration">{{ course.duration_display }}</span>
-                                <div class="price">
-                                    {% if course.is_free %}
-                                    <span class="price-free">Безкоштовно</span>
-                                    {% else %}
-                                    <span class="price-amount">{{ course.price }}₴</span>
-                                    {% endif %}
-                                    {% if course_points and not course.is_free %}
-                                    {% with points=course_points|get_item:course.id %}
-                                    {% if points and points > 0 %}
-                                    <span class="loyalty-points">+{{ points }} балів</span>
-                                    {% endif %}
-                                    {% endwith %}
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                            <div class="product-tags">
-                                {% for tag in course.tags.all|slice:":3" %}
-                                <span class="tag">{{ tag.name }}</span>
-                                {% endfor %}
-                            </div>
-
-                            <div class="product-actions">
-                                <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
-                                    Переглянути
-                                </a>
-                                {% if not user.is_authenticated %}
-                                <small class="access-hint">Увійдіть для доступу</small>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </article>
-                    {% empty %}
-                    <div class="no-results">
-                        <h3>Нічого не знайдено</h3>
-                        <p>Спробуйте змінити параметри пошуку або фільтрування</p>
-                        <a href="{% url 'content:course_list' %}" class="btn btn-outline">
-                            Показати всі курси
-                        </a>
                     </div>
-                    {% endfor %}
-                </div>
-
-                <!-- Pagination -->
-                {% if is_paginated %}
-                <div class="pagination-wrapper">
-                    <div class="pagination">
-                        {% if page_obj.has_previous %}
-                        <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
-                            class="page-link">Перша</a>
-                        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
-                            class="page-link">‹</a>
-                        {% endif %}
-
-                        <span class="page-info">
-                            Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
-                        </span>
-
-                        {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
-                            class="page-link">›</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
-                            class="page-link">Остання</a>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endif %}
-            </main>
+                    {% endif %}
+                </main>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 </div>
 
 <!-- Support Widget -->
 <div class="support-widget">
-    <button class="support-btn" x-data="{ open: false }" @click="open = !open">
+    <button class="support-btn">
         <svg class="icon" viewBox="0 0 24 24">
             <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
         </svg>
