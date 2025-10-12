@@ -1019,7 +1019,7 @@
         }
 
         .expert-name {
-            color: #1a1a1a;
+            color: var(--color-text);
             text-shadow: none;
         }
 
@@ -1100,7 +1100,7 @@
         }
 
         .direction-title {
-            color: #1a1a1a;
+            color: var(--color-text);
             text-shadow: none;
         }
 
