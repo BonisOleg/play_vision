@@ -4,6 +4,27 @@
     min-height: calc(100vh - 160px);
 }
 
+/* === SVG GRADIENT STYLES === */
+#triangleGradient stop:nth-child(1) {
+    stop-color: #ff6b35;
+    stop-opacity: 0.1;
+}
+
+#triangleGradient stop:nth-child(2) {
+    stop-color: #ff6b35;
+    stop-opacity: 0.05;
+}
+
+#triangleGradient stop:nth-child(3) {
+    stop-color: #ff6b35;
+    stop-opacity: 0.1;
+}
+
+#shadow {
+    flood-color: #ff6b35;
+    flood-opacity: 0.2;
+}
+
 /* === INTERACTION STATES === */
 /* Triangle highlighted state */
 .triangle-svg.triangle-highlighted {

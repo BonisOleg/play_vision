@@ -64,6 +64,26 @@
     background: var(--shadow-alpha-30);
 }
 
+/* Tablet responsiveness */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .fullscreen-section {
+        min-height: 500px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero-buttons {
+        gap: var(--spacing-sm);
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+}
+
 @media (max-width: 768px) {
     .hero-section.hero-bordered .section-content {
         padding: 2rem;

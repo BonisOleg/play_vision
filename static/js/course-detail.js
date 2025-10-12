@@ -18,8 +18,8 @@ function startPreview() {
     if (!modal) return;
 
     // Show modal
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    modal.classList.add('is-active');
+    document.body.classList.add('modal-open');
 
     // Reset timer
     previewTimeLeft = 20;
@@ -99,8 +99,8 @@ function closePreview() {
     }
 
     // Hide modal
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
+    modal.classList.remove('is-active');
+    document.body.classList.remove('modal-open');
 }
 
 /**
@@ -480,7 +480,7 @@ class AccessibilityManager {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 const modal = document.getElementById('previewModal');
-                if (modal && modal.style.display !== 'none') {
+                if (modal && modal.classList.contains('is-active')) {
                     closePreview();
                 }
             }

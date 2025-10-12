@@ -47,7 +47,7 @@
         {% if show_progress and progress %}
         <div class="course-progress">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ progress.progress_percentage }}%"></div>
+                <div class="progress-fill" data-progress="{{ progress.progress_percentage }}"></div>
             </div>
             <span class="progress-text">{{ progress.progress_percentage|floatformat:0 }}% завершено</span>
         </div>

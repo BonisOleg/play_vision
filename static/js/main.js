@@ -195,20 +195,15 @@ function getCookie(name) {
 }
 
 function initializeProgressBars() {
-    // Встановлюємо width для всіх progress bars з data-атрибутом
-    const progressFills = document.querySelectorAll('.progress-fill[data-progress]');
+    const progressFills = document.querySelectorAll('.progress-fill');
     progressFills.forEach(fill => {
-        const progress = fill.getAttribute('data-progress');
+        const progress = fill.dataset.progress || fill.textContent.trim();
         if (progress) {
-            fill.style.width = progress + '%';
+            const value = parseFloat(progress);
+            if (!isNaN(value) && value >= 0 && value <= 100) {
+                fill.style.setProperty('--progress-width', value + '%');
+            }
         }
-    });
-
-    // Також встановлюємо для progress bars з inline width
-    const inlineProgressFills = document.querySelectorAll('.progress-fill[style*="width"]');
-    inlineProgressFills.forEach(fill => {
-        // Width вже встановлений inline, нічого не робимо
-        // Це для існуючих темплейтів
     });
 }
 

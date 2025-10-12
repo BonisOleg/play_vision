@@ -34,7 +34,8 @@
 }
 
 /* === PROGRESS BARS === */
-.progress {
+.progress,
+.progress-bar {
     position: relative;
     width: 100%;
     height: 8px;
@@ -44,10 +45,18 @@
 }
 
 .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
     background: var(--color-primary);
     border-radius: var(--radius-full);
+    width: var(--progress-width, 0%);
     transition: width var(--transition-base);
+}
+
+.progress-container {
+    width: 100%;
 }
 
 /* === LOADING STATES === */

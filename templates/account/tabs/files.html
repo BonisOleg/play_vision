@@ -17,7 +17,7 @@
             <!-- Прогрес бар -->
             <div class="progress-container">
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: {{ material.progress }}%"></div>
+                    <div class="progress-fill" data-progress="{{ material.progress }}"></div>
                 </div>
                 <div class="progress-text">{{ material.progress|floatformat:0 }}%</div>
             </div>
@@ -99,7 +99,7 @@
                 <h4>{{ course.title }}</h4>
                 <div class="course-progress">
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ course.progress_percentage|default:0 }}%"></div>
+                        <div class="progress-fill" data-progress="{{ course.progress_percentage|default:0 }}"></div>
                     </div>
                     <span class="progress-text">{{ course.progress_percentage|default:0 }}%</span>
                 </div>

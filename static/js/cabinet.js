@@ -224,7 +224,7 @@ class Cabinet {
             // Запобігаємо конфліктам з HTMX - додаємо затримку
             setTimeout(() => {
                 // Показати модальне вікно
-                modal.style.display = 'flex';
+                modal.classList.add('is-active');
                 modalContent.innerHTML = '<div class="loading">Завантаження...</div>';
             }, 50);
 
@@ -747,12 +747,12 @@ class Cabinet {
     }
 
     closeModal(modal) {
-        modal.style.display = 'none';
+        modal.classList.remove('is-active');
     }
 
     closeAllModals() {
         document.querySelectorAll('.modal').forEach(modal => {
-            modal.style.display = 'none';
+            modal.classList.remove('is-active');
         });
     }
 
@@ -1270,7 +1270,7 @@ function resetCabinetCache() {
 
     // Закриваємо всі модальні вікна
     document.querySelectorAll('.modal').forEach(modal => {
-        modal.style.display = 'none';
+        modal.classList.remove('is-active');
     });
 
     // Очищуємо notifications контейнер

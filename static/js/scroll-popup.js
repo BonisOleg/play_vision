@@ -60,14 +60,14 @@ class ScrollPopup {
         this.isShown = true;
         this.element.classList.remove('is-hidden');
         this.element.classList.add('is-visible');
-        document.body.style.overflow = 'hidden';
+        document.body.classList.add('modal-open');
         localStorage.setItem('popup_shown', 'true');
     }
 
     close() {
         this.element.classList.add('is-hidden');
         this.element.classList.remove('is-visible');
-        document.body.style.overflow = '';
+        document.body.classList.remove('modal-open');
         sessionStorage.setItem('popup_dismissed', 'true');
     }
 

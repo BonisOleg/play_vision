@@ -163,7 +163,7 @@
 
             {% if user_progress %}
             <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ user_progress.progress_percentage }}%"></div>
+                <div class="progress-fill" data-progress="{{ user_progress.progress_percentage }}"></div>
                 <span class="progress-text">{{ user_progress.progress_percentage|floatformat:0 }}% завершено</span>
             </div>
             {% endif %}

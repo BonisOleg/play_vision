@@ -1,4 +1,4 @@
-/* Scroll Popup Component - БЕЗ !important */
+/* Scroll Popup Component */
 
 .scroll-popup {
     position: fixed;
@@ -11,6 +11,21 @@
     align-items: center;
     justify-content: center;
     padding: var(--spacing-lg);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.scroll-popup.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.scroll-popup.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .popup-overlay {

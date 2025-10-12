@@ -460,6 +460,11 @@ a:hover {
     min-height: calc(100vh - 200px);
 }
 
+/* Modal Open - prevent body scroll */
+body.modal-open {
+    overflow: hidden;
+}
+
 .footer {
     background: var(--color-bg-gray);
     border-top: 1px solid var(--color-border);
@@ -737,6 +742,43 @@ a:hover {
     text-decoration: none;
 }
 
+/* iOS Safari specific fixes */
+html.ios-safari {
+    /* Fix for viewport height on iOS */
+    height: -webkit-fill-available;
+}
+
+html.ios-safari body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+}
+
+/* Fix for sticky positioning on iOS */
+html.ios-safari .header {
+    position: -webkit-sticky;
+    position: sticky;
+}
+
+/* Fix for smooth scrolling on iOS */
+html.ios-safari {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent iOS zoom on focus */
+@media (max-width: 1024px) {
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="search"],
+    textarea,
+    select {
+        font-size: 16px;
+    }
+}
+
 /* Mobile adaptations */
 @media (max-width: 768px) {
     .navbar-brand {
@@ -772,6 +814,28 @@ a:hover {
     }
 }
 
+/* Tablet specific styles (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 90%;
+        padding: 0 var(--spacing-lg);
+    }
+
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* Small mobile devices */
 @media (max-width: 375px) {
     .btn {
         font-size: 0.875rem;
@@ -784,5 +848,13 @@ a:hover {
 
     .container {
         padding: 0 var(--spacing-sm);
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
     }
 }
