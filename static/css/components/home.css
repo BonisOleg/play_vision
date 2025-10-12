@@ -719,10 +719,10 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(3, 180px);
-    grid-auto-rows: 104px;
-    gap: 1rem 1.5rem;
+    grid-template-rows: repeat(2, 180px);
+    gap: 2rem;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     max-width: 700px;
     margin: 3rem auto;
     padding: 0 var(--spacing-md);
@@ -731,27 +731,41 @@
 .hexagon {
     position: relative;
     width: 180px;
-    height: 208px;
+    height: 180px;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     box-shadow: 0 8px 20px var(--shadow-alpha-30);
 }
 
-.hexagon:nth-child(2),
+.hexagon:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.hexagon:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.hexagon:nth-child(3) {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.hexagon:nth-child(4) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
 .hexagon:nth-child(5) {
-    grid-column-start: 2;
+    grid-column: 2;
+    grid-row: 2;
 }
 
-.hexagon:nth-child(3),
 .hexagon:nth-child(6) {
-    grid-column-start: 3;
-}
-
-.hexagon:nth-child(4),
-.hexagon:nth-child(5),
-.hexagon:nth-child(6) {
-    margin-top: -104px;
+    grid-column: 3;
+    grid-row: 2;
 }
 
 .hexagon:hover {
@@ -813,20 +827,14 @@
 @media (max-width: 992px) {
     .hexagons-grid {
         grid-template-columns: repeat(3, 150px);
-        grid-auto-rows: 87px;
-        gap: 0.75rem 1rem;
+        grid-template-rows: repeat(2, 150px);
+        gap: 1.5rem;
         padding: 0 var(--spacing-sm);
     }
 
     .hexagon {
         width: 150px;
-        height: 173px;
-    }
-
-    .hexagon:nth-child(4),
-    .hexagon:nth-child(5),
-    .hexagon:nth-child(6) {
-        margin-top: -87px;
+        height: 150px;
     }
 
     .hexagon h4 {
@@ -851,20 +859,14 @@
 
     .hexagons-grid {
         grid-template-columns: repeat(3, 110px);
-        grid-auto-rows: 64px;
-        gap: 0.5rem 0.75rem;
+        grid-template-rows: repeat(2, 110px);
+        gap: 1rem;
         justify-content: center;
     }
 
     .hexagon {
         width: 110px;
-        height: 127px;
-    }
-
-    .hexagon:nth-child(4),
-    .hexagon:nth-child(5),
-    .hexagon:nth-child(6) {
-        margin-top: -64px;
+        height: 110px;
     }
 
     .hexagon-inner {
@@ -892,19 +894,13 @@
 
     .hexagons-grid {
         grid-template-columns: repeat(3, 95px);
-        grid-auto-rows: 55px;
-        gap: 0.35rem 0.5rem;
+        grid-template-rows: repeat(2, 95px);
+        gap: 0.75rem;
     }
 
     .hexagon {
         width: 95px;
-        height: 110px;
-    }
-
-    .hexagon:nth-child(4),
-    .hexagon:nth-child(5),
-    .hexagon:nth-child(6) {
-        margin-top: -55px;
+        height: 95px;
     }
 
     .hexagon-inner {
