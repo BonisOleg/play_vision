@@ -30,14 +30,38 @@ class ScrollPopup {
         // Закриття popup
         const closeBtn = this.element.querySelector('.popup-close');
         const overlay = this.element.querySelector('.popup-overlay');
+        const card = this.element.querySelector('.popup-card');
 
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.close());
+            closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.close();
+            });
         }
 
         if (overlay) {
-            overlay.addEventListener('click', () => this.close());
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    e.preventDefault();
+                    this.close();
+                }
+            });
         }
+
+        // Запобігаємо закриттю при кліці на картку
+        if (card) {
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        // Закриття по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isShown) {
+                this.close();
+            }
+        });
 
         // Форма реєстрації (якщо є)
         const form = this.element.querySelector('#scroll-popup-form');
@@ -65,6 +89,7 @@ class ScrollPopup {
     }
 
     close() {
+        this.isShown = false;
         this.element.classList.add('is-hidden');
         this.element.classList.remove('is-visible');
         document.body.classList.remove('modal-open');
