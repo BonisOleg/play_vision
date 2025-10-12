@@ -109,6 +109,25 @@
     background: var(--color-bg);
 }
 
+.mentor-coaching-section .section-bg {
+    display: none;
+}
+
+.mentor-coaching-section .section-overlay--dark {
+    display: none;
+}
+
+.mentor-coaching-section .section-title,
+.mentor-coaching-section .ecosystem-subtitle {
+    color: var(--color-text);
+    text-shadow: none;
+}
+
+.mentor-coaching-section .hexagon h4 {
+    color: white;
+    text-shadow: 0 2px 4px var(--shadow-alpha-60);
+}
+
 .hero-badge {
     display: inline-block;
     background: var(--color-primary);
@@ -1045,12 +1064,24 @@
             background: var(--color-bg-dark);
         }
 
+        .mentor-coaching-section .section-bg {
+            display: block;
+        }
+
         .mentor-coaching-section .section-overlay--dark {
+            display: block;
             background: var(--shadow-alpha-80);
         }
 
-        .ecosystem-subtitle {
-            color: var(--color-text);
+        .mentor-coaching-section .section-title,
+        .mentor-coaching-section .ecosystem-subtitle {
+            color: white;
+            text-shadow: 0 2px 8px var(--shadow-alpha-80);
+        }
+
+        .mentor-coaching-section .hexagon h4 {
+            color: white;
+            text-shadow: 0 2px 4px var(--shadow-alpha-60);
         }
 
         .hexagon {
