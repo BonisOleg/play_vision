@@ -127,6 +127,47 @@ a:hover {
 .logo {
     height: 40px;
     width: auto;
+    transition: opacity var(--transition-fast);
+}
+
+/* Logo theme switching */
+.logo-light {
+    display: block;
+}
+
+.logo-dark {
+    display: none;
+}
+
+/* Dark theme: показуємо біле лого */
+[data-theme="dark"] .logo-light {
+    display: none;
+}
+
+[data-theme="dark"] .logo-dark {
+    display: block;
+}
+
+/* Auto theme: залежить від системної теми */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .logo-light {
+        display: none;
+    }
+
+    [data-theme="auto"] .logo-dark {
+        display: block;
+    }
+}
+
+/* Забезпечуємо що тільки одне лого показується */
+.navbar-brand {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand .logo {
+    position: relative;
 }
 
 .navbar-menu,
@@ -843,6 +884,11 @@ html.ios-safari {
     }
 
     .logo {
+        height: 32px;
+    }
+
+    .logo-light,
+    .logo-dark {
         height: 32px;
     }
 

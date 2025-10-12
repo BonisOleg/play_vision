@@ -20,8 +20,7 @@
                     <nav class="breadcrumb">
                         <a href="{% url 'content:course_list' %}">Хаб знань</a>
                         <span>/</span>
-                        <a href="{% url 'content:course_list' %}?category={{ course.category.slug }}">{{
-                            course.category.name }}</a>
+                        <a href="{% url 'content:course_list' %}?category={{ course.category.slug }}">{{ course.category.name }}</a>
                         <span>/</span>
                         <span>{{ course.title }}</span>
                     </nav>

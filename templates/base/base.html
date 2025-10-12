@@ -12,6 +12,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
 
+    <!-- Preload logos for theme switching -->
+    <link rel="preload" href="{% static 'icons/horizontal_desc_black.svg' %}" as="image" type="image/svg+xml">
+    <link rel="preload" href="{% static 'icons/horizontal_desc_white.svg' %}" as="image" type="image/svg+xml">
+
     <!-- PWA Complete Configuration -->
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <meta name="theme-color" content="#ff6b35">
@@ -75,7 +79,8 @@
             <nav class="navbar">
                 <!-- Logo -->
                 <a href="{% url 'core:home' %}" class="navbar-brand">
-                    <img src="{% static 'images/playvision-logo.svg' %}" alt="Play Vision" class="logo">
+                    <img src="{% static 'icons/horizontal_desc_black.svg' %}" alt="Play Vision" class="logo logo-light">
+                    <img src="{% static 'icons/horizontal_desc_white.svg' %}" alt="Play Vision" class="logo logo-dark">
                 </a>
 
                 <!-- Desktop Navigation -->
