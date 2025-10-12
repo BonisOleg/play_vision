@@ -13,7 +13,7 @@
 <div class="fullscreen-container">
 
     <!-- 1. HERO SECTION -->
-    <section class="fullscreen-section hero-section hero-bordered" x-data="heroCarousel()">
+    <section class="fullscreen-section hero-section hero-bordered">
         <!-- Background Video/Image -->
         <div class="section-bg">
             <video class="section-bg-video" muted loop preload="metadata">
@@ -27,19 +27,14 @@
 
         <div class="section-content hero-with-frame">
             <div class="hero-badge">ГОЛОВНЕ ЗАРАЗ</div>
-            <h1 class="hero-title" x-text="slides[currentSlide].title"></h1>
-            <p class="hero-subtitle" x-text="slides[currentSlide].subtitle"></p>
+            <h1 class="hero-title">Продуктивна практика у футбольних клубах</h1>
+            <p class="hero-subtitle">Реальні кейси, стажування та менторинг з професіоналами індустрії</p>
 
             <div class="hero-buttons">
-                <a :href="slides[currentSlide].ctaUrl" class="btn btn-primary">Дізнатись більше</a>
+                <a href="/about/" class="btn btn-primary">Дізнатись більше</a>
             </div>
 
-            <div class="hero-slider-dots">
-                <template x-for="(slide, index) in slides" :key="index">
-                    <button class="slider-dot" :class="{'active': currentSlide === index}" @click="currentSlide = index"
-                        :aria-label="'Слайд ' + (index + 1)"></button>
-                </template>
-            </div>
+            <div class="hero-slider-dots"></div>
         </div>
     </section>
 
@@ -53,16 +48,15 @@
         <div class="section-content">
             <h2 class="section-title">6 найголовніших курсів</h2>
 
-            <div class="featured-carousel-container" x-data="coursesCarousel()">
-                <button class="carousel-btn carousel-btn-prev" @click="prevSlide()" :disabled="currentIndex === 0"
-                    aria-label="Попередній курс">
+            <div class="featured-carousel-container">
+                <button class="carousel-btn carousel-btn-prev" aria-label="Попередній курс">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M15 18l-6-6 6-6" />
                     </svg>
                 </button>
 
                 <div class="featured-carousel">
-                    <div class="carousel-track" :style="`transform: translateX(-${currentIndex * slideWidth}%)`">
+                    <div class="carousel-track">
                         {% for course in featured_courses %}
                         <div class="carousel-slide">
                             <div class="featured-card">
@@ -89,8 +83,7 @@
                     </div>
                 </div>
 
-                <button class="carousel-btn carousel-btn-next" @click="nextSlide()" :disabled="currentIndex >= maxIndex"
-                    aria-label="Наступний курс">
+                <button class="carousel-btn carousel-btn-next" aria-label="Наступний курс">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 18l6-6-6-6" />
                     </svg>

@@ -63,16 +63,6 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 
     {% block extra_head %}{% endblock %}
-
-    <!-- Alpine.js -->
-    <script defer src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js"></script>
-
-    <!-- Alpine.js Start Handler -->
-    <script>
-        document.addEventListener('alpine:init', () => {
-            console.log('Alpine.js initialized');
-        });
-    </script>
 </head>
 
 <body>
@@ -86,7 +76,6 @@
                 <!-- Logo -->
                 <a href="{% url 'core:home' %}" class="navbar-brand">
                     <img src="{% static 'images/playvision-logo.svg' %}" alt="Play Vision" class="logo">
-                    <span>playvision - навігатор футбольного розвитку</span>
                 </a>
 
                 <!-- Desktop Navigation -->
@@ -183,9 +172,9 @@
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
-        <div class="message message-{{ message.tags }}" x-data="{ show: true }" x-show="show">
+        <div class="message message-{{ message.tags }}">
             {{ message }}
-            <button @click="show = false" class="message-close">&times;</button>
+            <button class="message-close">&times;</button>
         </div>
         {% endfor %}
     </div>
@@ -249,7 +238,9 @@
     </svg>
 
     <!-- Scripts -->
-    <!-- Core utilities - load first -->
+    <!-- Theme Manager - load first to prevent flash -->
+    <script src="{% static 'js/theme-manager.js' %}"></script>
+    <!-- Core utilities -->
     <script src="{% static 'js/interval-manager.js' %}"></script>
     <script src="{% static 'js/dom-utils.js' %}"></script>
     <script src="{% static 'js/api-utils.js' %}"></script>

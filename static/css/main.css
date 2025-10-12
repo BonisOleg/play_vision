@@ -379,6 +379,12 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    opacity: 1;
+    transition: opacity var(--transition-base);
+}
+
+.message-fade-out {
+    opacity: 0;
 }
 
 .message-success {
@@ -399,6 +405,8 @@ a:hover {
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--color-text-light);
+    padding: 0 0 0 var(--spacing-md);
+    line-height: 1;
 }
 
 .main {

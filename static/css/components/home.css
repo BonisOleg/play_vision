@@ -612,14 +612,20 @@
     }
 }
 
+/* === iOS SAFARI OPTIMIZATIONS === */
 @supports (-webkit-touch-callout: none) {
     .fullscreen-section {
         height: -webkit-calc(100vh - 80px);
         min-height: -webkit-calc(100vh - 80px);
     }
 
+    /* Buttons */
+    .btn,
     .cta-section .btn-primary,
-    .cta-section .btn-outline {
+    .cta-section .btn-outline,
+    .carousel-btn,
+    .slider-dot,
+    .hexagon {
         -webkit-appearance: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
@@ -627,8 +633,34 @@
         user-select: none;
         appearance: none;
         cursor: pointer;
-        border-style: solid;
-        border-width: 2px;
+    }
+
+    /* Smooth scrolling */
+    .fullscreen-container,
+    .section-content {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Hexagons - prevent blur */
+    .hexagon,
+    .hexagon-inner {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+
+    /* Video */
+    .section-bg-video {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    /* Fix iOS Safari address bar height issues */
+    @media screen and (max-width: 768px) {
+        .fullscreen-section {
+            min-height: -webkit-fill-available;
+        }
     }
 }
 
@@ -650,8 +682,10 @@
     grid-auto-rows: 104px;
     gap: 1rem 1.5rem;
     justify-content: center;
+    align-items: start;
     max-width: 700px;
     margin: 3rem auto;
+    padding: 0 var(--spacing-md);
 }
 
 .hexagon {
@@ -738,97 +772,113 @@
 
 @media (max-width: 992px) {
     .hexagons-grid {
-        grid-template-columns: repeat(3, 160px);
-        grid-auto-rows: 92px;
+        grid-template-columns: repeat(3, 150px);
+        grid-auto-rows: 87px;
         gap: 0.75rem 1rem;
+        padding: 0 var(--spacing-sm);
     }
 
     .hexagon {
-        width: 160px;
-        height: 184px;
+        width: 150px;
+        height: 173px;
     }
 
     .hexagon:nth-child(4),
     .hexagon:nth-child(5),
     .hexagon:nth-child(6) {
-        margin-top: -92px;
-    }
-
-    .hexagon h4 {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .hexagons-grid {
-        grid-template-columns: repeat(2, 140px);
-        grid-auto-rows: 80px;
-        gap: 0.5rem;
-    }
-
-    .hexagon {
-        width: 140px;
-        height: 161px;
-    }
-
-    .hexagon:nth-child(2),
-    .hexagon:nth-child(3),
-    .hexagon:nth-child(5),
-    .hexagon:nth-child(6) {
-        grid-column-start: auto;
-    }
-
-    .hexagon:nth-child(3),
-    .hexagon:nth-child(4),
-    .hexagon:nth-child(5),
-    .hexagon:nth-child(6) {
-        margin-top: -80px;
-    }
-
-    .hexagon-inner {
-        padding: 1rem;
-        gap: 0.5rem;
-    }
-
-    .hexagon-icon {
-        width: 35px;
-        height: 35px;
+        margin-top: -87px;
     }
 
     .hexagon h4 {
         font-size: 0.85rem;
     }
-}
-
-@media (max-width: 480px) {
-    .hexagons-grid {
-        grid-template-columns: repeat(2, 120px);
-        grid-auto-rows: 69px;
-        gap: 0.5rem;
-    }
-
-    .hexagon {
-        width: 120px;
-        height: 138px;
-    }
-
-    .hexagon:nth-child(3),
-    .hexagon:nth-child(4),
-    .hexagon:nth-child(5),
-    .hexagon:nth-child(6) {
-        margin-top: -69px;
-    }
 
     .hexagon-inner {
-        padding: 0.75rem;
+        padding: 1.25rem;
     }
 
     .hexagon-icon {
-        width: 28px;
-        height: 28px;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ecosystem-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+    }
+
+    .hexagons-grid {
+        grid-template-columns: repeat(3, 110px);
+        grid-auto-rows: 64px;
+        gap: 0.5rem 0.75rem;
+        justify-content: center;
+    }
+
+    .hexagon {
+        width: 110px;
+        height: 127px;
+    }
+
+    .hexagon:nth-child(4),
+    .hexagon:nth-child(5),
+    .hexagon:nth-child(6) {
+        margin-top: -64px;
+    }
+
+    .hexagon-inner {
+        padding: 0.85rem;
+        gap: 0.35rem;
+    }
+
+    .hexagon-icon {
+        width: 30px;
+        height: 30px;
     }
 
     .hexagon h4 {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 480px) {
+    .ecosystem-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        padding: 0 var(--spacing-md);
+    }
+
+    .hexagons-grid {
+        grid-template-columns: repeat(3, 95px);
+        grid-auto-rows: 55px;
+        gap: 0.35rem 0.5rem;
+    }
+
+    .hexagon {
+        width: 95px;
+        height: 110px;
+    }
+
+    .hexagon:nth-child(4),
+    .hexagon:nth-child(5),
+    .hexagon:nth-child(6) {
+        margin-top: -55px;
+    }
+
+    .hexagon-inner {
+        padding: 0.65rem;
+        gap: 0.25rem;
+    }
+
+    .hexagon-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .hexagon h4 {
+        font-size: 0.65rem;
+        line-height: 1.15;
     }
 }

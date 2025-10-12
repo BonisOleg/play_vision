@@ -87,7 +87,7 @@
                         {% elif content_state == 'preview' %}
                         <div class="content-overlay preview">
                             <div class="overlay-content">
-                                <button class="preview-btn" onclick="startPreview()">
+                                <button class="preview-btn" data-action="start-preview">
                                     <span class="play-icon">▶</span>
                                     Переглянути 20 секунд
                                 </button>
@@ -117,7 +117,8 @@
                                 Розпочати навчання
                             </a>
                             {% elif course.is_free %}
-                            <button class="btn btn-primary btn-large" onclick="startFreeCourse()">
+                            <button class="btn btn-primary btn-large" data-action="start-free-course"
+                                data-course-id="{{ course.id }}">
                                 Розпочати безкоштовно
                             </button>
                             {% else %}
@@ -258,11 +259,11 @@
 </div>
 
 <!-- Preview Modal -->
-<div id="previewModal" class="modal" style="display: none;">
+<div id="previewModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Передперегляд курсу</h3>
-            <button class="modal-close" onclick="closePreview()">&times;</button>
+            <button class="modal-close">&times;</button>
         </div>
         <div class="modal-body">
             <div class="preview-video">

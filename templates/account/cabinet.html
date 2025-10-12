@@ -23,10 +23,10 @@
                         {{ user.first_name|first|default:user.email|first|upper }}
                     </div>
                     {% endif %}
-                    <button class="avatar-upload-btn" onclick="document.getElementById('avatar-input').click()">
+                    <button class="avatar-upload-btn">
                         Завантажити фото
                     </button>
-                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                    <input type="file" id="avatar-input" accept="image/*" class="is-hidden">
                 </div>
 
                 <!-- Форма профілю -->
@@ -84,7 +84,8 @@
                         <div class="interests-list">
                             {% for interest in interests %}
                             <label class="interest-item">
-                                <input type="checkbox" name="interests" value="{{ interest.id }}" {% if interest in user.profile.interests.all %}checked{% endif %}>
+                                <input type="checkbox" name="interests" value="{{ interest.id }}" {% if interest in
+                                    user.profile.interests.all %}checked{% endif %}>
                                 <span class="interest-label">
                                     <span class="interest-number">{{ forloop.counter }}.</span>
                                     {{ interest.name }}

@@ -83,9 +83,9 @@
                     </div>
                 </div>
 
-                <div class="material-actions">
+                <div class="material-actions" data-material-id="{{ material.id }}">
                     {% if has_access %}
-                    <button class="btn btn-primary" onclick="markAsCompleted()" {% if progress and material in
+                    <button class="btn btn-primary" data-action="mark-completed" {% if progress and material in
                         progress.materials_completed.all %}disabled{% endif %}>
                         {% if progress and material in progress.materials_completed.all %}
                         ✓ Завершено
@@ -185,7 +185,7 @@
                             <source src="{{ material.get_video_url }}" type="video/mp4">
                             <p>Ваш браузер не підтримує відтворення відео.</p>
                         </video>
-                        <div class="preview-overlay" id="previewOverlay" style="display: none;">
+                        <div class="preview-overlay is-hidden" id="previewOverlay">
                             <div class="preview-message">
                                 <h3>Передперегляд закінчився</h3>
                                 <p>Повний матеріал доступний з підпискою або після покупки курсу</p>
@@ -343,11 +343,11 @@
 </div>
 
 <!-- Progress Update Modal -->
-<div id="progressModal" class="modal" style="display: none;">
+<div id="progressModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Прогрес оновлено!</h3>
-            <button class="modal-close" onclick="closeProgressModal()">&times;</button>
+            <button class="modal-close">&times;</button>
         </div>
         <div class="modal-body">
             <p>Матеріал "{{ material.title }}" позначено як завершений.</p>
@@ -359,7 +359,7 @@
             {% endif %}
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" onclick="closeProgressModal()">Продовжити</button>
+            <button class="btn btn-primary">Продовжити</button>
         </div>
     </div>
 </div>
@@ -367,80 +367,5 @@
 
 {% block extra_js %}
 <script src="{% static 'js/material-detail.js' %}"></script>
-<script id="material-data" type="application/json">
-{
-    "id": {{ material.id }},
-    "courseSlug": "{{ material.course.slug }}",
-    "slug": "{{ material.slug }}",
-    "contentType": "{{ material.content_type }}",
-    "hasAccess": {% if has_access %}true{% else %}false{% endif %},
-    "isPreview": {% if material.is_preview and not has_access %}true{% else %}false{% endif %}
-}
-</script>
-<script>
-    // Initialize material with data from JSON
-    window.materialData = JSON.parse(document.getElementById('material-data').textContent);
-
-    // Set progress bar width from data attribute
-    document.addEventListener('DOMContentLoaded', function () {
-        const progressFill = document.querySelector('.progress-fill');
-        if (progressFill && progressFill.dataset.progress) {
-            progressFill.style.width = progressFill.dataset.progress + '%';
-        }
-    });
-
-    // Mark material as completed
-    function markAsCompleted() {
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
-        const updateUrl = '{% url "content:update_progress" pk=material.course.pk %}';
-
-        fetch(updateUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken ? csrfToken.value : ''
-            },
-            body: JSON.stringify({
-                material_id: window.materialData.id,
-                action: 'complete'
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.querySelector('.btn[onclick="markAsCompleted()"]').disabled = true;
-                    document.querySelector('.btn[onclick="markAsCompleted()"]').textContent = '✓ Завершено';
-
-                    // Update progress
-                    if (data.progress_percentage) {
-                        document.getElementById('updatedProgress').textContent = data.progress_percentage + '%';
-                        document.querySelector('.progress-fill').style.width = data.progress_percentage + '%';
-                    }
-
-                    // Show modal
-                    document.getElementById('progressModal').style.display = 'flex';
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    function closeProgressModal() {
-        document.getElementById('progressModal').style.display = 'none';
-    }
-
-    // Video preview functionality
-    function setupVideoPreview(video) {
-        if (!window.materialData.isPreview) return;
-
-        const previewSeconds = parseInt(video.dataset.previewSeconds) || 20;
-        const overlay = document.getElementById('previewOverlay');
-
-        video.addEventListener('timeupdate', function () {
-            if (video.currentTime >= previewSeconds) {
-                video.pause();
-                overlay.style.display = 'flex';
-            }
-        });
-    }
-</script>
+<script src="{% static 'js/material-detail-handlers.js' %}"></script>
 {% endblock %}

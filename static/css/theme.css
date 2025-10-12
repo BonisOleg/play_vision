@@ -212,8 +212,9 @@
 }
 
 /* Disable transitions during theme switch to prevent flashing */
+.theme-transition-disabled,
 .theme-transition-disabled * {
-    transition: none !important;
+    transition-duration: 0s;
 }
 
 /* === PRINT STYLES === */

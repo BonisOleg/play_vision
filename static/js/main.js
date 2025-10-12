@@ -30,23 +30,12 @@ function initializeHTMX() {
         }
     });
 
-    // Захист Alpine.js компонентів від HTMX
+    // Захист навігації від HTMX
     document.body.addEventListener('htmx:beforeSwap', function (event) {
-        // Не дозволяємо HTMX переписувати навігацію з Alpine.js
         if (event.detail.target.closest('.header') ||
-            event.detail.target.classList.contains('mobile-menu') ||
-            event.detail.target.hasAttribute('x-data') ||
-            event.detail.target.querySelector('[x-data]')) {
+            event.detail.target.classList.contains('mobile-menu')) {
             event.preventDefault();
             return false;
-        }
-    });
-
-    // Захист при завантаженні сторінки
-    document.body.addEventListener('htmx:load', function (event) {
-        // Переініціалізуємо Alpine.js компоненти якщо потрібно
-        if (window.Alpine && event.detail.elt.querySelector('[x-data]')) {
-            window.Alpine.initTree(event.detail.elt);
         }
     });
 }
@@ -119,9 +108,25 @@ function initializeCart() {
 function initializeMessages() {
     const messages = document.querySelectorAll('.message');
     messages.forEach(message => {
+        // Додаємо обробник кнопки закриття
+        const closeBtn = message.querySelector('.message-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                message.classList.add('message-fade-out');
+                setTimeout(() => message.remove(), 300);
+            });
+        }
+
+        // Автоматичне закриття через 5 секунд
         setTimeout(() => {
-            message.style.opacity = '0';
-            setTimeout(() => message.remove(), 300);
+            if (message.parentElement) {
+                message.classList.add('message-fade-out');
+                setTimeout(() => {
+                    if (message.parentElement) {
+                        message.remove();
+                    }
+                }, 300);
+            }
         }, 5000);
     });
 }
@@ -131,16 +136,30 @@ function showMessage(text, type = 'info') {
 
     const message = document.createElement('div');
     message.className = `message message-${type}`;
-    message.innerHTML = `
-        ${text}
-        <button class="message-close" onclick="this.parentElement.remove()">&times;</button>
-    `;
+
+    const textNode = document.createTextNode(text);
+    message.appendChild(textNode);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'message-close';
+    closeBtn.textContent = '×';
+    closeBtn.addEventListener('click', () => {
+        message.classList.add('message-fade-out');
+        setTimeout(() => message.remove(), 300);
+    });
+    message.appendChild(closeBtn);
 
     messagesContainer.appendChild(message);
 
     setTimeout(() => {
-        message.style.opacity = '0';
-        setTimeout(() => message.remove(), 300);
+        if (message.parentElement) {
+            message.classList.add('message-fade-out');
+            setTimeout(() => {
+                if (message.parentElement) {
+                    message.remove();
+                }
+            }, 300);
+        }
     }, 5000);
 }
 
@@ -176,12 +195,20 @@ function getCookie(name) {
 }
 
 function initializeProgressBars() {
+    // Встановлюємо width для всіх progress bars з data-атрибутом
     const progressFills = document.querySelectorAll('.progress-fill[data-progress]');
     progressFills.forEach(fill => {
         const progress = fill.getAttribute('data-progress');
         if (progress) {
             fill.style.width = progress + '%';
         }
+    });
+
+    // Також встановлюємо для progress bars з inline width
+    const inlineProgressFills = document.querySelectorAll('.progress-fill[style*="width"]');
+    inlineProgressFills.forEach(fill => {
+        // Width вже встановлений inline, нічого не робимо
+        // Це для існуючих темплейтів
     });
 }
 
@@ -234,17 +261,8 @@ function initializeDropdownMenu() {
     });
 }
 
-// Функція для відновлення Alpine.js після HTMX оновлень
-function restoreAlpineComponents() {
-    if (window.Alpine) {
-        // Переініціалізуємо Alpine.js на всій сторінці
-        window.Alpine.initTree(document.body);
-    }
-}
-
 window.PlayVision = {
     showMessage,
     getCookie,
-    initializeProgressBars,
-    restoreAlpineComponents
+    initializeProgressBars
 };

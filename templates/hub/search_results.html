@@ -188,9 +188,14 @@
                     <a href="{% url 'content:course_list' %}" class="btn btn-primary">
                         Переглянути всі курси
                     </a>
-                    <button class="btn btn-outline" onclick="document.querySelector('.search-input').focus()">
+                    <button class="btn btn-outline" id="new-search-btn">
                         Новий пошук
                     </button>
+                    <script>
+                        document.getElementById('new-search-btn')?.addEventListener('click', () => {
+                            document.querySelector('.search-input')?.focus();
+                        });
+                    </script>
                 </div>
             </div>
             {% endif %}

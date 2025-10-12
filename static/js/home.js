@@ -1,12 +1,13 @@
 /**
  * Home Page Components
+ * Vanilla JS implementation without Alpine.js
  */
 
-// Hero Carousel (7 слайдів)
-function heroCarousel() {
-    return {
-        currentSlide: 0,
-        slides: [
+class HeroCarousel {
+    constructor(element) {
+        this.element = element;
+        this.currentSlide = 0;
+        this.slides = [
             {
                 title: 'Продуктивна практика у футбольних клубах',
                 subtitle: 'Реальні кейси, стажування та менторинг з професіоналами індустрії',
@@ -42,61 +43,187 @@ function heroCarousel() {
                 subtitle: '4 ключових напрямки для професійного зростання у футболі',
                 ctaUrl: '/about/#directions'
             }
-        ],
+        ];
 
-        init() {
-            // Автопрокрутка кожні 5 секунд
-            setInterval(() => {
-                this.nextSlide();
-            }, 5000);
-        },
+        this.titleElement = element.querySelector('.hero-title');
+        this.subtitleElement = element.querySelector('.hero-subtitle');
+        this.ctaButton = element.querySelector('.hero-buttons a');
+        this.dotsContainer = element.querySelector('.hero-slider-dots');
 
-        nextSlide() {
-            this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.init();
+    }
+
+    init() {
+        this.renderDots();
+        this.updateSlide();
+        this.startAutoplay();
+    }
+
+    renderDots() {
+        if (!this.dotsContainer) return;
+
+        this.dotsContainer.innerHTML = '';
+        this.slides.forEach((slide, index) => {
+            const dot = document.createElement('button');
+            dot.className = 'slider-dot';
+            dot.setAttribute('aria-label', `Слайд ${index + 1}`);
+
+            if (index === 0) {
+                dot.classList.add('active');
+            }
+
+            dot.addEventListener('click', () => this.goToSlide(index));
+            this.dotsContainer.appendChild(dot);
+        });
+    }
+
+    updateSlide() {
+        const slide = this.slides[this.currentSlide];
+
+        if (this.titleElement) {
+            this.titleElement.textContent = slide.title;
         }
-    };
-}
 
-// Courses Carousel (6 курсів)
-function coursesCarousel() {
-    return {
-        currentIndex: 0,
-        slidesPerView: 3,
-        totalSlides: 6,
+        if (this.subtitleElement) {
+            this.subtitleElement.textContent = slide.subtitle;
+        }
 
-        get slideWidth() {
-            return 100 / this.slidesPerView;
-        },
+        if (this.ctaButton) {
+            this.ctaButton.href = slide.ctaUrl;
+        }
 
-        get maxIndex() {
-            return Math.max(0, this.totalSlides - this.slidesPerView);
-        },
+        this.updateDots();
+    }
 
-        init() {
-            this.updateSlidesPerView();
-            window.addEventListener('resize', () => this.updateSlidesPerView());
-        },
+    updateDots() {
+        if (!this.dotsContainer) return;
 
-        updateSlidesPerView() {
-            if (window.innerWidth < 768) {
-                this.slidesPerView = 1;
-            } else if (window.innerWidth < 1024) {
-                this.slidesPerView = 2;
+        const dots = this.dotsContainer.querySelectorAll('.slider-dot');
+        dots.forEach((dot, index) => {
+            if (index === this.currentSlide) {
+                dot.classList.add('active');
             } else {
-                this.slidesPerView = 3;
+                dot.classList.remove('active');
             }
-        },
+        });
+    }
 
-        nextSlide() {
-            if (this.currentIndex < this.maxIndex) {
-                this.currentIndex++;
-            }
-        },
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.updateSlide();
+    }
 
-        prevSlide() {
-            if (this.currentIndex > 0) {
-                this.currentIndex--;
-            }
-        }
-    };
+    nextSlide() {
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.updateSlide();
+    }
+
+    startAutoplay() {
+        setInterval(() => {
+            this.nextSlide();
+        }, 5000);
+    }
 }
+
+class CoursesCarousel {
+    constructor(element) {
+        this.element = element;
+        this.currentIndex = 0;
+        this.slidesPerView = 3;
+        this.track = element.querySelector('.carousel-track');
+        this.prevBtn = element.querySelector('.carousel-btn-prev');
+        this.nextBtn = element.querySelector('.carousel-btn-next');
+
+        if (!this.track) return;
+
+        this.totalSlides = this.track.querySelectorAll('.carousel-slide').length;
+
+        this.init();
+    }
+
+    init() {
+        this.updateSlidesPerView();
+        this.updateButtons();
+        this.attachEvents();
+    }
+
+    attachEvents() {
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', () => this.prevSlide());
+        }
+
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', () => this.nextSlide());
+        }
+
+        window.addEventListener('resize', () => {
+            this.updateSlidesPerView();
+            this.updatePosition();
+            this.updateButtons();
+        });
+    }
+
+    updateSlidesPerView() {
+        if (window.innerWidth < 768) {
+            this.slidesPerView = 1;
+        } else if (window.innerWidth < 1024) {
+            this.slidesPerView = 2;
+        } else {
+            this.slidesPerView = 3;
+        }
+    }
+
+    get slideWidth() {
+        return 100 / this.slidesPerView;
+    }
+
+    get maxIndex() {
+        return Math.max(0, this.totalSlides - this.slidesPerView);
+    }
+
+    updatePosition() {
+        if (!this.track) return;
+
+        const translateX = -(this.currentIndex * this.slideWidth);
+        this.track.style.transform = `translateX(${translateX}%)`;
+    }
+
+    updateButtons() {
+        if (this.prevBtn) {
+            this.prevBtn.disabled = this.currentIndex === 0;
+        }
+
+        if (this.nextBtn) {
+            this.nextBtn.disabled = this.currentIndex >= this.maxIndex;
+        }
+    }
+
+    nextSlide() {
+        if (this.currentIndex < this.maxIndex) {
+            this.currentIndex++;
+            this.updatePosition();
+            this.updateButtons();
+        }
+    }
+
+    prevSlide() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.updatePosition();
+            this.updateButtons();
+        }
+    }
+}
+
+// Ініціалізація при завантаженні сторінки
+document.addEventListener('DOMContentLoaded', () => {
+    const heroElement = document.querySelector('.hero-section');
+    if (heroElement) {
+        new HeroCarousel(heroElement);
+    }
+
+    const coursesElement = document.querySelector('.featured-carousel-container');
+    if (coursesElement) {
+        new CoursesCarousel(coursesElement);
+    }
+});
