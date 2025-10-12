@@ -1,51 +1,51 @@
 /**
- * Scroll Popup Component - SIMPLIFIED VERSION
+ * Scroll Popup - ULTRA SIMPLE VERSION
+ * Глобальна функція для гарантованого закриття
  */
+
+// Глобальна функція закриття
+window.closeScrollPopup = function () {
+    console.log('🔴 CLOSING POPUP');
+    const popup = document.getElementById('scroll-popup');
+    if (popup) {
+        popup.classList.add('is-hidden');
+        popup.classList.remove('is-visible');
+        popup.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        sessionStorage.setItem('popup_dismissed', 'true');
+    }
+};
 
 class ScrollPopup {
     constructor(element) {
         this.element = element;
         this.isShown = false;
-        this.loading = false;
-        this.setupCloseHandlers();
+        this.setupHandlers();
         this.checkIfShouldShow();
     }
 
-    setupCloseHandlers() {
-        // АГРЕСИВНЕ закриття - всі можливі варіанти
+    setupHandlers() {
         const self = this;
 
-        // 1. Клік на будь-що з класом popup-close
-        document.addEventListener('click', function (e) {
-            if (e.target.closest('.popup-close')) {
-                console.log('CLOSE: button clicked');
-                e.preventDefault();
-                e.stopPropagation();
-                self.forceClose();
-                return false;
+        // Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && self.isShown) {
+                window.closeScrollPopup();
             }
-        }, true);
+        });
 
-        // 2. Клік на overlay
+        // Overlay click
         const overlay = this.element.querySelector('.popup-overlay');
         if (overlay) {
             overlay.addEventListener('click', function (e) {
                 if (e.target === overlay) {
-                    console.log('CLOSE: overlay clicked');
-                    self.forceClose();
+                    window.closeScrollPopup();
                 }
             });
         }
 
-        // 3. Escape
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && self.isShown) {
-                console.log('CLOSE: escape pressed');
-                self.forceClose();
-            }
-        });
-
-        // 4. Форма
+        // Form submit
         const form = this.element.querySelector('#scroll-popup-form');
         if (form) {
             form.addEventListener('submit', (e) => this.handleRegister(e));
@@ -60,7 +60,6 @@ class ScrollPopup {
             return;
         }
 
-        // Скрол
         let scrollTimeout;
         window.addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
@@ -76,7 +75,7 @@ class ScrollPopup {
     }
 
     show() {
-        console.log('SHOW popup');
+        console.log('🟢 SHOWING POPUP');
         this.isShown = true;
         this.element.classList.remove('is-hidden');
         this.element.classList.add('is-visible');
@@ -84,24 +83,8 @@ class ScrollPopup {
         localStorage.setItem('popup_shown', 'true');
     }
 
-    forceClose() {
-        console.log('FORCE CLOSE popup');
-        this.isShown = false;
-
-        // Видаляємо ВСІ класи і ховаємо
-        this.element.classList.add('is-hidden');
-        this.element.classList.remove('is-visible');
-        this.element.style.display = 'none'; // Форсуємо приховування
-
-        document.body.classList.remove('modal-open');
-        document.body.style.overflow = ''; // Очищуємо
-
-        sessionStorage.setItem('popup_dismissed', 'true');
-    }
-
     async handleRegister(e) {
         e.preventDefault();
-
         if (this.loading) return;
 
         const form = e.target;
@@ -156,10 +139,10 @@ class ScrollPopup {
     }
 }
 
-// Ініціалізація при завантаженні
+// Ініціалізація
 document.addEventListener('DOMContentLoaded', () => {
     const popup = document.getElementById('scroll-popup');
     if (popup) {
-        new ScrollPopup(popup);
+        window.scrollPopupInstance = new ScrollPopup(popup);
     }
 });
