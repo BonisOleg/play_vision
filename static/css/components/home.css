@@ -922,3 +922,221 @@
         line-height: 1.15;
     }
 }
+
+/* ============================================ */
+/* DARK THEME SUPPORT - HOME PAGE */
+/* ============================================ */
+
+[data-theme="dark"],
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+
+        /* === HERO SECTION === */
+        .hero-section {
+            color: white;
+        }
+
+        .hero-section.hero-bordered .section-content {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-badge {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .hero-title,
+        .hero-subtitle {
+            color: white;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        }
+
+        /* === SECTION BACKGROUNDS === */
+        .courses-section,
+        .experts-section {
+            background: var(--color-bg);
+        }
+
+        .featured-courses-section {
+            background: var(--color-bg-gray);
+        }
+
+        /* === COURSE CARDS (Освітні програми) === */
+        .course-card {
+            background: var(--color-bg-gray);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .course-card:hover {
+            background: var(--color-bg-dark);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .course-image {
+            background: var(--color-bg-dark);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .course-title {
+            color: var(--color-text);
+            text-shadow: none;
+        }
+
+        .course-description,
+        .course-number {
+            color: var(--color-text-light);
+        }
+
+        .course-link {
+            color: var(--color-primary);
+        }
+
+        .course-link:hover {
+            color: var(--color-primary-light);
+        }
+
+        /* === EXPERT CARDS (Команда професіоналів) === */
+        .expert-card {
+            background: var(--color-bg-gray);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .expert-card:hover {
+            background: var(--color-bg-dark);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .expert-photo {
+            background: var(--color-bg-dark);
+            border: 2px solid var(--color-border);
+        }
+
+        .expert-name {
+            color: var(--color-text);
+            text-shadow: none;
+        }
+
+        .expert-specialization {
+            color: var(--color-text-light);
+        }
+
+        .expert-link {
+            color: var(--color-primary);
+        }
+
+        .expert-link:hover {
+            color: var(--color-primary-light);
+        }
+
+        .experts-subtitle {
+            color: var(--color-text-light);
+            text-shadow: none;
+        }
+
+        /* === MENTOR-COACHING SECTION === */
+        .mentor-coaching-section {
+            background: var(--color-secondary);
+        }
+
+        .mentor-coaching-section .section-overlay--dark {
+            background: rgba(26, 26, 26, 0.7);
+        }
+
+        .ecosystem-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .hexagon {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .hexagon:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        /* === SECTION TITLES === */
+        .section-title {
+            color: var(--color-text);
+            text-shadow: none;
+        }
+
+        .featured-courses-section .section-title,
+        .courses-section .section-title {
+            color: var(--color-text);
+        }
+
+        .mentor-coaching-section .section-title,
+        .cta-section .section-title {
+            color: white;
+        }
+
+        /* === CTA SECTION === */
+        .cta-section {
+            background: var(--color-bg);
+        }
+
+        .cta-title {
+            color: white;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        }
+
+        /* === DIRECTION CARDS === */
+        .direction-card {
+            background: var(--color-bg-gray);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .direction-card:hover {
+            background: var(--color-bg-dark);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        .direction-title {
+            color: var(--color-text);
+            text-shadow: none;
+        }
+
+        .direction-description {
+            color: var(--color-text-light);
+        }
+
+        /* === VALUES SECTION === */
+        .values-section {
+            background: var(--color-bg-gray);
+        }
+
+        .values-description {
+            color: var(--color-text-light);
+            text-shadow: none;
+        }
+
+        .value-circle {
+            background: var(--color-bg-dark);
+            border: 2px solid var(--color-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .value-circle:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .value-text {
+            color: var(--color-text);
+            text-shadow: none;
+        }
+
+        /* === COURSES LINK === */
+        .courses-link {
+            color: var(--color-primary);
+        }
+
+        .courses-link:hover {
+            color: var(--color-primary-light);
+        }
+    }
+}

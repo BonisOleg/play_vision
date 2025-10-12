@@ -204,17 +204,14 @@
 }
 
 /* === TRANSITIONS FOR THEME SWITCHING === */
-[data-theme] * {
-    transition: background-color var(--transition-base),
-        color var(--transition-base),
-        border-color var(--transition-base),
-        box-shadow var(--transition-base);
-}
+/* Removed global transitions - they cause flickering
+   Each component defines own transitions if needed */
 
 /* Disable transitions during theme switch to prevent flashing */
 .theme-transition-disabled,
 .theme-transition-disabled * {
-    transition-duration: 0s;
+    transition: none !important;
+    animation: none !important;
 }
 
 /* === PRINT STYLES === */

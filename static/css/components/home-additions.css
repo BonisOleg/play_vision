@@ -73,7 +73,11 @@
 
 .carousel-slide {
     flex: 0 0 33.333%;
+    width: 33.333%;
+    min-width: 33.333%;
+    max-width: 33.333%;
     padding: 0 var(--spacing-md);
+    box-sizing: border-box;
 }
 
 .featured-card {
@@ -276,6 +280,9 @@
 @media (max-width: 1024px) {
     .carousel-slide {
         flex: 0 0 50%;
+        width: 50%;
+        min-width: 50%;
+        max-width: 50%;
     }
 }
 
@@ -287,6 +294,9 @@
 
     .carousel-slide {
         flex: 0 0 100%;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
     }
 
     .featured-carousel-container {
@@ -365,5 +375,124 @@
     .carousel-btn {
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
+    }
+}
+
+/* ============================================ */
+/* DARK THEME SUPPORT - HOME ADDITIONS */
+/* ============================================ */
+
+[data-theme="dark"],
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+
+        /* === HERO WITH FRAME === */
+        .hero-with-frame {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        /* === FEATURED CAROUSEL CARDS === */
+        .featured-card {
+            background: var(--color-bg-gray);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .featured-card:hover {
+            background: var(--color-bg-dark);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .featured-image {
+            background: var(--color-bg-dark);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .featured-category {
+            color: var(--color-primary);
+        }
+
+        .featured-title {
+            color: var(--color-text);
+        }
+
+        .featured-description {
+            color: var(--color-text-light);
+        }
+
+        .featured-link {
+            color: var(--color-primary);
+        }
+
+        .featured-link:hover {
+            color: var(--color-primary-light);
+        }
+
+        /* === CAROUSEL BUTTONS === */
+        .carousel-btn {
+            background: var(--color-bg-gray);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-btn:hover:not(:disabled) {
+            background: var(--color-bg-dark);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .carousel-btn:disabled {
+            background: var(--color-bg-dark);
+            color: var(--color-text-muted);
+            opacity: 0.4;
+        }
+
+        /* === FEATURED COURSES SECTION === */
+        .featured-courses-section {
+            background: var(--color-bg-gray);
+        }
+
+        /* === MENTOR CTA === */
+        .mentor-cta .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .mentor-cta .btn-primary:hover {
+            background: var(--color-primary-dark);
+            border-color: var(--color-primary-dark);
+        }
+
+        /* === ECOSYSTEM DIAGRAM === */
+        .ecosystem-center {
+            background: var(--color-primary);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+        }
+
+        .ecosystem-item {
+            background: var(--color-bg-gray);
+            border: 2px solid var(--color-border);
+        }
+
+        .ecosystem-item:hover {
+            background: var(--color-bg-dark);
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+        }
+
+        .ecosystem-item h4 {
+            color: var(--color-text);
+        }
+
+        /* === NO COURSES MESSAGE === */
+        .no-courses {
+            color: var(--color-text-light);
+        }
     }
 }
