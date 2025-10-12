@@ -1,6 +1,5 @@
 /**
- * Scroll Popup Component
- * Vanilla JS implementation without Alpine.js
+ * Scroll Popup Component - SIMPLIFIED VERSION
  */
 
 class ScrollPopup {
@@ -8,95 +7,76 @@ class ScrollPopup {
         this.element = element;
         this.isShown = false;
         this.loading = false;
-        this.init();
+        this.setupCloseHandlers();
+        this.checkIfShouldShow();
     }
 
-    init() {
-        console.log('ScrollPopup initialized'); // Debug
+    setupCloseHandlers() {
+        // АГРЕСИВНЕ закриття - всі можливі варіанти
+        const self = this;
 
-        // Перевіряємо чи вже показували
-        const shown = localStorage.getItem('popup_shown');
-        const dismissed = sessionStorage.getItem('popup_dismissed');
-
-        if (shown || dismissed) {
-            console.log('Popup already shown or dismissed'); // Debug
-            return;
-        }
-
-        // Відстежуємо скрол з debounce
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => this.checkScroll(), 200);
-        });
-
-        // Закриття popup - метод 1: прямий listener на кнопку
-        const closeBtn = this.element.querySelector('.popup-close');
-        const overlay = this.element.querySelector('.popup-overlay');
-
-        console.log('Close button found:', !!closeBtn); // Debug
-        console.log('Overlay found:', !!overlay); // Debug
-
-        if (closeBtn) {
-            closeBtn.addEventListener('click', (e) => {
-                console.log('Close button clicked', e.target); // Debug
+        // 1. Клік на будь-що з класом popup-close
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.popup-close')) {
+                console.log('CLOSE: button clicked');
                 e.preventDefault();
                 e.stopPropagation();
-                this.close();
-            });
-        }
-
-        // Метод 2: делегування подій на весь popup
-        this.element.addEventListener('click', (e) => {
-            const target = e.target;
-            const closeButton = target.closest('.popup-close');
-
-            if (closeButton) {
-                console.log('Close via delegation'); // Debug
-                e.preventDefault();
-                e.stopPropagation();
-                this.close();
+                self.forceClose();
+                return false;
             }
-        });
+        }, true);
 
+        // 2. Клік на overlay
+        const overlay = this.element.querySelector('.popup-overlay');
         if (overlay) {
-            overlay.addEventListener('click', (e) => {
-                // Закриваємо тільки якщо клік по overlay, а не по його дітям
+            overlay.addEventListener('click', function (e) {
                 if (e.target === overlay) {
-                    console.log('Overlay clicked'); // Debug
-                    e.preventDefault();
-                    this.close();
+                    console.log('CLOSE: overlay clicked');
+                    self.forceClose();
                 }
             });
         }
 
-        // Закриття по Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isShown) {
-                console.log('Escape pressed'); // Debug
-                this.close();
+        // 3. Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && self.isShown) {
+                console.log('CLOSE: escape pressed');
+                self.forceClose();
             }
         });
 
-        // Форма реєстрації (якщо є)
+        // 4. Форма
         const form = this.element.querySelector('#scroll-popup-form');
         if (form) {
             form.addEventListener('submit', (e) => this.handleRegister(e));
         }
     }
 
-    checkScroll() {
-        if (this.isShown) return;
+    checkIfShouldShow() {
+        const shown = localStorage.getItem('popup_shown');
+        const dismissed = sessionStorage.getItem('popup_dismissed');
 
-        const scrolled = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-
-        if (scrolled >= 0.8) {
-            this.show();
+        if (shown || dismissed) {
+            return;
         }
+
+        // Скрол
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (!this.isShown) {
+                    const scrolled = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                    if (scrolled >= 0.8) {
+                        this.show();
+                    }
+                }
+            }, 200);
+        });
     }
 
     show() {
-        console.log('Showing popup'); // Debug
+        console.log('SHOW popup');
         this.isShown = true;
         this.element.classList.remove('is-hidden');
         this.element.classList.add('is-visible');
@@ -104,12 +84,18 @@ class ScrollPopup {
         localStorage.setItem('popup_shown', 'true');
     }
 
-    close() {
-        console.log('Closing popup'); // Debug
+    forceClose() {
+        console.log('FORCE CLOSE popup');
         this.isShown = false;
+
+        // Видаляємо ВСІ класи і ховаємо
         this.element.classList.add('is-hidden');
         this.element.classList.remove('is-visible');
+        this.element.style.display = 'none'; // Форсуємо приховування
+
         document.body.classList.remove('modal-open');
+        document.body.style.overflow = ''; // Очищуємо
+
         sessionStorage.setItem('popup_dismissed', 'true');
     }
 
