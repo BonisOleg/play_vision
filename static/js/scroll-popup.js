@@ -12,11 +12,14 @@ class ScrollPopup {
     }
 
     init() {
+        console.log('ScrollPopup initialized'); // Debug
+
         // Перевіряємо чи вже показували
         const shown = localStorage.getItem('popup_shown');
         const dismissed = sessionStorage.getItem('popup_dismissed');
 
         if (shown || dismissed) {
+            console.log('Popup already shown or dismissed'); // Debug
             return;
         }
 
@@ -27,38 +30,50 @@ class ScrollPopup {
             scrollTimeout = setTimeout(() => this.checkScroll(), 200);
         });
 
-        // Закриття popup
+        // Закриття popup - метод 1: прямий listener на кнопку
         const closeBtn = this.element.querySelector('.popup-close');
         const overlay = this.element.querySelector('.popup-overlay');
-        const card = this.element.querySelector('.popup-card');
+
+        console.log('Close button found:', !!closeBtn); // Debug
+        console.log('Overlay found:', !!overlay); // Debug
 
         if (closeBtn) {
             closeBtn.addEventListener('click', (e) => {
+                console.log('Close button clicked', e.target); // Debug
                 e.preventDefault();
                 e.stopPropagation();
                 this.close();
             });
         }
 
+        // Метод 2: делегування подій на весь popup
+        this.element.addEventListener('click', (e) => {
+            const target = e.target;
+            const closeButton = target.closest('.popup-close');
+
+            if (closeButton) {
+                console.log('Close via delegation'); // Debug
+                e.preventDefault();
+                e.stopPropagation();
+                this.close();
+            }
+        });
+
         if (overlay) {
             overlay.addEventListener('click', (e) => {
+                // Закриваємо тільки якщо клік по overlay, а не по його дітям
                 if (e.target === overlay) {
+                    console.log('Overlay clicked'); // Debug
                     e.preventDefault();
                     this.close();
                 }
             });
         }
 
-        // Запобігаємо закриттю при кліці на картку
-        if (card) {
-            card.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-        }
-
         // Закриття по Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.isShown) {
+                console.log('Escape pressed'); // Debug
                 this.close();
             }
         });
@@ -81,6 +96,7 @@ class ScrollPopup {
     }
 
     show() {
+        console.log('Showing popup'); // Debug
         this.isShown = true;
         this.element.classList.remove('is-hidden');
         this.element.classList.add('is-visible');
@@ -89,6 +105,7 @@ class ScrollPopup {
     }
 
     close() {
+        console.log('Closing popup'); // Debug
         this.isShown = false;
         this.element.classList.add('is-hidden');
         this.element.classList.remove('is-visible');
