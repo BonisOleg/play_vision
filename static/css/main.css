@@ -620,9 +620,9 @@ body.modal-open {
     color: var(--color-text-light);
 }
 
-/* Показувати тільки на мобільних і планшетах */
-.navbar-ai-mobile {
-    display: none;
+/* AI кнопка видима завжди */
+.navbar-ai {
+    display: flex;
 }
 
 @media (max-width: 1024px) {
@@ -637,10 +637,7 @@ body.modal-open {
         display: flex;
     }
 
-    /* Показати AI помічника на мобільних і планшетах */
-    .navbar-ai-mobile {
-        display: flex;
-    }
+    /* AI помічник вже видимий глобально */
 
     /* Сховати десктопні елементи на мобільних і планшетах */
     .navbar-desktop-only {
