@@ -11,7 +11,7 @@
 <div class="event-detail">
     <!-- Hero секція з банером -->
     <section class="event-hero"
-        style="background-image: url('{% if event.banner_image %}{{ event.banner_image.url }}{% else %}{% static 'images/events-bg.jpg' %}{% endif %}');">
+        data-bg-image="{% if event.banner_image %}{{ event.banner_image.url }}{% else %}{% static 'images/events-bg.jpg' %}{% endif %}">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="container">
@@ -24,13 +24,15 @@
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-calendar"></use>
                         </svg>
-                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{ event.start_datetime|date:"H:i" }}</span>
+                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{
+                            event.start_datetime|date:"H:i" }}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-location"></use>
                         </svg>
-                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{% endif %}</span>
+                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{%
+                            endif %}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
@@ -329,7 +331,7 @@
 </div>
 
 <!-- SVG спрайт -->
-<svg style="display: none;">
+<svg class="svg-sprites-hidden">
     <symbol id="icon-calendar" viewBox="0 0 24 24">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2" />
         <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" />

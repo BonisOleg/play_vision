@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('📍 Restored scroll position:', savedScrollPosition);
     }
 
+    // Set hero background image from data attribute
+    initHeroBackground();
+
     // Calendar functionality
     initCalendar();
 
@@ -26,6 +29,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Debug info
     console.log('✅ Events page initialization complete');
 });
+
+// Initialize hero background from data attribute
+function initHeroBackground() {
+    const heroSection = document.querySelector('.event-hero[data-bg-image]');
+    if (heroSection) {
+        const bgImage = heroSection.getAttribute('data-bg-image');
+        if (bgImage) {
+            heroSection.style.backgroundImage = `url('${bgImage}')`;
+        }
+    }
+}
 
 // Enhanced Event Calendar Component
 function eventCalendar() {

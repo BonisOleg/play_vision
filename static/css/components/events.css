@@ -2196,3 +2196,17 @@
         margin-bottom: 2rem;
     }
 }
+
+/* SVG sprites */
+.svg-sprites-hidden {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Checkbox group spacing */
+.checkbox-group--spaced {
+    margin-top: 1rem;
+}
