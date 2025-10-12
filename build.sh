@@ -46,4 +46,7 @@ echo "👤 Creating demo data..."
 python manage.py setup_initial_data || echo "⚠️ Initial data setup failed, continuing..."
 python manage.py create_content_data || echo "⚠️ Content data creation failed, continuing..."
 
+echo "⭐ Creating featured courses..."
+python manage.py create_featured_courses || echo "⚠️ Featured courses creation failed, continuing..."
+
 echo "🎉 Build completed successfully!"
