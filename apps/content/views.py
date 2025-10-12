@@ -6,6 +6,7 @@ from django.db.models import Q, Count
 from django.utils import timezone
 from .models import Course, Material, Favorite, UserCourseProgress
 from .utils import check_user_course_access
+from apps.loyalty.services import LoyaltyService
 
 
 class CourseListView(ListView):
@@ -86,6 +87,16 @@ class CourseListView(ListView):
             context['user_favorites'] = list(favorites)
         else:
             context['user_favorites'] = []
+        
+        # Додати бали для кожного курсу
+        course_points = {}
+        for course in context['courses']:
+            points = LoyaltyService.get_points_for_course_display(
+                course.price,
+                self.request.user if self.request.user.is_authenticated else None
+            )
+            course_points[course.id] = points
+        context['course_points'] = course_points
         
         return context
 

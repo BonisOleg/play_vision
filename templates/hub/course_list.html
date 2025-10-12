@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load loyalty_filters %}
 
 {% block title %}Хаб знань - Play Vision{% endblock %}
 
@@ -399,7 +400,8 @@
                             <div class="filter-options">
                                 {% for category in categories %}
                                 <label class="filter-option">
-                                    <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                    <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                        current_category|default:''==category.slug %}checked{% endif %}>
                                     <span>{{ category.name }}</span>
                                 </label>
                                 {% endfor %}
@@ -514,19 +516,20 @@
                     <div class="sort-options">
                         <label for="sort">Сортувати за:</label>
                         <select name="sort" id="sort" class="sort-select">
-                            <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
+                            <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
+                                %}selected{% endif %}>
                                 Новіші спочатку
                             </option>
-                            <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
+                            <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
                                 назвою А-Я
                             </option>
-                            <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
+                            <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
                                 назвою Я-А
                             </option>
-                            <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
+                            <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
                                 За ціною (зростання)
                             </option>
-                            <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
+                            <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
                                 ціною (спадання)
                             </option>
                         </select>
@@ -594,6 +597,13 @@
                                     <span class="price-free">Безкоштовно</span>
                                     {% else %}
                                     <span class="price-amount">{{ course.price }}₴</span>
+                                    {% endif %}
+                                    {% if course_points and not course.is_free %}
+                                    {% with points=course_points|get_item:course.id %}
+                                    {% if points and points > 0 %}
+                                    <span class="loyalty-points">+{{ points }} балів</span>
+                                    {% endif %}
+                                    {% endwith %}
                                     {% endif %}
                                 </div>
                             </div>

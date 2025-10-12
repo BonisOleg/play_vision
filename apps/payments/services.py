@@ -8,6 +8,7 @@ from django.db import transaction
 from django.contrib.auth import get_user_model
 
 from .models import Payment, Order, OrderItem, WebhookEvent, Coupon, CouponUsage
+from apps.loyalty.services import LoyaltyService
 
 User = get_user_model()
 
@@ -147,6 +148,9 @@ class PaymentService:
             # Process order items (grant access, create subscriptions, etc.)
             self.process_order_completion(order)
             
+            # Award loyalty points for purchase
+            self.award_loyalty_points(order)
+            
             # Update coupon usage if applicable
             if order.coupon:
                 order.coupon.used_count += 1
@@ -225,6 +229,9 @@ class PaymentService:
                     amount=plan.event_tickets_balance,
                     expires_at=end_date
                 )
+            
+            # Award loyalty points for subscription
+            self.award_subscription_loyalty_points(user, plan, subscription.id)
                 
         except Plan.DoesNotExist:
             pass
@@ -259,6 +266,54 @@ class PaymentService:
         elif items.filter(item_type='course').exists():
             return 'course'
         return 'bundle'
+    
+    def award_loyalty_points(self, order):
+        """Award loyalty points for completed order"""
+        try:
+            # Нараховуємо бали тільки за курси/івенти, не за підписки
+            # (підписки нараховують бали окремо в award_subscription_loyalty_points)
+            items = order.items.exclude(item_type='subscription')
+            
+            if not items.exists():
+                return
+            
+            # Сума покупки без підписок
+            purchase_amount = sum(item.get_total() for item in items)
+            
+            if purchase_amount > 0:
+                LoyaltyService.award_points_for_purchase(
+                    user=order.user,
+                    amount=purchase_amount,
+                    order_id=order.id
+                )
+        except Exception as e:
+            # Не блокуємо платіж якщо не вдалося нарахувати бали
+            print(f"Error awarding loyalty points: {e}")
+    
+    def award_subscription_loyalty_points(self, user, plan, subscription_id):
+        """Award loyalty points for subscription purchase"""
+        try:
+            # Визначити tier
+            plan_slug = plan.slug.lower()
+            if 'pro' in plan_slug or 'pro-vision' in plan_slug:
+                tier = 'pro_vision'
+            elif 'a-vision' in plan_slug or plan_slug.startswith('a_'):
+                tier = 'a_vision'
+            elif 'b-vision' in plan_slug or plan_slug.startswith('b_'):
+                tier = 'b_vision'
+            elif 'c-vision' in plan_slug or plan_slug.startswith('c_'):
+                tier = 'c_vision'
+            else:
+                return
+            
+            LoyaltyService.award_points_for_subscription(
+                user=user,
+                subscription_tier=tier,
+                duration_months=plan.duration_months,
+                subscription_id=subscription_id
+            )
+        except Exception as e:
+            print(f"Error awarding subscription loyalty points: {e}")
     
     def create_customer(self, user):
         """Create Stripe customer"""
