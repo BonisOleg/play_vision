@@ -219,9 +219,27 @@
 }
 
 /* === DARK THEME OVERRIDES === */
-[data-theme="dark"],
+[data-theme="dark"] {
+    --color-bg: #1a1a1a;
+    --color-bg-gray: #2a2a2a;
+    --color-bg-dark: #333333;
+    --color-text: #f0f0f0;
+    --color-text-light: #aaaaaa;
+    --color-text-muted: #777777;
+    --color-border: #444444;
+    --color-border-light: #333333;
+
+    /* Adjust shadows for dark mode */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+}
+
+/* Auto theme: follow system preference */
 @media (prefers-color-scheme: dark) {
-    :root {
+    [data-theme="auto"] {
         --color-bg: #1a1a1a;
         --color-bg-gray: #2a2a2a;
         --color-bg-dark: #333333;
