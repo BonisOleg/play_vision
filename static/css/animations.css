@@ -166,43 +166,37 @@
 /* === HELPER CLASSES === */
 .animate-fade-in {
     animation: fadeIn var(--transition-base, 0.3s) ease;
-    will-change: opacity;
 }
 
 .animate-fade-out {
     animation: fadeOut var(--transition-base, 0.3s) ease;
-    will-change: opacity;
 }
 
 .animate-slide-in-right {
     animation: slideInRight var(--transition-base, 0.3s) ease;
-    will-change: transform, opacity;
 }
 
 .animate-slide-out-right {
     animation: slideOutRight var(--transition-base, 0.3s) ease;
-    will-change: transform, opacity;
 }
 
 .animate-spin {
     animation: spin 1s linear infinite;
-    will-change: transform;
 }
 
 .animate-pulse {
     animation: pulse 2s ease-in-out infinite;
-    will-change: transform, opacity;
 }
 
 .animate-fade-in-up {
     animation: fadeInUp var(--transition-base, 0.3s) ease;
-    will-change: transform, opacity;
 }
 
 .animate-typing {
     animation: typing 1.4s infinite ease-in-out;
-    will-change: transform, opacity;
 }
+
+/* will-change додаємо тільки перед анімацією через JS */
 
 /* === REDUCED MOTION SUPPORT === */
 @media (prefers-reduced-motion: reduce) {

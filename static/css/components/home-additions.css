@@ -18,43 +18,47 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 60px;
+    padding: 0 48px;
 }
 
 .carousel-btn {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     background: white;
     border: none;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius-full);
     box-shadow: var(--shadow-md);
     cursor: pointer;
     z-index: 10;
-    transition: var(--transition-base);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translateY(-50%);
 }
 
 .carousel-btn:hover:not(:disabled) {
     box-shadow: var(--shadow-lg);
-    transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-btn:active:not(:disabled) {
+    transform: translateY(-50%) scale(0.95);
 }
 
 .carousel-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+    pointer-events: none;
 }
 
 .carousel-btn-prev {
-    left: 0;
+    left: 4px;
 }
 
 .carousel-btn-next {
-    right: 0;
+    right: 4px;
 }
 
 .featured-carousel {
@@ -286,7 +290,7 @@
 @media (max-width: 768px) {
     .hero-with-frame {
         border-width: 2px;
-        padding: var(--spacing-xl) var(--spacing-lg);
+        padding: var(--spacing-lg);
     }
 
     .carousel-slide {
@@ -294,12 +298,17 @@
     }
 
     .featured-carousel-container {
-        padding: 0 50px;
+        padding: 0 40px;
     }
 
     .carousel-btn {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .carousel-btn svg {
+        width: 20px;
+        height: 20px;
     }
 
     .ecosystem-diagram {
@@ -330,6 +339,31 @@
     }
 }
 
+/* Додаткові медіа-запити для малих екранів */
+@media (max-width: 375px) {
+    .featured-carousel-container {
+        padding: 0 36px;
+    }
+
+    .carousel-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .carousel-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .carousel-btn-prev {
+        left: 2px;
+    }
+
+    .carousel-btn-next {
+        right: 2px;
+    }
+}
+
 /* iOS Safari специфіка */
 @supports (-webkit-touch-callout: none) {
     .hero-with-frame {
@@ -338,5 +372,6 @@
 
     .carousel-btn {
         -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
     }
 }

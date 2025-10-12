@@ -166,7 +166,6 @@ a:hover {
     position: absolute;
     top: 100%;
     left: 50%;
-    transform: translateX(-50%);
     min-width: 350px;
     background: white;
     border-radius: 12px;
@@ -179,7 +178,7 @@ a:hover {
     opacity: 0;
     visibility: hidden;
     transform: translateX(-50%) translateY(-10px);
-    transition: all 0.3s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
 }
 
 /* Show dropdown on hover */
@@ -332,14 +331,17 @@ a:hover {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
     text-decoration: none;
-    will-change: transform;
 }
 
 .btn:hover {
     text-decoration: none;
     transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
 }
 
 .btn-primary {
@@ -694,5 +696,43 @@ a:hover {
     .navbar-brand span {
         font-size: 0.75rem;
         line-height: 1.2;
+    }
+
+    .dropdown-menu {
+        min-width: 300px;
+        left: auto;
+        right: 0;
+        transform: none;
+    }
+
+    .navbar-dropdown:hover .dropdown-menu,
+    .navbar-dropdown.dropdown-open .dropdown-menu {
+        transform: none;
+    }
+
+    .messages {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .message {
+        font-size: 0.875rem;
+        padding: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 375px) {
+    .btn {
+        font-size: 0.875rem;
+        padding: var(--spacing-xs) var(--spacing-md);
+    }
+
+    .logo {
+        height: 32px;
+    }
+
+    .container {
+        padding: 0 var(--spacing-sm);
     }
 }
