@@ -227,26 +227,22 @@
                         <h3 class="sidebar-title">Період</h3>
                         <div class="filter-group">
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="all" {% if current_date_range=='all' or not
-                                    current_date_range %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="all" {% if current_date_range == 'all' or not current_date_range %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Всі події</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="today" {% if current_date_range=='today'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="today" {% if current_date_range == 'today' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Сьогодні</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="week" {% if current_date_range=='week'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="week" {% if current_date_range == 'week' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Цей тиждень</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="month" {% if current_date_range=='month'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="month" {% if current_date_range ==  'month' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Цей місяць</span>
                             </label>
