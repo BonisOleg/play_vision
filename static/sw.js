@@ -3,9 +3,9 @@
  * Повна реалізація PWA функціоналу згідно MainPlan.mdc та tz.mdc
  */
 
-const CACHE_NAME = 'playvision-v1.5';
-const STATIC_CACHE = 'playvision-static-v1.5';
-const DYNAMIC_CACHE = 'playvision-dynamic-v1.5';
+const CACHE_NAME = 'playvision-v1.6';
+const STATIC_CACHE = 'playvision-static-v1.6';
+const DYNAMIC_CACHE = 'playvision-dynamic-v1.6';
 
 // Публічні ресурси для кешування (згідно MainPlan.mdc)
 const CACHEABLE_PATHS = [
