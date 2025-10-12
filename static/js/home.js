@@ -143,6 +143,7 @@ class CoursesCarousel {
 
     init() {
         this.updateSlidesPerView();
+        this.updatePosition();
         this.updateButtons();
         this.attachEvents();
     }
