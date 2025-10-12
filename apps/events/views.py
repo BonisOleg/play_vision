@@ -28,10 +28,10 @@ class EventListView(ListView):
             start_datetime__gt=timezone.now()
         ).select_related('organizer').prefetch_related('speakers', 'tags')
         
-        # Filter by type
-        event_type = self.request.GET.get('type')
-        if event_type:
-            queryset = queryset.filter(event_type=event_type)
+        # Filter by type (multiple values)
+        event_types = self.request.GET.getlist('event_type')
+        if event_types:
+            queryset = queryset.filter(event_type__in=event_types)
         
         # Search
         search = self.request.GET.get('search')
@@ -43,15 +43,23 @@ class EventListView(ListView):
                 Q(speakers__last_name__icontains=search)
             ).distinct()
         
-        # Filter by date
-        date_filter = self.request.GET.get('date')
+        # Filter by format (online/offline)
+        format_filter = self.request.GET.get('format')
+        if format_filter and format_filter != 'all':
+            if format_filter == 'online':
+                queryset = queryset.filter(Q(location__icontains='онлайн') | Q(online_link__isnull=False))
+            elif format_filter == 'offline':
+                queryset = queryset.exclude(Q(location__icontains='онлайн') | Q(online_link__isnull=False))
+        
+        # Filter by date range
+        date_range = self.request.GET.get('date_range')
         now = timezone.now()
-        if date_filter == 'today':
+        if date_range == 'today':
             queryset = queryset.filter(start_datetime__date=now.date())
-        elif date_filter == 'week':
+        elif date_range == 'week':
             week_end = now + timezone.timedelta(days=7)
             queryset = queryset.filter(start_datetime__range=[now, week_end])
-        elif date_filter == 'month':
+        elif date_range == 'month':
             month_end = now + timezone.timedelta(days=30)
             queryset = queryset.filter(start_datetime__range=[now, month_end])
         
@@ -65,10 +73,17 @@ class EventListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['event_types'] = Event.EVENT_TYPE_CHOICES
-        context['current_type'] = self.request.GET.get('type', '')
+        context['current_types'] = self.request.GET.getlist('event_type')
         context['current_search'] = self.request.GET.get('search', '')
-        context['current_date'] = self.request.GET.get('date', '')
+        context['current_format'] = self.request.GET.get('format', 'all')
+        context['current_date_range'] = self.request.GET.get('date_range', 'all')
         context['current_order'] = self.request.GET.get('order', 'start_datetime')
+        
+        # Get display names for current types
+        types_dict = dict(Event.EVENT_TYPE_CHOICES)
+        context['current_types_display'] = [
+            types_dict.get(t) for t in context['current_types'] if t in types_dict
+        ]
         
         # Featured events
         context['featured_events'] = Event.objects.filter(

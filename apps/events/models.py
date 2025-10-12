@@ -221,6 +221,9 @@ class EventTicket(models.Model):
                            related_name='event_tickets')
     ticket_number = models.CharField(max_length=20, unique=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0, 
+                               validators=[MinValueValidator(0)],
+                               help_text='Ціна квитка на момент покупки')
     
     # Payment
     payment = models.ForeignKey('payments.Payment', on_delete=models.SET_NULL, 
@@ -379,8 +382,19 @@ class EventRegistration(models.Model):
     """
     Additional registration data for events
     """
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='registrations')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
+                           related_name='event_registrations')
     ticket = models.OneToOneField(EventTicket, on_delete=models.CASCADE, 
                                 related_name='registration')
+    
+    # Attendee information
+    attendee_name = models.CharField(max_length=200)
+    attendee_email = models.EmailField()
+    attendee_phone = models.CharField(max_length=20, blank=True)
+    company = models.CharField(max_length=200, blank=True)
+    position = models.CharField(max_length=200, blank=True)
+    notes = models.TextField(blank=True, help_text='Очікування від події')
     
     # Additional info
     dietary_requirements = models.TextField(blank=True)
