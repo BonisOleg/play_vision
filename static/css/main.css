@@ -332,6 +332,80 @@ a:hover {
     height: 40px;
     color: var(--color-text);
     position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.navbar-icon:hover {
+    background: var(--color-bg-gray);
+}
+
+.navbar-icon:active {
+    transform: scale(0.95);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: relative;
+}
+
+.theme-icon-light,
+.theme-icon-dark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+/* Light theme: show sun icon */
+[data-theme="light"] .theme-icon-light {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+[data-theme="light"] .theme-icon-dark {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* Dark theme: show moon icon */
+[data-theme="dark"] .theme-icon-light {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+[data-theme="dark"] .theme-icon-dark {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+/* Auto theme: залежить від системної теми */
+@media (prefers-color-scheme: light) {
+    [data-theme="auto"] .theme-icon-light {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    [data-theme="auto"] .theme-icon-dark {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .theme-icon-light {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    [data-theme="auto"] .theme-icon-dark {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
 }
 
 .cart-icon {
