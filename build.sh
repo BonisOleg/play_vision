@@ -36,8 +36,36 @@ except Exception as e:
     print(f'⚠️ Database check failed: {e}')
 " || echo "Database check failed, continuing..."
 
+echo "🗄️ Showing pending migrations..."
+python manage.py showmigrations --plan || echo "⚠️ Could not show migrations"
+
 echo "🗄️ Running migrations..."
-python manage.py migrate
+python manage.py migrate --noinput
+
+echo "✅ Migrations completed. Checking loyalty app tables..."
+python -c "
+import os
+import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'playvision.settings.production')
+django.setup()
+from django.db import connection
+try:
+    with connection.cursor() as cursor:
+        cursor.execute(\"SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'loyalty_accounts');\")
+        loyalty_exists = cursor.fetchone()[0]
+        print(f'✓ Loyalty accounts table exists: {loyalty_exists}')
+        
+        cursor.execute(\"SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'point_earning_rules');\")
+        rules_exists = cursor.fetchone()[0]
+        print(f'✓ Point earning rules table exists: {rules_exists}')
+        
+        if loyalty_exists:
+            cursor.execute(\"SELECT column_name FROM information_schema.columns WHERE table_name = 'loyalty_accounts' AND column_name = 'lifetime_spent_points';\")
+            col_exists = cursor.fetchone()
+            print(f'✓ lifetime_spent_points column exists: {col_exists is not None}')
+except Exception as e:
+    print(f'⚠️ Loyalty tables check failed: {e}')
+" || echo "⚠️ Loyalty check failed, continuing..."
 
 echo "🤖 Loading AI knowledge base..."
 python manage.py load_knowledge_base || echo "⚠️ AI knowledge base loading failed, continuing..."

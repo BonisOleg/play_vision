@@ -155,7 +155,8 @@
         <div class="container">
             {% if cms_sections %}
             {% for section in cms_sections %}
-            {% if section.section_type == 'custom' and ('values' in section.title|lower or 'цінності' in section.title|lower) %}
+            {% if section.section_type == 'custom' %}
+            {% if 'values' in section.title|lower or 'цінності' in section.title|lower %}
             <h2 class="section-title">{{ section.title }}</h2>
             <div class="values-grid">
                 {% for block in section.blocks.all %}
@@ -167,6 +168,7 @@
                 {% endfor %}
             </div>
             {% if section.subtitle %}<p class="values-description">{{ section.subtitle }}</p>{% endif %}
+            {% endif %}
             {% endif %}
             {% endfor %}
             {% else %}
@@ -216,8 +218,10 @@
         <div class="container">
             {% if cms_sections %}
             {% for section in cms_sections %}
-            {% if section.section_type == 'custom' and ('hub' in section.title|lower or 'знань' in section.title|lower) %}
+            {% if section.section_type == 'custom' %}
+            {% if 'hub' in section.title|lower or 'знань' in section.title|lower %}
             <h2 class="section-title hub-title">{{ section.title }}</h2>
+            {% endif %}
             {% endif %}
             {% endfor %}
             {% else %}
