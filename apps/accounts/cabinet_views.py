@@ -48,24 +48,32 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         context['active_subscription'] = active_subscription
         
         # Аккаунт лояльності
+        loyalty_account = None
         try:
             loyalty_account = user.loyalty_account
             created = False
-        except LoyaltyAccount.DoesNotExist:
-            loyalty_account = LoyaltyAccount.objects.create(
-                user=user,
-                points=0,
-                lifetime_points=0,
-                lifetime_spent=0
-            )
-            created = True
-            
-        if created:
-            # Встановити початковий рівень
-            bronze_tier = LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first()
-            if bronze_tier:
-                loyalty_account.current_tier = bronze_tier
-                loyalty_account.save()
+        except (LoyaltyAccount.DoesNotExist, AttributeError):
+            # Спробувати створити, але обробити помилки БД
+            try:
+                loyalty_account = LoyaltyAccount.objects.create(
+                    user=user,
+                    points=0,
+                    lifetime_points=0,
+                    lifetime_spent_points=0
+                )
+                created = True
+                
+                # Встановити початковий рівень
+                bronze_tier = LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first()
+                if bronze_tier:
+                    loyalty_account.current_tier = bronze_tier
+                    loyalty_account.save()
+            except Exception as e:
+                # Якщо таблиці немає або є проблеми з БД, просто логуємо
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.warning(f"Could not create loyalty account for user {user.id}: {e}")
+                created = False
         
         context['loyalty_account'] = loyalty_account
         

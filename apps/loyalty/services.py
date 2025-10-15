@@ -149,12 +149,19 @@ class LoyaltyService:
         """
         Отримати кількість балів для відображення на картці курсу
         """
-        if not user or not user.is_authenticated:
-            tier = 'none'
-        else:
-            tier = cls.get_user_subscription_tier(user)
+        try:
+            if not user or not user.is_authenticated:
+                tier = 'none'
+            else:
+                tier = cls.get_user_subscription_tier(user)
 
-        return PointEarningRule.get_points_for_purchase(course_price, tier)
+            return PointEarningRule.get_points_for_purchase(course_price, tier)
+        except Exception as e:
+            # Якщо таблиці немає або є проблеми з БД, повертаємо 0
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Could not get points for course display: {e}")
+            return 0
 
     @classmethod
     def can_redeem_subscription_month(cls, user: User, tier: str = 'c_vision') -> Tuple[bool, int]:
