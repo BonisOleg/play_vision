@@ -61,6 +61,8 @@
     <link rel="stylesheet" href="{% static 'css/animations.css' %}">
     <link rel="stylesheet" href="{% static 'css/accessibility.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/mobile-bottom-nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/footer-desktop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/footer-mobile.css' %}">
     {% block extra_css %}{% endblock %}
 
     <!-- HTMX -->
@@ -211,41 +213,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h3>Play Vision</h3>
-                    <p>Освітня платформа для футбольних фахівців</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Навігація</h4>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'core:home' %}">Головна</a></li>
-                        <li><a href="{% url 'core:about' %}">Про нас</a></li>
-                        <li><a href="{% url 'content:course_list' %}">Хаб знань</a></li>
-                        <li><a href="{% url 'core:contacts' %}">Контакти</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Правова інформація</h4>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'core:legal' slug='privacy' %}">Політика приватності</a></li>
-                        <li><a href="{% url 'core:legal' slug='terms' %}">Умови використання</a></li>
-                        <li><a href="{% url 'core:legal' slug='cookies' %}">Політика cookies</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Контакти</h4>
-                    <p>Email: support@playvision.com</p>
-                    <p>Телефон: +380 44 123 45 67</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Play Vision. Всі права захищені.</p>
-            </div>
-        </div>
-    </footer>
+    {% include 'partials/footer-desktop.html' %}
+    {% include 'partials/footer-mobile.html' %}
 
     <!-- SVG Icons -->
     <svg class="svg-icons-hidden">
@@ -300,6 +269,8 @@
         };
     </script>
     <script src="{% static 'js/scroll-popup.js' %}"></script>
+    <script src="{% static 'js/footer-accordions.js' %}" defer></script>
+    <script src="{% static 'js/footer-subscribe.js' %}" defer></script>
 
     <!-- Mobile Bottom Navigation -->
     {% include 'partials/mobile-bottom-nav.html' %}

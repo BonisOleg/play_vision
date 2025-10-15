@@ -1,0 +1,297 @@
+/* ========================================== */
+/* FOOTER DESKTOP */
+/* ========================================== */
+
+.footer-desktop {
+    background: var(--color-bg-dark);
+    color: var(--color-bg);
+    padding: var(--spacing-xxl) 0 0;
+    margin-top: var(--spacing-xxl);
+}
+
+/* ===== GRID ===== */
+.footer-desktop-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* ===== SECTION ===== */
+.footer-desktop-section {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.footer-desktop-section:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.footer-desktop-section:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.footer-desktop-section:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.footer-desktop-section:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* ===== TITLES ===== */
+.footer-desktop-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-bg);
+}
+
+.footer-desktop-text {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+/* ===== LINKS ===== */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-links a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all var(--transition-base);
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary);
+    transform: translateX(3px);
+}
+
+/* ===== SOCIAL ICONS ===== */
+.footer-social {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    background: var(--color-secondary);
+    color: var(--color-bg);
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-icon:hover {
+    background: var(--color-primary);
+    transform: translateY(-3px);
+}
+
+/* ===== SUBSCRIBE FORM ===== */
+.footer-subscribe-form {
+    margin-top: var(--spacing-md);
+}
+
+.footer-subscribe-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-subscribe-form .form-control {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.95rem;
+    background: var(--color-secondary);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    color: var(--color-bg);
+    transition: border-color var(--transition-base);
+}
+
+.footer-subscribe-form .form-control::placeholder {
+    color: var(--color-text-muted);
+}
+
+.footer-subscribe-form .form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* ===== CHECKBOX ===== */
+.form-group-checkbox {
+    margin-bottom: var(--spacing-md);
+}
+
+.checkbox-label {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-top: 2px;
+    cursor: pointer;
+    min-width: 16px;
+    min-height: 16px;
+}
+
+.checkbox-text {
+    color: var(--color-text-muted);
+    line-height: 1.4;
+}
+
+.checkbox-text a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.checkbox-text a:hover {
+    color: var(--color-primary-light);
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.btn-subscribe {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all var(--transition-base);
+}
+
+.btn-subscribe:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== FORM MESSAGE ===== */
+.form-message {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.form-message.success {
+    background: var(--color-success-light);
+    color: var(--color-success-dark);
+    display: block;
+}
+
+.form-message.error {
+    background: var(--color-error-light);
+    color: var(--color-error-dark);
+    display: block;
+}
+
+/* ===== FOOTER BOTTOM ===== */
+.footer-bottom {
+    border-top: 1px solid var(--color-secondary);
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet (768px - 992px) */
+@media (max-width: 992px) {
+    .footer-desktop-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    .footer-desktop {
+        padding: var(--spacing-xl) 0 0;
+    }
+}
+
+/* Hide desktop footer on mobile */
+@media (max-width: 767px) {
+    .footer-desktop {
+        display: none;
+    }
+}
+
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .footer-desktop {
+        background: var(--color-bg-dark);
+    }
+}
+
+[data-theme="dark"] .footer-desktop {
+    background: var(--color-bg-dark);
+}
+
+/* ===== HIGH CONTRAST ===== */
+@media (prefers-contrast: high) {
+    .footer-desktop {
+        border-top: 2px solid var(--color-border);
+    }
+
+    .footer-links a {
+        font-weight: 600;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    .footer-desktop-section {
+        animation: none;
+    }
+
+    .footer-links a,
+    .social-icon,
+    .btn-subscribe {
+        transition: none;
+    }
+
+    .footer-links a:hover,
+    .social-icon:hover,
+    .btn-subscribe:hover {
+        transform: none;
+    }
+}

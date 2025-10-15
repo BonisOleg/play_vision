@@ -1,0 +1,421 @@
+/* ========================================== */
+/* FOOTER MOBILE */
+/* ========================================== */
+
+.footer-mobile {
+    display: none;
+    background: var(--color-bg-dark);
+    color: var(--color-bg);
+    padding: var(--spacing-xl) 0 max(var(--spacing-xl), calc(var(--spacing-xl) + env(safe-area-inset-bottom)));
+}
+
+/* ===== SHOW ON MOBILE ===== */
+@media (max-width: 767px) {
+    .footer-mobile {
+        display: block;
+    }
+}
+
+/* ===== SUBSCRIBE SECTION ===== */
+.mobile-subscribe {
+    margin-bottom: var(--spacing-xl);
+}
+
+.mobile-subscribe-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-bg);
+}
+
+.mobile-subscribe-text {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+/* ===== SUBSCRIBE FORM ===== */
+.subscribe-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.subscribe-form label {
+    display: block;
+    color: var(--color-bg);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.subscribe-form .required {
+    color: var(--color-primary);
+}
+
+.subscribe-form .form-control {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 1rem;
+    background: var(--color-secondary);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    color: var(--color-bg);
+    transition: border-color var(--transition-base);
+}
+
+.subscribe-form .form-control::placeholder {
+    color: var(--color-text-muted);
+}
+
+.subscribe-form .form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* ===== CHECKBOX ===== */
+.subscribe-form .form-group-checkbox {
+    margin-bottom: var(--spacing-md);
+}
+
+.subscribe-form .checkbox-label {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.subscribe-form .checkbox-label input[type="checkbox"] {
+    margin-top: 2px;
+    cursor: pointer;
+    min-width: 16px;
+    min-height: 16px;
+}
+
+.subscribe-form .checkbox-text {
+    color: var(--color-text-muted);
+    line-height: 1.4;
+}
+
+.subscribe-form .checkbox-text a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.subscribe-form .checkbox-text a:hover {
+    color: var(--color-primary-light);
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.subscribe-form .btn-subscribe {
+    width: 100%;
+    min-height: 48px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* ===== FORM MESSAGE ===== */
+.subscribe-form .form-message {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.subscribe-form .form-message.success {
+    background: var(--color-success-light);
+    color: var(--color-success-dark);
+    display: block;
+}
+
+.subscribe-form .form-message.error {
+    background: var(--color-error-light);
+    color: var(--color-error-dark);
+    display: block;
+}
+
+/* ===== SOCIAL SECTION ===== */
+.mobile-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    background: var(--color-secondary);
+    color: var(--color-bg);
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.social-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-link:hover {
+    background: var(--color-primary);
+}
+
+/* ===== ACCORDIONS ===== */
+.mobile-accordions {
+    margin-bottom: var(--spacing-xl);
+}
+
+/* ===== ACCORDION ITEM ===== */
+.accordion-item {
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+/* ===== ACCORDION HEADER ===== */
+.accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    background: none;
+    border: none;
+    color: var(--color-bg);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: color var(--transition-base);
+    min-height: 48px;
+}
+
+.accordion-header:hover {
+    color: var(--color-primary);
+}
+
+.accordion-header span {
+    flex: 1;
+}
+
+/* ===== ACCORDION ICON ===== */
+.accordion-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--transition-base);
+    flex-shrink: 0;
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* ===== ACCORDION CONTENT ===== */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-base);
+}
+
+.accordion-item.active .accordion-content {
+    padding-bottom: var(--spacing-md);
+}
+
+/* ===== ACCORDION LINKS ===== */
+.accordion-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.accordion-links li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.accordion-links a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color var(--transition-base);
+    display: inline-block;
+}
+
+.accordion-links a:hover {
+    color: var(--color-primary);
+}
+
+/* ===== CONTACT INFO GRID ===== */
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+}
+
+.contact-item {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.contact-item strong {
+    display: block;
+    color: var(--color-bg);
+    margin-bottom: var(--spacing-xs);
+}
+
+.contact-item a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+/* ===== COPYRIGHT ===== */
+.mobile-copyright {
+    text-align: center;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-secondary);
+}
+
+.mobile-copyright p {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Small Mobile (max-width: 576px) */
+@media (max-width: 576px) {
+    .footer-mobile {
+        padding: var(--spacing-lg) 0 max(var(--spacing-lg), calc(var(--spacing-lg) + env(safe-area-inset-bottom)));
+    }
+
+    .mobile-subscribe-title {
+        font-size: 1rem;
+    }
+
+    .subscribe-form .form-control {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+
+    .mobile-social {
+        gap: 15px;
+    }
+
+    .social-link {
+        width: 36px;
+        height: 36px;
+    }
+
+    .social-link svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Extra Small (max-width: 400px) */
+@media (max-width: 400px) {
+    .mobile-subscribe-title {
+        font-size: 0.9rem;
+    }
+
+    .accordion-header {
+        font-size: 0.9rem;
+        padding: var(--spacing-sm) 0;
+    }
+
+    .contact-info-grid {
+        gap: var(--spacing-sm);
+    }
+}
+
+/* ===== iOS SAFARI SPECIFIC ===== */
+@supports (-webkit-touch-callout: none) {
+    .footer-mobile {
+        padding-bottom: max(var(--spacing-xl), calc(var(--spacing-xl) + env(safe-area-inset-bottom)));
+    }
+
+    .accordion-header {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+    }
+
+    .social-link {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATION ===== */
+@media (hover: none) and (pointer: coarse) {
+    .accordion-header {
+        min-height: 56px;
+    }
+
+    .social-link {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .footer-mobile {
+        background: var(--color-bg-dark);
+    }
+}
+
+[data-theme="dark"] .footer-mobile {
+    background: var(--color-bg-dark);
+}
+
+/* ===== HIGH CONTRAST ===== */
+@media (prefers-contrast: high) {
+    .accordion-item {
+        border-bottom-width: 2px;
+    }
+
+    .accordion-header {
+        font-weight: 700;
+    }
+
+    .accordion-links a {
+        font-weight: 600;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+
+    .accordion-icon,
+    .accordion-content {
+        transition: none;
+    }
+
+    .form-message {
+        animation: none;
+    }
+}

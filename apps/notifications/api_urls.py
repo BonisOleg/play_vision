@@ -15,4 +15,7 @@ urlpatterns = [
     # User notifications
     path('list/', api_views.NotificationListView.as_view(), name='notification_list'),
     path('<int:pk>/read/', api_views.MarkAsReadView.as_view(), name='mark_as_read'),
+    
+    # Newsletter subscription
+    path('newsletter/subscribe/', api_views.NewsletterSubscribeView.as_view(), name='newsletter_subscribe'),
 ]

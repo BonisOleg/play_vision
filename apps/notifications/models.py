@@ -308,3 +308,77 @@ class NotificationLog(models.Model):
     
     def __str__(self):
         return f"{self.notification.id} - {self.event}"
+
+
+class NewsletterSubscriber(models.Model):
+    """
+    Підписники на розсилку новин
+    """
+    STATUS_CHOICES = [
+        ('active', 'Активний'),
+        ('unsubscribed', 'Відписався'),
+        ('bounced', 'Відмова доставки'),
+        ('complaint', 'Скарга'),
+    ]
+    
+    name = models.CharField(max_length=100, verbose_name='Ім\'я')
+    email = models.EmailField(unique=True, verbose_name='Email')
+    
+    # Зв'язок з користувачем (опціонально)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.SET_NULL,
+        null=True, 
+        blank=True,
+        related_name='newsletter_subscription'
+    )
+    
+    # Статус
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    
+    # Джерело підписки
+    source = models.CharField(max_length=50, default='footer_form', choices=[
+        ('footer_form', 'Футер сайту'),
+        ('popup', 'Спливаюче вікно'),
+        ('checkout', 'Форма оплати'),
+        ('registration', 'Реєстрація'),
+        ('manual', 'Ручне додавання'),
+    ])
+    
+    # IP та метадані
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(blank=True)
+    
+    # Часові мітки
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+    unsubscribed_at = models.DateTimeField(null=True, blank=True)
+    last_sent_at = models.DateTimeField(null=True, blank=True, 
+                                       verbose_name='Остання розсилка')
+    
+    # Статистика
+    emails_sent = models.PositiveIntegerField(default=0)
+    emails_opened = models.PositiveIntegerField(default=0)
+    emails_clicked = models.PositiveIntegerField(default=0)
+    
+    # Метадані
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'newsletter_subscribers'
+        verbose_name = 'Підписник розсилки'
+        verbose_name_plural = 'Підписники розсилки'
+        ordering = ['-subscribed_at']
+        indexes = [
+            models.Index(fields=['email', 'status']),
+            models.Index(fields=['status', 'subscribed_at']),
+        ]
+    
+    def __str__(self):
+        return f"{self.name} ({self.email})"
+    
+    def unsubscribe(self):
+        """Відписатися від розсилки"""
+        self.status = 'unsubscribed'
+        self.unsubscribed_at = timezone.now()
+        self.save()

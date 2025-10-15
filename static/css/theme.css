@@ -95,14 +95,7 @@
     }
 }
 
-/* Footer in dark mode */
-[data-theme="dark"] .footer,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .footer {
-        background: var(--color-bg-gray);
-        border-top-color: var(--color-border);
-    }
-}
+/* Footer dark mode styles moved to footer-desktop.css and footer-mobile.css */
 
 /* Tables in dark mode */
 [data-theme="dark"] table,

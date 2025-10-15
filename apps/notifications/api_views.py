@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 import json
 import logging
 
-from .models import PushSubscription, Notification
+from .models import PushSubscription, Notification, NewsletterSubscriber
 
 logger = logging.getLogger(__name__)
 
@@ -263,3 +263,116 @@ class MarkAsReadView(APIView):
             return Response({
                 'error': 'Internal server error'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class NewsletterSubscribeView(APIView):
+    """
+    Підписка на розсилку новин
+    """
+    
+    def post(self, request):
+        """
+        Створює підписку на розсилку
+        
+        Expected JSON data:
+        {
+            "name": "Ім'я",
+            "email": "email@example.com"
+        }
+        """
+        try:
+            # Парсинг JSON даних
+            data = json.loads(request.body.decode('utf-8'))
+            
+            # Валідація обов'язкових полів
+            name = data.get('name', '').strip()
+            email = data.get('email', '').strip()
+            
+            if not name:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Будь ласка, вкажіть ваше ім\'я'
+                }, status=400)
+            
+            if not email:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Будь ласка, вкажіть ваш email'
+                }, status=400)
+            
+            # Базова валідація email
+            if '@' not in email or '.' not in email:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Будь ласка, вкажіть коректний email'
+                }, status=400)
+            
+            # Отримання метаданих
+            ip_address = self._get_client_ip(request)
+            user_agent = request.META.get('HTTP_USER_AGENT', '')
+            
+            # Перевірка чи вже існує підписка
+            existing_subscriber = NewsletterSubscriber.objects.filter(email=email).first()
+            
+            if existing_subscriber:
+                if existing_subscriber.status == 'active':
+                    return JsonResponse({
+                        'success': False,
+                        'error': 'Ви вже підписані на розсилку'
+                    }, status=400)
+                else:
+                    # Якщо раніше відписався, повторно активуємо
+                    existing_subscriber.status = 'active'
+                    existing_subscriber.name = name
+                    existing_subscriber.unsubscribed_at = None
+                    existing_subscriber.save()
+                    
+                    logger.info(f'Newsletter resubscribed: {email}')
+                    
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Ви успішно підписалися на розсилку!'
+                    })
+            
+            # Створення нового підписника
+            subscriber = NewsletterSubscriber.objects.create(
+                name=name,
+                email=email,
+                user=request.user if request.user.is_authenticated else None,
+                source='footer_form',
+                ip_address=ip_address,
+                user_agent=user_agent,
+                status='active'
+            )
+            
+            logger.info(f'New newsletter subscriber: {email}')
+            
+            # TODO: Відправити welcome email
+            # self._send_welcome_email(subscriber)
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Дякуємо за підписку! Ви будете отримувати наші новини.'
+            })
+            
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'success': False,
+                'error': 'Невірний формат даних'
+            }, status=400)
+        except Exception as e:
+            logger.error(f'Error creating newsletter subscription: {str(e)}')
+            return JsonResponse({
+                'success': False,
+                'error': 'Виникла помилка. Спробуйте пізніше.'
+            }, status=500)
+    
+    def _get_client_ip(self, request):
+        """Отримує IP адресу клієнта"""
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
