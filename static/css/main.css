@@ -208,7 +208,7 @@ a:hover {
     top: 100%;
     left: 50%;
     min-width: 350px;
-    background: white;
+    background: var(--color-bg);
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     padding: 8px;
@@ -290,21 +290,21 @@ a:hover {
 
 .dropdown-item-badge--online,
 .dropdown-item-badge--webinar {
-    background: rgba(76, 175, 80, 0.1);
-    color: #388E3C;
+    background: rgba(0, 0, 0, 0.1);
+    color: #000000;
 }
 
 .dropdown-item-badge--offline,
 .dropdown-item-badge--seminar,
 .dropdown-item-badge--workshop {
-    background: rgba(255, 87, 34, 0.1);
-    color: #D84315;
+    background: rgba(229, 9, 20, 0.1);
+    color: #E50914;
 }
 
 .dropdown-item-badge--hybrid,
 .dropdown-item-badge--forum {
-    background: rgba(255, 193, 7, 0.1);
-    color: #F57C00;
+    background: rgba(229, 9, 20, 0.1);
+    color: #b8070f;
 }
 
 .dropdown-divider {
@@ -505,7 +505,7 @@ a:hover {
 }
 
 .message {
-    background: white;
+    background: var(--color-bg);
     border-radius: 6px;
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-sm);
@@ -782,9 +782,9 @@ body.modal-open {
 
 /* Warning alerts for phone-only users */
 .completion-alert--warning {
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-    border-left: 4px solid #ffc107;
-    color: #856404;
+    background: linear-gradient(135deg, #ffe6e8 0%, #ffccd0 100%);
+    border-left: 4px solid #E50914;
+    color: #b8070f;
     padding: var(--spacing-lg);
     border-radius: 8px;
     margin-bottom: var(--spacing-lg);
@@ -792,27 +792,27 @@ body.modal-open {
 
 /* Info alerts for email users */
 .completion-alert--info {
-    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-    border-left: 4px solid #17a2b8;
-    color: #0c5460;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    border-left: 4px solid #000000;
+    color: #000000;
     padding: var(--spacing-lg);
     border-radius: 8px;
     margin-bottom: var(--spacing-lg);
 }
 
 .completion-alert--warning h3 {
-    color: #856404;
+    color: #b8070f;
     margin-bottom: var(--spacing-sm);
 }
 
 .completion-alert--info h3 {
-    color: #0c5460;
+    color: #000000;
     margin-bottom: var(--spacing-sm);
 }
 
 .btn--warning {
-    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
-    color: #212529;
+    background: linear-gradient(135deg, #E50914 0%, #b8070f 100%);
+    color: #ffffff;
     border: none;
     padding: 12px 24px;
     border-radius: 8px;
@@ -823,10 +823,10 @@ body.modal-open {
 }
 
 .btn--warning:hover {
-    background: linear-gradient(135deg, #ffb300 0%, #ffa000 100%);
+    background: linear-gradient(135deg, #b8070f 0%, #8a0509 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
-    color: #212529;
+    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+    color: #ffffff;
     text-decoration: none;
 }
 

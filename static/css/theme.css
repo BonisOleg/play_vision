@@ -232,7 +232,7 @@
     [data-theme="light"],
     [data-theme="dark"],
     [data-theme="auto"] {
-        --color-primary: #ff6b35;
+        --color-primary: #E50914;
         --color-text: currentColor;
         --color-bg: canvas;
     }

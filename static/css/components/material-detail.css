@@ -2,12 +2,12 @@
 
 /* ===== VARIABLES ===== */
 :root {
-    --material-bg: #ffffff;
-    --material-bg-gray: #f8f9fa;
-    --material-border: #e0e0e0;
-    --material-success: #4caf50;
-    --material-warning: #ff9800;
-    --material-danger: #f44336;
+    --material-bg: var(--color-bg);
+    --material-bg-gray: var(--color-bg-gray);
+    --material-border: var(--color-border);
+    --material-success: var(--color-success);
+    --material-warning: var(--color-error);
+    --material-danger: var(--color-error);
     --material-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     --material-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
     --material-radius: 8px;
@@ -51,7 +51,7 @@
 .progress-bar {
     width: 100%;
     height: 8px;
-    background: #e0e0e0;
+    background: var(--color-border-light);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -106,7 +106,7 @@
 .material-title {
     font-size: 2rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin-bottom: 1rem;
     line-height: 1.2;
 }
@@ -273,7 +273,7 @@
 .material-text h2 {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin: 2rem 0 1rem 0;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--primary-color);
@@ -282,7 +282,7 @@
 .material-text h3 {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin: 1.5rem 0 1rem 0;
 }
 
@@ -302,7 +302,7 @@
 
 .material-text blockquote {
     border-left: 4px solid var(--primary-color);
-    background: #f8f9fa;
+    background: var(--color-bg-gray);
     padding: 1rem 1.5rem;
     margin: 1.5rem 0;
     border-radius: 0 var(--material-radius) var(--material-radius) 0;
@@ -310,7 +310,7 @@
 }
 
 .material-text code {
-    background: #f1f3f4;
+    background: var(--color-bg-gray);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: 'Monaco', 'Courier New', monospace;
@@ -318,8 +318,8 @@
 }
 
 .material-text pre {
-    background: #f8f9fa;
-    border: 1px solid #e0e0e0;
+    background: var(--color-bg-gray);
+    border: 1px solid var(--color-border);
     border-radius: var(--material-radius);
     padding: 1rem;
     overflow-x: auto;
@@ -353,7 +353,7 @@
 .sidebar-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -379,12 +379,12 @@
 }
 
 .material-item:hover {
-    background: #f8f9fa;
+    background: var(--color-bg-gray);
     border-color: var(--material-border);
 }
 
 .material-item.current {
-    background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+    background: linear-gradient(135deg, var(--color-primary-alpha-10), var(--color-bg-gray));
     border-color: var(--primary-color);
     font-weight: 600;
 }
@@ -434,7 +434,7 @@
 .info-item {
     text-align: center;
     padding: 0.75rem;
-    background: #f8f9fa;
+    background: var(--color-bg-gray);
     border-radius: var(--material-radius);
 }
 
@@ -457,7 +457,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: #f8f9fa;
+    background: var(--color-bg-gray);
     border-radius: var(--material-radius);
     margin-bottom: 1rem;
 }
@@ -474,7 +474,7 @@
 .instructor-details h4 {
     font-size: 1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin-bottom: 0.25rem;
 }
 
@@ -595,41 +595,41 @@
 /* ===== DARK MODE SUPPORT ===== */
 @media (prefers-color-scheme: dark) {
     :root {
-        --material-bg: #1a1a1a;
-        --material-bg-gray: #2d2d2d;
-        --material-border: #404040;
+        --material-bg: var(--color-bg);
+        --material-bg-gray: var(--color-bg-gray);
+        --material-border: var(--color-border);
         --material-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         --material-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
 
     .material-content,
     .sidebar-card {
-        background: #2d2d2d;
-        color: #e0e0e0;
+        background: var(--color-bg-gray);
+        color: var(--color-text);
     }
 
     .material-title {
-        color: #ffffff;
+        color: var(--color-text);
     }
 
     .material-text {
-        color: #e0e0e0;
+        color: var(--color-text);
     }
 
     .material-text h2,
     .material-text h3 {
-        color: #ffffff;
+        color: var(--color-text);
     }
 
     .material-item:hover {
-        background: #404040;
+        background: var(--color-bg-dark);
     }
 
     .info-item {
-        background: #404040;
+        background: var(--color-bg-dark);
     }
 
     .instructor-info {
-        background: #404040;
+        background: var(--color-bg-dark);
     }
 }

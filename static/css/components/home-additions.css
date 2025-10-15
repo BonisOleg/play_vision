@@ -24,7 +24,7 @@
 .carousel-btn {
     position: absolute;
     top: 50%;
-    background: white;
+    background: var(--color-bg);
     border: none;
     width: 40px;
     height: 40px;
@@ -83,7 +83,7 @@
 }
 
 .featured-card {
-    background: white;
+    background: var(--color-bg);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -114,7 +114,7 @@
 .image-placeholder {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
 }
 
 .featured-content {
@@ -221,7 +221,7 @@
     position: absolute;
     width: 140px;
     height: 140px;
-    background: white;
+    background: var(--color-bg);
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     display: flex;
     flex-direction: column;
@@ -234,7 +234,7 @@
 
 .ecosystem-item:hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 8px 32px var(--color-primary-alpha-20);
 }
 
 .ecosystem-item-1 {
@@ -415,7 +415,7 @@
         }
 
         .image-placeholder {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
         }
 
         .featured-category {
@@ -477,7 +477,7 @@
         /* === ECOSYSTEM DIAGRAM === */
         .ecosystem-center {
             background: var(--color-primary);
-            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 8px 24px var(--color-primary-alpha-20);
         }
 
         .ecosystem-item {
@@ -487,7 +487,7 @@
 
         .ecosystem-item:hover {
             background: var(--color-bg-dark);
-            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+            box-shadow: 0 8px 32px var(--color-primary-alpha-20);
         }
 
         .ecosystem-item h4 {

@@ -193,7 +193,7 @@
 }
 
 .event-price-badge.free {
-    background: #28a745;
+    background: var(--color-success);
 }
 
 .event-content {
@@ -266,7 +266,7 @@
 }
 
 .tickets-sold-out {
-    color: #dc3545;
+    color: var(--color-error);
     font-weight: 600;
     font-size: 0.875rem;
 }
@@ -1175,7 +1175,7 @@
 }
 
 .price-free {
-    color: #4caf50;
+    color: var(--color-success);
     font-size: 0.9rem;
 }
 
@@ -1183,7 +1183,7 @@
     display: inline-block;
     margin-left: 0.5rem;
     padding: 0.25rem 0.5rem;
-    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     color: white;
     font-size: 0.75rem;
     font-weight: 600;
@@ -2092,11 +2092,11 @@
 /* ===== DARK MODE SUPPORT ===== */
 @media (prefers-color-scheme: dark) {
     :root {
-        --hub-bg: #1a1a1a;
-        --hub-bg-gray: #2d2d2d;
-        --hub-text: #e0e0e0;
-        --hub-text-light: #a0a0a0;
-        --hub-border: #404040;
+        --hub-bg: var(--color-bg);
+        --hub-bg-gray: var(--color-bg-gray);
+        --hub-text: var(--color-text);
+        --hub-text-light: var(--color-text-light);
+        --hub-border: var(--color-border);
         --hub-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         --hub-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
@@ -2105,31 +2105,31 @@
     .product-card,
     .result-card,
     .sidebar-card {
-        background: #2d2d2d;
-        border-color: #404040;
-        color: #e0e0e0;
+        background: var(--color-bg-gray);
+        border-color: var(--color-border);
+        color: var(--color-text);
     }
 
     .material-card-title,
     .product-title,
     .result-title {
-        color: #ffffff;
+        color: var(--color-text);
     }
 
     .subscription-banner {
-        background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
-        border-bottom: 1px solid #404040;
+        background: linear-gradient(135deg, var(--color-bg-gray) 0%, var(--color-bg) 100%);
+        border-bottom: 1px solid var(--color-border);
     }
 
     .search-input,
     .filter-select {
-        background: #2d2d2d;
-        border-color: #404040;
-        color: #e0e0e0;
+        background: var(--color-bg-gray);
+        border-color: var(--color-border);
+        color: var(--color-text);
     }
 
     .search-input::placeholder {
-        color: #a0a0a0;
+        color: var(--color-text-muted);
     }
 }
 
