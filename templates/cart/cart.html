@@ -49,8 +49,7 @@
                             {% if item.get_display_badges %}
                             <div class="cart-item-badges">
                                 {% for badge in item.get_display_badges %}
-                                <span
-                                    class="cart-item-badge {% if badge == 'топ-продажів' %}cart-item-badge--top{% elif badge == 'новинка' %}cart-item-badge--new{% endif %}">
+                                <span class="cart-item-badge {% if badge == 'топ-продажів' %}cart-item-badge--top{% elif badge == 'новинка' %}cart-item-badge--new{% endif %}">
                                     {{ badge }}
                                 </span>
                                 {% endfor %}

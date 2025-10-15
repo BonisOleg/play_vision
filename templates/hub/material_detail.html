@@ -258,8 +258,7 @@
             <h3>Інші матеріали курсу</h3>
             <div class="materials-list">
                 {% for course_material in material.course.materials.all %}
-                <div
-                    class="material-nav-item {% if course_material.id == material.id %}current{% endif %}
+                <div class="material-nav-item {% if course_material.id == material.id %}current{% endif %}
                             {% if progress and course_material in progress.materials_completed.all %}completed{% endif %}">
                     <div class="material-nav-icon">
                         {% if course_material.content_type == 'video' %}
