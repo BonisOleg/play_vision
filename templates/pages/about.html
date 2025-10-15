@@ -11,6 +11,25 @@
 <div class="about-container">
 
     <!-- Subscription CTA Section -->
+    {% if cms_sections %}
+    {% for section in cms_sections %}
+    {% if section.section_type == 'cta' %}
+    <section class="subscription-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">{{ section.title }}</h2>
+                {% if section.subtitle %}<p>{{ section.subtitle }}</p>{% endif %}
+                {% for block in section.blocks.all %}
+                {% if block.cta_text and block.cta_url %}
+                <a href="{{ block.cta_url }}" class="btn btn-primary">{{ block.cta_text }}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    {% endfor %}
+    {% else %}
     <section class="subscription-cta">
         <div class="container">
             <div class="cta-content">
@@ -19,12 +38,25 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Mission Section -->
     <section class="mission-section">
         <div class="container">
             <div class="mission-content">
                 <div class="mission-text">
+                    {% if cms_sections %}
+                    {% for section in cms_sections %}
+                    {% if section.section_type == 'custom' and 'mission' in section.title|lower %}
+                    <h1 class="mission-title">{{ section.title }}</h1>
+                    {% for block in section.blocks.all %}
+                    <p class="mission-description">{{ block.text }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if not cms_sections or not cms_sections|length %}
                     <h1 class="mission-title">Про Play Vision</h1>
                     <p class="mission-description">
                         Екосистема Play Vision побудована за принципом «футбольного трикутника»,
@@ -35,6 +67,7 @@
                         середовища — ключ до глибинних змін і справжньої трансформації
                         футбольної індустрії України.
                     </p>
+                    {% endif %}
                 </div>
                 <div class="mission-visual">
                     <div class="play-vision-logo">
@@ -120,6 +153,24 @@
     <!-- Values Section -->
     <section class="values-section">
         <div class="container">
+            {% if cms_sections %}
+            {% for section in cms_sections %}
+            {% if section.section_type == 'custom' and 'values' in section.title|lower or 'цінності' in
+            section.title|lower %}
+            <h2 class="section-title">{{ section.title }}</h2>
+            <div class="values-grid">
+                {% for block in section.blocks.all %}
+                <div class="value-item">
+                    <div class="value-circle">
+                        <span class="value-text">{{ block.title }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if section.subtitle %}<p class="values-description">{{ section.subtitle }}</p>{% endif %}
+            {% endif %}
+            {% endfor %}
+            {% else %}
             <h2 class="section-title">Наші цінності</h2>
             <div class="values-grid">
                 <div class="value-item">
@@ -157,17 +208,54 @@
                 Ми поєднуємо мотивацію та прагматизм із допитливістю і інтуїцією.
                 Опираємось на спільноту практиків і відкритих знань.
             </p>
+            {% endif %}
         </div>
     </section>
 
     <!-- Knowledge Hub Section -->
     <section class="knowledge-hub-section">
         <div class="container">
+            {% if cms_sections %}
+            {% for section in cms_sections %}
+            {% if section.section_type == 'custom' and 'hub' in section.title|lower or 'знань' in section.title|lower %}
+            <h2 class="section-title hub-title">{{ section.title }}</h2>
+            {% endif %}
+            {% endfor %}
+            {% else %}
             <h2 class="section-title hub-title">Хаб знань</h2>
+            {% endif %}
 
-            <!-- Expert Quotes - статична версія -->
+            <!-- Expert Quotes -->
             <div class="quotes-carousel">
                 <div class="quote-container">
+                    {% if cms_experts %}
+                    {% for expert in cms_experts|slice:":1" %}
+                    <div class="quote-slide active">
+                        <div class="quote-content">
+                            {% if expert.bio %}
+                            <div class="quote-text">{{ expert.bio|truncatewords:30 }}</div>
+                            {% else %}
+                            <div class="quote-text">Найважливіше в футболі — це не фізичні дані, а розуміння гри та
+                                прийняття правильних рішень.</div>
+                            {% endif %}
+                            <div class="quote-author">
+                                <div class="author-avatar">
+                                    {% if expert.photo %}
+                                    <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                    {% else %}
+                                    <img src="{% static 'images/experts/fabian-otte.jpg' %}" alt="{{ expert.name }}"
+                                        loading="lazy">
+                                    {% endif %}
+                                </div>
+                                <div class="author-info">
+                                    <div class="author-name">{{ expert.name }}</div>
+                                    <div class="author-title">{{ expert.position }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
                     <div class="quote-slide active">
                         <div class="quote-content">
                             <div class="quote-text">Найважливіше в футболі — це не фізичні дані, а розуміння гри та
@@ -184,6 +272,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
 

@@ -826,6 +826,10 @@
     line-height: 1.3;
 }
 
+.hexagon {
+    background: linear-gradient(135deg, var(--hex-color, var(--color-primary)) 0%, var(--hex-color, var(--color-primary-light)) 100%);
+}
+
 .hexagon-motivation {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
 }

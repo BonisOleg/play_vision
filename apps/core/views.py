@@ -32,12 +32,39 @@ class HomeView(TemplateView):
             is_featured=True
         ).select_related('category').prefetch_related('tags')[:6]
         
+        # CMS контент
+        from apps.cms.models import HeroSlide, PageSection, ExpertCard, HexagonItem
+        
+        context['cms_hero_slides'] = HeroSlide.objects.filter(is_active=True)
+        context['cms_sections'] = PageSection.objects.filter(
+            page='home',
+            is_active=True
+        ).prefetch_related('blocks')
+        context['cms_experts'] = ExpertCard.objects.filter(
+            is_active=True,
+            show_on_homepage=True
+        )
+        context['cms_hexagons'] = HexagonItem.objects.filter(is_active=True)
+        
         return context
 
 
 class AboutView(TemplateView):
     """About page view"""
     template_name = 'pages/about.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        from apps.cms.models import PageSection, ExpertCard
+        
+        context['cms_sections'] = PageSection.objects.filter(
+            page='about',
+            is_active=True
+        ).prefetch_related('blocks')
+        context['cms_experts'] = ExpertCard.objects.filter(is_active=True)
+        
+        return context
 
 
 class ComingSoonView(TemplateView):

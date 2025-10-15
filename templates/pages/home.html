@@ -15,24 +15,54 @@
     <!-- 1. HERO SECTION -->
     <section class="fullscreen-section hero-section hero-bordered">
         <!-- Background Video/Image -->
+        {% if cms_hero_slides %}
+        {% with first_slide=cms_hero_slides.0 %}
+        <div class="section-bg">
+            {% if first_slide.video %}
+            <video class="section-bg-video" muted loop preload="metadata">
+                <source src="{{ first_slide.video.url }}" type="video/mp4">
+                {% if first_slide.image %}
+                <img class="section-bg-image" src="{{ first_slide.image.url }}" alt="{{ first_slide.title }}"
+                    loading="eager">
+                {% endif %}
+            </video>
+            {% elif first_slide.image %}
+            <img class="section-bg-image" src="{{ first_slide.image.url }}" alt="{{ first_slide.title }}"
+                loading="eager">
+            {% endif %}
+        </div>
+        {% endwith %}
+        {% else %}
         <div class="section-bg">
             <video class="section-bg-video" muted loop preload="metadata">
                 <source src="{% static 'videos/hero-bg.mp4' %}" type="video/mp4">
-                <!-- Fallback image if video fails -->
                 <img class="section-bg-image" src="{% static 'images/hero-bg.jpg' %}" alt="Play Vision Hero"
                     loading="eager">
             </video>
         </div>
+        {% endif %}
         <div class="section-overlay section-overlay--gradient"></div>
 
         <div class="section-content hero-with-frame">
+            {% if cms_hero_slides %}
+            {% with first_slide=cms_hero_slides.0 %}
+            {% if first_slide.badge %}<div class="hero-badge">{{ first_slide.badge }}</div>{% endif %}
+            <h1 class="hero-title">{{ first_slide.title }}</h1>
+            {% if first_slide.subtitle %}<p class="hero-subtitle">{{ first_slide.subtitle }}</p>{% endif %}
+            {% if first_slide.cta_text and first_slide.cta_url %}
+            <div class="hero-buttons">
+                <a href="{{ first_slide.cta_url }}" class="btn btn-primary">{{ first_slide.cta_text }}</a>
+            </div>
+            {% endif %}
+            {% endwith %}
+            {% else %}
             <div class="hero-badge">ГОЛОВНЕ ЗАРАЗ</div>
             <h1 class="hero-title">Продуктивна практика у футбольних клубах</h1>
             <p class="hero-subtitle">Реальні кейси, стажування та менторинг з професіоналами індустрії</p>
-
             <div class="hero-buttons">
                 <a href="/about/" class="btn btn-primary">Дізнатись більше</a>
             </div>
+            {% endif %}
 
             <div class="hero-slider-dots"></div>
         </div>
@@ -157,6 +187,19 @@
             <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
 
             <div class="hexagons-grid">
+                {% if cms_hexagons %}
+                {% for hex in cms_hexagons %}
+                <div class="hexagon" style="--hex-color: {{ hex.color }};">
+                    <div class="hexagon-inner">
+                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24">
+                            {{ hex.icon_svg|safe }}
+                        </svg>
+                        <h4>{{ hex.title }}</h4>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <!-- Fallback: Hardcode hexagons -->
                 <div class="hexagon hexagon-motivation">
                     <div class="hexagon-inner">
                         <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
@@ -166,7 +209,6 @@
                         <h4>Ментальність</h4>
                     </div>
                 </div>
-
                 <div class="hexagon hexagon-intuition">
                     <div class="hexagon-inner">
                         <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
@@ -178,7 +220,6 @@
                         <h4>Життя та побут</h4>
                     </div>
                 </div>
-
                 <div class="hexagon hexagon-society">
                     <div class="hexagon-inner">
                         <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
@@ -195,7 +236,6 @@
                         <h4>Техніка</h4>
                     </div>
                 </div>
-
                 <div class="hexagon hexagon-curiosity">
                     <div class="hexagon-inner">
                         <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
@@ -206,7 +246,6 @@
                         <h4>Здоров'я та звички</h4>
                     </div>
                 </div>
-
                 <div class="hexagon hexagon-pragmatism">
                     <div class="hexagon-inner">
                         <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
@@ -217,7 +256,6 @@
                         <h4>Ігровий інтелект</h4>
                     </div>
                 </div>
-
                 <div class="hexagon hexagon-optimism">
                     <div class="hexagon-inner">
                         <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
@@ -228,6 +266,7 @@
                         <h4>Фізика</h4>
                     </div>
                 </div>
+                {% endif %}
             </div>
 
             <div class="mentor-cta">
@@ -253,37 +292,48 @@
             </p>
 
             <div class="experts-grid">
-                <!-- Expert 1 -->
+                {% if cms_experts %}
+                {% for expert in cms_experts %}
+                <div class="expert-card">
+                    <div class="expert-photo">
+                        {% if expert.photo %}
+                        <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                        {% endif %}
+                    </div>
+                    <h3 class="expert-name">{{ expert.name }}</h3>
+                    <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                    {% if expert.bio %}
+                    <a href="#" class="expert-link">Огляд профілю →</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <!-- Fallback: Hardcode experts -->
                 <div class="expert-card">
                     <div class="expert-photo"></div>
                     <h3 class="expert-name">Dr. Fabian Otte</h3>
                     <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
                     <a href="#" class="expert-link">Огляд профілю →</a>
                 </div>
-
-                <!-- Expert 2 -->
                 <div class="expert-card">
                     <div class="expert-photo"></div>
                     <h3 class="expert-name">Dr. Adam Owen</h3>
                     <p class="expert-specialization">Training Methodology, Session Design</p>
                     <a href="#" class="expert-link">Огляд профілю →</a>
                 </div>
-
-                <!-- Expert 3 -->
                 <div class="expert-card">
                     <div class="expert-photo"></div>
                     <h3 class="expert-name">Prof. Hassane Zouhal</h3>
                     <p class="expert-specialization">Exercise Physiology, Talent ID</p>
                     <a href="#" class="expert-link">Огляд профілю →</a>
                 </div>
-
-                <!-- Expert 4 -->
                 <div class="expert-card">
                     <div class="expert-photo"></div>
                     <h3 class="expert-name">Dr. Raphael Villatore</h3>
                     <p class="expert-specialization">Sports Medicine & Nutrition</p>
                     <a href="#" class="expert-link">Огляд профілю →</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </section>

@@ -389,8 +389,8 @@ class EventRegistration(models.Model):
                                 related_name='registration')
     
     # Attendee information
-    attendee_name = models.CharField(max_length=200)
-    attendee_email = models.EmailField()
+    attendee_name = models.CharField(max_length=200, default='')
+    attendee_email = models.EmailField(blank=True, default='')
     attendee_phone = models.CharField(max_length=20, blank=True)
     company = models.CharField(max_length=200, blank=True)
     position = models.CharField(max_length=200, blank=True)

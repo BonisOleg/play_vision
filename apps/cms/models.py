@@ -317,3 +317,223 @@ class ContentBlock(models.Model):
     
     def __str__(self):
         return f"{self.name} ({self.block_type})"
+
+
+class HeroSlide(models.Model):
+    """Hero carousel slides"""
+    title = models.CharField('Заголовок', max_length=200)
+    subtitle = models.CharField('Підзаголовок', max_length=300, blank=True)
+    badge = models.CharField('Бейдж', max_length=50, blank=True, 
+                            help_text='Текст бейджу (ГОЛОВНЕ ЗАРАЗ)')
+    
+    # Media
+    image = models.ImageField('Зображення', upload_to='cms/hero/', blank=True,
+                             help_text='Рекомендований розмір: 1920×1080 px')
+    video = models.FileField('Відео', upload_to='cms/hero/videos/', blank=True,
+                            help_text='MP4 формат')
+    
+    # CTA
+    cta_text = models.CharField('Текст кнопки', max_length=50, blank=True)
+    cta_url = models.CharField('URL кнопки', max_length=200, blank=True)
+    
+    # Display
+    order = models.PositiveIntegerField('Порядок', default=0)
+    is_active = models.BooleanField('Активний', default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_hero_slides'
+        verbose_name = 'Hero Слайд'
+        verbose_name_plural = 'Hero Слайди'
+        ordering = ['order', '-created_at']
+    
+    def __str__(self):
+        return f"{self.title} (#{self.order})"
+    
+    def save(self, *args, **kwargs):
+        """Auto-optimize images"""
+        if self.image and hasattr(self.image, 'file'):
+            try:
+                from PIL import Image
+                from io import BytesIO
+                from django.core.files.uploadedfile import InMemoryUploadedFile
+                
+                img = Image.open(self.image)
+                
+                if img.height > 1080 or img.width > 1920:
+                    # Convert RGBA to RGB
+                    if img.mode in ('RGBA', 'LA', 'P'):
+                        background = Image.new('RGB', img.size, (255, 255, 255))
+                        background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
+                        img = background
+                    
+                    # Resize
+                    img.thumbnail((1920, 1080), Image.Resampling.LANCZOS)
+                    
+                    # Save
+                    output = BytesIO()
+                    img.save(output, format='JPEG', optimize=True, quality=85)
+                    output.seek(0)
+                    
+                    self.image = InMemoryUploadedFile(
+                        output, 'ImageField',
+                        f"{self.image.name.split('.')[0]}.jpg",
+                        'image/jpeg', output.getbuffer().nbytes, None
+                    )
+            except Exception:
+                pass
+        
+        super().save(*args, **kwargs)
+
+
+class PageSection(models.Model):
+    """Page sections"""
+    SECTION_TYPES = [
+        ('hero', 'Hero'),
+        ('featured_courses', 'Featured Курси'),
+        ('courses', 'Курси'),
+        ('mentor', 'Ментор-коучинг'),
+        ('experts', 'Експерти'),
+        ('cta', 'Call to Action'),
+        ('custom', 'Кастомна секція'),
+    ]
+    
+    page = models.CharField('Сторінка', max_length=50, default='home')
+    section_type = models.CharField('Тип секції', max_length=30, choices=SECTION_TYPES)
+    title = models.CharField('Заголовок', max_length=200, blank=True)
+    subtitle = models.CharField('Підзаголовок', max_length=300, blank=True)
+    
+    # Background
+    bg_image = models.ImageField('Фонове зображення', upload_to='cms/sections/', blank=True)
+    bg_color = models.CharField('Колір фону', max_length=7, default='#ffffff')
+    
+    # Display
+    order = models.PositiveIntegerField('Порядок', default=0)
+    is_active = models.BooleanField('Активна', default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_page_sections'
+        verbose_name = 'Секція сторінки'
+        verbose_name_plural = 'Секції сторінок'
+        ordering = ['page', 'order']
+    
+    def __str__(self):
+        return f"{self.page}: {self.get_section_type_display()}"
+
+
+class SectionBlock(models.Model):
+    """Blocks within page sections"""
+    BLOCK_TYPES = [
+        ('text', 'Текст'),
+        ('image', 'Зображення'),
+        ('card', 'Картка'),
+        ('course_card', 'Картка курсу'),
+    ]
+    
+    section = models.ForeignKey(PageSection, on_delete=models.CASCADE, related_name='blocks')
+    block_type = models.CharField('Тип блоку', max_length=20, choices=BLOCK_TYPES)
+    
+    title = models.CharField('Заголовок', max_length=200, blank=True)
+    text = models.TextField('Текст', blank=True)
+    image = models.ImageField('Зображення', upload_to='cms/blocks/', blank=True)
+    
+    # CTA
+    cta_text = models.CharField('Текст кнопки', max_length=50, blank=True)
+    cta_url = models.CharField('URL кнопки', max_length=200, blank=True)
+    
+    # Display
+    order = models.PositiveIntegerField('Порядок', default=0)
+    
+    class Meta:
+        db_table = 'cms_section_blocks'
+        verbose_name = 'Блок секції'
+        verbose_name_plural = 'Блоки секцій'
+        ordering = ['order']
+    
+    def __str__(self):
+        return f"{self.section.section_type}: {self.title or self.block_type}"
+
+
+class ExpertCard(models.Model):
+    """Expert cards"""
+    name = models.CharField('Ім\'я', max_length=100)
+    position = models.CharField('Посада', max_length=150)
+    specialization = models.CharField('Спеціалізація', max_length=200, blank=True)
+    bio = models.TextField('Біографія', blank=True)
+    
+    photo = models.ImageField('Фото', upload_to='cms/experts/', blank=True,
+                             help_text='Рекомендований розмір: 400×400 px')
+    
+    # Display
+    order = models.PositiveIntegerField('Порядок', default=0)
+    is_active = models.BooleanField('Активний', default=True)
+    show_on_homepage = models.BooleanField('Показувати на головній', default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_expert_cards'
+        verbose_name = 'Експерт'
+        verbose_name_plural = 'Експерти'
+        ordering = ['order']
+    
+    def __str__(self):
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        """Auto-optimize images"""
+        if self.photo and hasattr(self.photo, 'file'):
+            try:
+                from PIL import Image
+                from io import BytesIO
+                from django.core.files.uploadedfile import InMemoryUploadedFile
+                
+                img = Image.open(self.photo)
+                
+                if img.height > 400 or img.width > 400:
+                    if img.mode in ('RGBA', 'LA', 'P'):
+                        background = Image.new('RGB', img.size, (255, 255, 255))
+                        background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
+                        img = background
+                    
+                    img.thumbnail((400, 400), Image.Resampling.LANCZOS)
+                    
+                    output = BytesIO()
+                    img.save(output, format='JPEG', optimize=True, quality=85)
+                    output.seek(0)
+                    
+                    self.photo = InMemoryUploadedFile(
+                        output, 'ImageField',
+                        f"{self.photo.name.split('.')[0]}.jpg",
+                        'image/jpeg', output.getbuffer().nbytes, None
+                    )
+            except Exception:
+                pass
+        
+        super().save(*args, **kwargs)
+
+
+class HexagonItem(models.Model):
+    """Hexagon items for mentor-coaching section"""
+    title = models.CharField('Назва', max_length=100)
+    icon_svg = models.TextField('SVG іконка', help_text='Вставте SVG код іконки')
+    description = models.TextField('Опис', blank=True)
+    color = models.CharField('Колір', max_length=7, default='#ff6b35')
+    
+    order = models.PositiveIntegerField('Порядок', default=0)
+    is_active = models.BooleanField('Активний', default=True)
+    
+    class Meta:
+        db_table = 'cms_hexagon_items'
+        verbose_name = 'Hexagon елемент'
+        verbose_name_plural = 'Hexagon елементи'
+        ordering = ['order']
+    
+    def __str__(self):
+        return self.title
