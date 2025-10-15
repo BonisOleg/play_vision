@@ -85,8 +85,7 @@
 
                 <div class="material-actions" data-material-id="{{ material.id }}">
                     {% if has_access %}
-                    <button class="btn btn-primary" data-action="mark-completed" {% if progress and material in
-                        progress.materials_completed.all %}disabled{% endif %}>
+                    <button class="btn btn-primary" data-action="mark-completed" {% if progress and material in progress.materials_completed.all %}disabled{% endif %}>
                         {% if progress and material in progress.materials_completed.all %}
                         ✓ Завершено
                         {% else %}
