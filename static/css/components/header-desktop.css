@@ -1,0 +1,463 @@
+/**
+ * DESKTOP HEADER STYLES
+ * Стилі для desktop меню згідно документації та ~ правил
+ * БЕЗ !important, БЕЗ inline styles, зовнішній CSS
+ */
+
+/* ========================================
+   MAIN HEADER CONTAINER
+   ======================================== */
+
+.main-header {
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+}
+
+/* ========================================
+   LOGO
+   ======================================== */
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+}
+
+.logo-link:hover {
+    transform: scale(1.05);
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    max-width: 280px;
+    transition: opacity var(--transition-fast);
+}
+
+/* Logo theme switching */
+.logo-light {
+    display: block;
+}
+
+.logo-dark {
+    display: none;
+}
+
+[data-theme="dark"] .logo-light {
+    display: none;
+}
+
+[data-theme="dark"] .logo-dark {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .logo-light {
+        display: none;
+    }
+
+    [data-theme="auto"] .logo-dark {
+        display: block;
+    }
+}
+
+/* ========================================
+   HEADER ACTIONS
+   ======================================== */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.desktop-actions {
+    display: flex;
+}
+
+.navbar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--color-text);
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.navbar-icon:hover {
+    background: var(--color-bg-gray);
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.navbar-icon:active {
+    transform: scale(0.95);
+}
+
+.action-icon {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: relative;
+}
+
+.theme-icon-light,
+.theme-icon-dark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+[data-theme="light"] .theme-icon-light {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+[data-theme="light"] .theme-icon-dark {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+[data-theme="dark"] .theme-icon-light {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+[data-theme="dark"] .theme-icon-dark {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme="auto"] .theme-icon-light {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    [data-theme="auto"] .theme-icon-dark {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .theme-icon-light {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    [data-theme="auto"] .theme-icon-dark {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+}
+
+/* Cart Badge */
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+    line-height: 1;
+}
+
+.badge:empty,
+.badge[data-cart-count="0"] {
+    display: none;
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+
+.main-nav {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--spacing-lg);
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md) 0;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.icon-chevron-down {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    transition: transform var(--transition-fast);
+}
+
+.dropdown:hover .icon-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* ========================================
+   DROPDOWN MENU
+   ======================================== */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    min-width: 300px;
+    background: var(--color-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    padding: 8px;
+    margin-top: 8px;
+    z-index: 200;
+    max-height: 80vh;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal), visibility var(--transition-normal), transform var(--transition-normal);
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-header {
+    padding: 12px 16px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-link {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: background var(--transition-fast);
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.dropdown-link:hover {
+    background: var(--color-bg-gray);
+    text-decoration: none;
+}
+
+.dropdown-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dropdown-item-title {
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+.dropdown-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+.dropdown-item-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.dropdown-item-badge--online,
+.dropdown-item-badge--webinar {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000000;
+}
+
+.dropdown-item-badge--offline,
+.dropdown-item-badge--seminar,
+.dropdown-item-badge--workshop {
+    background: rgba(229, 9, 20, 0.1);
+    color: #E50914;
+}
+
+.dropdown-item-badge--hybrid,
+.dropdown-item-badge--forum {
+    background: rgba(229, 9, 20, 0.1);
+    color: #b8070f;
+}
+
+.dropdown-divider {
+    margin: 8px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.dropdown-item--all {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.dropdown-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--color-text-light);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .navbar-desktop-only {
+        display: none;
+    }
+
+    .header-content {
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        height: 40px;
+    }
+
+    .header-content {
+        padding: var(--spacing-sm) 0;
+    }
+}
+
+@media (max-width: 375px) {
+    .logo-img {
+        height: 32px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+/* Focus visible для keyboard navigation */
+.navbar-icon:focus-visible,
+.nav-link:focus-visible,
+.dropdown-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+    .logo-link,
+    .navbar-icon,
+    .nav-link,
+    .dropdown-menu,
+    .theme-icon-light,
+    .theme-icon-dark,
+    .icon-chevron-down {
+        transition: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+
+    .main-header,
+    .main-nav {
+        border-width: 2px;
+    }
+
+    .navbar-icon:hover,
+    .nav-link:hover {
+        outline: 2px solid currentColor;
+    }
+}
+
+/* Touch target improvements for mobile */
+@media (max-width: 768px) {
+    .navbar-icon {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .nav-link {
+        padding: var(--spacing-sm);
+        min-height: 44px;
+    }
+}

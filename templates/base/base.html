@@ -61,6 +61,8 @@
     <link rel="stylesheet" href="{% static 'css/utilities.css' %}">
     <link rel="stylesheet" href="{% static 'css/animations.css' %}">
     <link rel="stylesheet" href="{% static 'css/accessibility.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/header-desktop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/ai-header-search.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/mobile-bottom-nav.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/footer-desktop.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/footer-mobile.css' %}">
@@ -78,67 +80,58 @@
     <a href="#main-content" class="skip-link">Перейти до основного контенту</a>
 
     <!-- Header -->
-    <header class="header">
+    <header class="main-header">
         <div class="container">
-            <nav class="navbar">
+            <div class="header-content">
                 <!-- Logo -->
-                <a href="{% url 'core:home' %}" class="navbar-brand">
-                    <img src="{% static 'icons/horizontal_desc_black.svg' %}" alt="Play Vision" class="logo logo-light">
-                    <img src="{% static 'icons/horizontal_desc_white.svg' %}" alt="Play Vision" class="logo logo-dark">
+                <a href="{% url 'core:home' %}" class="logo-link">
+                    <img src="{% static 'icons/horizontal_desc_black.svg' %}" alt="Play Vision"
+                        class="logo-img logo-light">
+                    <img src="{% static 'icons/horizontal_desc_white.svg' %}" alt="Play Vision"
+                        class="logo-img logo-dark">
                 </a>
 
-                <!-- Desktop Navigation -->
-                <div class="navbar-menu">
-                    <a href="{% url 'core:home' %}"
-                        class="navbar-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-                        Головна
-                    </a>
-                    <a href="{% url 'core:about' %}"
-                        class="navbar-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
-                        Про Play Vision
-                    </a>
-                    <a href="{% url 'content:course_list' %}"
-                        class="navbar-link hub-link {% if 'hub' in request.path %}active{% endif %}">
-                        Хаб знань
-                    </a>
-                    <div class="navbar-dropdown">
-                        <a href="{% url 'events:event_list' %}"
-                            class="navbar-link {% if 'events' in request.path %}active{% endif %}">
-                            Івенти
-                        </a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-header">Найближчі події</div>
-                            {% for event in upcoming_events_menu %}
-                            <a href="{% url 'events:event_detail' event.slug %}" class="dropdown-item">
-                                <div class="dropdown-item-content">
-                                    <div class="dropdown-item-title">{{ event.title }}</div>
-                                    <div class="dropdown-item-meta">
-                                        <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{
-                                            event.start_datetime|date:"H:i" }}</span>
-                                        <span class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
-                                            {% if event.is_online %}онлайн{% else %}офлайн{% endif %}
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                            {% empty %}
-                            <div class="dropdown-empty">Немає запланованих подій</div>
-                            {% endfor %}
-                            <div class="dropdown-divider"></div>
-                            <a href="{% url 'events:event_list' %}" class="dropdown-item dropdown-item--all">
-                                Всі події →
-                            </a>
+                <!-- AI Search/Chat Container (компактна версія) -->
+                <div class="ai-search-container">
+                    <form class="ai-search-form" id="ai-header-form" role="search">
+                        {% csrf_token %}
+                        <div class="ai-search-input-group">
+                            <svg class="ai-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            <input type="text" class="ai-search-input" id="ai-header-input"
+                                placeholder="Запитайте AI помічника..." aria-label="Запит до AI" maxlength="500">
+                            <button type="submit" class="ai-search-btn" aria-label="Надіслати запит">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13" />
+                                    <polygon points="22,2 15,22 11,13 2,9" />
+                                </svg>
+                            </button>
                         </div>
-                    </div>
-                    <a href="{% url 'core:coming_soon' %}?page=mentoring" class="navbar-link">Ментор-коучінг</a>
+                    </form>
+
+                    <!-- Dropdown з результатами -->
+                    <div class="ai-search-results" id="ai-search-results" aria-live="polite"></div>
                 </div>
 
-                <!-- User Menu -->
-                <div class="navbar-actions">
+                <!-- Header Actions -->
+                <div class="header-actions desktop-actions">
+                    <!-- Full AI Chat Link -->
+                    <a href="{% url 'ai:chat' %}" class="navbar-icon ai-full-link" aria-label="Повний AI чат">
+                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                        <span class="sr-only">Повний чат</span>
+                    </a>
+
                     <!-- Theme Toggle -->
                     <button type="button" class="navbar-icon theme-toggle" aria-label="Перемкнути тему"
                         data-theme-toggle>
-                        <svg class="icon theme-icon-light" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        <svg class="action-icon theme-icon-light" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5" />
                             <line x1="12" y1="1" x2="12" y2="3" />
@@ -150,39 +143,31 @@
                             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
                             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                         </svg>
-                        <svg class="icon theme-icon-dark" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        <svg class="action-icon theme-icon-dark" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                         </svg>
                         <span class="sr-only">Перемкнути тему</span>
                     </button>
 
-                    <!-- AI Помічник -->
-                    <a href="{% url 'ai:chat' %}" class="navbar-icon navbar-ai" aria-label="AI Помічник">
-                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                        <span class="sr-only">AI Помічник</span>
-                    </a>
-
                     {% if user.is_authenticated %}
-                    <!-- Кошик (тільки на десктопі) -->
-                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon navbar-desktop-only"
+                    <!-- Cart -->
+                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-link navbar-desktop-only"
                         aria-label="Кошик">
-                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
                             <circle cx="9" cy="21" r="1" />
                             <circle cx="20" cy="21" r="1" />
                             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                         </svg>
-                        <span class="cart-count" data-cart-count>{{ cart_items_count|default:0 }}</span>
+                        <span class="badge" data-cart-count>{{ cart_items_count|default:0 }}</span>
                     </a>
 
-                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon navbar-desktop-only">
-                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                    <!-- Cabinet -->
+                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon account-link navbar-desktop-only"
+                        aria-label="Кабінет">
+                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                             <circle cx="12" cy="7" r="4" />
                         </svg>
@@ -193,8 +178,75 @@
                     <a href="{% url 'accounts:register' %}" class="btn btn-outline navbar-desktop-only">Реєстрація</a>
                     {% endif %}
                 </div>
-            </nav>
+            </div>
         </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="main-nav desktop-nav">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="{% url 'core:home' %}"
+                            class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                            Головна
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'core:about' %}"
+                            class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                            Про Play Vision
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'content:course_list' %}"
+                            class="nav-link {% if 'hub' in request.path %}active{% endif %}">
+                            Хаб знань
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="{% url 'events:event_list' %}"
+                            class="nav-link {% if 'events' in request.path %}active{% endif %}">
+                            Івенти
+                            <svg class="icon-chevron-down" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <div class="dropdown-header">Найближчі події</div>
+                                {% for event in upcoming_events_menu %}
+                                <a href="{% url 'events:event_detail' event.slug %}" class="dropdown-link">
+                                    <div class="dropdown-item-content">
+                                        <div class="dropdown-item-title">{{ event.title }}</div>
+                                        <div class="dropdown-item-meta">
+                                            <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{
+                                                event.start_datetime|date:"H:i" }}</span>
+                                            <span
+                                                class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
+                                                {% if event.is_online %}онлайн{% else %}офлайн{% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                                {% empty %}
+                                <div class="dropdown-empty">Немає запланованих подій</div>
+                                {% endfor %}
+                                <div class="dropdown-divider"></div>
+                                <a href="{% url 'events:event_list' %}" class="dropdown-link dropdown-item--all">
+                                    Всі події →
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'core:coming_soon' %}?page=mentoring" class="nav-link">
+                            Ментор-коучінг
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
     <!-- Messages -->
@@ -247,6 +299,9 @@
     <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
     <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- AI Header Search -->
+    <script src="{% static 'js/components/ai-header-search.js' %}" defer></script>
 
     <!-- Cart functionality for all pages -->
     {% if user.is_authenticated %}
