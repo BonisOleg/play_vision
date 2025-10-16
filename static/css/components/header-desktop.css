@@ -295,7 +295,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--color-bg);
+    background: rgba(255, 255, 255, 0.5);
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     z-index: 90;
@@ -303,6 +303,10 @@
     overflow: hidden;
     opacity: 0;
     transition: max-height var(--transition-slow), opacity var(--transition-slow);
+}
+
+[data-theme="dark"] .main-nav {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .main-nav.nav-open {
