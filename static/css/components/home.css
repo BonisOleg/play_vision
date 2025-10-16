@@ -556,26 +556,17 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: relative;
-}
-
-.cta-simple::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(229, 9, 20, 0.2) 100%);
-    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .cta-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
     width: 100%;
     max-width: 800px;
+    padding: 0 var(--spacing-md);
 }
 
 [data-theme="dark"] .cta-simple {
