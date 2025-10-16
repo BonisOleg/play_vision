@@ -130,6 +130,10 @@
     background: linear-gradient(135deg, var(--color-secondary-alpha-80) 0%, var(--color-primary-alpha-80) 100%);
 }
 
+.section-overlay--cta-gradient {
+    background: linear-gradient(135deg, var(--color-secondary-alpha-20) 0%, var(--color-primary-alpha-20) 100%);
+}
+
 /* Hero with border style */
 .hero-section.hero-bordered .section-overlay {
     background: transparent;

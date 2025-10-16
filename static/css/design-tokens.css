@@ -39,7 +39,10 @@
     /* === ALPHA VARIATIONS === */
     --color-primary-alpha-10: rgba(229, 9, 20, 0.1);
     --color-primary-alpha-20: rgba(229, 9, 20, 0.2);
+    --color-primary-alpha-30: rgba(229, 9, 20, 0.3);
     --color-primary-alpha-80: rgba(229, 9, 20, 0.8);
+    --color-secondary-alpha-20: rgba(0, 0, 0, 0.2);
+    --color-secondary-alpha-30: rgba(0, 0, 0, 0.3);
     --color-secondary-alpha-80: rgba(0, 0, 0, 0.8);
     --shadow-alpha-5: rgba(0, 0, 0, 0.05);
     --shadow-alpha-10: rgba(0, 0, 0, 0.1);
