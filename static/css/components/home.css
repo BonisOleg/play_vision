@@ -307,6 +307,24 @@
     margin-bottom: var(--spacing-xxl);
 }
 
+.courses-section .section-title {
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.courses-section .courses-link {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.courses-section .courses-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
 .courses-link {
     color: var(--color-primary);
     font-weight: 600;
@@ -1175,9 +1193,13 @@
             text-shadow: none;
         }
 
-        .featured-courses-section .section-title,
-        .courses-section .section-title {
+        .featured-courses-section .section-title {
             color: var(--color-text);
+        }
+
+        .courses-section .section-title {
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .mentor-coaching-section .section-title,
