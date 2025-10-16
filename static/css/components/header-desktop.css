@@ -16,6 +16,12 @@
     z-index: 100;
 }
 
+@media (min-width: 1025px) {
+    .main-header {
+        position: relative;
+    }
+}
+
 .header-content {
     display: grid;
     grid-template-columns: minmax(200px, 1fr) auto minmax(300px, 2fr) auto minmax(200px, 1fr);
@@ -285,16 +291,21 @@
    ======================================== */
 
 .main-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background: var(--color-bg);
     border-top: 1px solid var(--color-border);
+    z-index: 90;
     max-height: 0;
     overflow: hidden;
-    transition: max-height var(--transition-slow), opacity var(--transition-slow);
     opacity: 0;
+    transition: max-height var(--transition-slow), opacity var(--transition-slow);
 }
 
 .main-nav.nav-open {
-    max-height: 500px;
+    max-height: 80px;
     opacity: 1;
 }
 
