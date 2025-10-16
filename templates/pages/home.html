@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="{% static 'css/components/home-additions.css' %}">
 <link rel="preload" href="{% static 'images/hiroday.png' %}" as="image">
 <link rel="preload" href="{% static 'images/hironight.png' %}" as="image">
-<link rel="preload" href="{% static 'images/cta-bg.jpg' %}" as="image">
+<link rel="preload" href="{% static 'images/readyhomeday.png' %}" as="image">
+<link rel="preload" href="{% static 'images/readyhomenight.png' %}" as="image">
 {% endblock %}
 
 {% block content %}
@@ -347,8 +348,12 @@
     <section class="fullscreen-section cta-section">
         <!-- Background Image -->
         <div class="section-bg">
-            <img class="section-bg-image" src="{% static 'images/cta-bg.jpg' %}" alt="Приєднуйся">
+            <img class="section-bg-image cta-bg-light" src="{% static 'images/readyhomeday.png' %}"
+                alt="Приєднуйся до PlayVision" loading="lazy">
+            <img class="section-bg-image cta-bg-dark" src="{% static 'images/readyhomenight.png' %}"
+                alt="Приєднуйся до PlayVision" loading="lazy">
         </div>
+        <div class="section-overlay section-overlay--gradient"></div>
 
         <div class="section-content">
             <h2 class="cta-title">Готові приєднатись до спільноти PlayVision?</h2>
