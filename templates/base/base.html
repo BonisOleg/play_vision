@@ -91,6 +91,19 @@
                         class="logo-img logo-dark">
                 </a>
 
+                {% if user.is_authenticated %}
+                <!-- Cart -->
+                <a href="{% url 'cart:cart' %}" class="navbar-icon cart-link navbar-desktop-only" aria-label="Кошик">
+                    <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span class="badge" data-cart-count>{{ cart_items_count|default:0 }}</span>
+                </a>
+                {% endif %}
+
                 <!-- AI Search/Chat Container (компактна версія) -->
                 <div class="ai-search-container">
                     <form class="ai-search-form" id="ai-header-form" role="search">
@@ -119,14 +132,21 @@
 
                 <!-- Header Actions -->
                 <div class="header-actions desktop-actions">
-                    <!-- Full AI Chat Link -->
-                    <a href="{% url 'ai:chat' %}" class="navbar-icon ai-full-link" aria-label="Повний AI чат">
+                    {% if user.is_authenticated %}
+                    <!-- Cabinet -->
+                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon account-link navbar-desktop-only"
+                        aria-label="Кабінет">
                         <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
                         </svg>
-                        <span class="sr-only">Повний чат</span>
+                        <span class="sr-only">Кабінет</span>
                     </a>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}" class="navbar-link navbar-desktop-only">Вхід</a>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-outline navbar-desktop-only">Реєстрація</a>
+                    {% endif %}
 
                     <!-- Theme Toggle -->
                     <button type="button" class="navbar-icon theme-toggle" aria-label="Перемкнути тему"
@@ -150,39 +170,28 @@
                         <span class="sr-only">Перемкнути тему</span>
                     </button>
 
-                    {% if user.is_authenticated %}
-                    <!-- Cart -->
-                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-link navbar-desktop-only"
-                        aria-label="Кошик">
+                    <!-- Full AI Chat Link -->
+                    <a href="{% url 'ai:chat' %}" class="navbar-icon ai-full-link" aria-label="Повний AI чат">
                         <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
-                            <circle cx="9" cy="21" r="1" />
-                            <circle cx="20" cy="21" r="1" />
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                         </svg>
-                        <span class="badge" data-cart-count>{{ cart_items_count|default:0 }}</span>
+                        <span class="sr-only">Повний чат</span>
                     </a>
 
-                    <!-- Cabinet -->
-                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon account-link navbar-desktop-only"
-                        aria-label="Кабінет">
-                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                            <circle cx="12" cy="7" r="4" />
-                        </svg>
-                        <span class="sr-only">Кабінет</span>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'accounts:login' %}" class="navbar-link navbar-desktop-only">Вхід</a>
-                    <a href="{% url 'accounts:register' %}" class="btn btn-outline navbar-desktop-only">Реєстрація</a>
-                    {% endif %}
+                    <!-- Burger Menu Toggle Button -->
+                    <button type="button" class="burger-menu-toggle" aria-label="Меню" aria-expanded="false"
+                        data-burger-toggle>
+                        <span class="burger-line burger-line-1"></span>
+                        <span class="burger-line burger-line-2"></span>
+                        <span class="burger-line burger-line-3"></span>
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Desktop Navigation -->
-        <nav class="main-nav desktop-nav">
+        <nav class="main-nav desktop-nav" data-nav-menu>
             <div class="container">
                 <ul class="nav-list">
                     <li class="nav-item">
@@ -302,6 +311,9 @@
 
     <!-- AI Header Search -->
     <script src="{% static 'js/components/ai-header-search.js' %}" defer></script>
+
+    <!-- Burger Menu Toggle -->
+    <script src="{% static 'js/components/burger-menu.js' %}" defer></script>
 
     <!-- Cart functionality for all pages -->
     {% if user.is_authenticated %}

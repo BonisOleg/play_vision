@@ -17,11 +17,12 @@
 }
 
 .header-content {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) auto minmax(300px, 2fr) auto minmax(200px, 1fr);
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-md);
     padding: var(--spacing-lg) 0;
+    width: 100%;
 }
 
 /* ========================================
@@ -31,14 +32,19 @@
 .logo-link {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-shrink: 0;
     transition: transform var(--transition-fast);
+    grid-column: 1;
 }
 
 .logo-link:hover {
     transform: scale(1.05);
     text-decoration: none;
+}
+
+.cart-link.navbar-desktop-only {
+    grid-column: 2;
 }
 
 .logo-img {
@@ -76,20 +82,33 @@
 }
 
 /* ========================================
+   AI SEARCH CONTAINER POSITIONING
+   ======================================== */
+
+.ai-search-container {
+    grid-column: 3;
+    justify-self: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* ========================================
    HEADER ACTIONS
    ======================================== */
 
 .header-actions {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    grid-column: 4 / 6;
 }
 
 .desktop-actions {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
 }
 
 .navbar-icon {
@@ -206,12 +225,77 @@
 }
 
 /* ========================================
+   BURGER MENU BUTTON
+   ======================================== */
+
+.burger-menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    background: transparent;
+    border: 2px solid var(--color-text);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    position: relative;
+    gap: 5px;
+}
+
+.burger-menu-toggle:hover {
+    background: var(--color-bg-gray);
+    transform: translateY(-2px);
+}
+
+.burger-menu-toggle:active {
+    transform: scale(0.98);
+}
+
+.burger-line {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: transform var(--transition-base), opacity var(--transition-base), background-color var(--transition-fast);
+}
+
+.burger-menu-toggle[aria-expanded="true"] .burger-line-1 {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.burger-menu-toggle[aria-expanded="true"] .burger-line-2 {
+    opacity: 0;
+}
+
+.burger-menu-toggle[aria-expanded="true"] .burger-line-3 {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.burger-menu-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ========================================
    NAVIGATION
    ======================================== */
 
 .main-nav {
     background: var(--color-bg);
     border-top: 1px solid var(--color-border);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-slow), opacity var(--transition-slow);
+    opacity: 0;
+}
+
+.main-nav.nav-open {
+    max-height: 500px;
+    opacity: 1;
 }
 
 .nav-list {
@@ -393,7 +477,21 @@
    RESPONSIVE
    ======================================== */
 
+@media (min-width: 1025px) {
+    .burger-menu-toggle {
+        display: flex;
+    }
+
+    .desktop-nav {
+        display: block;
+    }
+}
+
 @media (max-width: 1024px) {
+    .burger-menu-toggle {
+        display: none;
+    }
+
     .desktop-nav {
         display: none;
     }
@@ -403,7 +501,18 @@
     }
 
     .header-content {
+        display: flex;
+        justify-content: space-between;
         gap: var(--spacing-md);
+    }
+
+    .ai-search-container {
+        flex: 1;
+        max-width: 100%;
+    }
+
+    .header-actions {
+        gap: var(--spacing-sm);
     }
 }
 
@@ -464,7 +573,10 @@
     .dropdown-menu,
     .theme-icon-light,
     .theme-icon-dark,
-    .icon-chevron-down {
+    .icon-chevron-down,
+    .burger-menu-toggle,
+    .burger-line,
+    .main-nav {
         transition: none;
     }
 }

@@ -10,9 +10,6 @@
 
 .ai-search-container {
     position: relative;
-    flex: 1;
-    max-width: 600px;
-    min-width: 400px;
 }
 
 .ai-search-form {
@@ -308,20 +305,9 @@
    RESPONSIVE
    ======================================== */
 
-@media (max-width: 1024px) {
-    .ai-search-container {
-        max-width: 400px;
-        min-width: 300px;
-    }
-}
-
 @media (max-width: 768px) {
     .ai-search-container {
         display: none;
-    }
-
-    .header-actions {
-        gap: var(--spacing-xs);
     }
 }
 
