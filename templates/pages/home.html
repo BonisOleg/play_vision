@@ -6,6 +6,8 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/home-additions.css' %}">
+<link rel="preload" href="{% static 'images/hiroday.png' %}" as="image">
+<link rel="preload" href="{% static 'images/hironight.png' %}" as="image">
 <link rel="preload" href="{% static 'images/cta-bg.jpg' %}" as="image">
 {% endblock %}
 
@@ -34,7 +36,9 @@
         {% endwith %}
         {% else %}
         <div class="section-bg">
-            <img class="section-bg-image" src="{% static 'images/hero-bg.jpg' %}" alt="Play Vision Hero"
+            <img class="section-bg-image hero-bg-light" src="{% static 'images/hiroday.png' %}" alt="Play Vision Hero"
+                loading="eager">
+            <img class="section-bg-image hero-bg-dark" src="{% static 'images/hironight.png' %}" alt="Play Vision Hero"
                 loading="eager">
         </div>
         {% endif %}
