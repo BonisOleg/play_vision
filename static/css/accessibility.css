@@ -271,17 +271,8 @@ select:focus-visible {
         padding-bottom: env(safe-area-inset-bottom);
     }
 
-    /* Fix iOS rubber band scrolling */
+    /* Fix iOS rubber band scrolling - proper way without blocking scroll */
     body {
-        position: fixed;
-        width: 100%;
-        overscroll-behavior-y: none;
-    }
-
-    /* But allow scrolling in main container */
-    .main-content {
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        height: 100vh;
+        overscroll-behavior-y: contain;
     }
 }

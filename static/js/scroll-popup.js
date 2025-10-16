@@ -17,9 +17,6 @@ window.closeScrollPopup = function () {
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
-        document.body.style.overflow = '';
-        document.body.style.webkitOverflowScrolling = '';
-        document.body.style.touchAction = '';
 
         if (scrollY) {
             window.scrollTo(0, parseInt(scrollY || '0') * -1);
@@ -93,10 +90,6 @@ class ScrollPopup {
         const scrollY = window.scrollY;
         document.body.style.top = `-${scrollY}px`;
         document.body.classList.add('modal-open');
-
-        // iOS Chrome/Safari specific fixes
-        document.body.style.webkitOverflowScrolling = 'auto';
-        document.body.style.touchAction = 'none';
 
         this.element.classList.remove('is-hidden');
         this.element.classList.add('is-visible');

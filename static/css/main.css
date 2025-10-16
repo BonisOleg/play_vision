@@ -14,7 +14,7 @@
 
 html {
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: contain;
     /* iOS Safari specific fixes */
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
@@ -30,7 +30,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: contain;
     /* iOS Chrome/Safari fixes */
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
@@ -596,11 +596,12 @@ body.modal-open {
     position: fixed;
     width: 100%;
     overscroll-behavior: contain;
-    /* iOS Chrome/Safari specific */
-    -webkit-overflow-scrolling: auto;
-    touch-action: none;
+    /* iOS Chrome/Safari specific - allow vertical scroll inside modals */
+    -webkit-overflow-scrolling: touch;
+    /* Allow vertical pan for modal content */
+    touch-action: pan-y pinch-zoom;
     /* Prevent bounce effect */
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: contain;
 }
 
 /* iOS Chrome/Safari specific fixes */
@@ -609,27 +610,27 @@ body.modal-open {
     /* iOS Safari */
     body {
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior-y: none;
+        overscroll-behavior-y: contain;
     }
 
     body.modal-open {
-        -webkit-overflow-scrolling: auto;
-        touch-action: none;
-        overscroll-behavior-y: none;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y pinch-zoom;
+        overscroll-behavior-y: contain;
     }
 
     /* Prevent iOS Safari bounce */
     html,
     body {
-        overscroll-behavior: none;
+        overscroll-behavior: contain;
     }
 }
 
 /* iOS Chrome specific */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     body.modal-open {
-        -webkit-overflow-scrolling: auto;
-        touch-action: none;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y pinch-zoom;
     }
 }
 
