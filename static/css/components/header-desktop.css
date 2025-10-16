@@ -16,12 +16,6 @@
     z-index: 100;
 }
 
-@media (min-width: 1025px) {
-    .main-header {
-        position: relative;
-    }
-}
-
 .header-content {
     display: grid;
     grid-template-columns: minmax(200px, 1fr) auto minmax(300px, 2fr) auto minmax(200px, 1fr);
