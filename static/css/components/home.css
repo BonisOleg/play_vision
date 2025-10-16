@@ -300,10 +300,6 @@
     line-height: 1.6;
 }
 
-.courses-section {
-    background: var(--color-bg-gray);
-}
-
 .courses-header {
     display: flex;
     justify-content: space-between;
@@ -1058,7 +1054,6 @@
         }
 
         /* === SECTION BACKGROUNDS === */
-        .courses-section,
         .experts-section {
             background: var(--color-bg);
         }
