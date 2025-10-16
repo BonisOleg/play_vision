@@ -11,8 +11,18 @@ window.closeScrollPopup = function () {
         popup.classList.add('is-hidden');
         popup.classList.remove('is-visible');
         popup.style.display = 'none';
+
+        const scrollY = document.body.style.top;
         document.body.classList.remove('modal-open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
         document.body.style.overflow = '';
+
+        if (scrollY) {
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
+
         sessionStorage.setItem('popup_dismissed', 'true');
     }
 };
@@ -77,9 +87,13 @@ class ScrollPopup {
     show() {
         console.log('🟢 SHOWING POPUP');
         this.isShown = true;
+
+        const scrollY = window.scrollY;
+        document.body.style.top = `-${scrollY}px`;
+        document.body.classList.add('modal-open');
+
         this.element.classList.remove('is-hidden');
         this.element.classList.add('is-visible');
-        document.body.classList.add('modal-open');
         localStorage.setItem('popup_shown', 'true');
     }
 

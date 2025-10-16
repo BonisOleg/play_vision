@@ -223,6 +223,11 @@ class Cabinet {
 
             // Запобігаємо конфліктам з HTMX - додаємо затримку
             setTimeout(() => {
+                // Блокуємо скрол для iOS
+                const scrollY = window.scrollY;
+                document.body.style.top = `-${scrollY}px`;
+                document.body.classList.add('modal-open');
+
                 // Показати модальне вікно
                 modal.classList.add('is-active');
                 modalContent.innerHTML = '<div class="loading">Завантаження...</div>';
@@ -748,11 +753,22 @@ class Cabinet {
 
     closeModal(modal) {
         modal.classList.remove('is-active');
+
+        // Відновлюємо скрол для iOS
+        const scrollY = document.body.style.top;
+        document.body.classList.remove('modal-open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+
+        if (scrollY) {
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
     }
 
     closeAllModals() {
         document.querySelectorAll('.modal').forEach(modal => {
-            modal.classList.remove('is-active');
+            this.closeModal(modal);
         });
     }
 

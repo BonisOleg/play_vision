@@ -253,21 +253,6 @@
 
     <!-- Scroll Popup -->
     <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
-    <script>
-        // Глобальна функція закриття popup - завантажується першою
-        window.closeScrollPopup = function () {
-            console.log('🔴 POPUP CLOSED');
-            const popup = document.getElementById('scroll-popup');
-            if (popup) {
-                popup.classList.add('is-hidden');
-                popup.classList.remove('is-visible');
-                popup.style.display = 'none';
-                document.body.classList.remove('modal-open');
-                document.body.style.overflow = '';
-                sessionStorage.setItem('popup_dismissed', 'true');
-            }
-        };
-    </script>
     <script src="{% static 'js/scroll-popup.js' %}"></script>
     <script src="{% static 'js/footer-accordions.js' %}" defer></script>
     <script src="{% static 'js/footer-subscribe.js' %}" defer></script>

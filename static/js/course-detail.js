@@ -19,6 +19,9 @@ function startPreview() {
 
     // Show modal
     modal.classList.add('is-active');
+
+    const scrollY = window.scrollY;
+    document.body.style.top = `-${scrollY}px`;
     document.body.classList.add('modal-open');
 
     // Reset timer
@@ -100,7 +103,16 @@ function closePreview() {
 
     // Hide modal
     modal.classList.remove('is-active');
+
+    const scrollY = document.body.style.top;
     document.body.classList.remove('modal-open');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+
+    if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
 }
 
 /**
