@@ -61,7 +61,7 @@
         // Відправка на сервер
         const csrfToken = formData.get('csrfmiddlewaretoken');
 
-        fetch('/api/newsletter/subscribe/', {
+        fetch('/api/v1/notifications/newsletter/subscribe/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
