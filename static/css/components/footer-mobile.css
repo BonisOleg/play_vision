@@ -5,8 +5,9 @@
 .footer-mobile {
     display: none;
     background: var(--color-bg-dark);
-    color: var(--color-bg);
+    color: #ffffff;
     padding: var(--spacing-xl) 0 max(var(--spacing-xl), calc(var(--spacing-xl) + env(safe-area-inset-bottom)));
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ===== SHOW ON MOBILE ===== */
@@ -27,11 +28,11 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: var(--spacing-sm);
-    color: var(--color-bg);
+    color: #ffffff;
 }
 
 .mobile-subscribe-text {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: var(--spacing-md);
@@ -44,7 +45,7 @@
 
 .subscribe-form label {
     display: block;
-    color: var(--color-bg);
+    color: #ffffff;
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: var(--spacing-xs);
@@ -58,15 +59,15 @@
     width: 100%;
     padding: var(--spacing-sm) var(--spacing-md);
     font-size: 1rem;
-    background: var(--color-secondary);
-    border: 1px solid var(--color-border-light);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-md);
-    color: var(--color-bg);
+    color: #ffffff;
     transition: border-color var(--transition-base);
 }
 
 .subscribe-form .form-control::placeholder {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .subscribe-form .form-control:focus {
@@ -95,7 +96,7 @@
 }
 
 .subscribe-form .checkbox-text {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
 }
 
@@ -156,8 +157,8 @@
     width: 40px;
     height: 40px;
     border-radius: var(--radius-full);
-    background: var(--color-secondary);
-    color: var(--color-bg);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
     text-decoration: none;
     transition: all var(--transition-base);
 }
@@ -178,7 +179,7 @@
 
 /* ===== ACCORDION ITEM ===== */
 .accordion-item {
-    border-bottom: 1px solid var(--color-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ===== ACCORDION HEADER ===== */
@@ -190,7 +191,7 @@
     padding: var(--spacing-md) 0;
     background: none;
     border: none;
-    color: var(--color-bg);
+    color: #ffffff;
     font-size: 1rem;
     font-weight: 600;
     text-align: left;
@@ -242,7 +243,7 @@
 }
 
 .accordion-links a {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color var(--transition-base);
@@ -261,14 +262,14 @@
 }
 
 .contact-item {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
     line-height: 1.6;
 }
 
 .contact-item strong {
     display: block;
-    color: var(--color-bg);
+    color: #ffffff;
     margin-bottom: var(--spacing-xs);
 }
 
@@ -285,11 +286,11 @@
 .mobile-copyright {
     text-align: center;
     padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-copyright p {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 0.85rem;
     margin: 0;
 }

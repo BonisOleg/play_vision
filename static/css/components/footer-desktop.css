@@ -4,9 +4,10 @@
 
 .footer-desktop {
     background: var(--color-bg-dark);
-    color: var(--color-bg);
+    color: #ffffff;
     padding: var(--spacing-xxl) 0 0;
     margin-top: var(--spacing-xxl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ===== GRID ===== */
@@ -45,11 +46,11 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: var(--spacing-md);
-    color: var(--color-bg);
+    color: #ffffff;
 }
 
 .footer-desktop-text {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: var(--spacing-md);
@@ -67,7 +68,7 @@
 }
 
 .footer-links a {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 0.95rem;
     transition: all var(--transition-base);
@@ -93,8 +94,8 @@
     width: 40px;
     height: 40px;
     border-radius: var(--radius-full);
-    background: var(--color-secondary);
-    color: var(--color-bg);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
     text-decoration: none;
     transition: all var(--transition-base);
 }
@@ -122,15 +123,15 @@
     width: 100%;
     padding: var(--spacing-sm) var(--spacing-md);
     font-size: 0.95rem;
-    background: var(--color-secondary);
-    border: 1px solid var(--color-border-light);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-md);
-    color: var(--color-bg);
+    color: #ffffff;
     transition: border-color var(--transition-base);
 }
 
 .footer-subscribe-form .form-control::placeholder {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .footer-subscribe-form .form-control:focus {
@@ -159,7 +160,7 @@
 }
 
 .checkbox-text {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
 }
 
@@ -210,13 +211,13 @@
 
 /* ===== FOOTER BOTTOM ===== */
 .footer-bottom {
-    border-top: 1px solid var(--color-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: var(--spacing-lg) 0;
     text-align: center;
 }
 
 .footer-bottom p {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 0.9rem;
     margin: 0;
 }
