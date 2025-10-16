@@ -19,9 +19,9 @@
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-md) 0;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
 }
 
 /* ========================================
@@ -31,6 +31,7 @@
 .logo-link {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     transition: transform var(--transition-fast);
 }
@@ -41,9 +42,9 @@
 }
 
 .logo-img {
-    height: 50px;
+    height: 60px;
     width: auto;
-    max-width: 280px;
+    max-width: 300px;
     transition: opacity var(--transition-fast);
 }
 
@@ -81,25 +82,28 @@
 .header-actions {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    justify-content: center;
+    gap: var(--spacing-sm);
 }
 
 .desktop-actions {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     color: var(--color-text);
     position: relative;
     border: none;
     background: transparent;
     cursor: pointer;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
 
@@ -107,16 +111,18 @@
     background: var(--color-bg-gray);
     color: var(--color-primary);
     text-decoration: none;
+    transform: translateY(-2px);
 }
 
 .navbar-icon:active {
-    transform: scale(0.95);
+    transform: scale(0.98);
 }
 
 .action-icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     stroke: currentColor;
+    stroke-width: 2;
 }
 
 /* Theme Toggle */
@@ -180,17 +186,18 @@
 /* Cart Badge */
 .badge {
     position: absolute;
-    top: -4px;
-    right: -4px;
-    background: var(--color-primary);
+    top: -2px;
+    right: -2px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
     color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 10px;
-    min-width: 18px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: var(--radius-full);
+    min-width: 20px;
     text-align: center;
     line-height: 1;
+    box-shadow: 0 2px 8px var(--color-primary-alpha-20);
 }
 
 .badge:empty,
@@ -213,8 +220,8 @@
     align-items: center;
     list-style: none;
     margin: 0;
-    padding: 0;
-    gap: var(--spacing-lg);
+    padding: var(--spacing-sm) 0;
+    gap: var(--spacing-xl);
 }
 
 .nav-item {
@@ -224,18 +231,25 @@
 .nav-link {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: var(--spacing-xs);
-    padding: var(--spacing-md) 0;
-    font-weight: 500;
-    font-size: 0.875rem;
+    padding: var(--spacing-md) var(--spacing-sm);
+    font-weight: 600;
+    font-size: 0.9375rem;
     color: var(--color-text);
-    transition: color var(--transition-fast);
+    transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
-.nav-link:hover,
+.nav-link:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
 .nav-link.active {
     color: var(--color-primary);
     text-decoration: none;
+    font-weight: 700;
 }
 
 .icon-chevron-down {
@@ -395,17 +409,37 @@
 
 @media (max-width: 768px) {
     .logo-img {
-        height: 40px;
+        height: 50px;
     }
 
     .header-content {
-        padding: var(--spacing-sm) 0;
+        padding: var(--spacing-md) 0;
+        gap: var(--spacing-md);
+    }
+
+    .navbar-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .action-icon {
+        width: 20px;
+        height: 20px;
     }
 }
 
 @media (max-width: 375px) {
     .logo-img {
-        height: 32px;
+        height: 44px;
+    }
+
+    .header-content {
+        gap: var(--spacing-sm);
+    }
+
+    .navbar-icon {
+        width: 40px;
+        height: 40px;
     }
 }
 

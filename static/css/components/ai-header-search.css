@@ -11,7 +11,8 @@
 .ai-search-container {
     position: relative;
     flex: 1;
-    max-width: 500px;
+    max-width: 600px;
+    min-width: 400px;
 }
 
 .ai-search-form {
@@ -23,15 +24,15 @@
     align-items: center;
     gap: var(--spacing-sm);
     background: var(--color-bg);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 2px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .ai-search-input-group:focus-within {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
 }
 
 /* ========================================
@@ -54,14 +55,16 @@
     flex: 1;
     border: none;
     background: transparent;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
     color: var(--color-text);
-    padding: var(--spacing-xs) 0;
+    padding: var(--spacing-xs) var(--spacing-sm);
     outline: none;
 }
 
 .ai-search-input::placeholder {
     color: var(--color-text-light);
+    font-weight: 400;
 }
 
 /* Запобігання zoom на iOS */
@@ -80,18 +83,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--color-primary) 0%, #ff8a5c 100%);
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
     border: none;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .ai-search-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 4px 12px var(--color-primary-alpha-20);
 }
 
 .ai-search-btn:active {
@@ -105,8 +108,8 @@
 }
 
 .ai-search-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     stroke: white;
     fill: none;
 }
@@ -205,7 +208,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--color-primary) 0%, #ff8a5c 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
     border-radius: 50%;
     font-size: 18px;
 }
@@ -308,12 +311,17 @@
 @media (max-width: 1024px) {
     .ai-search-container {
         max-width: 400px;
+        min-width: 300px;
     }
 }
 
 @media (max-width: 768px) {
     .ai-search-container {
         display: none;
+    }
+
+    .header-actions {
+        gap: var(--spacing-xs);
     }
 }
 
