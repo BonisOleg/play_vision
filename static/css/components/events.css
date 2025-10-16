@@ -337,10 +337,11 @@
 }
 
 .event-price {
-    color: var(--color-text);
-    background: var(--silver-white);
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.15);
     padding: 2px 6px;
     border-radius: 4px;
+    font-weight: 600;
 }
 
 /* Enhanced Calendar Event Elements */
@@ -720,7 +721,8 @@
 
 /* Sidebar */
 .events-sidebar {
-    background: var(--silver-white);
+    background: var(--accent-dark);
+    color: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
@@ -733,7 +735,7 @@
 .sidebar-section {
     margin-bottom: 30px;
     padding-bottom: 30px;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .sidebar-section:last-child {
@@ -745,7 +747,7 @@
 .sidebar-title {
     font-size: 18px;
     font-weight: 600;
-    color: var(--color-secondary);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 16px;
 }
 
@@ -825,17 +827,23 @@
 .search-input {
     width: 100%;
     padding: 0.75rem 3rem 0.75rem 1rem;
-    border: 2px solid var(--accent-dark);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     font-size: 14px;
-    background: var(--silver-white);
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
     transition: border-color 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .search-input:focus {
     outline: none;
-    border-color: var(--event-primary);
-    box-shadow: 0 0 0 3px rgba(227, 30, 36, 0.1);
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
 }
 
 .search-btn {
@@ -843,7 +851,7 @@
     right: 0.5rem;
     background: none;
     border: none;
-    color: var(--color-text-light);
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 4px;
@@ -873,7 +881,7 @@
     align-items: center;
     cursor: pointer;
     font-size: 15px;
-    color: var(--color-text);
+    color: rgba(255, 255, 255, 0.9);
     padding: 8px;
     border-radius: 6px;
     transition: background-color 0.2s ease;
@@ -881,7 +889,7 @@
 }
 
 .filter-option:hover {
-    background: var(--color-bg-gray);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .filter-option input[type="checkbox"],
@@ -895,7 +903,7 @@
 .filter-radio {
     width: 18px;
     height: 18px;
-    border: 2px solid var(--color-border);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     margin-right: 12px;
     transition: all 0.2s ease;
     flex-shrink: 0;
@@ -904,10 +912,12 @@
 .filter-checkmark {
     border-radius: 4px;
     position: relative;
+    background: transparent;
 }
 
 .filter-radio {
     border-radius: 50%;
+    background: transparent;
 }
 
 .filter-option input[type="checkbox"]:checked+.filter-checkmark {
@@ -922,7 +932,7 @@
     left: 5px;
     width: 5px;
     height: 8px;
-    border: 2px solid var(--accent-dark);
+    border: 2px solid rgba(255, 255, 255, 0.95);
     border-top: none;
     border-left: none;
     transform: rotate(45deg);
@@ -1076,23 +1086,24 @@
 }
 
 .event-item {
-    background: var(--silver-white);
+    background: var(--accent-dark);
+    color: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--color-border-light);
-    transition: box-shadow 0.2s ease, opacity 0.2s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--accent-dark);
+    transition: box-shadow 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
 }
 
 .event-item:hover {
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-    opacity: 0.95;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
 }
 
 .event-link {
     display: block;
     text-decoration: none;
-    color: inherit;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .event-image,
@@ -1134,14 +1145,14 @@
 .event-item .event-title {
     font-size: 20px;
     font-weight: 600;
-    color: var(--color-secondary);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: 12px;
     line-height: 1.4;
 }
 
-.event-description {
+.event-item .event-description {
     font-size: 15px;
-    color: var(--color-text-light);
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.6;
     margin-bottom: 20px;
 }
@@ -1158,18 +1169,18 @@
     gap: 8px;
 }
 
-.event-location {
+.event-item .event-location {
     display: flex;
     align-items: center;
     gap: 6px;
     font-size: 14px;
-    color: var(--color-text-light);
+    color: rgba(255, 255, 255, 0.85);
 }
 
-.event-price {
+.event-item .event-price {
     font-size: 16px;
     font-weight: 600;
-    color: var(--color-secondary);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .event-price--free {

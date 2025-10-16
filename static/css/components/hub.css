@@ -760,12 +760,14 @@
 
 /* ===== FILTERS SIDEBAR ===== */
 .filters-sidebar {
-    background: var(--silver-white);
+    background: var(--accent-dark);
+    color: rgba(255, 255, 255, 0.9);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     overflow: hidden;
     position: sticky;
     top: 200px;
+    border: 1px solid var(--accent-dark);
 }
 
 .filters-header {
@@ -773,8 +775,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-bg-gray);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .filters-controls {
@@ -796,7 +798,7 @@
 .filters-header h3 {
     margin: 0;
     font-size: 1.1rem;
-    color: var(--color-text);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .mobile-filters-toggle {
@@ -827,7 +829,7 @@
 }
 
 .filters-scrollable::-webkit-scrollbar-track {
-    background: var(--color-bg-gray);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
 }
 
@@ -845,10 +847,10 @@
     margin-bottom: 2rem;
 }
 
-.filter-group h4 {
+.filters-sidebar .filter-group h4 {
     margin: 0 0 1rem;
     font-size: 1rem;
-    color: var(--color-text);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .filter-options {
