@@ -869,6 +869,7 @@
 }
 
 .hexagon-inner {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -878,6 +879,19 @@
     color: white;
     text-align: center;
     gap: 0.75rem;
+}
+
+.hexagon-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+
+.hexagon-inner > * {
+    position: relative;
+    z-index: 1;
 }
 
 .hexagon-icon {
@@ -899,27 +913,39 @@
 }
 
 .hexagon-motivation {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    background-image: url('/static/images/mainmental.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .hexagon-intuition {
-    background: linear-gradient(135deg, var(--color-blue-dark) 0%, var(--color-blue) 100%);
+    background-image: url('/static/images/mainpobut.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .hexagon-society {
-    background: linear-gradient(135deg, var(--color-orange-dark) 0%, var(--color-orange) 100%);
+    background-image: url('/static/images/maintech.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .hexagon-curiosity {
-    background: linear-gradient(135deg, var(--color-green) 0%, var(--color-green-light) 100%);
+    background-image: url('/static/images/mainzdor.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .hexagon-pragmatism {
-    background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-purple-light) 100%);
+    background-image: url('/static/images/mainintel.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .hexagon-optimism {
-    background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-pink-light) 100%);
+    background-image: url('/static/images/mainfiz.png');
+    background-size: cover;
+    background-position: center;
 }
 
 @media (max-width: 992px) {
