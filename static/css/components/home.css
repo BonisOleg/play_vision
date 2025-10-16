@@ -885,7 +885,7 @@
     z-index: 0;
 }
 
-.hexagon-inner > * {
+.hexagon-inner>* {
     position: relative;
     z-index: 1;
 }
