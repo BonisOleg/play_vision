@@ -589,6 +589,23 @@
     color: white;
 }
 
+.cta-simple {
+    background-image: url('/static/images/readyhomeday.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+[data-theme="dark"] .cta-simple {
+    background-image: url('/static/images/readyhomenight.png');
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .cta-simple {
+        background-image: url('/static/images/readyhomenight.png');
+    }
+}
+
 .cta-title {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
