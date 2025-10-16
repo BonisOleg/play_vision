@@ -2204,3 +2204,74 @@
 .checkbox-group--spaced {
     margin-top: 1rem;
 }
+
+/* === DARK THEME OVERRIDES === */
+
+/* Events sidebar in dark mode */
+[data-theme="dark"] .events-sidebar,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .events-sidebar {
+        background: var(--color-bg-gray);
+    }
+}
+
+/* Event items in dark mode */
+[data-theme="dark"] .event-item,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-item {
+        background: var(--color-bg-gray);
+    }
+}
+
+/* Filter selects in dark mode */
+[data-theme="dark"] .filter-select,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .filter-select {
+        background: var(--color-bg-gray);
+    }
+}
+
+/* Navigation buttons in dark mode */
+[data-theme="dark"] .nav-btn,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-btn {
+        background: var(--color-bg-gray);
+    }
+}
+
+/* Search input in dark mode */
+[data-theme="dark"] .search-input,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .search-input {
+        background: var(--color-bg-gray);
+    }
+}
+
+/* Pagination links in dark mode */
+[data-theme="dark"] .pagination-link,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .pagination-link {
+        background: var(--color-bg-gray);
+    }
+}
+
+/* Event main content in dark mode */
+[data-theme="dark"] .event-main,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-main {
+        background: var(--color-bg-gray);
+    }
+}
+
+/* Sidebar cards in dark mode */
+[data-theme="dark"] .registration-card,
+[data-theme="dark"] .organizer-card,
+[data-theme="dark"] .share-card,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .registration-card,
+    [data-theme="auto"] .organizer-card,
+    [data-theme="auto"] .share-card {
+        background: var(--color-bg-gray);
+    }
+}
