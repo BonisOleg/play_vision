@@ -15,6 +15,9 @@
 html {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: none;
+    /* iOS Safari specific fixes */
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -28,6 +31,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: none;
+    /* iOS Chrome/Safari fixes */
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* Prevent zoom on input focus */
+    touch-action: manipulation;
 }
 
 h1,
@@ -588,6 +596,41 @@ body.modal-open {
     position: fixed;
     width: 100%;
     overscroll-behavior: contain;
+    /* iOS Chrome/Safari specific */
+    -webkit-overflow-scrolling: auto;
+    touch-action: none;
+    /* Prevent bounce effect */
+    overscroll-behavior-y: none;
+}
+
+/* iOS Chrome/Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+
+    /* iOS Safari */
+    body {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: none;
+    }
+
+    body.modal-open {
+        -webkit-overflow-scrolling: auto;
+        touch-action: none;
+        overscroll-behavior-y: none;
+    }
+
+    /* Prevent iOS Safari bounce */
+    html,
+    body {
+        overscroll-behavior: none;
+    }
+}
+
+/* iOS Chrome specific */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    body.modal-open {
+        -webkit-overflow-scrolling: auto;
+        touch-action: none;
+    }
 }
 
 /* Footer styles moved to footer-desktop.css and footer-mobile.css */
