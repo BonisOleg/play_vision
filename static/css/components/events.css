@@ -49,9 +49,9 @@
 
 .filter-select {
     padding: 0.5rem 1rem;
-    border: 2px solid var(--color-border);
+    border: 2px solid var(--accent-dark);
     border-radius: 8px;
-    background: white;
+    background: var(--silver-white);
     color: var(--color-text);
     font-size: 14px;
     cursor: pointer;
@@ -82,9 +82,9 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    border: 2px solid var(--color-border);
+    border: 2px solid var(--accent-dark);
     border-radius: 50%;
-    background: white;
+    background: var(--silver-white);
     color: var(--color-text);
     cursor: pointer;
     transition: var(--transition-base);
@@ -269,8 +269,8 @@
 }
 
 .event-card:hover {
-    background: white;
-    border-color: var(--color-border);
+    background: var(--silver-white);
+    border-color: var(--accent-dark);
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -338,7 +338,7 @@
 
 .event-price {
     color: var(--color-text);
-    background: white;
+    background: var(--silver-white);
     padding: 2px 6px;
     border-radius: 4px;
 }
@@ -720,10 +720,11 @@
 
 /* Sidebar */
 .events-sidebar {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--accent-dark);
     height: fit-content;
     position: sticky;
     top: 20px;
@@ -824,10 +825,10 @@
 .search-input {
     width: 100%;
     padding: 0.75rem 3rem 0.75rem 1rem;
-    border: 2px solid var(--color-border);
+    border: 2px solid var(--accent-dark);
     border-radius: 8px;
     font-size: 14px;
-    background: white;
+    background: var(--silver-white);
     transition: border-color 0.2s ease;
 }
 
@@ -921,7 +922,7 @@
     left: 5px;
     width: 5px;
     height: 8px;
-    border: 2px solid white;
+    border: 2px solid var(--accent-dark);
     border-top: none;
     border-left: none;
     transform: rotate(45deg);
@@ -1075,10 +1076,11 @@
 }
 
 .event-item {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-border-light);
     transition: box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
@@ -1216,8 +1218,8 @@
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: white;
-    border: 1px solid var(--color-border);
+    background: var(--silver-white);
+    border: 1px solid var(--accent-dark);
     border-radius: 8px;
     text-decoration: none;
     color: var(--color-text);
@@ -1325,10 +1327,11 @@
 }
 
 .event-main {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 40px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--accent-dark);
 }
 
 .event-section {
@@ -1379,7 +1382,7 @@
     top: 8px;
     width: 24px;
     height: 24px;
-    background: white;
+    background: var(--silver-white);
     border: 3px solid var(--event-primary);
     border-radius: 50%;
     z-index: 1;
@@ -1554,10 +1557,11 @@
 .registration-card,
 .organizer-card,
 .share-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--accent-dark);
     margin-bottom: 20px;
 }
 

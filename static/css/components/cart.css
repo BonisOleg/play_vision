@@ -31,10 +31,11 @@
 
 /* ОСНОВНА ЧАСТИНА КОШИКА */
 .cart-main {
-    background: white;
+    background: var(--silver-white);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: 1px solid var(--accent-dark);
 }
 
 .cart-header {
@@ -324,7 +325,7 @@
     border: 1px solid var(--color-border);
     border-radius: 6px;
     font-size: 1rem;
-    background: white;
+    background: var(--silver-white);
 }
 
 .cart-coupon-input::placeholder {
@@ -387,13 +388,14 @@
 
 /* ПІДСУМОК */
 .cart-summary {
-    background: white;
+    background: var(--silver-white);
     border-radius: 8px;
     padding: var(--spacing-lg);
     height: fit-content;
     position: sticky;
     top: 100px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--accent-dark);
 }
 
 .cart-summary-title {
@@ -485,7 +487,7 @@
 }
 
 .cart-continue-btn {
-    background: white;
+    background: var(--silver-white);
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
     padding: var(--spacing-md) var(--spacing-lg);
@@ -590,7 +592,7 @@
     position: fixed;
     top: 100px;
     right: 20px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 6px;
     padding: var(--spacing-md);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);

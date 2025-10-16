@@ -42,7 +42,7 @@
 
 .popup-card {
     position: relative;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-xl);
     max-width: 500px;
     width: 100%;

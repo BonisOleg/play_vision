@@ -20,7 +20,7 @@
     border: 2px solid var(--hub-border);
     border-radius: 25px;
     font-size: 1rem;
-    background: white;
+    background: var(--silver-white);
     transition: var(--hub-transition);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -70,7 +70,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: white;
+    background: var(--silver-white);
     border: 1px solid var(--hub-border);
     border-top: none;
     border-radius: 0 0 15px 15px;
@@ -163,7 +163,7 @@
 
 /* ===== SEARCH FILTERS ===== */
 .search-filters {
-    background: white;
+    background: var(--silver-white);
     padding: 1.5rem;
     border-radius: var(--hub-radius);
     box-shadow: var(--hub-shadow);
@@ -194,7 +194,7 @@
     border: 1px solid var(--hub-border);
     border-radius: var(--hub-radius);
     font-size: 0.95rem;
-    background: white;
+    background: var(--silver-white);
     cursor: pointer;
     transition: var(--hub-transition);
 }
@@ -290,7 +290,7 @@
     border: 1px solid var(--hub-border);
     border-radius: var(--hub-radius);
     font-size: 0.9rem;
-    background: white;
+    background: var(--silver-white);
     min-width: 150px;
 }
 
@@ -298,7 +298,7 @@
 .no-results {
     text-align: center;
     padding: 4rem 2rem;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--hub-radius);
     box-shadow: var(--hub-shadow);
 }

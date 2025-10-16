@@ -212,7 +212,7 @@
 
     [data-theme="dark"],
     [data-theme="auto"] {
-        background: white;
+        background: var(--silver-white);
         color: black;
     }
 }

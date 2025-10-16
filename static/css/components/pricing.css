@@ -32,7 +32,7 @@
 }
 
 .plan-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: var(--spacing-xl);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -165,7 +165,7 @@
 }
 
 .faq-item {
-    background: white;
+    background: var(--silver-white);
     padding: var(--spacing-lg);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);

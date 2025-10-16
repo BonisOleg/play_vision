@@ -37,6 +37,7 @@
 
 .section-overlay--light {
     background: var(--white-alpha-90);
+    border: 1px solid var(--accent-dark);
 }
 
 .section-overlay--dark {
@@ -57,7 +58,7 @@
 }
 
 .hero-section.hero-bordered .section-content {
-    border: 3px solid var(--white-alpha-90);
+    border: 3px solid var(--accent-dark);
     border-radius: 12px;
     padding: 3rem;
     backdrop-filter: blur(8px);
@@ -171,8 +172,9 @@
 }
 
 .hero-btn-outline {
-    color: white;
-    border-color: white;
+    color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    background: var(--silver-white);
 }
 
 .hero-slider-dots {
@@ -186,8 +188,8 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    border: 2px solid white;
-    background: transparent;
+    border: 2px solid var(--accent-dark);
+    background: var(--silver-white);
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -544,9 +546,9 @@
 }
 
 .cta-section .btn-outline {
-    background: var(--shadow-alpha-30);
-    color: white;
-    border: 2px solid white;
+    background: var(--silver-white);
+    color: var(--accent-dark);
+    border: 2px solid var(--accent-dark);
     font-weight: 600;
     padding: var(--spacing-md) var(--spacing-xl);
     border-radius: 8px;

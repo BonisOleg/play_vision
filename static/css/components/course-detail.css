@@ -71,7 +71,7 @@
     gap: 1rem;
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--hub-radius);
     box-shadow: var(--hub-shadow);
 }
@@ -186,10 +186,11 @@
 
 /* ===== COURSE ACTIONS ===== */
 .course-actions {
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--hub-radius);
     padding: 2rem;
     box-shadow: var(--hub-shadow);
+    border: 1px solid var(--accent-dark);
 }
 
 .price-section {
@@ -308,7 +309,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1.5rem;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--hub-radius);
     box-shadow: var(--hub-shadow);
     transition: var(--hub-transition);
@@ -394,10 +395,11 @@
 }
 
 .course-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--hub-radius);
     overflow: hidden;
     box-shadow: var(--hub-shadow);
+    border: 1px solid var(--color-border-light);
     transition: var(--hub-transition);
 }
 
@@ -483,7 +485,7 @@
 }
 
 .modal-content {
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--hub-radius);
     max-width: 800px;
     width: 90%;

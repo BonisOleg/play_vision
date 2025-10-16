@@ -34,7 +34,7 @@
 .quote-card {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-xl);
     padding: var(--spacing-xxl);
     box-shadow: var(--hub-shadow);

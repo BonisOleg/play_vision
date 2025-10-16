@@ -91,7 +91,7 @@ img[loading="lazy"].loaded {
 
 .subscription-cta .btn {
     flex-shrink: 0;
-    background: white;
+    background: var(--silver-white);
     color: var(--color-primary);
     font-weight: 600;
     padding: var(--spacing-sm) var(--spacing-xl);
@@ -434,15 +434,17 @@ img[loading="lazy"].loaded {
     transform: translateX(-50%);
     width: 120px;
     height: 6px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 3px;
 }
 
 /* Quotes Carousel */
 .quotes-carousel {
-    background: white;
+    background: var(--silver-white);
     border-radius: 0;
     padding: var(--spacing-xxl);
+    border-top: 2px solid var(--accent-dark);
+    border-bottom: 2px solid var(--accent-dark);
     margin: 0;
     box-shadow: none;
     position: relative;
@@ -596,7 +598,7 @@ img[loading="lazy"].loaded {
 }
 
 .material-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);

@@ -12,7 +12,7 @@
     display: grid;
     grid-template-columns: 400px 1fr;
     gap: 30px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 16px;
     box-shadow: 0 4px 20px var(--shadow-alpha-10);
     overflow: hidden;
@@ -103,7 +103,7 @@
     border-radius: 8px;
     font-size: 14px;
     transition: all 0.3s ease;
-    background: white;
+    background: var(--silver-white);
 }
 
 .form-control:focus {
@@ -171,7 +171,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     border: 1px solid var(--color-border-dark);
-    background: white;
+    background: var(--silver-white);
 }
 
 .interest-tag.active {
@@ -231,7 +231,7 @@
 .tab-link.active {
     color: var(--color-primary);
     border-bottom-color: var(--color-primary);
-    background: white;
+    background: var(--silver-white);
 }
 
 /* Контент вкладок */
@@ -261,7 +261,7 @@
 }
 
 .profile-info-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 30px;
     margin-bottom: 30px;
@@ -343,7 +343,7 @@
 }
 
 .profile-stat-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 2px 10px var(--shadow-alpha-5);
@@ -385,7 +385,7 @@
 }
 
 .profile-detail-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 2px 10px var(--shadow-alpha-5);
@@ -423,7 +423,7 @@
 }
 
 .profile-interests {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 25px;
     margin-bottom: 30px;
@@ -454,7 +454,7 @@
 }
 
 .profile-quick-actions {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 2px 10px var(--shadow-alpha-5);
@@ -550,7 +550,7 @@
 
 /* Інформаційні картки */
 .info-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 2px 8px var(--shadow-alpha-10);
@@ -764,7 +764,7 @@
 }
 
 .material-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: 20px;
     border: 1px solid #f0f0f0;
@@ -832,7 +832,7 @@
 .stat-item {
     text-align: center;
     padding: 20px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     border: 1px solid #f0f0f0;
 }
@@ -945,7 +945,7 @@
     align-items: center;
     gap: 20px;
     padding: 15px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     border: 1px solid #f0f0f0;
 }
@@ -1017,7 +1017,7 @@
 }
 
 .way-item {
-    background: white;
+    background: var(--silver-white);
     padding: 20px;
     border-radius: 12px;
     border: 1px solid #f0f0f0;
@@ -1060,7 +1060,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 8px;
     border: 1px solid #f0f0f0;
 }
@@ -1098,7 +1098,7 @@
 }
 
 .stat-card {
-    background: white;
+    background: var(--silver-white);
     padding: 20px;
     border-radius: 12px;
     border: 1px solid #f0f0f0;
@@ -1124,7 +1124,7 @@
 }
 
 .payments-table {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #f0f0f0;
@@ -1282,7 +1282,7 @@
 }
 
 .modal-content {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     max-width: 800px;
     width: 90%;
@@ -1676,7 +1676,7 @@
 .courses-section {
     margin-top: 40px;
     padding: 30px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     box-shadow: 0 2px 10px var(--shadow-alpha-10);
 }

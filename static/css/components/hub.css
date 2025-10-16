@@ -42,7 +42,7 @@
 
 .subscription-banner .btn {
     flex-shrink: 0;
-    background: white;
+    background: var(--silver-white);
     color: var(--color-primary);
     border: none;
     font-weight: 600;
@@ -117,7 +117,7 @@
 }
 
 .event-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -553,10 +553,11 @@
 }
 
 .material-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
+    border: 1px solid var(--accent-dark);
     transition: var(--transition-base);
     height: 100%;
 }
@@ -674,7 +675,7 @@
     height: 40px;
     border-radius: 50%;
     border: none;
-    background: white;
+    background: var(--silver-white);
     box-shadow: var(--shadow-sm);
     color: var(--color-primary);
     font-size: 1.5rem;
@@ -713,7 +714,7 @@
     border: 2px solid var(--color-border);
     border-radius: 50px;
     font-size: 1rem;
-    background: white;
+    background: var(--silver-white);
     transition: var(--transition-base);
 }
 
@@ -759,7 +760,7 @@
 
 /* ===== FILTERS SIDEBAR ===== */
 .filters-sidebar {
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     overflow: hidden;
@@ -962,7 +963,7 @@
     align-items: center;
     margin-bottom: 2rem;
     padding: 1rem;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
 }
@@ -982,7 +983,7 @@
     padding: 0.5rem 1rem;
     border: 1px solid var(--color-border);
     border-radius: 4px;
-    background: white;
+    background: var(--silver-white);
     cursor: pointer;
 }
 
@@ -999,10 +1000,11 @@
 }
 
 .product-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border-light);
     transition: var(--transition-base);
     height: 100%;
     display: flex;
@@ -1223,7 +1225,7 @@
     grid-column: 1 / -1;
     text-align: center;
     padding: 3rem 2rem;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
 }
@@ -1250,7 +1252,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1rem;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
 }
@@ -1406,7 +1408,7 @@
         top: 100%;
         left: 0;
         right: 0;
-        background: white;
+        background: var(--silver-white);
         box-shadow: var(--shadow-sm);
         border-radius: 0 0 var(--radius-md) var(--radius-md);
         z-index: 10;
@@ -1596,7 +1598,7 @@
 }
 
 .result-card {
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -1720,7 +1722,7 @@
 .no-results {
     text-align: center;
     padding: 4rem 2rem;
-    background: white;
+    background: var(--silver-white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     max-width: 600px;
@@ -1796,7 +1798,7 @@
 
 .suggestion-tag {
     padding: 0.5rem 1rem;
-    background: white;
+    background: var(--silver-white);
     color: var(--color-text);
     text-decoration: none;
     border-radius: 20px;

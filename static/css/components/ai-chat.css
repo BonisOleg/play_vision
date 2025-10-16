@@ -53,7 +53,7 @@
 }
 
 .ai-chat-interface {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -100,7 +100,7 @@
 }
 
 .ai-message-content {
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     padding: var(--spacing-md);
     max-width: 70%;
@@ -166,7 +166,7 @@
     display: block;
     width: 100%;
     text-align: left;
-    background: white;
+    background: var(--silver-white);
     border: 1px solid var(--color-border);
     border-radius: 6px;
     padding: var(--spacing-sm);
@@ -183,7 +183,7 @@
 
 .ai-input-container {
     padding: var(--spacing-lg);
-    background: white;
+    background: var(--silver-white);
     border-top: 1px solid var(--color-border);
 }
 
@@ -259,7 +259,7 @@
 }
 
 .ai-suggestion-btn {
-    background: white;
+    background: var(--silver-white);
     border: 2px solid var(--color-border);
     border-radius: 8px;
     padding: var(--spacing-md);
@@ -282,7 +282,7 @@
     right: 20px;
     width: 350px;
     max-width: calc(100vw - 40px);
-    background: white;
+    background: var(--silver-white);
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     z-index: 1000;
@@ -354,7 +354,7 @@
 }
 
 .ai-widget-message--bot .ai-message-content {
-    background: white;
+    background: var(--silver-white);
     border-radius: 8px;
     padding: var(--spacing-sm);
     font-size: 0.875rem;
@@ -654,7 +654,7 @@
     width: 380px;
     max-width: calc(100vw - 48px);
     max-height: 600px;
-    background: white;
+    background: var(--silver-white);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     z-index: 998;
@@ -721,7 +721,7 @@
 }
 
 .ai-mini-message--bot {
-    background: white;
+    background: var(--silver-white);
     border: 1px solid var(--color-border);
     align-self: flex-start;
 }
@@ -733,7 +733,7 @@
 }
 
 .ai-mini-message--typing {
-    background: white;
+    background: var(--silver-white);
     border: 1px solid var(--color-border);
     padding: 12px 20px;
     display: flex;
@@ -762,7 +762,7 @@
     display: flex;
     gap: 8px;
     padding: 12px;
-    background: white;
+    background: var(--silver-white);
     border-top: 1px solid var(--color-border);
 }
 
