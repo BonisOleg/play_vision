@@ -2275,3 +2275,168 @@
         background: var(--color-bg-gray);
     }
 }
+
+/* TEXT COLORS IN DARK MODE - Force black text */
+
+/* Event item text colors */
+[data-theme="dark"] .event-item .event-title,
+[data-theme="dark"] .event-item .event-description,
+[data-theme="dark"] .event-item .event-type,
+[data-theme="dark"] .event-item .event-date,
+[data-theme="dark"] .event-item .event-location,
+[data-theme="dark"] .event-item .event-price,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .event-item .event-title,
+    [data-theme="auto"] .event-item .event-description,
+    [data-theme="auto"] .event-item .event-type,
+    [data-theme="auto"] .event-item .event-date,
+    [data-theme="auto"] .event-item .event-location,
+    [data-theme="auto"] .event-item .event-price {
+        color: #000 !important;
+    }
+}
+
+/* Filter selects text */
+[data-theme="dark"] .filter-select,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .filter-select {
+        color: #000 !important;
+    }
+}
+
+/* Navigation buttons text */
+[data-theme="dark"] .nav-btn,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-btn {
+        color: #000 !important;
+    }
+}
+
+/* Search input text */
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .search-input::placeholder,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .search-input,
+    [data-theme="auto"] .search-input::placeholder {
+        color: #000 !important;
+    }
+}
+
+/* Sidebar section text */
+[data-theme="dark"] .sidebar-title,
+[data-theme="dark"] .filter-label,
+[data-theme="dark"] .filter-option,
+[data-theme="dark"] .active-filters-title,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .sidebar-title,
+    [data-theme="auto"] .filter-label,
+    [data-theme="auto"] .filter-option,
+    [data-theme="auto"] .active-filters-title {
+        color: #000 !important;
+    }
+}
+
+/* Upcoming events text */
+[data-theme="dark"] .upcoming-events .event-name,
+[data-theme="dark"] .upcoming-events .event-date,
+[data-theme="dark"] .upcoming-event-title,
+[data-theme="dark"] .upcoming-event-meta,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .upcoming-events .event-name,
+    [data-theme="auto"] .upcoming-events .event-date,
+    [data-theme="auto"] .upcoming-event-title,
+    [data-theme="auto"] .upcoming-event-meta {
+        color: #000 !important;
+    }
+}
+
+/* Pagination links text */
+[data-theme="dark"] .pagination-link,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .pagination-link {
+        color: #000 !important;
+    }
+}
+
+/* Event main text colors */
+[data-theme="dark"] .event-main .section-title,
+[data-theme="dark"] .event-main .event-description,
+[data-theme="dark"] .event-main .timeline-title,
+[data-theme="dark"] .event-main .timeline-time,
+[data-theme="dark"] .event-main .speaker-name,
+[data-theme="dark"] .event-main .speaker-position,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .event-main .section-title,
+    [data-theme="auto"] .event-main .event-description,
+    [data-theme="auto"] .event-main .timeline-title,
+    [data-theme="auto"] .event-main .timeline-time,
+    [data-theme="auto"] .event-main .speaker-name,
+    [data-theme="auto"] .event-main .speaker-position {
+        color: #000 !important;
+    }
+}
+
+/* Sidebar cards text colors */
+[data-theme="dark"] .registration-card .card-title,
+[data-theme="dark"] .registration-card .price-label,
+[data-theme="dark"] .registration-card .price-amount,
+[data-theme="dark"] .registration-card .subscription-note,
+[data-theme="dark"] .registration-card .status-text,
+[data-theme="dark"] .organizer-card .card-title,
+[data-theme="dark"] .organizer-card .organizer-name,
+[data-theme="dark"] .organizer-card .organizer-role,
+[data-theme="dark"] .share-card .card-title,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .registration-card .card-title,
+    [data-theme="auto"] .registration-card .price-label,
+    [data-theme="auto"] .registration-card .price-amount,
+    [data-theme="auto"] .registration-card .subscription-note,
+    [data-theme="auto"] .registration-card .status-text,
+    [data-theme="auto"] .organizer-card .card-title,
+    [data-theme="auto"] .organizer-card .organizer-name,
+    [data-theme="auto"] .organizer-card .organizer-role,
+    [data-theme="auto"] .share-card .card-title {
+        color: #000 !important;
+    }
+}
+
+/* Calendar elements text */
+[data-theme="dark"] .calendar-title,
+[data-theme="dark"] .calendar-subtitle,
+[data-theme="dark"] .current-period,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .calendar-title,
+    [data-theme="auto"] .calendar-subtitle,
+    [data-theme="auto"] .current-period {
+        color: #000 !important;
+    }
+}
+
+/* Event content text */
+[data-theme="dark"] .event-content .event-meta,
+[data-theme="dark"] .event-content .event-footer,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .event-content .event-meta,
+    [data-theme="auto"] .event-content .event-footer {
+        color: #000 !important;
+    }
+}
+
+/* Page titles */
+[data-theme="dark"] .page-title,
+[data-theme="dark"] .page-subtitle,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .page-title,
+    [data-theme="auto"] .page-subtitle {
+        color: #000 !important;
+    }
+}
