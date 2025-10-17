@@ -61,7 +61,7 @@
 /* Fixed контейнер для фону (hero parallax override) */
 .hero-section .section-bg {
     position: fixed;
-    top: 0;
+    top: 110px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -86,7 +86,7 @@
 /* Overlay фіксований окремо */
 .hero-section .section-overlay {
     position: fixed;
-    top: 0;
+    top: 110px;
     left: 0;
     width: 100%;
     height: 100%;
