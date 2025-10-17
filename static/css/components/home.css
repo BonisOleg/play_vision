@@ -5,6 +5,10 @@
 }
 
 .fullscreen-section {
+    width: 90%;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
     height: calc(100vh - 80px);
     display: flex;
     align-items: center;
@@ -121,6 +125,8 @@
 /* .section-content moved to parallax.css */
 
 .hero-section {
+    width: 100%;
+    max-width: 100%;
     color: white;
     text-align: center;
 }
@@ -139,7 +145,12 @@
     display: none;
 }
 
-.mentor-coaching-section .section-title,
+.mentor-coaching-section .section-title {
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    margin-top: var(--spacing-xxl);
+}
+
 .mentor-coaching-section .ecosystem-subtitle {
     color: white;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
@@ -645,6 +656,8 @@
 
 @media (max-width: 1024px) {
     .fullscreen-section {
+        width: 95%;
+        max-width: 95%;
         height: auto;
         min-height: calc(100vh - 80px);
         padding: var(--spacing-xxl) 0;
@@ -667,6 +680,8 @@
 
 @media (max-width: 768px) {
     .fullscreen-section {
+        width: 98%;
+        max-width: 98%;
         padding: var(--spacing-xl) 0;
     }
 
@@ -1229,7 +1244,12 @@
             display: none;
         }
 
-        .mentor-coaching-section .section-title,
+        .mentor-coaching-section .section-title {
+            color: white;
+            text-shadow: 0 2px 8px var(--shadow-alpha-80);
+            margin-top: var(--spacing-xxl);
+        }
+
         .mentor-coaching-section .ecosystem-subtitle {
             color: white;
             text-shadow: 0 2px 8px var(--shadow-alpha-80);
