@@ -88,11 +88,11 @@
 }
 
 .hero-section.hero-bordered .section-content {
-    border: 3px solid var(--accent-dark);
-    border-radius: 12px;
+    border: none;
+    border-radius: 0;
     padding: 3rem;
-    backdrop-filter: blur(8px);
-    background: var(--shadow-alpha-30);
+    backdrop-filter: none;
+    background: transparent;
 }
 
 /* Tablet responsiveness */
@@ -118,7 +118,6 @@
 @media (max-width: 768px) {
     .hero-section.hero-bordered .section-content {
         padding: 2rem;
-        border-width: 2px;
     }
 }
 
@@ -1078,9 +1077,9 @@
         }
 
         .hero-section.hero-bordered .section-content {
-            background: rgba(0, 0, 0, 0.5);
-            border-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
+            border: none;
+            background: transparent;
+            backdrop-filter: none;
         }
 
         .hero-badge {
