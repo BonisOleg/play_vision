@@ -126,7 +126,7 @@
 }
 
 .mentor-coaching-section {
-    background: var(--color-bg);
+    background: transparent;
     position: relative;
     z-index: var(--z-section, 20);
 }
@@ -141,8 +141,8 @@
 
 .mentor-coaching-section .section-title,
 .mentor-coaching-section .ecosystem-subtitle {
-    color: var(--color-text);
-    text-shadow: none;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .mentor-coaching-section .hexagon h4 {
@@ -1218,16 +1218,15 @@
 
         /* === MENTOR-COACHING SECTION === */
         .mentor-coaching-section {
-            background: var(--color-bg-dark);
+            background: transparent;
         }
 
         .mentor-coaching-section .section-bg {
-            display: block;
+            display: none;
         }
 
         .mentor-coaching-section .section-overlay--dark {
-            display: block;
-            background: var(--shadow-alpha-80);
+            display: none;
         }
 
         .mentor-coaching-section .section-title,
