@@ -69,17 +69,27 @@
 
     /* === ADDITIONAL BORDERS === */
     --color-border-dark: #000000;
-    --color-text-muted: #666666;
 
-    /* === Z-INDEX SYSTEM === */
+    /* === Z-INDEX SYSTEM (unified) === */
     --z-background: -1;
+    --z-base: 1;
     --z-overlay: 1;
     --z-content: 10;
     --z-section: 20;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-popover: 600;
+    --z-tooltip: 700;
+    --z-toast: 800;
+    --z-fab: 999;
     --z-header: 1000;
-    --z-mobile-menu: 10000;
+    --z-notification: 1000;
     --z-modal-backdrop: 2000;
     --z-modal-content: 2001;
+    --z-modal: 2001;
+    --z-top: 9999;
+    --z-mobile-menu: 10000;
 
     /* === EXTENDED COLOR PALETTE === */
     --color-blue: #000000;
@@ -165,20 +175,6 @@
     --radius-xl: 16px;
     --radius-2xl: 24px;
     --radius-full: 9999px;
-
-    /* === Z-INDEX SCALE === */
-    --z-base: 1;
-    --z-dropdown: 100;
-    --z-sticky: 200;
-    --z-fixed: 300;
-    --z-overlay: 400;
-    --z-modal: 500;
-    --z-popover: 600;
-    --z-tooltip: 700;
-    --z-toast: 800;
-    --z-fab: 999;
-    --z-notification: 1000;
-    --z-top: 9999;
 
     /* === LAYOUT === */
     --layout-nav-height: 80px;

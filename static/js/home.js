@@ -38,56 +38,95 @@ class HeroCarousel {
     constructor(element) {
         this.element = element;
         this.currentSlide = 0;
-        this.slides = [
-            {
-                title: 'Продуктивна практика у футбольних клубах',
-                subtitle: 'Реальні кейси, стажування та менторинг з професіоналами індустрії',
-                ctaUrl: '/about/'
-            },
-            {
-                title: 'Ми відкрились!',
-                subtitle: 'Приєднуйтесь до спільноти футбольних професіоналів України',
-                ctaUrl: '/about/'
-            },
-            {
-                title: 'Івенти',
-                subtitle: 'Вебінари, майстер-класи та форуми від міжнародних експертів',
-                ctaUrl: '/events/'
-            },
-            {
-                title: 'Хаб знань — долучайся першим',
-                subtitle: 'Ексклюзивні курси та матеріали для розвитку футбольних фахівців',
-                ctaUrl: '/hub/'
-            },
-            {
-                title: 'Ментор-коучинг',
-                subtitle: 'Індивідуальний підхід до комплексного розвитку кожного футболіста',
-                ctaUrl: '/mentor-coaching/'
-            },
-            {
-                title: 'Про нас',
-                subtitle: 'Дізнайтеся більше про нашу місію, цінності та команду експертів',
-                ctaUrl: '/about/'
-            },
-            {
-                title: 'Напрямки діяльності',
-                subtitle: '4 ключових напрямки для професійного зростання у футболі',
-                ctaUrl: '/about/#directions'
+
+        // Check for CMS slides data
+        const cmsDataElement = document.getElementById('hero-slides-data');
+        if (cmsDataElement) {
+            try {
+                this.slides = JSON.parse(cmsDataElement.textContent);
+            } catch (e) {
+                console.error('Failed to parse CMS slides data:', e);
+                this.slides = this.getDefaultSlides();
             }
-        ];
+        } else {
+            this.slides = this.getDefaultSlides();
+        }
 
         this.titleElement = element.querySelector('.hero-title');
         this.subtitleElement = element.querySelector('.hero-subtitle');
+        this.badgeElement = element.querySelector('.hero-badge');
         this.ctaButton = element.querySelector('.hero-buttons a');
         this.dotsContainer = element.querySelector('.hero-slider-dots');
 
         this.init();
     }
 
+    getDefaultSlides() {
+        return [
+            {
+                title: 'Продуктивна практика у футбольних клубах',
+                subtitle: 'Реальні кейси, стажування та менторинг з професіоналами індустрії',
+                badge: 'ГОЛОВНЕ ЗАРАЗ',
+                ctaText: 'Дізнатись більше',
+                ctaUrl: '/about/'
+            },
+            {
+                title: 'Ми відкрились!',
+                subtitle: 'Приєднуйтесь до спільноти футбольних професіоналів України',
+                badge: 'НОВИНА',
+                ctaText: 'Дізнатись більше',
+                ctaUrl: '/about/'
+            },
+            {
+                title: 'Івенти',
+                subtitle: 'Вебінари, майстер-класи та форуми від міжнародних експертів',
+                badge: 'ПОДІЯ',
+                ctaText: 'Переглянути івенти',
+                ctaUrl: '/events/'
+            },
+            {
+                title: 'Хаб знань — долучайся першим',
+                subtitle: 'Ексклюзивні курси та матеріали для розвитку футбольних фахівців',
+                badge: 'НАВЧАННЯ',
+                ctaText: 'До хабу знань',
+                ctaUrl: '/hub/'
+            },
+            {
+                title: 'Ментор-коучинг',
+                subtitle: 'Індивідуальний підхід до комплексного розвитку кожного футболіста',
+                badge: 'РОЗВИТОК',
+                ctaText: 'Дізнатись більше',
+                ctaUrl: '/mentor-coaching/'
+            },
+            {
+                title: 'Про нас',
+                subtitle: 'Дізнайтеся більше про нашу місію, цінності та команду експертів',
+                badge: 'ПРО ПРОЕКТ',
+                ctaText: 'Про Play Vision',
+                ctaUrl: '/about/'
+            },
+            {
+                title: 'Напрямки діяльності',
+                subtitle: '4 ключових напрямки для професійного зростання у футболі',
+                badge: 'НАПРЯМКИ',
+                ctaText: 'Дізнатись більше',
+                ctaUrl: '/about/#directions'
+            }
+        ];
+    }
+
     init() {
-        this.renderDots();
+        // Only show dots and autoplay if more than 1 slide
+        if (this.slides.length > 1) {
+            this.renderDots();
+            this.startAutoplay();
+        } else {
+            // Hide dots container if only 1 slide
+            if (this.dotsContainer) {
+                this.dotsContainer.style.display = 'none';
+            }
+        }
         this.updateSlide();
-        this.startAutoplay();
     }
 
     renderDots() {
@@ -111,6 +150,10 @@ class HeroCarousel {
     updateSlide() {
         const slide = this.slides[this.currentSlide];
 
+        if (this.badgeElement && slide.badge) {
+            this.badgeElement.textContent = slide.badge;
+        }
+
         if (this.titleElement) {
             this.titleElement.textContent = slide.title;
         }
@@ -121,6 +164,9 @@ class HeroCarousel {
 
         if (this.ctaButton) {
             this.ctaButton.href = slide.ctaUrl;
+            if (slide.ctaText) {
+                this.ctaButton.textContent = slide.ctaText;
+            }
         }
 
         this.updateDots();

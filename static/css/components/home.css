@@ -1,3 +1,9 @@
+/* Fullscreen container for all home sections */
+.fullscreen-container {
+    width: 100%;
+    position: relative;
+}
+
 .fullscreen-section {
     height: calc(100vh - 80px);
     display: flex;
@@ -8,22 +14,7 @@
     min-height: 600px;
 }
 
-.section-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: var(--z-background, -1);
-}
-
-.section-bg-image,
-.section-bg-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+/* Section bg, overlay styles moved to parallax.css to avoid conflicts */
 
 /* Hero background switching for light/dark theme */
 .hero-bg-light,
@@ -64,16 +55,7 @@
     }
 }
 
-
-.section-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: var(--z-overlay, 1);
-    background: var(--shadow-alpha-40);
-}
+/* Section overlay base styles moved to parallax.css */
 
 .section-overlay--light {
     background: var(--white-alpha-90);
@@ -136,14 +118,7 @@
     }
 }
 
-.section-content {
-    position: relative;
-    z-index: var(--z-content, 10);
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
-}
+/* .section-content moved to parallax.css */
 
 .hero-section {
     color: white;
@@ -1084,6 +1059,82 @@
 
         .featured-courses-section {
             background: var(--color-bg-gray);
+        }
+
+        /* === FEATURED CAROUSEL (from home-additions.css) === */
+        .hero-with-frame {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .featured-card {
+            background: var(--color-bg-gray);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .featured-card:hover {
+            background: var(--color-bg-dark);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .featured-image {
+            background: var(--color-bg-dark);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .featured-category {
+            color: var(--color-primary);
+        }
+
+        .featured-title {
+            color: var(--color-text);
+        }
+
+        .featured-description {
+            color: var(--color-text-light);
+        }
+
+        .featured-link {
+            color: var(--color-primary);
+        }
+
+        .featured-link:hover {
+            color: var(--color-primary-light);
+        }
+
+        .carousel-btn {
+            background: var(--color-bg-gray);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-btn:hover:not(:disabled) {
+            background: var(--color-bg-dark);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .carousel-btn:disabled {
+            background: var(--color-bg-dark);
+            color: var(--color-text-muted);
+            opacity: 0.4;
+        }
+
+        .mentor-cta .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .mentor-cta .btn-primary:hover {
+            background: var(--color-primary-dark);
+            border-color: var(--color-primary-dark);
+        }
+
+        .no-courses {
+            color: var(--color-text-light);
         }
 
         /* === COURSE CARDS (Освітні програми) === */
