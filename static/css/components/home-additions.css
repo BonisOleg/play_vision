@@ -12,6 +12,7 @@
 /* Featured Courses Carousel */
 .featured-courses-section {
     background: var(--color-bg-gray);
+    position: relative;
 }
 
 .featured-carousel-container {

@@ -1,0 +1,138 @@
+/**
+ * PARALLAX SCROLL EFFECT
+ * Фіксований фон з рухомим контентом поверх
+ * 
+ * Структура:
+ * - Fixed контейнер (.section-bg) тримає позицію
+ * - Absolute зображення всередині зберігають opacity transition
+ * - Fixed overlay окремо
+ * - Relative контент скролиться
+ */
+
+/* === VIEWPORT HEIGHT VARIABLE === */
+:root {
+    --vh: 1vh;
+}
+
+/* === HERO SECTION PARALLAX === */
+.hero-section {
+    min-height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: visible;
+}
+
+/* Fixed контейнер для фону */
+.hero-section .section-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-background);
+    pointer-events: none;
+}
+
+/* Зображення absolute всередині fixed контейнера */
+.hero-section .section-bg .section-bg-image {
+    position: absolute;
+}
+
+/* Overlay фіксований окремо */
+.hero-section .section-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-overlay);
+    pointer-events: none;
+}
+
+/* Hero контент скролиться */
+.hero-section .section-content {
+    position: relative;
+    z-index: var(--z-content);
+    pointer-events: auto;
+}
+
+/* === ПЕРША СЕКЦІЯ ПІСЛЯ HERO === */
+.fullscreen-container .featured-courses-section {
+    position: relative;
+    z-index: var(--z-section);
+    background: var(--color-bg-gray);
+    margin-top: -20px;
+    padding-top: calc(var(--spacing-xxl) + 20px);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -10px 30px var(--shadow-alpha-30);
+}
+
+/* === ІНШІ СЕКЦІЇ === */
+.fullscreen-section:not(.hero-section) {
+    position: relative;
+    z-index: var(--z-section);
+    background: var(--color-bg);
+}
+
+.courses-section,
+.mentor-coaching-section,
+.experts-section {
+    position: relative;
+    z-index: var(--z-section);
+}
+
+/* === GPU ACCELERATION === */
+.hero-section .section-bg,
+.hero-section .section-overlay {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* === iOS SAFARI FIX === */
+@supports (-webkit-touch-callout: none) {
+    .hero-section {
+        min-height: -webkit-fill-available;
+    }
+
+    .hero-section .section-bg,
+    .hero-section .section-overlay {
+        -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+    }
+
+    @media screen and (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+
+        .hero-section .section-bg,
+        .hero-section .section-overlay {
+            position: absolute;
+        }
+    }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .fullscreen-container .featured-courses-section {
+        margin-top: -16px;
+        padding-top: calc(var(--spacing-xl) + 16px);
+        border-radius: 16px 16px 0 0;
+    }
+}
+
+/* === PREFERS REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-section .section-bg,
+    .hero-section .section-overlay {
+        will-change: auto;
+        transform: none;
+    }
+}
+
+/* === DARK THEME === */
+[data-theme="dark"] .fullscreen-container .featured-courses-section,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .fullscreen-container .featured-courses-section {
+        background: var(--color-bg-gray);
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+    }
+}

@@ -71,6 +71,16 @@
     --color-border-dark: #000000;
     --color-text-muted: #666666;
 
+    /* === Z-INDEX SYSTEM === */
+    --z-background: -1;
+    --z-overlay: 1;
+    --z-content: 10;
+    --z-section: 20;
+    --z-header: 1000;
+    --z-mobile-menu: 10000;
+    --z-modal-backdrop: 2000;
+    --z-modal-content: 2001;
+
     /* === EXTENDED COLOR PALETTE === */
     --color-blue: #000000;
     --color-blue-dark: #000000;

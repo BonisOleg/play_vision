@@ -3,6 +3,37 @@
  * Vanilla JS implementation without Alpine.js
  */
 
+/**
+ * Viewport Height Manager для iOS Safari fix
+ */
+class ViewportHeightManager {
+    constructor() {
+        this.updateViewportHeight();
+        this.attachEvents();
+    }
+
+    updateViewportHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    attachEvents() {
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                this.updateViewportHeight();
+            }, 100);
+        });
+
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.updateViewportHeight();
+            }, 200);
+        });
+    }
+}
+
 class HeroCarousel {
     constructor(element) {
         this.element = element;
@@ -218,6 +249,8 @@ class CoursesCarousel {
 
 // Ініціалізація при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', () => {
+    new ViewportHeightManager();
+
     const heroElement = document.querySelector('.hero-section');
     if (heroElement) {
         new HeroCarousel(heroElement);
