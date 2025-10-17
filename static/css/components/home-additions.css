@@ -262,7 +262,9 @@
 }
 
 .mentor-cta {
-    margin-top: var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xxl);
+    text-align: center;
 }
 
 /* Button sizes видалено - тепер у main.css */
