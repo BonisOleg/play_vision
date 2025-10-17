@@ -105,7 +105,6 @@
 .fullscreen-container .featured-courses-section {
     position: relative;
     z-index: var(--z-section);
-    background: var(--color-bg-gray);
     height: auto;
     min-height: auto;
     margin-top: -20px;
@@ -192,7 +191,6 @@
 [data-theme="dark"] .fullscreen-container .featured-courses-section,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .fullscreen-container .featured-courses-section {
-        background: var(--color-bg-gray);
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
     }
 }

@@ -222,6 +222,11 @@
     border-radius: 6px;
 }
 
+.featured-courses-section .section-title {
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
 .directions-section {
     background: var(--color-bg);
     text-align: center;
@@ -277,6 +282,10 @@
     line-height: 1.6;
 }
 
+.courses-section {
+    background: var(--color-bg);
+}
+
 .courses-header {
     display: flex;
     justify-content: space-between;
@@ -285,20 +294,20 @@
 }
 
 .courses-section .section-title {
-    color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    color: var(--color-text);
+    text-shadow: none;
 }
 
 .courses-section .courses-link {
-    color: white;
+    color: var(--color-primary);
     font-weight: 600;
     text-decoration: none;
     transition: color 0.3s ease;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    text-shadow: none;
 }
 
 .courses-section .courses-link:hover {
-    color: var(--color-primary);
+    color: var(--color-primary-dark);
     text-decoration: underline;
 }
 
@@ -1057,10 +1066,6 @@
             background: var(--color-bg);
         }
 
-        .featured-courses-section {
-            background: var(--color-bg-gray);
-        }
-
         /* === FEATURED CAROUSEL (from home-additions.css) === */
         .hero-with-frame {
             border-color: rgba(255, 255, 255, 0.2);
@@ -1251,12 +1256,13 @@
         }
 
         .featured-courses-section .section-title {
-            color: var(--color-text);
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .courses-section .section-title {
-            color: white;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            color: var(--color-text);
+            text-shadow: none;
         }
 
         .mentor-coaching-section .section-title,
