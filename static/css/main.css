@@ -319,9 +319,6 @@ body.modal-open {
 @media (max-width: 1024px) {
 
     /* Додати padding знизу для компенсації нижньої навігації */
-    .main {
-        padding-bottom: 80px;
-    }
 
     /* Адаптація типографіки */
     h1 {
