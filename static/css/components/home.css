@@ -233,6 +233,11 @@
     border-radius: 6px;
 }
 
+.featured-courses-section {
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    overflow: hidden;
+}
+
 .featured-courses-section .section-title {
     color: white;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
@@ -295,6 +300,8 @@
 
 .courses-section {
     background: var(--color-bg);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    overflow: hidden;
 }
 
 .courses-header {
@@ -413,6 +420,8 @@
     background: var(--color-bg);
     position: relative;
     z-index: var(--z-section, 20);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    overflow: hidden;
 }
 
 .experts-subtitle {
@@ -563,6 +572,8 @@
     color: white;
     position: relative;
     z-index: var(--z-section, 20);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    overflow: hidden;
 }
 
 .cta-simple {
@@ -575,7 +586,10 @@
 .cta-content {
     width: 100%;
     max-width: 800px;
-    padding: 0 var(--spacing-md);
+    padding: var(--spacing-xxl) var(--spacing-xl);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-lg);
 }
 
 [data-theme="dark"] .cta-simple {
@@ -690,6 +704,10 @@
         flex-direction: column;
         align-items: center;
         gap: var(--spacing-md);
+    }
+
+    .cta-content {
+        padding: var(--spacing-lg) var(--spacing-md);
     }
 
     .cta-section .btn-primary,
@@ -1083,9 +1101,9 @@
 
         /* === FEATURED CAROUSEL (from home-additions.css) === */
         .hero-with-frame {
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
+            border: none;
+            background: transparent;
+            backdrop-filter: none;
         }
 
         .featured-card {

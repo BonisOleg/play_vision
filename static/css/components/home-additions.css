@@ -2,11 +2,11 @@
 
 /* Hero білі рамки */
 .hero-with-frame {
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: var(--radius-xl);
+    border: none;
+    border-radius: 0;
     padding: var(--spacing-xxl);
-    backdrop-filter: blur(10px);
-    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: none;
+    background: transparent;
 }
 
 /* Featured Courses Carousel */
@@ -281,7 +281,6 @@
 
 @media (max-width: 768px) {
     .hero-with-frame {
-        border-width: 2px;
         padding: var(--spacing-lg);
     }
 
@@ -363,7 +362,7 @@
 /* iOS Safari специфіка */
 @supports (-webkit-touch-callout: none) {
     .hero-with-frame {
-        backdrop-filter: blur(8px);
+        backdrop-filter: none;
     }
 
     .carousel-btn {

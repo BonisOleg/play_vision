@@ -7,6 +7,7 @@
     background: var(--color-bg-dark);
     color: #ffffff;
     padding: var(--spacing-xl) 0 max(var(--spacing-xl), calc(var(--spacing-xl) + env(safe-area-inset-bottom)));
+    margin-top: 200px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
