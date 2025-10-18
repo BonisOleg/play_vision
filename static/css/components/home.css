@@ -298,7 +298,8 @@
 }
 
 .courses-section {
-    background: var(--color-bg);
+    background: var(--color-bg) url('/static/images/whitegreed.png') repeat;
+    background-size: auto;
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     overflow: hidden;
 }
@@ -416,7 +417,8 @@
 }
 
 .experts-section {
-    background: var(--color-bg);
+    background: var(--color-bg) url('/static/images/blackgreed.png') repeat;
+    background-size: auto;
     position: relative;
     z-index: var(--z-section, 20);
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
@@ -1095,7 +1097,8 @@
 
         /* === SECTION BACKGROUNDS === */
         .experts-section {
-            background: var(--color-bg);
+            background: var(--color-bg) url('/static/images/blackgreed.png') repeat;
+            background-size: auto;
         }
 
         /* === FEATURED CAROUSEL (from home-additions.css) === */
