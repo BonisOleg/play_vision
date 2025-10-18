@@ -63,7 +63,7 @@
 
 .footer-logo-image {
     width: 100%;
-    max-width: 250px;
+    max-width: 210px;
     height: auto;
     display: block;
 }
@@ -96,7 +96,6 @@
 .footer-social {
     display: flex;
     gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
 }
 
 .social-icon {
