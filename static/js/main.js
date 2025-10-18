@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeCart();
     initializeMessages();
     initializeProgressBars();
-    initializeDropdownMenu();
 });
 
 function initializeHTMX() {
@@ -207,54 +206,6 @@ function initializeProgressBars() {
     });
 }
 
-function initializeDropdownMenu() {
-    // Handle click on active Events link
-    const eventsLink = document.querySelector('.navbar-dropdown .navbar-link');
-    const dropdownContainer = document.querySelector('.navbar-dropdown');
-
-    if (eventsLink && dropdownContainer) {
-        eventsLink.addEventListener('click', function (e) {
-            // Only show dropdown if we're on events list page, not detail pages
-            const isOnEventsList = window.location.pathname === '/events/' || window.location.pathname === '/events';
-
-            if (this.classList.contains('active') && isOnEventsList) {
-                e.preventDefault();
-                dropdownContainer.classList.toggle('dropdown-open');
-            }
-            // Allow normal navigation for event detail pages or when not active
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (e) {
-            if (!dropdownContainer.contains(e.target)) {
-                dropdownContainer.classList.remove('dropdown-open');
-            }
-        });
-    }
-
-    // Prevent only problematic empty hash links from scrolling to top
-    // But allow clicks on calendar and filter elements
-    document.addEventListener('click', function (e) {
-        // Don't interfere with navigation, calendar days, filter options, or event cards
-        if (e.target.closest('.navbar-link') ||
-            e.target.closest('.navbar-dropdown') ||
-            e.target.closest('.calendar-day') ||
-            e.target.closest('.filter-option') ||
-            e.target.closest('.event-card') ||
-            e.target.closest('.dropdown-item')) {
-            return;
-        }
-
-        const link = e.target.closest('a');
-        // Only prevent default for truly empty or hash-only links that aren't navigation
-        if (link &&
-            (link.getAttribute('href') === '#' || link.getAttribute('href') === '') &&
-            !link.classList.contains('navbar-link') &&
-            !link.classList.contains('dropdown-item')) {
-            e.preventDefault();
-        }
-    });
-}
 
 window.PlayVision = {
     showMessage,
