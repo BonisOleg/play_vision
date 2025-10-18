@@ -354,6 +354,26 @@ class PWAInstallView(TemplateView):
         return context
 
 
+class PDFBackgroundsDemoView(TemplateView):
+    """Demo page for PDF backgrounds"""
+    template_name = 'pages/pdf-backgrounds-demo.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        import json
+        from pathlib import Path
+        
+        # Читаємо маніфест з інформацією про зображення
+        manifest_path = Path(settings.BASE_DIR) / 'static' / 'images' / 'pdf-backgrounds' / 'manifest.json'
+        if manifest_path.exists():
+            with open(manifest_path, 'r', encoding='utf-8') as f:
+                context['backgrounds_manifest'] = json.load(f)
+        else:
+            context['backgrounds_manifest'] = {}
+        
+        return context
+
+
 class ServiceWorkerView(View):
     """Serve Service Worker from root path"""
     

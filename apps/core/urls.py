@@ -11,6 +11,7 @@ urlpatterns = [
     path('pricing/', views.PricingView.as_view(), name='pricing'),
     path('search/', views.SearchView.as_view(), name='search'),
     path('coming-soon/', views.ComingSoonView.as_view(), name='coming_soon'),
+    path('pdf-backgrounds-demo/', views.PDFBackgroundsDemoView.as_view(), name='pdf_backgrounds_demo'),
     
     # PWA pages
     path('pwa/offline/', views.PWAOfflineView.as_view(), name='pwa_offline'),

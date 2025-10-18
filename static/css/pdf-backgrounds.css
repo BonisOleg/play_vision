@@ -1,0 +1,850 @@
+/* Автогенеровані класи для PDF фонів */
+/* Використання: <div class='bg-название'></div> */
+
+.bg-01-backpack-black-1 {
+  background-image: url('/static/images/pdf-backgrounds/01_backpack_black_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1772×2363px */
+}
+
+.bg-02-backpack-black-1 {
+  background-image: url('/static/images/pdf-backgrounds/02_backpack_black_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1772×2363px */
+}
+
+.bg-a4-diploma-1 {
+  background-image: url('/static/images/pdf-backgrounds/a4_diploma_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1778×1264px */
+}
+
+.bg-pattern-1 {
+  background-image: url('/static/images/pdf-backgrounds/pattern_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1264×1778px */
+}
+
+.bg-pattern-2 {
+  background-image: url('/static/images/pdf-backgrounds/pattern_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1264×1778px */
+}
+
+.bg-01-a5-playbook-playvision-1 {
+  background-image: url('/static/images/pdf-backgrounds/01_a5_playbook playvision_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-01-a5-playbook-playvision-2 {
+  background-image: url('/static/images/pdf-backgrounds/01_a5_playbook playvision_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-01-a5-playbook-playvision-3 {
+  background-image: url('/static/images/pdf-backgrounds/01_a5_playbook playvision_page3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-01-a5-playbook-playvision-4 {
+  background-image: url('/static/images/pdf-backgrounds/01_a5_playbook playvision_page4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-02-a5-playbook-playvision-1 {
+  background-image: url('/static/images/pdf-backgrounds/02_a5_playbook playvision_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-02-a5-playbook-playvision-2 {
+  background-image: url('/static/images/pdf-backgrounds/02_a5_playbook playvision_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-02-a5-playbook-playvision-3 {
+  background-image: url('/static/images/pdf-backgrounds/02_a5_playbook playvision_page3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-02-a5-playbook-playvision-4 {
+  background-image: url('/static/images/pdf-backgrounds/02_a5_playbook playvision_page4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-03-a5-playbook-playvision-1 {
+  background-image: url('/static/images/pdf-backgrounds/03_a5_playbook playvision_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-03-a5-playbook-playvision-2 {
+  background-image: url('/static/images/pdf-backgrounds/03_a5_playbook playvision_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-03-a5-playbook-playvision-3 {
+  background-image: url('/static/images/pdf-backgrounds/03_a5_playbook playvision_page3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-03-a5-playbook-playvision-4 {
+  background-image: url('/static/images/pdf-backgrounds/03_a5_playbook playvision_page4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 898×1264px */
+}
+
+.bg-рекомендації-по-роботі-з-анімацією-play-vision-2-1 {
+  background-image: url('/static/images/pdf-backgrounds/Рекомендації по роботі з анімацією Play Vision-2_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1242×1755px */
+}
+
+.bg-рекомендації-по-роботі-з-анімацією-play-vision-2-2 {
+  background-image: url('/static/images/pdf-backgrounds/Рекомендації по роботі з анімацією Play Vision-2_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1242×1755px */
+}
+
+.bg-рекомендації-по-роботі-з-анімацією-play-vision-2-3 {
+  background-image: url('/static/images/pdf-backgrounds/Рекомендації по роботі з анімацією Play Vision-2_page3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1242×1755px */
+}
+
+.bg-рекомендації-по-роботі-з-анімацією-play-vision-2-4 {
+  background-image: url('/static/images/pdf-backgrounds/Рекомендації по роботі з анімацією Play Vision-2_page4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1242×1755px */
+}
+
+.bg-рекомендації-по-роботі-з-анімацією-play-vision-2-5 {
+  background-image: url('/static/images/pdf-backgrounds/Рекомендації по роботі з анімацією Play Vision-2_page5.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1242×1755px */
+}
+
+.bg-300x20mm-lanyard-1 {
+  background-image: url('/static/images/pdf-backgrounds/300x20mm_lanyard_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1772×119px */
+}
+
+.bg-70x100-badge-1 {
+  background-image: url('/static/images/pdf-backgrounds/70x100_badge_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 438×615px */
+}
+
+.bg-a4-certificate-1 {
+  background-image: url('/static/images/pdf-backgrounds/a4_certificate_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1264×1778px */
+}
+
+.bg-01-papercup-1 {
+  background-image: url('/static/images/pdf-backgrounds/01_papercup_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1182×591px */
+}
+
+.bg-01-papercup-2 {
+  background-image: url('/static/images/pdf-backgrounds/01_papercup_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1182×591px */
+}
+
+.bg-02-papercup-1 {
+  background-image: url('/static/images/pdf-backgrounds/02_papercup_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1182×591px */
+}
+
+.bg-02-papercup-2 {
+  background-image: url('/static/images/pdf-backgrounds/02_papercup_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1182×591px */
+}
+
+.bg-pins-1 {
+  background-image: url('/static/images/pdf-backgrounds/pins_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 591×591px */
+}
+
+.bg-play-vision-elements-presentation-1 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-2 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-3 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-4 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-5 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page5.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-6 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page6.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-7 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page7.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-8 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page8.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-9 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page9.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-10 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page10.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-11 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page11.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-12 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page12.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-13 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page13.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-14 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page14.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-15 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page15.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-16 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page16.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-17 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page17.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-18 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page18.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-19 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page19.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-play-vision-elements-presentation-20 {
+  background-image: url('/static/images/pdf-backgrounds/play_vision_elements_presentation_page20.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 4000×2250px */
+}
+
+.bg-playvision-guideline-print-1 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-2 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-3 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-4 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-5 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page5.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-6 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page6.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-7 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page7.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-8 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page8.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-9 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page9.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-10 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page10.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-11 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page11.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-12 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page12.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-13 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page13.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-14 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page14.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-15 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page15.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-16 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page16.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-17 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page17.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-18 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page18.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-19 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page19.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-20 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page20.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-21 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page21.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-22 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page22.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-23 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page23.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-24 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page24.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-25 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page25.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-26 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page26.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-27 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page27.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-print-28 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_print_page28.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1252×1778px */
+}
+
+.bg-playvision-guideline-web-1 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-2 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-3 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-4 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-5 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page5.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-6 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page6.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-7 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page7.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-8 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page8.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-9 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page9.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-10 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page10.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-11 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page11.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-12 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page12.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-13 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page13.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-14 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page14.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-15 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page15.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-16 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page16.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-17 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page17.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-18 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page18.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-19 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page19.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-20 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page20.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-21 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page21.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-22 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page22.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-23 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page23.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-24 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page24.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-25 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page25.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-26 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page26.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-27 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page27.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}
+
+.bg-playvision-guideline-web-28 {
+  background-image: url('/static/images/pdf-backgrounds/playvision_guideline_web_page28.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 1241×1754px */
+}

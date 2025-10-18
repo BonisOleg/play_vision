@@ -1,0 +1,744 @@
+{
+  "01_backpack_black_page1.png": {
+    "original_pdf": "guideline/backpack/01_backpack_black.pdf",
+    "page": 1,
+    "width": 1772,
+    "height": 2363,
+    "css_class": "bg-01-backpack-black-1"
+  },
+  "02_backpack_black_page1.png": {
+    "original_pdf": "guideline/backpack/02_backpack_black.pdf",
+    "page": 1,
+    "width": 1772,
+    "height": 2363,
+    "css_class": "bg-02-backpack-black-1"
+  },
+  "a4_diploma_page1.png": {
+    "original_pdf": "guideline/diploma/a4_diploma.pdf",
+    "page": 1,
+    "width": 1778,
+    "height": 1264,
+    "css_class": "bg-a4-diploma-1"
+  },
+  "pattern_page1.png": {
+    "original_pdf": "guideline/pattern/pattern.pdf",
+    "page": 1,
+    "width": 1264,
+    "height": 1778,
+    "css_class": "bg-pattern-1"
+  },
+  "pattern_page2.png": {
+    "original_pdf": "guideline/pattern/pattern.pdf",
+    "page": 2,
+    "width": 1264,
+    "height": 1778,
+    "css_class": "bg-pattern-2"
+  },
+  "01_a5_playbook playvision_page1.png": {
+    "original_pdf": "guideline/playbook/01_a5_playbook playvision.pdf",
+    "page": 1,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-01-a5-playbook-playvision-1"
+  },
+  "01_a5_playbook playvision_page2.png": {
+    "original_pdf": "guideline/playbook/01_a5_playbook playvision.pdf",
+    "page": 2,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-01-a5-playbook-playvision-2"
+  },
+  "01_a5_playbook playvision_page3.png": {
+    "original_pdf": "guideline/playbook/01_a5_playbook playvision.pdf",
+    "page": 3,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-01-a5-playbook-playvision-3"
+  },
+  "01_a5_playbook playvision_page4.png": {
+    "original_pdf": "guideline/playbook/01_a5_playbook playvision.pdf",
+    "page": 4,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-01-a5-playbook-playvision-4"
+  },
+  "02_a5_playbook playvision_page1.png": {
+    "original_pdf": "guideline/playbook/02_a5_playbook playvision.pdf",
+    "page": 1,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-02-a5-playbook-playvision-1"
+  },
+  "02_a5_playbook playvision_page2.png": {
+    "original_pdf": "guideline/playbook/02_a5_playbook playvision.pdf",
+    "page": 2,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-02-a5-playbook-playvision-2"
+  },
+  "02_a5_playbook playvision_page3.png": {
+    "original_pdf": "guideline/playbook/02_a5_playbook playvision.pdf",
+    "page": 3,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-02-a5-playbook-playvision-3"
+  },
+  "02_a5_playbook playvision_page4.png": {
+    "original_pdf": "guideline/playbook/02_a5_playbook playvision.pdf",
+    "page": 4,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-02-a5-playbook-playvision-4"
+  },
+  "03_a5_playbook playvision_page1.png": {
+    "original_pdf": "guideline/playbook/03_a5_playbook playvision.pdf",
+    "page": 1,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-03-a5-playbook-playvision-1"
+  },
+  "03_a5_playbook playvision_page2.png": {
+    "original_pdf": "guideline/playbook/03_a5_playbook playvision.pdf",
+    "page": 2,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-03-a5-playbook-playvision-2"
+  },
+  "03_a5_playbook playvision_page3.png": {
+    "original_pdf": "guideline/playbook/03_a5_playbook playvision.pdf",
+    "page": 3,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-03-a5-playbook-playvision-3"
+  },
+  "03_a5_playbook playvision_page4.png": {
+    "original_pdf": "guideline/playbook/03_a5_playbook playvision.pdf",
+    "page": 4,
+    "width": 898,
+    "height": 1264,
+    "css_class": "bg-03-a5-playbook-playvision-4"
+  },
+  "Рекомендації по роботі з анімацією Play Vision-2_page1.png": {
+    "original_pdf": "guideline/Рекомендації по роботі з анімацією Play Vision-2.pdf",
+    "page": 1,
+    "width": 1242,
+    "height": 1755,
+    "css_class": "bg-рекомендації-по-роботі-з-анімацією-play-vision-2-1"
+  },
+  "Рекомендації по роботі з анімацією Play Vision-2_page2.png": {
+    "original_pdf": "guideline/Рекомендації по роботі з анімацією Play Vision-2.pdf",
+    "page": 2,
+    "width": 1242,
+    "height": 1755,
+    "css_class": "bg-рекомендації-по-роботі-з-анімацією-play-vision-2-2"
+  },
+  "Рекомендації по роботі з анімацією Play Vision-2_page3.png": {
+    "original_pdf": "guideline/Рекомендації по роботі з анімацією Play Vision-2.pdf",
+    "page": 3,
+    "width": 1242,
+    "height": 1755,
+    "css_class": "bg-рекомендації-по-роботі-з-анімацією-play-vision-2-3"
+  },
+  "Рекомендації по роботі з анімацією Play Vision-2_page4.png": {
+    "original_pdf": "guideline/Рекомендації по роботі з анімацією Play Vision-2.pdf",
+    "page": 4,
+    "width": 1242,
+    "height": 1755,
+    "css_class": "bg-рекомендації-по-роботі-з-анімацією-play-vision-2-4"
+  },
+  "Рекомендації по роботі з анімацією Play Vision-2_page5.png": {
+    "original_pdf": "guideline/Рекомендації по роботі з анімацією Play Vision-2.pdf",
+    "page": 5,
+    "width": 1242,
+    "height": 1755,
+    "css_class": "bg-рекомендації-по-роботі-з-анімацією-play-vision-2-5"
+  },
+  "300x20mm_lanyard_page1.png": {
+    "original_pdf": "guideline/хлам/badge/300x20mm_lanyard.pdf",
+    "page": 1,
+    "width": 1772,
+    "height": 119,
+    "css_class": "bg-300x20mm-lanyard-1"
+  },
+  "70x100_badge_page1.png": {
+    "original_pdf": "guideline/хлам/badge/70x100_badge.pdf",
+    "page": 1,
+    "width": 438,
+    "height": 615,
+    "css_class": "bg-70x100-badge-1"
+  },
+  "a4_certificate_page1.png": {
+    "original_pdf": "guideline/хлам/certificate/a4_certificate.pdf",
+    "page": 1,
+    "width": 1264,
+    "height": 1778,
+    "css_class": "bg-a4-certificate-1"
+  },
+  "01_papercup_page1.png": {
+    "original_pdf": "guideline/хлам/paper_cup/01_papercup.pdf",
+    "page": 1,
+    "width": 1182,
+    "height": 591,
+    "css_class": "bg-01-papercup-1"
+  },
+  "01_papercup_page2.png": {
+    "original_pdf": "guideline/хлам/paper_cup/01_papercup.pdf",
+    "page": 2,
+    "width": 1182,
+    "height": 591,
+    "css_class": "bg-01-papercup-2"
+  },
+  "02_papercup_page1.png": {
+    "original_pdf": "guideline/хлам/paper_cup/02_papercup.pdf",
+    "page": 1,
+    "width": 1182,
+    "height": 591,
+    "css_class": "bg-02-papercup-1"
+  },
+  "02_papercup_page2.png": {
+    "original_pdf": "guideline/хлам/paper_cup/02_papercup.pdf",
+    "page": 2,
+    "width": 1182,
+    "height": 591,
+    "css_class": "bg-02-papercup-2"
+  },
+  "pins_page1.png": {
+    "original_pdf": "guideline/хлам/pin/pins.pdf",
+    "page": 1,
+    "width": 591,
+    "height": 591,
+    "css_class": "bg-pins-1"
+  },
+  "play_vision_elements_presentation_page1.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 1,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-1"
+  },
+  "play_vision_elements_presentation_page2.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 2,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-2"
+  },
+  "play_vision_elements_presentation_page3.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 3,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-3"
+  },
+  "play_vision_elements_presentation_page4.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 4,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-4"
+  },
+  "play_vision_elements_presentation_page5.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 5,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-5"
+  },
+  "play_vision_elements_presentation_page6.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 6,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-6"
+  },
+  "play_vision_elements_presentation_page7.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 7,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-7"
+  },
+  "play_vision_elements_presentation_page8.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 8,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-8"
+  },
+  "play_vision_elements_presentation_page9.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 9,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-9"
+  },
+  "play_vision_elements_presentation_page10.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 10,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-10"
+  },
+  "play_vision_elements_presentation_page11.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 11,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-11"
+  },
+  "play_vision_elements_presentation_page12.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 12,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-12"
+  },
+  "play_vision_elements_presentation_page13.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 13,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-13"
+  },
+  "play_vision_elements_presentation_page14.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 14,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-14"
+  },
+  "play_vision_elements_presentation_page15.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 15,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-15"
+  },
+  "play_vision_elements_presentation_page16.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 16,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-16"
+  },
+  "play_vision_elements_presentation_page17.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 17,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-17"
+  },
+  "play_vision_elements_presentation_page18.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 18,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-18"
+  },
+  "play_vision_elements_presentation_page19.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 19,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-19"
+  },
+  "play_vision_elements_presentation_page20.png": {
+    "original_pdf": "guideline/хлам/play_vision_elements_presentation.pdf",
+    "page": 20,
+    "width": 4000,
+    "height": 2250,
+    "css_class": "bg-play-vision-elements-presentation-20"
+  },
+  "playvision_guideline_print_page1.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 1,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-1"
+  },
+  "playvision_guideline_print_page2.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 2,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-2"
+  },
+  "playvision_guideline_print_page3.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 3,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-3"
+  },
+  "playvision_guideline_print_page4.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 4,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-4"
+  },
+  "playvision_guideline_print_page5.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 5,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-5"
+  },
+  "playvision_guideline_print_page6.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 6,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-6"
+  },
+  "playvision_guideline_print_page7.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 7,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-7"
+  },
+  "playvision_guideline_print_page8.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 8,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-8"
+  },
+  "playvision_guideline_print_page9.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 9,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-9"
+  },
+  "playvision_guideline_print_page10.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 10,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-10"
+  },
+  "playvision_guideline_print_page11.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 11,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-11"
+  },
+  "playvision_guideline_print_page12.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 12,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-12"
+  },
+  "playvision_guideline_print_page13.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 13,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-13"
+  },
+  "playvision_guideline_print_page14.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 14,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-14"
+  },
+  "playvision_guideline_print_page15.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 15,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-15"
+  },
+  "playvision_guideline_print_page16.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 16,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-16"
+  },
+  "playvision_guideline_print_page17.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 17,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-17"
+  },
+  "playvision_guideline_print_page18.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 18,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-18"
+  },
+  "playvision_guideline_print_page19.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 19,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-19"
+  },
+  "playvision_guideline_print_page20.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 20,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-20"
+  },
+  "playvision_guideline_print_page21.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 21,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-21"
+  },
+  "playvision_guideline_print_page22.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 22,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-22"
+  },
+  "playvision_guideline_print_page23.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 23,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-23"
+  },
+  "playvision_guideline_print_page24.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 24,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-24"
+  },
+  "playvision_guideline_print_page25.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 25,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-25"
+  },
+  "playvision_guideline_print_page26.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 26,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-26"
+  },
+  "playvision_guideline_print_page27.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 27,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-27"
+  },
+  "playvision_guideline_print_page28.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_print.pdf",
+    "page": 28,
+    "width": 1252,
+    "height": 1778,
+    "css_class": "bg-playvision-guideline-print-28"
+  },
+  "playvision_guideline_web_page1.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 1,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-1"
+  },
+  "playvision_guideline_web_page2.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 2,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-2"
+  },
+  "playvision_guideline_web_page3.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 3,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-3"
+  },
+  "playvision_guideline_web_page4.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 4,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-4"
+  },
+  "playvision_guideline_web_page5.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 5,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-5"
+  },
+  "playvision_guideline_web_page6.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 6,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-6"
+  },
+  "playvision_guideline_web_page7.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 7,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-7"
+  },
+  "playvision_guideline_web_page8.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 8,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-8"
+  },
+  "playvision_guideline_web_page9.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 9,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-9"
+  },
+  "playvision_guideline_web_page10.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 10,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-10"
+  },
+  "playvision_guideline_web_page11.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 11,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-11"
+  },
+  "playvision_guideline_web_page12.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 12,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-12"
+  },
+  "playvision_guideline_web_page13.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 13,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-13"
+  },
+  "playvision_guideline_web_page14.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 14,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-14"
+  },
+  "playvision_guideline_web_page15.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 15,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-15"
+  },
+  "playvision_guideline_web_page16.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 16,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-16"
+  },
+  "playvision_guideline_web_page17.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 17,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-17"
+  },
+  "playvision_guideline_web_page18.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 18,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-18"
+  },
+  "playvision_guideline_web_page19.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 19,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-19"
+  },
+  "playvision_guideline_web_page20.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 20,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-20"
+  },
+  "playvision_guideline_web_page21.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 21,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-21"
+  },
+  "playvision_guideline_web_page22.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 22,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-22"
+  },
+  "playvision_guideline_web_page23.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 23,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-23"
+  },
+  "playvision_guideline_web_page24.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 24,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-24"
+  },
+  "playvision_guideline_web_page25.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 25,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-25"
+  },
+  "playvision_guideline_web_page26.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 26,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-26"
+  },
+  "playvision_guideline_web_page27.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 27,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-27"
+  },
+  "playvision_guideline_web_page28.png": {
+    "original_pdf": "guideline/хлам/playvision_guideline_web.pdf",
+    "page": 28,
+    "width": 1241,
+    "height": 1754,
+    "css_class": "bg-playvision-guideline-web-28"
+  }
+}
