@@ -20,19 +20,16 @@
 
 /* ===== LOGO ===== */
 .footer-logo-mobile {
+    margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-xl);
     text-align: center;
 }
 
 .footer-logo-mobile .footer-logo-image {
     width: 100%;
-    max-width: 280px;
+    max-width: 180px;
     height: auto;
     display: inline-block;
-    border-radius: 12px;
-    border: 2px solid var(--color-primary);
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.02);
 }
 
 /* ===== SUBSCRIBE SECTION ===== */

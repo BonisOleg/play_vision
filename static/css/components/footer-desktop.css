@@ -58,25 +58,14 @@
 
 /* ===== LOGO ===== */
 .footer-logo {
-    margin-bottom: var(--spacing-lg);
+    margin-top: var(--spacing-md);
 }
 
 .footer-logo-image {
     width: 100%;
-    max-width: 320px;
+    max-width: 200px;
     height: auto;
     display: block;
-    border-radius: 12px;
-    border: 2px solid var(--color-primary);
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.02);
-    transition: all 0.3s ease;
-}
-
-.footer-logo-image:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-accent);
-    box-shadow: 0 8px 24px rgba(229, 0, 26, 0.15);
 }
 
 /* ===== LINKS ===== */
