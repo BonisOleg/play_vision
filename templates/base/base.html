@@ -62,7 +62,6 @@
     <link rel="stylesheet" href="{% static 'css/animations.css' %}">
     <link rel="stylesheet" href="{% static 'css/accessibility.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/header-desktop.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/ai-header-search.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/ai-chat-dialog.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/mobile-bottom-nav.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/footer-desktop.css' %}">
@@ -91,45 +90,6 @@
                     <img src="{% static 'icons/horizontal_desc_white.svg' %}" alt="Play Vision"
                         class="logo-img logo-dark">
                 </a>
-
-                {% if user.is_authenticated %}
-                <!-- Cart -->
-                <a href="{% url 'cart:cart' %}" class="navbar-icon cart-link navbar-desktop-only" aria-label="Кошик">
-                    <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="21" r="1" />
-                        <circle cx="20" cy="21" r="1" />
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                    </svg>
-                    <span class="badge" data-cart-count>{{ cart_items_count|default:0 }}</span>
-                </a>
-                {% endif %}
-
-                <!-- AI Search/Chat Container (компактна версія) -->
-                <div class="ai-search-container">
-                    <form class="ai-search-form" id="ai-header-form" role="search">
-                        {% csrf_token %}
-                        <div class="ai-search-input-group">
-                            <svg class="ai-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2">
-                                <path
-                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <input type="text" class="ai-search-input" id="ai-header-input"
-                                placeholder="Запитайте AI помічника..." aria-label="Запит до AI" maxlength="500">
-                            <button type="submit" class="ai-search-btn" aria-label="Надіслати запит">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <line x1="22" y1="2" x2="11" y2="13" />
-                                    <polygon points="22,2 15,22 11,13 2,9" />
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- Dropdown з результатами -->
-                    <div class="ai-search-results" id="ai-search-results" aria-live="polite"></div>
-                </div>
 
                 <!-- Navigation Actions (Desktop) -->
                 <nav class="header-nav-actions navbar-desktop-only" aria-label="Основна навігація">
@@ -345,9 +305,6 @@
     <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
     <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
-
-    <!-- AI Header Search -->
-    <script src="{% static 'js/components/ai-header-search.js' %}" defer></script>
 
     <!-- AI Chat Dialog -->
     <script src="{% static 'js/components/ai-chat-dialog.js' %}" defer></script>

@@ -16,6 +16,8 @@
     // Елементи DOM
     let toggleBtn = null;
     let dialog = null;
+    let dialogContainer = null;
+    let dialogHeader = null;
     let overlay = null;
     let closeButtons = null;
     let messagesContainer = null;
@@ -24,6 +26,15 @@
     let sendBtn = null;
     let charCounter = null;
 
+    // Drag & Drop state
+    let isDragging = false;
+    let currentX = 0;
+    let currentY = 0;
+    let initialX = 0;
+    let initialY = 0;
+    let xOffset = 0;
+    let yOffset = 0;
+
     /**
      * Ініціалізація компонента
      */
@@ -31,6 +42,8 @@
         // Отримати елементи DOM
         toggleBtn = document.querySelector('[data-ai-chat-toggle]');
         dialog = document.querySelector('[data-ai-chat-dialog]');
+        dialogContainer = document.querySelector('.ai-dialog-container');
+        dialogHeader = document.querySelector('.ai-dialog-header');
         overlay = document.querySelector('[data-ai-dialog-overlay]');
         closeButtons = document.querySelectorAll('[data-ai-dialog-close]');
         messagesContainer = document.querySelector('[data-ai-dialog-messages]');
@@ -39,7 +52,7 @@
         sendBtn = document.querySelector('[data-ai-dialog-send]');
         charCounter = document.querySelector('[data-ai-char-counter]');
 
-        if (!toggleBtn || !dialog) {
+        if (!toggleBtn || !dialog || !dialogContainer) {
             return;
         }
 
@@ -49,10 +62,6 @@
         closeButtons.forEach(function (btn) {
             btn.addEventListener('click', closeDialog);
         });
-
-        if (overlay) {
-            overlay.addEventListener('click', closeDialog);
-        }
 
         if (form) {
             form.addEventListener('submit', handleSubmit);
@@ -69,6 +78,9 @@
                 closeDialog();
             }
         });
+
+        // Drag & Drop functionality
+        initDragAndDrop();
 
         // Завантажити історію чату
         loadChatHistory();
@@ -89,6 +101,9 @@
      * Відкрити dialog
      */
     function openDialog() {
+        // Скинути позицію перед відкриттям
+        resetPosition();
+        
         dialog.classList.add(CLASS_DIALOG_OPEN);
         dialog.setAttribute('aria-hidden', 'false');
         
@@ -96,7 +111,7 @@
         if (input) {
             setTimeout(function () {
                 input.focus();
-            }, 100);
+            }, 300);
         }
 
         // Scroll до низу повідомлень
@@ -367,6 +382,107 @@
             .find(function (row) { return row.startsWith('csrftoken='); });
         
         return cookieValue ? cookieValue.split('=')[1] : '';
+    }
+
+    /**
+     * Ініціалізація Drag & Drop
+     */
+    function initDragAndDrop() {
+        if (!dialogHeader || !dialogContainer) {
+            return;
+        }
+
+        // Mouse events
+        dialogHeader.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        // Touch events для мобільних
+        dialogHeader.addEventListener('touchstart', dragStart, { passive: false });
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('touchend', dragEnd);
+    }
+
+    /**
+     * Початок перетягування
+     */
+    function dragStart(e) {
+        if (e.type === 'touchstart') {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+        } else {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+        }
+
+        // Не починати drag якщо клікнули на кнопку закриття
+        if (e.target.closest('[data-ai-dialog-close]')) {
+            return;
+        }
+
+        isDragging = true;
+    }
+
+    /**
+     * Процес перетягування
+     */
+    function drag(e) {
+        if (!isDragging) {
+            return;
+        }
+
+        e.preventDefault();
+
+        if (e.type === 'touchmove') {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+        } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+        }
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        setTranslate(currentX, currentY);
+    }
+
+    /**
+     * Кінець перетягування
+     */
+    function dragEnd(e) {
+        if (!isDragging) {
+            return;
+        }
+
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+    }
+
+    /**
+     * Встановити position через transform
+     */
+    function setTranslate(xPos, yPos) {
+        if (!dialogContainer) {
+            return;
+        }
+
+        dialogContainer.style.transform = 'translate(' + xPos + 'px, ' + yPos + 'px)';
+    }
+
+    /**
+     * Скинути позицію при відкритті
+     */
+    function resetPosition() {
+        xOffset = 0;
+        yOffset = 0;
+        currentX = 0;
+        currentY = 0;
+        
+        if (dialogContainer) {
+            dialogContainer.style.transform = 'translate(0, 0)';
+        }
     }
 
     /**

@@ -18,7 +18,7 @@
 
 .header-content {
     display: grid;
-    grid-template-columns: minmax(180px, auto) auto minmax(300px, 2fr) auto minmax(180px, auto);
+    grid-template-columns: minmax(200px, auto) 1fr auto auto;
     align-items: center;
     gap: var(--spacing-md);
     padding: var(--spacing-lg) 0;
@@ -43,9 +43,6 @@
     text-decoration: none;
 }
 
-.cart-link.navbar-desktop-only {
-    grid-column: 2;
-}
 
 .logo-img {
     height: 60px;
@@ -82,26 +79,15 @@
 }
 
 /* ========================================
-   AI SEARCH CONTAINER POSITIONING
-   ======================================== */
-
-.ai-search-container {
-    grid-column: 3;
-    justify-self: center;
-    width: 100%;
-    max-width: 600px;
-}
-
-/* ========================================
    NAVIGATION ACTIONS
    ======================================== */
 
 .header-nav-actions {
-    grid-column: 4;
+    grid-column: 2;
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    justify-self: flex-end;
+    justify-self: center;
 }
 
 .nav-action-btn {
@@ -157,7 +143,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: var(--spacing-md);
-    grid-column: 5;
+    grid-column: 3 / 5;
 }
 
 .desktop-actions {

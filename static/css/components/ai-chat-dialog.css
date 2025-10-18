@@ -16,19 +16,16 @@
     bottom: 0;
     z-index: 999;
     display: none;
-    opacity: 0;
     pointer-events: none;
-    transition: opacity var(--transition-normal);
 }
 
 .ai-chat-dialog.dialog-open {
-    display: flex;
-    opacity: 1;
-    pointer-events: auto;
+    display: block;
+    pointer-events: none;
 }
 
 /* ========================================
-   OVERLAY (BACKDROP)
+   OVERLAY (не блокує клікі)
    ======================================== */
 
 .ai-dialog-overlay {
@@ -37,13 +34,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(2px);
-    cursor: pointer;
-}
-
-[data-theme="dark"] .ai-dialog-overlay {
-    background: rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    opacity: 0;
 }
 
 /* ========================================
@@ -51,7 +43,7 @@
    ======================================== */
 
 .ai-dialog-container {
-    position: absolute;
+    position: fixed;
     top: 80px;
     right: 20px;
     width: 420px;
@@ -59,16 +51,21 @@
     max-height: calc(100vh - 120px);
     background: var(--color-bg);
     border-radius: var(--radius-lg);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transform: translateY(-20px);
-    transition: transform var(--transition-normal);
+    pointer-events: auto;
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+    transform-origin: top right;
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .ai-chat-dialog.dialog-open .ai-dialog-container {
-    transform: translateY(0);
+    opacity: 1;
+    transform: scale(1) translateY(0);
 }
 
 [data-theme="dark"] .ai-dialog-container {
@@ -88,6 +85,12 @@
     background: var(--color-bg-gray);
     border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
+    cursor: move;
+    user-select: none;
+}
+
+.ai-dialog-header:active {
+    cursor: grabbing;
 }
 
 .ai-dialog-back,
@@ -102,7 +105,8 @@
     color: var(--color-text);
     cursor: pointer;
     border-radius: var(--radius-md);
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+    flex-shrink: 0;
 }
 
 .ai-dialog-back:hover,
@@ -113,7 +117,12 @@
 
 .ai-dialog-back:active,
 .ai-dialog-close:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
+}
+
+/* Ховаємо back button, показуємо тільки close (X) */
+.ai-dialog-back {
+    display: none;
 }
 
 .ai-dialog-back svg,
