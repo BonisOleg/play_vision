@@ -192,87 +192,111 @@
             <h2 class="section-title">Ментор-коучинг</h2>
             <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
 
-            <div class="hexagons-grid">
-                {% if cms_hexagons %}
-                {% for hex in cms_hexagons %}
-                <div class="hexagon" style="--hex-color: {{ hex.color }};">
+            <div class="mentor-animation-container">
+                <div class="hexagon-center-large">
                     <div class="hexagon-inner">
-                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24">
-                            {{ hex.icon_svg|safe }}
-                        </svg>
-                        <h4>{{ hex.title }}</h4>
+                        <h3 class="center-title">Ментор коучінг<br>в Play Vision</h3>
+                        <p class="center-hint">натисни</p>
                     </div>
                 </div>
-                {% endfor %}
-                {% else %}
-                <!-- Fallback: Hardcode hexagons -->
-                <div class="hexagon hexagon-motivation">
-                    <div class="hexagon-inner">
-                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                        </svg>
-                        <h4>Ментальність</h4>
+
+                <svg class="connection-lines-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                    <line class="connection-line" data-index="0" x1="300" y1="300" x2="300" y2="50" stroke="red"
+                        stroke-width="2" />
+                    <line class="connection-line" data-index="1" x1="300" y1="300" x2="516" y2="175" stroke="red"
+                        stroke-width="2" />
+                    <line class="connection-line" data-index="2" x1="300" y1="300" x2="516" y2="425" stroke="red"
+                        stroke-width="2" />
+                    <line class="connection-line" data-index="3" x1="300" y1="300" x2="300" y2="550" stroke="red"
+                        stroke-width="2" />
+                    <line class="connection-line" data-index="4" x1="300" y1="300" x2="84" y2="425" stroke="red"
+                        stroke-width="2" />
+                    <line class="connection-line" data-index="5" x1="300" y1="300" x2="84" y2="175" stroke="red"
+                        stroke-width="2" />
+                </svg>
+
+                <div class="hexagons-orbit">
+                    {% if cms_hexagons %}
+                    {% for hex in cms_hexagons %}
+                    <div class="hexagon hexagon-orbit-item" data-orbit-index="{{ forloop.counter0 }}"
+                        style="--hex-color: {{ hex.color }};">
+                        <div class="hexagon-inner">
+                            <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24">
+                                {{ hex.icon_svg|safe }}
+                            </svg>
+                            <h4>{{ hex.title }}</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="hexagon hexagon-intuition">
-                    <div class="hexagon-inner">
-                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <path
-                                d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                        </svg>
-                        <h4>Життя та побут</h4>
+                    {% endfor %}
+                    {% else %}
+                    <div class="hexagon hexagon-orbit-item hexagon-motivation" data-orbit-index="0">
+                        <div class="hexagon-inner">
+                            <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                            </svg>
+                            <h4>Ментальність</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="hexagon hexagon-society">
-                    <div class="hexagon-inner">
-                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
-                            <circle cx="12" cy="12" r="2" />
-                            <circle cx="6" cy="6" r="2" />
-                            <circle cx="18" cy="6" r="2" />
-                            <circle cx="6" cy="18" r="2" />
-                            <circle cx="18" cy="18" r="2" />
-                            <line x1="12" y1="12" x2="6" y2="6" stroke="white" stroke-width="2" />
-                            <line x1="12" y1="12" x2="18" y2="6" stroke="white" stroke-width="2" />
-                            <line x1="12" y1="12" x2="6" y2="18" stroke="white" stroke-width="2" />
-                            <line x1="12" y1="12" x2="18" y2="18" stroke="white" stroke-width="2" />
-                        </svg>
-                        <h4>Техніка</h4>
+                    <div class="hexagon hexagon-orbit-item hexagon-intuition" data-orbit-index="1">
+                        <div class="hexagon-inner">
+                            <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                stroke="white" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            </svg>
+                            <h4>Життя та побут</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="hexagon hexagon-curiosity">
-                    <div class="hexagon-inner">
-                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
-                            stroke-width="2">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                        <h4>Здоров'я та звички</h4>
+                    <div class="hexagon hexagon-orbit-item hexagon-society" data-orbit-index="2">
+                        <div class="hexagon-inner">
+                            <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="white">
+                                <circle cx="12" cy="12" r="2" />
+                                <circle cx="6" cy="6" r="2" />
+                                <circle cx="18" cy="6" r="2" />
+                                <circle cx="6" cy="18" r="2" />
+                                <circle cx="18" cy="18" r="2" />
+                                <line x1="12" y1="12" x2="6" y2="6" stroke="white" stroke-width="2" />
+                                <line x1="12" y1="12" x2="18" y2="6" stroke="white" stroke-width="2" />
+                                <line x1="12" y1="12" x2="6" y2="18" stroke="white" stroke-width="2" />
+                                <line x1="12" y1="12" x2="18" y2="18" stroke="white" stroke-width="2" />
+                            </svg>
+                            <h4>Техніка</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="hexagon hexagon-pragmatism">
-                    <div class="hexagon-inner">
-                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
-                            stroke-width="2">
-                            <path d="M12 10l3-3m-3 3l-3-3m3 3v8" />
-                            <circle cx="12" cy="18" r="3" />
-                        </svg>
-                        <h4>Ігровий інтелект</h4>
+                    <div class="hexagon hexagon-orbit-item hexagon-curiosity" data-orbit-index="3">
+                        <div class="hexagon-inner">
+                            <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                stroke="white" stroke-width="2">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                            </svg>
+                            <h4>Здоров'я та звички</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="hexagon hexagon-optimism">
-                    <div class="hexagon-inner">
-                        <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
-                            stroke-width="2">
-                            <path
-                                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
-                        </svg>
-                        <h4>Фізика</h4>
+                    <div class="hexagon hexagon-orbit-item hexagon-pragmatism" data-orbit-index="4">
+                        <div class="hexagon-inner">
+                            <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                stroke="white" stroke-width="2">
+                                <path d="M12 10l3-3m-3 3l-3-3m3 3v8" />
+                                <circle cx="12" cy="18" r="3" />
+                            </svg>
+                            <h4>Ігровий інтелект</h4>
+                        </div>
                     </div>
+                    <div class="hexagon hexagon-orbit-item hexagon-optimism" data-orbit-index="5">
+                        <div class="hexagon-inner">
+                            <svg class="hexagon-icon" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                                stroke="white" stroke-width="2">
+                                <path
+                                    d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+                            </svg>
+                            <h4>Фізика</h4>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
 
             <div class="mentor-cta">
