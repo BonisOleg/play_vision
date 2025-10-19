@@ -856,6 +856,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
 }
 
 .hexagon-center-large {
@@ -950,6 +951,7 @@
     height: 100%;
     left: 0;
     top: 0;
+    pointer-events: none;
 }
 
 .hexagon-orbit-item {
@@ -960,41 +962,41 @@
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: default;
     box-shadow: 0 8px 20px var(--shadow-alpha-30);
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: calc(50% - 90px);
+    top: calc(50% - 90px);
+    transform: scale(0) translate(0, 0);
     opacity: 0;
-    pointer-events: none;
+    pointer-events: auto;
     z-index: 2;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-    transform: translate(-50%, -50%) translate(0, -250px);
+    transform: scale(1) translateY(-200px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-    transform: translate(-50%, -50%) translate(216px, -125px);
+    transform: scale(1) translate(173px, -100px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-    transform: translate(-50%, -50%) translate(216px, 125px);
+    transform: scale(1) translate(173px, 100px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-    transform: translate(-50%, -50%) translate(0, 250px);
+    transform: scale(1) translateY(200px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-    transform: translate(-50%, -50%) translate(-216px, 125px);
+    transform: scale(1) translate(-173px, 100px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-    transform: translate(-50%, -50%) translate(-216px, -125px);
+    transform: scale(1) translate(-173px, -100px);
     opacity: 1;
 }
 
@@ -1169,30 +1171,32 @@
     .hexagon-orbit-item {
         width: 150px;
         height: 150px;
+        left: calc(50% - 75px);
+        top: calc(50% - 75px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        transform: translate(-50%, -50%) translate(0, -210px);
+        transform: scale(1) translateY(-170px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        transform: translate(-50%, -50%) translate(182px, -105px);
+        transform: scale(1) translate(147px, -85px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        transform: translate(-50%, -50%) translate(182px, 105px);
+        transform: scale(1) translate(147px, 85px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        transform: translate(-50%, -50%) translate(0, 210px);
+        transform: scale(1) translateY(170px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        transform: translate(-50%, -50%) translate(-182px, 105px);
+        transform: scale(1) translate(-147px, 85px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        transform: translate(-50%, -50%) translate(-182px, -105px);
+        transform: scale(1) translate(-147px, -85px);
     }
 
     .hexagons-grid {
@@ -1252,30 +1256,32 @@
     .hexagon-orbit-item {
         width: 110px;
         height: 110px;
+        left: calc(50% - 55px);
+        top: calc(50% - 55px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        transform: translate(-50%, -50%) translate(0, -170px);
+        transform: scale(1) translateY(-140px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        transform: translate(-50%, -50%) translate(147px, -85px);
+        transform: scale(1) translate(121px, -70px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        transform: translate(-50%, -50%) translate(147px, 85px);
+        transform: scale(1) translate(121px, 70px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        transform: translate(-50%, -50%) translate(0, 170px);
+        transform: scale(1) translateY(140px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        transform: translate(-50%, -50%) translate(-147px, 85px);
+        transform: scale(1) translate(-121px, 70px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        transform: translate(-50%, -50%) translate(-147px, -85px);
+        transform: scale(1) translate(-121px, -70px);
     }
 
     .hexagons-grid {
@@ -1339,30 +1345,32 @@
     .hexagon-orbit-item {
         width: 90px;
         height: 90px;
+        left: calc(50% - 45px);
+        top: calc(50% - 45px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        transform: translate(-50%, -50%) translate(0, -140px);
+        transform: scale(1) translateY(-120px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        transform: translate(-50%, -50%) translate(121px, -70px);
+        transform: scale(1) translate(104px, -60px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        transform: translate(-50%, -50%) translate(121px, 70px);
+        transform: scale(1) translate(104px, 60px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        transform: translate(-50%, -50%) translate(0, 140px);
+        transform: scale(1) translateY(120px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        transform: translate(-50%, -50%) translate(-121px, 70px);
+        transform: scale(1) translate(-104px, 60px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        transform: translate(-50%, -50%) translate(-121px, -70px);
+        transform: scale(1) translate(-104px, -60px);
     }
 
     .hexagons-grid {
