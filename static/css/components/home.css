@@ -851,7 +851,7 @@
     position: relative;
     width: 100%;
     max-width: 700px;
-    height: 650px;
+    height: 700px;
     margin: 3rem auto;
     display: flex;
     align-items: center;
@@ -902,12 +902,9 @@
 }
 
 @keyframes pulse-opacity {
-
-    0%,
-    100% {
+    0%, 100% {
         opacity: 0.3;
     }
-
     50% {
         opacity: 1;
     }
@@ -967,48 +964,37 @@
     top: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
+    pointer-events: none;
     z-index: 2;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-    left: 50%;
-    top: 100px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translate(0, -250px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-    left: calc(50% + 216px);
-    top: 200px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translate(216px, -125px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-    left: calc(50% + 216px);
-    top: 450px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translate(216px, 125px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-    left: 50%;
-    top: 550px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translate(0, 250px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-    left: calc(50% - 216px);
-    top: 450px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translate(-216px, 125px);
     opacity: 1;
 }
 
 .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-    left: calc(50% - 216px);
-    top: 200px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translate(-216px, -125px);
     opacity: 1;
 }
 
@@ -1159,7 +1145,7 @@
 @media (max-width: 992px) {
     .mentor-animation-container {
         max-width: 600px;
-        height: 550px;
+        height: 600px;
     }
 
     .hexagon-center-large {
@@ -1186,31 +1172,27 @@
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        top: 85px;
+        transform: translate(-50%, -50%) translate(0, -210px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        left: calc(50% + 180px);
-        top: 165px;
+        transform: translate(-50%, -50%) translate(182px, -105px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        left: calc(50% + 180px);
-        top: 385px;
+        transform: translate(-50%, -50%) translate(182px, 105px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        top: 465px;
+        transform: translate(-50%, -50%) translate(0, 210px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        left: calc(50% - 180px);
-        top: 385px;
+        transform: translate(-50%, -50%) translate(-182px, 105px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        left: calc(50% - 180px);
-        top: 165px;
+        transform: translate(-50%, -50%) translate(-182px, -105px);
     }
 
     .hexagons-grid {
@@ -1242,7 +1224,7 @@
 
     .mentor-animation-container {
         max-width: 450px;
-        height: 480px;
+        height: 500px;
     }
 
     .hexagon-center-large {
@@ -1273,31 +1255,27 @@
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        top: 70px;
+        transform: translate(-50%, -50%) translate(0, -170px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        left: calc(50% + 135px);
-        top: 145px;
+        transform: translate(-50%, -50%) translate(147px, -85px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        left: calc(50% + 135px);
-        top: 335px;
+        transform: translate(-50%, -50%) translate(147px, 85px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        top: 410px;
+        transform: translate(-50%, -50%) translate(0, 170px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        left: calc(50% - 135px);
-        top: 335px;
+        transform: translate(-50%, -50%) translate(-147px, 85px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        left: calc(50% - 135px);
-        top: 145px;
+        transform: translate(-50%, -50%) translate(-147px, -85px);
     }
 
     .hexagons-grid {
@@ -1332,7 +1310,7 @@
 
     .mentor-animation-container {
         max-width: 350px;
-        height: 420px;
+        height: 440px;
     }
 
     .hexagon-center-large {
@@ -1364,31 +1342,27 @@
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        top: 60px;
+        transform: translate(-50%, -50%) translate(0, -140px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        left: calc(50% + 110px);
-        top: 120px;
+        transform: translate(-50%, -50%) translate(121px, -70px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        left: calc(50% + 110px);
-        top: 300px;
+        transform: translate(-50%, -50%) translate(121px, 70px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        top: 360px;
+        transform: translate(-50%, -50%) translate(0, 140px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        left: calc(50% - 110px);
-        top: 300px;
+        transform: translate(-50%, -50%) translate(-121px, 70px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        left: calc(50% - 110px);
-        top: 120px;
+        transform: translate(-50%, -50%) translate(-121px, -70px);
     }
 
     .hexagons-grid {
