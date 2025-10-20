@@ -22,18 +22,17 @@
                 <select name="event_type" class="filter-select">
                     <option value="all">Всі типи подій</option>
                     {% for type_value, type_display in event_types %}
-                    <option value="{{ type_value }}" {% if request.GET.type==type_value %}selected{% endif %}>{{
-                        type_display }}</option>
+                    <option value="{{ type_value }}" {% if request.GET.type == type_value %}selected{% endif %}>{{ type_display }}</option>
                     {% endfor %}
                 </select>
 
                 <select name="event_format" class="filter-select">
                     <option value="all">Всі формати</option>
-                    <option value="online" {% if request.GET.format=='online' %}selected{% endif %}>Тільки онлайн
+                    <option value="online" {% if request.GET.format == 'online' %}selected{% endif %}>Тільки онлайн
                     </option>
-                    <option value="offline" {% if request.GET.format=='offline' %}selected{% endif %}>Тільки офлайн
+                    <option value="offline" {% if request.GET.format == 'offline' %}selected{% endif %}>Тільки офлайн
                     </option>
-                    <option value="hybrid" {% if request.GET.format=='hybrid' %}selected{% endif %}>Гібридні</option>
+                    <option value="hybrid" {% if request.GET.format == 'hybrid' %}selected{% endif %}>Гібридні</option>
                 </select>
 
                 <button data-action="reset-filters"
@@ -110,8 +109,7 @@
                         <div class="filter-group">
                             {% for type_value, type_display in event_types %}
                             <label class="filter-option">
-                                <input type="checkbox" name="event_type" value="{{ type_value }}" {% if type_value in
-                                    current_types %}checked{% endif %}>
+                                <input type="checkbox" name="event_type" value="{{ type_value }}" {% if type_value in current_types %}checked{% endif %}>
                                 <span class="filter-checkmark"></span>
                                 <span class="filter-label">{{ type_display }}</span>
                             </label>
@@ -124,26 +122,22 @@
                         <h3 class="sidebar-title">Формат проведення</h3>
                         <div class="filter-group">
                             <label class="filter-option">
-                                <input type="radio" name="format" value="all" {% if current_format=='all' or not
-                                    current_format %}checked{% endif %}>
+                                <input type="radio" name="format" value="all" {% if current_format == 'all' or not current_format %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Всі формати</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="format" value="online" {% if current_format=='online'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="format" value="online" {% if current_format == 'online' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Онлайн</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="format" value="offline" {% if current_format=='offline'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="format" value="offline" {% if current_format == 'offline' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Офлайн</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="format" value="hybrid" {% if current_format=='hybrid'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="format" value="hybrid" {% if current_format == 'hybrid' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Гібрид</span>
                             </label>
@@ -155,26 +149,22 @@
                         <h3 class="sidebar-title">Період</h3>
                         <div class="filter-group">
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="all" {% if current_date_range=='all' or not
-                                    current_date_range %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="all" {% if current_date_range == 'all' or not current_date_range %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Всі події</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="today" {% if current_date_range=='today'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="today" {% if current_date_range == 'today' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Сьогодні</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="week" {% if current_date_range=='week'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="week" {% if current_date_range == 'week' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Цей тиждень</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="month" {% if current_date_range=='month'
-                                    %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="month" {% if current_date_range == 'month' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Цей місяць</span>
                             </label>
@@ -186,20 +176,17 @@
                         <h3 class="sidebar-title">Ціна</h3>
                         <div class="filter-group">
                             <label class="filter-option">
-                                <input type="radio" name="price" value="all" {% if not current_price or
-                                    current_price=='all' %}checked{% endif %}>
+                                <input type="radio" name="price" value="all" {% if not current_price or current_price == 'all' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Всі події</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="price" value="free" {% if current_price=='free' %}checked{%
-                                    endif %}>
+                                <input type="radio" name="price" value="free" {% if current_price == 'free' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Безкоштовні</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="price" value="paid" {% if current_price=='paid' %}checked{%
-                                    endif %}>
+                                <input type="radio" name="price" value="paid" {% if current_price == 'paid' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Платні</span>
                             </label>
