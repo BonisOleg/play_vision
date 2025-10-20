@@ -18,26 +18,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="hub-container">
-    <!-- Subscription Banner -->
-    <div class="subscription-banner" id="subscription-banner">
-        <button class="banner-close" aria-label="Закрити">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-        </button>
-
-        <div class="container">
-            <div class="subscription-banner-content">
-                <h2>Оформи підписку, стань частиною спільноти фахівців!</h2>
-                <p>Отримай доступ до всіх курсів та матеріалів від провідних експертів</p>
-                <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">
-                    Оформити підписку
-                </a>
-            </div>
-        </div>
+<!-- КРИТИЧНО: Sticky баннер підписки (ЗАВЖДИ ВИДИМИЙ під хедером!) -->
+<div class="subscription-sticky-banner">
+    <div class="container">
+        <p class="banner-text">Оформи підписку, стань частиною спільноти фахівців!</p>
+        <a href="{% url 'core:pricing' %}" class="btn btn-banner">Тарифи</a>
     </div>
+</div>
+
+<div class="hub-container">
 
     {% comment %}
     <!-- ВИДАЛЕНО ЗА ВИМОГОЮ КЛІЄНТА -->
@@ -159,6 +148,54 @@
 
     {% comment %} СТАРІ ЦИТАТИ ВИДАЛЕНО {% endcomment %}
 
+    <!-- 4 Інформаційні борди -->
+    <section class="hub-boards">
+        <div class="container">
+            <div class="boards-grid">
+                <!-- Борд 1 -->
+                <div class="board-card">
+                    <h3 class="board-title">Твоя бібліотека футбольних знань</h3>
+                    <p class="board-description">
+                        Хаб знань — освітня платформа для тренерів, аналітиків, скаутів, менеджерів і всіх,
+                        хто живе футболом. Тут зібрано експертні матеріали та тренди зі всього світу — українською
+                        мовою.
+                    </p>
+                    <a href="#products" class="board-btn">Відкрити знання</a>
+                </div>
+
+                <!-- Борд 2 -->
+                <div class="board-card">
+                    <h3 class="board-title">Навчання від практиків, а не теоретиків</h3>
+                    <p class="board-description">
+                        Усі матеріали створені фахівцями з досвідом роботи в клубах, академіях і федераціях.
+                        Все, що ви вивчаєте, було перевірено на практиці у вашій роботі.
+                    </p>
+                    <a href="#courses" class="board-btn">Перейти до курсів</a>
+                </div>
+
+                <!-- Борд 3 -->
+                <div class="board-card">
+                    <h3 class="board-title">Футбольна освіта нового покоління</h3>
+                    <p class="board-description">
+                        Структуровані модулі, практичні завдання, сертифікати. Знання і рекомендації від експертів.
+                        Розвивайся системно з чіткою траєкторією зростання.
+                    </p>
+                    <a href="#courses" class="board-btn">Обрати напрям</a>
+                </div>
+
+                <!-- Борд 4 -->
+                <div class="board-card">
+                    <h3 class="board-title">Європейський підхід — українська мова</h3>
+                    <p class="board-description">
+                        Методики UEFA, філософія клубів топ-рангу, підходи до аналізу за сучасними стандартами.
+                        Все це пояснено просто, наочно і реалізовано зі справжніми прикладами.
+                    </p>
+                    <a href="#materials" class="board-btn">Переглянути матеріали</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Educational Products -->
     <section class="main-materials">
         <div class="container">
@@ -269,7 +306,8 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                            current_category|default:''==category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -344,14 +382,14 @@
                                     <svg class="icon" viewBox="0 0 24 24">
                                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                                     </svg>
-                                    Застосувати
+                                    Застосувати фільтри
                                 </button>
                                 <button type="button" data-action="clear-filters" class="btn btn-outline is-hidden">
                                     <svg class="icon" viewBox="0 0 24 24">
                                         <path
                                             d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
                                     </svg>
-                                    Скинути все
+                                    Скинути всі
                                 </button>
                                 <a href="{% url 'content:course_list' %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}"
                                     class="btn btn-ghost">
@@ -377,19 +415,20 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
+                                    %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
+                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
                                     назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
+                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
                                     назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
+                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
                                     ціною (спадання)
                                 </option>
                             </select>
@@ -416,8 +455,31 @@
                                         {% if course.is_featured %}
                                         <span class="badge badge-top">топ-продажів</span>
                                         {% endif %}
+                                        {% if course.created_at|timesince|slice:":2" == "0 " or
+                                        course.created_at|timesince|slice:":3" == "1 д" or
+                                        course.created_at|timesince|slice:":3" == "2 д" %}
+                                        <span class="badge badge-new">новинка</span>
+                                        {% endif %}
+                                        {% if course.rating >= 4.5 and course.enrollment_count >= 100 %}
+                                        <span class="badge badge-classic">вічна класика</span>
+                                        {% endif %}
+                                        {% if user.is_authenticated and user.profile.interests.all %}
+                                        {% for tag in course.tags.all %}
+                                        {% if tag in user.profile.interests.all %}
+                                        <span class="badge badge-recommended">для вас</span>
+                                        {% break %}
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
                                         {% if course.is_free %}
                                         <span class="badge badge-free">безкоштовно</span>
+                                        {% endif %}
+
+                                        <!-- Кнопка play для відео курсів -->
+                                        {% if course.preview_video %}
+                                        <button class="play-button" data-video-preview="{{ course.id }}"
+                                            aria-label="Переглянути превью">
+                                        </button>
                                         {% endif %}
                                     </div>
 
@@ -539,4 +601,5 @@
 {% block extra_js %}
 <script src="{% static 'js/hub.js' %}"></script>
 <script src="{% static 'js/search-autocomplete.js' %}"></script>
+<script src="{% static 'js/expert-quotes.js' %}"></script>
 {% endblock %}

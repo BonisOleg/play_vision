@@ -2308,23 +2308,23 @@
     [data-theme="auto"] .event-item .event-date,
     [data-theme="auto"] .event-item .event-location,
     [data-theme="auto"] .event-item .event-price {
-        color: #000 !important;
+        color: #000;
     }
 }
 
 /* Filter selects text */
 [data-theme="dark"] .filter-select,
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .filter-select {
-        color: #000 !important;
+    html[data-theme="auto"] .filter-select {
+        color: #000;
     }
 }
 
 /* Navigation buttons text */
 [data-theme="dark"] .nav-btn,
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .nav-btn {
-        color: #000 !important;
+    html[data-theme="auto"] .nav-btn {
+        color: #000;
     }
 }
 
@@ -2333,9 +2333,9 @@
 [data-theme="dark"] .search-input::placeholder,
 @media (prefers-color-scheme: dark) {
 
-    [data-theme="auto"] .search-input,
-    [data-theme="auto"] .search-input::placeholder {
-        color: #000 !important;
+    html[data-theme="auto"] .search-input,
+    html[data-theme="auto"] .search-input::placeholder {
+        color: #000;
     }
 }
 
@@ -2348,9 +2348,9 @@
 
     [data-theme="auto"] .sidebar-title,
     [data-theme="auto"] .filter-label,
-    [data-theme="auto"] .filter-option,
-    [data-theme="auto"] .active-filters-title {
-        color: #000 !important;
+    html[data-theme="auto"] .filter-option,
+    html[data-theme="auto"] .active-filters-title {
+        color: #000;
     }
 }
 
@@ -2365,7 +2365,7 @@
     [data-theme="auto"] .upcoming-events .event-date,
     [data-theme="auto"] .upcoming-event-title,
     [data-theme="auto"] .upcoming-event-meta {
-        color: #000 !important;
+        color: #000;
     }
 }
 
@@ -2373,7 +2373,7 @@
 [data-theme="dark"] .pagination-link,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .pagination-link {
-        color: #000 !important;
+        color: #000;
     }
 }
 
@@ -2392,7 +2392,7 @@
     [data-theme="auto"] .event-main .timeline-time,
     [data-theme="auto"] .event-main .speaker-name,
     [data-theme="auto"] .event-main .speaker-position {
-        color: #000 !important;
+        color: #000;
     }
 }
 
@@ -2417,7 +2417,7 @@
     [data-theme="auto"] .organizer-card .organizer-name,
     [data-theme="auto"] .organizer-card .organizer-role,
     [data-theme="auto"] .share-card .card-title {
-        color: #000 !important;
+        color: #000;
     }
 }
 
@@ -2430,7 +2430,7 @@
     [data-theme="auto"] .calendar-title,
     [data-theme="auto"] .calendar-subtitle,
     [data-theme="auto"] .current-period {
-        color: #000 !important;
+        color: #000;
     }
 }
 
@@ -2439,9 +2439,9 @@
 [data-theme="dark"] .event-content .event-footer,
 @media (prefers-color-scheme: dark) {
 
-    [data-theme="auto"] .event-content .event-meta,
-    [data-theme="auto"] .event-content .event-footer {
-        color: #000 !important;
+    html[data-theme="auto"] .event-content .event-meta,
+    html[data-theme="auto"] .event-content .event-footer {
+        color: #000;
     }
 }
 
@@ -2450,8 +2450,108 @@
 [data-theme="dark"] .page-subtitle,
 @media (prefers-color-scheme: dark) {
 
-    [data-theme="auto"] .page-title,
-    [data-theme="auto"] .page-subtitle {
-        color: #000 !important;
+    html[data-theme="auto"] .page-title,
+    html[data-theme="auto"] .page-subtitle {
+        color: #000;
+    }
+}
+
+/* === Блок "Що ти отримаєш" === */
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.benefit-icon {
+    flex-shrink: 0;
+    color: #10b981;
+    margin-top: 2px;
+}
+
+/* === Блок "Для кого" === */
+.audience-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.audience-item {
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    background: #f3f4f6;
+    border-left: 3px solid #f97316;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+/* === Тарифи квитків === */
+.ticket-tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.tier-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.tier-card:hover {
+    border-color: #f97316;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
+}
+
+.tier-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tier-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.tier-price {
+    font-size: 36px;
+    font-weight: 700;
+    color: #f97316;
+}
+
+.tier-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tier-features li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 14px;
+}
+
+.tier-features li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 992px) {
+    .ticket-tiers-grid {
+        grid-template-columns: 1fr;
     }
 }

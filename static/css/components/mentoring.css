@@ -1,0 +1,506 @@
+/* Ментор-коучінг сторінка */
+
+.mentoring-container {
+    background: var(--silver-white);
+}
+
+/* === Блок 1: Вступ === */
+.mentoring-intro {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.mentoring-intro .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #1f2937;
+}
+
+.intro-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.intro-paragraph {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #4b5563;
+    margin-bottom: 24px;
+    text-align: justify;
+}
+
+/* === Блок 2: Структура (шестикутники) === */
+.mentoring-structure {
+    padding: 80px 20px;
+    background: white;
+}
+
+.mentoring-structure .section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: #1f2937;
+}
+
+.mentoring-structure .section-subtitle {
+    font-size: 1.125rem;
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 60px;
+}
+
+.hexagons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hexagon-card {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+.hexagon-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.15);
+    border-color: #f97316;
+}
+
+.hex-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.hex-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.hex-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hex-details li {
+    padding: 10px 0;
+    padding-left: 28px;
+    position: relative;
+    color: #4b5563;
+    font-size: 0.938rem;
+    line-height: 1.6;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.hex-details li:last-child {
+    border-bottom: none;
+}
+
+.hex-details li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #f97316;
+    font-weight: 700;
+}
+
+/* === Блок 3: Команда === */
+.mentoring-team {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    color: white;
+}
+
+.mentoring-team .section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.team-description {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.team-description p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #d1d5db;
+}
+
+.team-structure {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto 60px;
+}
+
+.role-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.role-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #f97316;
+    transform: translateY(-2px);
+}
+
+.role-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #f97316;
+    margin-bottom: 12px;
+}
+
+.role-card p {
+    font-size: 0.938rem;
+    color: #d1d5db;
+    line-height: 1.6;
+}
+
+.contact-info {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.contact-info h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #9ca3af;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contact-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.contact-email {
+    font-size: 1.125rem;
+    color: #f97316;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-email:hover {
+    color: #fb923c;
+    text-decoration: underline;
+}
+
+/* === Блок 4: Методологія === */
+.mentoring-methodology {
+    padding: 80px 20px;
+    background: white;
+}
+
+.mentoring-methodology .section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #1f2937;
+}
+
+.methodology-intro {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.methodology-intro p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #6b7280;
+}
+
+.principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.principle-card {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.principle-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.principle-card:hover::before {
+    transform: scaleX(1);
+}
+
+.principle-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(249, 115, 22, 0.15);
+    border-color: #f97316;
+}
+
+.principle-number {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 20px;
+}
+
+.principle-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.principle-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4b5563;
+    text-align: center;
+}
+
+/* === Блок 5: CTA кнопки === */
+.mentoring-cta {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-large {
+    padding: 16px 32px;
+    font-size: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-large .icon {
+    flex-shrink: 0;
+}
+
+/* === Футбольний трикутник === */
+.football-triangle {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #f3f4f6 0%, white 100%);
+}
+
+.football-triangle .section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: #1f2937;
+}
+
+.football-triangle .section-subtitle {
+    font-size: 1.125rem;
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 60px;
+}
+
+.triangle-diagram {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 60px;
+    padding: 40px;
+}
+
+.triangle-lines {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.triangle-vertex {
+    position: absolute;
+    background: white;
+    border: 3px solid #f97316;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    min-width: 140px;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.triangle-vertex:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.2);
+}
+
+.triangle-top {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.triangle-left {
+    bottom: 0;
+    left: 0;
+}
+
+.triangle-right {
+    bottom: 0;
+    right: 0;
+}
+
+.vertex-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.triangle-vertex h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+.triangle-description {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.triangle-description p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #4b5563;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+
+    .mentoring-intro,
+    .mentoring-structure,
+    .mentoring-team,
+    .mentoring-methodology,
+    .mentoring-cta,
+    .football-triangle {
+        padding: 60px 16px;
+    }
+
+    .section-title {
+        font-size: 1.875rem;
+    }
+
+    .hexagons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-structure {
+        grid-template-columns: 1fr;
+    }
+
+    .principles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+
+    .btn-large {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .triangle-diagram {
+        padding: 20px;
+    }
+
+    .triangle-vertex {
+        min-width: 100px;
+        padding: 16px 12px;
+    }
+
+    .vertex-icon {
+        font-size: 32px;
+    }
+
+    .triangle-vertex h3 {
+        font-size: 0.938rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro-paragraph {
+        font-size: 1rem;
+    }
+
+    .hexagon-card {
+        padding: 20px;
+    }
+
+    .hex-icon {
+        font-size: 40px;
+    }
+
+    .hex-title {
+        font-size: 1.25rem;
+    }
+}

@@ -77,16 +77,24 @@ class Cabinet {
         const avatarBtn = document.querySelector('.avatar-upload-btn');
 
         if (avatarInput && avatarBtn) {
+            // Активація input при кліку на кнопку
+            avatarBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                avatarInput.click();
+            });
+
+            // Обробка вибору файлу
             avatarInput.addEventListener('change', this.handleAvatarUpload.bind(this));
         }
     }
 
     setupProgressBars() {
         // Анімація прогрес барів
-        const progressBars = document.querySelectorAll('.progress-fill');
+        const progressBars = document.querySelectorAll('.progress-fill, .progress-bar-fill');
         progressBars.forEach(bar => {
             const progress = bar.dataset.progress || bar.style.width.replace('%', '');
             if (progress) {
+                bar.style.width = `${progress}%`;
                 this.animateProgressBar(bar, progress);
             }
         });
@@ -436,10 +444,15 @@ class Cabinet {
 
     updateInterestsField() {
         const activeTags = document.querySelectorAll('.interest-tag.active');
-        const interests = Array.from(activeTags).map(tag => tag.textContent.trim());
+        const interestIds = Array.from(activeTags).map(tag => tag.dataset.interestId);
 
-        // Можна зберегти в прихованому полі або відправити окремо
-        console.log('Активні інтереси:', interests);
+        // Оновити приховане поле
+        const hiddenInput = document.getElementById('selected-interests');
+        if (hiddenInput) {
+            hiddenInput.value = interestIds.join(',');
+        }
+
+        console.log('Активні інтереси:', interestIds);
     }
 
     validateForm(form) {
@@ -1266,6 +1279,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isCabinetPage) {
         window.cabinet = new Cabinet();
+
+        // Обробник кнопки "Повторити" платіж
+        const repeatButtons = document.querySelectorAll('[data-action="repeatPayment"]');
+        repeatButtons.forEach(button => {
+            button.addEventListener('click', async function () {
+                const planId = this.dataset.planId;
+                const paymentId = this.dataset.paymentId;
+
+                if (!confirm('Повторити оплату за цим планом?')) {
+                    return;
+                }
+
+                try {
+                    window.location.href = `/subscriptions/checkout/${planId}/?repeat_payment=${paymentId}`;
+                } catch (error) {
+                    console.error('Помилка повтору платежу:', error);
+                    alert('Виникла помилка. Спробуйте пізніше.');
+                }
+            });
+        });
     }
 });
 

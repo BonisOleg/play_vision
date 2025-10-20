@@ -1,5 +1,13 @@
 <!-- Вкладка "Мої файли" -->
 <div class="files-tab">
+    <!-- Швидкі дії -->
+    <div class="quick-actions">
+        <a href="{% url 'cabinet:loyalty' %}" class="btn-quick-action">
+            <span class="icon">🏆</span>
+            Програма лояльності
+        </a>
+    </div>
+
     {% if materials %}
     <div class="materials-grid">
         {% for material in materials %}
@@ -8,6 +16,17 @@
             <div class="material-header">
                 <h4 class="material-title">{{ material.title }}</h4>
                 <div class="material-type">{{ material.content_type }}</div>
+
+                <!-- Іконка замочка для заблокованих матеріалів -->
+                {% if not material.has_access %}
+                <div class="lock-icon" title="Потрібна підписка">🔒</div>
+                {% endif %}
+
+                <!-- Іконка валюти для окремо куплених -->
+                {% if material.purchased_separately %}
+                <div class="purchase-icon" title="Придбано окремо">💰</div>
+                {% endif %}
+
                 <button class="favorite-btn {% if material.is_favorite %}active{% endif %}" data-action="toggleFavorite"
                     data-course-id="{{ material.course_id }}">
                     <span class="star-icon">★</span>

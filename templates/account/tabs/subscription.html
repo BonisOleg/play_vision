@@ -1,5 +1,48 @@
 <!-- Вкладка підписки -->
 <div class="subscription-tab">
+    <!-- Блоки Loyalty інформації -->
+    {% if loyalty_account %}
+    <div class="loyalty-info-grid">
+        <!-- Блок "Рівень" -->
+        <div class="info-card loyalty-tier">
+            <h3>Рівень</h3>
+            <div class="tier-display">
+                <div class="tier-badge tier-{{ loyalty_account.current_tier.name|lower }}">
+                    {{ loyalty_account.current_tier.name }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Блок "Прогрес рівня" -->
+        <div class="info-card loyalty-progress">
+            <h3>Прогрес рівня</h3>
+            <div class="progress-display">
+                <div class="progress-text">
+                    {{ loyalty_account.total_points }}/{{ loyalty_account.points_to_next_tier }} балів до {{
+                    loyalty_account.next_tier.name }}
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" data-progress="{{ loyalty_account.progress_percentage }}"></div>
+                </div>
+                <div class="progress-percentage">{{ loyalty_account.progress_percentage }}%</div>
+            </div>
+        </div>
+
+        <!-- Блок "Знижка" -->
+        <div class="info-card loyalty-discount">
+            <h3>Знижка</h3>
+            <div class="discount-display">
+                <div class="discount-current">
+                    Поточна: <strong>{{ loyalty_account.current_discount }}%</strong>
+                </div>
+                <div class="discount-potential">
+                    Потенційна: <strong>{{ loyalty_account.potential_discount }}%</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="subscription-cards">
         <!-- Поточний план -->
         <div class="info-card">

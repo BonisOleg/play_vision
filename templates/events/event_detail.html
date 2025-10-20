@@ -24,13 +24,15 @@
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-calendar"></use>
                         </svg>
-                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{ event.start_datetime|date:"H:i" }}</span>
+                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{
+                            event.start_datetime|date:"H:i" }}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-location"></use>
                         </svg>
-                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{% endif %}</span>
+                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{%
+                            endif %}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
@@ -61,6 +63,56 @@
                     <div class="event-description">
                         {{ event.description|linebreaks }}
                     </div>
+                </section>
+
+                <!-- Що ти отримаєш -->
+                <section class="event-section">
+                    <h2 class="section-title">Що ти отримаєш</h2>
+                    {% if event.benefits %}
+                    <ul class="benefits-list">
+                        {% for benefit in event.benefits %}
+                        <li class="benefit-item">
+                            <svg class="benefit-icon" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            <span>{{ benefit }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <ul class="benefits-list">
+                        <li class="benefit-item">
+                            <svg class="benefit-icon" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            <span>Шаблінні відео аналітика та скаут-форм</span>
+                        </li>
+                        <li class="benefit-item">
+                            <svg class="benefit-icon" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            <span>Доступ до закритої спільноти у telegram</span>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </section>
+
+                <!-- Для кого -->
+                <section class="event-section">
+                    <h2 class="section-title">Для кого</h2>
+                    {% if event.target_audience %}
+                    <ul class="audience-list">
+                        {% for audience in event.target_audience %}
+                        <li class="audience-item">{{ audience }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <ul class="audience-list">
+                        <li class="audience-item">Тренери (всіх команд та віковів)</li>
+                        <li class="audience-item">Аналітики, скаути, менеджери</li>
+                        <li class="audience-item">Психологи, нутриціологія, батьки гравців</li>
+                    </ul>
+                    {% endif %}
                 </section>
 
                 <!-- Розклад -->
@@ -105,6 +157,30 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Тарифи квитків -->
+                {% if event.ticket_tiers %}
+                <section class="event-section">
+                    <h2 class="section-title">Квитки</h2>
+                    <div class="ticket-tiers-grid">
+                        {% for tier in event.ticket_tiers %}
+                        <div class="tier-card">
+                            <div class="tier-header">
+                                <h3 class="tier-name">{{ tier.name }}</h3>
+                                <div class="tier-price">{{ tier.price }}</div>
+                            </div>
+                            <div class="tier-features">
+                                <ul>
+                                    {% for feature in tier.features %}
+                                    <li>{{ feature }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
 
                 <!-- Спікери -->
                 <section class="event-section">

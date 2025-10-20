@@ -34,6 +34,11 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         context['active_tab'] = tab
         context['user_profile'] = getattr(user, 'profile', None)
         
+        # Індикатор "днів з нами"
+        days = (timezone.now().date() - user.date_joined.date()).days
+        context['days_count'] = days
+        context['days_word'] = self._get_days_word(days)
+        
         # Додати інтереси для форми
         from apps.content.models import Tag
         context['interests'] = Tag.objects.filter(
@@ -89,6 +94,15 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         
         return context
     
+    def _get_days_word(self, n):
+        """Повертає правильне слово для кількості днів"""
+        if n % 10 == 1 and n % 100 != 11:
+            return "день"
+        elif 2 <= n % 10 <= 4 and (n % 100 < 10 or n % 100 >= 20):
+            return "дні"
+        else:
+            return "днів"
+    
     def _get_subscription_context(self, user, active_subscription):
         """Контекст для вкладки підписки"""
         context = {}
@@ -110,6 +124,23 @@ class CabinetView(LoginRequiredMixin, TemplateView):
             'total_subscriptions': user.subscriptions.count(),
             'days_remaining': active_subscription.days_remaining if active_subscription else 0,
         }
+        
+        # Додати loyalty дані
+        if hasattr(user, 'loyalty_account'):
+            loyalty_account = user.loyalty_account
+            next_tier = loyalty_account.get_next_tier()
+            points_to_next = loyalty_account.points_to_next_tier()
+            progress_pct = loyalty_account.get_progress_percentage()
+            
+            context['loyalty_account'] = {
+                'current_tier': loyalty_account.current_tier,
+                'next_tier': next_tier,
+                'total_points': loyalty_account.total_points,
+                'points_to_next_tier': points_to_next if points_to_next else 0,
+                'progress_percentage': progress_pct,
+                'current_discount': loyalty_account.get_discount_percentage(),
+                'potential_discount': loyalty_account.get_potential_discount() if next_tier else loyalty_account.get_discount_percentage(),
+            }
         
         return context
     
@@ -160,6 +191,21 @@ class CabinetView(LoginRequiredMixin, TemplateView):
                 elif material.content_type == 'article':
                     content_type_display = "Стаття"
                 
+                # Перевірка доступу
+                has_access = bool(active_subscription)  # Є підписка = є доступ
+                purchased_separately = False
+                
+                # Перевірити чи куплений окремо (не через підписку)
+                if Payment and not active_subscription:
+                    purchased_separately = Payment.objects.filter(
+                        user=user,
+                        course=course,
+                        status='succeeded',
+                        subscription__isnull=True
+                    ).exists()
+                    if purchased_separately:
+                        has_access = True
+                
                 materials_data.append({
                     'id': material.id,
                     'title': material.title,
@@ -169,6 +215,9 @@ class CabinetView(LoginRequiredMixin, TemplateView):
                     'is_completed': is_completed,
                     'is_favorite': user.favorites.filter(course=course).exists(),
                     'can_download': material.content_type in ['pdf', 'video'] and material_progress > 0,
+                    'course_id': course.id,
+                    'has_access': has_access,
+                    'purchased_separately': purchased_separately,
                 })
         
         context['materials'] = materials_data

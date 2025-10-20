@@ -257,7 +257,7 @@
         </div>
 
         <div class="offline-actions">
-            <button class="btn" onclick="window.location.reload()">
+            <button class="btn" data-action="reloadPage">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="23,4 23,10 17,10" />
                     <path d="M20.49,15a9,9,0,1,1-2.12-9.36L23,10" />
@@ -347,6 +347,18 @@
             }
         }
     </style>
+
+    <script>
+        // Обробник кнопки перезавантаження
+        document.addEventListener('DOMContentLoaded', () => {
+            const reloadBtn = document.querySelector('[data-action="reloadPage"]');
+            if (reloadBtn) {
+                reloadBtn.addEventListener('click', () => {
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -15,9 +15,8 @@
     <div class="container">
         <!-- Header -->
         <section class="pricing-header">
-            <h1 class="pricing-title">Оберіть свій план підписки</h1>
-            <p class="pricing-subtitle">Отримайте доступ до всіх курсів та матеріалів від провідних експертів футболу
-            </p>
+            <h1 class="pricing-title">Train with a VISION.</h1>
+            <p class="pricing-subtitle">Rise through the ranks.</p>
         </section>
 
         <!-- Plans Grid -->
@@ -30,7 +29,48 @@
                     {% endif %}
 
                     <div class="plan-header">
+                        <!-- Іконка плану -->
+                        <div class="plan-icon">
+                            {% if 'C-VISION' in plan.name or 'C-Vision' in plan.name %}
+                            <span class="icon-circle">🔵</span>
+                            {% elif 'B-VISION' in plan.name or 'B-Vision' in plan.name %}
+                            <span class="icon-trophy">🏆</span>
+                            {% elif 'A-VISION' in plan.name or 'A-Vision' in plan.name %}
+                            <span class="icon-target">🎯</span>
+                            {% elif 'PRO-VISION' in plan.name or 'Pro-Vision' in plan.name %}
+                            <span class="icon-crown">👑</span>
+                            {% endif %}
+                        </div>
+
                         <h3 class="plan-name">{{ plan.name }}</h3>
+
+                        <!-- Підзаголовок -->
+                        <div class="plan-subtitle">
+                            {% if 'C-VISION' in plan.name or 'C-Vision' in plan.name %}
+                            Початковий Рівень
+                            {% elif 'B-VISION' in plan.name or 'B-Vision' in plan.name %}
+                            Базовий + Поглиблений
+                            {% elif 'A-VISION' in plan.name or 'A-Vision' in plan.name %}
+                            Професійний
+                            {% elif 'PRO-VISION' in plan.name or 'Pro-Vision' in plan.name %}
+                            Елітний
+                            {% endif %}
+                        </div>
+
+                        <!-- Слоган -->
+                        <div
+                            class="plan-slogan {% if 'C-VISION' in plan.name %}plan-slogan-blue{% elif 'B-VISION' in plan.name %}plan-slogan-orange{% elif 'A-VISION' in plan.name %}plan-slogan-orange{% elif 'PRO-VISION' in plan.name %}plan-slogan-red{% endif %}">
+                            {% if 'C-VISION' in plan.name or 'C-Vision' in plan.name %}
+                            Знайди свій PRO-VISION
+                            {% elif 'B-VISION' in plan.name or 'B-Vision' in plan.name %}
+                            Розвивай свій PRO-VISION
+                            {% elif 'A-VISION' in plan.name or 'A-Vision' in plan.name %}
+                            Вдоскони свій PRO-VISION
+                            {% elif 'PRO-VISION' in plan.name or 'Pro-Vision' in plan.name %}
+                            Ти є PRO-VISION
+                            {% endif %}
+                        </div>
+
                         <div class="plan-price">
                             <span class="plan-currency">$</span>
                             <span class="plan-amount">{{ plan.price }}</span>

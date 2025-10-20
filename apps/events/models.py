@@ -53,6 +53,28 @@ class Event(models.Model):
     requires_subscription = models.BooleanField(default=False, 
                                               help_text='Чи можна використати квитки з підписки')
     
+    # Event details
+    benefits = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Список переваг події (що отримає учасник)',
+        verbose_name='Що ти отримаєш'
+    )
+    
+    target_audience = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Для кого ця подія (цільова аудиторія)',
+        verbose_name='Для кого'
+    )
+    
+    ticket_tiers = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Тарифи квитків у форматі JSON: [{"name": "STANDARD", "price": 5450, "features": ["..."]}]',
+        verbose_name='Тарифи квитків'
+    )
+    
     # Media
     thumbnail = models.ImageField(upload_to='event_thumbnails/', blank=True)
     banner_image = models.ImageField(upload_to='event_banners/', blank=True)

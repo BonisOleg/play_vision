@@ -89,8 +89,8 @@ select:focus-visible {
     .card,
     .event-card,
     .course-card,
-    .notification {
-        border: 2px solid currentColor !important;
+    html body .notification {
+        border: 2px solid currentColor;
     }
 
     .badge {
@@ -111,9 +111,9 @@ select:focus-visible {
     }
 
     /* Better focus indicators */
-    *:focus-visible {
-        outline: 3px solid currentColor !important;
-        outline-offset: 3px !important;
+    html body *:focus-visible {
+        outline: 3px solid currentColor;
+        outline-offset: 3px;
     }
 
     /* Stronger text shadows for better readability */
@@ -130,11 +130,13 @@ select:focus-visible {
 
     *,
     *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    html body *,
+    html body *::before,
+    html body *::after {
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
+        scroll-behavior: auto;
     }
 
     /* Remove all transforms and complex animations */
@@ -145,48 +147,48 @@ select:focus-visible {
     .animate-spin,
     .animate-pulse,
     .animate-fade-in-up,
-    .animate-typing {
-        animation: none !important;
-        transform: none !important;
+    html body .animate-typing {
+        animation: none;
+        transform: none;
     }
 
     /* Disable parallax scrolling */
-    .parallax {
-        transform: none !important;
+    html body .parallax {
+        transform: none;
     }
 
     /* Instant card animations */
     .card,
     .event-card,
-    .course-card {
-        transition: none !important;
-        transform: none !important;
+    html body .course-card {
+        transition: none;
+        transform: none;
     }
 
     /* Disable smooth scrolling */
-    html {
-        scroll-behavior: auto !important;
+    html body {
+        scroll-behavior: auto;
     }
 
     /* Keep minimal opacity transitions for better UX */
     button,
     a,
     input,
-    .btn {
-        transition-property: opacity !important;
-        transition-duration: 0.15s !important;
+    html body .btn {
+        transition-property: opacity;
+        transition-duration: 0.15s;
     }
 
     /* Disable loading animations */
     .spinner,
     .loading-animation,
-    .skeleton-loading {
-        animation: none !important;
+    html body .skeleton-loading {
+        animation: none;
     }
 
     /* Disable video autoplay */
-    video[autoplay] {
-        animation-play-state: paused !important;
+    html body video[autoplay] {
+        animation-play-state: paused;
     }
 }
 

@@ -1,35 +1,55 @@
-<!-- Monthly Expert Quote -->
-<section class="monthly-quote-section">
+<!-- Карусель з 3 цитат експертів -->
+<section class="expert-quotes-carousel">
     <div class="container">
-        <h2 class="section-title">Цитата місяця</h2>
-
-        {% if monthly_quote %}
-        <div class="quote-card">
-            <div class="quote-header">
-                {% if monthly_quote.expert_photo %}
-                <img src="{{ monthly_quote.expert_photo.url }}" alt="{{ monthly_quote.expert_name }}"
-                    class="quote-avatar">
-                {% else %}
-                <div class="quote-avatar-placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                </div>
-                {% endif %}
-                <div class="quote-expert-info">
-                    <h3 class="quote-expert-name">{{ monthly_quote.expert_name }}</h3>
-                    <p class="quote-expert-role">{{ monthly_quote.expert_role }}</p>
+        <div class="quotes-slider">
+            <!-- Цитата 1: Пеп Гвардіола -->
+            <div class="quote-slide active" data-quote-index="0">
+                <div class="quote-content">
+                    <div class="quote-photo">
+                        <img src="{% static 'images/experts/guardiola-bw.jpg' %}" alt="Пеп Гвардіола"
+                            class="expert-photo">
+                    </div>
+                    <blockquote class="quote-text">
+                        "Той, хто перестає вчитись, перестає бути тренером."
+                    </blockquote>
+                    <cite class="quote-author">— Пеп Гвардіола</cite>
                 </div>
             </div>
-            <blockquote class="quote-text">
-                "{{ monthly_quote.quote_text }}"
-            </blockquote>
+
+            <!-- Цитата 2: Жозе Моурінью -->
+            <div class="quote-slide" data-quote-index="1">
+                <div class="quote-content">
+                    <div class="quote-photo">
+                        <img src="{% static 'images/experts/mourinho-bw.jpg' %}" alt="Жозе Моурінью"
+                            class="expert-photo">
+                    </div>
+                    <blockquote class="quote-text">
+                        "Якщо ти думаєш, що вже все знаєш — ти перестаєш рости."
+                    </blockquote>
+                    <cite class="quote-author">— Жозе Моурінью</cite>
+                </div>
+            </div>
+
+            <!-- Цитата 3: Карло Анчелотті -->
+            <div class="quote-slide" data-quote-index="2">
+                <div class="quote-content">
+                    <div class="quote-photo">
+                        <img src="{% static 'images/experts/ancelotti-bw.jpg' %}" alt="Карло Анчелотті"
+                            class="expert-photo">
+                    </div>
+                    <blockquote class="quote-text">
+                        "Навчання — це не слабкість. Це означає амбіції."
+                    </blockquote>
+                    <cite class="quote-author">— Карло Анчелотті</cite>
+                </div>
+            </div>
+
+            <!-- Індикатори -->
+            <div class="quote-indicators">
+                <button class="quote-indicator active" data-slide="0" aria-label="Цитата 1"></button>
+                <button class="quote-indicator" data-slide="1" aria-label="Цитата 2"></button>
+                <button class="quote-indicator" data-slide="2" aria-label="Цитата 3"></button>
+            </div>
         </div>
-        {% else %}
-        <div class="no-quote">
-            <p>Цитату місяця ще не додано. Додайте через адмін-панель.</p>
-        </div>
-        {% endif %}
     </div>
 </section>

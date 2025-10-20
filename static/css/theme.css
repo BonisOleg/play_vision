@@ -3,6 +3,12 @@
  * Використовує CSS custom properties з design-tokens.css
  */
 
+/* === ROOT VARIABLES === */
+:root {
+    /* iOS Safari viewport height fix */
+    --vh: 1vh;
+}
+
 /* === LIGHT THEME (default) === */
 [data-theme="light"] {
     color-scheme: light;
@@ -201,10 +207,10 @@
    Each component defines own transitions if needed */
 
 /* Disable transitions during theme switch to prevent flashing */
-.theme-transition-disabled,
-.theme-transition-disabled * {
-    transition: none !important;
-    animation: none !important;
+html.theme-transition-disabled,
+html.theme-transition-disabled * {
+    transition: none;
+    animation: none;
 }
 
 /* === PRINT STYLES === */
@@ -240,8 +246,11 @@
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    [data-theme] * {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
+
+    html[data-theme] *,
+    html[data-theme] *::before,
+    html[data-theme] *::after {
+        transition-duration: 0.01ms;
+        animation-duration: 0.01ms;
     }
 }

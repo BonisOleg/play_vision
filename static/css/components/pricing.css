@@ -241,3 +241,48 @@
         transform: none;
     }
 }
+
+/* === Іконки планів === */
+.plan-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.icon-circle,
+.icon-trophy,
+.icon-target,
+.icon-crown {
+    display: inline-block;
+}
+
+/* Підзаголовки */
+.plan-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Слогани */
+.plan-slogan {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.plan-slogan-blue {
+    color: #3b82f6;
+    /* Синій */
+}
+
+.plan-slogan-orange {
+    color: #f97316;
+    /* Помаранчевий */
+}
+
+.plan-slogan-red {
+    color: #e11d48;
+    /* Червоний */
+}

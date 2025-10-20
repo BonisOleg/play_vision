@@ -37,6 +37,15 @@ class ScrollPopup {
     setupHandlers() {
         const self = this;
 
+        // Close button via data-action
+        const closeBtn = this.element.querySelector('[data-action="closeScrollPopup"]');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.closeScrollPopup();
+            });
+        }
+
         // Escape key
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && self.isShown) {

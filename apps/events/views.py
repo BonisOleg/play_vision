@@ -63,6 +63,13 @@ class EventListView(ListView):
             month_end = now + timezone.timedelta(days=30)
             queryset = queryset.filter(start_datetime__range=[now, month_end])
         
+        # Filter by price
+        price_filter = self.request.GET.get('price')
+        if price_filter == 'free':
+            queryset = queryset.filter(is_free=True)
+        elif price_filter == 'paid':
+            queryset = queryset.filter(is_free=False)
+        
         # Ordering
         order = self.request.GET.get('order', 'start_datetime')
         if order in ['start_datetime', '-start_datetime', 'price', '-price', 'title']:
@@ -78,6 +85,7 @@ class EventListView(ListView):
         context['current_format'] = self.request.GET.get('format', 'all')
         context['current_date_range'] = self.request.GET.get('date_range', 'all')
         context['current_order'] = self.request.GET.get('order', 'start_datetime')
+        context['current_price'] = self.request.GET.get('price', 'all')
         
         # Get display names for current types
         types_dict = dict(Event.EVENT_TYPE_CHOICES)

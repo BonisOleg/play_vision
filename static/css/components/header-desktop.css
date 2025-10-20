@@ -14,6 +14,9 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    /* iOS Safari sticky fix */
+    -webkit-position: sticky;
+    padding-top: env(safe-area-inset-top, 0);
 }
 
 .header-content {
@@ -43,12 +46,26 @@
     text-decoration: none;
 }
 
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
 
 .logo-img {
     height: 60px;
     width: auto;
     max-width: 300px;
     transition: opacity var(--transition-fast);
+}
+
+.logo-tagline {
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-left: 2px;
 }
 
 /* Logo theme switching */
@@ -94,8 +111,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
+    gap: 6px;
+    min-width: 44px;
     height: 44px;
+    padding: 0 12px;
     color: var(--color-text);
     border: none;
     background: transparent;
@@ -127,6 +146,30 @@
     height: 22px;
     stroke: currentColor;
     stroke-width: 2;
+}
+
+.nav-action-btn .action-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Виділена кнопка підписки */
+.nav-action-btn--highlighted {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: white;
+    border-radius: 24px;
+    padding: 0 16px;
+}
+
+.nav-action-btn--highlighted:hover {
+    background: linear-gradient(135deg, #ea580c, #f97316);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.nav-action-btn--highlighted .action-icon {
+    stroke: white;
 }
 
 /* Nav action dropdown для івентів */
@@ -184,6 +227,30 @@
     height: 22px;
     stroke: currentColor;
     stroke-width: 2;
+}
+
+/* Cart Icon */
+.cart-icon {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.cart-count:empty {
+    display: none;
 }
 
 /* Theme Toggle */
@@ -489,6 +556,7 @@
 
 /* Touch target improvements for mobile */
 @media (max-width: 768px) {
+
     .navbar-icon,
     .nav-action-btn {
         min-width: 44px;

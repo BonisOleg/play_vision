@@ -1,9 +1,10 @@
 <!-- Scroll Popup Component -->
-<div id="scroll-popup" class="scroll-popup is-hidden">
+<div id="scroll-popup"
+    class="scroll-popup is-hidden {% if user.is_authenticated %}popup-auth{% else %}popup-guest{% endif %}">
     <div class="popup-overlay"></div>
 
     <div class="popup-card">
-        <button type="button" class="popup-close" aria-label="Закрити" onclick="closeScrollPopup(); return false;">
+        <button type="button" class="popup-close" aria-label="Закрити" data-action="closeScrollPopup">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -11,22 +12,25 @@
         </button>
 
         <div class="popup-content">
-            <h2>Готовий приєднатись до спільноти Play vision?</h2>
-
             {% if user.is_authenticated %}
-            <p>Оформи підписку та отримай <strong>+30 балів лояльності</strong>!</p>
-            <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary btn-large">
-                Перейти до підписки
+            <!-- Для зареєстрованих: Градієнт + 30 балів -->
+            <div class="popup-bonus">30 БАЛІВ</div>
+            <h2 class="popup-title">Готовий приєднатись до спільноти Play vision?</h2>
+            <p class="popup-subtitle">ЗА ОФОРМЛЕННЯ ПІДПИСКИ</p>
+            <a href="{% url 'core:pricing' %}" class="btn btn-popup btn-large">
+                ПІДПИСКИ
             </a>
             {% else %}
-            <p>Зареєструйся та отримай <strong>10% знижку</strong> на першу покупку!</p>
+            <!-- Для незареєстрованих: Темний фон + 10% -->
+            <div class="popup-discount">10%</div>
+            <h2 class="popup-title">ОТРИМАЙТЕ 10% ЗНИЖКУ НА ПЕРШЕ ЗАМОВЛЕННЯ!</h2>
+            <p class="popup-subtitle">Готовий приєднатись до спільноти Play vision?</p>
+            <p class="popup-text">Підпишіться на розсилку, щоб дізнатися свій код на знижку 10%...</p>
             <form class="popup-form" id="scroll-popup-form">
                 {% csrf_token %}
-                <input type="email" name="email" placeholder="Ваш email" required class="form-input">
-                <input type="password" name="password" placeholder="Пароль (мін. 8 символів)" required minlength="8"
-                    class="form-input">
-                <button type="submit" class="btn btn-primary btn-large">
-                    Зареєструватись
+                <input type="email" name="email" placeholder="Введіть свою email-адресу" required class="form-input">
+                <button type="submit" class="btn btn-popup btn-large">
+                    НАТИСНІТЬ ДЛЯ ОТРИМАННЯ КОДУ
                 </button>
             </form>
             <p class="popup-footer">

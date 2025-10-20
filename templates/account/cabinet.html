@@ -29,6 +29,18 @@
                     <input type="file" id="avatar-input" accept="image/*" class="is-hidden">
                 </div>
 
+                <!-- Індикатор "днів з нами" -->
+                <div class="days-with-us">
+                    <svg class="calendar-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span class="days-text">{{ days_count }} {{ days_word }} з нами</span>
+                </div>
+
                 <!-- Форма профілю -->
                 <form class="profile-form" id="profile-form">
                     {% csrf_token %}
@@ -56,13 +68,21 @@
                         <div class="form-group">
                             <label for="email">E-mail</label>
                             <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
-                            <span class="verification-badge verified">верифіковано</span>
+                            {% if user.is_email_verified %}
+                            <span class="verification-badge verified">✓ верифіковано</span>
+                            {% else %}
+                            <span class="verification-badge pending">⚠ очікує</span>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             <label for="phone">Телефон</label>
                             <input type="tel" id="phone" name="phone" class="form-control" placeholder="+380..."
                                 value="{{ user.phone|default:'' }}">
-                            <span class="verification-badge">очікує</span>
+                            {% if user.is_phone_verified %}
+                            <span class="verification-badge verified">✓ верифіковано</span>
+                            {% else %}
+                            <span class="verification-badge pending">⚠ очікує</span>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -81,17 +101,18 @@
 
                     <div class="interests-section">
                         <label>Напрямки (інтереси)</label>
-                        <div class="interests-list">
+                        <div class="interests-tags">
                             {% for interest in interests %}
-                            <label class="interest-item">
-                                <input type="checkbox" name="interests" value="{{ interest.id }}" {% if interest in user.profile.interests.all %}checked{% endif %}>
-                                <span class="interest-label">
-                                    <span class="interest-number">{{ forloop.counter }}.</span>
-                                    {{ interest.name }}
-                                </span>
-                            </label>
+                            <button type="button"
+                                class="interest-tag {% if interest in user.profile.interests.all %}active{% endif %}"
+                                data-action="toggleInterest" data-interest-id="{{ interest.id }}">
+                                {{ interest.name }}
+                            </button>
                             {% endfor %}
                         </div>
+                        <!-- Приховане поле для збереження обраних інтересів -->
+                        <input type="hidden" name="interests" id="selected-interests"
+                            value="{% for interest in user.profile.interests.all %}{{ interest.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
                     </div>
 
                     <button type="submit" class="btn-save">ЗБЕРЕГТИ</button>

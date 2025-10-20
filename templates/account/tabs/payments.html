@@ -47,6 +47,7 @@
                 <div class="col-description">Опис</div>
                 <div class="col-amount">Сума</div>
                 <div class="col-status">Статус</div>
+                <div class="col-action">Дія</div>
             </div>
             {% for payment in recent_payments %}
             <div class="table-row">
@@ -94,6 +95,18 @@
                         {{ payment.get_status_display }}
                         {% endif %}
                     </span>
+                </div>
+                <div class="col-action">
+                    {% if payment.subscription and payment.status == 'succeeded' %}
+                    <button class="btn-repeat" 
+                            data-action="repeatPayment"
+                            data-plan-id="{{ payment.subscription.plan.id }}"
+                            data-payment-id="{{ payment.id }}">
+                        Повторити
+                    </button>
+                    {% else %}
+                    <span class="action-empty">—</span>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

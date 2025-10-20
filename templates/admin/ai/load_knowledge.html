@@ -31,8 +31,7 @@
         <form method="post">
             {% csrf_token %}
             <div class="submit-row">
-                <input type="submit" value="Завантажити базу знань" class="default"
-                    onclick="return confirm('Ви впевнені? Це може зайняти кілька хвилин.');">
+                <input type="submit" value="Завантажити базу знань" class="default" data-action="confirmLoadKnowledge">
                 <a href="../" class="button cancel-link">Скасувати</a>
             </div>
         </form>
@@ -55,4 +54,18 @@
         </ol>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const submitBtn = document.querySelector('[data-action="confirmLoadKnowledge"]');
+        if (submitBtn) {
+            submitBtn.form.addEventListener('submit', (e) => {
+                if (!confirm('Ви впевнені? Це може зайняти кілька хвилин.')) {
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+</script>
+
 {% endblock %}

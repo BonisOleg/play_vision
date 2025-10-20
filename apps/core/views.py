@@ -49,6 +49,15 @@ class HomeView(TemplateView):
         return context
 
 
+class MentoringView(TemplateView):
+    """Ментор-коучінг сторінка"""
+    template_name = 'pages/mentoring.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
 class AboutView(TemplateView):
     """About page view"""
     template_name = 'pages/about.html'

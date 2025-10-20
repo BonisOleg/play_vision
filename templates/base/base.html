@@ -85,22 +85,29 @@
             <div class="header-content">
                 <!-- Logo -->
                 <a href="{% url 'core:home' %}" class="logo-link">
-                    <img src="{% static 'icons/horizontal_desc_black.svg' %}" alt="Play Vision"
-                        class="logo-img logo-light">
-                    <img src="{% static 'icons/horizontal_desc_white.svg' %}" alt="Play Vision"
-                        class="logo-img logo-dark">
+                    <div class="logo-container">
+                        <img src="{% static 'icons/horizontal_desc_black.svg' %}" alt="Play Vision"
+                            class="logo-img logo-light">
+                        <img src="{% static 'icons/horizontal_desc_white.svg' %}" alt="Play Vision"
+                            class="logo-img logo-dark">
+                        <span class="logo-tagline">навігатор футбольного розвитку</span>
+                    </div>
                 </a>
 
                 <!-- Navigation Actions (Desktop) -->
                 <nav class="header-nav-actions navbar-desktop-only" aria-label="Основна навігація">
-                    <a href="{% url 'core:home' %}" class="nav-action-btn {% if request.resolver_match.url_name == 'home' %}active{% endif %}" aria-label="Головна">
+                    <a href="{% url 'core:home' %}"
+                        class="nav-action-btn {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                        aria-label="Головна">
                         <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                             <polyline points="9 22 9 12 15 12 15 22" />
                         </svg>
                         <span class="sr-only">Головна</span>
                     </a>
-                    <a href="{% url 'core:about' %}" class="nav-action-btn {% if request.resolver_match.url_name == 'about' %}active{% endif %}" aria-label="Про нас">
+                    <a href="{% url 'core:about' %}"
+                        class="nav-action-btn {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                        aria-label="Про нас">
                         <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10" />
                             <line x1="12" y1="16" x2="12" y2="12" />
@@ -108,7 +115,9 @@
                         </svg>
                         <span class="sr-only">Про Play Vision</span>
                     </a>
-                    <a href="{% url 'content:course_list' %}" class="nav-action-btn {% if 'hub' in request.path or 'content' in request.path %}active{% endif %}" aria-label="Хаб знань">
+                    <a href="{% url 'content:course_list' %}"
+                        class="nav-action-btn {% if 'hub' in request.path or 'content' in request.path %}active{% endif %}"
+                        aria-label="Хаб знань">
                         <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
@@ -116,8 +125,11 @@
                         <span class="sr-only">Хаб знань</span>
                     </a>
                     <div class="nav-action-dropdown">
-                        <a href="{% url 'events:event_list' %}" class="nav-action-btn {% if 'events' in request.path %}active{% endif %}" aria-label="Івенти">
-                            <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <a href="{% url 'events:event_list' %}"
+                            class="nav-action-btn {% if 'events' in request.path %}active{% endif %}"
+                            aria-label="Івенти">
+                            <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
                                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                                 <line x1="16" y1="2" x2="16" y2="6" />
                                 <line x1="8" y1="2" x2="8" y2="6" />
@@ -133,8 +145,10 @@
                                     <div class="dropdown-item-content">
                                         <div class="dropdown-item-title">{{ event.title }}</div>
                                         <div class="dropdown-item-meta">
-                                            <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{ event.start_datetime|date:"H:i" }}</span>
-                                            <span class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
+                                            <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{
+                                                event.start_datetime|date:"H:i" }}</span>
+                                            <span
+                                                class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
                                                 {% if event.is_online %}онлайн{% else %}офлайн{% endif %}
                                             </span>
                                         </div>
@@ -150,7 +164,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{% url 'core:coming_soon' %}?page=mentoring" class="nav-action-btn" aria-label="Ментор-коучінг">
+                    <a href="{% url 'core:mentoring' %}" class="nav-action-btn" aria-label="Ментор-коучінг">
                         <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                             <circle cx="9" cy="7" r="4" />
@@ -159,14 +173,40 @@
                         </svg>
                         <span class="sr-only">Ментор-коучінг</span>
                     </a>
+
+                    <!-- Кнопка підписки (виділена) -->
+                    <a href="{% url 'core:pricing' %}" class="nav-action-btn nav-action-btn--highlighted"
+                        aria-label="Підписка">
+                        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                        <span class="action-text">Підписка</span>
+                    </a>
                 </nav>
 
                 <!-- System Actions -->
                 <div class="header-actions desktop-actions">
                     {% if user.is_authenticated %}
+                    <!-- Cart -->
+                    <a href="{% url 'cart:cart_detail' %}" class="navbar-icon navbar-desktop-only cart-icon"
+                        aria-label="Кошик">
+                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                        <span class="cart-count" data-cart-count>0</span>
+                        <span class="sr-only">Кошик</span>
+                    </a>
+
                     <!-- Cabinet -->
-                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon navbar-desktop-only" aria-label="Кабінет">
-                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon navbar-desktop-only"
+                        aria-label="Кабінет">
+                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                             <circle cx="12" cy="7" r="4" />
                         </svg>
@@ -178,8 +218,10 @@
                     {% endif %}
 
                     <!-- Theme Toggle -->
-                    <button type="button" class="navbar-icon theme-toggle navbar-desktop-only" aria-label="Перемкнути тему" data-theme-toggle>
-                        <svg class="action-icon theme-icon-light" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button type="button" class="navbar-icon theme-toggle navbar-desktop-only"
+                        aria-label="Перемкнути тему" data-theme-toggle>
+                        <svg class="action-icon theme-icon-light" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5" />
                             <line x1="12" y1="1" x2="12" y2="3" />
                             <line x1="12" y1="21" x2="12" y2="23" />
@@ -190,15 +232,18 @@
                             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
                             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                         </svg>
-                        <svg class="action-icon theme-icon-dark" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg class="action-icon theme-icon-dark" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                         </svg>
                         <span class="sr-only">Перемкнути тему</span>
                     </button>
 
                     <!-- AI Chat Toggle -->
-                    <button type="button" class="navbar-icon ai-chat-toggle navbar-desktop-only" aria-label="AI чат" data-ai-chat-toggle>
-                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button type="button" class="navbar-icon ai-chat-toggle navbar-desktop-only" aria-label="AI чат"
+                        data-ai-chat-toggle>
+                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                         </svg>
                         <span class="sr-only">AI чат</span>
@@ -231,7 +276,8 @@
                 <div class="ai-message ai-message--bot">
                     <div class="ai-message-avatar">🤖</div>
                     <div class="ai-message-content">
-                        <p>Привіт! Я AI помічник Play Vision. Можу відповісти на питання про футбол, курси, підписки та багато іншого. Про що хочете дізнатися?</p>
+                        <p>Привіт! Я AI помічник Play Vision. Можу відповісти на питання про футбол, курси, підписки та
+                            багато іншого. Про що хочете дізнатися?</p>
                     </div>
                 </div>
             </div>
@@ -239,9 +285,11 @@
                 <form class="ai-dialog-form" data-ai-dialog-form>
                     {% csrf_token %}
                     <div class="ai-dialog-input-wrapper">
-                        <textarea class="ai-dialog-input" data-ai-dialog-input placeholder="Введіть ваше запитання..." rows="1" maxlength="500" aria-label="Запитання до AI"></textarea>
+                        <textarea class="ai-dialog-input" data-ai-dialog-input placeholder="Введіть ваше запитання..."
+                            rows="1" maxlength="500" aria-label="Запитання до AI"></textarea>
                         <button type="submit" class="ai-dialog-send" data-ai-dialog-send aria-label="Надіслати">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
                                 <line x1="22" y1="2" x2="11" y2="13" />
                                 <polygon points="22,2 15,22 11,13 2,9" />
                             </svg>
@@ -322,6 +370,12 @@
 
     <!-- Mobile Bottom Navigation -->
     {% include 'partials/mobile-bottom-nav.html' %}
+
+    <!-- Cart Counter -->
+    <script src="{% static 'js/cart-counter.js' %}" defer></script>
+
+    <!-- iOS Viewport Fix -->
+    <script src="{% static 'js/viewport-fix.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>
