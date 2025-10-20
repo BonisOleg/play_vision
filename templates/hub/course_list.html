@@ -453,9 +453,7 @@
                                         {% if course.is_featured %}
                                         <span class="badge badge-top">топ-продажів</span>
                                         {% endif %}
-                                        {% if course.created_at|timesince|slice:":2" == "0 " or
-                                        course.created_at|timesince|slice:":3" == "1 д" or
-                                        course.created_at|timesince|slice:":3" == "2 д" %}
+                                        {% if course.created_at|timesince|slice:":2" == "0 " or course.created_at|timesince|slice:":3" == "1 д" or course.created_at|timesince|slice:":3" == "2 д" %}
                                         <span class="badge badge-new">новинка</span>
                                         {% endif %}
                                         {% if course.rating >= 4.5 and course.enrollment_count >= 100 %}

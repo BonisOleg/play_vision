@@ -31,8 +31,7 @@
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-location"></use>
                         </svg>
-                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{%
-                            endif %}</span>
+                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{% endif %}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
