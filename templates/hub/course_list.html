@@ -306,7 +306,8 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                            current_category|default:''==category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
