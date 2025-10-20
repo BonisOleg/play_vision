@@ -414,20 +414,19 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
-                                    %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
+                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
                                     назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
+                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
                                     назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
+                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
                                     ціною (спадання)
                                 </option>
                             </select>
