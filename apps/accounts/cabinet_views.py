@@ -128,18 +128,36 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         # Додати loyalty дані
         if hasattr(user, 'loyalty_account'):
             loyalty_account = user.loyalty_account
-            next_tier = loyalty_account.get_next_tier()
-            points_to_next = loyalty_account.points_to_next_tier()
-            progress_pct = loyalty_account.get_progress_percentage()
+            
+            # Отримати наступний tier
+            next_tier = None
+            points_to_next = 0
+            if loyalty_account.current_tier:
+                next_tier = LoyaltyTier.objects.filter(
+                    is_active=True,
+                    points_required__gt=loyalty_account.current_tier.points_required
+                ).order_by('points_required').first()
+                if next_tier:
+                    points_to_next = max(0, next_tier.points_required - loyalty_account.lifetime_points)
+            
+            # Розрахувати прогрес
+            progress_pct = 0
+            if next_tier and points_to_next > 0:
+                total_for_tier = next_tier.points_required - (loyalty_account.current_tier.points_required if loyalty_account.current_tier else 0)
+                current_progress = loyalty_account.lifetime_points - (loyalty_account.current_tier.points_required if loyalty_account.current_tier else 0)
+                progress_pct = int((current_progress / total_for_tier) * 100) if total_for_tier > 0 else 0
+            
+            # Потенційна знижка
+            potential_discount = next_tier.discount_percentage if next_tier else loyalty_account.get_discount_percentage()
             
             context['loyalty_account'] = {
-                'current_tier': loyalty_account.current_tier,
+                'current_tier': loyalty_account.current_tier or LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first(),
                 'next_tier': next_tier,
-                'total_points': loyalty_account.total_points,
-                'points_to_next_tier': points_to_next if points_to_next else 0,
+                'total_points': loyalty_account.lifetime_points,
+                'points_to_next_tier': points_to_next,
                 'progress_percentage': progress_pct,
                 'current_discount': loyalty_account.get_discount_percentage(),
-                'potential_discount': loyalty_account.get_potential_discount() if next_tier else loyalty_account.get_discount_percentage(),
+                'potential_discount': potential_discount,
             }
         
         return context
