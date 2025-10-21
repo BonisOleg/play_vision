@@ -222,17 +222,10 @@
 
                     <!-- Inline AI Chat -->
                     <div class="ai-chat-inline" data-ai-chat-inline>
-                        <!-- Chat Messages Container (hidden initially) -->
-                        <div class="ai-chat-messages" data-ai-messages style="display: none;">
-                            <div class="ai-message ai-message--bot">
-                                <div class="ai-message-avatar">🤖</div>
-                                <div class="ai-message-content">
-                                    <p>Привіт! Я AI помічник Play Vision. Чим можу допомогти?</p>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Chat Messages Container (історія над інпутом, hidden initially) -->
+                        <div class="ai-chat-messages" data-ai-messages style="display: none;"></div>
 
-                        <!-- Chat Input -->
+                        <!-- Chat Input (залишається внизу) -->
                         <div class="ai-chat-input-wrapper">
                             <input type="text" class="ai-chat-input" placeholder="Запитайте AI помічника..."
                                 data-ai-input aria-label="Запитання до AI">

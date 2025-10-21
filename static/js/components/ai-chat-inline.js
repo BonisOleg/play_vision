@@ -170,10 +170,10 @@
 
         elements.messages.style.display = 'flex';
 
-        // Плавна анімація появи
+        // Плавна анімація появи ВГОРУ
         requestAnimationFrame(() => {
             elements.messages.style.opacity = '0';
-            elements.messages.style.transform = 'translateY(-10px)';
+            elements.messages.style.transform = 'translateY(10px)';
 
             requestAnimationFrame(() => {
                 elements.messages.style.transition = `opacity ${CONFIG.animationDuration}ms ease, transform ${CONFIG.animationDuration}ms ease`;
@@ -187,10 +187,11 @@
         if (!elements.messages) return;
 
         elements.messages.style.opacity = '0';
-        elements.messages.style.transform = 'translateY(-10px)';
+        elements.messages.style.transform = 'translateY(10px)';
 
         setTimeout(() => {
             elements.messages.style.display = 'none';
+            elements.messages.style.transform = 'translateY(0)';
         }, CONFIG.animationDuration);
     }
 

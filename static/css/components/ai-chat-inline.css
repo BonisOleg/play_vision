@@ -8,6 +8,7 @@
    ======================================== */
 
 .header-actions-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -31,31 +32,28 @@
    ======================================== */
 
 .ai-chat-inline {
+    width: 320px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    width: 320px;
-    position: relative;
+    align-items: stretch;
 }
 
-/* Messages container - ПОЗИЦІОНУВАННЯ ПОВЕРХ МЕНЮ */
+/* Messages container - НАРОСТАЄ НАД ІНПУТОМ */
 .ai-chat-messages {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    right: 0;
     width: 100%;
     max-height: 50vh;
     overflow-y: auto;
     overflow-x: hidden;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
+    border-bottom: none;
     padding: 12px;
+    padding-bottom: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 12px;
-    z-index: 9999;
 }
 
 [data-theme="dark"] .ai-chat-messages {
@@ -171,6 +169,13 @@
     border-radius: 24px;
     padding: 6px 8px 6px 16px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Коли є історія чату - інпут приєднується знизу */
+.ai-chat-inline:has(.ai-chat-messages[style*="display: flex"]) .ai-chat-input-wrapper {
+    border-radius: 0 0 12px 12px;
+    border-top: none;
 }
 
 .ai-chat-input-wrapper:focus-within {
