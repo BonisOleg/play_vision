@@ -295,7 +295,7 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         }
         
         # Останні транзакції балів
-        context['recent_transactions'] = loyalty_account.point_transactions.order_by('-created_at')[:5]
+        context['recent_transactions'] = loyalty_account.transactions.order_by('-created_at')[:5]
         
         # Всі рівні для відображення
         context['all_tiers'] = LoyaltyTier.objects.filter(is_active=True).order_by('points_required')

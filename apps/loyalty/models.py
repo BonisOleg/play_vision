@@ -133,6 +133,40 @@ class LoyaltyAccount(models.Model):
             return 5
         return 0
 
+    def get_next_tier(self):
+        """Отримати наступний рівень (legacy tier system)"""
+        if not self.current_tier:
+            # Якщо немає поточного тира, повернути перший доступний
+            return LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first()
+        
+        # Знайти наступний тир з більшою кількістю балів
+        return LoyaltyTier.objects.filter(
+            is_active=True,
+            points_required__gt=self.current_tier.points_required
+        ).order_by('points_required').first()
+
+    def points_to_next_tier(self) -> int:
+        """Скільки балів потрібно до наступного рівня"""
+        next_tier = self.get_next_tier()
+        if not next_tier:
+            return 0
+        return max(0, next_tier.points_required - self.points)
+
+    def progress_to_next_tier(self) -> int:
+        """Прогрес до наступного рівня у відсотках (0-100)"""
+        next_tier = self.get_next_tier()
+        if not next_tier:
+            return 100
+        
+        current_tier_points = self.current_tier.points_required if self.current_tier else 0
+        total_points_needed = next_tier.points_required - current_tier_points
+        
+        if total_points_needed <= 0:
+            return 100
+        
+        progress = ((self.points - current_tier_points) / total_points_needed) * 100
+        return int(max(0, min(100, progress)))
+
 
 class PointTransaction(models.Model):
     """
