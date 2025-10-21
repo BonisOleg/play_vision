@@ -183,7 +183,7 @@ class LegalPageView(TemplateView):
 
 class PricingView(TemplateView):
     """Pricing page view"""
-    template_name = 'pages/pricing.html'
+    template_name = 'subscriptions/pricing.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
