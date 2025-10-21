@@ -39,12 +39,12 @@
             // Обчислюємо позицію відносно контейнера
             const left = tabRect.left - containerRect.left;
             const width = tabRect.width;
-            
+
             // Отримуємо всі таби як масив
             const tabsArray = Array.from(tabs);
             const tabIndex = tabsArray.indexOf(targetTab);
             const isLastTab = tabIndex === tabsArray.length - 1;
-            
+
             // Зменшуємо ширину всіх кнопок на WIDTH_REDUCTION
             // Для останньої кнопки додаємо ще RIGHT_OFFSET
             const adjustedWidth = isLastTab ? width - WIDTH_REDUCTION - RIGHT_OFFSET : width - WIDTH_REDUCTION;

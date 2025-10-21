@@ -200,6 +200,17 @@
     color: white;
 }
 
+/* ТЕМНА ТЕМА - білий текст при hover */
+[data-theme="dark"] .nav-tab-btn:hover {
+    color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn:hover {
+        color: white;
+    }
+}
+
 .nav-tab-btn:active {
     transform: scale(0.98);
 }
