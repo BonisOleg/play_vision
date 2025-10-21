@@ -32,9 +32,13 @@
    ======================================== */
 
 .ai-chat-inline {
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 320px;
     display: flex;
     flex-direction: column;
+    z-index: 10000;
 }
 
 /* Messages container - ІСТОРІЯ ЗВЕРХУ, ІНПУТ ОПУСКАЄТЬСЯ */
