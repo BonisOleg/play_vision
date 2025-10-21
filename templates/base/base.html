@@ -62,6 +62,7 @@
     <link rel="stylesheet" href="{% static 'css/animations.css' %}">
     <link rel="stylesheet" href="{% static 'css/accessibility.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/header-desktop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/ai-chat-inline.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/ai-chat-dialog.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/mobile-bottom-nav.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/footer-desktop.css' %}">
@@ -165,68 +166,94 @@
                     </div>
                 </nav>
 
-                <!-- System Actions -->
-                <div class="header-actions desktop-actions">
-                    {% if user.is_authenticated %}
-                    <!-- Cart -->
-                    <a href="{% url 'cart:cart' %}" class="navbar-icon navbar-desktop-only cart-icon"
-                        aria-label="Кошик">
-                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <circle cx="9" cy="21" r="1" />
-                            <circle cx="20" cy="21" r="1" />
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                        </svg>
-                        <span class="cart-count" data-cart-count>0</span>
-                        <span class="sr-only">Кошик</span>
-                    </a>
+                <!-- System Actions with AI Chat -->
+                <div class="header-actions-wrapper navbar-desktop-only">
+                    <!-- Action Buttons -->
+                    <div class="header-actions desktop-actions">
+                        {% if user.is_authenticated %}
+                        <!-- Cart -->
+                        <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon" aria-label="Кошик">
+                            <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1" />
+                                <circle cx="20" cy="21" r="1" />
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                            </svg>
+                            <span class="cart-count" data-cart-count>0</span>
+                            <span class="sr-only">Кошик</span>
+                        </a>
 
-                    <!-- Cabinet -->
-                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon navbar-desktop-only"
-                        aria-label="Кабінет">
-                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                            <circle cx="12" cy="7" r="4" />
-                        </svg>
-                        <span class="sr-only">Кабінет</span>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'accounts:login' %}" class="navbar-link navbar-desktop-only">Вхід</a>
-                    <a href="{% url 'accounts:register' %}" class="btn btn-outline navbar-desktop-only">Реєстрація</a>
-                    {% endif %}
+                        <!-- Cabinet -->
+                        <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon" aria-label="Кабінет">
+                            <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <span class="sr-only">Кабінет</span>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}" class="navbar-link">Вхід</a>
+                        <a href="{% url 'accounts:register' %}" class="btn btn-outline">Реєстрація</a>
+                        {% endif %}
 
-                    <!-- Theme Toggle -->
-                    <button type="button" class="navbar-icon theme-toggle navbar-desktop-only"
-                        aria-label="Перемкнути тему" data-theme-toggle>
-                        <svg class="action-icon theme-icon-light" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5" />
-                            <line x1="12" y1="1" x2="12" y2="3" />
-                            <line x1="12" y1="21" x2="12" y2="23" />
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                            <line x1="1" y1="12" x2="3" y2="12" />
-                            <line x1="21" y1="12" x2="23" y2="12" />
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                        </svg>
-                        <svg class="action-icon theme-icon-dark" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                        </svg>
-                        <span class="sr-only">Перемкнути тему</span>
-                    </button>
+                        <!-- Theme Toggle -->
+                        <button type="button" class="navbar-icon theme-toggle" aria-label="Перемкнути тему"
+                            data-theme-toggle>
+                            <svg class="action-icon theme-icon-light" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5" />
+                                <line x1="12" y1="1" x2="12" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="23" />
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                <line x1="1" y1="12" x2="3" y2="12" />
+                                <line x1="21" y1="12" x2="23" y2="12" />
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                            </svg>
+                            <svg class="action-icon theme-icon-dark" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                            </svg>
+                            <span class="sr-only">Перемкнути тему</span>
+                        </button>
+                    </div>
 
-                    <!-- AI Chat Toggle -->
-                    <button type="button" class="navbar-icon ai-chat-toggle navbar-desktop-only" aria-label="AI чат"
-                        data-ai-chat-toggle>
-                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                        </svg>
-                        <span class="sr-only">AI чат</span>
-                    </button>
+                    <!-- Inline AI Chat -->
+                    <div class="ai-chat-inline" data-ai-chat-inline>
+                        <!-- Chat Messages Container (hidden initially) -->
+                        <div class="ai-chat-messages" data-ai-messages style="display: none;">
+                            <div class="ai-message ai-message--bot">
+                                <div class="ai-message-avatar">🤖</div>
+                                <div class="ai-message-content">
+                                    <p>Привіт! Я AI помічник Play Vision. Чим можу допомогти?</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="ai-chat-input-wrapper">
+                            <input type="text" class="ai-chat-input" placeholder="Запитайте AI помічника..."
+                                data-ai-input aria-label="Запитання до AI">
+                            <button type="button" class="ai-chat-send-btn" data-ai-send aria-label="Надіслати">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13" />
+                                    <polygon points="22,2 15,22 11,13 2,9" />
+                                </svg>
+                            </button>
+                            <button type="button" class="ai-chat-detach-btn" data-ai-detach aria-label="Відкріпити чат"
+                                style="display: none;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -332,6 +359,9 @@
     <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
     <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- AI Chat Inline -->
+    <script src="{% static 'js/components/ai-chat-inline.js' %}" defer></script>
 
     <!-- AI Chat Dialog -->
     <script src="{% static 'js/components/ai-chat-dialog.js' %}" defer></script>
