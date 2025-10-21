@@ -102,7 +102,6 @@
     grid-column: 2;
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
     justify-self: center;
 }
 
@@ -111,8 +110,8 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 6px;
+    gap: 2px;
+    padding: 4px;
     background: var(--color-bg);
     border: 2px solid var(--color-text);
     border-radius: 50px;
@@ -132,15 +131,15 @@
     }
 }
 
-/* Анімований слайдер (жолобок) */
+/* Анімований слайдер (жолобок) - ОНОВЛЕНА ПЛАВНІША АНІМАЦІЯ */
 .nav-tabs-slider {
     position: absolute;
-    top: 6px;
-    left: 6px;
-    height: calc(100% - 12px);
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
     background: var(--color-text);
     border-radius: 50px;
-    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     pointer-events: none;
     z-index: 1;
     opacity: 0;
@@ -162,14 +161,14 @@
     opacity: 1;
 }
 
-/* Кнопки навігації */
+/* Кнопки навігації - ОНОВЛЕНІ КОЛЬОРИ */
 .nav-tab-btn {
     position: relative;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 20px;
+    padding: 10px 18px;
     min-height: 44px;
     font-size: 15px;
     font-weight: 500;
@@ -180,18 +179,18 @@
     cursor: pointer;
     text-decoration: none;
     white-space: nowrap;
-    transition: color 0.3s ease, transform 0.2s ease;
+    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.2s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ТЕМНА ТЕМА - світлий текст */
+/* ТЕМНА ТЕМА - ВИПРАВЛЕНИЙ світлий текст */
 [data-theme="dark"] .nav-tab-btn {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tab-btn {
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(255, 255, 255, 0.95);
     }
 }
 
@@ -217,6 +216,45 @@
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tab-btn.active {
         color: #1a1a1a;
+    }
+}
+
+/* Виділена кнопка підписки - ПОМАРАНЧЕВА */
+.nav-tab-btn--highlighted {
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: white;
+    font-weight: 600;
+}
+
+.nav-tab-btn--highlighted:hover {
+    background: linear-gradient(135deg, #ea580c, #f97316);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
+}
+
+/* Коли кнопка підписки активна */
+.nav-tab-btn--highlighted.active {
+    background: linear-gradient(135deg, #ea580c, #f97316);
+    color: white;
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
+}
+
+/* ТЕМНА ТЕМА - підписка залишається помаранчевою */
+[data-theme="dark"] .nav-tab-btn--highlighted {
+    color: white;
+}
+
+[data-theme="dark"] .nav-tab-btn--highlighted.active {
+    color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn--highlighted {
+        color: white;
+    }
+
+    [data-theme="auto"] .nav-tab-btn--highlighted.active {
+        color: white;
     }
 }
 
@@ -350,51 +388,6 @@
     text-align: center;
     color: var(--color-text-light);
     font-size: 14px;
-}
-
-/* ========================================
-   HIGHLIGHTED SUBSCRIPTION BUTTON
-   ======================================== */
-
-.nav-action-btn-highlighted {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 20px;
-    min-height: 44px;
-    background: linear-gradient(135deg, #f97316, #fb923c);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
-}
-
-.nav-action-btn-highlighted:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35);
-    text-decoration: none;
-}
-
-.nav-action-btn-highlighted:active {
-    transform: translateY(0) scale(0.98);
-}
-
-.nav-action-btn-highlighted .action-icon {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    stroke-width: 2;
-}
-
-.nav-action-btn-highlighted .action-text {
-    font-size: 15px;
-    font-weight: 600;
 }
 
 /* ========================================
@@ -633,7 +626,6 @@
 /* Focus visible для keyboard navigation */
 .navbar-icon:focus-visible,
 .nav-tab-btn:focus-visible,
-.nav-action-btn-highlighted:focus-visible,
 .dropdown-link:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
@@ -646,7 +638,6 @@
     .navbar-icon,
     .nav-tab-btn,
     .nav-tabs-slider,
-    .nav-action-btn-highlighted,
     .dropdown-menu,
     .theme-icon-light,
     .theme-icon-dark {

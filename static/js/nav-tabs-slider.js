@@ -1,6 +1,7 @@
 /**
  * Navigation Tabs Animated Slider
  * Плавна анімація жолобка при переході між пунктами меню
+ * Оновлена версія з точнішим позиціонуванням
  */
 
 (function () {
@@ -18,11 +19,16 @@
 
         if (!slider || tabs.length === 0) return;
 
+        // Константи для точного позиціонування
+        const CONTAINER_PADDING = 4; // padding контейнера в px
+        const TAB_GAP = 2; // gap між табами в px
+
         /**
-         * Оновлює позицію та розмір слайдера
+         * Оновлює позицію та розмір слайдера з точним обрамленням
          * @param {HTMLElement} targetTab - Цільовий таб
+         * @param {boolean} instant - Миттєве позиціонування без анімації
          */
-        function updateSliderPosition(targetTab) {
+        function updateSliderPosition(targetTab, instant = false) {
             if (!targetTab) return;
 
             const containerRect = container.getBoundingClientRect();
@@ -32,9 +38,20 @@
             const left = tabRect.left - containerRect.left;
             const width = tabRect.width;
 
-            // Застосовуємо стилі
+            // Застосовуємо стилі з точним позиціонуванням
+            if (instant) {
+                slider.style.transition = 'none';
+            }
+
             slider.style.width = `${width}px`;
             slider.style.transform = `translateX(${left}px)`;
+
+            // Відновлюємо анімацію після миттєвого позиціонування
+            if (instant) {
+                requestAnimationFrame(() => {
+                    slider.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                });
+            }
         }
 
         /**
@@ -51,32 +68,26 @@
         function initSliderPosition() {
             const activeTab = findActiveTab();
             if (activeTab) {
-                // Встановлюємо позицію без анімації при завантаженні
-                slider.style.transition = 'none';
-                updateSliderPosition(activeTab);
-
-                // Відновлюємо анімацію через короткий час
-                setTimeout(() => {
-                    slider.style.transition = 'all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
-                }, 50);
+                // Встановлюємо позицію миттєво при завантаженні
+                updateSliderPosition(activeTab, true);
             }
         }
 
         /**
-         * Обробляє hover на табах
+         * Обробляє hover на табах з плавною анімацією
          */
         function handleTabHover() {
             tabs.forEach(tab => {
-                // Hover in
+                // Hover in - плавно переміщуємо до tab
                 tab.addEventListener('mouseenter', function () {
-                    updateSliderPosition(this);
+                    updateSliderPosition(this, false);
                 });
 
-                // Hover out - повертаємося до активного
+                // Hover out - плавно повертаємося до активного
                 tab.addEventListener('mouseleave', function () {
                     const activeTab = findActiveTab();
                     if (activeTab) {
-                        updateSliderPosition(activeTab);
+                        updateSliderPosition(activeTab, false);
                     }
                 });
             });
@@ -88,26 +99,49 @@
         function handleResize() {
             const activeTab = findActiveTab();
             if (activeTab) {
-                updateSliderPosition(activeTab);
+                // При resize робимо миттєве оновлення
+                updateSliderPosition(activeTab, true);
             }
+        }
+
+        /**
+         * Debounce функція для оптимізації
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
 
         // Ініціалізація
         initSliderPosition();
         handleTabHover();
 
-        // Обробляємо зміну розміру вікна
-        let resizeTimeout;
-        window.addEventListener('resize', function () {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(handleResize, 100);
+        // Обробляємо зміну розміру вікна з debounce
+        const debouncedResize = debounce(handleResize, 150);
+        window.addEventListener('resize', debouncedResize);
+
+        // Обробляємо зміну орієнтації на мобільних
+        window.addEventListener('orientationchange', function () {
+            setTimeout(handleResize, 100);
         });
 
         // Обробляємо зміну теми (може змінити розміри)
         const themeObserver = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
                 if (mutation.attributeName === 'data-theme') {
-                    setTimeout(handleResize, 50);
+                    setTimeout(() => {
+                        const activeTab = findActiveTab();
+                        if (activeTab) {
+                            updateSliderPosition(activeTab, true);
+                        }
+                    }, 50);
                 }
             });
         });
@@ -117,25 +151,36 @@
             attributeFilter: ['data-theme']
         });
 
-        // Обробляємо клік по табу (для SPA навігації)
+        // Обробляємо клік по табу (для навігації)
         tabs.forEach(tab => {
-            tab.addEventListener('click', function () {
+            tab.addEventListener('click', function (e) {
                 // Видаляємо активний клас зі всіх табів
                 tabs.forEach(t => t.classList.remove('active'));
                 // Додаємо активний клас до поточного табу
                 this.classList.add('active');
-                // Оновлюємо позицію слайдера
-                updateSliderPosition(this);
+                // Оновлюємо позицію слайдера з анімацією
+                updateSliderPosition(this, false);
             });
         });
 
         // Експортуємо функцію оновлення для зовнішнього використання
-        window.updateNavSlider = function () {
+        window.updateNavSlider = function (instant = false) {
             const activeTab = findActiveTab();
             if (activeTab) {
-                updateSliderPosition(activeTab);
+                updateSliderPosition(activeTab, instant);
             }
         };
+
+        // Додаткове оновлення після повного завантаження шрифтів
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                setTimeout(() => {
+                    if (window.updateNavSlider) {
+                        window.updateNavSlider(true);
+                    }
+                }, 100);
+            });
+        }
     }
 
     // Ініціалізація при завантаженні DOM
@@ -146,13 +191,11 @@
     }
 
     // Повторна ініціалізація після завантаження всіх ресурсів
-    // (для точного обчислення розмірів)
     window.addEventListener('load', function () {
         setTimeout(function () {
             if (window.updateNavSlider) {
-                window.updateNavSlider();
+                window.updateNavSlider(true);
             }
-        }, 100);
+        }, 150);
     });
 })();
-
