@@ -1854,7 +1854,7 @@
 }
 
 .btn-repeat {
-    background: #f97316;
+    background: #ff6b35;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -1866,7 +1866,7 @@
 }
 
 .btn-repeat:hover {
-    background: #ea580c;
+    background: #ff6b35;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
 }
@@ -1904,7 +1904,7 @@
 }
 
 .tier-badge.tier-silver {
-    background: #f97316;
+    background: #ff6b35;
     color: white;
 }
 
@@ -1940,7 +1940,7 @@
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #f97316, #fb923c);
+    background: linear-gradient(90deg, #ff6b35, #ff6b35);
     transition: width 0.5s ease;
 }
 
@@ -1948,7 +1948,7 @@
     text-align: right;
     font-size: 14px;
     font-weight: 600;
-    color: #f97316;
+    color: #ff6b35;
 }
 
 /* Блок "Знижка" */
@@ -1966,7 +1966,7 @@
 .discount-current strong,
 .discount-potential strong {
     font-size: 18px;
-    color: #f97316;
+    color: #ff6b35;
 }
 
 .discount-potential {
@@ -1996,7 +1996,7 @@
 
 .calendar-icon {
     flex-shrink: 0;
-    stroke: #f97316;
+    stroke: #ff6b35;
 }
 
 .days-text {
@@ -2062,7 +2062,7 @@
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: #f97316;
+    background: #ff6b35;
     color: white;
     border-radius: 8px;
     text-decoration: none;
@@ -2071,7 +2071,7 @@
 }
 
 .btn-quick-action:hover {
-    background: #ea580c;
+    background: #ff6b35;
     transform: translateY(-1px);
     text-decoration: none;
     color: white;
@@ -2101,17 +2101,17 @@
 }
 
 .interest-tag:hover {
-    border-color: #f97316;
+    border-color: #ff6b35;
     background: #fff7ed;
 }
 
 .interest-tag.active {
-    background: #f97316;
+    background: #ff6b35;
     color: white;
-    border-color: #f97316;
+    border-color: #ff6b35;
 }
 
 .interest-tag.active:hover {
-    background: #ea580c;
-    border-color: #ea580c;
+    background: #ff6b35;
+    border-color: #ff6b35;
 }

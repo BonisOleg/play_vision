@@ -327,7 +327,7 @@
     top: 0;
     bottom: 60px;
     width: 3px;
-    background: linear-gradient(180deg, #f97316, #fb923c);
+    background: linear-gradient(180deg, #ff6b35, #ff6b35);
 }
 
 .timeline-item {
@@ -343,7 +343,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f97316, #fb923c);
+    background: linear-gradient(135deg, #ff6b35, #ff6b35);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -356,7 +356,7 @@
     background: #f9fafb;
     padding: 20px 24px;
     border-radius: 12px;
-    border-left: 3px solid #f97316;
+    border-left: 3px solid #ff6b35;
 }
 
 .timeline-content h4 {

@@ -130,7 +130,7 @@
 }
 
 .hex-technique {
-    border-top-color: #f97316;
+    border-top-color: #ff6b35;
 }
 
 .hex-mentality {
@@ -308,7 +308,7 @@
 /* БЛОК 5: CTA */
 .mentoring-cta {
     padding: 4rem 0;
-    background: linear-gradient(135deg, #f97316 0%, #e11d48 100%);
+    background: linear-gradient(135deg, #ff6b35 0%, #e11d48 100%);
 }
 
 .cta-buttons {

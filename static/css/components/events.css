@@ -2636,7 +2636,7 @@
     padding: 12px 20px;
     margin-bottom: 10px;
     background: #f3f4f6;
-    border-left: 3px solid #f97316;
+    border-left: 3px solid #ff6b35;
     border-radius: 4px;
     font-size: 15px;
 }
@@ -2657,7 +2657,7 @@
 }
 
 .tier-card:hover {
-    border-color: #f97316;
+    border-color: #ff6b35;
     box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
 }
 
@@ -2678,7 +2678,7 @@
 .tier-price {
     font-size: 36px;
     font-weight: 700;
-    color: #f97316;
+    color: #ff6b35;
 }
 
 .tier-features ul {

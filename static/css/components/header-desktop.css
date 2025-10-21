@@ -137,7 +137,7 @@
     top: 3.6px;
     left: 3.6px;
     height: calc(100% - 7.2px);
-    background: #ff6b35;
+    background: var(--color-text);
     border-radius: 50px;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     pointer-events: none;
@@ -145,14 +145,14 @@
     opacity: 0;
 }
 
-/* ТЕМНА ТЕМА - червоний слайдер */
+/* ТЕМНА ТЕМА - світлий слайдер */
 [data-theme="dark"] .nav-tabs-slider {
-    background: #ff6b35;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tabs-slider {
-        background: #ff6b35;
+        background: rgba(255, 255, 255, 0.95);
     }
 }
 
@@ -197,17 +197,17 @@
 .nav-tab-btn:hover {
     text-decoration: none;
     transform: translateY(-1px);
-    color: white;
+    color: var(--color-bg);
 }
 
-/* ТЕМНА ТЕМА - білий текст при hover */
+/* ТЕМНА ТЕМА - темний текст при hover */
 [data-theme="dark"] .nav-tab-btn:hover {
-    color: white;
+    color: #1a1a1a;
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tab-btn:hover {
-        color: white;
+        color: #1a1a1a;
     }
 }
 
@@ -215,19 +215,19 @@
     transform: scale(0.98);
 }
 
-/* Активна кнопка - білий текст на червоному фоні */
+/* Активна кнопка - червоний фірмовий текст */
 .nav-tab-btn.active {
-    color: white;
+    color: #ff6b35;
 }
 
-/* ТЕМНА ТЕМА - білий текст на активній кнопці */
+/* ТЕМНА ТЕМА - червоний текст на активній кнопці */
 [data-theme="dark"] .nav-tab-btn.active {
-    color: white;
+    color: #ff6b35;
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tab-btn.active {
-        color: white;
+        color: #ff6b35;
     }
 }
 
@@ -342,8 +342,8 @@
 
 .dropdown-item-badge--hybrid,
 .dropdown-item-badge--forum {
-    background: rgba(249, 115, 22, 0.15);
-    color: #ea580c;
+    background: rgba(255, 107, 53, 0.15);
+    color: #ff6b35;
 }
 
 .dropdown-divider {
