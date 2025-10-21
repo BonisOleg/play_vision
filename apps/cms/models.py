@@ -465,6 +465,7 @@ class ExpertCard(models.Model):
     position = models.CharField('Посада', max_length=150)
     specialization = models.CharField('Спеціалізація', max_length=200, blank=True)
     bio = models.TextField('Біографія', blank=True)
+    email = models.EmailField('Email', blank=True, help_text='Email експерта для контакту')
     
     photo = models.ImageField('Фото', upload_to='cms/experts/', blank=True,
                              help_text='Рекомендований розмір: 400×400 px')

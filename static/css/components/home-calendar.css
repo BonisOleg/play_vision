@@ -1,0 +1,212 @@
+/* Календар івентів на головній сторінці */
+
+.home-events-section {
+    background: var(--bg-primary);
+    padding: 4rem 0;
+}
+
+[data-theme="dark"] .home-events-section {
+    background: var(--bg-secondary);
+}
+
+/* Вкладки типів подій */
+.event-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.event-tab {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 24px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .event-tab {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+}
+
+.event-tab.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.event-tab:hover:not(.active) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Календар тижня */
+.week-calendar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+.week-day {
+    flex: 0 0 auto;
+    width: 80px;
+    padding: 1rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+[data-theme="dark"] .week-day {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+}
+
+.week-day:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.week-day.has-event {
+    border-color: var(--color-primary);
+    background: var(--color-primary-alpha-10);
+}
+
+.day-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.day-name {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.events-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Інформація про обрану подію */
+.selected-event-info {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+[data-theme="dark"] .selected-event-info {
+    background: var(--bg-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.event-name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.event-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.event-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.event-meta span {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+}
+
+.event-time::before {
+    content: "🕐 ";
+}
+
+.event-type::before {
+    content: "📋 ";
+}
+
+.event-location::before {
+    content: "📍 ";
+}
+
+.no-event {
+    text-align: center;
+    padding: 3rem 0;
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .event-tabs {
+        gap: 0.5rem;
+    }
+
+    .event-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .week-calendar {
+        gap: 0.5rem;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 1rem;
+    }
+
+    .week-day {
+        flex-shrink: 0;
+        width: 70px;
+        padding: 0.75rem;
+    }
+
+    .day-number {
+        font-size: 1.25rem;
+    }
+
+    .selected-event-info {
+        padding: 1.5rem;
+    }
+
+    .event-name {
+        font-size: 1.5rem;
+    }
+}

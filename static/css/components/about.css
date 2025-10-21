@@ -113,6 +113,22 @@ img[loading="lazy"].loaded {
     background-size: 50px 50px;
 }
 
+/* БРЕНД-АБЗАЦ секція */
+.brand-section {
+    background: #1a1a1a !important;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px) !important;
+    background-size: 50px 50px !important;
+}
+
+.brand-content {
+    text-align: center;
+    padding: 4rem 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
 .mission-content {
     display: grid;
     grid-template-columns: 1fr 1fr;

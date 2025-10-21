@@ -144,7 +144,8 @@
                                     <div class="dropdown-item-content">
                                         <div class="dropdown-item-title">{{ event.title }}</div>
                                         <div class="dropdown-item-meta">
-                                            <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{ event.start_datetime|date:"H:i" }}</span>
+                                            <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} • {{
+                                                event.start_datetime|date:"H:i" }}</span>
                                             <span
                                                 class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
                                                 {% if event.is_online %}онлайн{% else %}офлайн{% endif %}

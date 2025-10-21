@@ -87,6 +87,23 @@
     background: transparent;
 }
 
+/* ОДНА ЗЕЛЕНА кнопка в hero */
+.hero-section .btn-primary {
+    background: #10b981;
+    /* Зелений колір */
+    border-color: #10b981;
+}
+
+.hero-section .btn-primary:hover {
+    background: #059669;
+    border-color: #059669;
+}
+
+.hero-section .btn-primary::after {
+    content: " →";
+    margin-left: 4px;
+}
+
 .hero-section.hero-bordered .section-content {
     border: none;
     border-radius: 0;

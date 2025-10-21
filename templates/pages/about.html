@@ -40,53 +40,27 @@
     </section>
     {% endif %}
 
-    <!-- Mission Section -->
-    <section class="mission-section">
+    <!-- БРЕНД-АБЗАЦ - темний фон з сіткою -->
+    <section class="mission-section brand-section">
         <div class="container">
-            <div class="mission-content">
-                <div class="mission-text">
-                    {% if cms_sections %}
-                    {% for section in cms_sections %}
-                    {% if section.section_type == 'custom' and 'mission' in section.title|lower %}
-                    <h1 class="mission-title">{{ section.title }}</h1>
-                    {% for block in section.blocks.all %}
-                    <p class="mission-description">{{ block.text }}</p>
-                    {% endfor %}
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
+            <div class="brand-content">
+                <h1 class="brand-title">Play Vision</h1>
 
-                    {% if not cms_sections or not cms_sections|length %}
-                    <h1 class="mission-title brand-title">Play Vision</h1>
+                <p class="brand-paragraph">
+                    Ми створюємо нову систему координат: поєднуємо освіту, менторство та технології,
+                    щоб зробити твій шлях у футболі зрозумілим. Це екосистема для фахівців, гравців
+                    та батьків, які шукають не випадкових порад, а чітких і системних кроків у
+                    розвитку кар'єри.
+                </p>
 
-                    <p class="mission-description brand-paragraph">
-                        Ми створюємо нову систему координат: поєднуємо освіту, менторство та технології,
-                        щоб зробити твій шлях у футболі зрозумілим. Це екосистема для фахівців, гравців
-                        та батьків, які шукають не випадкових порад, а чітких і системних кроків у
-                        розвитку кар'єри.
-                    </p>
+                <p class="brand-paragraph">
+                    Ми знаємо, куди рухаємось, і маємо досвід, щоб вести за собою.
+                </p>
 
-                    <p class="mission-description brand-paragraph">
-                        Ми знаємо, куди рухаємось, і маємо досвід, щоб вести за собою.
-                    </p>
-
-                    <p class="mission-description brand-paragraph">
-                        Play Vision змінює культуру футболу: від хаотичних рішень до продуманих траєкторій,
-                        від поодиноких зусиль — до спільноти, яка творить майбутнє гри.
-                    </p>
-                    {% endif %}
-                </div>
-                <div class="mission-visual">
-                    <div class="play-vision-logo">
-                        <div class="logo-container">
-                            <h2 class="logo-text">PLAY VISION</h2>
-                            <div class="logo-subtitle">
-                                <span class="football-icon">⚽</span>
-                                «Футбольний трикутник»
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <p class="brand-paragraph">
+                    Play Vision змінює культуру футболу: від хаотичних рішень до продуманих траєкторій,
+                    від поодиноких зусиль — до спільноти, яка творить майбутнє гри.
+                </p>
             </div>
         </div>
     </section>

@@ -10,6 +10,8 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/hub.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/hub-additions.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub-boards.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-quotes.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/search.css' %}">
 {% endblock %}
 
@@ -148,12 +150,14 @@
 
     {% comment %} СТАРІ ЦИТАТИ ВИДАЛЕНО {% endcomment %}
 
+
     <!-- 4 Інформаційні борди -->
     <section class="hub-boards">
         <div class="container">
             <div class="boards-grid">
                 <!-- Борд 1 -->
-                <div class="board-card">
+                <div class="board-card board-card-1">
+                    <div class="board-icon">📚</div>
                     <h3 class="board-title">Твоя бібліотека футбольних знань</h3>
                     <p class="board-description">
                         Хаб знань — освітня платформа для тренерів, аналітиків, скаутів, менеджерів і всіх,
@@ -164,7 +168,8 @@
                 </div>
 
                 <!-- Борд 2 -->
-                <div class="board-card">
+                <div class="board-card board-card-2">
+                    <div class="board-icon">⚽</div>
                     <h3 class="board-title">Навчання від практиків, а не теоретиків</h3>
                     <p class="board-description">
                         Усі матеріали створені фахівцями з досвідом роботи в клубах, академіях і федераціях.
@@ -174,7 +179,8 @@
                 </div>
 
                 <!-- Борд 3 -->
-                <div class="board-card">
+                <div class="board-card board-card-3">
+                    <div class="board-icon">🎓</div>
                     <h3 class="board-title">Футбольна освіта нового покоління</h3>
                     <p class="board-description">
                         Структуровані модулі, практичні завдання, сертифікати. Знання і рекомендації від експертів.
@@ -184,7 +190,8 @@
                 </div>
 
                 <!-- Борд 4 -->
-                <div class="board-card">
+                <div class="board-card board-card-4">
+                    <div class="board-icon">🌍</div>
                     <h3 class="board-title">Європейський підхід — українська мова</h3>
                     <p class="board-description">
                         Методики UEFA, філософія клубів топ-рангу, підходи до аналізу за сучасними стандартами.
@@ -306,7 +313,8 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                            current_category|default:''==category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -414,19 +422,20 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
+                                    %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
+                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
                                     назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
+                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
                                     назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
+                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
                                     ціною (спадання)
                                 </option>
                             </select>
@@ -453,7 +462,9 @@
                                         {% if course.is_featured %}
                                         <span class="badge badge-top">топ-продажів</span>
                                         {% endif %}
-                                        {% if course.created_at|timesince|slice:":2" == "0 " or course.created_at|timesince|slice:":3" == "1 д" or course.created_at|timesince|slice:":3" == "2 д" %}
+                                        {% if course.created_at|timesince|slice:":2" == "0 " or
+                                        course.created_at|timesince|slice:":3" == "1 д" or
+                                        course.created_at|timesince|slice:":3" == "2 д" %}
                                         <span class="badge badge-new">новинка</span>
                                         {% endif %}
                                         {% if course.rating >= 4.5 and course.enrollment_count >= 100 %}
@@ -582,14 +593,44 @@
     </section>
 </div>
 
-<!-- Support Widget -->
+<!-- Support Widget з функціоналом -->
 <div class="support-widget">
-    <button class="support-btn">
+    <button class="support-btn" data-action="openSupport" aria-label="Відкрити підтримку">
         <svg class="icon" viewBox="0 0 24 24">
             <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
         </svg>
         <span class="support-text">Підтримка</span>
     </button>
+
+    <!-- Dropdown меню -->
+    <div class="support-dropdown is-hidden">
+        <div class="support-option">
+            <button type="button" data-action="openAIChat" class="support-option-btn">
+                <svg class="option-icon" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                <span>AI Помічник</span>
+            </button>
+        </div>
+        <div class="support-option">
+            <a href="https://t.me/playvision_support_bot" target="_blank" rel="noopener" class="support-option-btn">
+                <svg class="option-icon" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+                </svg>
+                <span>Telegram підтримка</span>
+            </a>
+        </div>
+        <div class="support-option">
+            <a href="mailto:support@playvision.com" class="support-option-btn">
+                <svg class="option-icon" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+                <span>Email підтримка</span>
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

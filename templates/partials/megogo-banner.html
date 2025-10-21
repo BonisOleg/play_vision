@@ -1,0 +1,53 @@
+{% load static %}
+<!-- MEGOGO-style banner з мозаїкою курсів -->
+<section class="megogo-banner">
+    <div class="container">
+        <div class="banner-content">
+            <!-- Ліва частина: текст та кнопка -->
+            <div class="banner-text-section">
+                <h2 class="banner-title">Усі знання в одній платформі!</h2>
+                <p class="banner-subtitle">Курси, вебінари, івенти та ментор-коучінг — навчайся на Play Vision</p>
+
+                <div class="banner-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{ courses_count|default:"50+" }}</span>
+                        <span class="stat-label">курсів</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ events_count|default:"20+" }}</span>
+                        <span class="stat-label">івентів</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ materials_count|default:"200+" }}</span>
+                        <span class="stat-label">матеріалів</span>
+                    </div>
+                </div>
+
+                <a href="{% url 'core:pricing' %}" class="banner-cta-btn">
+                    Обрати план від 299 грн
+                </a>
+            </div>
+
+            <!-- Права частина: мозаїка курсів (12 плиток) -->
+            <div class="banner-mosaic">
+                {% for course in featured_courses|slice:":12" %}
+                <div class="mosaic-item"
+                    style="background-image: url('{% if course.thumbnail %}{{ course.thumbnail.url }}{% else %}{% static 'images/course-placeholder.jpg' %}{% endif %}');">
+                    <div class="mosaic-overlay">
+                        <span class="mosaic-title">{{ course.title|truncatewords:3 }}</span>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Fallback плитки якщо немає курсів -->
+                {% for i in "123456789012" %}
+                <div class="mosaic-item mosaic-placeholder">
+                    <div class="mosaic-overlay">
+                        <span class="mosaic-icon">📚</span>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

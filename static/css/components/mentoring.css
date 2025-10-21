@@ -1,91 +1,103 @@
 /* Ментор-коучінг сторінка */
 
-.mentoring-container {
-    background: var(--silver-white);
+.mentoring-page {
+    min-height: 100vh;
 }
 
-/* === Блок 1: Вступ === */
-.mentoring-intro {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+/* БЛОК 1: Hero */
+.mentoring-hero {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
 }
 
-.mentoring-intro .section-title {
-    font-size: 2.5rem;
+[data-theme="dark"] .mentoring-hero {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+.page-title {
+    font-size: 3rem;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 40px;
-    color: #1f2937;
+    margin-bottom: 3rem;
+    color: var(--text-primary);
 }
 
-.intro-content {
+.hero-content {
     max-width: 900px;
     margin: 0 auto;
 }
 
-.intro-paragraph {
-    font-size: 1.125rem;
+.lead-text {
+    font-size: 1.25rem;
     line-height: 1.8;
-    color: #4b5563;
-    margin-bottom: 24px;
-    text-align: justify;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
 }
 
-/* === Блок 2: Структура (шестикутники) === */
+/* БЛОК 2: Структура з шестикутниками */
 .mentoring-structure {
-    padding: 80px 20px;
+    padding: 4rem 0;
     background: white;
 }
 
-.mentoring-structure .section-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 16px;
-    color: #1f2937;
+[data-theme="dark"] .mentoring-structure {
+    background: var(--bg-secondary);
 }
 
-.mentoring-structure .section-subtitle {
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.section-subtitle {
     font-size: 1.125rem;
     text-align: center;
-    color: #6b7280;
-    margin-bottom: 60px;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
 }
 
 .hexagons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.hexagon-card {
+.hexagon {
     background: #f9fafb;
     border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 30px;
+    border-radius: 16px;
+    padding: 2rem;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.hexagon-card:hover {
+[data-theme="dark"] .hexagon {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+}
+
+.hexagon:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.15);
-    border-color: #f97316;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .hex-icon {
-    font-size: 48px;
+    font-size: 3rem;
+    margin-bottom: 1rem;
     text-align: center;
-    margin-bottom: 16px;
 }
 
-.hex-title {
+.hexagon h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
     text-align: center;
-    margin-bottom: 20px;
 }
 
 .hex-details {
@@ -95,412 +107,280 @@
 }
 
 .hex-details li {
-    padding: 10px 0;
-    padding-left: 28px;
-    position: relative;
-    color: #4b5563;
-    font-size: 0.938rem;
+    padding: 0.5rem 0;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
     line-height: 1.6;
-    border-bottom: 1px solid #f3f4f6;
-}
-
-.hex-details li:last-child {
-    border-bottom: none;
 }
 
 .hex-details li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: #f97316;
+    content: "• ";
+    color: var(--color-primary);
     font-weight: 700;
+    margin-right: 8px;
 }
 
-/* === Блок 3: Команда === */
+/* Кольори для різних напрямків */
+.hex-intelligence {
+    border-top-color: #8b5cf6;
+}
+
+.hex-physics {
+    border-top-color: #ec4899;
+}
+
+.hex-technique {
+    border-top-color: #f97316;
+}
+
+.hex-mentality {
+    border-top-color: #10b981;
+}
+
+.hex-lifestyle {
+    border-top-color: #3b82f6;
+}
+
+.hex-health {
+    border-top-color: #eab308;
+}
+
+/* БЛОК 3: Команда */
 .mentoring-team {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-    color: white;
+    padding: 4rem 0;
+    background: var(--bg-secondary);
 }
 
-.mentoring-team .section-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 40px;
-    color: white;
+[data-theme="dark"] .mentoring-team {
+    background: var(--bg-primary);
 }
 
 .team-description {
-    max-width: 900px;
-    margin: 0 auto 60px;
-    text-align: center;
-}
-
-.team-description p {
     font-size: 1.125rem;
     line-height: 1.8;
-    color: #d1d5db;
+    color: var(--text-secondary);
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    text-align: center;
 }
 
 .team-structure {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px;
-    max-width: 1100px;
-    margin: 0 auto 60px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
 }
 
-.role-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 24px;
+.structure-item {
     text-align: center;
-    transition: all 0.3s ease;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.role-card:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #f97316;
-    transform: translateY(-2px);
+[data-theme="dark"] .structure-item {
+    background: var(--bg-secondary);
 }
 
-.role-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #f97316;
-    margin-bottom: 12px;
+.structure-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
-.role-card p {
-    font-size: 0.938rem;
-    color: #d1d5db;
-    line-height: 1.6;
+.structure-item h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.structure-item p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
 }
 
 .contact-info {
     text-align: center;
-    padding: 40px;
-    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    background: white;
     border-radius: 12px;
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
+[data-theme="dark"] .contact-info {
+    background: var(--bg-secondary);
+}
+
 .contact-info h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #9ca3af;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
 }
 
 .contact-name {
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
-    margin-bottom: 8px;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
 }
 
 .contact-email {
     font-size: 1.125rem;
-    color: #f97316;
+    color: var(--color-primary);
     text-decoration: none;
-    transition: color 0.2s ease;
 }
 
 .contact-email:hover {
-    color: #fb923c;
     text-decoration: underline;
 }
 
-/* === Блок 4: Методологія === */
+/* БЛОК 4: Методологія */
 .mentoring-methodology {
-    padding: 80px 20px;
+    padding: 4rem 0;
     background: white;
 }
 
-.mentoring-methodology .section-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 24px;
-    color: #1f2937;
+[data-theme="dark"] .mentoring-methodology {
+    background: var(--bg-secondary);
 }
 
 .methodology-intro {
-    max-width: 800px;
-    margin: 0 auto 60px;
-    text-align: center;
-}
-
-.methodology-intro p {
     font-size: 1.125rem;
     line-height: 1.8;
-    color: #6b7280;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
 }
 
 .principles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
 .principle-card {
-    background: #f9fafb;
-    border: 2px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 32px;
-    transition: all 0.3s ease;
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border-left: 4px solid var(--color-primary);
     position: relative;
-    overflow: hidden;
 }
 
-.principle-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #f97316, #fb923c);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.principle-card:hover::before {
-    transform: scaleX(1);
-}
-
-.principle-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(249, 115, 22, 0.15);
-    border-color: #f97316;
+[data-theme="dark"] .principle-card {
+    background: var(--bg-primary);
 }
 
 .principle-number {
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, #f97316, #fb923c);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.principle-card h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    margin: 0 auto 20px;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
 }
 
-.principle-title {
-    font-size: 1.375rem;
-    font-weight: 700;
-    color: #1f2937;
-    text-align: center;
-    margin-bottom: 16px;
-}
-
-.principle-description {
+.principle-card p {
     font-size: 1rem;
-    line-height: 1.7;
-    color: #4b5563;
-    text-align: center;
+    line-height: 1.6;
+    color: var(--text-secondary);
 }
 
-/* === Блок 5: CTA кнопки === */
+/* БЛОК 5: CTA */
 .mentoring-cta {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #f97316 0%, #e11d48 100%);
 }
 
 .cta-buttons {
     display: flex;
-    gap: 20px;
     justify-content: center;
-    align-items: center;
+    gap: 1.5rem;
     flex-wrap: wrap;
 }
 
 .btn-large {
-    padding: 16px 32px;
+    padding: 1.25rem 2.5rem;
     font-size: 1.125rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
 }
 
-.btn-large .icon {
-    flex-shrink: 0;
+.btn-icon {
+    margin-right: 8px;
 }
 
-/* === Футбольний трикутник === */
-.football-triangle {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #f3f4f6 0%, white 100%);
-}
-
-.football-triangle .section-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 16px;
-    color: #1f2937;
-}
-
-.football-triangle .section-subtitle {
-    font-size: 1.125rem;
-    text-align: center;
-    color: #6b7280;
-    margin-bottom: 60px;
-}
-
-.triangle-diagram {
-    position: relative;
-    max-width: 500px;
-    margin: 0 auto 60px;
-    padding: 40px;
-}
-
-.triangle-lines {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-}
-
-.triangle-vertex {
-    position: absolute;
+.mentoring-cta .btn-outline {
     background: white;
-    border: 3px solid #f97316;
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    min-width: 140px;
-    z-index: 1;
-    transition: all 0.3s ease;
+    color: var(--color-primary);
+    border-color: white;
 }
 
-.triangle-vertex:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.2);
+.mentoring-cta .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.9);
 }
 
-.triangle-top {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.triangle-left {
-    bottom: 0;
-    left: 0;
-}
-
-.triangle-right {
-    bottom: 0;
-    right: 0;
-}
-
-.vertex-icon {
-    font-size: 40px;
-    margin-bottom: 8px;
-}
-
-.triangle-vertex h3 {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0;
-}
-
-.triangle-description {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.triangle-description p {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: #4b5563;
-}
-
-/* === Responsive === */
-@media (max-width: 768px) {
-
-    .mentoring-intro,
-    .mentoring-structure,
-    .mentoring-team,
-    .mentoring-methodology,
-    .mentoring-cta,
-    .football-triangle {
-        padding: 60px 16px;
-    }
-
-    .section-title {
-        font-size: 1.875rem;
-    }
-
+/* Responsive */
+@media (max-width: 992px) {
     .hexagons-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .team-structure {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .principles-grid {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .hexagons-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .team-structure {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .lead-text {
+        font-size: 1.125rem;
+    }
 
     .cta-buttons {
         flex-direction: column;
+        gap: 1rem;
     }
 
     .btn-large {
         width: 100%;
-        justify-content: center;
-    }
-
-    .triangle-diagram {
-        padding: 20px;
-    }
-
-    .triangle-vertex {
-        min-width: 100px;
-        padding: 16px 12px;
-    }
-
-    .vertex-icon {
-        font-size: 32px;
-    }
-
-    .triangle-vertex h3 {
-        font-size: 0.938rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .intro-paragraph {
-        font-size: 1rem;
-    }
-
-    .hexagon-card {
-        padding: 20px;
-    }
-
-    .hex-icon {
-        font-size: 40px;
-    }
-
-    .hex-title {
-        font-size: 1.25rem;
     }
 }

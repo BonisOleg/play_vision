@@ -3,12 +3,11 @@ from apps.cms.models import HeroSlide
 
 
 class Command(BaseCommand):
-    help = 'Створити 6 hero слайдів згідно usertask.md'
+    help = 'Створити 6 конкретних hero слайдів згідно usertask.md'
 
     def handle(self, *args, **options):
-        self.stdout.write('Створюємо hero слайди...')
+        self.stdout.write('Створюємо hero слайди...\n')
         
-        # 6 слайдів згідно usertask.md розділ 4, блок 1
         slides_data = [
             {
                 'title': 'Ми відкрилися. Play Vision стартує!',
@@ -16,8 +15,6 @@ class Command(BaseCommand):
                 'badge': 'НОВИНА',
                 'cta_text': 'Дізнатися більше',
                 'cta_url': '/about/',
-                'button_style': 'red',
-                'background_style': 'white',
                 'order': 1,
                 'is_active': True,
             },
@@ -27,8 +24,6 @@ class Command(BaseCommand):
                 'badge': '',
                 'cta_text': 'Календар подій',
                 'cta_url': '/events/',
-                'button_style': 'white',
-                'background_style': 'dark',
                 'order': 2,
                 'is_active': True,
             },
@@ -38,19 +33,15 @@ class Command(BaseCommand):
                 'badge': '',
                 'cta_text': 'Увійти до Хабу',
                 'cta_url': '/hub/',
-                'button_style': 'white-on-red',
-                'background_style': 'red',
                 'order': 3,
                 'is_active': True,
             },
             {
-                'title': 'КОУЧИНГ',
+                'title': 'Ментор-коучінг',
                 'subtitle': 'Індивідуальний супровід спортсменів, тренерів і команд: ментальність, техніка, фізична й ігрова підготовка.',
                 'badge': '',
                 'cta_text': 'Обрати програму',
                 'cta_url': '/mentor-coaching/',
-                'button_style': 'black',
-                'background_style': 'white',
                 'order': 4,
                 'is_active': True,
             },
@@ -60,45 +51,37 @@ class Command(BaseCommand):
                 'badge': '',
                 'cta_text': 'Познайомитися з нами',
                 'cta_url': '/about/',
-                'button_style': 'red',
-                'background_style': 'white',
                 'order': 5,
                 'is_active': True,
             },
             {
-                'title': 'НАПРЯМИ',
-                'subtitle': 'Івенти, Коучинг, Хаб знань, Інновації і технології. Повна екосистема футбольного розвитку.',
+                'title': 'Напрямки діяльності',
+                'subtitle': 'Освіта • Івенти • Ментор-коучінг • Програма лояльності',
                 'badge': '',
-                'cta_text': 'Дізнатися більше',
+                'cta_text': 'Дізнатись більше',
                 'cta_url': '/about/',
-                'button_style': 'black',
-                'background_style': 'brand',
                 'order': 6,
                 'is_active': True,
             },
         ]
         
+        created_count = 0
+        updated_count = 0
+        
         for data in slides_data:
-            slide, created = HeroSlide.objects.get_or_create(
-                title=data['title'],
+            slide, created = HeroSlide.objects.update_or_create(
+                order=data['order'],
                 defaults=data
             )
             if created:
-                self.stdout.write(self.style.SUCCESS(f'✓ Створено слайд: {data["title"]}'))
+                created_count += 1
+                self.stdout.write(self.style.SUCCESS(f'✓ Створено слайд #{data["order"]}: {data["title"]}'))
             else:
-                # Оновити дані якщо слайд вже існує
-                for key, value in data.items():
-                    setattr(slide, key, value)
-                slide.save()
-                self.stdout.write(f'  Слайд вже існує (оновлено): {data["title"]}')
+                updated_count += 1
+                self.stdout.write(f'  Оновлено слайд #{data["order"]}: {data["title"]}')
         
         self.stdout.write('')
-        self.stdout.write(self.style.SUCCESS('✅ Всі hero слайди створено!'))
+        self.stdout.write(self.style.SUCCESS(f'✅ Готово! Створено: {created_count}, Оновлено: {updated_count}'))
         self.stdout.write('')
-        self.stdout.write('ВАЖЛИВО:')
-        self.stdout.write('  • Завантажте зображення для кожного слайду (1920x1080)')
-        self.stdout.write('  • Використовуйте БІЛІ РАМКИ навколо банерів (НЕ заливку!)')
-        self.stdout.write('  • На кожному слайді тільки ОДНА ЗЕЛЕНА кнопка зі стрілкою →')
-        self.stdout.write('')
-        self.stdout.write(f'  Всього слайдів: {HeroSlide.objects.filter(is_active=True).count()}')
-
+        self.stdout.write('💡 Тепер додайте зображення до слайдів через Django Admin:')
+        self.stdout.write('   http://localhost:8000/admin/cms/heroslide/')

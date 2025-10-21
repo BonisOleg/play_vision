@@ -20,7 +20,8 @@
                     <nav class="breadcrumb">
                         <a href="{% url 'content:course_list' %}">Хаб знань</a>
                         <span>/</span>
-                        <a href="{% url 'content:course_list' %}?category={{ course.category.slug }}">{{ course.category.name }}</a>
+                        <a href="{% url 'content:course_list' %}?category={{ course.category.slug }}">{{
+                            course.category.name }}</a>
                         <span>/</span>
                         <span>{{ course.title }}</span>
                     </nav>
@@ -106,11 +107,11 @@
 
                         <div class="action-buttons">
                             {% if not user.is_authenticated %}
-                            <a href="{% url 'accounts:register' %}?next={{ request.get_full_path }}"
+                            <a href="{% url 'accounts:register' %}?next={{ request.get_full_path }}&add_to_cart=course_{{ course.id }}"
                                 class="btn btn-primary btn-large">
                                 Вступити в клуб
                             </a>
-                            <p class="hint">Зареєструйтесь для доступу до матеріалів</p>
+                            <p class="hint">Зареєструйтесь і товар автоматично потрапить в кошик</p>
                             {% elif has_access %}
                             <a href="#course-materials" class="btn btn-primary btn-large">
                                 Розпочати навчання
@@ -285,9 +286,13 @@
             <p>Хочете побачити повний курс?</p>
             <div class="preview-actions">
                 {% if not user.is_authenticated %}
-                <a href="{% url 'accounts:register' %}" class="btn btn-primary">Вступити в клуб</a>
+                <a href="{% url 'accounts:register' %}?next={{ request.get_full_path }}&add_to_cart=course_{{ course.id }}"
+                    class="btn btn-primary">
+                    Вступити в клуб
+                </a>
+                <p class="preview-hint">Товар буде автоматично доданий в кошик після реєстрації</p>
                 {% else %}
-                <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">Оформити підписку</a>
+                <a href="{% url 'core:pricing' %}" class="btn btn-primary">Оформити підписку</a>
                 <button class="btn btn-outline" hx-post="{% url 'htmx:cart:add_to_cart' %}"
                     hx-vals='{"item_type": "course", "item_id": "{{ course.id }}"}'>
                     Купити за {{ course.price }}₴
