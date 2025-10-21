@@ -6,8 +6,6 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/home-additions.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/home-calendar.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/megogo-banner.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/parallax.css' %}">
 <link rel="preload" href="{% static 'images/hiroday.png' %}" as="image">
 <link rel="preload" href="{% static 'images/hironight.png' %}" as="image">
@@ -156,7 +154,7 @@
                     <div class="course-content">
                         <div class="course-number">КУРС #1</div>
                         <h3 class="course-title">Тренерські принципи</h3>
-                        <p class="course-description">Основи ефективного коучінгу та методології тренувального процесу.
+                        <p class="course-description">Основи ефективного коучингу та методології тренувального процесу.
                         </p>
                         <a href="{% url 'content:course_list' %}" class="course-link">Огляд курсу →</a>
                     </div>
@@ -202,19 +200,19 @@
                     </div>
                 </div>
 
-                <svg class="connection-lines-svg" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg"
+                <svg class="connection-lines-svg" viewBox="0 0 700 650" xmlns="http://www.w3.org/2000/svg"
                     preserveAspectRatio="xMidYMid meet">
-                    <line class="connection-line" data-index="0" x1="350" y1="350" x2="350" y2="150" stroke="red"
+                    <line class="connection-line" data-index="0" x1="350" y1="325" x2="350" y2="100" stroke="red"
                         stroke-width="2" />
-                    <line class="connection-line" data-index="1" x1="350" y1="350" x2="523" y2="250" stroke="red"
+                    <line class="connection-line" data-index="1" x1="350" y1="325" x2="566" y2="200" stroke="red"
                         stroke-width="2" />
-                    <line class="connection-line" data-index="2" x1="350" y1="350" x2="523" y2="450" stroke="red"
+                    <line class="connection-line" data-index="2" x1="350" y1="325" x2="566" y2="450" stroke="red"
                         stroke-width="2" />
-                    <line class="connection-line" data-index="3" x1="350" y1="350" x2="350" y2="550" stroke="red"
+                    <line class="connection-line" data-index="3" x1="350" y1="325" x2="350" y2="550" stroke="red"
                         stroke-width="2" />
-                    <line class="connection-line" data-index="4" x1="350" y1="350" x2="177" y2="450" stroke="red"
+                    <line class="connection-line" data-index="4" x1="350" y1="325" x2="134" y2="450" stroke="red"
                         stroke-width="2" />
-                    <line class="connection-line" data-index="5" x1="350" y1="350" x2="177" y2="250" stroke="red"
+                    <line class="connection-line" data-index="5" x1="350" y1="325" x2="134" y2="200" stroke="red"
                         stroke-width="2" />
                 </svg>
 
@@ -374,59 +372,6 @@
     {% comment %}
     <!-- 5. VALUES SECTION - ВИДАЛЕНО ЗА ВИМОГОЮ КЛІЄНТА -->
     {% endcomment %}
-
-    <!-- 5. КАЛЕНДАР ІВЕНТІВ НА ГОЛОВНІЙ -->
-    <section class="fullscreen-section home-events-section">
-        <div class="section-content">
-            <h2 class="section-title">Календар подій</h2>
-            <p class="section-subtitle">Обери дату, щоб побачити події</p>
-
-            <!-- Вкладки типів подій -->
-            <div class="event-tabs">
-                <button class="event-tab active" data-event-type="all">Усі</button>
-                <button class="event-tab" data-event-type="forum">Форуми</button>
-                <button class="event-tab" data-event-type="webinar">Вебінари</button>
-                <button class="event-tab" data-event-type="course_launch">Запуски курсів</button>
-                <button class="event-tab" data-event-type="news">Новини</button>
-            </div>
-
-            <!-- Простий календар (тиждень) -->
-            <div class="week-calendar">
-                {% for day in calendar_week %}
-                <div class="week-day {% if day.has_events %}has-event{% endif %}"
-                    data-date="{{ day.date|date:'Y-m-d' }}">
-                    <div class="day-number">{{ day.date|date:'d' }}</div>
-                    <div class="day-name">{{ day.date|date:'D' }}</div>
-                    {% if day.events_count > 0 %}
-                    <div class="events-badge">{{ day.events_count }}</div>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Опис обраної події -->
-            <div class="selected-event-info">
-                <div id="event-details">
-                    {% if featured_event %}
-                    <h3 class="event-name">{{ featured_event.title }}</h3>
-                    <p class="event-description">{{ featured_event.short_description }}</p>
-                    <div class="event-meta">
-                        <span class="event-time">{{ featured_event.start_datetime|date:"H:i" }}</span>
-                        <span class="event-type">{{ featured_event.get_event_type_display }}</span>
-                        <span class="event-location">{% if featured_event.is_online %}Онлайн{% else %}{{
-                            featured_event.location }}{% endif %}</span>
-                    </div>
-                    <a href="{{ featured_event.get_absolute_url }}" class="btn btn-primary">Підписатися</a>
-                    {% else %}
-                    <p class="no-event">Оберіть дату щоб побачити подію</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MEGOGO-style Banner -->
-    {% include 'partials/megogo-banner.html' %}
 
     <!-- 6. CTA SECTION -->
     <section class="fullscreen-section cta-section cta-simple">
