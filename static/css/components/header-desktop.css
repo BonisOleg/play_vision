@@ -111,7 +111,7 @@
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    padding: 4px;
+    padding: 3.6px;
     background: var(--color-bg);
     border: 2px solid var(--color-text);
     border-radius: 50px;
@@ -134,9 +134,9 @@
 /* Анімований слайдер (жолобок) - ОНОВЛЕНА ПЛАВНІША АНІМАЦІЯ */
 .nav-tabs-slider {
     position: absolute;
-    top: 4px;
-    left: 4px;
-    height: calc(100% - 8px);
+    top: 3.6px;
+    left: 3.6px;
+    height: calc(100% - 7.2px);
     background: var(--color-text);
     border-radius: 50px;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -168,8 +168,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 18px;
-    min-height: 44px;
+    padding: 9px 18px;
+    min-height: 39.6px;
     font-size: 15px;
     font-weight: 500;
     color: var(--color-text);
@@ -197,6 +197,18 @@
 .nav-tab-btn:hover {
     text-decoration: none;
     transform: translateY(-1px);
+    color: var(--color-bg);
+}
+
+/* ТЕМНА ТЕМА - темний текст при hover */
+[data-theme="dark"] .nav-tab-btn:hover {
+    color: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn:hover {
+        color: #1a1a1a;
+    }
 }
 
 .nav-tab-btn:active {
@@ -219,44 +231,6 @@
     }
 }
 
-/* Виділена кнопка підписки - ПОМАРАНЧЕВА */
-.nav-tab-btn--highlighted {
-    background: linear-gradient(135deg, #f97316, #fb923c);
-    color: white;
-    font-weight: 600;
-}
-
-.nav-tab-btn--highlighted:hover {
-    background: linear-gradient(135deg, #ea580c, #f97316);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
-}
-
-/* Коли кнопка підписки активна */
-.nav-tab-btn--highlighted.active {
-    background: linear-gradient(135deg, #ea580c, #f97316);
-    color: white;
-    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
-}
-
-/* ТЕМНА ТЕМА - підписка залишається помаранчевою */
-[data-theme="dark"] .nav-tab-btn--highlighted {
-    color: white;
-}
-
-[data-theme="dark"] .nav-tab-btn--highlighted.active {
-    color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .nav-tab-btn--highlighted {
-        color: white;
-    }
-
-    [data-theme="auto"] .nav-tab-btn--highlighted.active {
-        color: white;
-    }
-}
 
 .nav-tab-text {
     position: relative;

@@ -20,8 +20,9 @@
         if (!slider || tabs.length === 0) return;
 
         // Константи для точного позиціонування
-        const CONTAINER_PADDING = 4; // padding контейнера в px
+        const CONTAINER_PADDING = 3.6; // padding контейнера в px
         const TAB_GAP = 2; // gap між табами в px
+        const RIGHT_OFFSET = 5; // відступ справа в px
 
         /**
          * Оновлює позицію та розмір слайдера з точним обрамленням
@@ -38,12 +39,20 @@
             const left = tabRect.left - containerRect.left;
             const width = tabRect.width;
 
+            // Отримуємо всі таби як масив
+            const tabsArray = Array.from(tabs);
+            const tabIndex = tabsArray.indexOf(targetTab);
+            const isLastTab = tabIndex === tabsArray.length - 1;
+
+            // Застосовуємо відступ для останнього табу (праворуч)
+            const adjustedWidth = isLastTab ? width - RIGHT_OFFSET : width;
+
             // Застосовуємо стилі з точним позиціонуванням
             if (instant) {
                 slider.style.transition = 'none';
             }
 
-            slider.style.width = `${width}px`;
+            slider.style.width = `${adjustedWidth}px`;
             slider.style.transform = `translateX(${left}px)`;
 
             // Відновлюємо анімацію після миттєвого позиціонування
