@@ -101,16 +101,18 @@
 
         if (!message) return;
 
+        console.log('📨 Sending message:', message);
+
+        // Показуємо історію чату ПЕРЕД додаванням повідомлення
+        if (!state.hasMessages) {
+            showChatHistory();
+        }
+
         // Додаємо повідомлення користувача
         addMessage(message, 'user');
 
         // Очищаємо input
         elements.input.value = '';
-
-        // Показуємо історію чату якщо це перше повідомлення
-        if (!state.hasMessages) {
-            showChatHistory();
-        }
 
         // Показуємо кнопку відкріплення
         if (elements.detachBtn) {
@@ -150,9 +152,14 @@
             : elements.messages;
 
         if (container) {
+            console.log('✅ Adding message to container', container);
             container.appendChild(messageEl);
             // Прокручуємо вниз
-            container.scrollTop = container.scrollHeight;
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 10);
+        } else {
+            console.error('❌ Container not found!');
         }
 
         state.hasMessages = true;
@@ -205,9 +212,9 @@
         // Створюємо модальне вікно
         createModal();
 
-        // Приховуємо inline чат
-        if (elements.messages) {
-            elements.messages.style.display = 'none';
+        // Приховуємо весь inline чат контейнер
+        if (elements.inline) {
+            elements.inline.style.display = 'none';
         }
 
         // Переміщаємо повідомлення в модалку
@@ -228,7 +235,12 @@
             state.modal = null;
         }
 
-        // Показуємо inline чат
+        // Показуємо весь inline чат контейнер
+        if (elements.inline) {
+            elements.inline.style.display = 'flex';
+        }
+
+        // Показуємо історію чату якщо є повідомлення
         if (elements.messages && state.hasMessages) {
             elements.messages.style.display = 'flex';
         }
