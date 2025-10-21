@@ -32,16 +32,13 @@
    ======================================== */
 
 .ai-chat-inline {
-    position: relative;
     width: 320px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Messages container - З'ЯВЛЯЄТЬСЯ НАД ІНПУТОМ */
+/* Messages container - ІСТОРІЯ ЗВЕРХУ, ІНПУТ ОПУСКАЄТЬСЯ */
 .ai-chat-messages {
-    position: absolute;
-    bottom: calc(100% + 0px);
-    left: 0;
-    right: 0;
     width: 100%;
     max-height: 50vh;
     overflow-y: auto;
@@ -56,7 +53,6 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    z-index: 10000;
 }
 
 [data-theme="dark"] .ai-chat-messages {
