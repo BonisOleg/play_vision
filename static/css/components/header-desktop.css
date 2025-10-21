@@ -137,7 +137,7 @@
     top: 3.6px;
     left: 3.6px;
     height: calc(100% - 7.2px);
-    background: var(--color-text);
+    background: #ff6b35;
     border-radius: 50px;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     pointer-events: none;
@@ -145,14 +145,14 @@
     opacity: 0;
 }
 
-/* ТЕМНА ТЕМА - світлий слайдер */
+/* ТЕМНА ТЕМА - червоний слайдер */
 [data-theme="dark"] .nav-tabs-slider {
-    background: rgba(255, 255, 255, 0.95);
+    background: #ff6b35;
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tabs-slider {
-        background: rgba(255, 255, 255, 0.95);
+        background: #ff6b35;
     }
 }
 
@@ -197,37 +197,26 @@
 .nav-tab-btn:hover {
     text-decoration: none;
     transform: translateY(-1px);
-    color: var(--color-bg);
-}
-
-/* ТЕМНА ТЕМА - темний текст при hover */
-[data-theme="dark"] .nav-tab-btn:hover {
-    color: #1a1a1a;
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .nav-tab-btn:hover {
-        color: #1a1a1a;
-    }
+    color: white;
 }
 
 .nav-tab-btn:active {
     transform: scale(0.98);
 }
 
-/* Активна кнопка - інвертуємо колір тексту */
+/* Активна кнопка - білий текст на червоному фоні */
 .nav-tab-btn.active {
-    color: var(--color-bg);
+    color: white;
 }
 
-/* ТЕМНА ТЕМА - темний текст на активній кнопці */
+/* ТЕМНА ТЕМА - білий текст на активній кнопці */
 [data-theme="dark"] .nav-tab-btn.active {
-    color: #1a1a1a;
+    color: white;
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tab-btn.active {
-        color: #1a1a1a;
+        color: white;
     }
 }
 

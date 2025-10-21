@@ -394,7 +394,7 @@ Honeycomb pattern:
 
 ### 3. Навігація
 **Desktop:**
-- Головна, Про Play Vision, Хаб знань, Івенти, Ментор-коучінг
+- Головна, Про Play Vision, Хаб знань, Івенти, Ментор-коучинг
 
 **Mobile/Tablet:**
 - Bottom navigation (Головна, Хаб, AI, Кабінет, Кошик)

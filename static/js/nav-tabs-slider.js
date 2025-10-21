@@ -22,7 +22,8 @@
         // Константи для точного позиціонування
         const CONTAINER_PADDING = 3.6; // padding контейнера в px
         const TAB_GAP = 2; // gap між табами в px
-        const RIGHT_OFFSET = 5; // відступ справа в px
+        const WIDTH_REDUCTION = 5; // зменшення ширини всіх кнопок в px
+        const RIGHT_OFFSET = 10; // додатковий відступ справа для останньої кнопки в px
 
         /**
          * Оновлює позицію та розмір слайдера з точним обрамленням
@@ -38,14 +39,15 @@
             // Обчислюємо позицію відносно контейнера
             const left = tabRect.left - containerRect.left;
             const width = tabRect.width;
-
+            
             // Отримуємо всі таби як масив
             const tabsArray = Array.from(tabs);
             const tabIndex = tabsArray.indexOf(targetTab);
             const isLastTab = tabIndex === tabsArray.length - 1;
-
-            // Застосовуємо відступ для останнього табу (праворуч)
-            const adjustedWidth = isLastTab ? width - RIGHT_OFFSET : width;
+            
+            // Зменшуємо ширину всіх кнопок на WIDTH_REDUCTION
+            // Для останньої кнопки додаємо ще RIGHT_OFFSET
+            const adjustedWidth = isLastTab ? width - WIDTH_REDUCTION - RIGHT_OFFSET : width - WIDTH_REDUCTION;
 
             // Застосовуємо стилі з точним позиціонуванням
             if (instant) {
