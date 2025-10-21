@@ -188,8 +188,8 @@
 
 /* === ТЕМНИЙ ДИЗАЙН ДЛЯ НЕЗАРЕЄСТРОВАНИХ === */
 .popup-guest .popup-card {
-    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+    border: 1px solid rgba(229, 9, 20, 0.3);
 }
 
 .popup-guest .popup-close {
@@ -266,7 +266,7 @@
 
 /* === ГРАДІЄНТ ДЛЯ ЗАРЕЄСТРОВАНИХ === */
 .popup-auth .popup-card {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, #E50914 0%, #b8070f 50%, #1a1a1a 100%);
     border: none;
 }
 
@@ -306,14 +306,14 @@
 
 .popup-auth .btn-popup {
     background: white;
-    color: #1e3a8a;
+    color: #1a1a1a;
     font-weight: 700;
     width: 100%;
 }
 
 .popup-auth .btn-popup:hover {
-    background: #fef3c7;
-    color: #1e3a8a;
+    background: #fbbf24;
+    color: #1a1a1a;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.5);
 }
