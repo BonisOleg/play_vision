@@ -313,8 +313,7 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
-                                            current_category|default:''==category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -422,20 +421,19 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
-                                    %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
+                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
                                     назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
+                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
                                     назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
+                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
                                     ціною (спадання)
                                 </option>
                             </select>
@@ -462,9 +460,7 @@
                                         {% if course.is_featured %}
                                         <span class="badge badge-top">топ-продажів</span>
                                         {% endif %}
-                                        {% if course.created_at|timesince|slice:":2" == "0 " or
-                                        course.created_at|timesince|slice:":3" == "1 д" or
-                                        course.created_at|timesince|slice:":3" == "2 д" %}
+                                        {% if course.created_at|timesince|slice:":2" == "0 " or course.created_at|timesince|slice:":3" == "1 д" or course.created_at|timesince|slice:":3" == "2 д" %}
                                         <span class="badge badge-new">новинка</span>
                                         {% endif %}
                                         {% if course.rating >= 4.5 and course.enrollment_count >= 100 %}
