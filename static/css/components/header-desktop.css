@@ -25,7 +25,7 @@
     gap: var(--spacing-md);
     padding: var(--spacing-lg) 0;
     width: 100%;
-    transform: translateX(-30px);
+    transform: translateX(-50px);
 }
 
 /* ========================================
