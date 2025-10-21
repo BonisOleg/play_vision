@@ -335,9 +335,6 @@
                     </div>
                     <h3 class="expert-name">{{ expert.name }}</h3>
                     <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
-                    {% if expert.email %}
-                    <a href="mailto:{{ expert.email }}" class="expert-email">{{ expert.email }}</a>
-                    {% endif %}
                     {% if expert.bio %}
                     <a href="#" class="expert-link">Огляд профілю →</a>
                     {% endif %}
