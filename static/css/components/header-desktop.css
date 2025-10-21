@@ -1,6 +1,6 @@
 /**
- * DESKTOP HEADER STYLES
- * Стилі для desktop меню згідно документації та ~ правил
+ * DESKTOP HEADER STYLES - REDESIGNED
+ * Новий дизайн меню з анімованим слайдером
  * БЕЗ !important, БЕЗ inline styles, зовнішній CSS
  */
 
@@ -14,7 +14,6 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    /* iOS Safari sticky fix */
     -webkit-position: sticky;
     padding-top: env(safe-area-inset-top, 0);
 }
@@ -96,85 +95,306 @@
 }
 
 /* ========================================
-   NAVIGATION ACTIONS
+   NAVIGATION TABS (NEW DESIGN)
    ======================================== */
 
 .header-nav-actions {
     grid-column: 2;
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-lg);
     justify-self: center;
 }
 
-.nav-action-btn {
+/* Контейнер для табів з анімованим слайдером */
+.nav-tabs-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px;
+    background: var(--color-bg);
+    border: 2px solid var(--color-text);
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ТЕМНА ТЕМА - темний фон, світла обводка */
+[data-theme="dark"] .nav-tabs-container {
+    background: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tabs-container {
+        background: #1a1a1a;
+        border-color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+/* Анімований слайдер (жолобок) */
+.nav-tabs-slider {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: calc(100% - 12px);
+    background: var(--color-text);
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+}
+
+/* ТЕМНА ТЕМА - світлий слайдер */
+[data-theme="dark"] .nav-tabs-slider {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tabs-slider {
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* Показуємо слайдер коли є активний елемент */
+.nav-tabs-container:has(.nav-tab-btn.active) .nav-tabs-slider {
+    opacity: 1;
+}
+
+/* Кнопки навігації */
+.nav-tab-btn {
+    position: relative;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    min-width: 44px;
-    height: 44px;
-    padding: 0 12px;
+    padding: 10px 20px;
+    min-height: 44px;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--color-text);
-    border: none;
     background: transparent;
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
-    border-radius: var(--radius-lg);
-    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-    position: relative;
     text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.3s ease, transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.nav-action-btn:hover {
-    background: var(--color-bg-gray);
-    color: var(--color-primary);
-    text-decoration: none;
-    transform: translateY(-2px);
+/* ТЕМНА ТЕМА - світлий текст */
+[data-theme="dark"] .nav-tab-btn {
+    color: rgba(255, 255, 255, 0.9);
 }
 
-.nav-action-btn:active {
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn {
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+.nav-tab-btn:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.nav-tab-btn:active {
     transform: scale(0.98);
 }
 
-.nav-action-btn.active {
-    color: var(--color-primary);
-    background: var(--color-bg-gray);
+/* Активна кнопка - інвертуємо колір тексту */
+.nav-tab-btn.active {
+    color: var(--color-bg);
 }
 
-.nav-action-btn .action-icon {
-    width: 22px;
-    height: 22px;
-    stroke: currentColor;
+/* ТЕМНА ТЕМА - темний текст на активній кнопці */
+[data-theme="dark"] .nav-tab-btn.active {
+    color: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn.active {
+        color: #1a1a1a;
+    }
+}
+
+.nav-tab-text {
+    position: relative;
+    z-index: 3;
+}
+
+/* ========================================
+   DROPDOWN (для івентів)
+   ======================================== */
+
+.nav-action-dropdown {
+    position: relative;
+}
+
+.nav-action-dropdown .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    min-width: 320px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 200;
+    max-height: 80vh;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.nav-action-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-header {
+    padding: 12px 16px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-link {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.dropdown-link:hover {
+    background: var(--color-bg-gray);
+    text-decoration: none;
+}
+
+.dropdown-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dropdown-item-title {
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+.dropdown-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+.dropdown-item-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.dropdown-item-badge--online,
+.dropdown-item-badge--webinar {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+}
+
+.dropdown-item-badge--offline,
+.dropdown-item-badge--seminar,
+.dropdown-item-badge--workshop {
+    background: rgba(239, 68, 68, 0.15);
+    color: #dc2626;
+}
+
+.dropdown-item-badge--hybrid,
+.dropdown-item-badge--forum {
+    background: rgba(249, 115, 22, 0.15);
+    color: #ea580c;
+}
+
+.dropdown-divider {
+    margin: 8px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.dropdown-item--all {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.dropdown-empty {
+    padding: 32px 24px;
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 14px;
+}
+
+/* ========================================
+   HIGHLIGHTED SUBSCRIPTION BUTTON
+   ======================================== */
+
+.nav-action-btn-highlighted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    min-height: 44px;
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+}
+
+.nav-action-btn-highlighted:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35);
+    text-decoration: none;
+}
+
+.nav-action-btn-highlighted:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.nav-action-btn-highlighted .action-icon {
+    width: 20px;
+    height: 20px;
+    stroke: white;
     stroke-width: 2;
 }
 
-.nav-action-btn .action-text {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Виділена кнопка підписки */
-.nav-action-btn--highlighted {
-    background: linear-gradient(135deg, #f97316, #fb923c);
-    color: white;
-    border-radius: 24px;
-    padding: 0 16px;
-}
-
-.nav-action-btn--highlighted:hover {
-    background: linear-gradient(135deg, #ea580c, #f97316);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
-}
-
-.nav-action-btn--highlighted .action-icon {
-    stroke: white;
-}
-
-/* Nav action dropdown для івентів */
-.nav-action-dropdown {
-    position: relative;
+.nav-action-btn-highlighted .action-text {
+    font-size: 15px;
+    font-weight: 600;
 }
 
 /* ========================================
@@ -333,126 +553,21 @@
     display: none;
 }
 
-
-/* ========================================
-   DROPDOWN MENU (для івентів в nav-actions)
-   ======================================== */
-
-.nav-action-dropdown .dropdown-menu {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 300px;
-    background: var(--color-bg);
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    padding: 8px;
-    z-index: 200;
-    max-height: 80vh;
-    overflow-y: auto;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity var(--transition-normal), visibility var(--transition-normal), transform var(--transition-normal);
-}
-
-.nav-action-dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.dropdown-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.dropdown-header {
-    padding: 12px 16px 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-text-light);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.dropdown-link {
-    display: block;
-    padding: 12px 16px;
-    border-radius: 8px;
-    transition: background var(--transition-fast);
-    text-decoration: none;
-    color: var(--color-text);
-}
-
-.dropdown-link:hover {
-    background: var(--color-bg-gray);
-    text-decoration: none;
-}
-
-.dropdown-item-content {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.dropdown-item-title {
+/* Navbar link для неавторизованих */
+.navbar-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--color-text);
-    line-height: 1.4;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.dropdown-item-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 13px;
-    color: var(--color-text-light);
-}
-
-.dropdown-item-badge {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.dropdown-item-badge--online,
-.dropdown-item-badge--webinar {
-    background: rgba(0, 0, 0, 0.1);
-    color: #000000;
-}
-
-.dropdown-item-badge--offline,
-.dropdown-item-badge--seminar,
-.dropdown-item-badge--workshop {
-    background: rgba(229, 9, 20, 0.1);
-    color: #E50914;
-}
-
-.dropdown-item-badge--hybrid,
-.dropdown-item-badge--forum {
-    background: rgba(229, 9, 20, 0.1);
-    color: #b8070f;
-}
-
-.dropdown-divider {
-    margin: 8px 0;
-    border-top: 1px solid var(--color-border);
-}
-
-.dropdown-item--all {
-    font-weight: 600;
+.navbar-link:hover {
     color: var(--color-primary);
-    text-align: center;
-}
-
-.dropdown-empty {
-    padding: 24px;
-    text-align: center;
-    color: var(--color-text-light);
+    text-decoration: none;
 }
 
 /* ========================================
@@ -468,11 +583,6 @@
         display: flex;
         justify-content: space-between;
         gap: var(--spacing-md);
-    }
-
-    .ai-search-container {
-        flex: 1;
-        max-width: 100%;
     }
 
     .header-actions {
@@ -522,7 +632,8 @@
 
 /* Focus visible для keyboard navigation */
 .navbar-icon:focus-visible,
-.nav-action-btn:focus-visible,
+.nav-tab-btn:focus-visible,
+.nav-action-btn-highlighted:focus-visible,
 .dropdown-link:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
@@ -533,7 +644,9 @@
 
     .logo-link,
     .navbar-icon,
-    .nav-action-btn,
+    .nav-tab-btn,
+    .nav-tabs-slider,
+    .nav-action-btn-highlighted,
     .dropdown-menu,
     .theme-icon-light,
     .theme-icon-dark {
@@ -543,14 +656,17 @@
 
 /* High contrast mode */
 @media (prefers-contrast: high) {
-
     .main-header {
         border-width: 2px;
     }
 
     .navbar-icon:hover,
-    .nav-action-btn:hover {
+    .nav-tab-btn:hover {
         outline: 2px solid currentColor;
+    }
+
+    .nav-tabs-container {
+        border-width: 3px;
     }
 }
 
@@ -558,7 +674,7 @@
 @media (max-width: 768px) {
 
     .navbar-icon,
-    .nav-action-btn {
+    .nav-tab-btn {
         min-width: 44px;
         min-height: 44px;
     }
