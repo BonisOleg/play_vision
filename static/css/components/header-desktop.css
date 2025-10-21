@@ -217,17 +217,17 @@
 
 /* Активна кнопка - червоний фірмовий текст */
 .nav-tab-btn.active {
-    color: #ff6b35;
+    color: #E50914;
 }
 
 /* ТЕМНА ТЕМА - червоний текст на активній кнопці */
 [data-theme="dark"] .nav-tab-btn.active {
-    color: #ff6b35;
+    color: #E50914;
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tab-btn.active {
-        color: #ff6b35;
+        color: #E50914;
     }
 }
 
