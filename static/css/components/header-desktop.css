@@ -25,6 +25,8 @@
     gap: var(--spacing-md);
     padding: var(--spacing-lg) 0;
     width: 100%;
+    transform: translateX(-50px);
+    /* Зміщення всього меню ліворуч */
 }
 
 /* ========================================
