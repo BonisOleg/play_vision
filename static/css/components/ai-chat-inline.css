@@ -13,17 +13,24 @@
     align-items: center;
     justify-content: flex-end;
     gap: var(--spacing-md);
+    transform: translateY(-8px);
+}
+
+.header-actions.desktop-actions .navbar-icon {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
 }
 
 /* ========================================
-   INLINE CHAT CONTAINER (DROPDOWN)
+   INLINE CHAT CONTAINER (НА РІВНІ МЕНЮ)
    ======================================== */
 
 .ai-chat-inline {
     position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 8px;
+    top: 50%;
+    right: -340px;
+    transform: translateY(-50%);
     width: 320px;
     display: flex;
     flex-direction: column;
