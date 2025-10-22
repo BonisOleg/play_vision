@@ -163,6 +163,34 @@
                             aria-current="{% if request.resolver_match.url_name == 'pricing' %}page{% else %}false{% endif %}">
                             <span class="nav-tab-text">Підписка</span>
                         </a>
+
+                        <!-- Inline AI Chat (всередині обводки меню) -->
+                        <div class="ai-chat-inline" data-ai-chat-inline>
+                            <!-- Chat Messages Container (історія над інпутом, hidden initially) -->
+                            <div class="ai-chat-messages" data-ai-messages style="display: none;"></div>
+
+                            <!-- Chat Input -->
+                            <div class="ai-chat-input-wrapper">
+                                <input type="text" class="ai-chat-input" placeholder="Запитайте AI помічника..."
+                                    data-ai-input aria-label="Запитання до AI">
+                                <button type="button" class="ai-chat-send-btn" data-ai-send aria-label="Надіслати">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <line x1="22" y1="2" x2="11" y2="13" />
+                                        <polygon points="22,2 15,22 11,13 2,9" />
+                                    </svg>
+                                </button>
+                                <button type="button" class="ai-chat-detach-btn" data-ai-detach
+                                    aria-label="Відкріпити чат" style="display: none;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </nav>
 
@@ -216,34 +244,6 @@
                         </svg>
                         <span class="sr-only">Перемкнути тему</span>
                     </button>
-
-                    <!-- Inline AI Chat (dropdown) -->
-                    <div class="ai-chat-inline" data-ai-chat-inline>
-                        <!-- Chat Messages Container (історія над інпутом, hidden initially) -->
-                        <div class="ai-chat-messages" data-ai-messages style="display: none;"></div>
-
-                        <!-- Chat Input (залишається внизу) -->
-                        <div class="ai-chat-input-wrapper">
-                            <input type="text" class="ai-chat-input" placeholder="Запитайте AI помічника..."
-                                data-ai-input aria-label="Запитання до AI">
-                            <button type="button" class="ai-chat-send-btn" data-ai-send aria-label="Надіслати">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <line x1="22" y1="2" x2="11" y2="13" />
-                                    <polygon points="22,2 15,22 11,13 2,9" />
-                                </svg>
-                            </button>
-                            <button type="button" class="ai-chat-detach-btn" data-ai-detach aria-label="Відкріпити чат"
-                                style="display: none;">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

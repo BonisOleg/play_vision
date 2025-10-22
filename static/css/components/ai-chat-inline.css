@@ -4,34 +4,15 @@
  */
 
 /* ========================================
-   ACTION BUTTONS
-   ======================================== */
-
-.header-actions.desktop-actions {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: var(--spacing-md);
-    transform: translateY(-8px);
-}
-
-.header-actions.desktop-actions .navbar-icon {
-    width: 40px;
-    height: 40px;
-    min-height: 40px;
-}
-
-/* ========================================
-   INLINE CHAT CONTAINER (В ОДНУ ЛІНІЮ З МЕНЮ)
+   INLINE CHAT CONTAINER (ВСЕРЕДИНІ ОБВОДКИ МЕНЮ)
    ======================================== */
 
 .ai-chat-inline {
     position: relative;
-    width: 320px;
+    width: 280px;
     display: flex;
     flex-direction: column;
-    margin-left: var(--spacing-md);
+    margin-left: 12px;
 }
 
 /* Messages container - ІСТОРІЯ ЗВЕРХУ, ІНПУТ ОПУСКАЄТЬСЯ */
