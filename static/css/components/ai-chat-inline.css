@@ -23,18 +23,15 @@
 }
 
 /* ========================================
-   INLINE CHAT CONTAINER (НА РІВНІ МЕНЮ)
+   INLINE CHAT CONTAINER (В ОДНУ ЛІНІЮ З МЕНЮ)
    ======================================== */
 
 .ai-chat-inline {
-    position: absolute;
-    top: 50%;
-    right: -340px;
-    transform: translateY(-50%);
+    position: relative;
     width: 320px;
     display: flex;
     flex-direction: column;
-    z-index: 10000;
+    margin-left: var(--spacing-md);
 }
 
 /* Messages container - ІСТОРІЯ ЗВЕРХУ, ІНПУТ ОПУСКАЄТЬСЯ */
