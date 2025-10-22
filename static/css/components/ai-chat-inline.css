@@ -37,7 +37,7 @@
      */
     top: 0;
     right: 0;
-    transform: translate(-1px, 1px);
+    transform: translate(-2px, 2px);
 }
 
 /* Messages container - ІСТОРІЯ ЗВЕРХУ, ІНПУТ ОПУСКАЄТЬСЯ */
