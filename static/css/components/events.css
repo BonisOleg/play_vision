@@ -33,10 +33,24 @@
     margin-bottom: 8px;
 }
 
+[data-theme="dark"] .calendar-title,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .calendar-title {
+        color: #ffffff;
+    }
+}
+
 .calendar-subtitle {
     font-size: 16px;
     color: var(--color-text-light);
     margin: 0;
+}
+
+[data-theme="dark"] .calendar-subtitle,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .calendar-subtitle {
+        color: #ffffff;
+    }
 }
 
 .calendar-filters {
@@ -112,6 +126,13 @@
     text-align: center;
 }
 
+[data-theme="dark"] .current-period,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .current-period {
+        color: #ffffff;
+    }
+}
+
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -164,6 +185,8 @@
     color: white;
     border: 2px solid var(--color-primary);
     box-shadow: 0 4px 20px var(--color-primary-alpha-20);
+    position: relative;
+    z-index: 10;
 }
 
 .calendar-day--today .day-number,
@@ -180,6 +203,8 @@
 .calendar-day--has-events {
     border: 2px solid var(--color-primary);
     background: var(--color-bg-gray);
+    position: relative;
+    z-index: 5;
 }
 
 .calendar-day--past {
@@ -713,9 +738,23 @@
     margin-bottom: 16px;
 }
 
+[data-theme="dark"] .page-title,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .page-title {
+        color: #ffffff;
+    }
+}
+
 .page-subtitle {
     font-size: 18px;
     color: var(--color-text-light);
+}
+
+[data-theme="dark"] .page-subtitle,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .page-subtitle {
+        color: #ffffff;
+    }
 }
 
 .events-content {
@@ -2384,91 +2423,118 @@
 
 /* === DARK THEME OVERRIDES === */
 
-/* Events sidebar in dark mode */
+/* Backgrounds in dark mode */
 [data-theme="dark"] .events-sidebar,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .events-sidebar {
-        background: #1a1a1a;
-    }
-}
-
-/* Event items in dark mode */
 [data-theme="dark"] .event-item,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-item {
-        background: #1a1a1a;
-    }
-}
-
-/* Filter selects in dark mode */
 [data-theme="dark"] .filter-select,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .filter-select {
-        background: #1a1a1a;
-    }
-}
-
-/* Navigation buttons in dark mode */
 [data-theme="dark"] .nav-btn,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .nav-btn {
-        background: #1a1a1a;
-    }
-}
-
-/* Search input in dark mode */
 [data-theme="dark"] .search-input,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .search-input {
-        background: #1a1a1a;
-    }
-}
-
-/* Pagination links in dark mode */
 [data-theme="dark"] .pagination-link,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .pagination-link {
-        background: #1a1a1a;
-    }
-}
-
-/* Event main content in dark mode */
 [data-theme="dark"] .event-main,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-main {
-        background: #1a1a1a;
-    }
-}
-
-/* Sidebar cards in dark mode */
 [data-theme="dark"] .registration-card,
 [data-theme="dark"] .organizer-card,
 [data-theme="dark"] .share-card,
+[data-theme="dark"] .event-calendar .calendar-day,
+[data-theme="dark"] .event-card,
+[data-theme="dark"] .timeline-marker,
+[data-theme="dark"] .tier-card,
+[data-theme="dark"] .event-details-panel,
+[data-theme="dark"] .payment-option,
+[data-theme="dark"] .audience-item,
+[data-theme="dark"] .benefit-item,
+[data-theme="dark"] .schedule-item,
+[data-theme="dark"] .speaker-card,
+[data-theme="dark"] .next-event-card,
+[data-theme="dark"] .share-button,
+[data-theme="dark"] .more-events-btn,
+[data-theme="dark"] .past-event-card,
+[data-theme="dark"] .upcoming-link,
+[data-theme="dark"] .event-calendar .calendar-day--has-events,
+[data-theme="dark"] .event-calendar .calendar-day--past,
+[data-theme="dark"] .event-calendar .calendar-day--weekend,
+[data-theme="dark"] .event-detail,
+[data-theme="dark"] .organizer-avatar,
+[data-theme="dark"] .btn--secondary,
+[data-theme="dark"] .event-image-placeholder,
+[data-theme="dark"] .past-event-image-placeholder,
+[data-theme="dark"] .speaker-photo-placeholder {
+    background: #1a1a1a;
+}
+
 @media (prefers-color-scheme: dark) {
 
+    [data-theme="auto"] .events-sidebar,
+    [data-theme="auto"] .event-item,
+    [data-theme="auto"] .filter-select,
+    [data-theme="auto"] .nav-btn,
+    [data-theme="auto"] .search-input,
+    [data-theme="auto"] .pagination-link,
+    [data-theme="auto"] .event-main,
     [data-theme="auto"] .registration-card,
     [data-theme="auto"] .organizer-card,
-    [data-theme="auto"] .share-card {
+    [data-theme="auto"] .share-card,
+    [data-theme="auto"] .event-calendar .calendar-day,
+    [data-theme="auto"] .event-card,
+    [data-theme="auto"] .timeline-marker,
+    [data-theme="auto"] .tier-card,
+    [data-theme="auto"] .event-details-panel,
+    [data-theme="auto"] .payment-option,
+    [data-theme="auto"] .audience-item,
+    [data-theme="auto"] .benefit-item,
+    [data-theme="auto"] .schedule-item,
+    [data-theme="auto"] .speaker-card,
+    [data-theme="auto"] .next-event-card,
+    [data-theme="auto"] .share-button,
+    [data-theme="auto"] .more-events-btn,
+    [data-theme="auto"] .past-event-card,
+    [data-theme="auto"] .upcoming-link,
+    [data-theme="auto"] .event-calendar .calendar-day--has-events,
+    [data-theme="auto"] .event-calendar .calendar-day--past,
+    [data-theme="auto"] .event-calendar .calendar-day--weekend,
+    [data-theme="auto"] .event-detail,
+    [data-theme="auto"] .organizer-avatar,
+    [data-theme="auto"] .btn--secondary,
+    [data-theme="auto"] .event-image-placeholder,
+    [data-theme="auto"] .past-event-image-placeholder,
+    [data-theme="auto"] .speaker-photo-placeholder {
         background: #1a1a1a;
     }
 }
 
-/* Calendar day cards in dark mode */
-[data-theme="dark"] .event-calendar .calendar-day {
-    background: #1a1a1a;
+/* Borders in dark mode */
+[data-theme="dark"] .event-calendar .calendar-day,
+[data-theme="dark"] .tier-card {
     border-color: #666666;
 }
 
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .event-calendar .calendar-day,
+    [data-theme="auto"] .tier-card {
+        border-color: #666666;
+    }
+}
+
+[data-theme="dark"] .tier-header,
+[data-theme="dark"] .tier-features li {
+    border-bottom-color: #666666;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .tier-header,
+    [data-theme="auto"] .tier-features li {
+        border-bottom-color: #666666;
+    }
+}
+
+/* Calendar day text - white in dark mode */
 [data-theme="dark"] .event-calendar .calendar-day .day-number,
 [data-theme="dark"] .event-calendar .calendar-day .day-name {
     color: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-calendar .calendar-day {
-        background: #1a1a1a;
-        border-color: #666666;
-    }
 
     [data-theme="auto"] .event-calendar .calendar-day .day-number,
     [data-theme="auto"] .event-calendar .calendar-day .day-name {
@@ -2476,8 +2542,12 @@
     }
 }
 
-/* Сьогоднішній день завжди червоний навіть в темній темі */
-[data-theme="dark"] .event-calendar .calendar-day--today,
+/* Today card stays red in dark mode */
+[data-theme="dark"] .event-calendar .calendar-day--today {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-color: var(--color-primary);
+}
+
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .event-calendar .calendar-day--today {
         background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
@@ -2490,307 +2560,64 @@
     }
 }
 
-/* Event card hover in dark mode */
-[data-theme="dark"] .event-card:hover,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-card:hover {
-        background: #1a1a1a;
-    }
-}
-
-/* Timeline marker in dark mode */
-[data-theme="dark"] .timeline-marker,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .timeline-marker {
-        background: #1a1a1a;
-    }
-}
-
-/* Tier cards in dark mode */
-[data-theme="dark"] .tier-card,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .tier-card {
-        background: #1a1a1a;
-        border-color: #666666;
-    }
-}
-
-/* Event details panel in dark mode */
-[data-theme="dark"] .event-details-panel,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-details-panel {
-        background: #1a1a1a;
-    }
-}
-
-/* Payment option hover in dark mode */
-[data-theme="dark"] .payment-option:hover,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .payment-option:hover {
-        background: #1a1a1a;
-    }
-}
-
-/* Payment option base in dark mode */
-[data-theme="dark"] .payment-option,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .payment-option {
-        background: #1a1a1a;
-    }
-}
-
-/* Audience items in dark mode */
-[data-theme="dark"] .audience-item,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .audience-item {
-        background: #1a1a1a;
-    }
-}
-
-/* Benefit items in dark mode */
-[data-theme="dark"] .benefit-item,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .benefit-item {
-        background: #1a1a1a;
-    }
-}
-
-/* Schedule items in dark mode */
-[data-theme="dark"] .schedule-item,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .schedule-item {
-        background: #1a1a1a;
-    }
-}
-
-/* Speaker cards in dark mode */
-[data-theme="dark"] .speaker-card,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .speaker-card {
-        background: #1a1a1a;
-    }
-}
-
-/* Next event card in dark mode */
-[data-theme="dark"] .next-event-card,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .next-event-card {
-        background: #1a1a1a;
-    }
-}
-
-/* Share buttons in dark mode */
-[data-theme="dark"] .share-button,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .share-button {
-        background: #1a1a1a;
-    }
-}
-
-/* More events button in dark mode */
-[data-theme="dark"] .more-events-btn,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .more-events-btn {
-        background: #1a1a1a;
-    }
-}
-
-/* Past event cards in dark mode */
-[data-theme="dark"] .past-event-card,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .past-event-card {
-        background: #1a1a1a;
-    }
-}
-
-/* Upcoming link in dark mode */
-[data-theme="dark"] .upcoming-link,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .upcoming-link {
-        background: #1a1a1a;
-    }
-}
-
-/* Event card base in dark mode */
-[data-theme="dark"] .event-card,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-card {
-        background: #1a1a1a;
-    }
-}
-
-/* Calendar day states in dark mode */
-[data-theme="dark"] .event-calendar .calendar-day--has-events,
-[data-theme="dark"] .event-calendar .calendar-day--past,
-[data-theme="dark"] .event-calendar .calendar-day--weekend {
-    background: #1a1a1a;
-}
-
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .event-calendar .calendar-day--has-events,
-    [data-theme="auto"] .event-calendar .calendar-day--past,
-    [data-theme="auto"] .event-calendar .calendar-day--weekend {
-        background: #1a1a1a;
-    }
-}
-
-/* Event detail page background in dark mode */
-[data-theme="dark"] .event-detail,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-detail {
-        background: #1a1a1a;
-    }
-}
-
-/* Organizer avatar in dark mode */
-[data-theme="dark"] .organizer-avatar,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .organizer-avatar {
-        background: #1a1a1a;
-    }
-}
-
-/* Secondary button in dark mode */
-[data-theme="dark"] .btn--secondary,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .btn--secondary {
-        background: #1a1a1a;
-    }
-}
-
-/* Event image placeholder in dark mode */
-[data-theme="dark"] .event-image-placeholder,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-image-placeholder {
-        background: #1a1a1a;
-    }
-}
-
-/* Past event image placeholder in dark mode */
-[data-theme="dark"] .past-event-image-placeholder,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .past-event-image-placeholder {
-        background: #1a1a1a;
-    }
-}
-
-/* Speaker photo placeholder in dark mode */
-[data-theme="dark"] .speaker-photo-placeholder,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .speaker-photo-placeholder {
-        background: #1a1a1a;
-    }
-}
-
-/* Ticket balance bar in dark mode */
-[data-theme="dark"] .ticket-balance-bar,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .ticket-balance-bar {
-        background: #1a1a1a;
-        border-color: #1a1a1a;
-    }
-}
-
-/* Tier header borders in dark mode */
-[data-theme="dark"] .tier-header,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .tier-header {
-        border-bottom-color: #666666;
-    }
-}
-
-/* Tier features borders in dark mode */
-[data-theme="dark"] .tier-features li,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .tier-features li {
-        border-bottom-color: #666666;
-    }
-}
-
-/* TEXT COLORS IN DARK MODE - Override specific elements */
-
-/* Calendar title and subtitle - white text in dark mode */
-[data-theme="dark"] .calendar-title,
-[data-theme="dark"] .calendar-subtitle,
-[data-theme="dark"] .current-period,
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .calendar-title,
-    [data-theme="auto"] .calendar-subtitle,
-    [data-theme="auto"] .current-period {
-        color: #ffffff;
-    }
-}
-
-/* Page title and subtitle - white text in dark mode */
-[data-theme="dark"] .page-title,
-[data-theme="dark"] .page-subtitle,
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .page-title,
-    [data-theme="auto"] .page-subtitle {
-        color: #ffffff;
-    }
-}
-
-/* Sidebar titles - white text in dark mode */
+/* White text in dark mode */
 [data-theme="dark"] .sidebar-title,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .sidebar-title {
-        color: #ffffff;
-    }
-}
-
-/* Filter labels and options - white text in dark mode */
 [data-theme="dark"] .filter-label,
 [data-theme="dark"] .filter-option,
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .filter-label,
-    [data-theme="auto"] .filter-option {
-        color: #ffffff;
-    }
-}
-
-/* Event item titles and text - white in dark mode */
+[data-theme="dark"] .pagination-link,
+[data-theme="dark"] .filter-select,
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .nav-btn,
+[data-theme="dark"] .day-number,
+[data-theme="dark"] .day-name,
+[data-theme="dark"] .event-title,
+[data-theme="dark"] .event-time,
+[data-theme="dark"] .upcoming-event-title,
+[data-theme="dark"] .upcoming-event-meta,
 [data-theme="dark"] .event-item .event-title,
 [data-theme="dark"] .event-item .event-description,
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .event-item .event-title,
-    [data-theme="auto"] .event-item .event-description {
-        color: #ffffff;
-    }
-}
-
-/* Registration card text - white in dark mode */
 [data-theme="dark"] .registration-card .card-title,
 [data-theme="dark"] .registration-card .price-label,
 [data-theme="dark"] .registration-card .price-amount,
 [data-theme="dark"] .organizer-card .card-title,
 [data-theme="dark"] .organizer-card .organizer-name,
 [data-theme="dark"] .share-card .card-title,
+[data-theme="dark"] .event-main .section-title,
+[data-theme="dark"] .event-main .event-description,
+[data-theme="dark"] .event-main .timeline-title,
+[data-theme="dark"] .event-main .timeline-time,
+[data-theme="dark"] .event-main .speaker-name {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .search-input::placeholder {
+    color: #ffffff;
+    opacity: 0.7;
+}
+
 @media (prefers-color-scheme: dark) {
 
+    [data-theme="auto"] .sidebar-title,
+    [data-theme="auto"] .filter-label,
+    [data-theme="auto"] .filter-option,
+    [data-theme="auto"] .pagination-link,
+    [data-theme="auto"] .filter-select,
+    [data-theme="auto"] .search-input,
+    [data-theme="auto"] .nav-btn,
+    [data-theme="auto"] .day-number,
+    [data-theme="auto"] .day-name,
+    [data-theme="auto"] .event-title,
+    [data-theme="auto"] .event-time,
+    [data-theme="auto"] .upcoming-event-title,
+    [data-theme="auto"] .upcoming-event-meta,
+    [data-theme="auto"] .event-item .event-title,
+    [data-theme="auto"] .event-item .event-description,
     [data-theme="auto"] .registration-card .card-title,
     [data-theme="auto"] .registration-card .price-label,
     [data-theme="auto"] .registration-card .price-amount,
     [data-theme="auto"] .organizer-card .card-title,
     [data-theme="auto"] .organizer-card .organizer-name,
-    [data-theme="auto"] .share-card .card-title {
-        color: #ffffff;
-    }
-}
-
-/* Event main section titles - white in dark mode */
-[data-theme="dark"] .event-main .section-title,
-[data-theme="dark"] .event-main .event-description,
-[data-theme="dark"] .event-main .timeline-title,
-[data-theme="dark"] .event-main .timeline-time,
-[data-theme="dark"] .event-main .speaker-name,
-@media (prefers-color-scheme: dark) {
-
+    [data-theme="auto"] .share-card .card-title,
     [data-theme="auto"] .event-main .section-title,
     [data-theme="auto"] .event-main .event-description,
     [data-theme="auto"] .event-main .timeline-title,
@@ -2798,67 +2625,10 @@
     [data-theme="auto"] .event-main .speaker-name {
         color: #ffffff;
     }
-}
 
-/* Calendar day numbers and text - white in dark mode */
-[data-theme="dark"] .day-number,
-[data-theme="dark"] .day-name,
-[data-theme="dark"] .event-title,
-[data-theme="dark"] .event-time,
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .day-number,
-    [data-theme="auto"] .day-name,
-    [data-theme="auto"] .event-title,
-    [data-theme="auto"] .event-time {
-        color: #ffffff;
-    }
-}
-
-/* Upcoming events text - white in dark mode */
-[data-theme="dark"] .upcoming-event-title,
-[data-theme="dark"] .upcoming-event-meta,
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .upcoming-event-title,
-    [data-theme="auto"] .upcoming-event-meta {
-        color: #ffffff;
-    }
-}
-
-/* Pagination text - white in dark mode */
-[data-theme="dark"] .pagination-link,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .pagination-link {
-        color: #ffffff;
-    }
-}
-
-/* Filter selects text - white in dark mode */
-[data-theme="dark"] .filter-select,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .filter-select {
-        color: #ffffff;
-    }
-}
-
-/* Search input text - white in dark mode */
-[data-theme="dark"] .search-input,
-[data-theme="dark"] .search-input::placeholder,
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .search-input,
     [data-theme="auto"] .search-input::placeholder {
         color: #ffffff;
         opacity: 0.7;
-    }
-}
-
-/* Navigation button text - white in dark mode */
-[data-theme="dark"] .nav-btn,
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .nav-btn {
-        color: #ffffff;
     }
 }
 
