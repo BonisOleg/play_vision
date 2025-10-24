@@ -2454,9 +2454,13 @@
 }
 
 /* Calendar day cards in dark mode */
-[data-theme="dark"] .calendar-day,
+[data-theme="dark"] .event-calendar .calendar-day {
+    background: #1a1a1a;
+    border-color: #666666;
+}
+
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .calendar-day {
+    [data-theme="auto"] .event-calendar .calendar-day {
         background: #1a1a1a;
         border-color: #666666;
     }
@@ -2592,14 +2596,17 @@
 }
 
 /* Calendar day states in dark mode */
-[data-theme="dark"] .calendar-day--has-events,
-[data-theme="dark"] .calendar-day--past,
-[data-theme="dark"] .calendar-day--weekend,
+[data-theme="dark"] .event-calendar .calendar-day--has-events,
+[data-theme="dark"] .event-calendar .calendar-day--past,
+[data-theme="dark"] .event-calendar .calendar-day--weekend {
+    background: #1a1a1a;
+}
+
 @media (prefers-color-scheme: dark) {
 
-    [data-theme="auto"] .calendar-day--has-events,
-    [data-theme="auto"] .calendar-day--past,
-    [data-theme="auto"] .calendar-day--weekend {
+    [data-theme="auto"] .event-calendar .calendar-day--has-events,
+    [data-theme="auto"] .event-calendar .calendar-day--past,
+    [data-theme="auto"] .event-calendar .calendar-day--weekend {
         background: #1a1a1a;
     }
 }
@@ -2677,8 +2684,159 @@
     }
 }
 
-/* TEXT COLORS IN DARK MODE - Use theme variables for automatic color switching */
-/* Text colors are automatically handled by design-tokens.css - no need for explicit overrides */
+/* TEXT COLORS IN DARK MODE - Override specific elements */
+
+/* Calendar title and subtitle - white text in dark mode */
+[data-theme="dark"] .calendar-title,
+[data-theme="dark"] .calendar-subtitle,
+[data-theme="dark"] .current-period,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .calendar-title,
+    [data-theme="auto"] .calendar-subtitle,
+    [data-theme="auto"] .current-period {
+        color: #ffffff;
+    }
+}
+
+/* Page title and subtitle - white text in dark mode */
+[data-theme="dark"] .page-title,
+[data-theme="dark"] .page-subtitle,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .page-title,
+    [data-theme="auto"] .page-subtitle {
+        color: #ffffff;
+    }
+}
+
+/* Sidebar titles - white text in dark mode */
+[data-theme="dark"] .sidebar-title,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .sidebar-title {
+        color: #ffffff;
+    }
+}
+
+/* Filter labels and options - white text in dark mode */
+[data-theme="dark"] .filter-label,
+[data-theme="dark"] .filter-option,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .filter-label,
+    [data-theme="auto"] .filter-option {
+        color: #ffffff;
+    }
+}
+
+/* Event item titles and text - white in dark mode */
+[data-theme="dark"] .event-item .event-title,
+[data-theme="dark"] .event-item .event-description,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .event-item .event-title,
+    [data-theme="auto"] .event-item .event-description {
+        color: #ffffff;
+    }
+}
+
+/* Registration card text - white in dark mode */
+[data-theme="dark"] .registration-card .card-title,
+[data-theme="dark"] .registration-card .price-label,
+[data-theme="dark"] .registration-card .price-amount,
+[data-theme="dark"] .organizer-card .card-title,
+[data-theme="dark"] .organizer-card .organizer-name,
+[data-theme="dark"] .share-card .card-title,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .registration-card .card-title,
+    [data-theme="auto"] .registration-card .price-label,
+    [data-theme="auto"] .registration-card .price-amount,
+    [data-theme="auto"] .organizer-card .card-title,
+    [data-theme="auto"] .organizer-card .organizer-name,
+    [data-theme="auto"] .share-card .card-title {
+        color: #ffffff;
+    }
+}
+
+/* Event main section titles - white in dark mode */
+[data-theme="dark"] .event-main .section-title,
+[data-theme="dark"] .event-main .event-description,
+[data-theme="dark"] .event-main .timeline-title,
+[data-theme="dark"] .event-main .timeline-time,
+[data-theme="dark"] .event-main .speaker-name,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .event-main .section-title,
+    [data-theme="auto"] .event-main .event-description,
+    [data-theme="auto"] .event-main .timeline-title,
+    [data-theme="auto"] .event-main .timeline-time,
+    [data-theme="auto"] .event-main .speaker-name {
+        color: #ffffff;
+    }
+}
+
+/* Calendar day numbers and text - white in dark mode */
+[data-theme="dark"] .day-number,
+[data-theme="dark"] .day-name,
+[data-theme="dark"] .event-title,
+[data-theme="dark"] .event-time,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .day-number,
+    [data-theme="auto"] .day-name,
+    [data-theme="auto"] .event-title,
+    [data-theme="auto"] .event-time {
+        color: #ffffff;
+    }
+}
+
+/* Upcoming events text - white in dark mode */
+[data-theme="dark"] .upcoming-event-title,
+[data-theme="dark"] .upcoming-event-meta,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .upcoming-event-title,
+    [data-theme="auto"] .upcoming-event-meta {
+        color: #ffffff;
+    }
+}
+
+/* Pagination text - white in dark mode */
+[data-theme="dark"] .pagination-link,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .pagination-link {
+        color: #ffffff;
+    }
+}
+
+/* Filter selects text - white in dark mode */
+[data-theme="dark"] .filter-select,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .filter-select {
+        color: #ffffff;
+    }
+}
+
+/* Search input text - white in dark mode */
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .search-input::placeholder,
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .search-input,
+    [data-theme="auto"] .search-input::placeholder {
+        color: #ffffff;
+        opacity: 0.7;
+    }
+}
+
+/* Navigation button text - white in dark mode */
+[data-theme="dark"] .nav-btn,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-btn {
+        color: #ffffff;
+    }
+}
 
 /* === Блок "Що ти отримаєш" === */
 .benefits-list {
