@@ -140,16 +140,17 @@
 }
 
 .calendar-day {
-    background: var(--color-bg);
-    border: 2px solid var(--color-border-light);
-    border-radius: 16px;
-    padding: 20px 16px 16px;
-    min-height: 180px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 160px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    min-width: 160px;
+    min-width: 140px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-day:hover {
@@ -210,10 +211,11 @@
 }
 
 .day-number {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 700;
     color: var(--color-text);
     line-height: 1;
+    text-align: center;
 }
 
 .day-name {
@@ -598,22 +600,35 @@
 }
 
 .event-card .event-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--color-secondary);
+    margin-bottom: 6px;
+    color: var(--color-text);
+    line-height: 1.3;
 }
 
-.calendar-day--active .event-card .event-title {
+.calendar-day--today .event-card .event-title {
     color: white;
 }
 
 .event-card .event-time {
-    font-size: 12px;
-    color: var(--color-text-light);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 4px;
 }
 
-.calendar-day--active .event-card .event-time {
+.calendar-day--today .event-card .event-time {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.event-card .event-format {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    text-transform: lowercase;
+}
+
+.calendar-day--today .event-card .event-format {
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -2700,5 +2715,306 @@
 @media (max-width: 992px) {
     .ticket-tiers-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Галерея минулих подій */
+.past-events-gallery {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.past-event-card {
+    display: block;
+    background: var(--color-bg-gray);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+}
+
+.past-event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--color-primary);
+}
+
+.past-event-image,
+.past-event-image-placeholder {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.past-event-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-border-light);
+    color: var(--color-text-muted);
+}
+
+.past-event-info {
+    padding: 0.75rem;
+}
+
+.past-event-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.25rem 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.past-event-date {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+}
+
+/* Адаптив для галереї минулих подій */
+@media (max-width: 1200px) {
+    .past-events-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .past-events-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .past-events-gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Статус-бар балансу квитків */
+.ticket-balance-bar {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px solid #0ea5e9;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.balance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.balance-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0369a1;
+}
+
+.balance-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0c4a6e;
+}
+
+.balance-progress {
+    height: 8px;
+    background: #cbd5e1;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.balance-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%);
+    transition: width 0.3s ease;
+    min-width: 5%;
+}
+
+.balance-hint {
+    font-size: 0.75rem;
+    color: #475569;
+    margin: 0;
+}
+
+/* Вибір способу оплати */
+.payment-method-choice {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--color-bg-gray);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.payment-option:hover {
+    border-color: var(--color-primary);
+    background: var(--color-bg);
+}
+
+.payment-option:has(input[type="radio"]:checked) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-alpha-10);
+}
+
+.payment-option input[type="radio"] {
+    margin-top: 0.25rem;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+}
+
+.payment-option input[type="radio"]:checked+.option-label {
+    color: var(--color-text);
+}
+
+.option-label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.option-label strong {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.option-label small {
+    font-size: 0.8125rem;
+    color: var(--color-text-light);
+}
+
+/* Адаптив для форми оплати */
+@media (max-width: 480px) {
+    .payment-option {
+        padding: 0.875rem;
+    }
+
+    .option-label strong {
+        font-size: 0.875rem;
+    }
+
+    .option-label small {
+        font-size: 0.75rem;
+    }
+}
+
+/* Панель деталей події (accordion) */
+.event-details-panel {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-details-panel.is-open {
+    max-height: 500px;
+    opacity: 1;
+    padding: 1.5rem;
+}
+
+.details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.details-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.details-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--color-text-light);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.details-close:hover {
+    background: var(--color-bg-gray);
+    color: var(--color-text);
+}
+
+.details-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.details-body p {
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.details-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+/* Адаптив для панелі деталей */
+@media (max-width: 768px) {
+    .event-details-panel.is-open {
+        padding: 1rem;
+    }
+
+    .details-header h3 {
+        font-size: 1.125rem;
+    }
+
+    .details-meta {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }

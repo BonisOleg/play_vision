@@ -11,11 +11,11 @@ from .models import (
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = [
-        'title', 'event_type', 'start_datetime', 'status', 
+        'title', 'event_type', 'event_category', 'start_datetime', 'status', 
         'tickets_sold', 'max_attendees', 'is_featured'
     ]
     list_filter = [
-        'event_type', 'status', 'is_featured', 'requires_subscription',
+        'event_type', 'event_category', 'status', 'is_featured', 'requires_subscription',
         'is_free', 'start_datetime'
     ]
     search_fields = ['title', 'description', 'location']
@@ -26,7 +26,7 @@ class EventAdmin(admin.ModelAdmin):
         ('Основна інформація', {
             'fields': (
                 'title', 'slug', 'description', 'short_description',
-                'event_type', 'status'
+                'event_type', 'event_category', 'status'
             )
         }),
         ('Дата та локація', {

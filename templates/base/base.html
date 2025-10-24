@@ -125,19 +125,15 @@
                             </a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-content">
-                                    <div class="dropdown-header">Найближчі події</div>
-                                    {% for event in upcoming_events_menu %}
-                                    <a href="{% url 'events:event_detail' event.slug %}" class="dropdown-link">
+                                    <div class="dropdown-header">Категорії подій</div>
+                                    {% for category in event_categories_menu %}
+                                    <a href="{{ category.url }}" class="dropdown-link">
                                         <div class="dropdown-item-content">
-                                            <div class="dropdown-item-title">{{ event.title }}</div>
+                                            <div class="dropdown-item-title">{{ category.name }}</div>
                                             <div class="dropdown-item-meta">
-                                                <span class="dropdown-item-date">{{ event.start_datetime|date:"d M" }} •
-                                                    {{
-                                                    event.start_datetime|date:"H:i" }}</span>
-                                                <span
-                                                    class="dropdown-item-badge dropdown-item-badge--{{ event.event_type }}">
-                                                    {% if event.is_online %}онлайн{% else %}офлайн{% endif %}
-                                                </span>
+                                                <span class="dropdown-item-badge dropdown-item-badge--count">
+                                                    {{ category.count }} {% if category.count == 1 %}подія{% elif
+                                                    category.count < 5 %}події{% else %}подій{% endif %} </span>
                                             </div>
                                         </div>
                                     </a>

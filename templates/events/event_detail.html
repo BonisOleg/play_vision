@@ -24,14 +24,14 @@
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-calendar"></use>
                         </svg>
-                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{
-                            event.start_datetime|date:"H:i" }}</span>
+                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{ event.start_datetime|date:"H:i" }}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-location"></use>
                         </svg>
-                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{% endif %}</span>
+                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{%
+                            endif %}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
@@ -267,6 +267,33 @@
                     </div>
                 </section>
                 {% endif %}
+
+                <!-- Минулі події цієї категорії -->
+                {% if past_category_events %}
+                <section class="event-section">
+                    <h2 class="section-title">Минулі події: {{ event.get_event_category_display }}</h2>
+                    <div class="past-events-gallery">
+                        {% for past_event in past_category_events %}
+                        <a href="{% url 'events:event_detail' past_event.slug %}" class="past-event-card">
+                            {% if past_event.thumbnail %}
+                            <img src="{{ past_event.thumbnail.url }}" alt="{{ past_event.title }}"
+                                class="past-event-image">
+                            {% else %}
+                            <div class="past-event-image-placeholder">
+                                <svg class="icon" width="40" height="40">
+                                    <use xlink:href="#icon-calendar"></use>
+                                </svg>
+                            </div>
+                            {% endif %}
+                            <div class="past-event-info">
+                                <h4 class="past-event-title">{{ past_event.title }}</h4>
+                                <span class="past-event-date">{{ past_event.start_datetime|date:"d.m.Y" }}</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
             </main>
 
             <!-- Бокова панель з формою реєстрації -->
@@ -289,6 +316,21 @@
                         {% endif %}
                     </div>
 
+                    <!-- Статус-бар балансу квитків -->
+                    {% if user.is_authenticated and event.requires_subscription and has_ticket_balance %}
+                    <div class="ticket-balance-bar">
+                        <div class="balance-header">
+                            <span class="balance-label">Баланс квитків Pro-Vision</span>
+                            <span class="balance-value">{{ ticket_balance }}</span>
+                        </div>
+                        <div class="balance-progress">
+                            <div class="balance-progress-fill" data-width="{% widthratio ticket_balance 10 100 %}">
+                            </div>
+                        </div>
+                        <p class="balance-hint">Ви можете використати квиток з підписки</p>
+                    </div>
+                    {% endif %}
+
                     {% if user.is_authenticated %}
                     {% if user_ticket %}
                     <div class="registration-status registration-status--success">
@@ -304,6 +346,37 @@
                         Переглянути квиток
                     </a>
                     {% elif can_register %}
+                    {% if event.requires_subscription and has_ticket_balance %}
+                    <!-- Форма з вибором способу оплати -->
+                    <form method="post" action="{% url 'events:register' event.slug %}" id="registerForm">
+                        {% csrf_token %}
+
+                        <div class="payment-method-choice">
+                            <label class="payment-option">
+                                <input type="radio" name="payment_method" value="balance" checked>
+                                <span class="option-label">
+                                    <strong>Використати квиток з підписки</strong>
+                                    <small>Залишиться: {{ ticket_balance|add:-1 }}</small>
+                                </span>
+                            </label>
+
+                            {% if not event.is_free %}
+                            <label class="payment-option">
+                                <input type="radio" name="payment_method" value="purchase">
+                                <span class="option-label">
+                                    <strong>Купити квиток</strong>
+                                    <small>{{ event.price }} ₴</small>
+                                </span>
+                            </label>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--full btn--large">
+                            Зареєструватися
+                        </button>
+                    </form>
+                    {% else %}
+                    <!-- Звичайна кнопка -->
                     <a href="{% url 'events:register' event.slug %}" class="btn btn--primary btn--full btn--large">
                         {% if event.is_free %}
                         Зареєструватися
@@ -311,6 +384,7 @@
                         Купити квиток
                         {% endif %}
                     </a>
+                    {% endif %}
                     {% else %}
                     <div class="registration-status registration-status--warning">
                         <svg class="status-icon" width="24" height="24">

@@ -24,6 +24,16 @@ class Event(models.Model):
         ('conference', 'Конференція'),
     ]
     
+    EVENT_CATEGORY_CHOICES = [
+        ('football_experts_forum', 'Форум футбольних фахівців'),
+        ('parents_forum', 'Форум футбольних батьків'),
+        ('internships', 'Стажування в професійних клубах'),
+        ('seminars_hackathons', 'Практичні семінари і хакатони'),
+        ('psychology_workshops', 'Воркшопи зі спортивної психології'),
+        ('selection_camps', 'Селекційні табори'),
+        ('online_webinars', 'Онлайн-теорії і вебінари'),
+    ]
+    
     STATUS_CHOICES = [
         ('draft', 'Чернетка'),
         ('published', 'Опублікований'),
@@ -36,6 +46,12 @@ class Event(models.Model):
     description = models.TextField()
     short_description = models.CharField(max_length=300)
     event_type = models.CharField(max_length=20, choices=EVENT_TYPE_CHOICES)
+    event_category = models.CharField(
+        max_length=50,
+        choices=EVENT_CATEGORY_CHOICES,
+        blank=True,
+        help_text='Специфічна категорія події для меню'
+    )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     
     # Dates and location

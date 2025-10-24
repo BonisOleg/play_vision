@@ -20,6 +20,7 @@ class SpeakerSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     """Basic serializer for Event model"""
     event_type_display = serializers.CharField(source='get_event_type_display', read_only=True)
+    event_category_display = serializers.CharField(source='get_event_category_display', read_only=True)
     status_display = serializers.CharField(source='get_status_display', read_only=True)
     organizer_name = serializers.CharField(source='organizer.profile.full_name', read_only=True)
     duration_minutes = serializers.ReadOnlyField()
@@ -33,7 +34,8 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = [
             'id', 'title', 'slug', 'short_description', 'event_type', 
-            'event_type_display', 'status', 'status_display',
+            'event_type_display', 'event_category', 'event_category_display',
+            'status', 'status_display',
             'start_datetime', 'end_datetime', 'timezone_name',
             'location', 'is_online', 'max_attendees', 'tickets_sold',
             'price', 'is_free', 'requires_subscription',

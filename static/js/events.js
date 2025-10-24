@@ -116,10 +116,61 @@ class EventCalendar {
     }
 }
 
+// Інтерактивний календар з accordion
+class EventCalendarInteractive {
+    constructor() {
+        this.detailsPanel = document.getElementById('eventDetailsPanel');
+        this.currentEventId = null;
+        this.init();
+    }
+
+    init() {
+        // Клік на день з подією
+        document.querySelectorAll('.calendar-day[data-event-slug]').forEach(day => {
+            day.addEventListener('click', () => {
+                const eventSlug = day.dataset.eventSlug;
+                window.location.href = `/events/${eventSlug}/`;
+            });
+
+            // Додати стиль курсору
+            day.style.cursor = 'pointer';
+        });
+    }
+
+    showPanel() {
+        if (this.detailsPanel) {
+            this.detailsPanel.style.display = 'block';
+            setTimeout(() => this.detailsPanel.classList.add('is-open'), 10);
+        }
+    }
+
+    hidePanel() {
+        if (this.detailsPanel) {
+            this.detailsPanel.classList.remove('is-open');
+            setTimeout(() => this.detailsPanel.style.display = 'none', 300);
+        }
+    }
+}
+
 // Ініціалізація
 document.addEventListener('DOMContentLoaded', () => {
     const calendar = document.querySelector('.event-calendar');
     if (calendar) {
         new EventCalendar(calendar);
     }
+
+    // Ініціалізація інтерактивного календаря
+    const calendarGrid = document.querySelector('.calendar-grid');
+    if (calendarGrid) {
+        window.eventCalendarInteractive = new EventCalendarInteractive();
+    }
+
+    // Застосування ширини прогрес-бару з data-атрибута
+    const progressFills = document.querySelectorAll('.balance-progress-fill[data-width]');
+    progressFills.forEach(fill => {
+        const width = fill.getAttribute('data-width');
+        if (width) {
+            fill.style.width = width + '%';
+        }
+    });
 });

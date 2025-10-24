@@ -22,7 +22,7 @@
                 <select name="event_type" class="filter-select">
                     <option value="all">Всі типи подій</option>
                     {% for type_value, type_display in event_types %}
-                    <option value="{{ type_value }}" {% if request.GET.type == type_value %}selected{% endif %}>{{ type_display }}</option>
+                    <option value="{{ type_value }}" {% if request.GET.type==type_value %}selected{% endif %}>{{ type_display }}</option>
                     {% endfor %}
                 </select>
 
@@ -62,9 +62,50 @@
             </div>
         </div>
 
-        <!-- Календар видалено - використовується список подій нижче -->
-        <div class="calendar-notice">
-            <p>Події представлені списком з фільтрами нижче</p>
+        <!-- Календар подій -->
+        <div class="calendar-grid" id="eventCalendar">
+            {% for day in calendar_days %}
+            <div class="calendar-day {% if day.is_today %}calendar-day--today{% endif %} 
+                                      {% if day.event %}calendar-day--has-events{% endif %}"
+                data-date="{{ day.date|date:'Y-m-d' }}" {% if day.event %}data-event-id="{{ day.event.id }}"
+                data-event-slug="{{ day.event.slug }}" {% endif %}>
+
+                <div class="day-header">
+                    <div class="day-info">
+                        <div class="day-number">{{ day.day_number }}</div>
+                        <div class="day-name">{{ day.day_name }}</div>
+                    </div>
+                </div>
+
+                {% if day.event %}
+                <div class="day-events">
+                    <div class="event-card">
+                        <div class="event-time">{{ day.event.start_datetime|date:"H:i" }}</div>
+                        <div class="event-title">{{ day.event.title }}</div>
+                        <div class="event-format">
+                            {% if day.event.is_online %}онлайн{% else %}офлайн{% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="no-events-day">
+                    <div class="no-events-content">
+                        <svg class="no-events-icon" viewBox="0 0 24 24">
+                            <use xlink:href="#icon-calendar-empty"></use>
+                        </svg>
+                        <span>Подій немає</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Панель деталей (accordion) -->
+        <div class="event-details-panel" id="eventDetailsPanel" style="display: none;">
+            <div class="details-content">
+                <!-- Завантажується через клік -->
+            </div>
         </div>
     </section>
 
@@ -167,28 +208,6 @@
                                 <input type="radio" name="date_range" value="month" {% if current_date_range == 'month' %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Цей місяць</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Фільтр "Ціна" з radio buttons -->
-                    <div class="sidebar-section">
-                        <h3 class="sidebar-title">Ціна</h3>
-                        <div class="filter-group">
-                            <label class="filter-option">
-                                <input type="radio" name="price" value="all" {% if not current_price or current_price == 'all' %}checked{% endif %}>
-                                <span class="filter-radio"></span>
-                                <span class="filter-label">Всі події</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="price" value="free" {% if current_price == 'free' %}checked{% endif %}>
-                                <span class="filter-radio"></span>
-                                <span class="filter-label">Безкоштовні</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="radio" name="price" value="paid" {% if current_price == 'paid' %}checked{% endif %}>
-                                <span class="filter-radio"></span>
-                                <span class="filter-label">Платні</span>
                             </label>
                         </div>
                     </div>

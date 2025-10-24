@@ -3,8 +3,8 @@ from django.db import connection
 from .models import Event
 
 
-def upcoming_events(request):
-    """Context processor to provide upcoming events globally"""
+def event_categories_menu(request):
+    """Static categories menu for events"""
     try:
         # Check if events table exists before querying
         with connection.cursor() as cursor:
@@ -17,18 +17,28 @@ def upcoming_events(request):
             table_exists = cursor.fetchone()[0]
             
         if not table_exists:
-            return {'upcoming_events_menu': []}
-            
-        events = Event.objects.filter(
-            status='published',
-            start_datetime__gt=timezone.now()
-        ).select_related('organizer').order_by('start_datetime')[:7]
+            return {'event_categories_menu': []}
         
-        return {
-            'upcoming_events_menu': events
-        }
+        categories = []
+        for cat_value, cat_display in Event.EVENT_CATEGORY_CHOICES:
+            # Підрахунок майбутніх подій категорії
+            count = Event.objects.filter(
+                status='published',
+                event_category=cat_value,
+                start_datetime__gt=timezone.now()
+            ).count()
+            
+            if count > 0:  # Показуємо тільки категорії з подіями
+                categories.append({
+                    'slug': cat_value,
+                    'name': cat_display,
+                    'count': count,
+                    'url': f'/events/?category={cat_value}'
+                })
+        
+        return {'event_categories_menu': categories}
     except Exception as e:
-        # If any database error occurs, return empty events list
+        # If any database error occurs, return empty categories list
         return {
-            'upcoming_events_menu': []
+            'event_categories_menu': []
         }

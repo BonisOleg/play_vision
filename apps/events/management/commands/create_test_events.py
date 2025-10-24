@@ -13,18 +13,20 @@ class Command(BaseCommand):
         self.stdout.write('Creating test events...')
         
         # Get or create admin user as organizer
-        organizer, created = User.objects.get_or_create(
-            username='admin',
-            defaults={
-                'email': 'admin@playvision.com',
-                'is_staff': True,
-                'is_superuser': True
-            }
-        )
-        if created:
-            organizer.set_password('admin123')
-            organizer.save()
-            self.stdout.write(self.style.SUCCESS(f'Created admin user: {organizer.username}'))
+        try:
+            organizer = User.objects.filter(is_superuser=True).first()
+            if not organizer:
+                organizer = User.objects.create_superuser(
+                    username='admin',
+                    email='admin@playvision.com',
+                    password='admin123'
+                )
+                self.stdout.write(self.style.SUCCESS(f'Created admin user: {organizer.username}'))
+            else:
+                self.stdout.write(self.style.SUCCESS(f'Using existing admin user: {organizer.username}'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Error getting organizer: {e}'))
+            return
         
         # Create speakers
         speakers_data = [
@@ -91,6 +93,7 @@ class Command(BaseCommand):
                 Приєднуйтесь до спільноти професіоналів!
                 ''',
                 'event_type': 'forum',
+                'event_category': 'football_experts_forum',
                 'start_datetime': now + timedelta(days=1, hours=18),
                 'end_datetime': now + timedelta(days=1, hours=21),
                 'location': 'Онлайн',
@@ -114,6 +117,7 @@ class Command(BaseCommand):
                 - Створення звітів для тренерів
                 ''',
                 'event_type': 'workshop',
+                'event_category': 'seminars_hackathons',
                 'start_datetime': now + timedelta(days=2, hours=19),
                 'end_datetime': now + timedelta(days=2, hours=21),
                 'location': 'Онлайн',
@@ -134,10 +138,12 @@ class Command(BaseCommand):
                 - Міжнародний досвід
                 ''',
                 'event_type': 'seminar',
+                'event_category': 'seminars_hackathons',
                 'start_datetime': now + timedelta(days=3, hours=17),
                 'end_datetime': now + timedelta(days=3, hours=19),
                 'location': 'Онлайн',
                 'max_attendees': 50,
+                'price': 0,
                 'is_free': True
             },
             {
@@ -154,6 +160,7 @@ class Command(BaseCommand):
                 - Сертифікат про проходження стажування
                 ''',
                 'event_type': 'internship',
+                'event_category': 'internships',
                 'start_datetime': now + timedelta(days=5, hours=10),
                 'end_datetime': now + timedelta(days=5, hours=18),
                 'location': 'м. Київ, вул. Грушевського 3',
@@ -175,12 +182,12 @@ class Command(BaseCommand):
                 - Кар\'єрні поради
                 ''',
                 'event_type': 'webinar',
+                'event_category': 'online_webinars',
                 'start_datetime': now + timedelta(days=6, hours=18, minutes=30),
                 'end_datetime': now + timedelta(days=6, hours=20),
                 'location': 'Онлайн',
                 'max_attendees': 200,
-                'price': 590,
-                'is_online': True
+                'price': 590
             },
             {
                 'title': 'Практикум GPS-даних в футболі',
@@ -218,8 +225,7 @@ class Command(BaseCommand):
                 'end_datetime': now + timedelta(days=8, hours=16),
                 'location': 'Онлайн',
                 'max_attendees': 1,
-                'price': 2500,
-                'is_online': True
+                'price': 2500
             },
             {
                 'title': 'Форум футбольних батьків 2',
@@ -235,11 +241,13 @@ class Command(BaseCommand):
                 - Комунікація з тренерами
                 ''',
                 'event_type': 'forum',
+                'event_category': 'parents_forum',
                 'start_datetime': now + timedelta(days=9, hours=17),
                 'end_datetime': now + timedelta(days=9, hours=20),
                 'location': 'м. Київ, НСК "Олімпійський" (гібридний формат)',
                 'online_link': 'https://zoom.us/j/111222333',
                 'max_attendees': 300,
+                'price': 0,
                 'is_free': True
             },
             {
@@ -256,12 +264,12 @@ class Command(BaseCommand):
                 - Індивідуальний підхід
                 ''',
                 'event_type': 'webinar',
+                'event_category': 'psychology_workshops',
                 'start_datetime': now + timedelta(days=10, hours=19),
                 'end_datetime': now + timedelta(days=10, hours=21),
                 'location': 'Онлайн',
                 'max_attendees': 150,
-                'price': 750,
-                'is_online': True
+                'price': 750
             },
             {
                 'title': 'Менеджмент у футболі — семінар',
@@ -295,6 +303,7 @@ class Command(BaseCommand):
                 Слідкуйте за оновленнями!
                 ''',
                 'event_type': 'forum',
+                'event_category': 'football_experts_forum',
                 'start_datetime': now + timedelta(days=45, hours=10),
                 'end_datetime': now + timedelta(days=45, hours=18),
                 'location': 'м. Київ, Конгрес-хол (гібридний формат)',
@@ -334,7 +343,11 @@ class Command(BaseCommand):
             
             # Set random tickets sold
             if not hasattr(event, 'tickets_sold') or event.tickets_sold == 0:
-                event.tickets_sold = random.randint(10, min(event.max_attendees - 10, 100))
+                max_sold = max(0, event.max_attendees - 10)
+                if max_sold > 10:
+                    event.tickets_sold = random.randint(10, min(max_sold, 100))
+                else:
+                    event.tickets_sold = random.randint(0, max(0, event.max_attendees // 2))
                 event.save()
             
             if created:

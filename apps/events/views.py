@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q, Count, Avg
+from django.db.models import Q, Count, Avg, Sum
 from django.utils import timezone
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
+from datetime import timedelta
 import json
 
 from .models import Event, EventTicket, EventWaitlist, EventFeedback, Speaker, EventRegistration
@@ -27,6 +28,11 @@ class EventListView(ListView):
             status='published',
             start_datetime__gt=timezone.now()
         ).select_related('organizer').prefetch_related('speakers', 'tags')
+        
+        # Filter by category
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(event_category=category)
         
         # Filter by type (multiple values)
         event_types = self.request.GET.getlist('event_type')
@@ -63,13 +69,6 @@ class EventListView(ListView):
             month_end = now + timezone.timedelta(days=30)
             queryset = queryset.filter(start_datetime__range=[now, month_end])
         
-        # Filter by price
-        price_filter = self.request.GET.get('price')
-        if price_filter == 'free':
-            queryset = queryset.filter(is_free=True)
-        elif price_filter == 'paid':
-            queryset = queryset.filter(is_free=False)
-        
         # Ordering
         order = self.request.GET.get('order', 'start_datetime')
         if order in ['start_datetime', '-start_datetime', 'price', '-price', 'title']:
@@ -85,7 +84,6 @@ class EventListView(ListView):
         context['current_format'] = self.request.GET.get('format', 'all')
         context['current_date_range'] = self.request.GET.get('date_range', 'all')
         context['current_order'] = self.request.GET.get('order', 'start_datetime')
-        context['current_price'] = self.request.GET.get('price', 'all')
         
         # Get display names for current types
         types_dict = dict(Event.EVENT_TYPE_CHOICES)
@@ -99,6 +97,40 @@ class EventListView(ListView):
             is_featured=True,
             start_datetime__gt=timezone.now()
         )[:3]
+        
+        # Генерація календаря-тижня
+        week_offset = int(self.request.GET.get('week', 0))
+        base_date = timezone.now().date()
+        start_date = base_date + timedelta(weeks=week_offset)
+        
+        # Знайти понеділок цього тижня
+        start_of_week = start_date - timedelta(days=start_date.weekday())
+        
+        # Згенерувати 7 днів
+        calendar_days = []
+        day_names = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
+        
+        for day_offset in range(7):
+            current_date = start_of_week + timedelta(days=day_offset)
+            
+            # Знайти ПЕРШУ подію цього дня
+            event = Event.objects.filter(
+                status='published',
+                start_datetime__date=current_date
+            ).select_related('organizer').first()
+            
+            calendar_days.append({
+                'date': current_date,
+                'day_number': current_date.day,
+                'day_name': day_names[day_offset],
+                'event': event,
+                'is_today': current_date == base_date
+            })
+        
+        context['calendar_days'] = calendar_days
+        context['week_offset'] = week_offset
+        context['week_start'] = start_of_week
+        context['week_end'] = start_of_week + timedelta(days=6)
         
         return context
 
@@ -130,11 +162,17 @@ class EventDetailView(DetailView):
             
             # Check available ticket balance
             if event.requires_subscription:
-                context['available_balance'] = TicketBalance.objects.filter(
+                balance_aggregate = TicketBalance.objects.filter(
                     user=user,
                     amount__gt=0,
                     expires_at__gt=timezone.now()
-                ).count()
+                ).aggregate(total=Sum('amount'))
+                
+                context['ticket_balance'] = balance_aggregate['total'] or 0
+                context['has_ticket_balance'] = context['ticket_balance'] > 0
+            else:
+                context['ticket_balance'] = 0
+                context['has_ticket_balance'] = False
         
         # Registration status
         context['can_register'], context['register_message'] = event.can_register(user if user.is_authenticated else None)
@@ -145,6 +183,16 @@ class EventDetailView(DetailView):
             start_datetime__gt=timezone.now(),
             event_type=event.event_type
         ).exclude(id=event.id)[:3]
+        
+        # Минулі події цієї категорії (тільки якщо категорія задана)
+        if event.event_category:
+            context['past_category_events'] = Event.objects.filter(
+                status='completed',
+                event_category=event.event_category,
+                start_datetime__lt=timezone.now()
+            ).order_by('-start_datetime')[:5]
+        else:
+            context['past_category_events'] = []
         
         # Feedback stats
         feedback_stats = event.feedback.aggregate(
@@ -171,7 +219,8 @@ def register_for_event(request, slug):
         return redirect('events:event_detail', slug=slug)
     
     # Check payment method
-    use_balance = request.POST.get('use_balance') == 'true'
+    payment_method = request.POST.get('payment_method', 'purchase')
+    use_balance = payment_method == 'balance'
     
     if use_balance and event.requires_subscription:
         # Use ticket balance
