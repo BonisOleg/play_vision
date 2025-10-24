@@ -22,7 +22,7 @@
                 <select name="event_type" class="filter-select">
                     <option value="all">Всі типи подій</option>
                     {% for type_value, type_display in event_types %}
-                    <option value="{{ type_value }}" {% if request.GET.type==type_value %}selected{% endif %}>{{ type_display }}</option>
+                    <option value="{{ type_value }}" {% if request.GET.type == type_value %}selected{% endif %}>{{ type_display }}</option>
                     {% endfor %}
                 </select>
 
