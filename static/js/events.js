@@ -85,16 +85,33 @@ class EventCalendar {
     previousWeek() {
         this.currentDate.setDate(this.currentDate.getDate() - 7);
         this.updatePeriodText();
+        this.reloadCalendar(-1);
     }
 
     nextWeek() {
         this.currentDate.setDate(this.currentDate.getDate() + 7);
         this.updatePeriodText();
+        this.reloadCalendar(1);
     }
 
     goToToday() {
         this.currentDate = new Date();
         this.updatePeriodText();
+        this.reloadCalendar(0);
+    }
+    
+    reloadCalendar(weekOffset) {
+        const url = new URL(window.location);
+        const currentWeek = parseInt(url.searchParams.get('week') || '0');
+        const newWeek = weekOffset === 0 ? 0 : currentWeek + weekOffset;
+        
+        if (newWeek === 0) {
+            url.searchParams.delete('week');
+        } else {
+            url.searchParams.set('week', newWeek);
+        }
+        
+        window.location.href = url.toString();
     }
 
     updatePeriodText() {

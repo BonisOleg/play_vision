@@ -76,6 +76,12 @@ class Command(BaseCommand):
         
         # Create events
         now = timezone.now()
+        # Знайти наступний понеділок
+        days_ahead = 0 - now.weekday()  # 0 = Monday
+        if days_ahead <= 0:
+            days_ahead += 7
+        next_monday = now + timedelta(days=days_ahead)
+        
         events_data = [
             {
                 'title': 'Форум футбольних фахівців 5',
@@ -94,8 +100,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'forum',
                 'event_category': 'football_experts_forum',
-                'start_datetime': now + timedelta(days=1, hours=18),
-                'end_datetime': now + timedelta(days=1, hours=21),
+                'start_datetime': next_monday.replace(hour=18, minute=0, second=0, microsecond=0),
+                'end_datetime': next_monday.replace(hour=21, minute=0, second=0, microsecond=0),
                 'location': 'Онлайн',
                 'online_link': 'https://zoom.us/j/123456789',
                 'max_attendees': 500,
@@ -118,8 +124,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'workshop',
                 'event_category': 'seminars_hackathons',
-                'start_datetime': now + timedelta(days=2, hours=19),
-                'end_datetime': now + timedelta(days=2, hours=21),
+                'start_datetime': (next_monday + timedelta(days=1)).replace(hour=19, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=1)).replace(hour=21, minute=0, second=0, microsecond=0),
                 'location': 'Онлайн',
                 'online_link': 'https://zoom.us/j/987654321',
                 'max_attendees': 100,
@@ -139,8 +145,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'seminar',
                 'event_category': 'seminars_hackathons',
-                'start_datetime': now + timedelta(days=3, hours=17),
-                'end_datetime': now + timedelta(days=3, hours=19),
+                'start_datetime': (next_monday + timedelta(days=2)).replace(hour=17, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=2)).replace(hour=19, minute=0, second=0, microsecond=0),
                 'location': 'Онлайн',
                 'max_attendees': 50,
                 'price': 0,
@@ -161,8 +167,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'internship',
                 'event_category': 'internships',
-                'start_datetime': now + timedelta(days=5, hours=10),
-                'end_datetime': now + timedelta(days=5, hours=18),
+                'start_datetime': (next_monday + timedelta(days=3)).replace(hour=10, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=3)).replace(hour=18, minute=0, second=0, microsecond=0),
                 'location': 'м. Київ, вул. Грушевського 3',
                 'max_attendees': 20,
                 'price': 3500,
@@ -183,8 +189,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'webinar',
                 'event_category': 'online_webinars',
-                'start_datetime': now + timedelta(days=6, hours=18, minutes=30),
-                'end_datetime': now + timedelta(days=6, hours=20),
+                'start_datetime': (next_monday + timedelta(days=4)).replace(hour=18, minute=30, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=4)).replace(hour=20, minute=0, second=0, microsecond=0),
                 'location': 'Онлайн',
                 'max_attendees': 200,
                 'price': 590
@@ -203,8 +209,9 @@ class Command(BaseCommand):
                 - Попередження травм
                 ''',
                 'event_type': 'workshop',
-                'start_datetime': now + timedelta(days=7, hours=12),
-                'end_datetime': now + timedelta(days=7, hours=16),
+                'event_category': 'seminars_hackathons',
+                'start_datetime': (next_monday + timedelta(days=10)).replace(hour=12, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=10)).replace(hour=16, minute=0, second=0, microsecond=0),
                 'location': 'м. Львів, стадіон "Арена Львів"',
                 'max_attendees': 30,
                 'price': 1500
@@ -221,8 +228,9 @@ class Command(BaseCommand):
                 - Психологія спорту
                 ''',
                 'event_type': 'seminar',
-                'start_datetime': now + timedelta(days=8, hours=15),
-                'end_datetime': now + timedelta(days=8, hours=16),
+                'event_category': 'psychology_workshops',
+                'start_datetime': (next_monday + timedelta(days=5)).replace(hour=15, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=5)).replace(hour=16, minute=0, second=0, microsecond=0),
                 'location': 'Онлайн',
                 'max_attendees': 1,
                 'price': 2500
@@ -242,8 +250,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'forum',
                 'event_category': 'parents_forum',
-                'start_datetime': now + timedelta(days=9, hours=17),
-                'end_datetime': now + timedelta(days=9, hours=20),
+                'start_datetime': (next_monday + timedelta(days=6)).replace(hour=17, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=6)).replace(hour=20, minute=0, second=0, microsecond=0),
                 'location': 'м. Київ, НСК "Олімпійський" (гібридний формат)',
                 'online_link': 'https://zoom.us/j/111222333',
                 'max_attendees': 300,
@@ -265,8 +273,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'webinar',
                 'event_category': 'psychology_workshops',
-                'start_datetime': now + timedelta(days=10, hours=19),
-                'end_datetime': now + timedelta(days=10, hours=21),
+                'start_datetime': (next_monday + timedelta(days=7)).replace(hour=19, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=7)).replace(hour=21, minute=0, second=0, microsecond=0),
                 'location': 'Онлайн',
                 'max_attendees': 150,
                 'price': 750
@@ -285,8 +293,9 @@ class Command(BaseCommand):
                 - Робота з агентами
                 ''',
                 'event_type': 'seminar',
-                'start_datetime': now + timedelta(days=12, hours=12),
-                'end_datetime': now + timedelta(days=12, hours=18),
+                'event_category': 'seminars_hackathons',
+                'start_datetime': (next_monday + timedelta(days=14)).replace(hour=12, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=14)).replace(hour=18, minute=0, second=0, microsecond=0),
                 'location': 'м. Дніпро, готель "Україна"',
                 'max_attendees': 80,
                 'price': 1800,
@@ -304,8 +313,8 @@ class Command(BaseCommand):
                 ''',
                 'event_type': 'forum',
                 'event_category': 'football_experts_forum',
-                'start_datetime': now + timedelta(days=45, hours=10),
-                'end_datetime': now + timedelta(days=45, hours=18),
+                'start_datetime': (next_monday + timedelta(days=45)).replace(hour=10, minute=0, second=0, microsecond=0),
+                'end_datetime': (next_monday + timedelta(days=45)).replace(hour=18, minute=0, second=0, microsecond=0),
                 'location': 'м. Київ, Конгрес-хол (гібридний формат)',
                 'max_attendees': 1000,
                 'price': 2500,

@@ -125,4 +125,10 @@ python manage.py create_content_data || echo "⚠️ Content data creation faile
 echo "⭐ Creating featured courses..."
 python manage.py create_featured_courses || echo "⚠️ Featured courses creation failed, continuing..."
 
+echo "📅 Updating production events..."
+python manage.py update_production_events || echo "⚠️ Events update failed, continuing..."
+
+echo "🎫 Creating test events..."
+python manage.py create_test_events || echo "⚠️ Test events creation failed, continuing..."
+
 echo "🎉 Build completed successfully!"
