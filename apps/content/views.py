@@ -44,6 +44,31 @@ class CourseListView(ListView):
         if training_type:
             queryset = queryset.filter(training_specialization=training_type)
         
+        # НОВИЙ: Фільтр за типом контенту
+        content_type = self.request.GET.getlist('content_type')
+        if content_type:
+            queryset = queryset.filter(content_type__in=content_type)
+        
+        # НОВИЙ: Фільтр за тривалістю
+        duration = self.request.GET.get('duration')
+        if duration:
+            if duration == '0-60':
+                queryset = queryset.filter(duration_minutes__lte=60)
+            elif duration == '60-180':
+                queryset = queryset.filter(duration_minutes__gt=60, duration_minutes__lte=180)
+            elif duration == '180+':
+                queryset = queryset.filter(duration_minutes__gt=180)
+        
+        # НОВИЙ: Фільтр за цільовою аудиторією
+        target_audience = self.request.GET.getlist('target_audience')
+        if target_audience:
+            # Фільтруємо курси, які містять хоча б одну з обраних аудиторій
+            from django.db.models import Q
+            query = Q()
+            for audience in target_audience:
+                query |= Q(target_audience__contains=[audience])
+            queryset = queryset.filter(query)
+        
         # Sorting
         sort = self.request.GET.get('sort', '-created_at')
         if sort in ['price', '-price', 'title', '-title', '-created_at', 'view_count']:
@@ -77,6 +102,9 @@ class CourseListView(ListView):
         context['current_interest'] = self.request.GET.get('interest', '')
         context['current_training_type'] = self.request.GET.get('training_type', '')
         context['current_sort'] = self.request.GET.get('sort', '-created_at')
+        context['current_content_types'] = self.request.GET.getlist('content_type')
+        context['current_duration'] = self.request.GET.get('duration', '')
+        context['current_target_audiences'] = self.request.GET.getlist('target_audience')
         
         # Check user favorites
         if self.request.user.is_authenticated:
@@ -171,6 +199,7 @@ class CourseSearchView(ListView):
         return Course.objects.filter(
             Q(title__icontains=query) |
             Q(description__icontains=query) |
+            Q(author__icontains=query) |
             Q(tags__name__icontains=query),
             is_published=True
         ).distinct()

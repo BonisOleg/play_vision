@@ -1541,7 +1541,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .tag {
@@ -1550,6 +1550,64 @@
     border-radius: 12px;
     font-size: 0.75rem;
     color: var(--color-text-light);
+}
+
+/* Індикатор "кому підходить" */
+.product-audience {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(225, 29, 72, 0.05));
+    border-left: 3px solid var(--color-primary);
+    border-radius: 6px;
+}
+
+.audience-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+
+.audience-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.audience-tag {
+    padding: 0.25rem 0.6rem;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.audience-tag.audience-more {
+    background: var(--color-text-light);
+    opacity: 0.8;
+}
+
+/* Автор курсу */
+.product-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: var(--color-bg-gray);
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.author-label {
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.author-name {
+    font-weight: 600;
+    color: var(--color-text);
 }
 
 .product-actions {
@@ -1702,6 +1760,28 @@
 
     .subscription-banner h2 {
         font-size: 1.25rem;
+    }
+
+    /* Нові елементи - mobile адаптація */
+    .product-audience {
+        padding: 0.5rem;
+    }
+
+    .audience-label {
+        font-size: 0.75rem;
+    }
+
+    .audience-tag {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+    }
+
+    .product-author {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        padding: 0.4rem;
+        font-size: 0.8rem;
     }
 
     .expert-quotes {

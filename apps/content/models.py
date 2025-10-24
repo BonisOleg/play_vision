@@ -87,11 +87,50 @@ class Course(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField()
     short_description = models.CharField(max_length=300)
+    author = models.CharField(max_length=200, blank=True, verbose_name='Автор курсу', help_text='Ім\'я автора/інструктора курсу')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='courses')
     tags = models.ManyToManyField(Tag, blank=True, related_name='courses')
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES)
     duration_minutes = models.PositiveIntegerField(help_text='Duration in minutes')
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    # Тип контенту (для фільтрації)
+    CONTENT_TYPE_CHOICES = [
+        ('video', 'Відео'),
+        ('pdf', 'PDF документ'),
+        ('article', 'Стаття'),
+        ('mixed', 'Змішаний'),
+    ]
+    content_type = models.CharField(
+        max_length=20,
+        choices=CONTENT_TYPE_CHOICES,
+        default='mixed',
+        verbose_name='Тип контенту',
+        help_text='Основний тип матеріалів у курсі',
+        db_index=True
+    )
+    
+    # Цільова аудиторія (кому підходить)
+    TARGET_AUDIENCE_CHOICES = [
+        ('player', 'Гравець'),
+        ('parent', 'Батьки'),
+        ('coach', 'Тренер'),
+        ('coach_gk', 'Тренер воротарів'),
+        ('coach_youth', 'Дитячий тренер'),
+        ('coach_fitness', 'Тренер ЗФП'),
+        ('analyst', 'Аналітик'),
+        ('scout', 'Скаут'),
+        ('psychologist', 'Психологія'),
+        ('nutritionist', 'Нутриціологія'),
+        ('media', 'Медіа'),
+        ('manager', 'Менеджер'),
+    ]
+    target_audience = models.JSONField(
+        default=list,
+        blank=True,
+        verbose_name='Кому підходить',
+        help_text='Список цільових аудиторій (можна обрати декілька)'
+    )
     
     # Training specialization
     training_specialization = models.CharField(
@@ -161,6 +200,13 @@ class Course(models.Model):
         if hours:
             return f"{hours}г {minutes}хв"
         return f"{minutes}хв"
+    
+    def get_target_audience_display(self):
+        """Отримати відображувані назви цільової аудиторії"""
+        audience_dict = dict(self.TARGET_AUDIENCE_CHOICES)
+        if not self.target_audience:
+            return []
+        return [audience_dict.get(code, code) for code in self.target_audience]
     
     def get_absolute_url(self):
         from django.urls import reverse

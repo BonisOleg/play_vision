@@ -38,6 +38,8 @@ class MaterialsCarousel {
         this.track = element.querySelector('.carousel-content');
         this.prevBtn = element.querySelector('.nav-prev');
         this.nextBtn = element.querySelector('.nav-next');
+        this.autoplayInterval = null;
+        this.autoplayDelay = 20000; // 20 секунд
 
         if (!this.track) return;
 
@@ -47,14 +49,29 @@ class MaterialsCarousel {
 
     init() {
         if (this.prevBtn) {
-            this.prevBtn.addEventListener('click', () => this.prevSlide());
+            this.prevBtn.addEventListener('click', () => {
+                this.prevSlide();
+                this.resetAutoplay();
+            });
         }
 
         if (this.nextBtn) {
-            this.nextBtn.addEventListener('click', () => this.nextSlide());
+            this.nextBtn.addEventListener('click', () => {
+                this.nextSlide();
+                this.resetAutoplay();
+            });
         }
 
         this.updatePosition();
+
+        // Запустити autoplay якщо є більше 1 слайду
+        if (this.totalSlides > 1) {
+            this.startAutoplay();
+
+            // Зупинити при наведенні миші
+            this.element.addEventListener('mouseenter', () => this.stopAutoplay());
+            this.element.addEventListener('mouseleave', () => this.startAutoplay());
+        }
     }
 
     updatePosition() {
@@ -71,6 +88,26 @@ class MaterialsCarousel {
     prevSlide() {
         this.currentSlide = this.currentSlide === 0 ? this.totalSlides - 1 : this.currentSlide - 1;
         this.updatePosition();
+    }
+
+    startAutoplay() {
+        if (this.totalSlides <= 1) return;
+        this.stopAutoplay(); // Очистити попередній інтервал
+        this.autoplayInterval = setInterval(() => {
+            this.nextSlide();
+        }, this.autoplayDelay);
+    }
+
+    stopAutoplay() {
+        if (this.autoplayInterval) {
+            clearInterval(this.autoplayInterval);
+            this.autoplayInterval = null;
+        }
+    }
+
+    resetAutoplay() {
+        this.stopAutoplay();
+        this.startAutoplay();
     }
 }
 

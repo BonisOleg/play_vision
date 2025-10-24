@@ -313,7 +313,8 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                            current_category|default:''==category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -357,28 +358,88 @@
                                 <h4>Інші напрямки</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="checkbox" name="interest" value="analytics">
-                                        <span>Аналітика і скаутинг</span>
+                                        <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in
+                                            current_target_audiences %}checked{% endif %}>
+                                        <span>Аналітик</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="interest" value="management">
-                                        <span>Менеджмент</span>
+                                        <input type="checkbox" name="target_audience" value="scout" {% if 'scout' in
+                                            current_target_audiences %}checked{% endif %}>
+                                        <span>Скаут</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="interest" value="psychology">
-                                        <span>Спортивна психологія</span>
+                                        <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in
+                                            current_target_audiences %}checked{% endif %}>
+                                        <span>Менеджер</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="interest" value="nutrition">
+                                        <input type="checkbox" name="target_audience" value="psychologist" {%
+                                            if 'psychologist' in current_target_audiences %}checked{% endif %}>
+                                        <span>Психологія</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="target_audience" value="nutritionist" {%
+                                            if 'nutritionist' in current_target_audiences %}checked{% endif %}>
                                         <span>Нутриціологія</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="interest" value="player">
-                                        <span>Футболіст</span>
+                                        <input type="checkbox" name="target_audience" value="media" {% if 'media' in
+                                            current_target_audiences %}checked{% endif %}>
+                                        <span>Медіа</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="interest" value="parent">
-                                        <span>Батько</span>
+                                        <input type="checkbox" name="target_audience" value="player" {% if 'player' in
+                                            current_target_audiences %}checked{% endif %}>
+                                        <span>Гравець</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in
+                                            current_target_audiences %}checked{% endif %}>
+                                        <span>Батьки</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Тип матеріалу -->
+                            <div class="filter-group">
+                                <h4>Тип матеріалу</h4>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="content_type" value="video" {% if 'video' in
+                                            current_content_types %}checked{% endif %}>
+                                        <span>Відео</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in
+                                            current_content_types %}checked{% endif %}>
+                                        <span>PDF</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="content_type" value="article" {% if 'article' in
+                                            current_content_types %}checked{% endif %}>
+                                        <span>Стаття</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Тривалість -->
+                            <div class="filter-group">
+                                <h4>Тривалість</h4>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="duration" value="0-60" {% if current_duration=='0-60'
+                                            %}checked{% endif %}>
+                                        <span>До 1 години</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="duration" value="60-180" {% if
+                                            current_duration=='60-180' %}checked{% endif %}>
+                                        <span>1-3 години</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="duration" value="180+" {% if current_duration=='180+'
+                                            %}checked{% endif %}>
+                                        <span>Більше 3 годин</span>
                                     </label>
                                 </div>
                             </div>
@@ -421,19 +482,20 @@
                         <div class="sort-options">
                             <label for="sort">Сортувати за:</label>
                             <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
+                                <option value="-created_at" {% if current_sort|default:'-created_at'=='-created_at'
+                                    %}selected{% endif %}>
                                     Новіші спочатку
                                 </option>
-                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
+                                <option value="title" {% if current_sort|default:''=='title' %}selected{% endif %}> За
                                     назвою А-Я
                                 </option>
-                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
+                                <option value="-title" {% if current_sort|default:''=='-title' %}selected{% endif %}> За
                                     назвою Я-А
                                 </option>
-                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
+                                <option value="price" {% if current_sort|default:''=='price' %}selected{% endif %}>
                                     За ціною (зростання)
                                 </option>
-                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
+                                <option value="-price" {% if current_sort|default:''=='-price' %}selected{% endif %}> За
                                     ціною (спадання)
                                 </option>
                             </select>
@@ -460,7 +522,9 @@
                                         {% if course.is_featured %}
                                         <span class="badge badge-top">топ-продажів</span>
                                         {% endif %}
-                                        {% if course.created_at|timesince|slice:":2" == "0 " or course.created_at|timesince|slice:":3" == "1 д" or course.created_at|timesince|slice:":3" == "2 д" %}
+                                        {% if course.created_at|timesince|slice:":2" == "0 " or
+                                        course.created_at|timesince|slice:":3" == "1 д" or
+                                        course.created_at|timesince|slice:":3" == "2 д" %}
                                         <span class="badge badge-new">новинка</span>
                                         {% endif %}
                                         {% if course.rating >= 4.5 and course.enrollment_count >= 100 %}
@@ -537,6 +601,28 @@
                                     <span class="tag">{{ tag.name }}</span>
                                     {% endfor %}
                                 </div>
+
+                                {% if course.target_audience %}
+                                <div class="product-audience">
+                                    <div class="audience-label">👤 Кому підходить:</div>
+                                    <div class="audience-tags">
+                                        {% for audience in course.get_target_audience_display|slice:":3" %}
+                                        <span class="audience-tag">{{ audience }}</span>
+                                        {% endfor %}
+                                        {% if course.get_target_audience_display|length > 3 %}
+                                        <span class="audience-tag audience-more">+{{
+                                            course.get_target_audience_display|length|add:"-3" }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if course.author %}
+                                <div class="product-author">
+                                    <span class="author-label">✍️ Автор:</span>
+                                    <span class="author-name">{{ course.author }}</span>
+                                </div>
+                                {% endif %}
 
                                 <div class="product-actions">
                                     <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
