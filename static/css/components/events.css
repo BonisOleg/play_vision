@@ -2388,7 +2388,7 @@
 [data-theme="dark"] .events-sidebar,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .events-sidebar {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
@@ -2396,7 +2396,7 @@
 [data-theme="dark"] .event-item,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .event-item {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
@@ -2404,7 +2404,7 @@
 [data-theme="dark"] .filter-select,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .filter-select {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
@@ -2412,7 +2412,7 @@
 [data-theme="dark"] .nav-btn,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-btn {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
@@ -2420,7 +2420,7 @@
 [data-theme="dark"] .search-input,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .search-input {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
@@ -2428,7 +2428,7 @@
 [data-theme="dark"] .pagination-link,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .pagination-link {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
@@ -2436,7 +2436,7 @@
 [data-theme="dark"] .event-main,
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .event-main {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
@@ -2449,174 +2449,236 @@
     [data-theme="auto"] .registration-card,
     [data-theme="auto"] .organizer-card,
     [data-theme="auto"] .share-card {
-        background: var(--color-bg-gray);
+        background: #1a1a1a;
     }
 }
 
-/* TEXT COLORS IN DARK MODE - Force black text */
+/* Calendar day cards in dark mode */
+[data-theme="dark"] .calendar-day,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .calendar-day {
+        background: #1a1a1a;
+        border-color: #666666;
+    }
+}
 
-/* Event item text colors */
-[data-theme="dark"] .event-item .event-title,
-[data-theme="dark"] .event-item .event-description,
-[data-theme="dark"] .event-item .event-type,
-[data-theme="dark"] .event-item .event-date,
-[data-theme="dark"] .event-item .event-location,
-[data-theme="dark"] .event-item .event-price,
+/* Event card hover in dark mode */
+[data-theme="dark"] .event-card:hover,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-card:hover {
+        background: #1a1a1a;
+    }
+}
+
+/* Timeline marker in dark mode */
+[data-theme="dark"] .timeline-marker,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .timeline-marker {
+        background: #1a1a1a;
+    }
+}
+
+/* Tier cards in dark mode */
+[data-theme="dark"] .tier-card,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .tier-card {
+        background: #1a1a1a;
+        border-color: #666666;
+    }
+}
+
+/* Event details panel in dark mode */
+[data-theme="dark"] .event-details-panel,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-details-panel {
+        background: #1a1a1a;
+    }
+}
+
+/* Payment option hover in dark mode */
+[data-theme="dark"] .payment-option:hover,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .payment-option:hover {
+        background: #1a1a1a;
+    }
+}
+
+/* Payment option base in dark mode */
+[data-theme="dark"] .payment-option,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .payment-option {
+        background: #1a1a1a;
+    }
+}
+
+/* Audience items in dark mode */
+[data-theme="dark"] .audience-item,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .audience-item {
+        background: #1a1a1a;
+    }
+}
+
+/* Benefit items in dark mode */
+[data-theme="dark"] .benefit-item,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .benefit-item {
+        background: #1a1a1a;
+    }
+}
+
+/* Schedule items in dark mode */
+[data-theme="dark"] .schedule-item,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .schedule-item {
+        background: #1a1a1a;
+    }
+}
+
+/* Speaker cards in dark mode */
+[data-theme="dark"] .speaker-card,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .speaker-card {
+        background: #1a1a1a;
+    }
+}
+
+/* Next event card in dark mode */
+[data-theme="dark"] .next-event-card,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .next-event-card {
+        background: #1a1a1a;
+    }
+}
+
+/* Share buttons in dark mode */
+[data-theme="dark"] .share-button,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .share-button {
+        background: #1a1a1a;
+    }
+}
+
+/* More events button in dark mode */
+[data-theme="dark"] .more-events-btn,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .more-events-btn {
+        background: #1a1a1a;
+    }
+}
+
+/* Past event cards in dark mode */
+[data-theme="dark"] .past-event-card,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .past-event-card {
+        background: #1a1a1a;
+    }
+}
+
+/* Upcoming link in dark mode */
+[data-theme="dark"] .upcoming-link,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .upcoming-link {
+        background: #1a1a1a;
+    }
+}
+
+/* Event card base in dark mode */
+[data-theme="dark"] .event-card,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-card {
+        background: #1a1a1a;
+    }
+}
+
+/* Calendar day states in dark mode */
+[data-theme="dark"] .calendar-day--has-events,
+[data-theme="dark"] .calendar-day--past,
+[data-theme="dark"] .calendar-day--weekend,
 @media (prefers-color-scheme: dark) {
 
-    [data-theme="auto"] .event-item .event-title,
-    [data-theme="auto"] .event-item .event-description,
-    [data-theme="auto"] .event-item .event-type,
-    [data-theme="auto"] .event-item .event-date,
-    [data-theme="auto"] .event-item .event-location,
-    [data-theme="auto"] .event-item .event-price {
-        color: #000;
+    [data-theme="auto"] .calendar-day--has-events,
+    [data-theme="auto"] .calendar-day--past,
+    [data-theme="auto"] .calendar-day--weekend {
+        background: #1a1a1a;
     }
 }
 
-/* Filter selects text */
-[data-theme="dark"] .filter-select,
+/* Event detail page background in dark mode */
+[data-theme="dark"] .event-detail,
 @media (prefers-color-scheme: dark) {
-    html[data-theme="auto"] .filter-select {
-        color: #000;
+    [data-theme="auto"] .event-detail {
+        background: #1a1a1a;
     }
 }
 
-/* Navigation buttons text */
-[data-theme="dark"] .nav-btn,
+/* Organizer avatar in dark mode */
+[data-theme="dark"] .organizer-avatar,
 @media (prefers-color-scheme: dark) {
-    html[data-theme="auto"] .nav-btn {
-        color: #000;
+    [data-theme="auto"] .organizer-avatar {
+        background: #1a1a1a;
     }
 }
 
-/* Search input text */
-[data-theme="dark"] .search-input,
-[data-theme="dark"] .search-input::placeholder,
+/* Secondary button in dark mode */
+[data-theme="dark"] .btn--secondary,
 @media (prefers-color-scheme: dark) {
-
-    html[data-theme="auto"] .search-input,
-    html[data-theme="auto"] .search-input::placeholder {
-        color: #000;
+    [data-theme="auto"] .btn--secondary {
+        background: #1a1a1a;
     }
 }
 
-/* Sidebar section text */
-[data-theme="dark"] .sidebar-title,
-[data-theme="dark"] .filter-label,
-[data-theme="dark"] .filter-option,
-[data-theme="dark"] .active-filters-title,
+/* Event image placeholder in dark mode */
+[data-theme="dark"] .event-image-placeholder,
 @media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .sidebar-title,
-    [data-theme="auto"] .filter-label,
-    html[data-theme="auto"] .filter-option,
-    html[data-theme="auto"] .active-filters-title {
-        color: #000;
+    [data-theme="auto"] .event-image-placeholder {
+        background: #1a1a1a;
     }
 }
 
-/* Upcoming events text */
-[data-theme="dark"] .upcoming-events .event-name,
-[data-theme="dark"] .upcoming-events .event-date,
-[data-theme="dark"] .upcoming-event-title,
-[data-theme="dark"] .upcoming-event-meta,
+/* Past event image placeholder in dark mode */
+[data-theme="dark"] .past-event-image-placeholder,
 @media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .upcoming-events .event-name,
-    [data-theme="auto"] .upcoming-events .event-date,
-    [data-theme="auto"] .upcoming-event-title,
-    [data-theme="auto"] .upcoming-event-meta {
-        color: #000;
+    [data-theme="auto"] .past-event-image-placeholder {
+        background: #1a1a1a;
     }
 }
 
-/* Pagination links text */
-[data-theme="dark"] .pagination-link,
+/* Speaker photo placeholder in dark mode */
+[data-theme="dark"] .speaker-photo-placeholder,
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .pagination-link {
-        color: #000;
+    [data-theme="auto"] .speaker-photo-placeholder {
+        background: #1a1a1a;
     }
 }
 
-/* Event main text colors */
-[data-theme="dark"] .event-main .section-title,
-[data-theme="dark"] .event-main .event-description,
-[data-theme="dark"] .event-main .timeline-title,
-[data-theme="dark"] .event-main .timeline-time,
-[data-theme="dark"] .event-main .speaker-name,
-[data-theme="dark"] .event-main .speaker-position,
+/* Ticket balance bar in dark mode */
+[data-theme="dark"] .ticket-balance-bar,
 @media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .event-main .section-title,
-    [data-theme="auto"] .event-main .event-description,
-    [data-theme="auto"] .event-main .timeline-title,
-    [data-theme="auto"] .event-main .timeline-time,
-    [data-theme="auto"] .event-main .speaker-name,
-    [data-theme="auto"] .event-main .speaker-position {
-        color: #000;
+    [data-theme="auto"] .ticket-balance-bar {
+        background: #1a1a1a;
+        border-color: #1a1a1a;
     }
 }
 
-/* Sidebar cards text colors */
-[data-theme="dark"] .registration-card .card-title,
-[data-theme="dark"] .registration-card .price-label,
-[data-theme="dark"] .registration-card .price-amount,
-[data-theme="dark"] .registration-card .subscription-note,
-[data-theme="dark"] .registration-card .status-text,
-[data-theme="dark"] .organizer-card .card-title,
-[data-theme="dark"] .organizer-card .organizer-name,
-[data-theme="dark"] .organizer-card .organizer-role,
-[data-theme="dark"] .share-card .card-title,
+/* Tier header borders in dark mode */
+[data-theme="dark"] .tier-header,
 @media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .registration-card .card-title,
-    [data-theme="auto"] .registration-card .price-label,
-    [data-theme="auto"] .registration-card .price-amount,
-    [data-theme="auto"] .registration-card .subscription-note,
-    [data-theme="auto"] .registration-card .status-text,
-    [data-theme="auto"] .organizer-card .card-title,
-    [data-theme="auto"] .organizer-card .organizer-name,
-    [data-theme="auto"] .organizer-card .organizer-role,
-    [data-theme="auto"] .share-card .card-title {
-        color: #000;
+    [data-theme="auto"] .tier-header {
+        border-bottom-color: #666666;
     }
 }
 
-/* Calendar elements text */
-[data-theme="dark"] .calendar-title,
-[data-theme="dark"] .calendar-subtitle,
-[data-theme="dark"] .current-period,
+/* Tier features borders in dark mode */
+[data-theme="dark"] .tier-features li,
 @media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .calendar-title,
-    [data-theme="auto"] .calendar-subtitle,
-    [data-theme="auto"] .current-period {
-        color: #000;
+    [data-theme="auto"] .tier-features li {
+        border-bottom-color: #666666;
     }
 }
 
-/* Event content text */
-[data-theme="dark"] .event-content .event-meta,
-[data-theme="dark"] .event-content .event-footer,
-@media (prefers-color-scheme: dark) {
-
-    html[data-theme="auto"] .event-content .event-meta,
-    html[data-theme="auto"] .event-content .event-footer {
-        color: #000;
-    }
-}
-
-/* Page titles */
-[data-theme="dark"] .page-title,
-[data-theme="dark"] .page-subtitle,
-@media (prefers-color-scheme: dark) {
-
-    html[data-theme="auto"] .page-title,
-    html[data-theme="auto"] .page-subtitle {
-        color: #000;
-    }
-}
+/* TEXT COLORS IN DARK MODE - Use theme variables for automatic color switching */
+/* Text colors are automatically handled by design-tokens.css - no need for explicit overrides */
 
 /* === Блок "Що ти отримаєш" === */
 .benefits-list {
