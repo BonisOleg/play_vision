@@ -126,20 +126,49 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-content">
                                     <div class="dropdown-header">Категорії подій</div>
-                                    {% for category in event_categories_menu %}
-                                    <a href="{{ category.url }}" class="dropdown-link">
+
+                                    <a href="{% url 'events:event_list' %}?type=forum_pro" class="dropdown-link">
                                         <div class="dropdown-item-content">
-                                            <div class="dropdown-item-title">{{ category.name }}</div>
-                                            <div class="dropdown-item-meta">
-                                                <span class="dropdown-item-badge dropdown-item-badge--count">
-                                                    {{ category.count }} {% if category.count == 1 %}подія{% elif
-                                                    category.count < 5 %}події{% else %}подій{% endif %} </span>
-                                            </div>
+                                            <div class="dropdown-item-title">Форум футбольних фахівців</div>
                                         </div>
                                     </a>
-                                    {% empty %}
-                                    <div class="dropdown-empty">Немає запланованих подій</div>
-                                    {% endfor %}
+
+                                    <a href="{% url 'events:event_list' %}?type=forum_parents" class="dropdown-link">
+                                        <div class="dropdown-item-content">
+                                            <div class="dropdown-item-title">Форум футбольних батьків</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="{% url 'events:event_list' %}?type=internship" class="dropdown-link">
+                                        <div class="dropdown-item-content">
+                                            <div class="dropdown-item-title">Стажування в професійних клубах</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="{% url 'events:event_list' %}?type=seminar" class="dropdown-link">
+                                        <div class="dropdown-item-content">
+                                            <div class="dropdown-item-title">Практичні семінари і хакатони</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="{% url 'events:event_list' %}?type=workshop" class="dropdown-link">
+                                        <div class="dropdown-item-content">
+                                            <div class="dropdown-item-title">Воркшопи зі спортивної психології</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="{% url 'events:event_list' %}?type=camp" class="dropdown-link">
+                                        <div class="dropdown-item-content">
+                                            <div class="dropdown-item-title">Селекційні табори</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="{% url 'events:event_list' %}?type=webinar" class="dropdown-link">
+                                        <div class="dropdown-item-content">
+                                            <div class="dropdown-item-title">Онлайн-теорії і вебінари</div>
+                                        </div>
+                                    </a>
+
                                     <div class="dropdown-divider"></div>
                                     <a href="{% url 'events:event_list' %}" class="dropdown-link dropdown-item--all">
                                         Всі події →

@@ -2459,10 +2459,34 @@
     border-color: #666666;
 }
 
+[data-theme="dark"] .event-calendar .calendar-day .day-number,
+[data-theme="dark"] .event-calendar .calendar-day .day-name {
+    color: #ffffff;
+}
+
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .event-calendar .calendar-day {
         background: #1a1a1a;
         border-color: #666666;
+    }
+
+    [data-theme="auto"] .event-calendar .calendar-day .day-number,
+    [data-theme="auto"] .event-calendar .calendar-day .day-name {
+        color: #ffffff;
+    }
+}
+
+/* Сьогоднішній день завжди червоний навіть в темній темі */
+[data-theme="dark"] .event-calendar .calendar-day--today,
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-calendar .calendar-day--today {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+        border-color: var(--color-primary);
+    }
+
+    [data-theme="auto"] .event-calendar .calendar-day--today .day-number,
+    [data-theme="auto"] .event-calendar .calendar-day--today .day-name {
+        color: #ffffff;
     }
 }
 
