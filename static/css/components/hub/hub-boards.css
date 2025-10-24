@@ -17,7 +17,7 @@
 }
 
 .board-card {
-    background: white;
+    background: var(--color-bg, white);
     border-radius: var(--hub-card-radius);
     padding: var(--hub-spacing-xl);
     box-shadow: var(--hub-card-shadow);

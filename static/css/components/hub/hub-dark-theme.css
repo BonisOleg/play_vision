@@ -1,299 +1,326 @@
 /**
  * HUB DARK THEME
  * Темна тема для сторінки Хаб Знань
- * Застосовується тільки коли body має клас .dark-theme
+ * Колір блоків: #1a1a1a (як footer на світлій темі)
  */
 
-body.dark-theme .hub-container {
-    background: var(--color-bg-dark, #0a0a0a);
+[data-theme="dark"] .hub-container {
+    background: #0a0a0a;
 }
 
-/* === БІЛІ БЛОКИ → ЧОРНІ === */
-
-/* Boards */
-body.dark-theme .board-card {
-    background: #000000;
+/* === BOARDS === */
+[data-theme="dark"] .board-card {
+    background: #1a1a1a;
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
 }
 
-body.dark-theme .board-title {
+[data-theme="dark"] .board-title {
     color: white;
 }
 
-body.dark-theme .board-description {
+[data-theme="dark"] .board-description {
     color: rgba(255, 255, 255, 0.7);
 }
 
-body.dark-theme .board-btn {
+[data-theme="dark"] .board-btn {
     background: rgba(255, 255, 255, 0.1);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .board-btn:hover {
+[data-theme="dark"] .board-btn:hover {
     background: var(--color-primary);
     color: white;
     border-color: var(--color-primary);
 }
 
-/* Material Cards (Carousel) */
-body.dark-theme .material-card {
-    background: #000000;
+/* === MATERIAL CARDS (CAROUSEL) === */
+[data-theme="dark"] .material-card {
+    background: #1a1a1a;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .material-content {
-    background: #000000;
+[data-theme="dark"] .material-content {
+    background: #1a1a1a;
 }
 
-body.dark-theme .material-content h3 {
+[data-theme="dark"] .material-content h3 {
     color: white;
 }
 
-body.dark-theme .material-content p {
+[data-theme="dark"] .material-content p {
     color: rgba(255, 255, 255, 0.7);
 }
 
-body.dark-theme .material-meta {
+[data-theme="dark"] .material-meta {
     border-top-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .material-meta .duration {
+[data-theme="dark"] .material-meta .duration {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Filters Sidebar */
-body.dark-theme .filters-sidebar {
-    background: #000000;
+/* === FILTERS SIDEBAR === */
+[data-theme="dark"] .filters-sidebar {
+    background: #1a1a1a;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .filters-header {
+[data-theme="dark"] .filters-header {
     border-bottom-color: rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .filters-header h3 {
+[data-theme="dark"] .filters-header h3 {
     color: white;
 }
 
-body.dark-theme .filter-group {
+[data-theme="dark"] .filter-group {
     border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .filter-group h4 {
+[data-theme="dark"] .filter-group h4 {
     color: white;
 }
 
-body.dark-theme .filter-toggle span {
+[data-theme="dark"] .filter-toggle span {
     color: white;
 }
 
-body.dark-theme .filter-option {
+[data-theme="dark"] .filter-option {
     color: white;
 }
 
-body.dark-theme .filter-option:hover {
+[data-theme="dark"] .filter-option:hover {
     background: rgba(255, 255, 255, 0.05);
 }
 
-body.dark-theme .filter-option span {
+[data-theme="dark"] .filter-option span {
     color: rgba(255, 255, 255, 0.9);
 }
 
-body.dark-theme .filters-scrollable::-webkit-scrollbar-track {
+[data-theme="dark"] .filters-scrollable::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
 }
 
-body.dark-theme .filters-scrollable::-webkit-scrollbar-thumb {
+[data-theme="dark"] .filters-scrollable::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .filter-actions {
+[data-theme="dark"] .filter-actions {
     border-top-color: rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .quick-filters h5 {
+[data-theme="dark"] .quick-filters h5 {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Product Cards */
-body.dark-theme .product-card {
-    background: #000000;
+/* === PRODUCT CARDS === */
+[data-theme="dark"] .product-card {
+    background: #1a1a1a;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .product-card:hover {
+[data-theme="dark"] .product-card:hover {
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .product-category {
-    color: var(--color-primary);
+[data-theme="dark"] .product-category {
+    color: var(--color-primary-light);
 }
 
-body.dark-theme .product-title {
+[data-theme="dark"] .product-title {
     color: white;
 }
 
-body.dark-theme .product-description {
+[data-theme="dark"] .product-description {
     color: rgba(255, 255, 255, 0.7);
 }
 
-body.dark-theme .product-author {
+[data-theme="dark"] .product-author {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .author-label {
+[data-theme="dark"] .author-label {
     color: rgba(255, 255, 255, 0.6);
 }
 
-body.dark-theme .author-name {
+[data-theme="dark"] .author-name {
     color: white;
 }
 
-body.dark-theme .product-audience {
+[data-theme="dark"] .product-audience {
     background: linear-gradient(135deg, rgba(229, 9, 20, 0.15), rgba(225, 29, 72, 0.15));
     border-left-color: var(--color-primary);
 }
 
-body.dark-theme .audience-label {
+[data-theme="dark"] .audience-label {
     color: rgba(255, 255, 255, 0.7);
 }
 
-body.dark-theme .product-meta {
+[data-theme="dark"] .product-meta {
     border-top-color: rgba(255, 255, 255, 0.1);
     border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .product-meta-item {
+[data-theme="dark"] .product-meta-item {
     color: rgba(255, 255, 255, 0.7);
 }
 
-body.dark-theme .product-tag {
+[data-theme="dark"] .product-tag {
     background: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.9);
 }
 
-body.dark-theme .favorite-btn {
+[data-theme="dark"] .favorite-btn {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .favorite-btn:hover {
+[data-theme="dark"] .favorite-btn:hover {
     border-color: var(--color-primary);
     background: rgba(229, 9, 20, 0.1);
 }
 
-body.dark-theme .favorite-btn .icon {
+[data-theme="dark"] .favorite-btn .icon {
     stroke: white;
 }
 
-body.dark-theme .favorite-btn.active {
+[data-theme="dark"] .favorite-btn.active {
     background: var(--color-primary);
     border-color: var(--color-primary);
 }
 
-/* Search */
-body.dark-theme .search-input {
-    background: #000000;
+/* === SEARCH === */
+[data-theme="dark"] .search-input {
+    background: #1a1a1a;
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
 }
 
-body.dark-theme .search-input::placeholder {
+[data-theme="dark"] .search-input::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
 
-body.dark-theme .search-input:focus {
+[data-theme="dark"] .search-input:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
 }
 
-body.dark-theme .search-suggestions {
-    background: #000000;
+[data-theme="dark"] .search-suggestions {
+    background: #1a1a1a;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .search-suggestion-item {
+[data-theme="dark"] .search-suggestion-item {
     border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .search-suggestion-item:hover {
+[data-theme="dark"] .search-suggestion-item:hover {
     background: rgba(255, 255, 255, 0.05);
 }
 
-body.dark-theme .suggestion-title {
+[data-theme="dark"] .suggestion-title {
     color: white;
 }
 
-body.dark-theme .suggestion-meta {
+[data-theme="dark"] .suggestion-meta {
     color: rgba(255, 255, 255, 0.6);
 }
 
-body.dark-theme .popular-tag {
+[data-theme="dark"] .popular-tag {
     background: rgba(255, 255, 255, 0.1);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .popular-tag:hover {
+[data-theme="dark"] .popular-tag:hover {
     background: var(--color-primary);
     border-color: var(--color-primary);
 }
 
-/* Pagination */
-body.dark-theme .page-link {
-    background: #000000;
+/* === PAGINATION === */
+[data-theme="dark"] .page-link {
+    background: #1a1a1a;
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
 }
 
-body.dark-theme .page-link:hover {
+[data-theme="dark"] .page-link:hover {
     border-color: var(--color-primary);
     background: rgba(229, 9, 20, 0.1);
 }
 
-body.dark-theme .page-link.active {
+[data-theme="dark"] .page-link.active {
     background: var(--color-primary);
     border-color: var(--color-primary);
 }
 
-body.dark-theme .page-info {
+[data-theme="dark"] .page-info {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Nav buttons */
-body.dark-theme .nav-btn {
-    background: #000000;
+/* === NAV BUTTONS === */
+[data-theme="dark"] .nav-btn {
+    background: #1a1a1a;
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
 }
 
-body.dark-theme .nav-btn:hover {
+[data-theme="dark"] .nav-btn:hover {
     border-color: var(--color-primary);
     background: rgba(229, 9, 20, 0.1);
 }
 
-/* Section titles */
-body.dark-theme .section-title {
+/* === SECTION TITLES === */
+[data-theme="dark"] .section-title {
     color: white;
 }
 
-body.dark-theme .section-subtitle {
+[data-theme="dark"] .section-subtitle {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* No products */
-body.dark-theme .no-products h3 {
+/* === NO PRODUCTS === */
+[data-theme="dark"] .no-products h3 {
     color: white;
 }
 
-body.dark-theme .no-products p {
+[data-theme="dark"] .no-products p {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Mobile filters toggle */
-body.dark-theme .mobile-filters-toggle {
+/* === MOBILE FILTERS TOGGLE === */
+[data-theme="dark"] .mobile-filters-toggle {
     background: rgba(255, 255, 255, 0.1);
+}
+
+/* === DIFFICULTY BADGES === */
+[data-theme="dark"] .difficulty-beginner {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+[data-theme="dark"] .difficulty-intermediate {
+    background: rgba(251, 146, 60, 0.2);
+    color: #fb923c;
+}
+
+[data-theme="dark"] .difficulty-advanced {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* === SECTIONS BACKGROUND === */
+[data-theme="dark"] .main-materials {
+    background: #0a0a0a;
+}
+
+[data-theme="dark"] .all-products {
+    background: #0a0a0a;
+}
+
+[data-theme="dark"] .hub-boards {
+    background: linear-gradient(135deg, #0a0a0a 0%, rgba(229, 9, 20, 0.05) 100%);
 }

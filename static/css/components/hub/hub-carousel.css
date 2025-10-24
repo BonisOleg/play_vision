@@ -32,7 +32,7 @@
 }
 
 .material-card {
-    background: white;
+    background: var(--color-bg, white);
     border-radius: var(--hub-card-radius);
     overflow: hidden;
     box-shadow: var(--hub-card-shadow);
@@ -156,7 +156,7 @@
 .nav-btn {
     width: 48px;
     height: 48px;
-    background: white;
+    background: var(--color-bg, white);
     border: 2px solid var(--color-border);
     border-radius: 50%;
     display: flex;

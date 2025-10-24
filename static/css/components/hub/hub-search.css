@@ -22,7 +22,7 @@
     font-size: 1rem;
     border: 2px solid var(--color-border);
     border-radius: 50px;
-    background: white;
+    background: var(--color-bg, white);
     color: var(--color-text);
     transition: var(--hub-transition-fast);
 }
@@ -71,7 +71,7 @@
     top: calc(100% + 0.5rem);
     left: 0;
     right: 0;
-    background: white;
+    background: var(--color-bg, white);
     border-radius: var(--hub-card-radius);
     box-shadow: var(--hub-card-shadow-hover);
     max-height: 300px;

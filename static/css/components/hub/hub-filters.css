@@ -12,7 +12,7 @@
 }
 
 .filters-sidebar {
-    background: white;
+    background: var(--color-bg, white);
     border-radius: var(--hub-card-radius);
     padding: var(--hub-spacing-lg);
     height: fit-content;
