@@ -85,8 +85,7 @@
 
                 <div class="material-actions" data-material-id="{{ material.id }}">
                     {% if has_access %}
-                    <button class="btn btn-primary" data-action="mark-completed" {% if progress and material in
-                        progress.materials_completed.all %}disabled{% endif %}>
+                    <button class="btn btn-primary" data-action="mark-completed" {% if progress and material in progress.materials_completed.all %}disabled{% endif %}>
                         {% if progress and material in progress.materials_completed.all %}
                         ✓ Завершено
                         {% else %}
@@ -354,8 +353,7 @@
             <p>Матеріал "{{ material.title }}" позначено як завершений.</p>
             {% if progress %}
             <div class="progress-update">
-                <span>Загальний прогрес курсу: <strong id="updatedProgress">{{
-                        progress.progress_percentage|floatformat:0 }}%</strong></span>
+                <span>Загальний прогрес курсу: <strong id="updatedProgress">{{ progress.progress_percentage|floatformat:0 }}%</strong></span>
             </div>
             {% endif %}
         </div>
