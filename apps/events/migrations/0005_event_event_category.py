@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0002_add_event_details_fields'),
+        ('events', '0003_add_event_details_fields'),
     ]
 
     operations = [

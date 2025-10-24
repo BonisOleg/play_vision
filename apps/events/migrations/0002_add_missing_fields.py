@@ -1,4 +1,4 @@
-# Generated manually
+# Generated manually for production sync
 
 from django.db import migrations, models
 
@@ -6,10 +6,11 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0005_update_speaker_model'),
+        ('events', '0001_initial'),
     ]
 
     operations = [
+        # Add requires_subscription if not exists
         migrations.AddField(
             model_name='event',
             name='requires_subscription',
