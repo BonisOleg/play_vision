@@ -371,8 +371,37 @@ class MobileFiltersToggle {
     }
 }
 
+// === SUBSCRIPTION BANNER MANAGER ===
+class SubscriptionBannerManager {
+    constructor() {
+        this.banner = document.getElementById('subscriptionBanner');
+        this.closeBtn = document.getElementById('closeBanner');
+        this.storageKey = 'hub_banner_hidden';
+
+        if (this.banner && this.closeBtn) {
+            this.init();
+        }
+    }
+
+    init() {
+        if (sessionStorage.getItem(this.storageKey) === 'true') {
+            this.banner.classList.add('is-hidden');
+        }
+
+        this.closeBtn.addEventListener('click', () => this.closeBanner());
+    }
+
+    closeBanner() {
+        this.banner.classList.add('is-hidden');
+        sessionStorage.setItem(this.storageKey, 'true');
+    }
+}
+
 // === INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', () => {
+    // Subscription Banner
+    new SubscriptionBannerManager();
+
     // Materials Carousel
     const carousel = document.querySelector('.materials-carousel');
     if (carousel) {

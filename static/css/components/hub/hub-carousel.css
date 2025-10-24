@@ -12,6 +12,8 @@
 .materials-carousel {
     position: relative;
     overflow: hidden;
+    max-width: 70%;
+    margin: 0 auto;
 }
 
 .carousel-wrapper {
@@ -45,7 +47,7 @@
 .material-image {
     position: relative;
     width: 100%;
-    padding-top: 56.25%;
+    padding-top: 39.375%;
     overflow: hidden;
     background: var(--color-bg-gray);
 }

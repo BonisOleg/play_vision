@@ -26,20 +26,20 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    grid-row-end: span 18;
+    grid-row-end: span 14;
 }
 
 /* Логіка: картки з більше переглядів = більші */
 .product-card[data-popularity="high"] {
-    grid-row-end: span 24;
+    grid-row-end: span 18;
 }
 
 .product-card[data-popularity="medium"] {
-    grid-row-end: span 21;
+    grid-row-end: span 16;
 }
 
 .product-card[data-popularity="low"] {
-    grid-row-end: span 18;
+    grid-row-end: span 14;
 }
 
 .product-card:hover {
