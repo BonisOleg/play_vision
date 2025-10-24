@@ -590,9 +590,18 @@
    RESPONSIVE
    ======================================== */
 
+/* Мобільні дії - показуються тільки на планшетах і телефонах */
+.navbar-mobile-only {
+    display: none;
+}
+
 @media (max-width: 1024px) {
     .navbar-desktop-only {
         display: none;
+    }
+
+    .navbar-mobile-only {
+        display: flex;
     }
 
     .header-content {
@@ -608,7 +617,7 @@
         gap: var(--spacing-sm);
     }
 
-    /* Показуємо тільки логотип, тему та кнопку входу/кабінет */
+    /* Показуємо тільки логотип, кошик (якщо є товари), тему та кнопку входу (для незареєстрованих) */
     .logo-link {
         flex: 0 0 auto;
     }
