@@ -199,9 +199,9 @@
 
                 <!-- System Actions -->
                 <div class="header-actions desktop-actions navbar-desktop-only">
-                    {% if user.is_authenticated %}
-                    <!-- Cart -->
-                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon" aria-label="Кошик">
+                    <!-- Cart - показується тільки якщо є товари -->
+                    <a href="{% url 'cart:cart' %}" class="navbar-icon cart-icon" aria-label="Кошик" data-cart-icon
+                        style="display: none;">
                         <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <circle cx="9" cy="21" r="1" />
@@ -211,25 +211,6 @@
                         <span class="cart-count" data-cart-count>0</span>
                         <span class="sr-only">Кошик</span>
                     </a>
-
-                    <!-- Cabinet -->
-                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon" aria-label="Кабінет">
-                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                            <circle cx="12" cy="7" r="4" />
-                        </svg>
-                        <span class="sr-only">Кабінет</span>
-                    </a>
-                    {% else %}
-                    <!-- Auth Button -->
-                    <a href="{% url 'accounts:register' %}" class="auth-entry-btn" aria-label="Вхід та Реєстрація">
-                        <div class="auth-entry-text">
-                            <span class="auth-entry-line">Увійти</span>
-                            <span class="auth-entry-line">Реєстрація</span>
-                        </div>
-                    </a>
-                    {% endif %}
 
                     <!-- Theme Toggle -->
                     <button type="button" class="navbar-icon theme-toggle" aria-label="Перемкнути тему"
@@ -252,6 +233,23 @@
                         </svg>
                         <span class="sr-only">Перемкнути тему</span>
                     </button>
+
+                    {% if user.is_authenticated %}
+                    <!-- Cabinet -->
+                    <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon" aria-label="Кабінет">
+                        <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <span class="sr-only">Кабінет</span>
+                    </a>
+                    {% else %}
+                    <!-- Auth Button -->
+                    <a href="{% url 'accounts:register' %}" class="auth-entry-btn" aria-label="Вхід та Реєстрація">
+                        <span class="auth-entry-text">Вхід / Реєстрація</span>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -380,6 +378,9 @@
 
     <!-- Cart Counter -->
     <script src="{% static 'js/cart-counter.js' %}" defer></script>
+
+    <!-- Mobile AI Button -->
+    <script src="{% static 'js/mobile-ai-button.js' %}" defer></script>
 
     <!-- Navigation Tabs Slider Animation -->
     <script src="{% static 'js/nav-tabs-slider.js' %}"></script>

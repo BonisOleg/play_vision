@@ -436,10 +436,20 @@
     min-width: 18px;
     text-align: center;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cart-count:empty {
     display: none;
+}
+
+/* Приховуємо кошик на планшетах і телефонах */
+@media (max-width: 1024px) {
+    .cart-icon {
+        display: none;
+    }
 }
 
 /* Theme Toggle */
@@ -527,7 +537,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 14px;
+    padding: 8px 16px;
     border: 2px solid var(--color-border);
     border-radius: 10px;
     background: var(--color-bg);
@@ -535,6 +545,7 @@
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
+    min-height: 44px;
 }
 
 .auth-entry-btn:hover {
@@ -546,20 +557,13 @@
 }
 
 .auth-entry-text {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    line-height: 1.1;
-}
-
-.auth-entry-line {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--color-text);
     white-space: nowrap;
 }
 
-.auth-entry-btn:hover .auth-entry-line {
+.auth-entry-btn:hover .auth-entry-text {
     color: var(--color-primary);
 }
 
@@ -595,10 +599,22 @@
         display: flex;
         justify-content: space-between;
         gap: var(--spacing-md);
+        transform: none;
     }
 
     .header-actions {
+        display: flex;
+        align-items: center;
         gap: var(--spacing-sm);
+    }
+
+    /* Показуємо тільки логотип, тему та кнопку входу/кабінет */
+    .logo-link {
+        flex: 0 0 auto;
+    }
+
+    .header-actions {
+        flex: 0 0 auto;
     }
 }
 
@@ -623,14 +639,11 @@
     }
 
     .auth-entry-btn {
-        padding: 5px 10px;
+        padding: 6px 12px;
+        min-height: 42px;
     }
 
     .auth-entry-text {
-        gap: 0px;
-    }
-
-    .auth-entry-line {
         font-size: 11px;
     }
 }
@@ -650,14 +663,11 @@
     }
 
     .auth-entry-btn {
-        padding: 4px 8px;
+        padding: 5px 10px;
+        min-height: 40px;
     }
 
     .auth-entry-text {
-        gap: 0px;
-    }
-
-    .auth-entry-line {
         font-size: 10px;
     }
 }

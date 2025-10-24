@@ -29,6 +29,9 @@
     transition: color var(--transition-fast);
     position: relative;
     min-height: 56px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }
 
 .mobile-bottom-nav .nav-item:active {
@@ -102,6 +105,11 @@
     .mobile-bottom-nav .nav-label {
         font-size: 12px;
     }
+
+    /* AI кнопка на планшеті */
+    .mobile-bottom-nav .nav-item-ai {
+        -webkit-tap-highlight-color: transparent;
+    }
 }
 
 /* ===== iOS SAFARI SPECIFIC ===== */
@@ -113,6 +121,12 @@
     .mobile-bottom-nav .nav-item {
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
+    }
+
+    /* AI кнопка на iOS */
+    .mobile-bottom-nav .nav-item-ai {
+        -webkit-user-select: none;
+        user-select: none;
     }
 
     /* Smooth scroll для iOS */
@@ -202,4 +216,36 @@
 .mobile-bottom-nav .nav-item:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: -2px;
+}
+
+/* ===== AI BUTTON SPECIFIC STYLES ===== */
+.mobile-bottom-nav .nav-item-ai {
+    font-family: inherit;
+}
+
+.mobile-bottom-nav .nav-item-ai:hover {
+    color: var(--color-primary);
+}
+
+.mobile-bottom-nav .nav-item-ai:active {
+    transform: scale(0.95);
+}
+
+/* Темна тема для AI кнопки */
+@media (prefers-color-scheme: dark) {
+    .mobile-bottom-nav .nav-item-ai {
+        color: var(--color-text-light);
+    }
+
+    .mobile-bottom-nav .nav-item-ai:hover {
+        color: var(--color-primary);
+    }
+}
+
+[data-theme="dark"] .mobile-bottom-nav .nav-item-ai {
+    color: var(--color-text-light);
+}
+
+[data-theme="dark"] .mobile-bottom-nav .nav-item-ai:hover {
+    color: var(--color-primary);
 }

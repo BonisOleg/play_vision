@@ -60,7 +60,7 @@
     transform: scale(0.9) translateY(-20px);
     transform-origin: top right;
     transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .ai-chat-dialog.dialog-open .ai-dialog-container {
@@ -162,6 +162,7 @@
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -235,10 +236,14 @@
 }
 
 @keyframes dotPulse {
-    0%, 80%, 100% {
+
+    0%,
+    80%,
+    100% {
         transform: scale(0.8);
         opacity: 0.5;
     }
+
     40% {
         transform: scale(1);
         opacity: 1;
@@ -388,41 +393,68 @@
    ======================================== */
 
 @media (max-width: 1024px) {
-    .ai-chat-dialog {
-        display: none;
-    }
-    
+
+    /* AI Chat Dialog працює на мобільних через кнопку в нижньому меню */
     .ai-chat-toggle {
         display: none;
     }
-}
 
-@media (max-width: 768px) {
     .ai-dialog-container {
         top: 20px;
         right: 10px;
         left: 10px;
         width: auto;
         max-width: none;
-        max-height: calc(100vh - 60px);
+        max-height: calc(100vh - 100px);
+    }
+}
+
+@media (max-width: 768px) {
+    .ai-dialog-container {
+        top: 15px;
+        right: 8px;
+        left: 8px;
+        max-height: calc(100vh - 90px);
     }
 }
 
 @media (max-width: 480px) {
     .ai-dialog-container {
-        top: 10px;
+        top: 0;
         right: 0;
         left: 0;
+        bottom: 0;
         border-radius: 0;
         max-height: 100vh;
+        max-width: 100vw;
     }
-    
+
     .ai-dialog-messages {
         padding: var(--spacing-sm);
     }
-    
+
     .ai-dialog-input-container {
         padding: var(--spacing-sm);
+    }
+}
+
+/* ===== iOS SAFARI SPECIFIC ===== */
+@supports (-webkit-touch-callout: none) {
+    @media (max-width: 1024px) {
+        .ai-dialog-container {
+            max-height: calc(100vh - max(100px, env(safe-area-inset-bottom)));
+        }
+    }
+
+    @media (max-width: 480px) {
+        .ai-dialog-container {
+            max-height: calc(100vh - env(safe-area-inset-bottom));
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .ai-dialog-input-container {
+            padding-bottom: max(var(--spacing-sm), calc(env(safe-area-inset-bottom) + var(--spacing-xs)));
+        }
     }
 }
 
@@ -446,6 +478,7 @@
    ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
+
     .ai-chat-dialog,
     .ai-dialog-container,
     .ai-dialog-back,
@@ -455,7 +488,7 @@
         transition: none;
         animation: none;
     }
-    
+
     .ai-loading-dot {
         animation: none;
     }
@@ -469,12 +502,12 @@
     .ai-dialog-container {
         border: 2px solid var(--color-text);
     }
-    
+
     .ai-dialog-header,
     .ai-dialog-input-container {
         border-width: 2px;
     }
-    
+
     .ai-message-content {
         border: 1px solid var(--color-border);
     }
@@ -499,4 +532,3 @@
 [data-theme="dark"] .ai-dialog-input-wrapper {
     background: var(--color-bg-dark);
 }
-
