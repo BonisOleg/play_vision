@@ -23,7 +23,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="search-results-container">
+<div class="search-results-container" data-results-count="{{ paginator.count|default:0 }}"
+    data-search-query="{{ search_query|escapejs }}">
     <div class="container">
         <!-- Search Header -->
         <section class="search-header">
@@ -227,8 +228,13 @@
 <script>
     // Enhanced search functionality
     document.addEventListener('DOMContentLoaded', function () {
+        const container = document.querySelector('.search-results-container');
         const searchInput = document.querySelector('.search-input');
         const searchForm = document.querySelector('.search-form');
+
+        // Get data from container
+        const searchQuery = container?.dataset.searchQuery || '';
+        const resultsCount = parseInt(container?.dataset.resultsCount || '0', 10);
 
         // Auto-focus search input
         if (searchInput && !searchInput.value) {
@@ -236,7 +242,6 @@
         }
 
         // Highlight search terms in results
-        const searchQuery = '{{ search_query|escapejs }}';
         if (searchQuery) {
             highlightSearchTerms(searchQuery);
         }
@@ -254,9 +259,9 @@
 
         // Track search analytics
         if (searchQuery) {
-            trackSearchEvent(searchQuery, {{ paginator.count }});
-    }
-});
+            trackSearchEvent(searchQuery, resultsCount);
+        }
+    });
 
     function highlightSearchTerms(query) {
         const terms = query.toLowerCase().split(' ').filter(term => term.length > 2);
