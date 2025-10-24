@@ -585,18 +585,11 @@
    RESPONSIVE
    ======================================== */
 
-/* Мобільні дії - показуються тільки на планшетах і телефонах */
-.navbar-mobile-only {
-    display: none;
-}
-
 @media (max-width: 1024px) {
-    .navbar-desktop-only {
-        display: none;
-    }
 
-    .navbar-mobile-only {
-        display: flex;
+    /* Ховаємо тільки десктопну навігацію, а не всі actions */
+    .header-nav-actions.navbar-desktop-only {
+        display: none;
     }
 
     .header-content {
@@ -612,7 +605,11 @@
         gap: var(--spacing-sm);
     }
 
-    /* Показуємо тільки логотип, кошик (якщо є товари), тему та кнопку входу (для незареєстрованих) */
+    /* Приховуємо кнопку кабінету на планшетах і телефонах для авторизованих */
+    .navbar-cabinet-btn {
+        display: none;
+    }
+
     .logo-link {
         flex: 0 0 auto;
     }

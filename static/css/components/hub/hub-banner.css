@@ -1,0 +1,56 @@
+/**
+ * HUB BANNER
+ * Sticky баннер підписки під header
+ * "Оформи підписку, стань частиною спільноти фахівців!"
+ */
+
+.subscription-sticky-banner {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    box-shadow: 0 2px 8px var(--shadow-alpha-15);
+    transition: var(--hub-transition);
+}
+
+.subscription-sticky-banner .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--hub-spacing-md);
+    padding: var(--hub-spacing-md);
+}
+
+.subscription-sticky-banner .banner-text {
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+.subscription-sticky-banner .btn-banner {
+    background: white;
+    color: var(--color-primary);
+    padding: 0.625rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--hub-transition-fast);
+    white-space: nowrap;
+}
+
+.subscription-sticky-banner .btn-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* iOS Safari fix для sticky позиціонування */
+@supports (-webkit-touch-callout: none) {
+    .subscription-sticky-banner {
+        position: -webkit-sticky;
+        position: sticky;
+    }
+}

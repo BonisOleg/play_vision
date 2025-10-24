@@ -59,6 +59,11 @@ class CourseListView(ListView):
             elif duration == '180+':
                 queryset = queryset.filter(duration_minutes__gt=180)
         
+        # НОВИЙ: Фільтр за рівнем складності
+        difficulty = self.request.GET.get('difficulty')
+        if difficulty and difficulty in ['beginner', 'intermediate', 'advanced']:
+            queryset = queryset.filter(difficulty=difficulty)
+        
         # НОВИЙ: Фільтр за цільовою аудиторією
         target_audience = self.request.GET.getlist('target_audience')
         if target_audience:
@@ -88,11 +93,21 @@ class CourseListView(ListView):
             tag_type='interest'
         ).order_by('display_order')
         
-        # Add featured courses for main materials section
+        # Add featured courses for main materials section (топ-7 по enrollment)
         context['featured_courses'] = Course.objects.filter(
             is_published=True,
             is_featured=True
-        ).select_related('category').prefetch_related('tags')[:6]
+        ).select_related('category').prefetch_related('tags').order_by('-enrollment_count')[:7]
+        
+        # Автоматично додати бейдж "новинка" для курсів молодше 7 днів
+        from datetime import timedelta
+        seven_days_ago = timezone.now() - timedelta(days=7)
+        context['recent_courses_ids'] = list(
+            Course.objects.filter(
+                is_published=True,
+                created_at__gte=seven_days_ago
+            ).values_list('id', flat=True)
+        )
         
         # Add monthly quote
         context['monthly_quote'] = MonthlyQuote.get_current_quote()
@@ -104,6 +119,7 @@ class CourseListView(ListView):
         context['current_sort'] = self.request.GET.get('sort', '-created_at')
         context['current_content_types'] = self.request.GET.getlist('content_type')
         context['current_duration'] = self.request.GET.get('duration', '')
+        context['current_difficulty'] = self.request.GET.get('difficulty', '')
         context['current_target_audiences'] = self.request.GET.getlist('target_audience')
         
         # Check user favorites

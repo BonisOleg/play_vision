@@ -8,19 +8,21 @@
 експертів в галузі.{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/components/hub.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-additions.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-boards.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-banner.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-carousel.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-search.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-filters.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-grid.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-badges.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-boards.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-responsive.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-quotes.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/search.css' %}">
-{% endblock %}
-
-{% block extra_head %}
-<!-- Hub page без Alpine.js -->
 {% endblock %}
 
 {% block content %}
-<!-- КРИТИЧНО: Sticky баннер підписки (ЗАВЖДИ ВИДИМИЙ під хедером!) -->
+<!-- Sticky Banner Підписки -->
 <div class="subscription-sticky-banner">
     <div class="container">
         <p class="banner-text">Оформи підписку, стань частиною спільноти фахівців!</p>
@@ -29,133 +31,13 @@
 </div>
 
 <div class="hub-container">
-
-    {% comment %}
-    <!-- ВИДАЛЕНО ЗА ВИМОГОЮ КЛІЄНТА -->
-    <!-- Upcoming Events Section -->
-    <!-- <section class="upcoming-events-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Найближчі події</h2>
-                <p>Приєднуйтеся до наших вебінарів, майстер-класів та форумів</p>
-                <a href="{% url 'events:event_list' %}" class="view-all-link">
-                    Переглянути всі події
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </a>
-            </div>
-
-            <div class="events-grid">
-                {% for event in upcoming_events_menu|slice:":3" %}
-                <article class="event-card">
-                    <div class="event-image">
-                        {% if event.thumbnail %}
-                        <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-                        {% else %}
-                        <div class="event-image-placeholder">
-                            <svg class="event-icon" viewBox="0 0 24 24">
-                                <path
-                                    d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
-                            </svg>
-                        </div>
-                        {% endif %}
-
-                        <div class="event-overlay">
-                            <span class="event-type-badge">{{ event.get_event_type_display }}</span>
-                            {% if event.is_free %}
-                            <span class="event-price-badge free">Безкоштовно</span>
-                            {% else %}
-                            <span class="event-price-badge">{{ event.price }}₴</span>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="event-content">
-                        <div class="event-meta">
-                            <span class="event-date">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path
-                                        d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
-                                </svg>
-                                {{ event.start_datetime|date:"d.m.Y" }}
-                            </span>
-                            <span class="event-time">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z" />
-                                </svg>
-                                {{ event.start_datetime|date:"H:i" }}
-                            </span>
-                            <span class="event-location">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    {% if event.is_online %}
-                                    <path
-                                        d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z" />
-                                    {% else %}
-                                    <path
-                                        d="M12,2C15.31,2 18,4.66 18,7.95C18,12.41 12,19 12,19S6,12.41 6,7.95C6,4.66 8.69,2 12,2M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6Z" />
-                                    {% endif %}
-                                </svg>
-                                {% if event.is_online %}Онлайн{% else %}{{ event.location }}{% endif %}
-                            </span>
-                        </div>
-
-                        <h3 class="event-title">
-                            <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
-                        </h3>
-
-                        <p class="event-description">{{ event.short_description|truncatechars:120 }}</p>
-
-                        <div class="event-footer">
-                            {% if event.available_tickets > 0 %}
-                            <span class="tickets-available">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path
-                                        d="M17,21H7A2,2 0 0,1 5,19V5A2,2 0 0,1 7,3H17A2,2 0 0,1 19,5V19A2,2 0 0,1 17,21M17,19V5H7V19H17M8,7H16V9H8V7M8,11H16V13H8V11M8,15H13V17H8V15Z" />
-                                </svg>
-                                {{ event.available_tickets }} місць
-                            </span>
-                            {% else %}
-                            <span class="tickets-sold-out">Розпродано</span>
-                            {% endif %}
-
-                            <a href="{{ event.get_absolute_url }}" class="btn btn-primary btn-small">
-                                Детальніше
-                            </a>
-                        </div>
-                    </div>
-                </article>
-                {% empty %}
-                <div class="no-events">
-                    <div class="no-events-content">
-                        <svg class="no-events-icon" viewBox="0 0 24 24">
-                            <path
-                                d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
-                        </svg>
-                        <h3>Найближчих подій поки немає</h3>
-                        <p>Слідкуйте за оновленнями календаря подій</p>
-                        <a href="{% url 'events:event_list' %}" class="btn btn-outline">
-                            Переглянути всі події
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section> -->
-    {% endcomment %}
-
+    <!-- Expert Quotes Carousel -->
     {% include 'hub/_monthly_quote.html' %}
 
-    {% comment %} СТАРІ ЦИТАТИ ВИДАЛЕНО {% endcomment %}
-
-
-    <!-- 4 Інформаційні борди -->
-    <section class="hub-boards">
+    <!-- 4 Інформаційні Борди -->
+    <section class="hub-boards hub-section">
         <div class="container">
             <div class="boards-grid">
-                <!-- Борд 1 -->
                 <div class="board-card board-card-1">
                     <div class="board-icon">📚</div>
                     <h3 class="board-title">Твоя бібліотека футбольних знань</h3>
@@ -167,7 +49,6 @@
                     <a href="#products" class="board-btn">Відкрити знання</a>
                 </div>
 
-                <!-- Борд 2 -->
                 <div class="board-card board-card-2">
                     <div class="board-icon">⚽</div>
                     <h3 class="board-title">Навчання від практиків, а не теоретиків</h3>
@@ -178,7 +59,6 @@
                     <a href="#courses" class="board-btn">Перейти до курсів</a>
                 </div>
 
-                <!-- Борд 3 -->
                 <div class="board-card board-card-3">
                     <div class="board-icon">🎓</div>
                     <h3 class="board-title">Футбольна освіта нового покоління</h3>
@@ -189,7 +69,6 @@
                     <a href="#courses" class="board-btn">Обрати напрям</a>
                 </div>
 
-                <!-- Борд 4 -->
                 <div class="board-card board-card-4">
                     <div class="board-icon">🌍</div>
                     <h3 class="board-title">Європейський підхід — українська мова</h3>
@@ -203,10 +82,11 @@
         </div>
     </section>
 
-    <!-- Educational Products -->
-    <section class="main-materials">
+    <!-- Головні Матеріали Carousel -->
+    <section class="main-materials hub-section">
         <div class="container">
-            <h2 class="section-title">Освітні продукти</h2>
+            <h2 class="section-title">Головні матеріали</h2>
+            <p class="section-subtitle">Найпопулярніші курси від провідних експертів</p>
 
             <div class="materials-carousel">
                 <div class="carousel-wrapper">
@@ -220,24 +100,30 @@
                                     {% else %}
                                     <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
                                     {% endif %}
+
                                     <div class="material-overlay">
-                                        <span class="difficulty-badge difficulty-{{ course.difficulty }}">
-                                            {{ course.get_difficulty_display }}
-                                        </span>
-                                        {% if course.is_featured %}
-                                        <span class="featured-badge">топ-продажів</span>
-                                        {% endif %}
+                                        <div class="product-badges">
+                                            <span class="difficulty-badge difficulty-{{ course.difficulty }}">
+                                                {{ course.get_difficulty_display }}
+                                            </span>
+                                            {% if course.badge_type == 'bestseller' or course.is_featured %}
+                                            <span class="badge badge-bestseller">топ-продажів</span>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="material-content">
                                     <h3>{{ course.title }}</h3>
                                     <p>{{ course.short_description }}</p>
+
                                     <div class="material-meta">
                                         <span class="duration">{{ course.duration_display }}</span>
                                         <span class="price">{{ course.price }}₴</span>
                                     </div>
+
                                     <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
-                                        Огляд курсу
+                                        Переглянути курс
                                     </a>
                                 </div>
                             </div>
@@ -254,35 +140,32 @@
 
                 {% if featured_courses|length > 1 %}
                 <div class="carousel-nav">
-                    <button class="nav-btn nav-prev">‹</button>
-                    <button class="nav-btn nav-next">›</button>
+                    <button class="nav-btn nav-prev" aria-label="Попередній слайд">‹</button>
+                    <button class="nav-btn nav-next" aria-label="Наступний слайд">›</button>
                 </div>
                 {% endif %}
             </div>
         </div>
     </section>
 
-    <!-- All Products -->
-    <section class="all-products">
+    <!-- Усі Продукти -->
+    <section class="all-products hub-section" id="products">
         <div class="container">
-            <div class="products-header">
-                <h2 class="section-title">Усі продукти</h2>
+            <h2 class="section-title">Усі продукти</h2>
 
-                <!-- Search Bar -->
-                <div class="search-container">
-                    <form method="get" class="search-form" id="searchForm">
-                        <input type="text" name="q" placeholder="Пошук за назвою, автором або тегами..."
-                            value="{{ request.GET.q }}" class="search-input" autocomplete="off">
-                        <button type="submit" class="search-btn">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path
-                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                            </svg>
-                        </button>
-                        <!-- Search Suggestions Container -->
-                        <div class="search-suggestions is-hidden" aria-hidden="true"></div>
-                    </form>
-                </div>
+            <!-- Search Bar -->
+            <div class="search-container">
+                <form method="get" class="search-form" action="{% url 'content:course_search' %}">
+                    <input type="text" name="q" placeholder="Пошук за назвою, автором або тегами..."
+                        value="{{ request.GET.q }}" class="search-input" autocomplete="off">
+                    <button type="submit" class="search-btn" aria-label="Пошук">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path
+                                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                        </svg>
+                    </button>
+                    <div class="search-suggestions is-hidden"></div>
+                </form>
             </div>
 
             <div class="products-layout">
@@ -291,12 +174,12 @@
                     <div class="filters-header">
                         <h3>Фільтрувати</h3>
                         <div class="filters-controls">
-                            <span class="active-filters-count is-hidden"></span>
-                            <button class="mobile-filters-toggle" aria-expanded="false" aria-controls="filters-content">
+                            <span class="active-filters-count is-hidden">0</span>
+                            <button class="mobile-filters-toggle" aria-expanded="false" aria-controls="filters-content"
+                                aria-label="Відкрити фільтри">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
                                 </svg>
-                                <span class="sr-only">Відкрити фільтри</span>
                             </button>
                         </div>
                     </div>
@@ -307,23 +190,23 @@
                             <input type="hidden" name="q" value="{{ request.GET.q }}">
                             {% endif %}
 
-                            <!-- Category Filter -->
+                            <!-- За напрямками -->
                             <div class="filter-group">
                                 <h4>За напрямками</h4>
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category|default:'' == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
                                 </div>
                             </div>
 
-                            <!-- Тренерство з під-фільтрами -->
+                            <!-- Тренерство підфільтри -->
                             <div class="filter-group">
                                 <h4>
-                                    <button type="button" class="filter-toggle">
+                                    <button type="button" class="filter-toggle" aria-expanded="false">
                                         <span>Тренерство</span>
                                         <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2">
@@ -331,7 +214,6 @@
                                         </svg>
                                     </button>
                                 </h4>
-
                                 <div class="sub-filters is-hidden">
                                     <label class="filter-option sub-option">
                                         <input type="checkbox" name="training_type" value="goalkeeper">
@@ -344,10 +226,6 @@
                                     <label class="filter-option sub-option">
                                         <input type="checkbox" name="training_type" value="fitness">
                                         <span>Тренер ЗФП</span>
-                                    </label>
-                                    <label class="filter-option sub-option">
-                                        <input type="checkbox" name="training_type" value="professional">
-                                        <span>Тренер професійних команд</span>
                                     </label>
                                 </div>
                             </div>
@@ -410,6 +288,25 @@
                                 </div>
                             </div>
 
+                            <!-- Рівень складності -->
+                            <div class="filter-group">
+                                <h4>Рівень складності</h4>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="difficulty" value="beginner" {% if current_difficulty == 'beginner' %}checked{% endif %}>
+                                        <span>Початковий</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="difficulty" value="intermediate" {% if current_difficulty == 'intermediate' %}checked{% endif %}>
+                                        <span>Середній</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="difficulty" value="advanced" {% if current_difficulty == 'advanced' %}checked{% endif %}>
+                                        <span>Експертний</span>
+                                    </label>
+                                </div>
+                            </div>
+
                             <!-- Тривалість -->
                             <div class="filter-group">
                                 <h4>Тривалість</h4>
@@ -429,6 +326,7 @@
                                 </div>
                             </div>
 
+                            <!-- Дії фільтрів -->
                             <div class="filter-actions">
                                 <button type="submit" class="btn btn-primary">
                                     <svg class="icon" viewBox="0 0 24 24">
@@ -443,186 +341,128 @@
                                     </svg>
                                     Скинути всі
                                 </button>
-                                <a href="{% url 'content:course_list' %}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}"
-                                    class="btn btn-ghost">
-                                    Скинути
-                                </a>
                             </div>
 
-                            <!-- Quick Filter Tags -->
+                            <!-- Активні фільтри -->
                             <div class="quick-filters is-hidden">
                                 <h5>Активні фільтри:</h5>
-                                <div class="filter-tags">
-                                    <!-- Динамічно генеруються через JS -->
-                                </div>
+                                <div class="filter-tags"></div>
                             </div>
                         </form>
                     </div>
                 </aside>
 
                 <!-- Products Grid -->
-                <main class="products-content">
-                    <!-- Sort Options -->
-                    <div class="sort-bar">
-                        <div class="sort-options">
-                            <label for="sort">Сортувати за:</label>
-                            <select name="sort" id="sort" class="sort-select">
-                                <option value="-created_at" {% if current_sort|default:'-created_at' == '-created_at' %}selected{% endif %}>
-                                    Новіші спочатку
-                                </option>
-                                <option value="title" {% if current_sort|default:'' == 'title' %}selected{% endif %}> За
-                                    назвою А-Я
-                                </option>
-                                <option value="-title" {% if current_sort|default:'' == '-title' %}selected{% endif %}> За
-                                    назвою Я-А
-                                </option>
-                                <option value="price" {% if current_sort|default:'' == 'price' %}selected{% endif %}>
-                                    За ціною (зростання)
-                                </option>
-                                <option value="-price" {% if current_sort|default:'' == '-price' %}selected{% endif %}> За
-                                    ціною (спадання)
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="results-count">
-                            Знайдено: {{ paginator.count }} курсів
-                        </div>
-                    </div>
-
-                    <!-- Products Grid -->
+                <div class="products-grid-area">
+                    {% if courses %}
                     <div class="products-grid">
                         {% for course in courses %}
-                        <article class="product-card">
-                            <div class="product-image">
-                                {% if course.thumbnail %}
-                                <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
-                                {% else %}
-                                <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
-                                {% endif %}
-
-                                <div class="product-overlay">
-                                    <div class="product-badges">
-                                        {% if course.is_featured %}
-                                        <span class="badge badge-top">топ-продажів</span>
-                                        {% endif %}
-                                        {% if course.created_at|timesince|slice:":2" == "0 " or course.created_at|timesince|slice:":3" == "1 д" or course.created_at|timesince|slice:":3" == "2 д" %}
-                                        <span class="badge badge-new">новинка</span>
-                                        {% endif %}
-                                        {% if course.rating >= 4.5 and course.enrollment_count >= 100 %}
-                                        <span class="badge badge-classic">вічна класика</span>
-                                        {% endif %}
-                                        {% if user.is_authenticated and user.profile.interests.all %}
-                                        {% for tag in course.tags.all %}
-                                        {% if tag in user.profile.interests.all %}
-                                        <span class="badge badge-recommended">для вас</span>
-                                        {% endif %}
-                                        {% endfor %}
-                                        {% endif %}
-                                        {% if course.is_free %}
-                                        <span class="badge badge-free">безкоштовно</span>
-                                        {% endif %}
-
-                                        <!-- Кнопка play для відео курсів -->
-                                        {% if course.preview_video %}
-                                        <button class="play-button" data-video-preview="{{ course.id }}"
-                                            aria-label="Переглянути превью">
-                                        </button>
-                                        {% endif %}
-                                    </div>
-
-                                    <!-- Favorite Button -->
-                                    {% if user.is_authenticated %}
-                                    <button class="favorite-btn {% if course.id in user_favorites %}active{% endif %}"
-                                        data-course-id="{{ course.id }}"
-                                        hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none"
-                                        hx-trigger="click">
-                                        <svg class="icon" viewBox="0 0 24 24">
-                                            <path
-                                                d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
-                                        </svg>
-                                    </button>
+                        <article class="product-card" data-view-count="{{ course.view_count }}"
+                            data-course-id="{{ course.id }}">
+                            <a href="{{ course.get_absolute_url }}"
+                                style="text-decoration: none; color: inherit; display: contents;">
+                                <div class="product-image">
+                                    {% if course.thumbnail %}
+                                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                    {% else %}
+                                    <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
                                     {% endif %}
-                                </div>
-                            </div>
 
-                            <div class="product-content">
-                                <div class="product-meta">
-                                    <span class="category">{{ course.category.name }}</span>
-                                    <span class="difficulty difficulty-{{ course.difficulty }}">
-                                        {{ course.get_difficulty_display }}
-                                    </span>
-                                </div>
+                                    <div class="product-overlay">
+                                        <div class="product-badges">
+                                            {% if course.badge_type == 'bestseller' %}
+                                            <span class="badge badge-bestseller">топ-продажів</span>
+                                            {% elif course.badge_type == 'new' or course.id in recent_courses_ids %}
+                                            <span class="badge badge-new">новинка</span>
+                                            {% elif course.badge_type == 'recommended' %}
+                                            <span class="badge badge-recommended">для вас</span>
+                                            {% elif course.badge_type == 'classic' or course.is_classic %}
+                                            <span class="badge badge-classic">вічна класика</span>
+                                            {% endif %}
 
-                                <h3 class="product-title">
-                                    <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
-                                </h3>
-
-                                <p class="product-description">{{ course.short_description }}</p>
-
-                                <div class="product-details">
-                                    <span class="duration">{{ course.duration_display }}</span>
-                                    <div class="price">
-                                        {% if course.is_free %}
-                                        <span class="price-free">Безкоштовно</span>
-                                        {% else %}
-                                        <span class="price-amount">{{ course.price }}₴</span>
-                                        {% endif %}
-                                        {% if course_points and not course.is_free %}
-                                        {% with points=course_points|get_item:course.id %}
-                                        {% if points and points > 0 %}
-                                        <span class="loyalty-points">+{{ points }} балів</span>
-                                        {% endif %}
-                                        {% endwith %}
-                                        {% endif %}
+                                            {% if course.is_free %}
+                                            <span class="badge badge-free">безкоштовно</span>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="product-tags">
-                                    {% for tag in course.tags.all|slice:":3" %}
-                                    <span class="tag">{{ tag.name }}</span>
-                                    {% endfor %}
-                                </div>
+                                <div class="product-content">
+                                    <div class="product-category">{{ course.category.name }}</div>
 
-                                {% if course.target_audience %}
-                                <div class="product-audience">
-                                    <div class="audience-label">👤 Кому підходить:</div>
-                                    <div class="audience-tags">
-                                        {% for audience in course.get_target_audience_display|slice:":3" %}
-                                        <span class="audience-tag">{{ audience }}</span>
-                                        {% endfor %}
-                                        {% if course.get_target_audience_display|length > 3 %}
-                                        <span class="audience-tag audience-more">+{{ course.get_target_audience_display|length|add:"-3" }}</span>
-                                        {% endif %}
+                                    <h3 class="product-title">{{ course.title }}</h3>
+
+                                    {% if course.author %}
+                                    <div class="product-author">
+                                        <span class="author-label">✍️ Автор:</span>
+                                        <span class="author-name">{{ course.author }}</span>
                                     </div>
-                                </div>
-                                {% endif %}
-
-                                {% if course.author %}
-                                <div class="product-author">
-                                    <span class="author-label">✍️ Автор:</span>
-                                    <span class="author-name">{{ course.author }}</span>
-                                </div>
-                                {% endif %}
-
-                                <div class="product-actions">
-                                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
-                                        Переглянути
-                                    </a>
-                                    {% if not user.is_authenticated %}
-                                    <small class="access-hint">Увійдіть для доступу</small>
                                     {% endif %}
+
+                                    <p class="product-description">{{ course.short_description }}</p>
+
+                                    {% if course.target_audience %}
+                                    <div class="product-audience">
+                                        <div class="audience-label">👤 Кому підходить:</div>
+                                        <div class="audience-tags">
+                                            {% for audience in course.get_target_audience_display|slice:":3" %}
+                                            <span class="audience-tag">{{ audience }}</span>
+                                            {% endfor %}
+                                            {% if course.get_target_audience_display|length > 3 %}
+                                            <span class="audience-tag audience-more">+{{ course.get_target_audience_display|length|add:"-3" }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="product-meta">
+                                        <div class="product-meta-item">
+                                            <svg class="icon" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z" />
+                                            </svg>
+                                            {{ course.duration_display }}
+                                        </div>
+                                        <span class="difficulty difficulty-{{ course.difficulty }}">
+                                            {{ course.get_difficulty_display }}
+                                        </span>
+                                    </div>
+
+                                    {% if course.tags.all %}
+                                    <div class="product-tags">
+                                        {% for tag in course.tags.all|slice:":3" %}
+                                        <span class="product-tag">{{ tag.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="product-footer">
+                                        <div class="product-price">
+                                            {% if course.is_free %}
+                                            <span class="price-free">Безкоштовно</span>
+                                            {% else %}
+                                            {{ course.price }}₴
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="product-actions">
+                                            {% if user.is_authenticated %}
+                                            <button
+                                                class="favorite-btn {% if course.id in user_favorites %}active{% endif %}"
+                                                data-course-id="{{ course.id }}"
+                                                hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none"
+                                                aria-label="Додати до улюблених">
+                                                <svg class="icon" viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                                                </svg>
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                        {% empty %}
-                        <div class="no-results">
-                            <h3>Нічого не знайдено</h3>
-                            <p>Спробуйте змінити параметри пошуку або фільтрування</p>
-                            <a href="{% url 'content:course_list' %}" class="btn btn-outline">
-                                Показати всі курси
                             </a>
-                        </div>
+                        </article>
                         {% endfor %}
                     </div>
 
@@ -631,9 +471,9 @@
                     <div class="pagination-wrapper">
                         <div class="pagination">
                             {% if page_obj.has_previous %}
-                            <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                            <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
                                 class="page-link">Перша</a>
-                            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
                                 class="page-link">‹</a>
                             {% endif %}
 
@@ -642,63 +482,31 @@
                             </span>
 
                             {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
                                 class="page-link">›</a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
                                 class="page-link">Остання</a>
                             {% endif %}
                         </div>
                     </div>
                     {% endif %}
-                </main>
+
+                    {% else %}
+                    <div class="no-products">
+                        <div class="no-products-icon">🔍</div>
+                        <h3>Курсів не знайдено</h3>
+                        <p>Спробуйте змінити фільтри або скинути їх</p>
+                        <a href="{% url 'content:course_list' %}" class="btn btn-primary">Показати всі курси</a>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </section>
 </div>
-
-<!-- Support Widget з функціоналом -->
-<div class="support-widget">
-    <button class="support-btn" data-action="openSupport" aria-label="Відкрити підтримку">
-        <svg class="icon" viewBox="0 0 24 24">
-            <path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
-        </svg>
-        <span class="support-text">Підтримка</span>
-    </button>
-
-    <!-- Dropdown меню -->
-    <div class="support-dropdown is-hidden">
-        <div class="support-option">
-            <button type="button" data-action="openAIChat" class="support-option-btn">
-                <svg class="option-icon" width="20" height="20" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-                <span>AI Помічник</span>
-            </button>
-        </div>
-        <div class="support-option">
-            <a href="https://t.me/playvision_support_bot" target="_blank" rel="noopener" class="support-option-btn">
-                <svg class="option-icon" width="20" height="20" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
-                </svg>
-                <span>Telegram підтримка</span>
-            </a>
-        </div>
-        <div class="support-option">
-            <a href="mailto:support@playvision.com" class="support-option-btn">
-                <svg class="option-icon" width="20" height="20" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                </svg>
-                <span>Email підтримка</span>
-            </a>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/hub.js' %}"></script>
-<script src="{% static 'js/search-autocomplete.js' %}"></script>
+<script src="{% static 'js/hub-v2.js' %}"></script>
 <script src="{% static 'js/expert-quotes.js' %}"></script>
 {% endblock %}

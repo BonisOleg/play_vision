@@ -1,0 +1,183 @@
+/**
+ * HUB CAROUSEL
+ * Карусель головних матеріалів (5-7 курсів)
+ * Автоматична зміна кожні 20 секунд
+ */
+
+.main-materials {
+    background: var(--color-bg);
+    padding: var(--hub-spacing-xl) 0;
+}
+
+.materials-carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-content {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.material-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+}
+
+.material-card {
+    background: white;
+    border-radius: var(--hub-card-radius);
+    overflow: hidden;
+    box-shadow: var(--hub-card-shadow);
+    transition: var(--hub-transition);
+}
+
+.material-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hub-card-shadow-hover);
+}
+
+.material-image {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    overflow: hidden;
+    background: var(--color-bg-gray);
+}
+
+.material-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.material-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: var(--hub-spacing-md);
+    gap: var(--hub-spacing-xs);
+}
+
+.difficulty-badge {
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(8px);
+}
+
+.difficulty-beginner {
+    background: rgba(0, 255, 0, 0.2);
+}
+
+.difficulty-intermediate {
+    background: rgba(255, 165, 0, 0.2);
+}
+
+.difficulty-advanced {
+    background: rgba(255, 0, 0, 0.2);
+}
+
+.featured-badge {
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: var(--color-primary);
+    color: white;
+}
+
+.material-content {
+    padding: var(--hub-spacing-lg);
+}
+
+.material-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--hub-spacing-sm);
+}
+
+.material-content p {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: var(--hub-spacing-md);
+}
+
+.material-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--hub-spacing-md);
+    padding-top: var(--hub-spacing-md);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.material-meta .duration {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.material-meta .price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* Навігація каруселі */
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--hub-spacing-md);
+    margin-top: var(--hub-spacing-lg);
+}
+
+.nav-btn {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: var(--hub-transition-fast);
+}
+
+.nav-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: scale(1.1);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.no-content {
+    text-align: center;
+    padding: var(--hub-spacing-xl);
+    color: var(--color-text-muted);
+}

@@ -44,33 +44,38 @@ class MaterialInline(admin.TabularInline):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'difficulty', 'price', 'is_featured', 
-                   'is_published', 'view_count', 'enrollment_count', 'created_at')
-    list_filter = ('category', 'difficulty', 'is_featured', 'is_free', 
-                  'is_published', 'requires_subscription', 'created_at')
-    search_fields = ('title', 'slug', 'description')
+    list_display = ('title', 'category', 'difficulty', 'badge_type', 'price', 
+                   'is_featured', 'is_published', 'view_count', 'enrollment_count', 'created_at')
+    list_filter = ('category', 'difficulty', 'badge_type', 'content_type', 
+                  'is_featured', 'is_free', 'is_classic', 'is_published', 
+                  'requires_subscription', 'created_at')
+    search_fields = ('title', 'slug', 'description', 'author')
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ('tags',)
     date_hierarchy = 'created_at'
     inlines = [MaterialInline]
     
     fieldsets = (
-        ('Basic Information', {
-            'fields': ('title', 'slug', 'category', 'tags', 'difficulty')
+        ('Основна інформація', {
+            'fields': ('title', 'slug', 'author', 'category', 'tags')
         }),
-        ('Description', {
+        ('Параметри курсу', {
+            'fields': ('difficulty', 'content_type', 'target_audience', 
+                      'training_specialization', 'duration_minutes')
+        }),
+        ('Опис', {
             'fields': ('short_description', 'description')
         }),
-        ('Pricing & Access', {
+        ('Ціна та доступ', {
             'fields': ('price', 'is_free', 'requires_subscription', 'subscription_tiers')
         }),
-        ('Media', {
+        ('Медіа', {
             'fields': ('thumbnail', 'preview_video')
         }),
-        ('Status & Display', {
-            'fields': ('is_featured', 'is_published', 'published_at')
+        ('Статус та відображення', {
+            'fields': ('is_featured', 'badge_type', 'is_classic', 'is_published', 'published_at')
         }),
-        ('Statistics', {
+        ('Статистика', {
             'fields': ('view_count', 'enrollment_count', 'rating'),
             'classes': ('collapse',)
         }),
@@ -78,7 +83,7 @@ class CourseAdmin(admin.ModelAdmin):
             'fields': ('meta_title', 'meta_description'),
             'classes': ('collapse',)
         }),
-        ('Timestamps', {
+        ('Часові мітки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),

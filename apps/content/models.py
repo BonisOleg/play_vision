@@ -155,6 +155,28 @@ class Course(models.Model):
     requires_subscription = models.BooleanField(default=True)
     subscription_tiers = models.JSONField(default=list, help_text='List of allowed subscription tiers')
     
+    # Badges
+    BADGE_TYPE_CHOICES = [
+        ('none', 'Без бейджа'),
+        ('bestseller', 'Топ-продажів'),
+        ('new', 'Новинка'),
+        ('recommended', 'Для вас'),
+        ('classic', 'Вічна класика'),
+    ]
+    badge_type = models.CharField(
+        max_length=20,
+        choices=BADGE_TYPE_CHOICES,
+        default='none',
+        verbose_name='Тип бейджа',
+        help_text='Оберіть бейдж для відображення на картці курсу',
+        db_index=True
+    )
+    is_classic = models.BooleanField(
+        default=False,
+        verbose_name='Вічна класика',
+        help_text='Позначити курс як класичний/вічний контент'
+    )
+    
     # Media
     thumbnail = models.ImageField(upload_to='course_thumbnails/')
     preview_video = models.FileField(upload_to='course_previews/', blank=True)
