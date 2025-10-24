@@ -15,6 +15,17 @@
             <p class="auth-subtitle">Стань частиною Play Vision уже сьогодні</p>
         </div>
 
+        <!-- Auth Mode Switcher -->
+        <div class="auth-mode-switcher">
+            <a href="{% url 'accounts:login' %}" class="auth-mode-tab">
+                Увійти
+            </a>
+            <a href="{% url 'accounts:register' %}" class="auth-mode-tab auth-mode-tab--active">
+                Зареєструватися
+            </a>
+        </div>
+        <p class="auth-switcher-hint">Ще немає аккаунта? Зареєструйтесь зараз!</p>
+
         <div class="auth-form">
             <div class="auth-tabs">
                 <button class="auth-tab auth-tab--active" data-tab="email">Email</button>
@@ -99,7 +110,8 @@
 
                 <div class="form-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" name="subscribe_news" {% if form.subscribe_news.value %}checked{% endif %}>
+                        <input type="checkbox" name="subscribe_news" {% if form.subscribe_news.value %}checked{% endif
+                            %}>
                         <span>Я хочу отримувати розсилку новин</span>
                     </label>
                     {% if form.subscribe_news.errors %}

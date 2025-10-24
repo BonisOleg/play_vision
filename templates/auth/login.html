@@ -15,6 +15,17 @@
             <p class="auth-subtitle">Авторизуйтесь, щоб отримати доступ</p>
         </div>
 
+        <!-- Auth Mode Switcher -->
+        <div class="auth-mode-switcher">
+            <a href="{% url 'accounts:login' %}" class="auth-mode-tab auth-mode-tab--active">
+                Увійти
+            </a>
+            <a href="{% url 'accounts:register' %}" class="auth-mode-tab">
+                Зареєструватися
+            </a>
+        </div>
+        <p class="auth-switcher-hint">Вже є акаунт? Увійдіть зараз!</p>
+
         <div class="auth-form">
             <div class="auth-tabs">
                 <button class="auth-tab auth-tab--active" data-tab="email">Email</button>

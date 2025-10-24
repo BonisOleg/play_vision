@@ -522,21 +522,69 @@
     display: none;
 }
 
-/* Navbar link для неавторизованих */
-.navbar-link {
-    display: inline-flex;
+/* Auth Entry Button (Увійти/Реєстрація) */
+.auth-entry-btn {
+    display: flex;
     align-items: center;
-    padding: 10px 16px;
-    font-size: 15px;
-    font-weight: 500;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-bg);
     color: var(--color-text);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.navbar-link:hover {
-    color: var(--color-primary);
+.auth-entry-btn:hover {
+    background: var(--color-bg-gray);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-decoration: none;
+}
+
+.auth-entry-icon {
+    flex-shrink: 0;
+    stroke: currentColor;
+}
+
+.auth-entry-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.2;
+}
+
+.auth-entry-line {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+}
+
+.auth-entry-btn:hover .auth-entry-line {
+    color: var(--color-primary);
+}
+
+/* Dark theme support */
+[data-theme="dark"] .auth-entry-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .auth-entry-btn:hover {
+    border-color: var(--color-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .auth-entry-btn {
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-theme="auto"] .auth-entry-btn:hover {
+        border-color: var(--color-primary);
+    }
 }
 
 /* ========================================
@@ -578,6 +626,20 @@
         width: 20px;
         height: 20px;
     }
+
+    .auth-entry-btn {
+        padding: 6px 12px;
+        gap: 6px;
+    }
+
+    .auth-entry-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .auth-entry-line {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 375px) {
@@ -592,6 +654,20 @@
     .navbar-icon {
         width: 40px;
         height: 40px;
+    }
+
+    .auth-entry-btn {
+        padding: 5px 10px;
+        gap: 5px;
+    }
+
+    .auth-entry-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .auth-entry-line {
+        font-size: 11px;
     }
 }
 
