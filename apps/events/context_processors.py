@@ -21,20 +21,23 @@ def event_categories_menu(request):
         
         categories = []
         for cat_value, cat_display in Event.EVENT_CATEGORY_CHOICES:
-            # Підрахунок майбутніх подій категорії
-            count = Event.objects.filter(
-                status='published',
-                event_category=cat_value,
-                start_datetime__gt=timezone.now()
-            ).count()
-            
-            if count > 0:  # Показуємо тільки категорії з подіями
-                categories.append({
-                    'slug': cat_value,
-                    'name': cat_display,
-                    'count': count,
-                    'url': f'/events/?category={cat_value}'
-                })
+            try:
+                # Підрахунок майбутніх подій категорії
+                count = Event.objects.filter(
+                    status='published',
+                    event_category=cat_value,
+                    start_datetime__gt=timezone.now()
+                ).count()
+                
+                if count > 0:  # Показуємо тільки категорії з подіями
+                    categories.append({
+                        'slug': cat_value,
+                        'name': cat_display,
+                        'count': count,
+                        'url': f'/events/?category={cat_value}'
+                    })
+            except Exception as e:
+                continue
         
         return {'event_categories_menu': categories}
     except Exception as e:
