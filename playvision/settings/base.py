@@ -264,6 +264,17 @@ AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='')
 AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='eu-central-1')
 
+# Bunny.net CDN Video Streaming
+BUNNY_ENABLED = config('BUNNY_ENABLED', default=True, cast=bool)
+BUNNY_API_KEY = config('BUNNY_API_KEY', default='')
+BUNNY_LIBRARY_ID = config('BUNNY_LIBRARY_ID', default='')
+BUNNY_CDN_HOSTNAME = config('BUNNY_CDN_HOSTNAME', default='')
+BUNNY_STORAGE_ZONE = config('BUNNY_STORAGE_ZONE', default='')
+BUNNY_STREAM_API_URL = 'https://video.bunnycdn.com/library'
+BUNNY_VIDEO_EMBED_URL = 'https://iframe.mediadelivery.net/embed'
+BUNNY_TOKEN_AUTHENTICATION = config('BUNNY_TOKEN_AUTHENTICATION', default=True, cast=bool)
+BUNNY_TOKEN_LIFETIME = config('BUNNY_TOKEN_LIFETIME', default=3600, cast=int)  # 1 година
+
 # AI Assistant settings
 OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')

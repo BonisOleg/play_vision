@@ -272,6 +272,40 @@ class Material(models.Model):
                                         help_text='Поточний токен доступу')
     token_expires_at = models.DateTimeField(null=True, blank=True)
     
+    # Bunny.net CDN Video
+    VIDEO_SOURCE_CHOICES = [
+        ('local', 'Локальне зберігання'),
+        ('s3', 'AWS S3'),
+        ('bunny', 'Bunny.net CDN'),
+    ]
+    video_source = models.CharField(
+        max_length=20,
+        choices=VIDEO_SOURCE_CHOICES,
+        default='local',
+        help_text='Джерело відео',
+        db_index=True
+    )
+    bunny_video_id = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text='GUID відео в Bunny.net',
+        db_index=True
+    )
+    bunny_collection_id = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text='ID колекції в Bunny.net'
+    )
+    bunny_video_status = models.CharField(
+        max_length=20,
+        blank=True,
+        help_text='Статус обробки відео в Bunny.net (0-6)'
+    )
+    bunny_thumbnail_url = models.URLField(
+        blank=True,
+        help_text='URL thumbnail з Bunny.net'
+    )
+    
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -293,22 +327,41 @@ class Material(models.Model):
     
     def get_video_url(self, user=None):
         """Універсальний метод отримання URL відео"""
-        if self.secure_video_enabled and user:
-            # Новий захищений спосіб з безпечним імпортом
+        # Bunny.net CDN (пріоритет)
+        if self.video_source == 'bunny' and self.bunny_video_id:
             try:
-                # Використовуємо пізній імпорт для уникнення циклічного імпорту
+                from apps.video_security.bunny_service import BunnyService
+                if BunnyService.is_enabled():
+                    # Повертаємо embed URL для iframe
+                    return BunnyService.get_video_embed_url(self.bunny_video_id)
+            except ImportError:
+                pass
+        
+        # Захищене відео (S3 або інше)
+        if self.secure_video_enabled and user:
+            try:
                 from django.apps import apps
                 if apps.is_installed('apps.video_security'):
                     from apps.video_security.services import SecureVideoService
                     return SecureVideoService.get_secure_url(self, user)
             except (ImportError, AttributeError, apps.AppRegistryNotReady):
-                # Fallback якщо video_security не встановлений або є проблеми з імпортом
                 pass
         
-        # Старий спосіб (fallback) для зворотної сумісності
+        # Fallback: локальний файл
         if self.video_file and self.video_file.name:
             return self.video_file.url
         
+        return None
+    
+    def get_video_stream_url(self):
+        """Отримати URL для HLS стрімінгу (для нативного плеєра)"""
+        if self.video_source == 'bunny' and self.bunny_video_id:
+            try:
+                from apps.video_security.bunny_service import BunnyService
+                if BunnyService.is_enabled():
+                    return BunnyService.get_video_stream_url(self.bunny_video_id)
+            except ImportError:
+                pass
         return None
 
 

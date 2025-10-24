@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .bunny_webhook_views import BunnyWebhookView
 
 app_name = 'video_security'
 
@@ -18,4 +19,7 @@ urlpatterns = [
     
     # Демо сторінка для тестування (НОВИЙ)
     path('demo/', views.SecureVideoDemoView.as_view(), name='demo'),
+    
+    # Bunny.net webhook endpoint
+    path('bunny/webhook/', BunnyWebhookView.as_view(), name='bunny_webhook'),
 ]

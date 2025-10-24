@@ -113,29 +113,106 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Material)
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('title', 'course', 'content_type', 'order', 'is_preview', 'created_at')
-    list_filter = ('content_type', 'is_preview', 'created_at')
-    search_fields = ('title', 'course__title')
+    list_display = ('title', 'course', 'content_type', 'video_source', 'order', 
+                   'is_preview', 'bunny_status_display', 'created_at')
+    list_filter = ('content_type', 'video_source', 'is_preview', 'created_at')
+    search_fields = ('title', 'course__title', 'bunny_video_id')
     raw_id_fields = ('course',)
     prepopulated_fields = {'slug': ('title',)}
     ordering = ('course', 'order')
     
     fieldsets = (
-        ('Basic Information', {
+        ('Основна інформація', {
             'fields': ('course', 'title', 'slug', 'content_type', 'order')
         }),
-        ('Content', {
-            'fields': ('video_file', 'video_duration_seconds', 'pdf_file', 'article_content')
+        ('Контент (Локальне зберігання)', {
+            'fields': ('video_file', 'video_duration_seconds', 'pdf_file', 'article_content'),
+            'classes': ('collapse',)
         }),
-        ('Preview Settings', {
+        ('Bunny.net CDN', {
+            'fields': ('video_source', 'bunny_video_id', 'bunny_collection_id', 
+                      'bunny_video_status', 'bunny_thumbnail_url'),
+            'description': 'Налаштування для відео з Bunny.net CDN'
+        }),
+        ('Налаштування превʼю', {
             'fields': ('is_preview', 'preview_seconds', 'preview_percentage')
         }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at')
+        ('Захист відео (застаріле)', {
+            'fields': ('secure_video_enabled', 's3_video_key', 'video_access_token', 'token_expires_at'),
+            'classes': ('collapse',)
+        }),
+        ('Часові мітки', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
         }),
     )
     
-    readonly_fields = ('created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at', 'bunny_video_status', 'bunny_thumbnail_url')
+    
+    actions = ['upload_to_bunny']
+    
+    def bunny_status_display(self, obj):
+        """Відображення статусу Bunny.net відео"""
+        if obj.video_source == 'bunny' and obj.bunny_video_id:
+            status_map = {
+                '0': '⏳ В черзі',
+                '1': '🔄 Обробка',
+                '2': '📦 Кодування',
+                '3': '✅ Готово',
+                '4': '❌ Помилка',
+                '5': '🗑️ Видалено',
+                '6': '⏸️ Призупинено',
+            }
+            status = obj.bunny_video_status or '0'
+            return status_map.get(status, f'Статус {status}')
+        return '-'
+    bunny_status_display.short_description = 'Bunny статус'
+    
+    def upload_to_bunny(self, request, queryset):
+        """Масове завантаження відео на Bunny.net"""
+        from apps.video_security.bunny_service import BunnyService
+        from django.contrib import messages
+        
+        if not BunnyService.is_enabled():
+            messages.error(request, 'Bunny.net інтеграція вимкнена в налаштуваннях')
+            return
+        
+        success_count = 0
+        error_count = 0
+        
+        for material in queryset.filter(content_type='video'):
+            # Перевірити чи є локальний файл
+            if not material.video_file:
+                error_count += 1
+                continue
+            
+            try:
+                # Завантажити на Bunny.net
+                video_data = BunnyService.upload_video(
+                    file_path=material.video_file.path,
+                    title=material.title,
+                    collection_id=material.course.slug  # Використовуємо slug курсу як колекцію
+                )
+                
+                if video_data:
+                    # Оновити матеріал
+                    material.video_source = 'bunny'
+                    material.bunny_video_id = video_data.get('guid')
+                    material.bunny_video_status = str(video_data.get('status', '0'))
+                    material.save()
+                    success_count += 1
+                else:
+                    error_count += 1
+            except Exception as e:
+                error_count += 1
+                continue
+        
+        if success_count:
+            messages.success(request, f'Успішно завантажено {success_count} відео на Bunny.net')
+        if error_count:
+            messages.error(request, f'Помилка завантаження {error_count} відео')
+    
+    upload_to_bunny.short_description = '📤 Завантажити відео на Bunny.net CDN'
 
 
 @admin.register(UserCourseProgress)

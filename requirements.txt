@@ -18,6 +18,7 @@ dj-database-url==2.3.0
 # Utils
 python-decouple==3.8
 Pillow==11.0.0
+requests==2.31.0
 
 # QR Code generation (для event tickets)
 qrcode[pil]==7.4.2

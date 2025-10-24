@@ -20,3 +20,4 @@ echo ""
 echo "АБО запустіть через render CLI:"
 echo "render shell -c 'python manage.py update_production_events && python manage.py create_test_events'"
 
+
