@@ -1,6 +1,6 @@
-# Generated manually
+# Generated manually - idempotent migration
 
-from django.db import migrations, models
+from django.db import migrations
 
 
 class Migration(migrations.Migration):
@@ -10,20 +10,51 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='event',
-            name='benefits',
-            field=models.JSONField(blank=True, default=list, help_text='Список переваг події (що отримає учасник)', verbose_name='Що ти отримаєш'),
+        # Add benefits field if it doesn't exist
+        migrations.RunSQL(
+            sql="""
+                DO $$
+                BEGIN
+                    IF NOT EXISTS (
+                        SELECT 1 FROM information_schema.columns 
+                        WHERE table_name='events' AND column_name='benefits'
+                    ) THEN
+                        ALTER TABLE events ADD COLUMN benefits JSONB DEFAULT '[]'::jsonb NOT NULL;
+                    END IF;
+                END $$;
+            """,
+            reverse_sql=migrations.RunSQL.noop,
         ),
-        migrations.AddField(
-            model_name='event',
-            name='target_audience',
-            field=models.JSONField(blank=True, default=list, help_text='Для кого ця подія (цільова аудиторія)', verbose_name='Для кого'),
+        
+        # Add target_audience field if it doesn't exist
+        migrations.RunSQL(
+            sql="""
+                DO $$
+                BEGIN
+                    IF NOT EXISTS (
+                        SELECT 1 FROM information_schema.columns 
+                        WHERE table_name='events' AND column_name='target_audience'
+                    ) THEN
+                        ALTER TABLE events ADD COLUMN target_audience JSONB DEFAULT '[]'::jsonb NOT NULL;
+                    END IF;
+                END $$;
+            """,
+            reverse_sql=migrations.RunSQL.noop,
         ),
-        migrations.AddField(
-            model_name='event',
-            name='ticket_tiers',
-            field=models.JSONField(blank=True, default=list, help_text='Тарифи квитків у форматі JSON: [{"name": "STANDARD", "price": 5450, "features": ["..."]}]', verbose_name='Тарифи квитків'),
+        
+        # Add ticket_tiers field if it doesn't exist
+        migrations.RunSQL(
+            sql="""
+                DO $$
+                BEGIN
+                    IF NOT EXISTS (
+                        SELECT 1 FROM information_schema.columns 
+                        WHERE table_name='events' AND column_name='ticket_tiers'
+                    ) THEN
+                        ALTER TABLE events ADD COLUMN ticket_tiers JSONB DEFAULT '[]'::jsonb NOT NULL;
+                    END IF;
+                END $$;
+            """,
+            reverse_sql=migrations.RunSQL.noop,
         ),
     ]
-
