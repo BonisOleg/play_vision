@@ -445,12 +445,7 @@
     display: none;
 }
 
-/* Приховуємо кошик на планшетах і телефонах */
-@media (max-width: 1024px) {
-    .cart-icon {
-        display: none;
-    }
-}
+/* Кошик працює однаково на всіх пристроях через JS */
 
 /* Theme Toggle */
 .theme-toggle {
