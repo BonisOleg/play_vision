@@ -198,8 +198,7 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
-                                            current_category==category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -238,43 +237,35 @@
                                 <h4>Інші напрямки</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in
-                                            current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in current_target_audiences %}checked{% endif %}>
                                         <span>Аналітик</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="scout" {% if 'scout' in
-                                            current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="scout" {% if 'scout' in current_target_audiences %}checked{% endif %}>
                                         <span>Скаут</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in
-                                            current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in current_target_audiences %}checked{% endif %}>
                                         <span>Менеджер</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="psychologist" {%
-                                            if 'psychologist' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="psychologist" {% if 'psychologist' in current_target_audiences %}checked{% endif %}>
                                         <span>Психологія</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="nutritionist" {%
-                                            if 'nutritionist' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="nutritionist" {% if 'nutritionist' in current_target_audiences %}checked{% endif %}>
                                         <span>Нутриціологія</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="media" {% if 'media' in
-                                            current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif %}>
                                         <span>Медіа</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="player" {% if 'player' in
-                                            current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="player" {% if 'player' in current_target_audiences %}checked{% endif %}>
                                         <span>Гравець</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in
-                                            current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{% endif %}>
                                         <span>Батьки</span>
                                     </label>
                                 </div>
@@ -285,18 +276,15 @@
                                 <h4>Тип матеріалу</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="checkbox" name="content_type" value="video" {% if 'video' in
-                                            current_content_types %}checked{% endif %}>
+                                        <input type="checkbox" name="content_type" value="video" {% if 'video' in current_content_types %}checked{% endif %}>
                                         <span>Відео</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in
-                                            current_content_types %}checked{% endif %}>
+                                        <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in current_content_types %}checked{% endif %}>
                                         <span>PDF</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="content_type" value="article" {% if 'article' in
-                                            current_content_types %}checked{% endif %}>
+                                        <input type="checkbox" name="content_type" value="article" {% if 'article' in current_content_types %}checked{% endif %}>
                                         <span>Стаття</span>
                                     </label>
                                 </div>
@@ -307,18 +295,15 @@
                                 <h4>Рівень складності</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="beginner" {% if
-                                            current_difficulty=='beginner' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="beginner" {% if current_difficulty == 'beginner' %}checked{% endif %}>
                                         <span>Початковий</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="intermediate" {% if
-                                            current_difficulty=='intermediate' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="intermediate" {% if current_difficulty == 'intermediate' %}checked{% endif %}>
                                         <span>Середній</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="advanced" {% if
-                                            current_difficulty=='advanced' %}checked{% endif %}>
+                                        <input type="radio" name="difficulty" value="advanced" {% if current_difficulty == 'advanced' %}checked{% endif %}>
                                         <span>Експертний</span>
                                     </label>
                                 </div>
@@ -329,18 +314,15 @@
                                 <h4>Тривалість</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="radio" name="duration" value="0-60" {% if current_duration=='0-60'
-                                            %}checked{% endif %}>
+                                        <input type="radio" name="duration" value="0-60" {% if current_duration == '0-60' %}checked{% endif %}>
                                         <span>До 1 години</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="duration" value="60-180" {% if
-                                            current_duration=='60-180' %}checked{% endif %}>
+                                        <input type="radio" name="duration" value="60-180" {% if current_duration == '60-180' %}checked{% endif %}>
                                         <span>1-3 години</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="radio" name="duration" value="180+" {% if current_duration=='180+'
-                                            %}checked{% endif %}>
+                                        <input type="radio" name="duration" value="180+" {% if current_duration == '180+' %}checked{% endif %}>
                                         <span>Більше 3 годин</span>
                                     </label>
                                 </div>
