@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Помилка оплати - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/payment-result.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="payment-result-container failure">
+    <div class="container">
+        <div class="result-card">
+            <!-- Error Icon -->
+            <div class="result-icon error-icon">
+                <svg viewBox="0 0 52 52" class="error-x">
+                    <circle class="error-circle" cx="26" cy="26" r="25" fill="none" />
+                    <path class="error-line error-line-1" d="M16 16 L36 36" />
+                    <path class="error-line error-line-2" d="M36 16 L16 36" />
+                </svg>
+            </div>
+
+            <!-- Error Message -->
+            <h1 class="result-title error-title">Помилка оплати</h1>
+
+            <div class="result-details">
+                <p class="result-message error-message">
+                    На жаль, не вдалось обробити платіж
+                </p>
+
+                <div class="error-info-box">
+                    <div class="error-reason">
+                        <h3>Причина:</h3>
+                        <p class="error-text">{{ error_description }}</p>
+                    </div>
+
+                    {% if error_code %}
+                    <div class="error-code">
+                        <span class="error-code-label">Код помилки:</span>
+                        <span class="error-code-value">{{ error_code }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Possible Solutions -->
+                <div class="solutions-box">
+                    <h3>Що робити?</h3>
+                    <ul class="solutions-list">
+                        <li>
+                            <strong>Перевірте баланс картки</strong>
+                            <p>Переконайтесь, що на картці достатньо коштів</p>
+                        </li>
+                        <li>
+                            <strong>Зверніться до банку</strong>
+                            <p>Можливо, банк заблокував транзакцію</p>
+                        </li>
+                        <li>
+                            <strong>Спробуйте іншу картку</strong>
+                            <p>Використайте альтернативний спосіб оплати</p>
+                        </li>
+                        <li>
+                            <strong>Зверніться до підтримки</strong>
+                            <p>Ми допоможемо вирішити проблему</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="result-actions">
+                <a href="{{ retry_url }}" class="btn btn-primary btn-large">
+                    Спробувати ще раз
+                </a>
+                <a href="{% url 'core:contact' %}" class="btn btn-outline btn-large">
+                    Зв'язатись з підтримкою
+                </a>
+            </div>
+
+            <!-- Additional Links -->
+            <div class="additional-links">
+                <a href="{% url 'subscriptions:pricing' %}">Вибрати інший план</a>
+                <span class="separator">•</span>
+                <a href="{% url 'content:course_list' %}">Переглянути безкоштовні курси</a>
+                <span class="separator">•</span>
+                <a href="{% url 'core:index' %}">На головну</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Анімація хрестика
+    setTimeout(function () {
+        document.querySelector('.error-x').classList.add('animated');
+    }, 100);
+</script>
+{% endblock %}

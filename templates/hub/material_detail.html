@@ -97,12 +97,13 @@
                     {% else %}
                     <div class="access-buttons">
                         {% if not user.is_authenticated %}
-                        <a href="{% url 'accounts:register' %}?next={{ request.get_full_path }}"
+                        <a href="{% url 'subscriptions:pricing' %}?next={{ request.get_full_path }}"
                             class="btn btn-primary">
                             Вступити в клуб
                         </a>
                         {% else %}
-                        <a href="{% url 'core:coming_soon' %}?page=subscription" class="btn btn-primary">
+                        <a href="{% url 'subscriptions:pricing' %}?ref=material_{{ material.id }}"
+                            class="btn btn-primary">
                             Оформити підписку
                         </a>
                         <button class="btn btn-outline" hx-post="{% url 'htmx:cart:add_to_cart' %}"

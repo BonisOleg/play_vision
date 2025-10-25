@@ -1,0 +1,111 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Підписка активована - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/payment-result.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="payment-result-container success">
+    <div class="container">
+        <div class="result-card">
+            <!-- Success Icon -->
+            <div class="result-icon success-icon">
+                <svg viewBox="0 0 52 52" class="checkmark">
+                    <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                </svg>
+            </div>
+
+            <!-- Success Message -->
+            <h1 class="result-title">Вітаємо! Підписка активна</h1>
+
+            {% if subscription %}
+            <div class="result-details">
+                <p class="result-message">
+                    Ваша підписка <strong>{{ subscription.plan.name }}</strong> успішно активована
+                </p>
+
+                <div class="subscription-info-box">
+                    <div class="info-row">
+                        <span class="info-label">План:</span>
+                        <span class="info-value">{{ subscription.plan.name }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Активна до:</span>
+                        <span class="info-value">{{ subscription.end_date|date:"d.m.Y" }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Вартість:</span>
+                        <span class="info-value">{{ subscription.plan.price }}₴</span>
+                    </div>
+                    {% if subscription.auto_renew %}
+                    <div class="info-row highlight">
+                        <span class="info-label">Автопродовження:</span>
+                        <span class="info-value">Увімкнено</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="benefits-preview">
+                    <h3>Ваші переваги:</h3>
+                    <ul>
+                        {% for feature in subscription.plan.features %}
+                        <li>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Actions -->
+            <div class="result-actions">
+                <a href="{% url 'cabinet:subscription' %}" class="btn btn-primary btn-large">
+                    Перейти в особистий кабінет
+                </a>
+                <a href="{% url 'content:course_list' %}" class="btn btn-outline btn-large">
+                    Переглянути курси
+                </a>
+            </div>
+
+            <!-- Auto-redirect notice -->
+            <p class="auto-redirect-notice">
+                Автоматичний перехід через <span id="countdown">{{ redirect_seconds }}</span> секунд...
+            </p>
+
+            <!-- Additional Info -->
+            <div class="additional-info">
+                <p>💡 Підписка продовжується автоматично. Ви можете скасувати її у будь-який момент в особистому
+                    кабінеті.</p>
+                <p>📧 Деталі підписки надіслані на вашу електронну пошту</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Автоматичний редірект
+    let countdown = {{ redirect_seconds }};
+    const countdownElement = document.getElementById('countdown');
+    const redirectUrl = '{{ redirect_url }}';
+
+    const timer = setInterval(function () {
+        countdown--;
+        countdownElement.textContent = countdown;
+
+        if (countdown <= 0) {
+            clearInterval(timer);
+            window.location.href = redirectUrl;
+        }
+    }, 1000);
+
+    // Анімація галочки
+    setTimeout(function () {
+        document.querySelector('.checkmark').classList.add('animated');
+    }, 100);
+</script>
+{% endblock %}

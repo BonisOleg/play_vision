@@ -66,6 +66,25 @@
     border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.plan-badge.badge-popular {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.plan-badge.badge-best-value {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.plan-badge.badge-good-value {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.plan-card--best-value {
+    border-color: #f5576c;
+    box-shadow: 0 8px 32px rgba(245, 87, 108, 0.25);
 }
 
 /* Іконки планів */
@@ -131,21 +150,47 @@
     align-items: baseline;
     justify-content: center;
     gap: 4px;
+    margin-bottom: var(--spacing-sm);
 }
 
 .plan-currency {
     font-size: 1.25rem;
     color: var(--color-text-light);
+    order: 2;
 }
 
 .plan-amount {
     font-size: 3rem;
     font-weight: 700;
     color: var(--color-primary);
+    order: 1;
 }
 
 .plan-period {
     font-size: 1rem;
+    color: var(--color-text-light);
+    order: 3;
+}
+
+.plan-savings-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.savings-text {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.monthly-price {
+    font-size: 0.875rem;
     color: var(--color-text-light);
 }
 

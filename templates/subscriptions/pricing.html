@@ -23,9 +23,10 @@
         <section class="pricing-plans">
             <div class="plans-grid">
                 {% for plan in plans %}
-                <div class="plan-card {% if plan.is_popular %}plan-card--popular{% endif %}">
-                    {% if plan.is_popular %}
-                    <div class="plan-badge">Найпопулярніший</div>
+                <div
+                    class="plan-card {% if plan.is_popular %}plan-card--popular{% endif %} {% if plan.is_best_value %}plan-card--best-value{% endif %}">
+                    {% if plan.auto_badge %}
+                    <div class="plan-badge {{ plan.badge_class }}">{{ plan.auto_badge }}</div>
                     {% endif %}
 
                     <div class="plan-header">
@@ -72,10 +73,17 @@
                         </div>
 
                         <div class="plan-price">
-                            <span class="plan-currency">$</span>
                             <span class="plan-amount">{{ plan.price }}</span>
+                            <span class="plan-currency">₴</span>
                             <span class="plan-period">/{{ plan.get_duration_display }}</span>
                         </div>
+
+                        {% if plan.savings_percentage > 0 %}
+                        <div class="plan-savings-info">
+                            <span class="savings-text">Економія {{ plan.savings_percentage }}%</span>
+                            <span class="monthly-price">({{ plan.monthly_price|floatformat:2 }}₴/міс)</span>
+                        </div>
+                        {% endif %}
                     </div>
 
                     <div class="plan-features">
@@ -91,16 +99,21 @@
                         {% if current_subscription.plan == plan %}
                         <button class="btn btn-current" disabled>Поточний план</button>
                         {% else %}
-                        <form method="post" action="{% url 'subscriptions:subscribe' plan.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Змінити план</button>
-                        </form>
+                        <a href="{% url 'subscriptions:checkout' plan.id %}" class="btn btn-primary">
+                            Змінити план
+                        </a>
                         {% endif %}
                         {% else %}
-                        <form method="post" action="{% url 'subscriptions:subscribe' plan.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Обрати план</button>
-                        </form>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'subscriptions:checkout' plan.id %}" class="btn btn-primary">
+                            Обрати план
+                        </a>
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next={% url 'subscriptions:checkout' plan.id %}"
+                            class="btn btn-primary">
+                            Вступити в клуб
+                        </a>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>

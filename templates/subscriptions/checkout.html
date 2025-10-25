@@ -1,0 +1,263 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Оформлення підписки - {{ plan.name }} - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/subscription-checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="subscription-checkout-container">
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs" aria-label="Хлібні крихти">
+            <a href="{% url 'subscriptions:pricing' %}">Підписки</a>
+            <span class="separator">›</span>
+            <span class="current">Оформлення</span>
+        </nav>
+
+        <div class="checkout-grid">
+            <!-- Ліва колонка - Форма оплати -->
+            <div class="checkout-main">
+                <h1 class="checkout-title">Оформлення підписки</h1>
+
+                {% if has_active_subscription %}
+                <div class="alert alert-info">
+                    <p>У вас вже є активна підписка <strong>{{ active_subscription.plan.name }}</strong></p>
+                    <p>Після оплати нова підписка замінить поточну</p>
+                </div>
+                {% endif %}
+
+                {% if comparison_data.has_purchases %}
+                <div class="comparison-block">
+                    <h3>💰 Порівняння з окремими покупками</h3>
+                    <p>Ви вже заплатили <strong>{{ comparison_data.total_spent }}₴</strong> за {{
+                        comparison_data.courses_count }} курс{% if comparison_data.courses_count > 1 %}и{% endif %}</p>
+                    <p class="highlight">Підписка <strong>{{ plan.name }}</strong> дає доступ до всього контенту за
+                        <strong>{{ plan.price }}₴</strong></p>
+                </div>
+                {% endif %}
+
+                <!-- Форма оплати -->
+                <form id="payment-form" method="post" action="{% url 'subscriptions:process_payment' plan.id %}">
+                    {% csrf_token %}
+
+                    <!-- Промокод -->
+                    <div class="form-section">
+                        <h3>Промокод</h3>
+                        <div class="coupon-input-group">
+                            <input type="text" id="coupon-code" name="coupon_code" placeholder="Введіть промокод"
+                                class="form-input">
+                            <button type="button" id="validate-coupon-btn" class="btn btn-secondary">
+                                Застосувати
+                            </button>
+                        </div>
+                        <div id="coupon-message" class="coupon-message"></div>
+                    </div>
+
+                    <!-- Способи оплати -->
+                    <div class="form-section">
+                        <h3>Спосіб оплати</h3>
+                        <div class="payment-methods">
+                            {% for method in payment_methods %}
+                            <label class="payment-method-option">
+                                <input type="radio" name="payment_method" value="{{ method.id }}" {% if forloop.first
+                                    %}checked{% endif %}>
+                                <span class="payment-method-label">
+                                    <span class="payment-icon payment-icon-{{ method.icon }}"></span>
+                                    <span class="payment-name">{{ method.name }}</span>
+                                </span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Автопродовження -->
+                    <div class="auto-renew-section">
+                        <div class="info-box">
+                            <p>{{ auto_renew_info.text }}</p>
+                            <p class="next-payment">
+                                Наступне списання: <strong>{{ auto_renew_info.next_payment_date|date:"d.m.Y" }}</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка оплати -->
+                    <button type="submit" class="btn btn-primary btn-large btn-pay">
+                        Підтвердити оплату {{ plan.price }}₴
+                    </button>
+
+                    <!-- Угода -->
+                    <div class="agreement-text">
+                        Натискаючи «Підтвердити оплату», ви погоджуєтесь з
+                        <a href="{% url 'core:legal' slug='terms' %}" target="_blank">Умовами використання</a> та
+                        <a href="{% url 'core:legal' slug='privacy' %}" target="_blank">Політикою конфіденційності</a>
+                    </div>
+                </form>
+
+                <!-- Кнопка скасування -->
+                <div class="cancel-subscription-section">
+                    <p class="cancel-info">Не хочете оформляти підписку?</p>
+                    <a href="{% url 'subscriptions:pricing' %}" class="btn-cancel-link">
+                        Повернутись до вибору планів
+                    </a>
+                </div>
+            </div>
+
+            <!-- Права колонка - Інфо про план -->
+            <aside class="checkout-sidebar">
+                <div class="plan-summary">
+                    <h3>Обраний план</h3>
+
+                    <div class="plan-info-box">
+                        <div class="plan-header">
+                            <div class="plan-icon">
+                                {% if 'C-VISION' in plan.name %}
+                                <span>🔵</span>
+                                {% elif 'B-VISION' in plan.name %}
+                                <span>🏆</span>
+                                {% elif 'A-VISION' in plan.name %}
+                                <span>🎯</span>
+                                {% elif 'PRO-VISION' in plan.name %}
+                                <span>👑</span>
+                                {% endif %}
+                            </div>
+                            <h4>{{ plan.name }}</h4>
+                        </div>
+
+                        <div class="plan-price-box">
+                            <span class="price-label">Ціна:</span>
+                            <span class="price-value">{{ plan.price }}₴</span>
+                        </div>
+
+                        <div class="plan-duration">
+                            <span class="duration-label">Термін:</span>
+                            <span class="duration-value">{{ plan.get_duration_display }}</span>
+                        </div>
+
+                        {% if plan.savings_percentage > 0 %}
+                        <div class="plan-savings">
+                            <span class="savings-badge">Економія {{ plan.savings_percentage }}%</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="plan-features-box">
+                        <h4>Переваги:</h4>
+                        <ul class="features-list">
+                            {% for feature in plan.features %}
+                            <li>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="security-badges">
+                        <div class="security-badge">
+                            <span class="security-icon">🔒</span>
+                            <span class="security-text">Захищений платіж</span>
+                        </div>
+                        <div class="security-badge">
+                            <span class="security-icon">✓</span>
+                            <span class="security-text">Миттєва активація</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden LiqPay Form -->
+<div id="liqpay-form-container" style="display: none;"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/components/subscription-checkout.js' %}"></script>
+<script>
+    // Обробка форми оплати
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('payment-form');
+        const validateCouponBtn = document.getElementById('validate-coupon-btn');
+        const couponInput = document.getElementById('coupon-code');
+        const couponMessage = document.getElementById('coupon-message');
+        const payButton = form.querySelector('.btn-pay');
+
+        // Валідація промокоду
+        validateCouponBtn.addEventListener('click', async function () {
+            const code = couponInput.value.trim();
+
+            if (!code) {
+                showCouponMessage('Введіть промокод', 'error');
+                return;
+            }
+
+            validateCouponBtn.disabled = true;
+            validateCouponBtn.textContent = 'Перевірка...';
+
+            try {
+                const response = await fetch('{% url "subscriptions:validate_coupon" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: `code=${encodeURIComponent(code)}`
+                });
+
+                const data = await response.json();
+
+                if (data.valid) {
+                    showCouponMessage(`✓ Промокод застосовано! Знижка: ${data.discount}`, 'success');
+                    validateCouponBtn.textContent = '✓ Застосовано';
+                    validateCouponBtn.classList.add('success');
+                } else {
+                    showCouponMessage(data.error, 'error');
+                    validateCouponBtn.disabled = false;
+                    validateCouponBtn.textContent = 'Застосувати';
+                }
+            } catch (error) {
+                showCouponMessage('Помилка перевірки промокоду', 'error');
+                validateCouponBtn.disabled = false;
+                validateCouponBtn.textContent = 'Застосувати';
+            }
+        });
+
+        function showCouponMessage(message, type) {
+            couponMessage.textContent = message;
+            couponMessage.className = `coupon-message coupon-message-${type}`;
+        }
+
+        // Обробка форми оплати
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            payButton.disabled = true;
+            payButton.textContent = 'Обробка...';
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Відображаємо LiqPay форму
+                    document.getElementById('liqpay-form-container').innerHTML = data.liqpay_html;
+                } else {
+                    alert('Помилка: ' + data.error);
+                    payButton.disabled = false;
+                    payButton.textContent = 'Підтвердити оплату {{ plan.price }}₴';
+                }
+            } catch (error) {
+                alert('Помилка обробки платежу');
+                payButton.disabled = false;
+                payButton.textContent = 'Підтвердити оплату {{ plan.price }}₴';
+            }
+        });
+    });
+</script>
+{% endblock %}

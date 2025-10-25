@@ -333,8 +333,7 @@
                                             <span class="audience-tag">{{ audience }}</span>
                                             {% endfor %}
                                             {% if course.get_target_audience_display|length > 3 %}
-                                            <span class="audience-tag audience-more">+{{
-                                                course.get_target_audience_display|length|add:"-3" }}</span>
+                                            <span class="audience-tag audience-more">+{{ course.get_target_audience_display|length|add:"-3" }}</span>
                                             {% endif %}
                                         </div>
                                     </div>

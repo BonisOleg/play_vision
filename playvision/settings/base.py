@@ -198,10 +198,10 @@ X_FRAME_OPTIONS = 'DENY'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
 
-# Stripe settings
-STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', default='')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
-STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default='')
+# LiqPay settings
+LIQPAY_PUBLIC_KEY = config('LIQPAY_PUBLIC_KEY', default='')
+LIQPAY_PRIVATE_KEY = config('LIQPAY_PRIVATE_KEY', default='')
+LIQPAY_SANDBOX = config('LIQPAY_SANDBOX', default=True, cast=bool)
 
 # Site framework
 SITE_ID = 1

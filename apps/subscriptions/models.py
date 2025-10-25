@@ -14,6 +14,13 @@ class Plan(models.Model):
         ('12_months', '12 місяців'),
     ]
     
+    BADGE_CHOICES = [
+        ('popular', 'Найпопулярніший'),
+        ('best_value', 'Максимальна економія'),
+        ('recommended', 'Рекомендуємо'),
+        ('new', 'Новинка'),
+    ]
+    
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     duration = models.CharField(max_length=20, choices=DURATION_CHOICES)
@@ -26,10 +33,15 @@ class Plan(models.Model):
     discount_percentage = models.IntegerField(default=0, help_text='Loyalty discount percentage')
     
     # Display
-    is_popular = models.BooleanField(default=False)
+    is_popular = models.BooleanField(default=False, help_text='Mark as popular plan')
+    is_best_value = models.BooleanField(default=False, help_text='Mark as best value (auto-set for longest duration)')
     is_active = models.BooleanField(default=True)
     display_order = models.PositiveIntegerField(default=0)
-    badge_text = models.CharField(max_length=50, blank=True, help_text='e.g. "Найпопулярніший"')
+    badge_text = models.CharField(max_length=50, blank=True, help_text='Custom badge text (optional)')
+    badge_type = models.CharField(max_length=20, choices=BADGE_CHOICES, blank=True)
+    
+    # Statistics for auto-badge detection
+    total_subscriptions = models.PositiveIntegerField(default=0, help_text='Total number of subscriptions sold')
     
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
@@ -60,6 +72,70 @@ class Plan(models.Model):
             savings = ((full_price - self.price) / full_price) * 100
             return int(savings)
         return 0
+    
+    @property
+    def auto_badge(self):
+        """
+        Автоматичне визначення бейджа
+        Пріоритет: is_popular > is_best_value > highest savings
+        """
+        if self.badge_text:
+            return self.badge_text
+        
+        if self.is_popular:
+            return 'Найпопулярніший'
+        
+        if self.is_best_value or self.savings_percentage >= 30:
+            return 'Максимальна економія'
+        
+        if self.savings_percentage >= 15:
+            return 'Вигідно'
+        
+        return ''
+    
+    @property
+    def badge_class(self):
+        """CSS клас для бейджа"""
+        if self.is_popular:
+            return 'badge-popular'
+        if self.is_best_value or self.savings_percentage >= 30:
+            return 'badge-best-value'
+        if self.savings_percentage >= 15:
+            return 'badge-good-value'
+        return 'badge-default'
+    
+    def save(self, *args, **kwargs):
+        """Автоматично визначаємо найвигідніший план"""
+        # Якщо це найдовший термін - позначаємо як best_value
+        if self.is_active:
+            all_plans = Plan.objects.filter(is_active=True)
+            if all_plans.exists():
+                max_duration = all_plans.aggregate(max_months=models.Max('duration_months'))['max_months']
+                if self.duration_months == max_duration:
+                    # Знімаємо best_value з інших планів
+                    Plan.objects.filter(is_best_value=True).exclude(id=self.id).update(is_best_value=False)
+                    self.is_best_value = True
+        
+        super().save(*args, **kwargs)
+    
+    @classmethod
+    def get_most_popular(cls):
+        """Отримати найпопулярніший план (за кількістю підписок)"""
+        return cls.objects.filter(is_active=True).order_by('-total_subscriptions').first()
+    
+    @classmethod
+    def get_best_value(cls):
+        """Отримати план з найбільшою економією"""
+        plans = cls.objects.filter(is_active=True)
+        best_plan = None
+        max_savings = 0
+        
+        for plan in plans:
+            if plan.savings_percentage > max_savings:
+                max_savings = plan.savings_percentage
+                best_plan = plan
+        
+        return best_plan
 
 
 class Subscription(models.Model):

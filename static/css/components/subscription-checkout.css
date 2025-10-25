@@ -1,0 +1,433 @@
+/* SUBSCRIPTION CHECKOUT STYLES */
+
+.subscription-checkout-container {
+    padding: var(--spacing-xxl) 0;
+    background: var(--color-bg);
+    min-height: 100vh;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    margin-bottom: var(--spacing-xl);
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.breadcrumbs a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumbs .separator {
+    margin: 0 var(--spacing-sm);
+}
+
+.breadcrumbs .current {
+    color: var(--color-text);
+}
+
+/* Checkout Grid */
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--spacing-xxl);
+    margin-top: var(--spacing-xl);
+}
+
+.checkout-main {
+    background: var(--silver-white);
+    padding: var(--spacing-xxl);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-text);
+}
+
+/* Alerts */
+.alert {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.alert-info {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    color: #0d47a1;
+}
+
+/* Comparison Block */
+.comparison-block {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    margin-bottom: var(--spacing-xl);
+}
+
+.comparison-block h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.25rem;
+}
+
+.comparison-block p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.comparison-block .highlight {
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-top: var(--spacing-md);
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.form-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+/* Coupon Input */
+.coupon-input-group {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.coupon-input-group .form-input {
+    flex: 1;
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.coupon-input-group .form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.coupon-input-group .btn-secondary {
+    padding: var(--spacing-md) var(--spacing-xl);
+    white-space: nowrap;
+}
+
+.coupon-message {
+    margin-top: var(--spacing-sm);
+    font-size: 0.875rem;
+    padding: var(--spacing-sm);
+    border-radius: 4px;
+}
+
+.coupon-message-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.coupon-message-error {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Payment Methods */
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.payment-method-option {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method-option:hover {
+    border-color: var(--color-primary);
+    background: rgba(255, 87, 51, 0.05);
+}
+
+.payment-method-option input[type="radio"] {
+    margin-right: var(--spacing-md);
+}
+
+.payment-method-option input[type="radio"]:checked~.payment-method-label {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.payment-method-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.payment-icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Auto-renew Section */
+.auto-renew-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.info-box {
+    background: #f5f5f5;
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--color-primary);
+}
+
+.info-box p {
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+}
+
+.next-payment {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+/* Pay Button */
+.btn-pay {
+    width: 100%;
+    padding: var(--spacing-lg);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* Agreement */
+.agreement-text {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.agreement-text a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.agreement-text a:hover {
+    text-decoration: underline;
+}
+
+/* Cancel Section */
+.cancel-subscription-section {
+    margin-top: var(--spacing-xxl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.cancel-info {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.btn-cancel-link {
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn-cancel-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* Sidebar */
+.checkout-sidebar {
+    position: sticky;
+    top: var(--spacing-xl);
+    height: fit-content;
+}
+
+.plan-summary {
+    background: var(--silver-white);
+    padding: var(--spacing-xl);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.plan-summary h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text);
+}
+
+.plan-info-box {
+    background: var(--color-bg);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.plan-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.plan-icon span {
+    font-size: 2rem;
+}
+
+.plan-header h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.plan-price-box,
+.plan-duration {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.plan-price-box {
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.price-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.plan-savings {
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+
+.savings-badge {
+    display: inline-block;
+    background: #ff6b35;
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.plan-features-box {
+    margin-bottom: var(--spacing-lg);
+}
+
+.plan-features-box h4 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.125rem;
+    color: var(--color-text);
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li {
+    padding: var(--spacing-sm) 0;
+    padding-left: var(--spacing-lg);
+    position: relative;
+}
+
+.features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.security-badges {
+    display: flex;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+}
+
+.security-badge {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.security-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+/* MOBILE ADAPTATIONS */
+@media (max-width: 1024px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-sidebar {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .subscription-checkout-container {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .checkout-main {
+        padding: var(--spacing-lg);
+    }
+
+    .checkout-title {
+        font-size: 1.5rem;
+    }
+
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* iOS SAFARI SPECIFIC */
+@supports (-webkit-touch-callout: none) {
+
+    .form-input,
+    .btn {
+        -webkit-appearance: none;
+        border-radius: 8px;
+    }
+}
