@@ -35,4 +35,4 @@ anthropic==0.34.2
 pywebpush==1.14.1
 
 # Payments (LiqPay)
-liqpay-python==1.1.0
+liqpay-python==1.0
