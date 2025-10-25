@@ -70,7 +70,7 @@ class CourseAdmin(admin.ModelAdmin):
             'fields': ('price', 'is_free', 'requires_subscription', 'subscription_tiers')
         }),
         ('Медіа', {
-            'fields': ('thumbnail', 'preview_video')
+            'fields': ('thumbnail', 'logo', 'preview_video')
         }),
         ('Статус та відображення', {
             'fields': ('is_featured', 'badge_type', 'is_classic', 'is_published', 'published_at')

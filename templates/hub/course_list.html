@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="{% static 'css/components/hub/hub-cards.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/hub/hub-badges.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/hub/hub-boards.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub/hub-preview.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/hub/hub-responsive.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/hub/hub-dark-theme.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-quotes.css' %}">
@@ -33,127 +34,62 @@
 </div>
 
 <div class="hub-container">
-    <!-- Expert Quotes Carousel -->
-    {% include 'hub/_monthly_quote.html' %}
-
     <!-- 4 Інформаційні Борди -->
     <section class="hub-boards hub-section">
         <div class="container">
             <div class="boards-grid">
                 <div class="board-card board-card-1">
                     <div class="board-icon">📚</div>
-                    <h3 class="board-title">Твоя бібліотека футбольних знань</h3>
+                    <h3 class="board-title">Вчися, аналізуй, розвивайся</h3>
                     <p class="board-description">
-                        Хаб знань — освітня платформа для тренерів, аналітиків, скаутів, менеджерів і всіх,
-                        хто живе футболом. Тут зібрано експертні матеріали та тренди зі всього світу — українською
-                        мовою.
+                        Твоя бібліотека футбольних знань. Хаб знань — освітня платформа для тренерів, аналітиків,
+                        скаутів, менеджерів і всіх, хто живе футболом. Тут зібрано найкращі відео, текстові курси
+                        й тренінги з усього світу — українською мовою.
                     </p>
                     <a href="#products" class="board-btn">Відкрити знання</a>
                 </div>
 
                 <div class="board-card board-card-2">
                     <div class="board-icon">⚽</div>
-                    <h3 class="board-title">Навчання від практиків, а не теоретиків</h3>
+                    <h3 class="board-title">Знання, що працюють на полі</h3>
                     <p class="board-description">
-                        Усі матеріали створені фахівцями з досвідом роботи в клубах, академіях і федераціях.
-                        Все, що ви вивчаєте, було перевірено на практиці у вашій роботі.
+                        Навчання від практиків, а не теоретиків. Усі матеріали створені фахівцями з досвідом роботи
+                        в клубах, академіях і федераціях. Все було перевірено на власному досвіді та в їхній роботі.
                     </p>
-                    <a href="#courses" class="board-btn">Перейти до курсів</a>
+                    <a href="#products" class="board-btn">Перейти до курсів</a>
                 </div>
 
                 <div class="board-card board-card-3">
                     <div class="board-icon">🎓</div>
-                    <h3 class="board-title">Футбольна освіта нового покоління</h3>
+                    <h3 class="board-title">Від базових знань до професійного рівня</h3>
                     <p class="board-description">
-                        Структуровані модулі, практичні завдання, сертифікати. Знання і рекомендації від експертів.
-                        Розвивайся системно з чіткою траєкторією зростання.
+                        Футбольна освіта нового покоління знань і рекомендацій від експертів. Розвивайся системно
+                        з чіткою траєкторією зростання.
                     </p>
-                    <a href="#courses" class="board-btn">Обрати напрям</a>
+                    <a href="#products" class="board-btn">Обрати напрям</a>
                 </div>
 
                 <div class="board-card board-card-4">
                     <div class="board-icon">🌍</div>
-                    <h3 class="board-title">Європейський підхід — українська мова</h3>
+                    <h3 class="board-title">Ми адаптуємо найкращий світовий досвід</h3>
                     <p class="board-description">
-                        Методики UEFA, філософія клубів топ-рангу, підходи до аналізу за сучасними стандартами.
-                        Все це пояснено просто, наочно і реалізовано зі справжніми прикладами.
+                        Європейський підхід — українська мова. Методики UEFA, філософія клубів топ-рангу, підходи
+                        до аналізу за сучасними стандартами. Все перекладено просто, наочно й реалізовано зі справжніми
+                        прикладами.
                     </p>
-                    <a href="#materials" class="board-btn">Переглянути матеріали</a>
+                    <a href="#products" class="board-btn">Переглянути матеріали</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Головні Матеріали Carousel -->
-    <section class="main-materials hub-section">
-        <div class="container">
-            <h2 class="section-title">Головні матеріали</h2>
-            <p class="section-subtitle">Найпопулярніші курси від провідних експертів</p>
+    <!-- Expert Quotes Carousel -->
+    {% include 'hub/_monthly_quote.html' %}
 
-            <div class="materials-carousel">
-                <div class="carousel-wrapper">
-                    <div class="carousel-content">
-                        {% for course in featured_courses %}
-                        <div class="material-slide">
-                            <div class="material-card">
-                                <div class="material-image">
-                                    {% if course.thumbnail %}
-                                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
-                                    {% else %}
-                                    <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}">
-                                    {% endif %}
-
-                                    <div class="material-overlay">
-                                        <div class="product-badges">
-                                            <span class="difficulty-badge difficulty-{{ course.difficulty }}">
-                                                {{ course.get_difficulty_display }}
-                                            </span>
-                                            {% if course.badge_type == 'bestseller' or course.is_featured %}
-                                            <span class="badge badge-bestseller">топ-продажів</span>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="material-content">
-                                    <h3>{{ course.title }}</h3>
-                                    <p>{{ course.short_description }}</p>
-
-                                    <div class="material-meta">
-                                        <span class="duration">{{ course.duration_display }}</span>
-                                        <span class="price">{{ course.price }}₴</span>
-                                    </div>
-
-                                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary">
-                                        Переглянути курс
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="material-slide">
-                            <div class="no-content">
-                                <p>Головні матеріали будуть додані найближчим часом</p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                {% if featured_courses|length > 1 %}
-                <div class="carousel-nav">
-                    <button class="nav-btn nav-prev" aria-label="Попередній слайд">‹</button>
-                    <button class="nav-btn nav-next" aria-label="Наступний слайд">›</button>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Усі Продукти -->
+    <!-- Освітні Продукти -->
     <section class="all-products hub-section" id="products">
         <div class="container">
-            <h2 class="section-title">Усі продукти</h2>
+            <h2 class="section-title">Освітні продукти</h2>
 
             <!-- Search Bar -->
             <div class="search-container">
@@ -198,7 +134,8 @@
                                 <div class="filter-options">
                                     {% for category in categories %}
                                     <label class="filter-option">
-                                        <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
+                                        <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                            current_category==category.slug %}checked{% endif %}>
                                         <span>{{ category.name }}</span>
                                     </label>
                                     {% endfor %}
@@ -229,6 +166,10 @@
                                         <input type="checkbox" name="training_type" value="fitness">
                                         <span>Тренер ЗФП</span>
                                     </label>
+                                    <label class="filter-option sub-option">
+                                        <input type="checkbox" name="training_type" value="professional">
+                                        <span>Тренер професійних команд</span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -237,35 +178,48 @@
                                 <h4>Інші напрямки</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Аналітик</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="scout" {% if 'scout' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="scout" {% if 'scout' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Скаут</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Менеджер</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="psychologist" {% if 'psychologist' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="psychologist" {%
+                                            if 'psychologist' in current_target_audiences %}checked{% endif %}>
                                         <span>Психологія</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="nutritionist" {% if 'nutritionist' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="nutritionist" {%
+                                            if 'nutritionist' in current_target_audiences %}checked{% endif %}>
                                         <span>Нутриціологія</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="rehabilitation" {%
+                                            if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
+                                        <span>Реабілітація</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="target_audience" value="media" {% if 'media' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Медіа</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="player" {% if 'player' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="player" {% if 'player' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Гравець</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{% endif %}>
+                                        <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Батьки</span>
                                     </label>
                                 </div>
@@ -276,54 +230,19 @@
                                 <h4>Тип матеріалу</h4>
                                 <div class="filter-options">
                                     <label class="filter-option">
-                                        <input type="checkbox" name="content_type" value="video" {% if 'video' in current_content_types %}checked{% endif %}>
+                                        <input type="checkbox" name="content_type" value="video" {% if 'video' in
+                                            current_content_types %}checked{% endif %}>
                                         <span>Відео</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in current_content_types %}checked{% endif %}>
+                                        <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in
+                                            current_content_types %}checked{% endif %}>
                                         <span>PDF</span>
                                     </label>
                                     <label class="filter-option">
-                                        <input type="checkbox" name="content_type" value="article" {% if 'article' in current_content_types %}checked{% endif %}>
+                                        <input type="checkbox" name="content_type" value="article" {% if 'article' in
+                                            current_content_types %}checked{% endif %}>
                                         <span>Стаття</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Рівень складності -->
-                            <div class="filter-group">
-                                <h4>Рівень складності</h4>
-                                <div class="filter-options">
-                                    <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="beginner" {% if current_difficulty == 'beginner' %}checked{% endif %}>
-                                        <span>Початковий</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="intermediate" {% if current_difficulty == 'intermediate' %}checked{% endif %}>
-                                        <span>Середній</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="radio" name="difficulty" value="advanced" {% if current_difficulty == 'advanced' %}checked{% endif %}>
-                                        <span>Експертний</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Тривалість -->
-                            <div class="filter-group">
-                                <h4>Тривалість</h4>
-                                <div class="filter-options">
-                                    <label class="filter-option">
-                                        <input type="radio" name="duration" value="0-60" {% if current_duration == '0-60' %}checked{% endif %}>
-                                        <span>До 1 години</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="radio" name="duration" value="60-180" {% if current_duration == '60-180' %}checked{% endif %}>
-                                        <span>1-3 години</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="radio" name="duration" value="180+" {% if current_duration == '180+' %}checked{% endif %}>
-                                        <span>Більше 3 годин</span>
                                     </label>
                                 </div>
                             </div>
@@ -386,7 +305,26 @@
                                             <span class="badge badge-free">безкоштовно</span>
                                             {% endif %}
                                         </div>
+
+                                        <!-- Play Button для preview (якщо є preview_video) -->
+                                        {% if course.preview_video %}
+                                        <button class="play-btn" data-course-id="{{ course.id }}"
+                                            data-course-title="{{ course.title }}"
+                                            data-has-access="{{ has_access|yesno:'true,false' }}"
+                                            aria-label="Переглянути preview">
+                                            <svg class="play-icon" viewBox="0 0 24 24">
+                                                <path d="M8,5.14V19.14L19,12.14L8,5.14Z" fill="currentColor" />
+                                            </svg>
+                                        </button>
+                                        {% endif %}
                                     </div>
+
+                                    <!-- Logo overlay для featured курсів (20% overlap знизу) -->
+                                    {% if course.is_featured and course.logo %}
+                                    <div class="course-logo-overlay">
+                                        <img src="{{ course.logo.url }}" alt="{{ course.title }} logo">
+                                    </div>
+                                    {% endif %}
                                 </div>
 
                                 <div class="product-content">
@@ -507,9 +445,44 @@
         </div>
     </section>
 </div>
+
+<!-- Preview Modal -->
+<div class="preview-modal" id="previewModal" role="dialog" aria-labelledby="previewModalTitle" aria-modal="true">
+    <div class="preview-modal-content">
+        <div class="preview-modal-header">
+            <h3 class="preview-modal-title" id="previewModalTitle">Передперегляд курсу</h3>
+            <button class="preview-close-btn" aria-label="Закрити">×</button>
+        </div>
+        <div class="preview-modal-body">
+            <!-- Preview Timer -->
+            <div class="preview-timer">
+                <span id="previewTimerText">20 сек</span>
+            </div>
+
+            <!-- Bunny.net Video Container -->
+            <div class="preview-video-container" id="previewVideoContainer">
+                <!-- Bunny.net iframe буде вставлено через JS -->
+            </div>
+
+            <!-- Lock Screen (показується після 20 сек) -->
+            <div class="preview-lock-screen" id="previewLockScreen">
+                <div class="lock-icon">🔒</div>
+                <div class="lock-message">
+                    <h3>Передперегляд закінчився</h3>
+                    <p>Щоб продовжити перегляд, оформіть підписку або купіть курс</p>
+                </div>
+                <div class="lock-actions">
+                    <a href="{% url 'core:pricing' %}" class="btn btn-primary">Оформити підписку</a>
+                    <button class="btn btn-outline" id="buyCoursebtn">Купити курс</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/hub-v2.js' %}"></script>
 <script src="{% static 'js/expert-quotes.js' %}"></script>
+<script src="{% static 'js/hub-preview.js' %}"></script>
 {% endblock %}

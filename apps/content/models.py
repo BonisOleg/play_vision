@@ -122,6 +122,7 @@ class Course(models.Model):
         ('scout', 'Скаут'),
         ('psychologist', 'Психологія'),
         ('nutritionist', 'Нутриціологія'),
+        ('rehabilitation', 'Реабілітація'),
         ('media', 'Медіа'),
         ('manager', 'Менеджер'),
     ]
@@ -179,6 +180,13 @@ class Course(models.Model):
     
     # Media
     thumbnail = models.ImageField(upload_to='course_thumbnails/')
+    logo = models.ImageField(
+        upload_to='course_logos/',
+        blank=True,
+        null=True,
+        verbose_name='Лого курсу',
+        help_text='Квадратне лого курсу для відображення на картці (рекомендовано 200x200px)'
+    )
     preview_video = models.FileField(upload_to='course_previews/', blank=True)
     
     # Metadata
