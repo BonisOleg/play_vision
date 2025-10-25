@@ -59,7 +59,7 @@ class MentoringView(TemplateView):
 
 
 class AboutView(TemplateView):
-    """About page view - Про Play Vision"""
+    """About page view - Про нас"""
     template_name = 'pages/about.html'
     
     def get_context_data(self, **kwargs):

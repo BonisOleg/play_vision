@@ -96,7 +96,7 @@ class AIWidgetFAQView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['widget_type'] = 'faq'
-        context['placeholder'] = 'Запитайте про Play Vision...'
+        context['placeholder'] = 'Запитайте про нас...'
         return context
 
 

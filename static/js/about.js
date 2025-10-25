@@ -1,6 +1,6 @@
 /**
  * About Page Functionality
- * Про Play Vision - Навігатор футбольного розвитку
+ * Про нас - Навігатор футбольного розвитку
  */
 
 document.addEventListener('DOMContentLoaded', function () {

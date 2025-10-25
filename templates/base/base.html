@@ -108,7 +108,7 @@
                             class="nav-tab-btn {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
                             data-nav-tab aria-label="Про нас"
                             aria-current="{% if request.resolver_match.url_name == 'about' %}page{% else %}false{% endif %}">
-                            <span class="nav-tab-text">Про PlayVision</span>
+                            <span class="nav-tab-text">Про нас</span>
                         </a>
                         <a href="{% url 'content:course_list' %}"
                             class="nav-tab-btn {% if 'hub' in request.path or 'content' in request.path %}active{% endif %}"

@@ -102,7 +102,7 @@ class HeroCarousel {
                 title: 'Про нас',
                 subtitle: 'Дізнайтеся більше про нашу місію, цінності та команду експертів',
                 badge: 'ПРО ПРОЕКТ',
-                ctaText: 'Про Play Vision',
+                ctaText: 'Про нас',
                 ctaUrl: '/about/'
             },
             {
