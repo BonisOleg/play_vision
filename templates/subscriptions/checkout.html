@@ -62,8 +62,7 @@
                         <div class="payment-methods">
                             {% for method in payment_methods %}
                             <label class="payment-method-option">
-                                <input type="radio" name="payment_method" value="{{ method.id }}" {% if forloop.first
-                                    %}checked{% endif %}>
+                                <input type="radio" name="payment_method" value="{{ method.id }}" {% if forloop.first %}checked{% endif %}>
                                 <span class="payment-method-label">
                                     <span class="payment-icon payment-icon-{{ method.icon }}"></span>
                                     <span class="payment-name">{{ method.name }}</span>

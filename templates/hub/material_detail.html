@@ -367,8 +367,7 @@
             <p>Матеріал "{{ material.title }}" позначено як завершений.</p>
             {% if progress %}
             <div class="progress-update">
-                <span>Загальний прогрес курсу: <strong id="updatedProgress">{{
-                        progress.progress_percentage|floatformat:0 }}%</strong></span>
+                <span>Загальний прогрес курсу: <strong id="updatedProgress">{{ progress.progress_percentage|floatformat:0 }}%</strong></span>
             </div>
             {% endif %}
         </div>
