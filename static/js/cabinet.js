@@ -157,7 +157,7 @@ class Cabinet {
             }
 
             // Відправка
-            const response = await fetch('/account/api/update-profile/', {
+            const response = await fetch('/account/profile/update/', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -196,7 +196,7 @@ class Cabinet {
         formData.append('avatar', file);
 
         try {
-            const response = await fetch('/account/api/update-profile/', {
+            const response = await fetch('/account/profile/update/', {
                 method: 'POST',
                 body: formData,
                 headers: {

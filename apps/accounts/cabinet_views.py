@@ -272,32 +272,69 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         """Контекст для вкладки лояльності"""
         context = {}
         
-        current_tier = loyalty_account.current_tier
-        context['current_tier'] = current_tier
+        if not loyalty_account:
+            context['loyalty_account'] = None
+            context['next_reward'] = None
+            context['reward_progress'] = 0
+            context['active_subscription'] = None
+            context['current_discount'] = 0
+            context['potential_discount'] = 0
+            context['recent_transactions'] = []
+            return context
         
-        # Прогрес до наступного рівня
-        next_tier = loyalty_account.get_next_tier()
-        if next_tier:
-            points_needed = loyalty_account.points_to_next_tier()
-            progress_percentage = loyalty_account.progress_to_next_tier()
-            
-            context['next_tier'] = next_tier
-            context['points_needed'] = points_needed
-            context['progress_percentage'] = min(progress_percentage, 100)
+        context['loyalty_account'] = loyalty_account
         
-        # Поточні знижки
+        # Активна підписка (для відображення рівня та множників балів)
+        active_subscription = user.subscriptions.filter(
+            status='active',
+            end_date__gte=timezone.now()
+        ).first()
+        context['active_subscription'] = active_subscription
+        
+        # Наступна винагорода (RedemptionOption)
+        from apps.loyalty.models import RedemptionOption
+        next_reward = RedemptionOption.objects.filter(
+            is_active=True,
+            points_required__gt=loyalty_account.points
+        ).order_by('points_required').first()
+        
+        context['next_reward'] = next_reward
+        
+        # Прогрес до наступної винагороди
+        if next_reward and next_reward.points_required > 0:
+            reward_progress = (loyalty_account.points / next_reward.points_required) * 100
+            context['reward_progress'] = min(int(reward_progress), 100)
+        else:
+            context['reward_progress'] = 0
+        
+        # Поточні та потенційні знижки
         current_discount = loyalty_account.get_discount_percentage()
-        potential_discount = next_tier.discount_percentage if next_tier else current_discount
         
-        context['discounts'] = {
-            'current': current_discount,
-            'potential': potential_discount,
-        }
+        # Потенційна знижка - наступна доступна за балами
+        potential_discount_option = RedemptionOption.objects.filter(
+            is_active=True,
+            option_type='discount',
+            points_required__gt=loyalty_account.points
+        ).order_by('points_required').first()
+        
+        potential_discount = potential_discount_option.discount_percentage if potential_discount_option else current_discount
+        
+        context['current_discount'] = current_discount
+        context['potential_discount'] = potential_discount
         
         # Останні транзакції балів
         context['recent_transactions'] = loyalty_account.transactions.order_by('-created_at')[:5]
         
-        # Всі рівні для відображення
+        # Legacy tier система (залишаємо для сумісності)
+        current_tier = loyalty_account.current_tier
+        context['current_tier'] = current_tier
+        
+        next_tier = loyalty_account.get_next_tier()
+        if next_tier:
+            context['next_tier'] = next_tier
+            context['points_needed'] = loyalty_account.points_to_next_tier()
+            context['progress_percentage'] = min(loyalty_account.progress_to_next_tier(), 100)
+        
         context['all_tiers'] = LoyaltyTier.objects.filter(is_active=True).order_by('points_required')
         
         return context
@@ -307,29 +344,21 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         context = {}
         
         if Payment:
-            # Історія платежів
-            payments = user.payments.order_by('-created_at')[:10]
-            context['recent_payments'] = payments
+            # ВСІ успішні платежі (підписки, курси, івенти)
+            all_payments = user.payments.filter(
+                status='succeeded'
+            ).select_related(
+                'subscription',
+                'subscription__plan',
+                'course',
+                'event_ticket',
+                'event_ticket__event'
+            ).order_by('-created_at')
             
-            # Статистика платежів
-            successful_payments = user.payments.filter(status='succeeded')
-            context['payment_stats'] = {
-                'total_payments': user.payments.count(),
-                'successful_payments': successful_payments.count(),
-                'total_amount': successful_payments.aggregate(
-                    total=models.Sum('amount')
-                )['total'] or 0,
-                'last_payment': user.payments.filter(status='succeeded').order_by('-created_at').first()
-            }
+            context['all_payments'] = all_payments
         else:
             # Fallback якщо модель Payment не існує
-            context['recent_payments'] = []
-            context['payment_stats'] = {
-                'total_payments': 0,
-                'successful_payments': 0,
-                'total_amount': 0,
-                'last_payment': None
-            }
+            context['all_payments'] = []
         
         return context
 

@@ -1,171 +1,77 @@
-<!-- Вкладка історії платежів -->
+<!-- Вкладка історії оплат -->
 <div class="payments-tab">
-    <!-- Статистика платежів -->
-    <div class="payment-stats">
-        <div class="stat-card">
-            <div class="stat-icon">💳</div>
-            <div class="stat-content">
-                <h3>{{ payment_stats.total_payments }}</h3>
-                <p>Всього платежів</p>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">✅</div>
-            <div class="stat-content">
-                <h3>{{ payment_stats.successful_payments }}</h3>
-                <p>Успішних платежів</p>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
-            <div class="stat-content">
-                <h3>${{ payment_stats.total_amount|floatformat:2 }}</h3>
-                <p>Загальна сума</p>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">📅</div>
-            <div class="stat-content">
-                {% if payment_stats.last_payment %}
-                <h3>{{ payment_stats.last_payment.created_at|date:"d.m.Y" }}</h3>
-                <p>Останній платіж</p>
-                {% else %}
-                <h3>—</h3>
-                <p>Немає платежів</p>
-                {% endif %}
-            </div>
-        </div>
+    <div class="tab-header">
+        <h2>Історія оплат</h2>
+        <p>Всі ваші успішні транзакції</p>
     </div>
 
-    <!-- Список платежів -->
-    {% if recent_payments %}
-    <div class="payments-list">
-        <h3>Історія платежів</h3>
-        <div class="payments-table">
-            <div class="table-header">
-                <div class="col-date">Дата</div>
-                <div class="col-description">Опис</div>
-                <div class="col-amount">Сума</div>
-                <div class="col-status">Статус</div>
-                <div class="col-action">Дія</div>
-            </div>
-            {% for payment in recent_payments %}
-            <div class="table-row">
-                <div class="col-date">
-                    <div class="payment-date">{{ payment.created_at|date:"d.m.Y" }}</div>
-                    <div class="payment-time">{{ payment.created_at|date:"H:i" }}</div>
-                </div>
-                <div class="col-description">
-                    <div class="payment-title">
-                        {% if payment.subscription %}
-                        Підписка: {{ payment.subscription.plan.name }}
-                        {% elif payment.course %}
-                        Курс: {{ payment.course.title }}
-                        {% elif payment.event_ticket %}
-                        Івент: {{ payment.event_ticket.event.title }}
-                        {% else %}
-                        Платіж #{{ payment.id }}
-                        {% endif %}
-                    </div>
-                    <div class="payment-method">
-                        {% if payment.payment_method %}
-                        {{ payment.get_payment_method_display }}
-                        {% else %}
-                        Картка
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-amount">
-                    <div class="amount">${{ payment.amount }}</div>
-                    {% if payment.currency != 'USD' %}
-                    <div class="currency">{{ payment.currency }}</div>
-                    {% endif %}
-                </div>
-                <div class="col-status">
-                    <span class="status-badge status-{{ payment.status }}">
-                        {% if payment.status == 'succeeded' %}
-                        Успішно
-                        {% elif payment.status == 'pending' %}
-                        Очікує
-                        {% elif payment.status == 'failed' %}
-                        Помилка
-                        {% elif payment.status == 'cancelled' %}
-                        Скасовано
-                        {% else %}
-                        {{ payment.get_status_display }}
-                        {% endif %}
-                    </span>
-                </div>
-                <div class="col-action">
-                    {% if payment.subscription and payment.status == 'succeeded' %}
-                    <button class="btn-repeat" 
-                            data-action="repeatPayment"
-                            data-plan-id="{{ payment.subscription.plan.id }}"
-                            data-payment-id="{{ payment.id }}">
-                        Повторити
-                    </button>
-                    {% else %}
-                    <span class="action-empty">—</span>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
+    {% if all_payments %}
+    <div class="payments-table">
+        <div class="table-header">
+            <div class="col-date">Дата</div>
+            <div class="col-description">Опис</div>
+            <div class="col-amount">Сума</div>
+            <div class="col-status">Статус</div>
         </div>
 
-        <!-- Пагінація (якщо потрібно) -->
-        {% if recent_payments.count >= 10 %}
-        <div class="pagination-container">
-            <button class="btn-load-more" data-action="loadMorePayments">
-                Завантажити ще
-            </button>
+        {% for payment in all_payments %}
+        <div class="table-row">
+            <div class="col-date">
+                <div class="payment-date">{{ payment.created_at|date:"d.m.Y" }}</div>
+                <div class="payment-time">{{ payment.created_at|date:"H:i" }}</div>
+            </div>
+
+            <div class="col-description">
+                <div class="payment-title">
+                    {% if payment.subscription %}
+                    Підписка — {{ payment.subscription.plan.name }}
+                    {% elif payment.course %}
+                    Курс: {{ payment.course.title }}
+                    {% elif payment.event_ticket %}
+                    Івент: {{ payment.event_ticket.event.title }}
+                    {% else %}
+                    Платіж #{{ payment.id }}
+                    {% endif %}
+                </div>
+                {% if payment.payment_method %}
+                <div class="payment-method">
+                    {{ payment.get_payment_method_display }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-amount">
+                <div class="amount">${{ payment.amount }}</div>
+                {% if payment.currency and payment.currency != 'USD' %}
+                <div class="currency">{{ payment.currency }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-status">
+                <span class="status-badge status-succeeded">Сплачено</span>
+            </div>
+
+            {% if payment.subscription %}
+            <div class="col-action">
+                <a href="{% url 'cabinet:subscription' %}" class="btn-repeat">
+                    Повторити
+                </a>
+            </div>
+            {% else %}
+            <div class="col-action">
+                <span class="action-empty">—</span>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
+        {% endfor %}
     </div>
     {% else %}
     <!-- Порожній стан -->
     <div class="empty-state">
         <div class="empty-icon">💳</div>
         <h3>Поки що немає платежів</h3>
-        <p>Тут буде відображатися історія ваших покупок та платежів</p>
-        <a href="{% url 'core:pricing' %}" class="btn-primary">Оформити підписку</a>
+        <p>Історія ваших покупок з'явиться тут</p>
+        <a href="{% url 'cabinet:subscription' %}" class="btn-primary">Оформити підписку</a>
     </div>
     {% endif %}
-
-    <!-- Інформаційні картки -->
-    <div class="payment-info">
-        <div class="info-card">
-            <h4>💡 Корисна інформація</h4>
-            <ul>
-                <li>Всі платежі захищені SSL шифруванням</li>
-                <li>Автоматичне продовження підписки можна вимкнути</li>
-                <li>Чеки надсилаються на ваш email</li>
-                <li>Повернення коштів до 14 днів</li>
-            </ul>
-        </div>
-
-        <div class="info-card">
-            <h4>🎁 Бонуси та знижки</h4>
-            <ul>
-                <li>Накопичуйте бали лояльності з кожної покупки</li>
-                <li>Знижки до 15% для VIP учасників</li>
-                <li>Спеціальні пропозиції для постійних клієнтів</li>
-                <li>Рефери програма з винагородами</li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<!-- Модальне вікно для перегляду деталей платежу -->
-<div id="payment-details-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Деталі платежу</h3>
-            <button class="modal-close" data-action="closePaymentDetailsModal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div id="payment-details-content">
-                <!-- Тут будуть завантажуватися деталі платежу -->
-            </div>
-        </div>
-    </div>
 </div>

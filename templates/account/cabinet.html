@@ -132,16 +132,16 @@
                     class="tab-link {% if active_tab == 'subscription' %}active{% endif %}">
                     Підписка
                 </a>
+                <a href="{% url 'cabinet:payments' %}"
+                    class="tab-link {% if active_tab == 'payments' %}active{% endif %}">
+                    Історія оплат
+                </a>
                 <a href="{% url 'cabinet:files' %}" class="tab-link {% if active_tab == 'files' %}active{% endif %}">
                     Мої файли
                 </a>
                 <a href="{% url 'cabinet:loyalty' %}"
                     class="tab-link {% if active_tab == 'loyalty' %}active{% endif %}">
                     Програма лояльності
-                </a>
-                <a href="{% url 'cabinet:payments' %}"
-                    class="tab-link {% if active_tab == 'payments' %}active{% endif %}">
-                    Історія оплат
                 </a>
             </nav>
 

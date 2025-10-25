@@ -1,190 +1,398 @@
-<!-- Вкладка програми лояльності -->
-<div class="loyalty-tab">
-    <div class="loyalty-cards">
-        <!-- Поточний рівень -->
-        <div class="info-card">
-            <h3>Рівень</h3>
-            <div class="tier-info">
-                {% if current_tier %}
-                <div class="tier-name tier-{{ current_tier.name|lower }}">
-                    {{ current_tier.name }}
-                </div>
-                <div class="tier-points">
-                    {{ loyalty_account.points }} балів
-                </div>
-                {% else %}
-                <div class="tier-name tier-bronze">
-                    Bronze
-                </div>
-                <div class="tier-points">
-                    0 балів
-                </div>
-                {% endif %}
+<!-- Вкладка програми лояльності (НОВИЙ ДИЗАЙН згідно презентації) -->
+<div class="loyalty-tab-new">
+
+    <!-- === БЛОК 1: Три верхні картки === -->
+    <div class="loyalty-summary-grid">
+        <!-- Мої бали -->
+        <div class="loyalty-summary-card">
+            <div class="card-header">
+                <h3>Мої бали</h3>
+            </div>
+            <div class="card-body">
+                <div class="balance-display">{{ loyalty_account.points|default:0 }}</div>
+                <p class="balance-note">За кожну покупку нараховуються бали (див. правила нижче).</p>
             </div>
         </div>
 
-        <!-- Прогрес рівня -->
-        <div class="info-card">
-            <h3>Прогрес рівня</h3>
-            {% if next_tier %}
-            <div class="progress-info">
-                <div class="progress-text">
-                    {{ loyalty_account.points }}/{{ next_tier.points_required }} балів до {{ next_tier.name }}
-                </div>
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-progress="{{ progress_percentage }}"></div>
-                    </div>
-                </div>
-                <div class="progress-remaining">
-                    {% if points_needed > 0 %}
-                    Потрібно ще {{ points_needed }} балів
+        <!-- Рівень -->
+        <div class="loyalty-summary-card">
+            <div class="card-header">
+                <h3>Рівень</h3>
+            </div>
+            <div class="card-body">
+                <div class="tier-display">
+                    {% if active_subscription %}
+                    <div class="tier-badge tier-active">{{ active_subscription.plan.name }}</div>
+                    <p class="tier-note">З підпискою бали нараховуються швидше (C/B ×1,5, A/Pro ×2).</p>
                     {% else %}
-                    Готово до підвищення!
+                    <div class="tier-badge tier-none">Без підписки</div>
+                    <p class="tier-note">З підпискою бали нараховуються швидше (C/B ×1,5, A/Pro ×2).</p>
                     {% endif %}
                 </div>
             </div>
-            {% else %}
-            <div class="progress-info">
-                <div class="progress-text max-tier">
-                    Максимальний рівень досягнуто
-                </div>
-            </div>
-            {% endif %}
         </div>
 
-        <!-- Знижка -->
-        <div class="info-card">
-            <h3>Знижка</h3>
-            <div class="discount-info">
-                <div class="current-discount">
-                    <span class="discount-label">Поточна:</span>
-                    <span class="discount-value">{{ discounts.current }}%</span>
-                </div>
-                {% if discounts.potential > discounts.current %}
-                <div class="potential-discount">
-                    <span class="discount-label">Потенційна:</span>
-                    <span class="discount-value">{{ discounts.potential }}%</span>
-                </div>
-                {% endif %}
+        <!-- Наступна винагорода -->
+        <div class="loyalty-summary-card">
+            <div class="card-header">
+                <h3>Наступна винагорода</h3>
             </div>
-        </div>
-    </div>
-
-    <!-- Рівні лояльності -->
-    <div class="loyalty-tiers">
-        <h3>Рівні лояльності</h3>
-        <div class="tiers-list">
-            {% for tier in all_tiers %}
-            <div class="tier-item {% if current_tier and tier.id == current_tier.id %}current{% endif %}">
-                <div class="tier-badge tier-{{ tier.name|lower }}">
-                    {{ tier.name }}
-                </div>
-                <div class="tier-details">
-                    <div class="tier-requirements">
-                        {% if tier.points_required == 0 %}
-                        Початковий рівень
-                        {% else %}
-                        {{ tier.points_required }}+ балів
-                        {% endif %}
+            <div class="card-body">
+                <div class="reward-display">
+                    {% if next_reward %}
+                    <div class="reward-name">{{ next_reward.name }}</div>
+                    <div class="reward-progress">
+                        <div class="progress-info">
+                            <span>Потрібно: {{ next_reward.points_required }} балів</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: {{ reward_progress }}%;"></div>
+                        </div>
+                        <div class="progress-text">Прогрес: {{ reward_progress }}%</div>
                     </div>
-                    <div class="tier-benefits">
-                        <span class="benefit">Знижка {{ tier.discount_percentage }}%</span>
-                        {% for benefit in tier.benefits %}
-                        <span class="benefit">{{ benefit }}</span>
-                        {% endfor %}
+                    {% else %}
+                    <p class="no-reward">Всі винагороди отримані</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === БЛОК 2: Приблизна покупка === -->
+    <div class="approximate-purchase-section">
+        <h2>Приблизна покупка</h2>
+        <div class="purchase-cards-grid">
+            <div class="purchase-card">
+                <div class="purchase-header">
+                    <span class="purchase-type">Mini-курс / стаття</span>
+                </div>
+                <div class="purchase-body">
+                    <div class="purchase-price">Сума: ₴499</div>
+                    <div class="purchase-status">ОТРИМАЄТЕ</div>
+                    <div class="purchase-points">+5 балів</div>
+                </div>
+            </div>
+
+            <div class="purchase-card">
+                <div class="purchase-header">
+                    <span class="purchase-type">Лекція / майстер-клас</span>
+                </div>
+                <div class="purchase-body">
+                    <div class="purchase-price">Сума: ₴1499</div>
+                    <div class="purchase-status">ОТРИМАЄТЕ</div>
+                    <div class="purchase-points">+10 балів</div>
+                </div>
+            </div>
+
+            <div class="purchase-card">
+                <div class="purchase-header">
+                    <span class="purchase-type">Форум / курс</span>
+                </div>
+                <div class="purchase-body">
+                    <div class="purchase-price">Сума: ₴3200</div>
+                    <div class="purchase-status">ОТРИМАЄТЕ</div>
+                    <div class="purchase-points">+15 балів</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === БЛОК 3: Що таке бали? === -->
+    <div class="loyalty-info-section">
+        <h2>Що таке бали?</h2>
+        <p>Бали - бонусні одиниці за покупки товарів/підписок/квитків.</p>
+        <p>Враховуючи багатошаровість X3, бали мають бути як мотиватором для активності і їхнього отримання, так і
+            додатковим інструментом для спонукання підписки. Логічна та прозора система Програми лояльності показує
+            користувачу як практичну цінність придбання, так і довгострокові вигоди.</p>
+    </div>
+
+    <!-- === БЛОК 4: Як отримати бали? === -->
+    <div class="loyalty-earning-section">
+        <h2>Як отримати бали?</h2>
+
+        <h3>За покупки:</h3>
+        <div class="earning-table-wrapper">
+            <div class="earning-table-header">Як нараховуються бали</div>
+
+            <div class="earning-table">
+                <!-- Діапазон ₴399-1000 -->
+                <div class="earning-row">
+                    <div class="earning-range">
+                        <div class="range-title">Діапазон</div>
+                        <div class="range-value">₴399-1000</div>
+                    </div>
+                    <div class="earning-details">
+                        <div class="earning-item">
+                            <span class="earning-tier">C-Vision</span>
+                            <span class="earning-points">+5 балів</span>
+                        </div>
+                        <div class="earning-item">
+                            <span class="earning-tier">B-Vision</span>
+                            <span class="earning-points">+8 балів</span>
+                        </div>
+                        <div class="earning-item">
+                            <span class="earning-tier">A/Pro-Vision</span>
+                            <span class="earning-points">+10 балів</span>
+                        </div>
                     </div>
                 </div>
-                {% if current_tier and tier.id == current_tier.id %}
-                <div class="tier-status current">Поточний</div>
-                {% elif tier.points_required <= loyalty_account.points %} <div class="tier-status achieved">Досягнуто
-            </div>
-            {% else %}
-            <div class="tier-status locked">Заблоковано</div>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-</div>
 
-<!-- Loyalty Rules Link -->
-<div class="loyalty-info-card">
-    <div class="info-card-content">
-        <h3>Детальна інформація</h3>
-        <p>Ознайомтеся з повними правилами та умовами Програми лояльності</p>
-        <a href="{% url 'loyalty:rules' %}" class="btn btn-outline btn-large">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-            </svg>
-            Правила Програми Лояльності
-        </a>
-    </div>
-</div>
+                <!-- Діапазон ₴1000-3000 -->
+                <div class="earning-row">
+                    <div class="earning-range">
+                        <div class="range-title">Діапазон</div>
+                        <div class="range-value">₴1000-3000</div>
+                    </div>
+                    <div class="earning-details">
+                        <div class="earning-item">
+                            <span class="earning-tier">C-Vision</span>
+                            <span class="earning-points">+10 балів</span>
+                        </div>
+                        <div class="earning-item">
+                            <span class="earning-tier">B-Vision</span>
+                            <span class="earning-points">+15 балів</span>
+                        </div>
+                        <div class="earning-item">
+                            <span class="earning-tier">A/Pro-Vision</span>
+                            <span class="earning-points">+20 балів</span>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Як заробляти бали -->
-<div class="earning-ways">
-    <h3>Як заробляти бали</h3>
-    <div class="ways-grid">
-        <div class="way-item">
-            <div class="way-icon">🛒</div>
-            <h4>Покупки</h4>
-            <p>1 бал за кожну $1 витрачену</p>
-        </div>
-        <div class="way-item">
-            <div class="way-icon">📝</div>
-            <h4>Заповнення профілю</h4>
-            <p>50 балів за повний профіль</p>
-        </div>
-        <div class="way-item">
-            <div class="way-icon">🎓</div>
-            <h4>Завершення курсів</h4>
-            <p>10-30 балів за курс</p>
-        </div>
-        <div class="way-item">
-            <div class="way-icon">📅</div>
-            <h4>Відвідування івентів</h4>
-            <p>20 балів за кожний івент</p>
-        </div>
-    </div>
-</div>
-
-<!-- Історія балів -->
-{% if recent_transactions %}
-<div class="points-history">
-    <h3>Останні нарахування</h3>
-    <div class="transactions-list">
-        {% for transaction in recent_transactions %}
-        <div class="transaction-item">
-            <div class="transaction-info">
-                <div class="transaction-reason">{{ transaction.reason }}</div>
-                <div class="transaction-date">{{ transaction.created_at|date:"d.m.Y H:i" }}</div>
-            </div>
-            <div class="transaction-points {% if transaction.points > 0 %}positive{% else %}negative{% endif %}">
-                {% if transaction.points > 0 %}+{% endif %}{{ transaction.points }}
+                <!-- Діапазон ₴3000+ -->
+                <div class="earning-row">
+                    <div class="earning-range">
+                        <div class="range-title">Діапазон</div>
+                        <div class="range-value">₴3000+</div>
+                    </div>
+                    <div class="earning-details">
+                        <div class="earning-item">
+                            <span class="earning-tier">C-Vision</span>
+                            <span class="earning-points">+15 балів</span>
+                        </div>
+                        <div class="earning-item">
+                            <span class="earning-tier">B-Vision</span>
+                            <span class="earning-points">+23 балів</span>
+                        </div>
+                        <div class="earning-item">
+                            <span class="earning-tier">A/Pro-Vision</span>
+                            <span class="earning-points">+30 балів</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
 
-<!-- Тестові кнопки для лояльності -->
-<div class="info-card">
-    <h3>Тестові дії</h3>
-    <div class="test-actions">
-        <button class="btn-primary" data-action="addLoyaltyPoints" data-points="50" data-reason="Тестове нарахування">
-            Додати 50 балів
-        </button>
-        <button class="btn-secondary" data-action="addLoyaltyPoints" data-points="100" data-reason="Великий бонус">
-            Додати 100 балів
-        </button>
-        <button class="btn-secondary" data-action="addLoyaltyPoints" data-points="200" data-reason="Мега бонус">
-            Додати 200 балів
-        </button>
+        <h3>За підписки:</h3>
+        <div class="subscription-earning-table">
+            <div class="subscription-earning-row">
+                <div class="subscription-tier-group">
+                    <h4>C-Vision / B-Vision</h4>
+                    <div class="subscription-points-list">
+                        <div class="sub-point-item">
+                            <span class="sub-duration">1 місяць</span>
+                            <span class="sub-points">+15 балів</span>
+                        </div>
+                        <div class="sub-point-item">
+                            <span class="sub-duration">3 місяці</span>
+                            <span class="sub-points">+65 балів</span>
+                        </div>
+                        <div class="sub-point-item">
+                            <span class="sub-duration">6 місяців</span>
+                            <span class="sub-points">+100 балів</span>
+                        </div>
+                        <div class="sub-point-item">
+                            <span class="sub-duration">1 рік</span>
+                            <span class="sub-points">+200 балів</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subscription-tier-group">
+                    <h4>A-Vision / Pro-Vision</h4>
+                    <div class="subscription-points-list">
+                        <div class="sub-point-item">
+                            <span class="sub-duration">3 місяці</span>
+                            <span class="sub-points">+80 балів</span>
+                        </div>
+                        <div class="sub-point-item">
+                            <span class="sub-duration">6 місяців</span>
+                            <span class="sub-points">+160 балів</span>
+                        </div>
+                        <div class="sub-point-item">
+                            <span class="sub-duration">1 рік</span>
+                            <span class="sub-points">+320 балів</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <p class="test-note">
-        <small>Ці кнопки для тестування функцій нарахування балів лояльності</small>
-    </p>
-</div>
+
+    <!-- === БЛОК 5: Як витрачати бали? === -->
+    <div class="loyalty-spending-section">
+        <h2>Як витрачати бали?</h2>
+
+        <h3>Без підписки:</h3>
+        <ul class="spending-list">
+            <li>Від 50 балів → знижка 5%</li>
+            <li>100 балів → знижка 10%</li>
+            <li>Придбання коротких матеріалів, що доступні за підпискою (PDF, статті, відео)</li>
+            <li>Оплата частини підписки (лише рівня C та B-vision)</li>
+        </ul>
+
+        <h3>З підпискою:</h3>
+        <ul class="spending-list">
+            <li>Усі можливості «Без підписки»</li>
+            <li>Обмін на повний місяць підписки (200-500 балів залежно від рівня)</li>
+            <li>Знижки на івенти та квитки</li>
+            <li>Купівля будь-яких матеріалів онлайн формату</li>
+        </ul>
+    </div>
+
+    <!-- === БЛОК 6: Як це реалізувати? === -->
+    <div class="loyalty-implementation-section">
+        <h2>Як це реалізувати?</h2>
+
+        <div class="implementation-example">
+            <h3>Кошик</h3>
+            <div class="image-placeholder">
+                <p>[Зображення прикладу кошика з балами]</p>
+                <p>Файл для додавання: static/images/loyalty/loyalty-cart-example.png</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- === БЛОК 7: Дорожня карта користувача === -->
+    <div class="loyalty-roadmap-section">
+        <h2>Дорожня карта користувача</h2>
+
+        <div class="roadmap-cards-grid">
+            <!-- Картка 1 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Січень 2025</span>
+                </div>
+                <h3>Перші покупки без підписки</h3>
+                <p>Користувач купує статтю та PDF матеріал. Отримує бонус балів.</p>
+                <div class="roadmap-bonus">+20 балів</div>
+            </div>
+
+            <!-- Картка 2 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Лютий 2025</span>
+                </div>
+                <h3>Відвідування форуму без підписки</h3>
+                <p>Користувач купує квиток на онлайн-форум. Отримує балів базові балів.</p>
+                <div class="roadmap-bonus">+10 балів</div>
+            </div>
+
+            <!-- Картка 3 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Березень 2025</span>
+                </div>
+                <h3>Оформлення C-Vision підписки</h3>
+                <p>Користувач переходить на підписку C-Vision і отримує бонусні бали на старанні.</p>
+                <div class="roadmap-bonus">+50 балів</div>
+            </div>
+
+            <!-- Картка 4 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Квітень 2025</span>
+                </div>
+                <h3>Активні покупки з підпискою</h3>
+                <p>Користувач купує 2 курси середньої крис.</p>
+                <div class="roadmap-bonus">+40 балів</div>
+            </div>
+
+            <!-- Картка 5 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Травень 2025</span>
+                </div>
+                <h3>Форум футбольних фахівців</h3>
+                <p>Користувач купує доступ до форуму. Завдяки підписці отримує більше балів.</p>
+                <div class="roadmap-bonus">+60 балів</div>
+            </div>
+
+            <!-- Картка 6 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Червень 2025</span>
+                </div>
+                <h3>Накопичено 300 балів</h3>
+                <p>Бонус досягнуто для отримання річної винагороди.</p>
+                <div class="roadmap-bonus">Бонус: 300</div>
+            </div>
+
+            <!-- Картка 7 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Липень 2025</span>
+                </div>
+                <h3>Використання балів</h3>
+                <p>Користувач обміняв балів на 1 місяць B-Vision або знижку →10%.</p>
+                <div class="roadmap-bonus roadmap-spent">-100 балів</div>
+            </div>
+
+            <!-- Картка 8 -->
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <span class="roadmap-date">Серпень 2025</span>
+                </div>
+                <h3>Варіант: Продовження шляху</h3>
+                <p>Замість витрати балів, користувач копить їх, щоб отримати річну знижку меркану.</p>
+                <div class="roadmap-bonus">Варіант: 500+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === БЛОК 8: Перспективи === -->
+    <div class="loyalty-perspectives-section">
+        <h2>Перспективи:</h2>
+
+        <ul class="perspectives-list">
+            <li>Розумна рекомендаційна система може пропонувати продукти або курси, за які користувач отримає більше
+                балів, або ті, що відповідають його інтересам.</li>
+            <li>Індивідуальні бонуси: наприклад, у день народження чи після 100 днів активності.</li>
+            <li>Челендж: «Пройди 5 курсів цього місяця — отримай 20 бонусних балів».</li>
+            <li>Рейтинг активних учасників Хабу знань.</li>
+            <li>Ексклюзивні івенти, доступні лише користувачам з високим балом у Хаб знань і для оплати послуг МК.</li>
+            <li>Push/email-сповіщення: «Ще 20 балів — і у вас буде знижка -10%».</li>
+            <li>Партнерські знижки: за достатньої кількості партнерів балів можна буде обмінити на знижку на їхні
+                продукти (аналогічно до прикладу Monobank).</li>
+            <li>Програма повернення: бонусні бали для користувачів, які не були активні, наприклад, протягом двох
+                місяців.</li>
+            <li>Партнерська програма: бали за реєстрацію друга або за пропонування контенту.</li>
+        </ul>
+    </div>
+
+    <!-- === БЛОК 9: Кнопка переходу на детальні правила === -->
+    <div class="loyalty-rules-link-section">
+        <div class="rules-cta-card">
+            <div class="rules-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                </svg>
+            </div>
+            <div class="rules-content">
+                <h3>Дізнатись більше про Програму лояльності</h3>
+                <p>Детальні правила нарахування балів, умови переходу між рівнями та інші особливості</p>
+            </div>
+            <a href="{% url 'loyalty:rules' %}" class="btn-rules-cta">
+                <span>Дізнатись більше</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
 </div>
