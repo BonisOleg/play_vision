@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.urls import reverse
 from django.conf import settings
+from django.db import models
 
 from .models import Plan, Subscription
 from apps.payments.liqpay_service import LiqPayService
