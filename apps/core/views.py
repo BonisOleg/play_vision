@@ -59,7 +59,7 @@ class MentoringView(TemplateView):
 
 
 class AboutView(TemplateView):
-    """About page view"""
+    """About page view - Про Play Vision"""
     template_name = 'pages/about.html'
     
     def get_context_data(self, **kwargs):
@@ -67,11 +67,17 @@ class AboutView(TemplateView):
         
         from apps.cms.models import PageSection, ExpertCard
         
+        # CMS секції для сторінки "Про нас"
         context['cms_sections'] = PageSection.objects.filter(
             page='about',
             is_active=True
         ).prefetch_related('blocks')
-        context['cms_experts'] = ExpertCard.objects.filter(is_active=True)
+        
+        # Команда/Експерти для блоку "Наша команда"
+        context['cms_experts'] = ExpertCard.objects.filter(
+            is_active=True,
+            show_on_homepage=False  # Показуємо тільки тих, хто не на головній
+        )
         
         return context
 
