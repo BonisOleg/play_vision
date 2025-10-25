@@ -199,8 +199,13 @@
 }
 
 .lock-icon {
-    font-size: 4rem;
     margin-bottom: 1.5rem;
+    color: var(--color-primary);
+    opacity: 0.9;
+}
+
+.lock-icon svg {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .lock-message {
@@ -262,8 +267,9 @@
         font-size: 1.125rem;
     }
 
-    .lock-icon {
-        font-size: 3rem;
+    .lock-icon svg {
+        width: 60px;
+        height: 60px;
     }
 
     .lock-message h3 {

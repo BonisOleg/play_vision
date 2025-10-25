@@ -96,41 +96,73 @@ class HubPreviewManager {
 
     async loadBunnyVideo(courseId) {
         try {
-            // Отримуємо Bunny.net video ID для курсу
-            // В реальності це має бути API запит до вашого бекенду
-            const response = await fetch(`/api/content/course/${courseId}/preview/`);
+            // DEMO MODE: Показуємо заглушку з інформацією
+            // В production режимі тут буде API запит
 
-            if (!response.ok) {
-                throw new Error('Failed to load preview');
+            // Спробуємо отримати дані з API
+            const response = await fetch(`/api/content/course/${courseId}/preview/`).catch(() => null);
+
+            if (response && response.ok) {
+                // Якщо API працює - використовуємо реальні дані
+                const data = await response.json();
+
+                const bunnyVideoId = data.bunny_video_id;
+                const bunnyLibraryId = data.bunny_library_id;
+
+                if (bunnyVideoId && bunnyLibraryId) {
+                    // Створюємо iframe для Bunny.net
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://iframe.mediadelivery.net/embed/${bunnyLibraryId}/${bunnyVideoId}?autoplay=true&preload=true`;
+                    iframe.loading = 'lazy';
+                    iframe.allow = 'accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture';
+                    iframe.allowFullscreen = true;
+
+                    this.videoContainer.innerHTML = '';
+                    this.videoContainer.appendChild(iframe);
+                    this.videoPlayer = iframe;
+                    return;
+                } else if (data.preview_video_url) {
+                    this.loadLocalVideo(data.preview_video_url);
+                    return;
+                }
             }
 
-            const data = await response.json();
+            // DEMO MODE: Показуємо красиву заглушку
+            this.showDemoPreview();
 
-            // Bunny.net embed URL
-            const bunnyVideoId = data.bunny_video_id;
-            const bunnyLibraryId = data.bunny_library_id || 'YOUR_LIBRARY_ID';
-
-            if (bunnyVideoId) {
-                // Створюємо iframe для Bunny.net
-                const iframe = document.createElement('iframe');
-                iframe.src = `https://iframe.mediadelivery.net/embed/${bunnyLibraryId}/${bunnyVideoId}?autoplay=true&preload=true`;
-                iframe.loading = 'lazy';
-                iframe.allow = 'accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture';
-                iframe.allowFullscreen = true;
-
-                // Очищуємо контейнер і додаємо iframe
-                this.videoContainer.innerHTML = '';
-                this.videoContainer.appendChild(iframe);
-
-                this.videoPlayer = iframe;
-            } else {
-                // Fallback: якщо немає Bunny.net ID, показуємо локальне відео
-                this.loadLocalVideo(data.preview_video_url);
-            }
         } catch (error) {
             console.error('Preview load error:', error);
-            this.showError('Не вдалося завантажити передперегляд');
+            // Fallback на demo
+            this.showDemoPreview();
         }
+    }
+
+    showDemoPreview() {
+        // Показуємо красиву demo заглушку
+        this.videoContainer.innerHTML = `
+            <div style="
+                display: flex; 
+                flex-direction: column;
+                align-items: center; 
+                justify-content: center; 
+                height: 100%; 
+                background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                color: white;
+                padding: 2rem;
+                text-align: center;
+            ">
+                <svg viewBox="0 0 24 24" width="80" height="80" fill="currentColor" style="opacity: 0.8; margin-bottom: 1.5rem;">
+                    <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                </svg>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 600;">Передперегляд курсу</h3>
+                <p style="opacity: 0.8; max-width: 400px; line-height: 1.6;">
+                    Тут буде показано 20-секундний фрагмент відео курсу з Bunny.net CDN
+                </p>
+                <div style="margin-top: 1.5rem; padding: 1rem 1.5rem; background: rgba(229, 9, 20, 0.2); border-radius: 8px; border: 1px solid rgba(229, 9, 20, 0.5);">
+                    <small style="opacity: 0.9;">💡 Функція буде активна після додавання відео в адмінці</small>
+                </div>
+            </div>
+        `;
     }
 
     loadLocalVideo(videoUrl) {
