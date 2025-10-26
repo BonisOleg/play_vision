@@ -3,7 +3,157 @@
 import django.core.validators
 import django.db.models.deletion
 from django.conf import settings
-from django.db import migrations, models
+from django.db import migrations, models, connection
+
+
+def add_field_if_not_exists(apps, schema_editor):
+    """Додає поля тільки якщо вони не існують"""
+    db_alias = schema_editor.connection.alias
+    
+    # Перевіряємо які колонки існують
+    with connection.cursor() as cursor:
+        # Для PostgreSQL
+        if connection.vendor == 'postgresql':
+            cursor.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='events' AND table_schema='public'
+            """)
+            existing_event_columns = {row[0] for row in cursor.fetchall()}
+            
+            cursor.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='event_registrations' AND table_schema='public'
+            """)
+            existing_registration_columns = {row[0] for row in cursor.fetchall()}
+            
+            cursor.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='event_tickets' AND table_schema='public'
+            """)
+            existing_ticket_columns = {row[0] for row in cursor.fetchall()}
+            
+            cursor.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='speakers' AND table_schema='public'
+            """)
+            existing_speaker_columns = {row[0] for row in cursor.fetchall()}
+            
+        # Для SQLite
+        else:
+            cursor.execute("PRAGMA table_info(events)")
+            existing_event_columns = {row[1] for row in cursor.fetchall()}
+            
+            cursor.execute("PRAGMA table_info(event_registrations)")
+            existing_registration_columns = {row[1] for row in cursor.fetchall()}
+            
+            cursor.execute("PRAGMA table_info(event_tickets)")
+            existing_ticket_columns = {row[1] for row in cursor.fetchall()}
+            
+            cursor.execute("PRAGMA table_info(speakers)")
+            existing_speaker_columns = {row[1] for row in cursor.fetchall()}
+        
+        # Додаємо поля в Event, яких немає
+        event_fields_to_add = {
+            'benefits': "ALTER TABLE events ADD COLUMN benefits JSONB DEFAULT '[]'",
+            'event_category': "ALTER TABLE events ADD COLUMN event_category VARCHAR(50) DEFAULT ''",
+            'target_audience': "ALTER TABLE events ADD COLUMN target_audience JSONB DEFAULT '[]'",
+            'ticket_tiers': "ALTER TABLE events ADD COLUMN ticket_tiers JSONB DEFAULT '[]'"
+        }
+        
+        for field_name, sql in event_fields_to_add.items():
+            if field_name not in existing_event_columns:
+                try:
+                    if connection.vendor == 'postgresql':
+                        cursor.execute(sql)
+                    else:
+                        # SQLite має інший синтаксис
+                        if 'JSONB' in sql:
+                            sql = sql.replace('JSONB', 'TEXT')
+                        cursor.execute(sql)
+                except Exception as e:
+                    print(f"Warning: Could not add {field_name}: {e}")
+        
+        # Додаємо поля в EventRegistration, яких немає
+        registration_fields_to_add = {
+            'attendee_email': "ALTER TABLE event_registrations ADD COLUMN attendee_email VARCHAR(254) DEFAULT ''",
+            'attendee_name': "ALTER TABLE event_registrations ADD COLUMN attendee_name VARCHAR(200) DEFAULT ''",
+            'attendee_phone': "ALTER TABLE event_registrations ADD COLUMN attendee_phone VARCHAR(20) DEFAULT ''",
+            'company': "ALTER TABLE event_registrations ADD COLUMN company VARCHAR(200) DEFAULT ''",
+            'custom_fields': "ALTER TABLE event_registrations ADD COLUMN custom_fields JSONB DEFAULT '{}'",
+            'dietary_requirements': "ALTER TABLE event_registrations ADD COLUMN dietary_requirements TEXT DEFAULT ''",
+            'emergency_contact': "ALTER TABLE event_registrations ADD COLUMN emergency_contact VARCHAR(100) DEFAULT ''",
+            'emergency_phone': "ALTER TABLE event_registrations ADD COLUMN emergency_phone VARCHAR(20) DEFAULT ''",
+            'how_did_you_hear': "ALTER TABLE event_registrations ADD COLUMN how_did_you_hear VARCHAR(100) DEFAULT ''",
+            'marketing_consent': "ALTER TABLE event_registrations ADD COLUMN marketing_consent BOOLEAN DEFAULT FALSE",
+            'notes': "ALTER TABLE event_registrations ADD COLUMN notes TEXT DEFAULT ''",
+            'position': "ALTER TABLE event_registrations ADD COLUMN position VARCHAR(200) DEFAULT ''",
+            'special_needs': "ALTER TABLE event_registrations ADD COLUMN special_needs TEXT DEFAULT ''",
+            'ticket_id': "ALTER TABLE event_registrations ADD COLUMN ticket_id BIGINT REFERENCES event_tickets(id)"
+        }
+        
+        for field_name, sql in registration_fields_to_add.items():
+            if field_name not in existing_registration_columns:
+                try:
+                    if connection.vendor == 'postgresql':
+                        cursor.execute(sql)
+                    else:
+                        if 'JSONB' in sql:
+                            sql = sql.replace('JSONB', 'TEXT')
+                        if 'BOOLEAN' in sql:
+                            sql = sql.replace('BOOLEAN', 'INTEGER')
+                        cursor.execute(sql)
+                except Exception as e:
+                    print(f"Warning: Could not add {field_name}: {e}")
+        
+        # Додаємо поля в EventTicket, яких немає
+        ticket_fields_to_add = {
+            'checked_in_by_id': "ALTER TABLE event_tickets ADD COLUMN checked_in_by_id BIGINT REFERENCES users(id)",
+            'price': "ALTER TABLE event_tickets ADD COLUMN price DECIMAL(10,2) DEFAULT 0.00",
+            'qr_data': "ALTER TABLE event_tickets ADD COLUMN qr_data TEXT DEFAULT ''",
+            'updated_at': "ALTER TABLE event_tickets ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+        }
+        
+        for field_name, sql in ticket_fields_to_add.items():
+            if field_name not in existing_ticket_columns:
+                try:
+                    if connection.vendor == 'postgresql':
+                        cursor.execute(sql)
+                    else:
+                        if 'TIMESTAMP' in sql:
+                            sql = sql.replace('TIMESTAMP', 'DATETIME')
+                        cursor.execute(sql)
+                except Exception as e:
+                    print(f"Warning: Could not add {field_name}: {e}")
+        
+        # Додаємо поля в Speaker, яких немає
+        speaker_fields_to_add = {
+            'email': "ALTER TABLE speakers ADD COLUMN email VARCHAR(254) UNIQUE DEFAULT ''",
+            'first_name': "ALTER TABLE speakers ADD COLUMN first_name VARCHAR(50) DEFAULT ''",
+            'last_name': "ALTER TABLE speakers ADD COLUMN last_name VARCHAR(50) DEFAULT ''",
+            'is_active': "ALTER TABLE speakers ADD COLUMN is_active BOOLEAN DEFAULT TRUE",
+            'linkedin_url': "ALTER TABLE speakers ADD COLUMN linkedin_url VARCHAR(200) DEFAULT ''",
+            'twitter_url': "ALTER TABLE speakers ADD COLUMN twitter_url VARCHAR(200) DEFAULT ''",
+            'website_url': "ALTER TABLE speakers ADD COLUMN website_url VARCHAR(200) DEFAULT ''",
+            'updated_at': "ALTER TABLE speakers ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+        }
+        
+        for field_name, sql in speaker_fields_to_add.items():
+            if field_name not in existing_speaker_columns:
+                try:
+                    if connection.vendor == 'postgresql':
+                        cursor.execute(sql)
+                    else:
+                        if 'BOOLEAN' in sql:
+                            sql = sql.replace('BOOLEAN', 'INTEGER')
+                        if 'TIMESTAMP' in sql:
+                            sql = sql.replace('TIMESTAMP', 'DATETIME')
+                        cursor.execute(sql)
+                except Exception as e:
+                    print(f"Warning: Could not add {field_name}: {e}")
 
 
 class Migration(migrations.Migration):
@@ -15,6 +165,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # Спершу виконуємо RunPython для додавання полів
+        migrations.RunPython(add_field_if_not_exists, migrations.RunPython.noop),
+        
+        # Створюємо нові моделі
         migrations.CreateModel(
             name='EventFeedback',
             fields=[
@@ -53,6 +207,8 @@ class Migration(migrations.Migration):
                 'ordering': ['created_at'],
             },
         ),
+        
+        # Змінюємо Meta options
         migrations.AlterModelOptions(
             name='eventregistration',
             options={'verbose_name': 'Event Registration', 'verbose_name_plural': 'Event Registrations'},
@@ -61,184 +217,8 @@ class Migration(migrations.Migration):
             name='speaker',
             options={'ordering': ['last_name', 'first_name'], 'verbose_name': 'Speaker', 'verbose_name_plural': 'Speakers'},
         ),
-        migrations.RemoveIndex(
-            model_name='eventregistration',
-            name='event_registrations_user_status_idx',
-        ),
-        migrations.RenameIndex(
-            model_name='event',
-            new_name='events_slug_930801_idx',
-            old_name='events_slug_idx',
-        ),
-        migrations.RenameIndex(
-            model_name='event',
-            new_name='events_status_cd4ad2_idx',
-            old_name='events_status_start_datetime_idx',
-        ),
-        migrations.RenameIndex(
-            model_name='event',
-            new_name='events_event_t_e1f6e6_idx',
-            old_name='events_event_type_status_idx',
-        ),
-        migrations.RenameIndex(
-            model_name='eventticket',
-            new_name='event_ticke_ticket__3660cf_idx',
-            old_name='event_tickets_ticket_number_idx',
-        ),
-        migrations.AlterUniqueTogether(
-            name='eventregistration',
-            unique_together=set(),
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='benefits',
-            field=models.JSONField(blank=True, default=list, help_text='Список переваг події (що отримає учасник)', verbose_name='Що ти отримаєш'),
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='event_category',
-            field=models.CharField(blank=True, choices=[('football_experts_forum', 'Форум футбольних фахівців'), ('parents_forum', 'Форум футбольних батьків'), ('internships', 'Стажування в професійних клубах'), ('seminars_hackathons', 'Практичні семінари і хакатони'), ('psychology_workshops', 'Воркшопи зі спортивної психології'), ('selection_camps', 'Селекційні табори'), ('online_webinars', 'Онлайн-теорії і вебінари')], help_text='Специфічна категорія події для меню', max_length=50),
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='target_audience',
-            field=models.JSONField(blank=True, default=list, help_text='Для кого ця подія (цільова аудиторія)', verbose_name='Для кого'),
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='ticket_tiers',
-            field=models.JSONField(blank=True, default=list, help_text='Тарифи квитків у форматі JSON: [{"name": "STANDARD", "price": 5450, "features": ["..."]}]', verbose_name='Тарифи квитків'),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='attendee_email',
-            field=models.EmailField(blank=True, default='', max_length=254),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='attendee_name',
-            field=models.CharField(default='', max_length=200),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='attendee_phone',
-            field=models.CharField(blank=True, max_length=20),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='company',
-            field=models.CharField(blank=True, max_length=200),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='custom_fields',
-            field=models.JSONField(blank=True, default=dict),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='dietary_requirements',
-            field=models.TextField(blank=True),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='emergency_contact',
-            field=models.CharField(blank=True, max_length=100),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='emergency_phone',
-            field=models.CharField(blank=True, max_length=20),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='how_did_you_hear',
-            field=models.CharField(blank=True, max_length=100),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='marketing_consent',
-            field=models.BooleanField(default=False),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='notes',
-            field=models.TextField(blank=True, help_text='Очікування від події'),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='position',
-            field=models.CharField(blank=True, max_length=200),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='special_needs',
-            field=models.TextField(blank=True),
-        ),
-        migrations.AddField(
-            model_name='eventregistration',
-            name='ticket',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='registration', to='events.eventticket'),
-        ),
-        migrations.AddField(
-            model_name='eventticket',
-            name='checked_in_by',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='checked_in_tickets', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AddField(
-            model_name='eventticket',
-            name='price',
-            field=models.DecimalField(decimal_places=2, default=0, help_text='Ціна квитка на момент покупки', max_digits=10, validators=[django.core.validators.MinValueValidator(0)]),
-        ),
-        migrations.AddField(
-            model_name='eventticket',
-            name='qr_data',
-            field=models.TextField(blank=True, help_text='Дані для QR коду'),
-        ),
-        migrations.AddField(
-            model_name='eventticket',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='email',
-            field=models.EmailField(blank=True, default='', max_length=254, unique=True),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='first_name',
-            field=models.CharField(default='', max_length=50),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='is_active',
-            field=models.BooleanField(default=True),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='last_name',
-            field=models.CharField(default='', max_length=50),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='linkedin_url',
-            field=models.URLField(blank=True),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='twitter_url',
-            field=models.URLField(blank=True),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True),
-        ),
-        migrations.AddField(
-            model_name='speaker',
-            name='website_url',
-            field=models.URLField(blank=True),
-        ),
+        
+        # Змінюємо AlterField замість AddField для існуючих полів
         migrations.AlterField(
             model_name='event',
             name='is_free',
@@ -279,18 +259,8 @@ class Migration(migrations.Migration):
             name='position',
             field=models.CharField(max_length=100),
         ),
-        migrations.AlterUniqueTogether(
-            name='eventticket',
-            unique_together={('event', 'user')},
-        ),
-        migrations.AddIndex(
-            model_name='eventticket',
-            index=models.Index(fields=['event', 'status'], name='event_ticke_event_i_231a46_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='eventticket',
-            index=models.Index(fields=['user', 'status'], name='event_ticke_user_id_db87b8_idx'),
-        ),
+        
+        # Додаємо зв'язки для нових моделей
         migrations.AddField(
             model_name='eventfeedback',
             name='event',
@@ -311,12 +281,18 @@ class Migration(migrations.Migration):
             name='user',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='event_waitlist', to=settings.AUTH_USER_MODEL),
         ),
+        
+        # Унікальність
         migrations.AlterUniqueTogether(
             name='eventfeedback',
             unique_together={('event', 'user')},
         ),
         migrations.AlterUniqueTogether(
             name='eventwaitlist',
+            unique_together={('event', 'user')},
+        ),
+        migrations.AlterUniqueTogether(
+            name='eventticket',
             unique_together={('event', 'user')},
         ),
     ]
