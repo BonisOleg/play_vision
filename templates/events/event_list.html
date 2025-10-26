@@ -19,24 +19,25 @@
 
             <!-- Фільтри календаря -->
             <div class="calendar-filters">
-                <select name="event_type" class="filter-select">
+                <select name="type" class="filter-select" data-filter-select="type">
                     <option value="all">Всі типи подій</option>
                     {% for type_value, type_display in event_types %}
-                    <option value="{{ type_value }}" {% if request.GET.type == type_value %}selected{% endif %}>{{ type_display }}</option>
+                    <option value="{{ type_value }}" {% if type_value in current_types %}selected{% endif %}>{{
+                        type_display }}</option>
                     {% endfor %}
                 </select>
 
-                <select name="event_format" class="filter-select">
+                <select name="format" class="filter-select" data-filter-select="format">
                     <option value="all">Всі формати</option>
-                    <option value="online" {% if request.GET.format == 'online' %}selected{% endif %}>Тільки онлайн
+                    <option value="online" {% if current_format=='online' %}selected{% endif %}>Тільки онлайн
                     </option>
-                    <option value="offline" {% if request.GET.format == 'offline' %}selected{% endif %}>Тільки офлайн
+                    <option value="offline" {% if request.GET.format=='offline' %}selected{% endif %}>Тільки офлайн
                     </option>
-                    <option value="hybrid" {% if request.GET.format == 'hybrid' %}selected{% endif %}>Гібридні</option>
+                    <option value="hybrid" {% if current_format=='hybrid' %}selected{% endif %}>Гібридні</option>
                 </select>
 
                 <button data-action="reset-filters"
-                    class="btn btn--outline btn--small {% if not request.GET.type and not request.GET.format %}is-hidden{% endif %}">
+                    class="btn btn--outline btn--small {% if not current_types and current_format == 'all' %}is-hidden{% endif %}">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path
                             d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -150,7 +151,8 @@
                         <div class="filter-group">
                             {% for type_value, type_display in event_types %}
                             <label class="filter-option">
-                                <input type="checkbox" name="event_type" value="{{ type_value }}" {% if type_value in current_types %}checked{% endif %}>
+                                <input type="checkbox" name="type" value="{{ type_value }}" {% if type_value in
+                                    current_types %}checked{% endif %}>
                                 <span class="filter-checkmark"></span>
                                 <span class="filter-label">{{ type_display }}</span>
                             </label>
@@ -163,22 +165,26 @@
                         <h3 class="sidebar-title">Формат проведення</h3>
                         <div class="filter-group">
                             <label class="filter-option">
-                                <input type="radio" name="format" value="all" {% if current_format == 'all' or not current_format %}checked{% endif %}>
+                                <input type="radio" name="format" value="all" {% if current_format=='all' or not
+                                    current_format %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Всі формати</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="format" value="online" {% if current_format == 'online' %}checked{% endif %}>
+                                <input type="radio" name="format" value="online" {% if current_format=='online'
+                                    %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Онлайн</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="format" value="offline" {% if current_format == 'offline' %}checked{% endif %}>
+                                <input type="radio" name="format" value="offline" {% if current_format=='offline'
+                                    %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Офлайн</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="format" value="hybrid" {% if current_format == 'hybrid' %}checked{% endif %}>
+                                <input type="radio" name="format" value="hybrid" {% if current_format=='hybrid'
+                                    %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Гібрид</span>
                             </label>
@@ -190,22 +196,26 @@
                         <h3 class="sidebar-title">Період</h3>
                         <div class="filter-group">
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="all" {% if current_date_range == 'all' or not current_date_range %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="all" {% if current_date_range=='all' or not
+                                    current_date_range %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Всі події</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="today" {% if current_date_range == 'today' %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="today" {% if current_date_range=='today'
+                                    %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Сьогодні</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="week" {% if current_date_range == 'week' %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="week" {% if current_date_range=='week'
+                                    %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Цей тиждень</span>
                             </label>
                             <label class="filter-option">
-                                <input type="radio" name="date_range" value="month" {% if current_date_range == 'month' %}checked{% endif %}>
+                                <input type="radio" name="date_range" value="month" {% if current_date_range=='month'
+                                    %}checked{% endif %}>
                                 <span class="filter-radio"></span>
                                 <span class="filter-label">Цей місяць</span>
                             </label>
@@ -459,26 +469,32 @@
                 {% if is_paginated %}
                 <nav class="pagination">
                     {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link pagination-link--prev">
+                    {% with request.GET.copy as get_params %}
+                    {% if get_params.update %}{% endif %}
+                    <a href="?{% for key, values in request.GET.lists %}{% if key != 'page' %}{% for value in values %}{{ key }}={{ value }}&{% endfor %}{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}"
+                        class="pagination-link pagination-link--prev">
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-arrow-left"></use>
                         </svg>
                         Попередня
                     </a>
+                    {% endwith %}
                     {% endif %}
 
                     <div class="pagination-numbers">
                         {% for num in page_obj.paginator.page_range %}
                         {% if page_obj.number == num %}
                         <span class="pagination-current">{{ num }}</span>
-                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}<a
-                            href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
+                            href="?{% for key, values in request.GET.lists %}{% if key != 'page' %}{% for value in values %}{{ key }}={{ value }}&{% endfor %}{% endif %}{% endfor %}page={{ num }}"
+                            class="pagination-link">{{ num }}</a>
                             {% endif %}
                             {% endfor %}
                     </div>
 
                     {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-link pagination-link--next">
+                    <a href="?{% for key, values in request.GET.lists %}{% if key != 'page' %}{% for value in values %}{{ key }}={{ value }}&{% endfor %}{% endif %}{% endfor %}page={{ page_obj.next_page_number }}"
+                        class="pagination-link pagination-link--next">
                         Наступна
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-arrow-right"></use>

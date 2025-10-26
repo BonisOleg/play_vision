@@ -24,13 +24,15 @@
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-calendar"></use>
                         </svg>
-                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{ event.start_datetime|date:"H:i" }}</span>
+                        <span class="meta-text">{{ event.start_datetime|date:"d F Y" }} • {{
+                            event.start_datetime|date:"H:i" }}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
                             <use xlink:href="#icon-location"></use>
                         </svg>
-                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{% endif %}</span>
+                        <span class="meta-text">{% if event.is_online %}Онлайн (Zoom){% else %}{{ event.location }}{%
+                            endif %}</span>
                     </div>
                     <div class="meta-item">
                         <svg class="icon" width="20" height="20">
@@ -245,48 +247,49 @@
                     </div>
                 </section>
 
-                <!-- Наступна подія -->
-                {% if similar_events %}
+                <!-- Рекомендовані події (що можуть бути цікавими) -->
+                {% if recommended_events %}
                 <section class="event-section">
-                    <h2 class="section-title">Наступна подія</h2>
-                    <div class="next-event">
-                        {% with next_event=similar_events.0 %}
-                        <a href="{% url 'events:event_detail' next_event.slug %}" class="next-event-card">
-                            <div class="next-event-info">
-                                <h3 class="next-event-title">{{ next_event.title }}</h3>
-                                <p class="next-event-subtitle">{{ next_event.short_description }}</p>
-                                <div class="next-event-meta">
-                                    <span class="meta-item">{{ next_event.start_datetime|date:"d.m.Y" }}</span>
-                                    <span class="meta-item">{{ next_event.location }}</span>
-                                </div>
-                            </div>
-                            <button class="btn btn--outline">Дізнатись деталі</button>
-                        </a>
-                        {% endwith %}
-                    </div>
-                </section>
-                {% endif %}
-
-                <!-- Минулі події цієї категорії -->
-                {% if past_category_events %}
-                <section class="event-section">
-                    <h2 class="section-title">Минулі події: {{ event.get_event_category_display }}</h2>
-                    <div class="past-events-gallery">
-                        {% for past_event in past_category_events %}
-                        <a href="{% url 'events:event_detail' past_event.slug %}" class="past-event-card">
-                            {% if past_event.thumbnail %}
-                            <img src="{{ past_event.thumbnail.url }}" alt="{{ past_event.title }}"
-                                class="past-event-image">
+                    <h2 class="section-title">Також можуть бути цікавими</h2>
+                    <div class="recommended-events-grid">
+                        {% for rec_event in recommended_events %}
+                        <a href="{% url 'events:event_detail' rec_event.slug %}" class="recommended-event-card">
+                            {% if rec_event.thumbnail %}
+                            <img src="{{ rec_event.thumbnail.url }}" alt="{{ rec_event.title }}"
+                                class="recommended-event-image">
                             {% else %}
-                            <div class="past-event-image-placeholder">
+                            <div class="recommended-event-image-placeholder">
                                 <svg class="icon" width="40" height="40">
                                     <use xlink:href="#icon-calendar"></use>
                                 </svg>
                             </div>
                             {% endif %}
-                            <div class="past-event-info">
-                                <h4 class="past-event-title">{{ past_event.title }}</h4>
-                                <span class="past-event-date">{{ past_event.start_datetime|date:"d.m.Y" }}</span>
+                            <div class="recommended-event-content">
+                                <div class="event-badge event-badge--{{ rec_event.event_type }}">{{
+                                    rec_event.get_event_type_display }}</div>
+                                <h4 class="recommended-event-title">{{ rec_event.title }}</h4>
+                                <p class="recommended-event-description">{{ rec_event.short_description|truncatewords:15
+                                    }}</p>
+                                <div class="recommended-event-meta">
+                                    <span class="meta-item">
+                                        <svg class="icon" width="16" height="16">
+                                            <use xlink:href="#icon-calendar"></use>
+                                        </svg>
+                                        {{ rec_event.start_datetime|date:"d.m.Y" }}
+                                    </span>
+                                    <span class="meta-item">
+                                        <svg class="icon" width="16" height="16">
+                                            <use xlink:href="#icon-location"></use>
+                                        </svg>
+                                        {% if rec_event.is_online %}Онлайн{% else %}{{
+                                        rec_event.location|truncatewords:2 }}{% endif %}
+                                    </span>
+                                </div>
+                                {% if rec_event.is_free %}
+                                <span class="event-price event-price--free">Безкоштовно</span>
+                                {% else %}
+                                <span class="event-price">{{ rec_event.price }} ₴</span>
+                                {% endif %}
                             </div>
                         </a>
                         {% endfor %}

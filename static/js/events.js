@@ -11,8 +11,8 @@ class EventCalendar {
         this.currentDate = new Date();
         this.visibleDays = [];
 
-        this.typeSelect = element.querySelector('select[name="event_type"]');
-        this.formatSelect = element.querySelector('select[name="event_format"]');
+        this.typeSelect = element.querySelector('select[name="type"]');
+        this.formatSelect = element.querySelector('select[name="format"]');
         this.resetBtn = element.querySelector('[data-action="reset-filters"]');
         this.prevBtn = element.querySelector('[data-action="prev-week"]');
         this.nextBtn = element.querySelector('[data-action="next-week"]');
@@ -99,18 +99,18 @@ class EventCalendar {
         this.updatePeriodText();
         this.reloadCalendar(0);
     }
-    
+
     reloadCalendar(weekOffset) {
         const url = new URL(window.location);
         const currentWeek = parseInt(url.searchParams.get('week') || '0');
         const newWeek = weekOffset === 0 ? 0 : currentWeek + weekOffset;
-        
+
         if (newWeek === 0) {
             url.searchParams.delete('week');
         } else {
             url.searchParams.set('week', newWeek);
         }
-        
+
         window.location.href = url.toString();
     }
 

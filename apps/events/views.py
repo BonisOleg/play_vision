@@ -34,8 +34,11 @@ class EventListView(ListView):
         if category:
             queryset = queryset.filter(event_category=category)
         
-        # Filter by type (multiple values)
-        event_types = self.request.GET.getlist('event_type')
+        # Filter by type (підтримуємо множинні значення через чекбокси)
+        event_types = self.request.GET.getlist('type')
+        # Фільтруємо 'all' якщо воно є у списку
+        event_types = [t for t in event_types if t and t != 'all']
+        
         if event_types:
             queryset = queryset.filter(event_type__in=event_types)
         
@@ -79,7 +82,11 @@ class EventListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['event_types'] = Event.EVENT_TYPE_CHOICES
-        context['current_types'] = self.request.GET.getlist('event_type')
+        # Отримуємо всі вибрані типи (підтримка множинного вибору)
+        current_types = self.request.GET.getlist('type')
+        # Фільтруємо 'all' якщо воно є
+        current_types = [t for t in current_types if t and t != 'all']
+        context['current_types'] = current_types
         context['current_search'] = self.request.GET.get('search', '')
         context['current_format'] = self.request.GET.get('format', 'all')
         context['current_date_range'] = self.request.GET.get('date_range', 'all')
@@ -177,22 +184,26 @@ class EventDetailView(DetailView):
         # Registration status
         context['can_register'], context['register_message'] = event.can_register(user if user.is_authenticated else None)
         
-        # Similar events
-        context['similar_events'] = Event.objects.filter(
+        # Рекомендовані події (5 івентів що можуть бути цікавими)
+        # Спочатку шукаємо події того ж типу, потім інші майбутні події
+        recommended = Event.objects.filter(
             status='published',
             start_datetime__gt=timezone.now(),
             event_type=event.event_type
-        ).exclude(id=event.id)[:3]
+        ).exclude(id=event.id)[:5]
         
-        # Минулі події цієї категорії (тільки якщо категорія задана)
-        if event.event_category:
-            context['past_category_events'] = Event.objects.filter(
-                status='completed',
-                event_category=event.event_category,
-                start_datetime__lt=timezone.now()
-            ).order_by('-start_datetime')[:5]
-        else:
-            context['past_category_events'] = []
+        # Якщо менше 5 подій того ж типу, додаємо інші події
+        if recommended.count() < 5:
+            additional_events = Event.objects.filter(
+                status='published',
+                start_datetime__gt=timezone.now()
+            ).exclude(
+                id__in=[event.id] + list(recommended.values_list('id', flat=True))
+            )[:5 - recommended.count()]
+            
+            recommended = list(recommended) + list(additional_events)
+        
+        context['recommended_events'] = recommended
         
         # Feedback stats
         feedback_stats = event.feedback.aggregate(
