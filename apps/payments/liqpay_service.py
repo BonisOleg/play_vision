@@ -10,7 +10,11 @@ from django.conf import settings
 from django.utils import timezone
 from django.db import transaction
 from datetime import timedelta
-from liqpay import LiqPay
+
+try:
+    from liqpay import LiqPay
+except ImportError:
+    LiqPay = None
 
 from .models import Payment, Order, OrderItem
 from apps.subscriptions.models import Subscription, Plan
@@ -23,10 +27,10 @@ class LiqPayService:
     """
     
     def __init__(self):
-        self.public_key = settings.LIQPAY_PUBLIC_KEY
-        self.private_key = settings.LIQPAY_PRIVATE_KEY
-        self.sandbox = settings.LIQPAY_SANDBOX
-        self.liqpay = LiqPay(self.public_key, self.private_key)
+        self.public_key = getattr(settings, 'LIQPAY_PUBLIC_KEY', '')
+        self.private_key = getattr(settings, 'LIQPAY_PRIVATE_KEY', '')
+        self.sandbox = getattr(settings, 'LIQPAY_SANDBOX', True)
+        self.liqpay = LiqPay(self.public_key, self.private_key) if LiqPay else None
     
     def create_payment(self, order, return_url, callback_url):
         """

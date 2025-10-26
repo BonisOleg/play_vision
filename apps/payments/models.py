@@ -33,6 +33,11 @@ class Payment(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     payment_type = models.CharField(max_length=20, choices=PAYMENT_TYPE_CHOICES)
     
+    # Related objects for different payment types
+    subscription = models.ForeignKey('subscriptions.Subscription', on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
+    course = models.ForeignKey('content.Course', on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
+    event_ticket = models.ForeignKey('events.EventTicket', on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
+    
     # Payment provider data
     stripe_payment_intent_id = models.CharField(max_length=200, blank=True, unique=True, null=True)
     payment_method = models.CharField(max_length=50, blank=True)

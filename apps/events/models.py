@@ -198,10 +198,10 @@ class Speaker(models.Model):
     """
     Event speakers and experts
     """
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
-    bio = models.TextField()
+    first_name = models.CharField(max_length=50, default='')
+    last_name = models.CharField(max_length=50, default='')
+    email = models.EmailField(unique=True, blank=True, default='')
+    bio = models.TextField(default='')
     position = models.CharField(max_length=100)
     company = models.CharField(max_length=100, blank=True)
     
@@ -424,7 +424,7 @@ class EventRegistration(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
                            related_name='event_registrations')
     ticket = models.OneToOneField(EventTicket, on_delete=models.CASCADE, 
-                                related_name='registration')
+                                related_name='registration', null=True, blank=True)
     
     # Attendee information
     attendee_name = models.CharField(max_length=200, default='')

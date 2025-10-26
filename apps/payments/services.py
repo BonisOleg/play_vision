@@ -16,7 +16,7 @@ User = get_user_model()
 try:
     import stripe
     stripe.api_key = getattr(settings, 'STRIPE_SECRET_KEY', '')
-    STRIPE_AVAILABLE = bool(settings.STRIPE_SECRET_KEY)
+    STRIPE_AVAILABLE = bool(getattr(settings, 'STRIPE_SECRET_KEY', ''))
 except ImportError:
     STRIPE_AVAILABLE = False
 
