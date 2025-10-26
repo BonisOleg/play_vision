@@ -2,7 +2,36 @@
 
 import django.db.models.deletion
 from django.conf import settings
-from django.db import migrations, models
+from django.db import migrations, models, connection
+
+
+def create_newsletter_table_if_not_exists(apps, schema_editor):
+    """Створює таблицю newsletter_subscribers тільки якщо вона не існує"""
+    db_alias = schema_editor.connection.alias
+    
+    with connection.cursor() as cursor:
+        # Перевіряємо чи існує таблиця
+        if connection.vendor == 'postgresql':
+            cursor.execute("""
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables 
+                    WHERE table_schema = 'public' 
+                    AND table_name = 'newsletter_subscribers'
+                )
+            """)
+            table_exists = cursor.fetchone()[0]
+        else:
+            # SQLite
+            cursor.execute("""
+                SELECT name FROM sqlite_master 
+                WHERE type='table' AND name='newsletter_subscribers'
+            """)
+            table_exists = cursor.fetchone() is not None
+        
+        if table_exists:
+            print("Table newsletter_subscribers already exists, skipping creation")
+        else:
+            print("Table newsletter_subscribers does not exist, will be created by model operation")
 
 
 class Migration(migrations.Migration):
@@ -13,6 +42,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(create_newsletter_table_if_not_exists, migrations.RunPython.noop),
         migrations.CreateModel(
             name='NewsletterSubscriber',
             fields=[
