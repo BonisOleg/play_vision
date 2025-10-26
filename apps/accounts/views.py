@@ -105,7 +105,39 @@ class PasswordResetView(View):
                 expires_at=timezone.now() + timedelta(minutes=15)
             )
             
-            # TODO: Send email
+            # Send password reset email
+            from django.core.mail import send_mail
+            from django.conf import settings
+            
+            subject = 'Відновлення пароля - Play Vision'
+            message = f'''
+Вітаємо!
+
+Ви запросили відновлення пароля для вашого акаунту Play Vision.
+
+Ваш код відновлення: {code}
+
+Код дійсний протягом 15 хвилин.
+
+Якщо ви не запитували відновлення пароля, проігноруйте цей лист.
+
+З повагою,
+Команда Play Vision
+            '''
+            
+            try:
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.error(f"Failed to send password reset email: {e}")
+            
             messages.success(request, 'Код відновлення відправлено на ваш email.')
         except User.DoesNotExist:
             messages.error(request, 'Користувача з таким email не знайдено.')
@@ -208,8 +240,31 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
             form.instance.survey_completed_at = timezone.now()
             form.instance.save()
             
-            # TODO: Give survey bonus
-            messages.success(self.request, 'Дякуємо за заповнення анкети! Ви отримали бонус.')
+            # Give survey bonus
+            try:
+                from apps.loyalty.models import LoyaltyAccount, LoyaltyTier
+                loyalty_account, created = LoyaltyAccount.objects.get_or_create(
+                    user=self.request.user,
+                    defaults={
+                        'points': 0,
+                        'lifetime_points': 0,
+                        'lifetime_spent_points': 0
+                    }
+                )
+                # Set initial tier if just created
+                if created:
+                    bronze_tier = LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first()
+                    if bronze_tier:
+                        loyalty_account.current_tier = bronze_tier
+                        loyalty_account.save()
+                
+                loyalty_account.add_points(50, 'survey_completion', 'Заповнення профілю')
+                messages.success(self.request, 'Дякуємо за заповнення анкети! Ви отримали 50 бонусних балів.')
+            except Exception as e:
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.warning(f"Could not add survey bonus: {e}")
+                messages.success(self.request, 'Дякуємо за заповнення анкети!')
         
         messages.success(self.request, 'Профіль успішно оновлено.')
         return response
@@ -526,15 +581,41 @@ class VerifyEmailFormView(LoginRequiredMixin, View):
                 # Remove phone-only status if it was phone registration
                 if request.user.phone_registered_at:
                     request.user.phone_registered_at = None
-                    success_message = 'Email успішно підтверджено! Тепер у вас повний доступ без обмежень.'
+                    success_message = '✅ Email успішно підтверджено! Тепер у вас повний доступ без обмежень.'
                 else:
-                    success_message = 'Email успішно підтверджено!'
+                    success_message = '✅ Email успішно підтверджено! Ваш акаунт активовано.'
                 
                 request.user.save()
                 verification.used_at = timezone.now()
                 verification.save()
                 
                 messages.success(request, success_message)
+                
+                # Add bonus points for email verification
+                try:
+                    from apps.loyalty.models import LoyaltyAccount, LoyaltyTier
+                    loyalty_account, created = LoyaltyAccount.objects.get_or_create(
+                        user=request.user,
+                        defaults={
+                            'points': 0,
+                            'lifetime_points': 0,
+                            'lifetime_spent_points': 0
+                        }
+                    )
+                    # Set initial tier if just created
+                    if created:
+                        bronze_tier = LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first()
+                        if bronze_tier:
+                            loyalty_account.current_tier = bronze_tier
+                            loyalty_account.save()
+                    
+                    loyalty_account.add_points(20, 'email_verification', 'Підтвердження email адреси')
+                    messages.success(request, '🎁 Ви отримали 20 бонусних балів за підтвердження email!')
+                except Exception as e:
+                    import logging
+                    logger = logging.getLogger(__name__)
+                    logger.warning(f"Could not add email verification bonus: {e}")
+                
                 return redirect('cabinet:dashboard')
                     
             except VerificationCode.DoesNotExist:

@@ -422,11 +422,49 @@ class UpdateProfileView(LoginRequiredMixin, View):
                 interest_ids = request.POST.getlist('interests')
                 profile.interests.set(interest_ids)
             
+            # Перевірка чи це перше заповнення анкети
+            survey_bonus_given = False
+            if not profile.completed_survey and all([
+                data.get('first_name'),
+                data.get('last_name'),
+                data.get('profession')
+            ]):
+                profile.completed_survey = True
+                profile.survey_completed_at = timezone.now()
+                
+                # Дати бонус
+                try:
+                    from apps.loyalty.models import LoyaltyAccount, LoyaltyTier
+                    loyalty_account, created = LoyaltyAccount.objects.get_or_create(
+                        user=request.user,
+                        defaults={
+                            'points': 0,
+                            'lifetime_points': 0,
+                            'lifetime_spent_points': 0
+                        }
+                    )
+                    if created:
+                        bronze_tier = LoyaltyTier.objects.filter(is_active=True).order_by('points_required').first()
+                        if bronze_tier:
+                            loyalty_account.current_tier = bronze_tier
+                            loyalty_account.save()
+                    
+                    loyalty_account.add_points(50, 'survey_completion', 'Заповнення профілю')
+                    survey_bonus_given = True
+                except Exception as e:
+                    import logging
+                    logger = logging.getLogger(__name__)
+                    logger.warning(f"Could not add survey bonus: {e}")
+            
             profile.save()
+            
+            message = 'Профіль успішно оновлено'
+            if survey_bonus_given:
+                message = 'Профіль успішно оновлено! Ви отримали 50 бонусних балів за заповнення анкети.'
             
             return JsonResponse({
                 'success': True,
-                'message': 'Профіль успішно оновлено'
+                'message': message
             })
         
         except Exception as e:

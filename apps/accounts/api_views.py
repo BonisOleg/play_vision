@@ -128,17 +128,8 @@ class UserRegistrationAPIView(APIView):
     
     def send_verification_email(self, user):
         """Generate and send email verification code"""
-        code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
-        
-        VerificationCode.objects.create(
-            user=user,
-            code=code,
-            code_type='email',
-            expires_at=timezone.now() + timedelta(minutes=15)
-        )
-        
-        # TODO: Send actual email
-        print(f"Verification code for {user.email}: {code}")
+        from .services import EmailService
+        EmailService.send_email_verification_code(user)
 
 
 class UserLoginAPIView(APIView):
@@ -287,8 +278,38 @@ class PasswordResetRequestAPIView(APIView):
                 expires_at=timezone.now() + timedelta(minutes=15)
             )
             
-            # TODO: Send email
-            print(f"Password reset code for {email}: {code}")
+            # Send password reset email
+            from django.core.mail import send_mail
+            from django.conf import settings
+            
+            subject = 'Відновлення пароля - Play Vision'
+            message = f'''
+Вітаємо!
+
+Ви запросили відновлення пароля для вашого акаунту Play Vision.
+
+Ваш код відновлення: {code}
+
+Код дійсний протягом 15 хвилин.
+
+Якщо ви не запитували відновлення пароля, проігноруйте цей лист.
+
+З повагою,
+Команда Play Vision
+            '''
+            
+            try:
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.error(f"Failed to send password reset email: {e}")
             
             return Response({
                 'success': True,
@@ -346,20 +367,26 @@ class SendVerificationCodeAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        # Generate new code
-        code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
-        
-        VerificationCode.objects.create(
-            user=request.user,
-            code=code,
-            code_type=code_type,
-            expires_at=timezone.now() + timedelta(minutes=15)
-        )
-        
-        # TODO: Send via email/SMS
-        print(f"Verification code for {request.user.email}: {code}")
-        
-        message = f"Код підтвердження відправлено на ваш {'email' if code_type == 'email' else 'телефон'}"
+        # Generate and send new code
+        if code_type == 'email':
+            from .services import EmailService
+            success = EmailService.send_email_verification_code(request.user)
+            message = 'Код підтвердження відправлено на ваш email'
+        elif code_type == 'phone':
+            # Phone verification not implemented yet
+            code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+            VerificationCode.objects.create(
+                user=request.user,
+                code=code,
+                code_type=code_type,
+                expires_at=timezone.now() + timedelta(minutes=15)
+            )
+            message = 'Код підтвердження відправлено на ваш телефон (SMS функціонал в розробці)'
+        else:
+            return Response(
+                {'error': 'Невідомий тип коду'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         
         return Response({
             'success': True,
