@@ -199,10 +199,10 @@ class CoursesCarousel {
     constructor(element) {
         this.element = element;
         this.currentIndex = 0;
-        this.slidesPerView = 3;
+        this.slidesPerView = 4; // 4 картки для featured courses
         this.track = element.querySelector('.carousel-track');
-        this.prevBtn = element.querySelector('.carousel-btn-prev');
-        this.nextBtn = element.querySelector('.carousel-btn-next');
+        this.prevBtn = element.querySelector('.featured-nav-prev');
+        this.nextBtn = element.querySelector('.featured-nav-next');
 
         if (!this.track) return;
 
@@ -227,20 +227,29 @@ class CoursesCarousel {
             this.nextBtn.addEventListener('click', () => this.nextSlide());
         }
 
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            this.updateSlidesPerView();
-            this.updatePosition();
-            this.updateButtons();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.updateSlidesPerView();
+                this.currentIndex = Math.min(this.currentIndex, this.maxIndex);
+                this.updatePosition();
+                this.updateButtons();
+            }, 150);
         });
     }
 
     updateSlidesPerView() {
-        if (window.innerWidth < 768) {
+        const width = window.innerWidth;
+
+        if (width < 576) {
             this.slidesPerView = 1;
-        } else if (window.innerWidth < 1024) {
+        } else if (width < 768) {
             this.slidesPerView = 2;
-        } else {
+        } else if (width < 1024) {
             this.slidesPerView = 3;
+        } else {
+            this.slidesPerView = 4; // 4 картки на desktop
         }
     }
 
