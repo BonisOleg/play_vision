@@ -25,12 +25,24 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        # Featured courses для каруселі (6 курсів)
+        # Featured courses для каруселі (6 курсів) - темний фон
         from apps.content.models import Course
         context['featured_courses'] = Course.objects.filter(
             is_published=True,
             is_featured=True
         ).select_related('category').prefetch_related('tags')[:6]
+        
+        # Main courses (Наші основні програми) - світлий фон, 6+ курсів
+        context['main_courses'] = Course.objects.filter(
+            is_published=True,
+            is_classic=True  # Використовуємо is_classic для "основних програм"
+        ).select_related('category').prefetch_related('tags')[:8]
+        
+        # Якщо немає курсів з is_classic, беремо найпопулярніші
+        if not context['main_courses'].exists():
+            context['main_courses'] = Course.objects.filter(
+                is_published=True
+            ).select_related('category').prefetch_related('tags').order_by('-created_at')[:6]
         
         # CMS контент
         from apps.cms.models import HeroSlide, PageSection, ExpertCard, HexagonItem

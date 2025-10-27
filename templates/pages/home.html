@@ -6,6 +6,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/home-additions.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/main-courses.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/parallax.css' %}">
 <link rel="preload" href="{% static 'images/hiroday.png' %}" as="image">
 <link rel="preload" href="{% static 'images/hironight.png' %}" as="image">
@@ -142,54 +143,70 @@
         </div>
     </section>
 
-    <!-- 3. COURSES SECTION - ЗАКОМЕНТОВАНО (не в Figma дизайні) -->
-    {% comment %}
-    <section class="fullscreen-section courses-section">
+    <!-- 3. COURSES SECTION (Наші основні програми) -->
+    <section class="fullscreen-section main-courses-section">
         <div class="section-content">
-            <div class="courses-header">
-                <h2 class="section-title">Курси та освітні програми</h2>
-                <a href="{% url 'content:course_list' %}" class="courses-link">Гортай добірку</a>
+            <div class="main-courses-header">
+                <h2 class="section-title">Наші основні програми</h2>
+
+                <div class="main-courses-navigation">
+                    <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <button class="course-nav-btn course-nav-next" aria-label="Наступні курси">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M9 18l6-6-6-6" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
-            <div class="courses-grid">
-                <!-- Course Card 1 -->
-                <div class="course-card">
-                    <div class="course-image"></div>
-                    <div class="course-content">
-                        <div class="course-number">КУРС #1</div>
-                        <h3 class="course-title">Тренерські принципи</h3>
-                        <p class="course-description">Основи ефективного коучингу та методології тренувального процесу.
-                        </p>
-                        <a href="{% url 'content:course_list' %}" class="course-link">Огляд курсу →</a>
-                    </div>
-                </div>
+            <div class="main-courses-carousel-container">
+                <div class="main-courses-carousel">
+                    <div class="main-courses-track">
+                        {% for course in main_courses %}
+                        <div class="main-course-slide">
+                            <article class="main-course-card">
+                                <a href="{{ course.get_absolute_url }}" class="main-course-link">
+                                    <div class="main-course-image">
+                                        {% if course.thumbnail %}
+                                        <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                        {% else %}
+                                        <div class="main-course-image-placeholder"></div>
+                                        {% endif %}
+                                    </div>
 
-                <!-- Course Card 2 -->
-                <div class="course-card">
-                    <div class="course-image"></div>
-                    <div class="course-content">
-                        <div class="course-number">КУРС #2</div>
-                        <h3 class="course-title">Спортивна фізіологія</h3>
-                        <p class="course-description">Науковий підхід до фізичної підготовки та відновлення спортсменів.
-                        </p>
-                        <a href="{% url 'content:course_list' %}" class="course-link">Огляд курсу →</a>
-                    </div>
-                </div>
+                                    <div class="main-course-content">
+                                        <span class="main-course-number">КУРС #{{ forloop.counter }}</span>
+                                        <h3 class="main-course-title">{{ course.title }}</h3>
+                                        <p class="main-course-description">{{ course.short_description|truncatewords:12
+                                            }}</p>
 
-                <!-- Course Card 3 -->
-                <div class="course-card">
-                    <div class="course-image"></div>
-                    <div class="course-content">
-                        <div class="course-number">КУРС #3</div>
-                        <h3 class="course-title">Скаутинг та аналітика</h3>
-                        <p class="course-description">Сучасні методи аналізу гри та пошуку талантів.</p>
-                        <a href="{% url 'content:course_list' %}" class="course-link">Огляд курсу →</a>
+                                        <button class="main-course-button" aria-label="Огляд курсу">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path d="M5 12h14M12 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </a>
+                            </article>
+                        </div>
+                        {% empty %}
+                        <div class="main-course-slide">
+                            <p class="no-main-courses">Курси скоро з'являться</p>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    {% endcomment %}
 
     <!-- 3. MENTOR-COACHING ECOSYSTEM -->
     <section class="fullscreen-section mentor-coaching-section">
@@ -383,4 +400,5 @@
 
 {% block extra_js %}
 <script src="{% static 'js/home.js' %}" defer></script>
+<script src="{% static 'js/main-courses-carousel.js' %}" defer></script>
 {% endblock %}
