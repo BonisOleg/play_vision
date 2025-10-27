@@ -130,6 +130,8 @@
     width: calc(25% - 15px);
     min-width: calc(25% - 15px);
     max-width: calc(25% - 15px);
+    min-height: 500px;
+    max-height: 500px;
 }
 
 /* ==================== КАРТКА КУРСУ (НОВА СТРУКТУРА) ==================== */
