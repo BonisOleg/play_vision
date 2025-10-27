@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{% static 'css/components/main-courses-redesign.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/parallax.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/mentor-hexagon.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
 <link rel="preload" href="{% static 'images/hiroday.png' %}" as="image">
 <link rel="preload" href="{% static 'images/hironight.png' %}" as="image">
 <link rel="preload" href="{% static 'images/readyhomeday.png' %}" as="image">
@@ -90,211 +91,222 @@
         </div>
     </section>
 
-    <!-- 2. COURSES SECTION (Наші основні програми) -->
-    <section class="fullscreen-section main-courses-section">
-        <div class="section-content">
-            <div class="main-courses-header">
-                <h2 class="section-title">Наші основні програми</h2>
+    <!-- UNIFIED SECTIONS WRAPPER (Наші основні програми, Ментор-коучинг, Команда професіоналів) -->
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
 
-                <div class="main-courses-navigation">
-                    <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M15 18l-6-6 6-6" />
-                        </svg>
-                    </button>
-                    <button class="course-nav-btn course-nav-next" aria-label="Наступні курси">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M9 18l6-6-6-6" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+            <!-- 2. COURSES SECTION (Наші основні програми) -->
+            <section class="fullscreen-section main-courses-section">
+                <div class="section-content">
+                    <div class="main-courses-header">
+                        <h2 class="section-title">Наші основні програми</h2>
 
-            <div class="main-courses-carousel-container">
-                <div class="main-courses-carousel">
-                    <div class="main-courses-track">
-                        {% for course in main_courses %}
-                        <div class="main-course-slide">
-                            <article class="main-course-card">
-                                <div class="course-card-top">
-                                    <span class="course-number">КУРС #{{ forloop.counter }}</span>
-                                    <h3 class="course-title">{{ course.title }}</h3>
-                                </div>
-
-                                <div class="course-image-wrapper">
-                                    <div class="course-image">
-                                        {% if course.thumbnail %}
-                                        <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
-                                        {% else %}
-                                        <div class="course-image-placeholder"></div>
-                                        {% endif %}
-                                    </div>
-
-                                    <a href="{{ course.get_absolute_url }}" class="course-btn">
-                                        <span class="course-btn-text">Огляд курсу</span>
-                                        <span class="course-btn-arrow"></span>
-                                    </a>
-                                </div>
-
-                                <div class="course-card-bottom">
-                                    <p class="course-description">{{ course.short_description|truncatewords:12 }}</p>
-                                </div>
-                            </article>
+                        <div class="main-courses-navigation">
+                            <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+                            <button class="course-nav-btn course-nav-next" aria-label="Наступні курси">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
                         </div>
-                        {% empty %}
-                        <div class="main-course-slide">
-                            <p class="no-main-courses">Курси скоро з'являться</p>
+                    </div>
+
+                    <div class="main-courses-carousel-container">
+                        <div class="main-courses-carousel">
+                            <div class="main-courses-track">
+                                {% for course in main_courses %}
+                                <div class="main-course-slide">
+                                    <article class="main-course-card">
+                                        <div class="course-card-top">
+                                            <span class="course-number">КУРС #{{ forloop.counter }}</span>
+                                            <h3 class="course-title">{{ course.title }}</h3>
+                                        </div>
+
+                                        <div class="course-image-wrapper">
+                                            <div class="course-image">
+                                                {% if course.thumbnail %}
+                                                <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                                {% else %}
+                                                <div class="course-image-placeholder"></div>
+                                                {% endif %}
+                                            </div>
+
+                                            <a href="{{ course.get_absolute_url }}" class="course-btn">
+                                                <span class="course-btn-text">Огляд курсу</span>
+                                                <span class="course-btn-arrow"></span>
+                                            </a>
+                                        </div>
+
+                                        <div class="course-card-bottom">
+                                            <p class="course-description">{{ course.short_description|truncatewords:12
+                                                }}</p>
+                                        </div>
+                                    </article>
+                                </div>
+                                {% empty %}
+                                <div class="main-course-slide">
+                                    <p class="no-main-courses">Курси скоро з'являться</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. MENTOR-COACHING ECOSYSTEM -->
+            <section class="fullscreen-section mentor-coaching-section">
+                <div class="section-content">
+                    <h2 class="section-title">Ментор-коучинг</h2>
+                    <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
+
+                    <div class="mentor-hexagon-container">
+                        <div class="hexagon-honeycomb">
+
+                            <!-- ЦЕНТР: Logo (0, 0) -->
+                            <div class="hexagon hexagon-center" style="--translate-x: 0px; --translate-y: 0px;">
+                                <div class="hexagon-inner">
+                                    <!-- Логотип додай сюди: couchmainlogo.png -->
+                                    <img src="{% static 'images/couchmainlogo.png' %}" alt="Play Vision"
+                                        class="hexagon-logo">
+                                </div>
+                            </div>
+
+                            <!-- ВГОРІ: Здоров'я та звички (0, -272) -->
+                            <div class="hexagon hexagon-item" style="--translate-x: 0px; --translate-y: -300px;">
+                                <div class="hexagon-inner">
+                                    <h4>Здоров'я та<br>звички</h4>
+                                </div>
+                            </div>
+
+                            <!-- ВЕРХ-ПРАВО: Життя та побут (304, -136) -->
+                            <div class="hexagon hexagon-item" style="--translate-x: 255px; --translate-y: -150px;">
+                                <div class="hexagon-inner">
+                                    <h4>Життя та<br>побут</h4>
+                                </div>
+                            </div>
+
+                            <!-- НИЗ-ПРАВО: Фізика (304, 136) -->
+                            <div class="hexagon hexagon-item" style="--translate-x: 255px; --translate-y: 160px;">
+                                <div class="hexagon-inner">
+                                    <h4>Фізика</h4>
+                                </div>
+                            </div>
+
+                            <!-- ВНИЗУ: Ігровий інтелект (0, 272) -->
+                            <div class="hexagon hexagon-item" style="--translate-x: 0px; --translate-y: 300px;">
+                                <div class="hexagon-inner">
+                                    <h4>Ігровий<br>інтелект</h4>
+                                </div>
+                            </div>
+
+                            <!-- НИЗ-ЛІВО: Техніка (-304, 136) -->
+                            <div class="hexagon hexagon-item" style="--translate-x: -255px; --translate-y: 160px;">
+                                <div class="hexagon-inner">
+                                    <h4>Техніка</h4>
+                                </div>
+                            </div>
+
+                            <!-- ВЕРХ-ЛІВО: Ментальність (-304, -136) -->
+                            <div class="hexagon hexagon-item" style="--translate-x:-255px; --translate-y: -150px;">
+                                <div class="hexagon-inner">
+                                    <h4>Ментальність</h4>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="mentor-cta">
+                        <a href="/mentor-coaching/" class="btn btn-primary hero-btn-new">
+                            <span class="btn-text">Детальніше</span>
+                            <span class="btn-logo-space"></span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. EXPERTS SECTION -->
+            <section class="fullscreen-section experts-section">
+                <!-- Background Image -->
+                <div class="section-bg">
+                    <img class="section-bg-image" data-src="{% static 'images/experts-bg.jpg' %}" alt="Експерти"
+                        loading="lazy">
+                </div>
+                <div class="section-overlay section-overlay--light"></div>
+
+                <div class="section-content">
+                    <h2 class="section-title">Команда професіоналів</h2>
+                    <p class="experts-subtitle">Міжнародні експерти, які створюють освітні програми та супроводжують ваш
+                        розвиток
+                    </p>
+
+                    <div class="experts-grid">
+                        {% if cms_experts %}
+                        {% for expert in cms_experts %}
+                        <div class="expert-card">
+                            <div class="expert-photo">
+                                {% if expert.photo %}
+                                <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                {% endif %}
+                            </div>
+                            <div class="expert-card-content">
+                                <h3 class="expert-name">{{ expert.name }}</h3>
+                                <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                                {% if expert.bio %}
+                                <a href="#" class="expert-link">огляд профілю</a>
+                                {% endif %}
+                            </div>
                         </div>
                         {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. MENTOR-COACHING ECOSYSTEM -->
-    <section class="fullscreen-section mentor-coaching-section">
-        <div class="section-content">
-            <h2 class="section-title">Ментор-коучинг</h2>
-            <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
-
-            <div class="mentor-hexagon-container">
-                <div class="hexagon-honeycomb">
-
-                    <!-- ЦЕНТР: Logo (0, 0) -->
-                    <div class="hexagon hexagon-center" style="--translate-x: 0px; --translate-y: 0px;">
-                        <div class="hexagon-inner">
-                            <!-- Логотип додай сюди: couchmainlogo.png -->
-                            <img src="{% static 'images/couchmainlogo.png' %}" alt="Play Vision" class="hexagon-logo">
+                        {% else %}
+                        <!-- Fallback: Hardcode experts -->
+                        <div class="expert-card">
+                            <div class="expert-photo"></div>
+                            <div class="expert-card-content">
+                                <h3 class="expert-name">Dr. Fabian Otte</h3>
+                                <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
+                                <a href="#" class="expert-link">огляд профілю</a>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- ВГОРІ: Здоров'я та звички (0, -272) -->
-                    <div class="hexagon hexagon-item" style="--translate-x: 0px; --translate-y: -300px;">
-                        <div class="hexagon-inner">
-                            <h4>Здоров'я та<br>звички</h4>
+                        <div class="expert-card">
+                            <div class="expert-photo"></div>
+                            <div class="expert-card-content">
+                                <h3 class="expert-name">Dr. Adam Owen</h3>
+                                <p class="expert-specialization">Training Methodology, Session Design</p>
+                                <a href="#" class="expert-link">огляд профілю</a>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- ВЕРХ-ПРАВО: Життя та побут (304, -136) -->
-                    <div class="hexagon hexagon-item" style="--translate-x: 255px; --translate-y: -150px;">
-                        <div class="hexagon-inner">
-                            <h4>Життя та<br>побут</h4>
+                        <div class="expert-card">
+                            <div class="expert-photo"></div>
+                            <div class="expert-card-content">
+                                <h3 class="expert-name">Prof. Hassane Zouhal</h3>
+                                <p class="expert-specialization">Exercise Physiology, Talent ID</p>
+                                <a href="#" class="expert-link">огляд профілю</a>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- НИЗ-ПРАВО: Фізика (304, 136) -->
-                    <div class="hexagon hexagon-item" style="--translate-x: 255px; --translate-y: 160px;">
-                        <div class="hexagon-inner">
-                            <h4>Фізика</h4>
+                        <div class="expert-card">
+                            <div class="expert-photo"></div>
+                            <div class="expert-card-content">
+                                <h3 class="expert-name">Dr. Raphael Villatore</h3>
+                                <p class="expert-specialization">Sports Medicine & Nutrition</p>
+                                <a href="#" class="expert-link">огляд профілю</a>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- ВНИЗУ: Ігровий інтелект (0, 272) -->
-                    <div class="hexagon hexagon-item" style="--translate-x: 0px; --translate-y: 300px;">
-                        <div class="hexagon-inner">
-                            <h4>Ігровий<br>інтелект</h4>
-                        </div>
-                    </div>
-
-                    <!-- НИЗ-ЛІВО: Техніка (-304, 136) -->
-                    <div class="hexagon hexagon-item" style="--translate-x: -255px; --translate-y: 160px;">
-                        <div class="hexagon-inner">
-                            <h4>Техніка</h4>
-                        </div>
-                    </div>
-
-                    <!-- ВЕРХ-ЛІВО: Ментальність (-304, -136) -->
-                    <div class="hexagon hexagon-item" style="--translate-x:-255px; --translate-y: -150px;">
-                        <div class="hexagon-inner">
-                            <h4>Ментальність</h4>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="mentor-cta">
-                <a href="/mentor-coaching/" class="btn btn-primary hero-btn-new">
-                    <span class="btn-text">Детальніше</span>
-                    <span class="btn-logo-space"></span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. EXPERTS SECTION -->
-    <section class="fullscreen-section experts-section">
-        <!-- Background Image -->
-        <div class="section-bg">
-            <img class="section-bg-image" data-src="{% static 'images/experts-bg.jpg' %}" alt="Експерти" loading="lazy">
-        </div>
-        <div class="section-overlay section-overlay--light"></div>
-
-        <div class="section-content">
-            <h2 class="section-title">Команда професіоналів</h2>
-            <p class="experts-subtitle">Міжнародні експерти, які створюють освітні програми та супроводжують ваш
-                розвиток
-            </p>
-
-            <div class="experts-grid">
-                {% if cms_experts %}
-                {% for expert in cms_experts %}
-                <div class="expert-card">
-                    <div class="expert-photo">
-                        {% if expert.photo %}
-                        <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
-                        {% endif %}
-                    </div>
-                    <div class="expert-card-content">
-                        <h3 class="expert-name">{{ expert.name }}</h3>
-                        <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
-                        {% if expert.bio %}
-                        <a href="#" class="expert-link">огляд профілю</a>
                         {% endif %}
                     </div>
                 </div>
-                {% endfor %}
-                {% else %}
-                <!-- Fallback: Hardcode experts -->
-                <div class="expert-card">
-                    <div class="expert-photo"></div>
-                    <div class="expert-card-content">
-                        <h3 class="expert-name">Dr. Fabian Otte</h3>
-                        <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
-                        <a href="#" class="expert-link">огляд профілю</a>
-                    </div>
-                </div>
-                <div class="expert-card">
-                    <div class="expert-photo"></div>
-                    <div class="expert-card-content">
-                        <h3 class="expert-name">Dr. Adam Owen</h3>
-                        <p class="expert-specialization">Training Methodology, Session Design</p>
-                        <a href="#" class="expert-link">огляд профілю</a>
-                    </div>
-                </div>
-                <div class="expert-card">
-                    <div class="expert-photo"></div>
-                    <div class="expert-card-content">
-                        <h3 class="expert-name">Prof. Hassane Zouhal</h3>
-                        <p class="expert-specialization">Exercise Physiology, Talent ID</p>
-                        <a href="#" class="expert-link">огляд профілю</a>
-                    </div>
-                </div>
-                <div class="expert-card">
-                    <div class="expert-photo"></div>
-                    <div class="expert-card-content">
-                        <h3 class="expert-name">Dr. Raphael Villatore</h3>
-                        <p class="expert-specialization">Sports Medicine & Nutrition</p>
-                        <a href="#" class="expert-link">огляд профілю</a>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
+            </section>
+
         </div>
-    </section>
+    </div>
+    <!-- END UNIFIED SECTIONS WRAPPER -->
 
     {% comment %}
     <!-- 5. VALUES SECTION - ВИДАЛЕНО ЗА ВИМОГОЮ КЛІЄНТА -->

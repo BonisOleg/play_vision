@@ -1,0 +1,178 @@
+/* ============================================
+   UNIFIED SECTIONS - Об'єднані секції з паттерном
+   Секції: Наші основні програми, Ментор-коучинг, Команда професіоналів
+   ============================================ */
+
+/* === WRAPPER ДЛЯ ОБ'ЄДНАНИХ СЕКЦІЙ === */
+.unified-sections-wrapper {
+    width: 100%;
+    position: relative;
+    background-image:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 34px,
+            var(--pattern-line-color) 34px,
+            var(--pattern-line-color) 35px),
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 34px,
+            var(--pattern-line-color) 34px,
+            var(--pattern-line-color) 35px),
+        radial-gradient(circle at 17.5px 17.5px,
+            var(--pattern-cross-color) 2px,
+            transparent 2px);
+    background-size: 35px 35px;
+    background-color: var(--unified-bg-color);
+    padding: 0;
+    margin: 0;
+}
+
+/* === ПАТТЕРН КОЛЬОРИ ДЛЯ СВІТЛОЇ ТЕМИ === */
+:root {
+    --unified-bg-color: #f5f5f5;
+    --pattern-line-color: rgba(200, 200, 200, 0.4);
+    --pattern-cross-color: rgba(150, 150, 150, 0.3);
+}
+
+/* === ПАТТЕРН КОЛЬОРИ ДЛЯ ТЕМНОЇ ТЕМИ === */
+[data-theme="dark"] {
+    --unified-bg-color: #1a1a1a;
+    --pattern-line-color: rgba(80, 80, 80, 0.4);
+    --pattern-cross-color: rgba(120, 120, 120, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+        --unified-bg-color: #1a1a1a;
+        --pattern-line-color: rgba(80, 80, 80, 0.4);
+        --pattern-cross-color: rgba(120, 120, 120, 0.3);
+    }
+}
+
+/* === ВНУТРІШНІЙ КОНТЕЙНЕР === */
+.unified-sections-container {
+    width: 70%;
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: var(--unified-bg-color);
+    position: relative;
+}
+
+/* === СЕКЦІЇ ВСЕРЕДИНІ === */
+.unified-sections-wrapper .fullscreen-section {
+    height: auto;
+    min-height: auto;
+    padding: 80px 0;
+    background: transparent;
+}
+
+/* Видалити фонові елементи секцій */
+.unified-sections-wrapper .main-courses-section,
+.unified-sections-wrapper .mentor-coaching-section,
+.unified-sections-wrapper .experts-section {
+    background: transparent;
+}
+
+.unified-sections-wrapper .section-bg,
+.unified-sections-wrapper .section-overlay {
+    display: none;
+}
+
+/* Забезпечити правильний колір тексту */
+.unified-sections-wrapper .section-title {
+    color: var(--color-text);
+}
+
+.unified-sections-wrapper .section-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 var(--spacing-xl);
+}
+
+/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .unified-sections-container {
+        width: 85%;
+    }
+
+    .unified-sections-wrapper .fullscreen-section {
+        padding: 60px 0;
+    }
+
+    .unified-sections-wrapper .section-content {
+        padding: 0 var(--spacing-lg);
+    }
+}
+
+/* === МОБІЛЬНА АДАПТАЦІЯ === */
+@media (max-width: 768px) {
+    .unified-sections-container {
+        width: 90%;
+    }
+
+    .unified-sections-wrapper .fullscreen-section {
+        padding: 50px 0;
+    }
+
+    .unified-sections-wrapper .section-content {
+        padding: 0 var(--spacing-md);
+    }
+
+    /* Менший паттерн для мобільних */
+    .unified-sections-wrapper {
+        background-image:
+            repeating-linear-gradient(0deg,
+                transparent,
+                transparent 24px,
+                var(--pattern-line-color) 24px,
+                var(--pattern-line-color) 25px),
+            repeating-linear-gradient(90deg,
+                transparent,
+                transparent 24px,
+                var(--pattern-line-color) 24px,
+                var(--pattern-line-color) 25px),
+            radial-gradient(circle at 12.5px 12.5px,
+                var(--pattern-cross-color) 1.5px,
+                transparent 1.5px);
+        background-size: 25px 25px;
+    }
+}
+
+/* === СПЕЦИФІЧНІ СТИЛІ ДЛЯ СЕКЦІЙ === */
+
+/* Курси */
+.unified-sections-wrapper .main-courses-section .section-title {
+    text-shadow: none;
+}
+
+/* Ментор-коучинг */
+.unified-sections-wrapper .mentor-coaching-section {
+    padding: 80px 0;
+}
+
+.unified-sections-wrapper .mentor-coaching-section .section-title {
+    text-shadow: none;
+}
+
+.unified-sections-wrapper .ecosystem-subtitle {
+    color: var(--color-text-light);
+    text-shadow: none;
+}
+
+/* Команда професіоналів */
+.unified-sections-wrapper .experts-section .section-title {
+    text-shadow: none;
+}
+
+.unified-sections-wrapper .experts-subtitle {
+    color: var(--color-text-light);
+}
+
+/* === iOS SAFARI SPECIFIC === */
+@supports (-webkit-touch-callout: none) {
+    .unified-sections-wrapper {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+}
