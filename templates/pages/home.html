@@ -248,38 +248,48 @@
                         <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
                         {% endif %}
                     </div>
-                    <h3 class="expert-name">{{ expert.name }}</h3>
-                    <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
-                    {% if expert.bio %}
-                    <a href="#" class="expert-link">Огляд профілю →</a>
-                    {% endif %}
+                    <div class="expert-card-content">
+                        <h3 class="expert-name">{{ expert.name }}</h3>
+                        <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                        {% if expert.bio %}
+                        <a href="#" class="expert-link">огляд профілю</a>
+                        {% endif %}
+                    </div>
                 </div>
                 {% endfor %}
                 {% else %}
                 <!-- Fallback: Hardcode experts -->
                 <div class="expert-card">
                     <div class="expert-photo"></div>
-                    <h3 class="expert-name">Dr. Fabian Otte</h3>
-                    <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
-                    <a href="#" class="expert-link">Огляд профілю →</a>
+                    <div class="expert-card-content">
+                        <h3 class="expert-name">Dr. Fabian Otte</h3>
+                        <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
+                        <a href="#" class="expert-link">огляд профілю</a>
+                    </div>
                 </div>
                 <div class="expert-card">
                     <div class="expert-photo"></div>
-                    <h3 class="expert-name">Dr. Adam Owen</h3>
-                    <p class="expert-specialization">Training Methodology, Session Design</p>
-                    <a href="#" class="expert-link">Огляд профілю →</a>
+                    <div class="expert-card-content">
+                        <h3 class="expert-name">Dr. Adam Owen</h3>
+                        <p class="expert-specialization">Training Methodology, Session Design</p>
+                        <a href="#" class="expert-link">огляд профілю</a>
+                    </div>
                 </div>
                 <div class="expert-card">
                     <div class="expert-photo"></div>
-                    <h3 class="expert-name">Prof. Hassane Zouhal</h3>
-                    <p class="expert-specialization">Exercise Physiology, Talent ID</p>
-                    <a href="#" class="expert-link">Огляд профілю →</a>
+                    <div class="expert-card-content">
+                        <h3 class="expert-name">Prof. Hassane Zouhal</h3>
+                        <p class="expert-specialization">Exercise Physiology, Talent ID</p>
+                        <a href="#" class="expert-link">огляд профілю</a>
+                    </div>
                 </div>
                 <div class="expert-card">
                     <div class="expert-photo"></div>
-                    <h3 class="expert-name">Dr. Raphael Villatore</h3>
-                    <p class="expert-specialization">Sports Medicine & Nutrition</p>
-                    <a href="#" class="expert-link">Огляд профілю →</a>
+                    <div class="expert-card-content">
+                        <h3 class="expert-name">Dr. Raphael Villatore</h3>
+                        <p class="expert-specialization">Sports Medicine & Nutrition</p>
+                        <a href="#" class="expert-link">огляд профілю</a>
+                    </div>
                 </div>
                 {% endif %}
             </div>
