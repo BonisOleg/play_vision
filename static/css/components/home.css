@@ -90,9 +90,7 @@
 }
 
 /* Hero with border style - БІЛІ РАМКИ */
-.hero-section.hero-bordered .section-overlay {
-    background: transparent;
-}
+/* Видалено - конфлікт з градієнтом */
 
 /* БІЛА кнопка з чорним текстом та іконкою (8-й скрін) */
 .hero-section .btn-primary {
