@@ -74,7 +74,7 @@
     background: var(--color-primary-alpha-80);
 }
 
-.section-overlay--gradient {
+.hero-section .section-overlay--gradient {
     background: linear-gradient(90deg,
             rgba(0, 0, 0, 0.88) 0%,
             rgba(0, 0, 0, 0.85) 25%,
@@ -82,7 +82,7 @@
             rgba(0, 0, 0, 0.65) 45%,
             rgba(0, 0, 0, 0.45) 55%,
             rgba(0, 0, 0, 0.15) 70%,
-            transparent 85%);
+            transparent 85%) !important;
 }
 
 .section-overlay--cta-gradient {
