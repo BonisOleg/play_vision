@@ -53,12 +53,12 @@
     align-items: center;
 }
 
-/* БАЗОВИЙ ГЕКСАГОН */
+/* БАЗОВИЙ ГЕКСАГОН - FLAT TOP */
 .hexagon {
     position: absolute;
     width: 310px;
     height: 280px;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
     background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
     box-shadow:
         0 10px 40px rgba(0, 0, 0, 0.08),
@@ -66,15 +66,13 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
-
-    /* ПОЗИЦІЮВАННЯ через CSS змінні */
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) rotate(30deg);
+    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0));
 }
 
 .hexagon:hover {
-    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) rotate(30deg) translateY(-8px) scale(1.03);
+    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-8px) scale(1.03);
     box-shadow:
         0 15px 50px rgba(0, 0, 0, 0.12),
         0 8px 20px rgba(0, 0, 0, 0.08),
@@ -93,10 +91,9 @@
     width: 100%;
     padding: 30px 20px;
     text-align: center;
-    transform: rotate(-30deg);
 }
 
-/* ТЕКСТ (Figma spec) */
+/* ТЕКСТ */
 .hexagon h4 {
     font-family: 'Roboto', sans-serif;
     font-size: 32px;
@@ -109,7 +106,7 @@
     letter-spacing: -0.5px;
 }
 
-/* ЦЕНТРАЛЬНИЙ ГЕКСАГОН (Logo) */
+/* ЦЕНТРАЛЬНИЙ ГЕКСАГОН */
 .hexagon-center {
     z-index: 5;
     background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
@@ -120,16 +117,15 @@
 }
 
 .hexagon-center:hover {
-    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) rotate(30deg) scale(1.02);
+    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) scale(1.02);
 }
 
-/* ЛОГОТИП (W-220 H-75) */
+/* ЛОГОТИП */
 .hexagon-logo {
     width: 220px;
     height: 75px;
     object-fit: contain;
     display: block;
-    transform: rotate(-30deg);
 }
 
 /* ОКРЕМІ ГЕКСАГОНИ */
@@ -257,7 +253,7 @@
     }
 
     .hexagon:hover {
-        transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) rotate(30deg) translateY(-4px) scale(1.02);
+        transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-4px) scale(1.02);
     }
 }
 
