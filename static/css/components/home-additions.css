@@ -1,12 +1,11 @@
-/* Home Page Additions - Зміни за скріншотами */
+/* Home Page Additions - Зміни за Figma дизайном */
 
-/* Hero білі рамки */
+/* Hero БЕЗ рамок */
 .hero-with-frame {
     border: none;
-    border-radius: 0;
+    border-radius: 12px;
     padding: var(--spacing-xxl);
-    backdrop-filter: none;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 /* Featured Courses Carousel */
@@ -24,15 +23,18 @@
 .carousel-btn {
     position: absolute;
     top: 50%;
-    background: var(--color-bg);
+    background: #000000;
+    /* Чорні кола (Figma design) */
+    color: #ffffff;
+    /* Білі стрілки */
     border: none;
     width: 40px;
     height: 40px;
-    border-radius: var(--radius-full);
-    box-shadow: var(--shadow-md);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     z-index: 10;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,7 +42,9 @@
 }
 
 .carousel-btn:hover:not(:disabled) {
-    box-shadow: var(--shadow-lg);
+    background: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-50%) scale(1.05);
 }
 
 .carousel-btn:active:not(:disabled) {
@@ -51,6 +55,27 @@
     opacity: 0.3;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+/* Адаптація до теми (темна тема - білі кола) */
+[data-theme="dark"] .carousel-btn {
+    background: #ffffff;
+    color: #000000;
+}
+
+[data-theme="dark"] .carousel-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .carousel-btn {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    [data-theme="auto"] .carousel-btn:hover:not(:disabled) {
+        background: #f0f0f0;
+    }
 }
 
 .carousel-btn-prev {
@@ -73,11 +98,12 @@
 }
 
 .carousel-slide {
-    flex: 0 0 33.333%;
+    flex: 0 0 25%;
+    /* 4 картки замість 3 (Figma design) */
     flex-shrink: 0;
-    width: 33.333%;
-    min-width: 33.333%;
-    max-width: 33.333%;
+    width: 25%;
+    min-width: 25%;
+    max-width: 25%;
     padding: 0 var(--spacing-md);
     box-sizing: border-box;
 }
@@ -269,9 +295,21 @@
 /* Button sizes видалено - тепер у main.css */
 
 /* Responsive для Homepage */
+@media (max-width: 1200px) {
+    .carousel-slide {
+        flex: 0 0 33.333%;
+        /* 3 картки на середніх екранах */
+        flex-shrink: 0;
+        width: 33.333%;
+        min-width: 33.333%;
+        max-width: 33.333%;
+    }
+}
+
 @media (max-width: 1024px) {
     .carousel-slide {
         flex: 0 0 50%;
+        /* 2 картки на планшетах */
         flex-shrink: 0;
         width: 50%;
         min-width: 50%;

@@ -87,21 +87,26 @@
     background: transparent;
 }
 
-/* ОДНА ЗЕЛЕНА кнопка в hero */
+/* БІЛА кнопка з чорним текстом (Figma design) */
 .hero-section .btn-primary {
-    background: #10b981;
-    /* Зелений колір */
-    border-color: #10b981;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    font-weight: 600;
+    padding: 14px 28px;
+    font-size: 1.125rem;
 }
 
 .hero-section .btn-primary:hover {
-    background: #059669;
-    border-color: #059669;
+    background: #f0f0f0;
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 .hero-section .btn-primary::after {
     content: " →";
-    margin-left: 4px;
+    margin-left: 6px;
 }
 
 .hero-section.hero-bordered .section-content {
@@ -112,22 +117,14 @@
     background: transparent;
 }
 
-/* КРИТИЧНО: Білі рамки навколо hero контенту (НЕ заливка!) */
+/* Hero контент БЕЗ рамок (Figma design) */
 .hero-with-frame {
-    border: 3px solid rgba(255, 255, 255, 0.9);
+    border: none;
     border-radius: 12px;
-    background: rgba(0, 0, 0, 0.25);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.4);
     padding: 3rem;
     max-width: 800px;
     margin: 0 auto;
-}
-
-@supports not (backdrop-filter: blur(4px)) {
-    .hero-with-frame {
-        background: rgba(0, 0, 0, 0.6);
-    }
 }
 
 /* Tablet responsiveness */
@@ -166,7 +163,8 @@
 }
 
 .mentor-coaching-section {
-    background: transparent;
+    background: #f5f5f5;
+    /* Світлий фон (Figma design) */
     position: relative;
     z-index: var(--z-section, 20);
 }
@@ -180,19 +178,24 @@
 }
 
 .mentor-coaching-section .section-title {
-    color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    color: #000000;
+    /* Чорний текст на світлому фоні */
+    text-shadow: none;
     margin-top: var(--spacing-xxl);
 }
 
 .mentor-coaching-section .ecosystem-subtitle {
-    color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    color: #333333;
+    text-shadow: none;
 }
 
 .mentor-coaching-section .hexagon h4 {
-    color: white;
-    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+    color: #0A0A0A;
+    /* Майже чорний (Figma spec) */
+    text-shadow: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    /* Bold */
 }
 
 .hero-badge {
@@ -237,10 +240,10 @@
     margin-bottom: var(--spacing-xxl);
 }
 
-/* КРИТИЧНО: ОДНА ЗЕЛЕНА кнопка зі стрілкою → */
+/* БІЛА кнопка зі стрілкою → (Figma design) */
 .hero-buttons .btn-primary {
-    background: #10b981;
-    color: white;
+    background: #ffffff;
+    color: #000000;
     border: none;
     padding: 14px 28px;
     font-size: 1.125rem;
@@ -253,9 +256,10 @@
 }
 
 .hero-buttons .btn-primary:hover {
-    background: #059669;
+    background: #f0f0f0;
+    color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 .hero-btn-outline {
@@ -353,6 +357,8 @@
     line-height: 1.6;
 }
 
+/* COURSES SECTION - ЗАКОМЕНТОВАНО (не в Figma дизайні) */
+/*
 .courses-section {
     background: var(--color-bg) url('/static/images/blackgreed.png') no-repeat center center;
     background-size: cover;
@@ -471,6 +477,7 @@
     color: var(--color-primary-dark);
     text-decoration: underline;
 }
+*/
 
 .experts-section {
     background: var(--color-bg) url('/static/images/blackgreed.png') no-repeat center center;
@@ -917,11 +924,15 @@
 
 .hexagon-center-large {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    /* Збільшено для кращого вигляду */
+    height: 320px;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-    box-shadow: 0 12px 30px var(--shadow-alpha-50);
+    /* Світлий неоморфізм фон (Figma design) */
+    background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.2),
+        0 8px 20px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
@@ -938,7 +949,8 @@
     justify-content: center;
     height: 100%;
     padding: 2rem;
-    color: white;
+    color: #0A0A0A;
+    /* Чорний текст */
     text-align: center;
     gap: 1rem;
 }
@@ -946,14 +958,17 @@
 .hexagon-center-large .center-title {
     font-size: 1.75rem;
     font-weight: 700;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     line-height: 1.3;
-    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+    color: #0A0A0A;
+    text-shadow: none;
 }
 
 .hexagon-center-large .center-hint {
     font-size: 1rem;
     margin: 0;
+    color: #666666;
     opacity: 0.7;
     animation: pulse-opacity 2s ease-in-out infinite;
 }
@@ -971,8 +986,9 @@
 }
 
 .mentor-animation-container.expanded .hexagon-center-large {
-    width: 220px;
-    height: 220px;
+    width: 280px;
+    /* Зменшений при розширенні */
+    height: 250px;
 }
 
 .mentor-animation-container.expanded .hexagon-center-large .center-title {
@@ -1015,14 +1031,19 @@
 
 .hexagon-orbit-item {
     position: absolute;
-    width: 180px;
-    height: 180px;
+    width: 310px;
+    /* Figma spec: W-310 */
+    height: 280px;
+    /* Figma spec: H-280 */
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: default;
-    box-shadow: 0 8px 20px var(--shadow-alpha-30);
-    left: calc(50% - 90px);
-    top: calc(50% - 90px);
+    /* Неоморфізм тіні (Figma design) */
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    left: calc(50% - 155px);
+    top: calc(50% - 140px);
     transform: scale(0) translate(0, 0);
     opacity: 0;
     pointer-events: auto;
@@ -1080,12 +1101,17 @@
 
 .hexagon {
     position: relative;
-    width: 180px;
-    height: 180px;
+    width: 310px;
+    /* Figma spec */
+    height: 280px;
+    /* Figma spec */
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
-    box-shadow: 0 8px 20px var(--shadow-alpha-30);
+    /* Неоморфізм тіні */
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .hexagon:nth-child(1) {
@@ -1141,7 +1167,8 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: transparent;
+    /* Прибрано темний overlay (Figma design) */
     z-index: 0;
 }
 
@@ -1155,62 +1182,42 @@
 }
 
 .hexagon h4 {
-    font-size: 1.25rem;
+    font-size: 32px;
+    /* Figma spec: 32px */
     margin: 0;
     font-weight: 700;
-    color: white;
-    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+    /* Bold */
+    font-family: 'Roboto', sans-serif;
+    /* Figma spec */
+    color: #0A0A0A;
+    /* Figma spec */
+    text-shadow: none;
     line-height: 1.3;
 }
 
 .hexagon {
-    background: linear-gradient(135deg, var(--hex-color, var(--color-primary)) 0%, var(--hex-color, var(--color-primary-light)) 100%);
+    /* Світлий неоморфізм градієнт (Figma design) */
+    background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
 }
 
-.hexagon-motivation {
-    background-image: url('/static/images/mainmental.png');
-    background-size: cover;
-    background-position: center;
-}
-
-.hexagon-intuition {
-    background-image: url('/static/images/mainpobut.png');
-    background-size: cover;
-    background-position: center;
-}
-
-.hexagon-society {
-    background-image: url('/static/images/maintech.png');
-    background-size: cover;
-    background-position: center;
-}
-
-.hexagon-curiosity {
-    background-image: url('/static/images/mainzdor.png');
-    background-size: cover;
-    background-position: center;
-}
-
-.hexagon-pragmatism {
-    background-image: url('/static/images/mainintel.png');
-    background-size: cover;
-    background-position: center;
-}
-
+/* ПРИБРАНО всі background-image - залишаємо чистий світлий фон */
+.hexagon-motivation,
+.hexagon-intuition,
+.hexagon-society,
+.hexagon-curiosity,
+.hexagon-pragmatism,
 .hexagon-optimism {
-    background-image: url('/static/images/mainfiz.png');
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
 }
 
 @media (max-width: 992px) {
     .mentor-animation-container {
-        max-width: 600px;
-        height: 600px;
+        max-width: 700px;
+        height: 700px;
     }
 
     .hexagon-center-large {
-        width: 250px;
+        width: 280px;
         height: 250px;
     }
 
@@ -1219,8 +1226,8 @@
     }
 
     .mentor-animation-container.expanded .hexagon-center-large {
-        width: 180px;
-        height: 180px;
+        width: 220px;
+        height: 200px;
     }
 
     .mentor-animation-container.expanded .hexagon-center-large .center-title {
@@ -1228,10 +1235,98 @@
     }
 
     .hexagon-orbit-item {
-        width: 150px;
+        width: 240px;
+        /* Tablet розмір */
+        height: 220px;
+        left: calc(50% - 120px);
+        top: calc(50% - 110px);
+    }
+
+    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
+        transform: scale(1) translateY(-220px);
+    }
+
+    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
+        transform: scale(1) translate(190px, -110px);
+    }
+
+    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
+        transform: scale(1) translate(190px, 110px);
+    }
+
+    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
+        transform: scale(1) translateY(220px);
+    }
+
+    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
+        transform: scale(1) translate(-190px, 110px);
+    }
+
+    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
+        transform: scale(1) translate(-190px, -110px);
+    }
+
+    .hexagons-grid {
+        grid-template-columns: repeat(3, 240px);
+        grid-template-rows: repeat(2, 220px);
+        gap: 1.5rem;
+        padding: 0 var(--spacing-sm);
+    }
+
+    .hexagon {
+        width: 240px;
+        height: 220px;
+    }
+
+    .hexagon h4 {
+        font-size: 24px;
+        /* Пропорційно зменшено */
+    }
+
+    .hexagon-inner {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .ecosystem-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+    }
+
+    .mentor-animation-container {
+        max-width: 500px;
+        height: 550px;
+    }
+
+    .hexagon-center-large {
+        width: 220px;
+        height: 200px;
+    }
+
+    .hexagon-center-large .center-title {
+        font-size: 1.25rem;
+    }
+
+    .hexagon-center-large .center-hint {
+        font-size: 0.9rem;
+    }
+
+    .mentor-animation-container.expanded .hexagon-center-large {
+        width: 170px;
         height: 150px;
-        left: calc(50% - 75px);
-        top: calc(50% - 75px);
+    }
+
+    .mentor-animation-container.expanded .hexagon-center-large .center-title {
+        font-size: 0.95rem;
+    }
+
+    .hexagon-orbit-item {
+        width: 180px;
+        /* Mobile розмір */
+        height: 160px;
+        left: calc(50% - 90px);
+        top: calc(50% - 80px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
@@ -1259,64 +1354,70 @@
     }
 
     .hexagons-grid {
-        grid-template-columns: repeat(3, 150px);
-        grid-template-rows: repeat(2, 150px);
-        gap: 1.5rem;
-        padding: 0 var(--spacing-sm);
+        grid-template-columns: repeat(3, 180px);
+        grid-template-rows: repeat(2, 160px);
+        gap: 1rem;
+        justify-content: center;
     }
 
     .hexagon {
-        width: 150px;
-        height: 150px;
-    }
-
-    .hexagon h4 {
-        font-size: 1rem;
+        width: 180px;
+        height: 160px;
     }
 
     .hexagon-inner {
-        padding: 1.25rem;
+        padding: 0.85rem;
+        gap: 0.35rem;
+    }
+
+    .hexagon h4 {
+        font-size: 20px;
+        /* Пропорційно */
+        line-height: 1.2;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     .ecosystem-subtitle {
-        font-size: 1.25rem;
-        margin-bottom: 3rem;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        padding: 0 var(--spacing-md);
     }
 
     .mentor-animation-container {
-        max-width: 450px;
-        height: 500px;
+        max-width: 380px;
+        height: 460px;
     }
 
     .hexagon-center-large {
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 160px;
     }
 
     .hexagon-center-large .center-title {
-        font-size: 1.25rem;
+        font-size: 1rem;
+        line-height: 1.25;
     }
 
     .hexagon-center-large .center-hint {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     .mentor-animation-container.expanded .hexagon-center-large {
-        width: 140px;
-        height: 140px;
+        width: 130px;
+        height: 115px;
     }
 
     .mentor-animation-container.expanded .hexagon-center-large .center-title {
-        font-size: 0.95rem;
+        font-size: 0.75rem;
     }
 
     .hexagon-orbit-item {
-        width: 110px;
-        height: 110px;
-        left: calc(50% - 55px);
-        top: calc(50% - 55px);
+        width: 140px;
+        /* Small mobile розмір */
+        height: 130px;
+        left: calc(50% - 70px);
+        top: calc(50% - 65px);
     }
 
     .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
@@ -1344,103 +1445,14 @@
     }
 
     .hexagons-grid {
-        grid-template-columns: repeat(3, 110px);
-        grid-template-rows: repeat(2, 110px);
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    .hexagon {
-        width: 110px;
-        height: 110px;
-    }
-
-    .hexagon-inner {
-        padding: 0.85rem;
-        gap: 0.35rem;
-    }
-
-    .hexagon h4 {
-        font-size: 0.9rem;
-        line-height: 1.2;
-    }
-}
-
-@media (max-width: 480px) {
-    .ecosystem-subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-        padding: 0 var(--spacing-md);
-    }
-
-    .mentor-animation-container {
-        max-width: 350px;
-        height: 440px;
-    }
-
-    .hexagon-center-large {
-        width: 160px;
-        height: 160px;
-    }
-
-    .hexagon-center-large .center-title {
-        font-size: 1rem;
-        line-height: 1.25;
-    }
-
-    .hexagon-center-large .center-hint {
-        font-size: 0.8rem;
-    }
-
-    .mentor-animation-container.expanded .hexagon-center-large {
-        width: 110px;
-        height: 110px;
-    }
-
-    .mentor-animation-container.expanded .hexagon-center-large .center-title {
-        font-size: 0.75rem;
-    }
-
-    .hexagon-orbit-item {
-        width: 90px;
-        height: 90px;
-        left: calc(50% - 45px);
-        top: calc(50% - 45px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        transform: scale(1) translateY(-120px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        transform: scale(1) translate(104px, -60px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        transform: scale(1) translate(104px, 60px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        transform: scale(1) translateY(120px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        transform: scale(1) translate(-104px, 60px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        transform: scale(1) translate(-104px, -60px);
-    }
-
-    .hexagons-grid {
-        grid-template-columns: repeat(3, 95px);
-        grid-template-rows: repeat(2, 95px);
+        grid-template-columns: repeat(3, 140px);
+        grid-template-rows: repeat(2, 130px);
         gap: 0.75rem;
     }
 
     .hexagon {
-        width: 95px;
-        height: 95px;
+        width: 140px;
+        height: 130px;
     }
 
     .hexagon-inner {
@@ -1449,7 +1461,8 @@
     }
 
     .hexagon h4 {
-        font-size: 0.8rem;
+        font-size: 16px;
+        /* Пропорційно */
         line-height: 1.15;
     }
 }
