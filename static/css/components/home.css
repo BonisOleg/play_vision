@@ -5,10 +5,9 @@
 }
 
 .fullscreen-section {
-    width: 90%;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
     height: calc(var(--vh, 1vh) * 100 - 80px);
     display: flex;
     align-items: center;
@@ -922,8 +921,9 @@
 
 @media (max-width: 1024px) {
     .fullscreen-section {
-        width: 95%;
-        max-width: 95%;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
         height: auto;
         min-height: calc(100vh - 80px);
         padding: var(--spacing-xxl) 0;
@@ -946,8 +946,9 @@
 
 @media (max-width: 768px) {
     .fullscreen-section {
-        width: 98%;
-        max-width: 98%;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
         padding: var(--spacing-xl) 0;
     }
 
