@@ -1,0 +1,283 @@
+/* ============================================
+   БЛОК "МЕНТОР-КОУЧИНГ" - HONEYCOMB PATTERN
+   Специфікації з Figma: W-310 H-280
+   Шрифт: Roboto Bold 32px
+   Колір: #0A0A0A
+   ============================================ */
+
+/* СЕКЦІЯ */
+.mentor-coaching-section {
+    background: #f8f8f8;
+    position: relative;
+    padding: 80px 0;
+    overflow: hidden;
+}
+
+.mentor-coaching-section .section-title {
+    color: #000000;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    text-shadow: none;
+}
+
+.mentor-coaching-section .ecosystem-subtitle {
+    color: #333333;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0 0 60px 0;
+    text-shadow: none;
+}
+
+/* КОНТЕЙНЕР */
+.mentor-hexagon-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* HONEYCOMB СІТКА */
+.hexagon-honeycomb {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* БАЗОВИЙ ГЕКСАГОН */
+.hexagon {
+    position: absolute;
+    width: 310px;
+    height: 280px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+
+    /* ПОЗИЦІЮВАННЯ через CSS змінні */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0));
+}
+
+.hexagon:hover {
+    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-8px) scale(1.03);
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.12),
+        0 8px 20px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    z-index: 10;
+}
+
+/* ВНУТРІШНІЙ КОНТЕЙНЕР */
+.hexagon-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+/* ТЕКСТ (Figma spec) */
+.hexagon h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #0A0A0A;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    text-shadow: none;
+    letter-spacing: -0.5px;
+}
+
+/* ЦЕНТРАЛЬНИЙ ГЕКСАГОН (Logo) */
+.hexagon-center {
+    z-index: 5;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+    box-shadow:
+        0 15px 60px rgba(0, 0, 0, 0.1),
+        0 8px 25px rgba(0, 0, 0, 0.06),
+        inset 0 2px 0 rgba(255, 255, 255, 1);
+}
+
+.hexagon-center:hover {
+    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) scale(1.02);
+}
+
+/* ЛОГОТИП (W-220 H-75) */
+.hexagon-logo {
+    width: 220px;
+    height: 75px;
+    object-fit: contain;
+    display: block;
+}
+
+/* ОКРЕМІ ГЕКСАГОНИ */
+.hexagon-item {
+    z-index: 2;
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - TABLET (769px - 1024px)
+   ============================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .mentor-hexagon-container {
+        max-width: 900px;
+        padding: 40px 20px;
+    }
+
+    .hexagon-honeycomb {
+        height: 600px;
+        transform: scale(0.85);
+    }
+
+    .hexagon {
+        width: 260px;
+        height: 235px;
+    }
+
+    .hexagon h4 {
+        font-size: 26px;
+    }
+
+    .hexagon-logo {
+        width: 185px;
+        height: 63px;
+    }
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - MOBILE (480px - 768px)
+   ============================================ */
+@media (min-width: 480px) and (max-width: 768px) {
+    .mentor-coaching-section {
+        padding: 60px 0;
+    }
+
+    .mentor-coaching-section .section-title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    .mentor-coaching-section .ecosystem-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+
+    .mentor-hexagon-container {
+        max-width: 600px;
+        padding: 30px 15px;
+    }
+
+    .hexagon-honeycomb {
+        height: 550px;
+        transform: scale(0.65);
+    }
+
+    .hexagon {
+        width: 220px;
+        height: 200px;
+    }
+
+    .hexagon h4 {
+        font-size: 22px;
+        line-height: 1.15;
+    }
+
+    .hexagon-logo {
+        width: 155px;
+        height: 53px;
+    }
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - SMALL MOBILE (до 479px)
+   ============================================ */
+@media (max-width: 479px) {
+    .mentor-coaching-section {
+        padding: 40px 0;
+    }
+
+    .mentor-coaching-section .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 10px;
+    }
+
+    .mentor-coaching-section .ecosystem-subtitle {
+        font-size: 1rem;
+        margin-bottom: 30px;
+        padding: 0 15px;
+        line-height: 1.4;
+    }
+
+    .mentor-hexagon-container {
+        max-width: 400px;
+        padding: 20px 10px;
+    }
+
+    .hexagon-honeycomb {
+        height: 450px;
+        transform: scale(0.5);
+    }
+
+    .hexagon {
+        width: 180px;
+        height: 165px;
+    }
+
+    .hexagon h4 {
+        font-size: 18px;
+        line-height: 1.1;
+    }
+
+    .hexagon-logo {
+        width: 125px;
+        height: 43px;
+    }
+
+    .hexagon:hover {
+        transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-4px) scale(1.02);
+    }
+}
+
+/* ============================================
+   iOS SAFARI ОПТИМІЗАЦІЯ
+   ============================================ */
+@supports (-webkit-touch-callout: none) {
+    .hexagon {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .hexagon-inner {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+
+    .hexagon-honeycomb {
+        -webkit-overflow-scrolling: touch;
+    }
+}
