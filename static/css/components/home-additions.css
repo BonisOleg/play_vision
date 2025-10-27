@@ -109,11 +109,12 @@
 }
 
 .featured-card {
-    background: var(--color-bg);
-    border-radius: var(--radius-lg);
+    background: #1a1a1a;
+    /* Чорний фон (8-й скрін) */
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-base);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -121,14 +122,15 @@
 
 .featured-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
 }
 
 .featured-image {
     width: 100%;
-    height: 200px;
+    height: 220px;
     overflow: hidden;
-    background: var(--color-bg-gray);
+    background: #d32f2f;
+    /* Червоний фон (8-й скрін) */
 }
 
 .featured-image img {
@@ -140,30 +142,35 @@
 .image-placeholder {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    background: #d32f2f;
+    /* Червоний placeholder (8-й скрін) */
 }
 
 .featured-content {
-    padding: var(--spacing-lg);
+    padding: 24px;
     flex: 1;
     display: flex;
     flex-direction: column;
+    background: #1a1a1a;
+    /* Чорний фон (8-й скрін) */
 }
 
 .featured-category {
     font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-primary);
+    font-weight: 700;
+    color: #d32f2f;
+    /* Червона категорія (8-й скрін) */
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: var(--spacing-xs);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
 }
 
 .featured-title {
-    font-size: 1.25rem;
+    font-size: 1.375rem;
     font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
+    color: #ffffff;
+    /* Білий заголовок (8-й скрін) */
+    margin-bottom: 12px;
     line-height: 1.3;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -173,25 +180,38 @@
 }
 
 .featured-description {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    line-height: 1.5;
-    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
+    color: #999999;
+    /* Сірий опис (8-й скрін) */
+    line-height: 1.6;
+    margin-bottom: 20px;
     flex: 1;
 }
 
 .featured-link {
-    color: var(--color-primary);
+    color: #d32f2f;
+    /* Червоне посилання (8-й скрін) */
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    transition: var(--transition-base);
+    gap: 6px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.featured-link::after {
+    content: "→";
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
 }
 
 .featured-link:hover {
-    gap: var(--spacing-sm);
+    color: #ff4444;
+}
+
+.featured-link:hover::after {
+    transform: translateX(4px);
 }
 
 .no-courses {
@@ -290,6 +310,33 @@
     margin-top: var(--spacing-xxl);
     margin-bottom: var(--spacing-xxl);
     text-align: center;
+}
+
+/* Червона кнопка під гексагонами (8-й скрін) */
+.mentor-cta .btn-primary {
+    background: #d32f2f;
+    color: #ffffff;
+    border: none;
+    padding: 16px 36px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+    transition: all 0.3s ease;
+}
+
+.mentor-cta .btn-primary::after {
+    content: "→";
+    font-size: 1.3rem;
+}
+
+.mentor-cta .btn-primary:hover {
+    background: #c62828;
+    box-shadow: 0 6px 25px rgba(211, 47, 47, 0.4);
+    transform: translateY(-2px);
 }
 
 /* Button sizes видалено - тепер у main.css */

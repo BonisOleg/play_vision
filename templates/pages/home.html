@@ -194,31 +194,16 @@
             <h2 class="section-title">Ментор-коучинг</h2>
             <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
 
-            <div class="mentor-animation-container">
-                <div class="hexagon-center-large">
-                    <div class="hexagon-inner">
-                        <h3 class="center-title">Ментор коучинг<br>в Play Vision</h3>
-                        <p class="center-hint">натисни</p>
+            <div class="mentor-static-container">
+                <div class="hexagons-grid-static">
+                    <!-- Центральний гексагон з логотипом (8-й скрін) -->
+                    <div class="hexagon hexagon-center">
+                        <div class="hexagon-inner">
+                            <img src="{% static 'icons/logo-mark.svg' %}" alt="Play Vision" class="hexagon-logo"
+                                style="width: 100px; height: auto; filter: brightness(0);">
+                        </div>
                     </div>
-                </div>
 
-                <svg class="connection-lines-svg" viewBox="0 0 700 650" xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="xMidYMid meet">
-                    <line class="connection-line" data-index="0" x1="350" y1="325" x2="350" y2="100" stroke="red"
-                        stroke-width="2" />
-                    <line class="connection-line" data-index="1" x1="350" y1="325" x2="566" y2="200" stroke="red"
-                        stroke-width="2" />
-                    <line class="connection-line" data-index="2" x1="350" y1="325" x2="566" y2="450" stroke="red"
-                        stroke-width="2" />
-                    <line class="connection-line" data-index="3" x1="350" y1="325" x2="350" y2="550" stroke="red"
-                        stroke-width="2" />
-                    <line class="connection-line" data-index="4" x1="350" y1="325" x2="134" y2="450" stroke="red"
-                        stroke-width="2" />
-                    <line class="connection-line" data-index="5" x1="350" y1="325" x2="134" y2="200" stroke="red"
-                        stroke-width="2" />
-                </svg>
-
-                <div class="hexagons-orbit">
                     {% if cms_hexagons %}
                     {% for hex in cms_hexagons %}
                     <div class="hexagon hexagon-orbit-item" data-orbit-index="{{ forloop.counter0 }}"

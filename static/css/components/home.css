@@ -87,26 +87,31 @@
     background: transparent;
 }
 
-/* БІЛА кнопка з чорним текстом (Figma design) */
+/* БІЛА кнопка з чорним текстом та іконкою (8-й скрін) */
 .hero-section .btn-primary {
     background: #ffffff;
     color: #000000;
     border: none;
     font-weight: 600;
-    padding: 14px 28px;
+    padding: 14px 32px 14px 28px;
     font-size: 1.125rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .hero-section .btn-primary:hover {
-    background: #f0f0f0;
+    background: #f5f5f5;
     color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
 .hero-section .btn-primary::after {
-    content: " →";
-    margin-left: 6px;
+    content: "→";
+    font-size: 1.25rem;
+    display: inline-block;
 }
 
 .hero-section.hero-bordered .section-content {
@@ -240,26 +245,30 @@
     margin-bottom: var(--spacing-xxl);
 }
 
-/* БІЛА кнопка зі стрілкою → (Figma design) */
+/* БІЛА кнопка зі стрілкою (8-й скрін) */
 .hero-buttons .btn-primary {
     background: #ffffff;
     color: #000000;
     border: none;
-    padding: 14px 28px;
+    padding: 14px 32px 14px 28px;
     font-size: 1.125rem;
     font-weight: 600;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .hero-buttons .btn-primary::after {
-    content: " →";
-    margin-left: 6px;
+    content: "→";
+    font-size: 1.25rem;
 }
 
 .hero-buttons .btn-primary:hover {
-    background: #f0f0f0;
+    background: #f5f5f5;
     color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
 .hero-btn-outline {
@@ -480,23 +489,32 @@
 */
 
 .experts-section {
-    background: var(--color-bg) url('/static/images/blackgreed.png') no-repeat center center;
+    background: #0a0a0a url('/static/images/blackgreed.png') no-repeat center center;
+    /* Темний фон (8-й скрін) */
     background-size: cover;
     position: relative;
     z-index: var(--z-section, 20);
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-radius: 0;
     overflow: hidden;
+    padding: var(--spacing-xxl) 0;
+}
+
+.experts-section .section-title {
+    color: #d32f2f;
+    /* Червоний заголовок (8-й скрін) */
+    text-shadow: none;
 }
 
 .experts-subtitle {
     text-align: center;
-    color: var(--color-text-light);
+    color: #ffffff;
+    /* Білий підзаголовок (8-й скрін) */
     font-size: 1.125rem;
     margin-bottom: var(--spacing-xxl);
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 2px 4px var(--shadow-alpha-30);
+    text-shadow: none;
 }
 
 .experts-grid {
@@ -507,51 +525,53 @@
 }
 
 .expert-card {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border-light);
+    background: #1a1a1a;
+    /* Темний фон картки (8-й скрін) */
+    border: 1px solid #333333;
     border-radius: 16px;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-xl);
     text-align: center;
-    box-shadow: 0 4px 16px var(--shadow-alpha-10);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .expert-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px var(--shadow-alpha-15);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+    border-color: #444444;
 }
 
 .expert-card:active {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 .expert-photo {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    background: var(--color-bg-gray);
+    background: #333333;
+    /* Темно-сірий placeholder (8-й скрін) */
     margin: 0 auto var(--spacing-md);
     object-fit: cover;
     flex-shrink: 0;
 }
 
 .expert-name {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: var(--spacing-xs);
-    color: var(--color-text);
+    color: #ffffff;
+    /* Біле ім'я (8-й скрін) */
     line-height: 1.3;
     text-shadow: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .expert-specialization {
-    color: var(--color-text-light);
+    color: #999999;
+    /* Сіра спеціалізація (8-й скрін) */
     line-height: 1.5;
     margin-bottom: var(--spacing-lg);
     flex: 1;
@@ -559,19 +579,30 @@
 }
 
 .expert-link {
-    color: var(--color-primary);
+    color: #d32f2f;
+    /* Червоне посилання (8-й скрін) */
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: 6px;
     margin-top: auto;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.expert-link::after {
+    content: "→";
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
 }
 
 .expert-link:hover {
-    color: var(--color-primary-dark);
-    text-decoration: underline;
+    color: #ff4444;
+}
+
+.expert-link:hover::after {
+    transform: translateX(4px);
 }
 
 .values-section {
@@ -685,43 +716,54 @@
     flex-wrap: wrap;
 }
 
+/* CTA кнопки (8-й скрін) */
 .cta-section .btn-primary {
-    background: var(--color-bg);
-    color: var(--color-primary);
-    border: 2px solid var(--color-bg);
+    background: #1a1a1a;
+    /* Темна кнопка (8-й скрін) */
+    color: #d32f2f;
+    /* Червоний текст */
+    border: 2px solid #1a1a1a;
     font-weight: 600;
-    padding: var(--spacing-md) var(--spacing-xl);
-    border-radius: 8px;
+    padding: 16px 32px;
+    border-radius: 50px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    font-size: 1rem;
-    box-shadow: 0 4px 12px var(--shadow-alpha-40);
+    font-size: 1.125rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
 }
 
 .cta-section .btn-primary:hover {
-    background: var(--color-primary);
-    color: var(--color-bg);
+    background: #d32f2f;
+    color: #ffffff;
+    border-color: #d32f2f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(211, 47, 47, 0.4);
 }
 
 .cta-section .btn-outline {
-    background: var(--silver-white);
-    color: var(--accent-dark);
-    border: 2px solid var(--accent-dark);
+    background: rgba(255, 255, 255, 0.9);
+    /* Світла сіра кнопка (8-й скрін) */
+    color: #1a1a1a;
+    border: 2px solid transparent;
     font-weight: 600;
-    padding: var(--spacing-md) var(--spacing-xl);
-    border-radius: 8px;
+    padding: 16px 32px;
+    border-radius: 50px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    font-size: 1rem;
+    font-size: 1.125rem;
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px var(--shadow-alpha-40);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
 }
 
 .cta-section .btn-outline:hover {
-    background: var(--color-bg);
-    color: var(--color-primary);
+    background: #ffffff;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
 }
 
 @media (min-width: 1200px) {
@@ -910,16 +952,23 @@
     font-weight: 400;
 }
 
-.mentor-animation-container {
+/* СТАТИЧНИЙ контейнер (8-й скрін - БЕЗ анімації) */
+.mentor-static-container {
     position: relative;
     width: 100%;
-    max-width: 700px;
-    height: 700px;
+    max-width: 1000px;
     margin: 3rem auto;
-    display: flex;
-    align-items: center;
+    padding: 2rem;
+}
+
+.hexagons-grid-static {
+    display: grid;
+    grid-template-columns: repeat(3, 280px);
+    grid-template-rows: repeat(3, 250px);
+    gap: 40px;
     justify-content: center;
-    overflow: visible;
+    align-items: center;
+    position: relative;
 }
 
 .hexagon-center-large {
@@ -999,105 +1048,69 @@
     display: none;
 }
 
-.connection-lines-svg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    z-index: 5;
-}
+/* Видалено connection-lines та hexagons-orbit (8-й скрін - статично БЕЗ ліній) */
 
-.connection-line {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.mentor-animation-container.expanded .connection-line {
-    opacity: 1;
-}
-
-.hexagons-orbit {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-}
-
-.hexagon-orbit-item {
-    position: absolute;
-    width: 310px;
-    /* Figma spec: W-310 */
-    height: 280px;
-    /* Figma spec: H-280 */
+/* Гексагони СТАТИЧНО (8-й скрін - БЕЗ анімації) */
+.hexagon-orbit-item,
+.hexagons-grid-static .hexagon {
+    width: 220px;
+    height: 200px;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: default;
-    /* Неоморфізм тіні (Figma design) */
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
     box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.15),
-        0 4px 12px rgba(0, 0, 0, 0.1);
-    left: calc(50% - 155px);
-    top: calc(50% - 140px);
-    transform: scale(0) translate(0, 0);
-    opacity: 0;
-    pointer-events: auto;
+        0 10px 40px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    cursor: default;
     z-index: 2;
 }
 
-.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-    transform: scale(1) translateY(-200px);
-    opacity: 1;
+/* Позиціонування гексагонів у сітці (статично) */
+.hexagons-grid-static .hexagon:nth-child(1) {
+    grid-column: 2;
+    grid-row: 1;
 }
 
-.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-    transform: scale(1) translate(173px, -100px);
-    opacity: 1;
+.hexagons-grid-static .hexagon:nth-child(2) {
+    grid-column: 3;
+    grid-row: 1;
 }
 
-.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-    transform: scale(1) translate(173px, 100px);
-    opacity: 1;
+.hexagons-grid-static .hexagon:nth-child(3) {
+    grid-column: 3;
+    grid-row: 2;
 }
 
-.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-    transform: scale(1) translateY(200px);
-    opacity: 1;
+.hexagons-grid-static .hexagon:nth-child(4) {
+    grid-column: 3;
+    grid-row: 3;
 }
 
-.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-    transform: scale(1) translate(-173px, 100px);
-    opacity: 1;
+.hexagons-grid-static .hexagon:nth-child(5) {
+    grid-column: 2;
+    grid-row: 3;
 }
 
-.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-    transform: scale(1) translate(-173px, -100px);
-    opacity: 1;
+.hexagons-grid-static .hexagon:nth-child(6) {
+    grid-column: 1;
+    grid-row: 3;
 }
 
-@keyframes draw-line {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
-.hexagons-grid {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, 180px);
-    grid-template-rows: repeat(2, 180px);
-    gap: 2rem;
-    justify-content: center;
+/* Центральний гексагон з логотипом (8-й скрін) */
+.hexagons-grid-static .hexagon-center,
+.hexagons-grid-static .hexagon:first-child {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
     align-items: center;
-    max-width: 700px;
-    margin: 3rem auto;
-    padding: 0 var(--spacing-md);
+    justify-content: center;
 }
+
+.hexagon-logo {
+    max-width: 100px;
+    height: auto;
+}
+
+/* Видалено анімацію draw-line та hexagons-grid (8-й скрін - статично) */
 
 .hexagon {
     position: relative;
@@ -1210,85 +1223,122 @@
     background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
 }
 
+/* Responsive для статичних гексагонів (8-й скрін) */
 @media (max-width: 992px) {
-    .mentor-animation-container {
-        max-width: 700px;
-        height: 700px;
+    .hexagons-grid-static {
+        grid-template-columns: repeat(3, 180px);
+        grid-template-rows: repeat(3, 160px);
+        gap: 24px;
     }
 
-    .hexagon-center-large {
-        width: 280px;
-        height: 250px;
-    }
-
-    .hexagon-center-large .center-title {
-        font-size: 1.5rem;
-    }
-
-    .mentor-animation-container.expanded .hexagon-center-large {
-        width: 220px;
-        height: 200px;
-    }
-
-    .mentor-animation-container.expanded .hexagon-center-large .center-title {
-        font-size: 1.1rem;
-    }
-
-    .hexagon-orbit-item {
-        width: 240px;
-        /* Tablet розмір */
-        height: 220px;
-        left: calc(50% - 120px);
-        top: calc(50% - 110px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
-        transform: scale(1) translateY(-220px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
-        transform: scale(1) translate(190px, -110px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
-        transform: scale(1) translate(190px, 110px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
-        transform: scale(1) translateY(220px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
-        transform: scale(1) translate(-190px, 110px);
-    }
-
-    .mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
-        transform: scale(1) translate(-190px, -110px);
-    }
-
-    .hexagons-grid {
-        grid-template-columns: repeat(3, 240px);
-        grid-template-rows: repeat(2, 220px);
-        gap: 1.5rem;
-        padding: 0 var(--spacing-sm);
-    }
-
-    .hexagon {
-        width: 240px;
-        height: 220px;
+    .hexagon-orbit-item,
+    .hexagons-grid-static .hexagon {
+        width: 180px;
+        height: 160px;
     }
 
     .hexagon h4 {
-        font-size: 24px;
-        /* Пропорційно зменшено */
+        font-size: 20px;
     }
 
-    .hexagon-inner {
-        padding: 1.25rem;
+    .mentor-static-container {
+        padding: 1rem;
     }
 }
 
+.hexagon-center-large {
+    width: 280px;
+    height: 250px;
+}
+
+.hexagon-center-large .center-title {
+    font-size: 1.5rem;
+}
+
+.mentor-animation-container.expanded .hexagon-center-large {
+    width: 220px;
+    height: 200px;
+}
+
+.mentor-animation-container.expanded .hexagon-center-large .center-title {
+    font-size: 1.1rem;
+}
+
+.hexagon-orbit-item {
+    width: 240px;
+    /* Tablet розмір */
+    height: 220px;
+    left: calc(50% - 120px);
+    top: calc(50% - 110px);
+}
+
+.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="0"] {
+    transform: scale(1) translateY(-220px);
+}
+
+.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="1"] {
+    transform: scale(1) translate(190px, -110px);
+}
+
+.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="2"] {
+    transform: scale(1) translate(190px, 110px);
+}
+
+.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="3"] {
+    transform: scale(1) translateY(220px);
+}
+
+.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="4"] {
+    transform: scale(1) translate(-190px, 110px);
+}
+
+.mentor-animation-container.expanded .hexagon-orbit-item[data-orbit-index="5"] {
+    transform: scale(1) translate(-190px, -110px);
+}
+
+.hexagons-grid {
+    grid-template-columns: repeat(3, 240px);
+    grid-template-rows: repeat(2, 220px);
+    gap: 1.5rem;
+    padding: 0 var(--spacing-sm);
+}
+
+.hexagon {
+    width: 240px;
+    height: 220px;
+}
+
+.hexagon h4 {
+    font-size: 24px;
+    /* Пропорційно зменшено */
+}
+
+.hexagon-inner {
+    padding: 1.25rem;
+}
+}
+
 @media (max-width: 768px) {
+    .hexagons-grid-static {
+        grid-template-columns: repeat(3, 140px);
+        grid-template-rows: repeat(3, 130px);
+        gap: 16px;
+    }
+
+    .hexagon-orbit-item,
+    .hexagons-grid-static .hexagon {
+        width: 140px;
+        height: 130px;
+    }
+
+    .hexagon h4 {
+        font-size: 16px;
+    }
+
+    .hexagon-logo {
+        max-width: 70px;
+    }
+
     .ecosystem-subtitle {
         font-size: 1.25rem;
         margin-bottom: 3rem;
@@ -1378,6 +1428,27 @@
 }
 
 @media (max-width: 480px) {
+    .hexagons-grid-static {
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 90px);
+        gap: 12px;
+    }
+
+    .hexagon-orbit-item,
+    .hexagons-grid-static .hexagon {
+        width: 100px;
+        height: 90px;
+    }
+
+    .hexagon h4 {
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    .hexagon-logo {
+        max-width: 50px;
+    }
+
     .ecosystem-subtitle {
         font-size: 1.1rem;
         margin-bottom: 2rem;

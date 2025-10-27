@@ -293,96 +293,12 @@ class CoursesCarousel {
     }
 }
 
+/* ВИДАЛЕНО АНІМАЦІЮ ГЕКСАГОНІВ (8-й скрін - статично БЕЗ анімації) */
+/*
 class MentorHexagonAnimation {
-    constructor(container) {
-        this.container = container;
-        this.centerHex = container.querySelector('.hexagon-center-large');
-        this.orbitItems = container.querySelectorAll('.hexagon-orbit-item');
-        this.lines = container.querySelectorAll('.connection-line');
-        this.isExpanded = false;
-        this.isAnimating = false;
-
-        this.itemDelay = 150;
-        this.animationDuration = 800;
-
-        this.attachEvents();
-    }
-
-    attachEvents() {
-        if (this.centerHex) {
-            this.centerHex.addEventListener('click', () => {
-                if (!this.isAnimating) {
-                    if (this.isExpanded) {
-                        this.collapse();
-                    } else {
-                        this.expand();
-                    }
-                }
-            });
-        }
-    }
-
-    expand() {
-        if (this.isAnimating) return;
-
-        this.isAnimating = true;
-        this.container.classList.add('expanded');
-
-        this.orbitItems.forEach((item, index) => {
-            setTimeout(() => {
-                this.animateOrbitItem(item, index, true);
-                this.animateLine(this.lines[index], index, true);
-            }, index * this.itemDelay);
-        });
-
-        const totalDuration = (this.orbitItems.length - 1) * this.itemDelay + this.animationDuration;
-        setTimeout(() => {
-            this.isExpanded = true;
-            this.isAnimating = false;
-        }, totalDuration);
-    }
-
-    collapse() {
-        if (this.isAnimating) return;
-
-        this.isAnimating = true;
-
-        const reversedItems = Array.from(this.orbitItems).reverse();
-        reversedItems.forEach((item, reverseIndex) => {
-            const originalIndex = this.orbitItems.length - 1 - reverseIndex;
-            setTimeout(() => {
-                this.animateOrbitItem(item, originalIndex, false);
-                this.animateLine(this.lines[originalIndex], originalIndex, false);
-            }, reverseIndex * this.itemDelay);
-        });
-
-        const totalDuration = (this.orbitItems.length - 1) * this.itemDelay + this.animationDuration;
-        setTimeout(() => {
-            this.container.classList.remove('expanded');
-            this.isExpanded = false;
-            this.isAnimating = false;
-        }, totalDuration);
-    }
-
-    animateOrbitItem(item, index, isExpanding) {
-        if (isExpanding) {
-            item.style.transitionDelay = '0s';
-        } else {
-            item.style.transitionDelay = '0s';
-        }
-    }
-
-    animateLine(line, index, isExpanding) {
-        if (!line) return;
-
-        if (isExpanding) {
-            line.style.animation = `draw-line ${this.animationDuration / 1000}s ease-out forwards`;
-        } else {
-            line.style.animation = 'none';
-            line.style.strokeDashoffset = '1000';
-        }
-    }
+    ... вся анімація видалена для статичного дизайну ...
 }
+*/
 
 // Ініціалізація при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', () => {
@@ -398,8 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
         new CoursesCarousel(coursesElement);
     }
 
-    const mentorAnimationContainer = document.querySelector('.mentor-animation-container');
-    if (mentorAnimationContainer) {
-        new MentorHexagonAnimation(mentorAnimationContainer);
-    }
+    // Анімацію гексагонів видалено (8-й скрін - статичний дизайн)
+    // const mentorAnimationContainer = document.querySelector('.mentor-animation-container');
+    // if (mentorAnimationContainer) {
+    //     new MentorHexagonAnimation(mentorAnimationContainer);
+    // }
 });
