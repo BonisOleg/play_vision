@@ -89,72 +89,7 @@
         </div>
     </section>
 
-    <!-- 2. FEATURED COURSES CAROUSEL (Світлий дизайн) -->
-    <section class="fullscreen-section featured-courses-section">
-        <div class="section-content">
-            <div class="featured-courses-header">
-                <h2 class="section-title">6 найголовніших курсів</h2>
-
-                <div class="featured-navigation">
-                    <button class="featured-nav-btn featured-nav-prev" aria-label="Попередній курс">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M15 18l-6-6 6-6" />
-                        </svg>
-                    </button>
-                    <button class="featured-nav-btn featured-nav-next" aria-label="Наступний курс">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M9 18l6-6-6-6" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="featured-carousel-container">
-                <div class="featured-carousel">
-                    <div class="carousel-track">
-                        {% for course in featured_courses %}
-                        <div class="carousel-slide">
-                            <article class="featured-card">
-                                <a href="{{ course.get_absolute_url }}" class="featured-card-link">
-                                    <div class="featured-image">
-                                        {% if course.thumbnail %}
-                                        <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
-                                        {% else %}
-                                        <div class="featured-image-placeholder"></div>
-                                        {% endif %}
-                                    </div>
-
-                                    <div class="featured-content">
-                                        <span class="featured-number">КУРС #{{ forloop.counter }}</span>
-                                        <h3 class="featured-title">{{ course.title }}</h3>
-                                        <p class="featured-description">{{ course.short_description|truncatewords:12 }}
-                                        </p>
-
-                                        <button class="featured-button" aria-label="Огляд курсу">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path d="M5 12h14M12 5l7 7-7 7" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </a>
-                            </article>
-                        </div>
-                        {% empty %}
-                        <div class="carousel-slide">
-                            <p class="no-courses">Курси скоро з'являться</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. COURSES SECTION (Наші основні програми) -->
+    <!-- 2. COURSES SECTION (Наші основні програми) -->
     <section class="fullscreen-section main-courses-section">
         <div class="section-content">
             <div class="main-courses-header">
@@ -194,8 +129,7 @@
                                     <div class="main-course-content">
                                         <span class="main-course-number">КУРС #{{ forloop.counter }}</span>
                                         <h3 class="main-course-title">{{ course.title }}</h3>
-                                        <p class="main-course-description">{{ course.short_description|truncatewords:12
-                                            }}</p>
+                                        <p class="main-course-description">{{ course.short_description|truncatewords:12 }}</p>
 
                                         <button class="main-course-button" aria-label="Огляд курсу">
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
