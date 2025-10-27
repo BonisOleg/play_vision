@@ -1,0 +1,518 @@
+/* Main Courses - Redesign згідно скріншота (10% + 80% + 10%) */
+
+/* ==================== СЕКЦІЯ ==================== */
+.main-courses-section {
+    background: #f5f5f5;
+    padding: 60px 0;
+    position: relative;
+}
+
+[data-theme="dark"] .main-courses-section {
+    background: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .main-courses-section {
+        background: #1a1a1a;
+    }
+}
+
+/* ==================== HEADER З НАВІГАЦІЄЮ ==================== */
+.main-courses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 16px;
+}
+
+.main-courses-header .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .main-courses-header .section-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .main-courses-header .section-title {
+        color: #ffffff;
+    }
+}
+
+/* ==================== КНОПКИ НАВІГАЦІЇ ==================== */
+.main-courses-navigation {
+    display: flex;
+    gap: 12px;
+}
+
+.course-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.course-nav-btn:hover:not(:disabled) {
+    background: #1a1a1a;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.course-nav-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.course-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+[data-theme="dark"] .course-nav-btn {
+    background: #ffffff;
+    color: #000000;
+}
+
+[data-theme="dark"] .course-nav-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .course-nav-btn {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    [data-theme="auto"] .course-nav-btn:hover:not(:disabled) {
+        background: #f0f0f0;
+    }
+}
+
+/* ==================== КАРУСЕЛЬ КОНТЕЙНЕР ==================== */
+.main-courses-carousel-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    overflow: hidden;
+}
+
+.main-courses-carousel {
+    overflow: hidden;
+    position: relative;
+}
+
+.main-courses-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== СЛАЙД ==================== */
+.main-course-slide {
+    flex: 0 0 calc(25% - 15px);
+    width: calc(25% - 15px);
+    min-width: calc(25% - 15px);
+    max-width: calc(25% - 15px);
+}
+
+/* ==================== КАРТКА КУРСУ (НОВА СТРУКТУРА) ==================== */
+.main-course-card {
+    background: transparent;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.main-course-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ==================== ВЕРХ 10% (ПРОЗОРИЙ ФОН) ==================== */
+.course-card-top {
+    padding: 16px 16px 12px 16px;
+    background: transparent;
+    min-height: 10%;
+}
+
+/* КУРС #X - тонкий текст */
+.course-number {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: #666666;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+[data-theme="dark"] .course-number {
+    color: #999999;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .course-number {
+        color: #999999;
+    }
+}
+
+/* НАЗВА КУРСУ */
+.course-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+[data-theme="dark"] .course-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .course-title {
+        color: #ffffff;
+    }
+}
+
+/* ==================== ЗОБРАЖЕННЯ 80% ЗІ СКРУГЛЕНИМИ КУТАМИ ==================== */
+.course-image-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-image {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #e8e8e8;
+    position: relative;
+}
+
+.course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.main-course-card:hover .course-image img {
+    transform: scale(1.03);
+}
+
+.course-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+}
+
+[data-theme="dark"] .course-image-placeholder {
+    background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .course-image-placeholder {
+        background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+    }
+}
+
+/* ==================== КНОПКА "ОГЛЯД КУРСУ" (ЯК У HERO) ==================== */
+.course-btn {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.course-btn:hover {
+    background: #f8f8f8;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.course-btn:active {
+    transform: translateY(0);
+}
+
+.course-btn-text {
+    display: inline-block;
+    color: #1a1a1a;
+}
+
+.course-btn-arrow {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.course-btn-arrow::after {
+    content: "→";
+    font-size: 1.125rem;
+    color: #d32f2f;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+}
+
+/* ==================== НИЗ 10% (ПРОЗОРИЙ ФОН) ==================== */
+.course-card-bottom {
+    padding: 12px 16px 16px 16px;
+    background: transparent;
+    min-height: 10%;
+}
+
+/* ОПИС КУРСУ */
+.course-description {
+    font-size: 0.8125rem;
+    color: #666666;
+    line-height: 1.5;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+[data-theme="dark"] .course-description {
+    color: #999999;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .course-description {
+        color: #999999;
+    }
+}
+
+/* ==================== ПОРОЖНІЙ СТАН ==================== */
+.no-main-courses {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666666;
+    font-size: 1.125rem;
+}
+
+[data-theme="dark"] .no-main-courses {
+    color: #999999;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .no-main-courses {
+        color: #999999;
+    }
+}
+
+/* ==================== ADAPTIVE TABLET (768px - 1024px) ==================== */
+@media (max-width: 1024px) {
+    .main-course-slide {
+        flex: 0 0 calc(33.333% - 14px);
+        width: calc(33.333% - 14px);
+        min-width: calc(33.333% - 14px);
+        max-width: calc(33.333% - 14px);
+    }
+
+    .main-courses-header .section-title {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-courses-section {
+        padding: 40px 0;
+    }
+
+    .main-courses-header {
+        margin-bottom: 30px;
+    }
+
+    .main-courses-header .section-title {
+        font-size: 1.5rem;
+    }
+
+    .course-nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .course-nav-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .main-course-slide {
+        flex: 0 0 calc(50% - 10px);
+        width: calc(50% - 10px);
+        min-width: calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+
+    .main-courses-track {
+        gap: 16px;
+    }
+
+    .course-image {
+        min-height: 220px;
+        border-radius: 10px;
+    }
+
+    .course-card-top {
+        padding: 12px 12px 10px 12px;
+    }
+
+    .course-title {
+        font-size: 1rem;
+    }
+
+    .course-btn {
+        padding: 10px 16px;
+        font-size: 0.8125rem;
+        bottom: 12px;
+        left: 12px;
+    }
+
+    .course-btn-arrow {
+        width: 20px;
+        height: 20px;
+    }
+
+    .course-btn-arrow::after {
+        font-size: 1rem;
+    }
+
+    .course-card-bottom {
+        padding: 10px 12px 12px 12px;
+    }
+
+    .course-description {
+        font-size: 0.75rem;
+    }
+}
+
+/* ==================== ADAPTIVE MOBILE (< 576px) ==================== */
+@media (max-width: 576px) {
+    .main-courses-section {
+        padding: 32px 0;
+    }
+
+    .main-courses-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .main-courses-header .section-title {
+        font-size: 1.375rem;
+    }
+
+    .main-courses-navigation {
+        align-self: flex-end;
+    }
+
+    .course-nav-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .course-nav-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .main-courses-carousel-container {
+        padding: 0 12px;
+    }
+
+    .main-course-slide {
+        flex: 0 0 100%;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .main-courses-track {
+        gap: 12px;
+    }
+
+    .course-image {
+        min-height: 240px;
+    }
+}
+
+/* ==================== iOS SAFARI ОПТИМІЗАЦІЯ ==================== */
+@supports (-webkit-touch-callout: none) {
+    .course-nav-btn {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+    }
+
+    .course-btn {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+    }
+
+    .main-course-card {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .course-image {
+        -webkit-mask-image: -webkit-radial-gradient(white, black);
+        mask-image: radial-gradient(white, black);
+    }
+}
+
+/* ==================== ACCESSIBILITY ==================== */
+@media (prefers-reduced-motion: reduce) {
+    .main-courses-track {
+        transition: none;
+    }
+
+    .main-course-card,
+    .course-image img,
+    .course-nav-btn,
+    .course-btn {
+        transition: none;
+    }
+}
