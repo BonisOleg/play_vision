@@ -46,7 +46,7 @@
         {% endif %}
         <div class="section-overlay section-overlay--gradient"></div>
 
-        <div class="section-content hero-with-frame" {% if cms_hero_slides %}data-cms-slides="true" {% endif %}>
+        <div class="section-content hero-new-design" {% if cms_hero_slides %}data-cms-slides="true" {% endif %}>
             {% if cms_hero_slides %}
             <!-- CMS Slides Data for JS -->
             <script type="application/json" id="hero-slides-data">
@@ -55,7 +55,6 @@
                 {
                     "title": "{{ slide.title|escapejs }}",
                     "subtitle": "{{ slide.subtitle|escapejs }}",
-                    "badge": "{{ slide.badge|escapejs }}",
                     "ctaText": "{{ slide.cta_text|escapejs }}",
                     "ctaUrl": "{{ slide.cta_url|escapejs }}"
                 }{% if not forloop.last %},{% endif %}
@@ -63,21 +62,25 @@
             ]
             </script>
             {% with first_slide=cms_hero_slides.0 %}
-            {% if first_slide.badge %}<div class="hero-badge">{{ first_slide.badge }}</div>{% endif %}
             <h1 class="hero-title">{{ first_slide.title }}</h1>
             {% if first_slide.subtitle %}<p class="hero-subtitle">{{ first_slide.subtitle }}</p>{% endif %}
             {% if first_slide.cta_text and first_slide.cta_url %}
             <div class="hero-buttons">
-                <a href="{{ first_slide.cta_url }}" class="btn btn-primary">{{ first_slide.cta_text }}</a>
+                <a href="{{ first_slide.cta_url }}" class="btn btn-primary hero-btn-new">
+                    <span class="btn-text">{{ first_slide.cta_text }}</span>
+                    <span class="btn-logo-space"></span>
+                </a>
             </div>
             {% endif %}
             {% endwith %}
             {% else %}
-            <div class="hero-badge">ГОЛОВНЕ ЗАРАЗ</div>
-            <h1 class="hero-title">Продуктивна практика у футбольних клубах</h1>
-            <p class="hero-subtitle">Реальні кейси, стажування та менторинг з професіоналами індустрії</p>
+            <h1 class="hero-title">Продуктивна практика<br>у футбольних клубах</h1>
+            <p class="hero-subtitle">Реальні кейси, стажування та менторинг з<br>професіоналами індустрії</p>
             <div class="hero-buttons">
-                <a href="/about/" class="btn btn-primary">Дізнатись більше</a>
+                <a href="/about/" class="btn btn-primary hero-btn-new">
+                    <span class="btn-text">Детальніше</span>
+                    <span class="btn-logo-space"></span>
+                </a>
             </div>
             {% endif %}
 

@@ -75,7 +75,13 @@
 }
 
 .section-overlay--gradient {
-    background: linear-gradient(135deg, var(--color-secondary-alpha-80) 0%, var(--color-primary-alpha-80) 100%);
+    background: linear-gradient(90deg,
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(0, 0, 0, 0.85) 30%,
+            rgba(0, 0, 0, 0.5) 50%,
+            rgba(0, 0, 0, 0.65) 65%,
+            rgba(0, 0, 0, 0.3) 80%,
+            transparent 100%);
 }
 
 .section-overlay--cta-gradient {
@@ -132,6 +138,21 @@
     margin: 0 auto;
 }
 
+/* NEW DESIGN - 1в1 як на скріні */
+.hero-new-design {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+    padding: 4rem 0 4rem 5%;
+    max-width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+}
+
 /* Tablet responsiveness */
 @media (min-width: 769px) and (max-width: 1024px) {
     .fullscreen-section {
@@ -150,11 +171,51 @@
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-lg);
     }
+
+    /* NEW DESIGN Tablet */
+    .hero-new-design {
+        padding: 3.5rem 5% 3.5rem 5%;
+    }
+
+    .hero-new-design .hero-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        max-width: 90%;
+    }
+
+    .hero-new-design .hero-subtitle {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        max-width: 90%;
+    }
 }
 
 @media (max-width: 768px) {
     .hero-section.hero-bordered .section-content {
         padding: 2rem;
+    }
+
+    /* NEW DESIGN Mobile */
+    .hero-new-design {
+        padding: 3rem 5% 3rem 5%;
+    }
+
+    .hero-new-design .hero-title {
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
+        max-width: 100%;
+    }
+
+    .hero-new-design .hero-subtitle {
+        font-size: clamp(0.95rem, 3vw, 1.125rem);
+        max-width: 100%;
+    }
+
+    .hero-btn-new {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+
+    .hero-btn-new .btn-logo-space {
+        width: 28px;
+        height: 28px;
     }
 }
 
@@ -227,6 +288,19 @@
     text-shadow: 0 4px 8px var(--shadow-alpha-80), 0 2px 4px var(--shadow-alpha-60);
 }
 
+/* NEW DESIGN Title */
+.hero-new-design .hero-title {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+    max-width: 600px;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+}
+
 .hero-subtitle {
     font-size: clamp(1.125rem, 2vw, 1.5rem);
     margin-bottom: var(--spacing-xxl);
@@ -237,12 +311,31 @@
     text-shadow: 0 2px 4px var(--shadow-alpha-70);
 }
 
+/* NEW DESIGN Subtitle */
+.hero-new-design .hero-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    margin-bottom: var(--spacing-xl);
+    opacity: 0.85;
+    max-width: 550px;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
 .hero-buttons {
     display: flex;
     gap: var(--spacing-md);
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: var(--spacing-xxl);
+}
+
+/* NEW DESIGN Buttons */
+.hero-new-design .hero-buttons {
+    justify-content: flex-start;
+    margin-bottom: var(--spacing-lg);
 }
 
 /* БІЛА кнопка зі стрілкою (8-й скрін) */
@@ -271,6 +364,53 @@
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
+/* NEW DESIGN - Кнопка з місцем під logo */
+.hero-btn-new {
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-btn-new .btn-text {
+    display: inline-block;
+}
+
+.hero-btn-new .btn-logo-space {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/icons/minilogo.png') no-repeat center center;
+    background-size: contain;
+    position: relative;
+}
+
+.hero-btn-new .btn-logo-space::after {
+    content: "→";
+    font-size: 1.25rem;
+    color: #d32f2f;
+    font-weight: bold;
+    position: absolute;
+    right: -8px;
+}
+
+.hero-btn-new:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
 .hero-btn-outline {
     color: var(--accent-dark);
     border-color: var(--accent-dark);
@@ -282,6 +422,13 @@
     justify-content: center;
     gap: var(--spacing-sm);
     margin-top: var(--spacing-xl);
+}
+
+/* NEW DESIGN - Точки під кнопкою */
+.hero-new-design .hero-slider-dots {
+    justify-content: flex-start;
+    margin-top: var(--spacing-md);
+    margin-left: 0;
 }
 
 .slider-dot {
@@ -887,6 +1034,41 @@
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
     }
+
+    /* NEW DESIGN Small Mobile */
+    .hero-new-design {
+        padding: 2.5rem 5%;
+    }
+
+    .hero-new-design .hero-title {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .hero-new-design .hero-subtitle {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .hero-btn-new {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        gap: 8px;
+    }
+
+    .hero-btn-new .btn-logo-space {
+        width: 24px;
+        height: 24px;
+    }
+
+    .hero-btn-new .btn-logo-space::after {
+        font-size: 1.1rem;
+        right: -6px;
+    }
+
+    .hero-new-design .hero-slider-dots {
+        margin-top: var(--spacing-sm);
+    }
 }
 
 /* === iOS SAFARI OPTIMIZATIONS === */
@@ -902,7 +1084,8 @@
     .cta-section .btn-outline,
     .carousel-btn,
     .slider-dot,
-    .hexagon {
+    .hexagon,
+    .hero-btn-new {
         -webkit-appearance: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
@@ -914,7 +1097,8 @@
 
     /* Smooth scrolling */
     .fullscreen-container,
-    .section-content {
+    .section-content,
+    .hero-new-design {
         -webkit-overflow-scrolling: touch;
     }
 
@@ -933,9 +1117,19 @@
         transform: translateZ(0);
     }
 
+    /* NEW DESIGN - gradient optimization */
+    .section-overlay--gradient {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
     /* Fix iOS Safari address bar height issues */
     @media screen and (max-width: 768px) {
         .fullscreen-section {
+            min-height: -webkit-fill-available;
+        }
+
+        .hero-new-design {
             min-height: -webkit-fill-available;
         }
     }

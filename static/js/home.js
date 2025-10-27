@@ -54,8 +54,8 @@ class HeroCarousel {
 
         this.titleElement = element.querySelector('.hero-title');
         this.subtitleElement = element.querySelector('.hero-subtitle');
-        this.badgeElement = element.querySelector('.hero-badge');
         this.ctaButton = element.querySelector('.hero-buttons a');
+        this.ctaButtonText = element.querySelector('.hero-buttons a .btn-text');
         this.dotsContainer = element.querySelector('.hero-slider-dots');
 
         this.init();
@@ -66,50 +66,43 @@ class HeroCarousel {
             {
                 title: 'Продуктивна практика у футбольних клубах',
                 subtitle: 'Реальні кейси, стажування та менторинг з професіоналами індустрії',
-                badge: 'ГОЛОВНЕ ЗАРАЗ',
-                ctaText: 'Дізнатись більше',
+                ctaText: 'Детальніше',
                 ctaUrl: '/about/'
             },
             {
                 title: 'Ми відкрились!',
                 subtitle: 'Приєднуйтесь до спільноти футбольних професіоналів України',
-                badge: 'НОВИНА',
-                ctaText: 'Дізнатись більше',
+                ctaText: 'Детальніше',
                 ctaUrl: '/about/'
             },
             {
                 title: 'Івенти',
                 subtitle: 'Вебінари, майстер-класи та форуми від міжнародних експертів',
-                badge: 'ПОДІЯ',
                 ctaText: 'Переглянути івенти',
                 ctaUrl: '/events/'
             },
             {
                 title: 'Хаб знань — долучайся першим',
                 subtitle: 'Ексклюзивні курси та матеріали для розвитку футбольних фахівців',
-                badge: 'НАВЧАННЯ',
                 ctaText: 'До хабу знань',
                 ctaUrl: '/hub/'
             },
             {
                 title: 'КОУЧИНГ',
                 subtitle: 'Індивідуальний підхід до комплексного розвитку кожного футболіста',
-                badge: 'РОЗВИТОК',
-                ctaText: 'Дізнатись більше',
+                ctaText: 'Детальніше',
                 ctaUrl: '/mentor-coaching/'
             },
             {
                 title: 'Про нас',
                 subtitle: 'Дізнайтеся більше про нашу місію, цінності та команду експертів',
-                badge: 'ПРО ПРОЕКТ',
                 ctaText: 'Про нас',
                 ctaUrl: '/about/'
             },
             {
                 title: 'НАПРЯМИ',
                 subtitle: '4 ключових напрямки для професійного зростання у футболі',
-                badge: 'НАПРЯМКИ',
-                ctaText: 'Дізнатись більше',
+                ctaText: 'Детальніше',
                 ctaUrl: '/about/#directions'
             }
         ];
@@ -150,10 +143,6 @@ class HeroCarousel {
     updateSlide() {
         const slide = this.slides[this.currentSlide];
 
-        if (this.badgeElement && slide.badge) {
-            this.badgeElement.textContent = slide.badge;
-        }
-
         if (this.titleElement) {
             this.titleElement.textContent = slide.title;
         }
@@ -164,7 +153,11 @@ class HeroCarousel {
 
         if (this.ctaButton) {
             this.ctaButton.href = slide.ctaUrl;
-            if (slide.ctaText) {
+            // Оновлюємо тільки текст всередині span.btn-text
+            if (this.ctaButtonText && slide.ctaText) {
+                this.ctaButtonText.textContent = slide.ctaText;
+            } else if (slide.ctaText) {
+                // Fallback для старого дизайну
                 this.ctaButton.textContent = slide.ctaText;
             }
         }
