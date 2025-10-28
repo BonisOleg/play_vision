@@ -70,7 +70,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 0;
+    padding: 10px 0;
     margin: 0;
     background-color: var(--unified-bg-color);
 }
@@ -94,7 +94,7 @@
 .unified-sections-wrapper .fullscreen-section {
     height: auto;
     min-height: auto;
-    padding: 80px 0;
+    padding: 20px 0;
     background: transparent;
 }
 
@@ -128,7 +128,7 @@
     }
 
     .unified-sections-wrapper .fullscreen-section {
-        padding: 60px 0;
+        padding: 20px 0;
     }
 
     .unified-sections-wrapper .section-content {
@@ -136,7 +136,7 @@
     }
 
     .decorative-line-wrapper {
-        padding: 30px 0;
+        padding: 10px 0;
     }
 
     .decorative-line-wrapper svg {
@@ -151,7 +151,7 @@
     }
 
     .unified-sections-wrapper .fullscreen-section {
-        padding: 50px 0;
+        padding: 20px 0;
     }
 
     .unified-sections-wrapper .section-content {
@@ -159,7 +159,7 @@
     }
 
     .decorative-line-wrapper {
-        padding: 20px 0;
+        padding: 10px 0;
     }
 
     .decorative-line-wrapper svg {
@@ -196,7 +196,7 @@
 
 /* Ментор-коучинг */
 .unified-sections-wrapper .mentor-coaching-section {
-    padding: 80px 0;
+    padding: 20px 0;
 }
 
 .unified-sections-wrapper .mentor-coaching-section .section-title {

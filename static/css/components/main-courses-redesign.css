@@ -3,7 +3,7 @@
 /* ==================== СЕКЦІЯ ==================== */
 .main-courses-section {
     background: #f5f5f5;
-    padding: 60px 0;
+    padding: 20px 0;
     position: relative;
 }
 
@@ -366,7 +366,7 @@
 
 @media (max-width: 768px) {
     .main-courses-section {
-        padding: 40px 0;
+        padding: 20px 0;
     }
 
     .main-courses-header {
@@ -437,7 +437,7 @@
 /* ==================== ADAPTIVE MOBILE (< 576px) ==================== */
 @media (max-width: 576px) {
     .main-courses-section {
-        padding: 32px 0;
+        padding: 20px 0;
     }
 
     .main-courses-header {

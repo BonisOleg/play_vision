@@ -559,7 +559,7 @@
     z-index: var(--z-section, 20);
     border-radius: 0;
     overflow: hidden;
-    padding: 80px 0;
+    padding: 20px 0;
 }
 
 .experts-section .section-content {
@@ -872,7 +872,7 @@
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .experts-section {
-        padding: 60px 0;
+        padding: 20px 0;
     }
 
     .experts-section .section-content {
@@ -986,7 +986,7 @@
     }
 
     .experts-section {
-        padding: 50px 0;
+        padding: 20px 0;
     }
 
     .experts-section .section-content {
@@ -1081,7 +1081,7 @@
     }
 
     .experts-section {
-        padding: 40px 0;
+        padding: 20px 0;
     }
 
     .experts-section .section-content {
