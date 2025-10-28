@@ -295,7 +295,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 22px;
     /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     text-decoration: none;
     transition: all 0.3s ease;
@@ -311,9 +311,9 @@
 }
 
 .hero-btn-new .btn-logo-space {
-    width: 24px;
+    width: 38px;
     /* ШИРИНА ЛОГОТИПА - зменшено щоб не обрізався */
-    height: 24px;
+    height: 38px;
     /* ВИСОТА ЛОГОТИПА - зменшено щоб не обрізався */
     flex-shrink: 0;
     display: inline-flex;
@@ -1336,19 +1336,6 @@
         opacity: 0.4;
     }
 
-    .mentor-cta .btn-primary {
-        background: #1a1a1a;
-        color: white;
-    }
-
-    .mentor-cta .btn-primary .btn-logo-space {
-        background: #ffffff;
-    }
-
-    .mentor-cta .btn-primary:hover {
-        background: #000000;
-    }
-
     .no-courses {
         color: var(--color-text-light);
     }
@@ -1668,19 +1655,6 @@
             background: var(--color-bg-dark);
             color: var(--color-text-muted);
             opacity: 0.4;
-        }
-
-        .mentor-cta .btn-primary {
-            background: #1a1a1a;
-            color: white;
-        }
-
-        .mentor-cta .btn-primary .btn-logo-space {
-            background: #ffffff;
-        }
-
-        .mentor-cta .btn-primary:hover {
-            background: #000000;
         }
 
         .no-courses {
