@@ -309,10 +309,10 @@
 .mentor-cta {
     margin-top: var(--spacing-xxl);
     margin-bottom: var(--spacing-xxl);
-    text-align: center;
+    text-align: left;
 }
 
-/* ЧОРНА кнопка з білим текстом і білим колом з логотипом (як на скріні) */
+/* ЧОРНА кнопка з білим текстом і білим колом з логотипом */
 .mentor-cta .btn-primary {
     background: #000000;
     color: #ffffff;

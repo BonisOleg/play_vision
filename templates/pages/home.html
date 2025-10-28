@@ -12,8 +12,7 @@
 <link rel="stylesheet" href="{% static 'css/components/mentor-hexagon.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
 <link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
-<link rel="preload" href="{% static 'images/readyhomeday.png' %}" as="image">
-<link rel="preload" href="{% static 'images/readyhomenight.png' %}" as="image">
+<link rel="preload" href="{% static 'images/backlast.png' %}" as="image">
 {% endblock %}
 
 {% block content %}
@@ -130,7 +129,8 @@
                                                 {% if course.thumbnail %}
                                                 <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
                                                 {% else %}
-                                                <div class="course-image-placeholder"></div>
+                                                <img src="{% static 'images/course' %}{{ forloop.counter|default:1 }}.png"
+                                                    alt="{{ course.title }}">
                                                 {% endif %}
                                             </div>
 
@@ -250,6 +250,9 @@
                             <div class="expert-photo">
                                 {% if expert.photo %}
                                 <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                {% else %}
+                                <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
+                                    alt="{{ expert.name }}" loading="lazy">
                                 {% endif %}
                             </div>
                             <div class="expert-card-content">
@@ -264,7 +267,9 @@
                         {% else %}
                         <!-- Fallback: Hardcode experts -->
                         <div class="expert-card">
-                            <div class="expert-photo"></div>
+                            <div class="expert-photo">
+                                <img src="{% static 'images/prof1.png' %}" alt="Dr. Fabian Otte" loading="lazy">
+                            </div>
                             <div class="expert-card-content">
                                 <h3 class="expert-name">Dr. Fabian Otte</h3>
                                 <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
@@ -272,7 +277,9 @@
                             </div>
                         </div>
                         <div class="expert-card">
-                            <div class="expert-photo"></div>
+                            <div class="expert-photo">
+                                <img src="{% static 'images/prof2.png' %}" alt="Dr. Adam Owen" loading="lazy">
+                            </div>
                             <div class="expert-card-content">
                                 <h3 class="expert-name">Dr. Adam Owen</h3>
                                 <p class="expert-specialization">Training Methodology, Session Design</p>
@@ -280,7 +287,9 @@
                             </div>
                         </div>
                         <div class="expert-card">
-                            <div class="expert-photo"></div>
+                            <div class="expert-photo">
+                                <img src="{% static 'images/prof3.png' %}" alt="Prof. Hassane Zouhal" loading="lazy">
+                            </div>
                             <div class="expert-card-content">
                                 <h3 class="expert-name">Prof. Hassane Zouhal</h3>
                                 <p class="expert-specialization">Exercise Physiology, Talent ID</p>
@@ -288,7 +297,9 @@
                             </div>
                         </div>
                         <div class="expert-card">
-                            <div class="expert-photo"></div>
+                            <div class="expert-photo">
+                                <img src="{% static 'images/prof4.png' %}" alt="Dr. Raphael Villatore" loading="lazy">
+                            </div>
                             <div class="expert-card-content">
                                 <h3 class="expert-name">Dr. Raphael Villatore</h3>
                                 <p class="expert-specialization">Sports Medicine & Nutrition</p>

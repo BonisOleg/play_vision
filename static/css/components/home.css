@@ -746,7 +746,7 @@
 }
 
 .cta-simple {
-    background-image: url('/static/images/readyhomeday.png');
+    background-image: url('/static/images/backlast.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -762,12 +762,12 @@
 }
 
 [data-theme="dark"] .cta-simple {
-    background-image: url('/static/images/readyhomenight.png');
+    background-image: url('/static/images/backlast.png');
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .cta-simple {
-        background-image: url('/static/images/readyhomenight.png');
+        background-image: url('/static/images/backlast.png');
     }
 }
 
