@@ -10,8 +10,7 @@
 <link rel="stylesheet" href="{% static 'css/components/parallax.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/mentor-hexagon.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
-<link rel="preload" href="{% static 'images/hiroday.png' %}" as="image">
-<link rel="preload" href="{% static 'images/hironight.png' %}" as="image">
+<link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
 <link rel="preload" href="{% static 'images/readyhomeday.png' %}" as="image">
 <link rel="preload" href="{% static 'images/readyhomenight.png' %}" as="image">
 {% endblock %}
@@ -41,10 +40,7 @@
         {% endwith %}
         {% else %}
         <div class="section-bg">
-            <img class="section-bg-image hero-bg-light" src="{% static 'images/hiroday.png' %}" alt="Play Vision Hero"
-                loading="eager">
-            <img class="section-bg-image hero-bg-dark" src="{% static 'images/hironight.png' %}" alt="Play Vision Hero"
-                loading="eager">
+            <img class="section-bg-image" src="{% static 'images/Hiro.png' %}" alt="Play Vision Hero" loading="eager">
         </div>
         {% endif %}
         <div class="section-overlay section-overlay--gradient"></div>
@@ -224,7 +220,7 @@
                     </div>
 
                     <div class="mentor-cta">
-                        <a href="/mentor-coaching/" class="btn btn-primary hero-btn-new">
+                        <a href="/mentor-coaching/" class="btn btn-primary">
                             <span class="btn-text">Детальніше</span>
                             <span class="btn-logo-space"></span>
                         </a>
@@ -317,7 +313,10 @@
         <div class="cta-content">
             <h2 class="cta-title">Готові приєднатись до спільноти PlayVision?</h2>
             <div class="cta-buttons">
-                <a href="{% url 'accounts:register' %}" class="btn btn-primary">Доєднатись</a>
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary">
+                    <span class="btn-text">Доєднатись</span>
+                    <span class="btn-logo-space"></span>
+                </a>
                 <a href="{% url 'core:pricing' %}" class="btn btn-outline">Детальніше про підписку</a>
             </div>
         </div>

@@ -312,7 +312,7 @@
     text-align: center;
 }
 
-/* Червона кнопка під гексагонами (8-й скрін) */
+/* Червона кнопка з білим логотипом під гексагонами */
 .mentor-cta .btn-primary {
     background: #d32f2f;
     color: #ffffff;
@@ -324,13 +324,26 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
     transition: all 0.3s ease;
 }
 
-.mentor-cta .btn-primary::after {
-    content: "→";
-    font-size: 1.3rem;
+.mentor-cta .btn-primary .btn-text {
+    display: inline-block;
+}
+
+.mentor-cta .btn-primary .btn-logo-space {
+    width: 34px;
+    /* ШИРИНА БІЛОГО ЛОГОТИПА - можна міняти */
+    height: 34px;
+    /* ВИСОТА БІЛОГО ЛОГОТИПА - можна міняти */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
+    background-size: contain;
+    position: relative;
 }
 
 .mentor-cta .btn-primary:hover {
@@ -391,6 +404,12 @@
         height: 20px;
     }
 
+    .mentor-cta .btn-primary .btn-logo-space {
+        width: 30px;
+        /* Планшетна версія - можна міняти */
+        height: 30px;
+    }
+
     .ecosystem-diagram {
         height: 400px;
         max-width: 400px;
@@ -441,6 +460,12 @@
 
     .carousel-btn-next {
         right: 2px;
+    }
+
+    .mentor-cta .btn-primary .btn-logo-space {
+        width: 26px;
+        /* Маленький мобільний - можна міняти */
+        height: 26px;
     }
 }
 

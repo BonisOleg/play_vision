@@ -19,44 +19,7 @@
 
 /* Section bg, overlay styles moved to parallax.css to avoid conflicts */
 
-/* Hero background switching for light/dark theme */
-.hero-bg-light,
-.hero-bg-dark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: opacity var(--transition-base);
-}
-
-.hero-bg-light {
-    opacity: 1;
-}
-
-.hero-bg-dark {
-    opacity: 0;
-}
-
-[data-theme="dark"] .hero-bg-light {
-    opacity: 0;
-}
-
-[data-theme="dark"] .hero-bg-dark {
-    opacity: 1;
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .hero-bg-light {
-        opacity: 0;
-    }
-
-    [data-theme="auto"] .hero-bg-dark {
-        opacity: 1;
-    }
-}
+/* Hero background - одне зображення для всіх тем */
 
 /* Section overlay base styles moved to parallax.css */
 
@@ -213,6 +176,7 @@
 
     .hero-btn-new .btn-logo-space {
         width: 28px;
+        /* Мобільна версія - можна міняти */
         height: 28px;
     }
 }
@@ -328,7 +292,7 @@
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
-/* NEW DESIGN - Кнопка з місцем під logo */
+/* NEW DESIGN - Кнопка з чорним логотипом (Hero) */
 .hero-btn-new {
     background: #ffffff;
     color: #000000;
@@ -340,6 +304,7 @@
     display: inline-flex;
     align-items: center;
     gap: 12px;
+    /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -351,22 +316,15 @@
 
 .hero-btn-new .btn-logo-space {
     width: 32px;
+    /* ШИРИНА ЛОГОТИПА - можна міняти */
     height: 32px;
+    /* ВИСОТА ЛОГОТИПА - можна міняти */
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: url('/static/icons/minilogo.png') no-repeat center center;
+    background: url('/static/images/black_botton.png') no-repeat center center;
     background-size: contain;
     position: relative;
-}
-
-.hero-btn-new .btn-logo-space::after {
-    content: "→";
-    font-size: 1.25rem;
-    color: #d32f2f;
-    font-weight: bold;
-    position: absolute;
-    right: -8px;
 }
 
 .hero-btn-new:hover {
@@ -835,12 +793,10 @@
     flex-wrap: wrap;
 }
 
-/* CTA кнопки (8-й скрін) */
+/* CTA кнопка "Доєднатись" з білим логотипом */
 .cta-section .btn-primary {
     background: #1a1a1a;
-    /* Темна кнопка (8-й скрін) */
     color: #d32f2f;
-    /* Червоний текст */
     border: 2px solid #1a1a1a;
     font-weight: 600;
     padding: 16px 32px;
@@ -848,9 +804,28 @@
     text-decoration: none;
     display: inline-flex;
     align-items: center;
+    gap: 12px;
+    /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     font-size: 1.125rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
+}
+
+.cta-section .btn-primary .btn-text {
+    display: inline-block;
+}
+
+.cta-section .btn-primary .btn-logo-space {
+    width: 34px;
+    /* ШИРИНА БІЛОГО ЛОГОТИПА - можна міняти */
+    height: 34px;
+    /* ВИСОТА БІЛОГО ЛОГОТИПА - можна міняти */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
+    background-size: contain;
+    position: relative;
 }
 
 .cta-section .btn-primary:hover {
@@ -986,6 +961,12 @@
         font-size: 1.1rem;
     }
 
+    .cta-section .btn-primary .btn-logo-space {
+        width: 30px;
+        /* Планшетна версія - можна міняти */
+        height: 30px;
+    }
+
     .courses-header {
         flex-direction: column;
         gap: var(--spacing-md);
@@ -1079,6 +1060,12 @@
         min-height: 48px;
     }
 
+    .cta-section .btn-primary .btn-logo-space {
+        width: 28px;
+        /* Маленький мобільний - можна міняти */
+        height: 28px;
+    }
+
     .values-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1152,12 +1139,8 @@
 
     .hero-btn-new .btn-logo-space {
         width: 24px;
+        /* Маленький мобільний - можна міняти */
         height: 24px;
-    }
-
-    .hero-btn-new .btn-logo-space::after {
-        font-size: 1.1rem;
-        right: -6px;
     }
 
     .hero-new-design .hero-slider-dots {

@@ -245,7 +245,7 @@
     }
 }
 
-/* ==================== КНОПКА "ОГЛЯД КУРСУ" (ЯК У HERO) ==================== */
+/* ==================== КНОПКА "ОГЛЯД КУРСУ" З ЧОРНИМ ЛОГОТИПОМ ==================== */
 .course-btn {
     position: absolute;
     bottom: 16px;
@@ -257,6 +257,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     text-decoration: none;
     color: #1a1a1a;
     font-weight: 600;
@@ -281,21 +282,16 @@
 }
 
 .course-btn-arrow {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    /* ШИРИНА ЛОГОТИПА - можна міняти */
+    height: 30px;
+    /* ВИСОТА ЛОГОТИПА - можна міняти */
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    background: url('/static/images/black_botton.png') no-repeat center center;
+    background-size: contain;
     position: relative;
-}
-
-.course-btn-arrow::after {
-    content: "→";
-    font-size: 1.125rem;
-    color: #d32f2f;
-    font-weight: bold;
-    position: absolute;
-    right: 0;
 }
 
 /* ==================== НИЗ 10% (ПРОЗОРИЙ ФОН) ==================== */
@@ -416,12 +412,9 @@
     }
 
     .course-btn-arrow {
-        width: 20px;
-        height: 20px;
-    }
-
-    .course-btn-arrow::after {
-        font-size: 1rem;
+        width: 26px;
+        /* Планшетна версія - можна міняти */
+        height: 26px;
     }
 
     .course-card-bottom {
@@ -481,6 +474,12 @@
 
     .course-image {
         min-height: 240px;
+    }
+
+    .course-btn-arrow {
+        width: 24px;
+        /* Маленький мобільний - можна міняти */
+        height: 24px;
     }
 }
 
