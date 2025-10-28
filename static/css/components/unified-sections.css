@@ -72,6 +72,7 @@
     align-items: center;
     padding: 40px 0;
     margin: 0;
+    background-color: var(--unified-bg-color);
 }
 
 .decorative-line-wrapper svg {

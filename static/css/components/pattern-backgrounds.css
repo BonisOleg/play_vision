@@ -1,41 +1,19 @@
 /* ============================================ */
-/* PATTERN BACKGROUNDS - Паттерн фони для блоків */
+/* PATTERN BACKGROUNDS - Паттерн фон для unified-sections-wrapper */
 /* ============================================ */
 
 /* 
- * Дальній фон з паттерном для блоків:
- * - Блок 2: Наші основні програми (main-courses-section)
- * - Блок 3: Ментор-коучинг (mentor-coaching-section)
- * - Блок 4: Команда професіоналів (experts-section)
+ * Дальній фон з паттерном ЗА блоками 2, 3, 4:
+ * - unified-sections-wrapper (обгортка всіх трьох секцій)
+ * - Один великий паттерн, розтягнутий на весь розмір
  */
 
-/* === БАЗОВІ СТИЛІ ПАТТЕРН-ФОНУ === */
-.pattern-background {
-    position: relative;
-    z-index: 1;
-}
-
-.pattern-background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.15;
-    background-repeat: repeat;
-    background-position: center center;
-    background-size: 400px 400px;
-    pointer-events: none;
-}
-
-/* === БЛОК 2: НАШІ ОСНОВНІ ПРОГРАМИ === */
-.main-courses-section {
+/* === UNIFIED SECTIONS WRAPPER - ПАТТЕРН ФОН === */
+.unified-sections-wrapper {
     position: relative;
 }
 
-.main-courses-section::before {
+.unified-sections-wrapper::before {
     content: '';
     position: absolute;
     top: 0;
@@ -43,236 +21,106 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.08;
-    background-repeat: repeat;
+    opacity: 0.15;
+    background-repeat: no-repeat;
     background-position: center center;
-    background-size: 350px 350px;
+    background-size: cover;
     pointer-events: none;
 }
 
 /* Світла тема - використовує світлий паттерн */
-[data-theme="light"] .main-courses-section::before {
+[data-theme="light"] .unified-sections-wrapper::before {
     background-image: url('/static/images/patterns/pattern-light.webp');
     opacity: 0.12;
 }
 
 /* Темна тема - використовує темний паттерн */
-[data-theme="dark"] .main-courses-section::before {
+[data-theme="dark"] .unified-sections-wrapper::before {
     background-image: url('/static/images/patterns/pattern-dark.webp');
-    opacity: 0.08;
+    opacity: 0.1;
 }
 
 /* Авто режим - слідує системним налаштуванням */
 @media (prefers-color-scheme: light) {
-    [data-theme="auto"] .main-courses-section::before {
+    [data-theme="auto"] .unified-sections-wrapper::before {
         background-image: url('/static/images/patterns/pattern-light.webp');
         opacity: 0.12;
     }
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .main-courses-section::before {
+    [data-theme="auto"] .unified-sections-wrapper::before {
         background-image: url('/static/images/patterns/pattern-dark.webp');
-        opacity: 0.08;
-    }
-}
-
-/* Контент має бути поверх паттерну */
-.main-courses-section .section-content {
-    position: relative;
-    z-index: 1;
-}
-
-/* === БЛОК 3: МЕНТОР-КОУЧИНГ === */
-.mentor-coaching-section {
-    position: relative;
-}
-
-.mentor-coaching-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 0.06;
-    background-repeat: repeat;
-    background-position: center center;
-    background-size: 400px 400px;
-    pointer-events: none;
-}
-
-/* Світла тема */
-[data-theme="light"] .mentor-coaching-section::before {
-    background-image: url('/static/images/patterns/pattern-light.webp');
-    opacity: 0.1;
-}
-
-/* Темна тема */
-[data-theme="dark"] .mentor-coaching-section::before {
-    background-image: url('/static/images/patterns/pattern-dark.webp');
-    opacity: 0.06;
-}
-
-/* Авто режим */
-@media (prefers-color-scheme: light) {
-    [data-theme="auto"] .mentor-coaching-section::before {
-        background-image: url('/static/images/patterns/pattern-light.webp');
         opacity: 0.1;
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .mentor-coaching-section::before {
-        background-image: url('/static/images/patterns/pattern-dark.webp');
-        opacity: 0.06;
-    }
-}
-
-/* Контент поверх паттерну */
-.mentor-coaching-section .section-content {
-    position: relative;
-    z-index: 1;
-}
-
-/* === БЛОК 4: КОМАНДА ПРОФЕСІОНАЛІВ === */
-.experts-section {
-    position: relative;
-}
-
-.experts-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 0.08;
-    background-repeat: repeat;
-    background-position: center center;
-    background-size: 380px 380px;
-    pointer-events: none;
-}
-
-/* Світла тема */
-[data-theme="light"] .experts-section::before {
-    background-image: url('/static/images/patterns/pattern-light.webp');
-    opacity: 0.12;
-}
-
-/* Темна тема */
-[data-theme="dark"] .experts-section::before {
-    background-image: url('/static/images/patterns/pattern-dark.webp');
-    opacity: 0.08;
-}
-
-/* Авто режим */
-@media (prefers-color-scheme: light) {
-    [data-theme="auto"] .experts-section::before {
-        background-image: url('/static/images/patterns/pattern-light.webp');
-        opacity: 0.12;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .experts-section::before {
-        background-image: url('/static/images/patterns/pattern-dark.webp');
-        opacity: 0.08;
-    }
-}
-
-/* Контент поверх паттерну */
-.experts-section .section-content {
+/* Контейнер має бути поверх паттерну */
+.unified-sections-container {
     position: relative;
     z-index: 1;
 }
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
+    .unified-sections-wrapper::before {
+        background-size: cover;
+        opacity: 0.1;
+    }
 
-    .main-courses-section::before,
-    .mentor-coaching-section::before,
-    .experts-section::before {
-        background-size: 300px 300px;
+    [data-theme="light"] .unified-sections-wrapper::before {
+        opacity: 0.1;
+    }
+
+    [data-theme="dark"] .unified-sections-wrapper::before {
+        opacity: 0.08;
     }
 }
 
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
-    .main-courses-section::before {
-        background-size: 250px 250px;
-        opacity: 0.06;
-    }
-
-    .mentor-coaching-section::before {
-        background-size: 280px 280px;
-        opacity: 0.05;
-    }
-
-    .experts-section::before {
-        background-size: 260px 260px;
-        opacity: 0.07;
-    }
-
-    /* Світла тема на мобільних */
-    [data-theme="light"] .main-courses-section::before,
-    [data-theme="light"] .mentor-coaching-section::before,
-    [data-theme="light"] .experts-section::before {
+    .unified-sections-wrapper::before {
+        background-size: cover;
         opacity: 0.08;
     }
 
-    /* Темна тема на мобільних */
-    [data-theme="dark"] .main-courses-section::before,
-    [data-theme="dark"] .mentor-coaching-section::before,
-    [data-theme="dark"] .experts-section::before {
-        opacity: 0.05;
+    [data-theme="light"] .unified-sections-wrapper::before {
+        opacity: 0.08;
+    }
+
+    [data-theme="dark"] .unified-sections-wrapper::before {
+        opacity: 0.06;
     }
 }
 
 /* === МАЛА МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 480px) {
+    .unified-sections-wrapper::before {
+        background-size: cover;
+        opacity: 0.06;
+    }
 
-    .main-courses-section::before,
-    .mentor-coaching-section::before,
-    .experts-section::before {
-        background-size: 200px 200px;
+    [data-theme="light"] .unified-sections-wrapper::before {
+        opacity: 0.06;
+    }
+
+    [data-theme="dark"] .unified-sections-wrapper::before {
         opacity: 0.05;
-    }
-
-    [data-theme="light"] .main-courses-section::before,
-    [data-theme="light"] .mentor-coaching-section::before,
-    [data-theme="light"] .experts-section::before {
-        opacity: 0.07;
-    }
-
-    [data-theme="dark"] .main-courses-section::before,
-    [data-theme="dark"] .mentor-coaching-section::before,
-    [data-theme="dark"] .experts-section::before {
-        opacity: 0.04;
     }
 }
 
 /* === iOS SAFARI ОПТИМІЗАЦІЯ === */
 @supports (-webkit-touch-callout: none) {
-
-    .main-courses-section::before,
-    .mentor-coaching-section::before,
-    .experts-section::before {
+    .unified-sections-wrapper::before {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
 
-    /* На iOS Safari background-size може бути проблемою, тому трохи зменшуємо */
     @media screen and (max-width: 768px) {
-
-        .main-courses-section::before,
-        .mentor-coaching-section::before,
-        .experts-section::before {
-            background-size: 220px 220px;
+        .unified-sections-wrapper::before {
+            background-size: cover;
         }
     }
 }
@@ -281,32 +129,22 @@
 @supports not (background-image: url('/static/images/patterns/pattern-light.webp')) {
 
     /* Якщо WebP не підтримується, використовуємо PNG */
-    [data-theme="light"] .main-courses-section::before,
-    [data-theme="light"] .mentor-coaching-section::before,
-    [data-theme="light"] .experts-section::before {
+    [data-theme="light"] .unified-sections-wrapper::before {
         background-image: url('/static/images/patterns/pattern-light.png');
     }
 
-    [data-theme="dark"] .main-courses-section::before,
-    [data-theme="dark"] .mentor-coaching-section::before,
-    [data-theme="dark"] .experts-section::before {
+    [data-theme="dark"] .unified-sections-wrapper::before {
         background-image: url('/static/images/patterns/pattern-dark.png');
     }
 
     @media (prefers-color-scheme: light) {
-
-        [data-theme="auto"] .main-courses-section::before,
-        [data-theme="auto"] .mentor-coaching-section::before,
-        [data-theme="auto"] .experts-section::before {
+        [data-theme="auto"] .unified-sections-wrapper::before {
             background-image: url('/static/images/patterns/pattern-light.png');
         }
     }
 
     @media (prefers-color-scheme: dark) {
-
-        [data-theme="auto"] .main-courses-section::before,
-        [data-theme="auto"] .mentor-coaching-section::before,
-        [data-theme="auto"] .experts-section::before {
+        [data-theme="auto"] .unified-sections-wrapper::before {
             background-image: url('/static/images/patterns/pattern-dark.png');
         }
     }
