@@ -555,7 +555,7 @@
 */
 
 .experts-section {
-    background: #fafafa;
+    background: transparent;
     position: relative;
     z-index: var(--z-section, 20);
     border-radius: 0;
@@ -1377,7 +1377,7 @@
 
     /* === EXPERT CARDS (Команда професіоналів) === */
     .experts-section {
-        background: var(--color-bg);
+        background: transparent;
     }
 
     .experts-section .section-title {
@@ -1698,7 +1698,7 @@
 
         /* === EXPERT CARDS (Команда професіоналів) === */
         .experts-section {
-            background: var(--color-bg);
+            background: transparent;
         }
 
         .experts-section .section-title {

@@ -189,11 +189,6 @@
     z-index: 1;
 }
 
-/* Видаляємо старий фон experts-bg.jpg якщо був */
-.experts-section .section-bg {
-    display: none;
-}
-
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
 
