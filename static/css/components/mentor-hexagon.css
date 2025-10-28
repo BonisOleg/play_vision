@@ -118,12 +118,14 @@
     transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) scale(1.02);
 }
 
-/* ЛОГОТИП */
+/* ЛОГОТИП - ЦЕНТРУВАННЯ */
 .hexagon-logo {
     width: 220px;
     height: 75px;
     object-fit: contain;
     display: block;
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 /* ОКРЕМІ ГЕКСАГОНИ */
