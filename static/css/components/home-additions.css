@@ -317,39 +317,45 @@
     background: #d32f2f;
     color: #ffffff;
     border: none;
-    padding: 16px 36px;
+    padding: 14px 28px 14px 32px;
     font-size: 1.125rem;
     font-weight: 600;
     border-radius: 50px;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 12px;
     /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
     transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    min-height: 52px;
 }
 
 .mentor-cta .btn-primary .btn-text {
     display: inline-block;
+    line-height: 1.2;
 }
 
 .mentor-cta .btn-primary .btn-logo-space {
-    width: 34px;
+    width: 32px;
     /* ШИРИНА БІЛОГО ЛОГОТИПА - можна міняти */
-    height: 34px;
+    height: 32px;
     /* ВИСОТА БІЛОГО ЛОГОТИПА - можна міняти */
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: url('/static/images/white_botton.png') no-repeat center center;
     background-size: contain;
-    position: relative;
 }
 
 .mentor-cta .btn-primary:hover {
     background: #c62828;
     box-shadow: 0 6px 25px rgba(211, 47, 47, 0.4);
     transform: translateY(-2px);
+    text-decoration: none;
 }
 
 /* Button sizes видалено - тепер у main.css */
@@ -404,10 +410,16 @@
         height: 20px;
     }
 
+    .mentor-cta .btn-primary {
+        padding: 12px 24px 12px 28px;
+        font-size: 1.0625rem;
+        min-height: 48px;
+    }
+
     .mentor-cta .btn-primary .btn-logo-space {
-        width: 30px;
+        width: 28px;
         /* Планшетна версія - можна міняти */
-        height: 30px;
+        height: 28px;
     }
 
     .ecosystem-diagram {
@@ -462,10 +474,17 @@
         right: 2px;
     }
 
+    .mentor-cta .btn-primary {
+        padding: 10px 20px 10px 24px;
+        font-size: 1rem;
+        min-height: 44px;
+        gap: 10px;
+    }
+
     .mentor-cta .btn-primary .btn-logo-space {
-        width: 26px;
+        width: 24px;
         /* Маленький мобільний - можна міняти */
-        height: 26px;
+        height: 24px;
     }
 }
 

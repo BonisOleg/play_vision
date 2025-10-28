@@ -170,14 +170,15 @@
     }
 
     .hero-btn-new {
-        padding: 12px 20px;
+        padding: 10px 20px 10px 24px;
         font-size: 0.95rem;
+        min-height: 44px;
     }
 
     .hero-btn-new .btn-logo-space {
-        width: 28px;
+        width: 26px;
         /* Мобільна версія - можна міняти */
-        height: 28px;
+        height: 26px;
     }
 }
 
@@ -297,40 +298,45 @@
     background: #ffffff;
     color: #000000;
     border: none;
-    padding: 14px 24px;
+    padding: 12px 24px 12px 28px;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 50px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    min-height: 48px;
 }
 
 .hero-btn-new .btn-text {
     display: inline-block;
+    line-height: 1.2;
 }
 
 .hero-btn-new .btn-logo-space {
-    width: 32px;
+    width: 28px;
     /* ШИРИНА ЛОГОТИПА - можна міняти */
-    height: 32px;
+    height: 28px;
     /* ВИСОТА ЛОГОТИПА - можна міняти */
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: url('/static/images/black_botton.png') no-repeat center center;
     background-size: contain;
-    position: relative;
 }
 
 .hero-btn-new:hover {
     background: #f5f5f5;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
 }
 
 .hero-btn-outline {
@@ -1132,15 +1138,16 @@
     }
 
     .hero-btn-new {
-        padding: 10px 18px;
+        padding: 8px 16px 8px 20px;
         font-size: 0.9rem;
         gap: 8px;
+        min-height: 40px;
     }
 
     .hero-btn-new .btn-logo-space {
-        width: 24px;
+        width: 22px;
         /* Маленький мобільний - можна міняти */
-        height: 24px;
+        height: 22px;
     }
 
     .hero-new-design .hero-slider-dots {
