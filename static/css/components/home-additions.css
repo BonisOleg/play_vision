@@ -317,7 +317,8 @@
     background: #d32f2f;
     color: #ffffff;
     border: none;
-    padding: 14px 28px 14px 32px;
+    padding: 18px 32px 18px 36px;
+    /* ЗБІЛЬШЕНО padding щоб логотип не обрізався */
     font-size: 1.125rem;
     font-weight: 600;
     border-radius: 50px;
@@ -330,7 +331,8 @@
     transition: all 0.3s ease;
     text-decoration: none;
     white-space: nowrap;
-    min-height: 52px;
+    min-height: 58px;
+    overflow: visible;
 }
 
 .mentor-cta .btn-primary .btn-text {
@@ -339,10 +341,10 @@
 }
 
 .mentor-cta .btn-primary .btn-logo-space {
-    width: 32px;
-    /* ШИРИНА БІЛОГО ЛОГОТИПА - можна міняти */
-    height: 32px;
-    /* ВИСОТА БІЛОГО ЛОГОТИПА - можна міняти */
+    width: 26px;
+    /* ШИРИНА БІЛОГО ЛОГОТИПА - зменшено щоб не обрізався */
+    height: 26px;
+    /* ВИСОТА БІЛОГО ЛОГОТИПА - зменшено щоб не обрізався */
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -411,15 +413,15 @@
     }
 
     .mentor-cta .btn-primary {
-        padding: 12px 24px 12px 28px;
+        padding: 16px 28px 16px 32px;
         font-size: 1.0625rem;
-        min-height: 48px;
+        min-height: 54px;
     }
 
     .mentor-cta .btn-primary .btn-logo-space {
-        width: 28px;
-        /* Планшетна версія - можна міняти */
-        height: 28px;
+        width: 24px;
+        /* Планшетна версія */
+        height: 24px;
     }
 
     .ecosystem-diagram {
@@ -475,16 +477,16 @@
     }
 
     .mentor-cta .btn-primary {
-        padding: 10px 20px 10px 24px;
+        padding: 14px 24px 14px 28px;
         font-size: 1rem;
-        min-height: 44px;
+        min-height: 50px;
         gap: 10px;
     }
 
     .mentor-cta .btn-primary .btn-logo-space {
-        width: 24px;
-        /* Маленький мобільний - можна міняти */
-        height: 24px;
+        width: 22px;
+        /* Маленький мобільний */
+        height: 22px;
     }
 }
 
