@@ -1339,12 +1339,14 @@
     .mentor-cta .btn-primary {
         background: #1a1a1a;
         color: white;
-        border-color: #1a1a1a;
+    }
+
+    .mentor-cta .btn-primary .btn-logo-space {
+        background: #ffffff;
     }
 
     .mentor-cta .btn-primary:hover {
         background: #000000;
-        border-color: #000000;
     }
 
     .no-courses {
@@ -1671,12 +1673,14 @@
         .mentor-cta .btn-primary {
             background: #1a1a1a;
             color: white;
-            border-color: #1a1a1a;
+        }
+
+        .mentor-cta .btn-primary .btn-logo-space {
+            background: #ffffff;
         }
 
         .mentor-cta .btn-primary:hover {
             background: #000000;
-            border-color: #000000;
         }
 
         .no-courses {
