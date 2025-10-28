@@ -312,9 +312,9 @@
     text-align: center;
 }
 
-/* Червона кнопка з білим логотипом під гексагонами */
+/* ЧОРНА кнопка з білим логотипом та білим текстом під гексагонами */
 .mentor-cta .btn-primary {
-    background: #d32f2f;
+    background: #1a1a1a;
     color: #ffffff;
     border: none;
     padding: 18px 32px 18px 36px;
@@ -327,7 +327,7 @@
     justify-content: center;
     gap: 12px;
     /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
-    box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     text-decoration: none;
     white-space: nowrap;
@@ -338,6 +338,7 @@
 .mentor-cta .btn-primary .btn-text {
     display: inline-block;
     line-height: 1.2;
+    color: #ffffff;
 }
 
 .mentor-cta .btn-primary .btn-logo-space {
@@ -354,8 +355,8 @@
 }
 
 .mentor-cta .btn-primary:hover {
-    background: #c62828;
-    box-shadow: 0 6px 25px rgba(211, 47, 47, 0.4);
+    background: #000000;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
     transform: translateY(-2px);
     text-decoration: none;
 }

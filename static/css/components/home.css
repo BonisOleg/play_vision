@@ -54,7 +54,7 @@
 /* Hero with border style - БІЛІ РАМКИ */
 /* Видалено - конфлікт з градієнтом */
 
-/* БІЛА кнопка з чорним текстом та іконкою (8-й скрін) */
+/* БІЛА кнопка без стрілки - логотип замість неї */
 .hero-section .btn-primary {
     background: #ffffff;
     color: #000000;
@@ -73,12 +73,6 @@
     color: #000000;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-}
-
-.hero-section .btn-primary::after {
-    content: "→";
-    font-size: 1.25rem;
-    display: inline-block;
 }
 
 .hero-section.hero-bordered .section-content {
@@ -267,7 +261,7 @@
     margin-bottom: var(--spacing-lg);
 }
 
-/* БІЛА кнопка зі стрілкою (8-й скрін) */
+/* БІЛА кнопка без стрілки - логотип замість неї */
 .hero-buttons .btn-primary {
     background: #ffffff;
     color: #000000;
@@ -279,11 +273,6 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-}
-
-.hero-buttons .btn-primary::after {
-    content: "→";
-    font-size: 1.25rem;
 }
 
 .hero-buttons .btn-primary:hover {
@@ -1348,14 +1337,14 @@
     }
 
     .mentor-cta .btn-primary {
-        background: var(--color-primary);
+        background: #1a1a1a;
         color: white;
-        border-color: var(--color-primary);
+        border-color: #1a1a1a;
     }
 
     .mentor-cta .btn-primary:hover {
-        background: var(--color-primary-dark);
-        border-color: var(--color-primary-dark);
+        background: #000000;
+        border-color: #000000;
     }
 
     .no-courses {
@@ -1680,14 +1669,14 @@
         }
 
         .mentor-cta .btn-primary {
-            background: var(--color-primary);
+            background: #1a1a1a;
             color: white;
-            border-color: var(--color-primary);
+            border-color: #1a1a1a;
         }
 
         .mentor-cta .btn-primary:hover {
-            background: var(--color-primary-dark);
-            border-color: var(--color-primary-dark);
+            background: #000000;
+            border-color: #000000;
         }
 
         .no-courses {
