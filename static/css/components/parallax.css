@@ -12,6 +12,9 @@
 /* === VIEWPORT HEIGHT VARIABLE === */
 :root {
     --vh: 1vh;
+    --header-height: 80px;
+    --header-height-tablet: 70px;
+    --header-height-mobile: 60px;
 }
 
 /* === BASE SECTION STYLES (all sections) === */
@@ -28,7 +31,7 @@
 .section-bg-video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
 }
 
@@ -53,8 +56,8 @@
 
 /* === HERO SECTION PARALLAX === */
 .hero-section {
-    min-height: calc(var(--vh, 1vh) * 100);
-    height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--vh, 1vh) * 100 - var(--header-height));
+    height: calc(var(--vh, 1vh) * 100 - var(--header-height));
     overflow: visible;
 }
 
@@ -67,6 +70,7 @@
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    background-color: #000000;
 }
 
 /* Зображення absolute всередині hero блоку */
@@ -78,7 +82,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     transition: opacity var(--transition-base);
 }
@@ -145,7 +149,8 @@
 /* === iOS SAFARI FIX === */
 @supports (-webkit-touch-callout: none) {
     .hero-section {
-        min-height: -webkit-fill-available;
+        min-height: calc(-webkit-fill-available - var(--header-height));
+        height: calc(-webkit-fill-available - var(--header-height));
     }
 
     .hero-section .section-bg,
@@ -155,6 +160,10 @@
     }
 
     @media screen and (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+        .hero-section {
+            min-height: calc(100vh - var(--header-height-mobile));
+            height: calc(100vh - var(--header-height-mobile));
+        }
 
         .hero-section .section-bg,
         .hero-section .section-overlay {
@@ -164,7 +173,19 @@
 }
 
 /* === RESPONSIVE === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-section {
+        min-height: calc(var(--vh, 1vh) * 100 - var(--header-height-tablet));
+        height: calc(var(--vh, 1vh) * 100 - var(--header-height-tablet));
+    }
+}
+
 @media (max-width: 768px) {
+    .hero-section {
+        min-height: calc(var(--vh, 1vh) * 100 - var(--header-height-mobile));
+        height: calc(var(--vh, 1vh) * 100 - var(--header-height-mobile));
+    }
+
     .fullscreen-container .featured-courses-section {
         margin-top: -16px;
         padding-top: calc(var(--spacing-xl) + 16px);

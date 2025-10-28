@@ -8,7 +8,6 @@
     width: 100%;
     max-width: 100%;
     margin: 0;
-    height: calc(var(--vh, 1vh) * 100 - 80px);
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,14 +1,14 @@
 /* ============================================ */
-/* PATTERN BACKGROUNDS - Паттерн фон для unified-sections-wrapper */
+/* PATTERN BACKGROUNDS - Чистий фон для unified-sections-wrapper */
 /* ============================================ */
 
 /* 
- * Дальній фон з паттерном ЗА блоками 2, 3, 4:
+ * Дальній чистий фон ЗА блоками 2, 3, 4:
  * - unified-sections-wrapper (обгортка всіх трьох секцій)
- * - Один великий паттерн, розтягнутий на весь розмір
+ * - Просто білий або чорний колір БЕЗ паттернів
  */
 
-/* === UNIFIED SECTIONS WRAPPER - ПАТТЕРН ФОН === */
+/* === UNIFIED SECTIONS WRAPPER - ЧИСТИЙ ФОН === */
 .unified-sections-wrapper {
     position: relative;
 }
@@ -21,131 +21,38 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.15;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
     pointer-events: none;
 }
 
-/* Світла тема - використовує світлий паттерн */
+/* Світла тема - білий фон */
 [data-theme="light"] .unified-sections-wrapper::before {
-    background-image: url('/static/images/patterns/pattern-light.webp');
-    opacity: 0.12;
+    background-color: #ffffff;
+    opacity: 1;
 }
 
-/* Темна тема - використовує темний паттерн */
+/* Темна тема - чорний фон */
 [data-theme="dark"] .unified-sections-wrapper::before {
-    background-image: url('/static/images/patterns/pattern-dark.webp');
-    opacity: 0.1;
+    background-color: #000000;
+    opacity: 1;
 }
 
 /* Авто режим - слідує системним налаштуванням */
 @media (prefers-color-scheme: light) {
     [data-theme="auto"] .unified-sections-wrapper::before {
-        background-image: url('/static/images/patterns/pattern-light.webp');
-        opacity: 0.12;
+        background-color: #ffffff;
+        opacity: 1;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .unified-sections-wrapper::before {
-        background-image: url('/static/images/patterns/pattern-dark.webp');
-        opacity: 0.1;
+        background-color: #000000;
+        opacity: 1;
     }
 }
 
-/* Контейнер має бути поверх паттерну */
+/* Контейнер має бути поверх фону */
 .unified-sections-container {
     position: relative;
     z-index: 1;
-}
-
-/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .unified-sections-wrapper::before {
-        background-size: cover;
-        opacity: 0.1;
-    }
-
-    [data-theme="light"] .unified-sections-wrapper::before {
-        opacity: 0.1;
-    }
-
-    [data-theme="dark"] .unified-sections-wrapper::before {
-        opacity: 0.08;
-    }
-}
-
-/* === МОБІЛЬНА АДАПТАЦІЯ === */
-@media (max-width: 768px) {
-    .unified-sections-wrapper::before {
-        background-size: cover;
-        opacity: 0.08;
-    }
-
-    [data-theme="light"] .unified-sections-wrapper::before {
-        opacity: 0.08;
-    }
-
-    [data-theme="dark"] .unified-sections-wrapper::before {
-        opacity: 0.06;
-    }
-}
-
-/* === МАЛА МОБІЛЬНА АДАПТАЦІЯ === */
-@media (max-width: 480px) {
-    .unified-sections-wrapper::before {
-        background-size: cover;
-        opacity: 0.06;
-    }
-
-    [data-theme="light"] .unified-sections-wrapper::before {
-        opacity: 0.06;
-    }
-
-    [data-theme="dark"] .unified-sections-wrapper::before {
-        opacity: 0.05;
-    }
-}
-
-/* === iOS SAFARI ОПТИМІЗАЦІЯ === */
-@supports (-webkit-touch-callout: none) {
-    .unified-sections-wrapper::before {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-    }
-
-    @media screen and (max-width: 768px) {
-        .unified-sections-wrapper::before {
-            background-size: cover;
-        }
-    }
-}
-
-/* === FALLBACK ДЛЯ СТАРИХ БРАУЗЕРІВ === */
-@supports not (background-image: url('/static/images/patterns/pattern-light.webp')) {
-
-    /* Якщо WebP не підтримується, використовуємо PNG */
-    [data-theme="light"] .unified-sections-wrapper::before {
-        background-image: url('/static/images/patterns/pattern-light.png');
-    }
-
-    [data-theme="dark"] .unified-sections-wrapper::before {
-        background-image: url('/static/images/patterns/pattern-dark.png');
-    }
-
-    @media (prefers-color-scheme: light) {
-        [data-theme="auto"] .unified-sections-wrapper::before {
-            background-image: url('/static/images/patterns/pattern-light.png');
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        [data-theme="auto"] .unified-sections-wrapper::before {
-            background-image: url('/static/images/patterns/pattern-dark.png');
-        }
-    }
 }
