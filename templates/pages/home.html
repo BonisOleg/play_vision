@@ -11,8 +11,11 @@
 <link rel="stylesheet" href="{% static 'css/components/parallax.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/mentor-hexagon.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/pattern-backgrounds.css' %}">
 <link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
 <link rel="preload" href="{% static 'images/backlast.png' %}" as="image">
+<link rel="preload" href="{% static 'images/patterns/pattern-light.webp' %}" as="image">
+<link rel="preload" href="{% static 'images/patterns/pattern-dark.webp' %}" as="image">
 {% endblock %}
 
 {% block content %}
@@ -141,7 +144,8 @@
                                         </div>
 
                                         <div class="course-card-bottom">
-                                            <p class="course-description">{{ course.short_description|truncatewords:12 }}</p>
+                                            <p class="course-description">{{ course.short_description|truncatewords:12
+                                                }}</p>
                                         </div>
                                     </article>
                                 </div>
