@@ -7,7 +7,7 @@
 .unified-sections-wrapper {
     width: 100%;
     position: relative;
-    background-image: url('/static/icons/pattern2.svg');
+    background-image: url('/static/icons/pattern_2.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,12 +16,12 @@
 }
 
 [data-theme="dark"] .unified-sections-wrapper {
-    background-image: url('/static/icons/pattern1.svg');
+    background-image: url('/static/icons/pattern_1.svg');
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .unified-sections-wrapper {
-        background-image: url('/static/icons/pattern1.svg');
+        background-image: url('/static/icons/pattern_1.svg');
     }
 }
 
