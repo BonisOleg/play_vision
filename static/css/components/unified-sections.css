@@ -7,24 +7,22 @@
 .unified-sections-wrapper {
     width: 100%;
     position: relative;
-    background-image:
-        repeating-linear-gradient(0deg,
-            transparent,
-            transparent 34px,
-            var(--pattern-line-color) 34px,
-            var(--pattern-line-color) 35px),
-        repeating-linear-gradient(90deg,
-            transparent,
-            transparent 34px,
-            var(--pattern-line-color) 34px,
-            var(--pattern-line-color) 35px),
-        radial-gradient(circle at 17.5px 17.5px,
-            var(--pattern-cross-color) 2px,
-            transparent 2px);
-    background-size: 35px 35px;
-    background-color: var(--unified-bg-color);
+    background-image: url('/static/icons/pattern2.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     padding: 0;
     margin: 0;
+}
+
+[data-theme="dark"] .unified-sections-wrapper {
+    background-image: url('/static/icons/pattern1.svg');
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .unified-sections-wrapper {
+        background-image: url('/static/icons/pattern1.svg');
+    }
 }
 
 /* === ПАТТЕРН КОЛЬОРИ ДЛЯ СВІТЛОЇ ТЕМИ === */
@@ -167,24 +165,6 @@
         padding: 0 20px;
     }
 
-    /* Менший паттерн для мобільних */
-    .unified-sections-wrapper {
-        background-image:
-            repeating-linear-gradient(0deg,
-                transparent,
-                transparent 24px,
-                var(--pattern-line-color) 24px,
-                var(--pattern-line-color) 25px),
-            repeating-linear-gradient(90deg,
-                transparent,
-                transparent 24px,
-                var(--pattern-line-color) 24px,
-                var(--pattern-line-color) 25px),
-            radial-gradient(circle at 12.5px 12.5px,
-                var(--pattern-cross-color) 1.5px,
-                transparent 1.5px);
-        background-size: 25px 25px;
-    }
 }
 
 /* === СПЕЦИФІЧНІ СТИЛІ ДЛЯ СЕКЦІЙ === */
