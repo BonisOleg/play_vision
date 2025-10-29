@@ -532,7 +532,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 16px;
+    padding: 8px 12px;
+    max-width: 90px;
     border: 2px solid var(--color-border);
     border-radius: 10px;
     background: var(--color-bg);
@@ -552,10 +553,12 @@
 }
 
 .auth-entry-text {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--color-text);
-    white-space: nowrap;
+    text-align: center;
+    line-height: 1.3;
+    white-space: normal;
 }
 
 .auth-entry-btn:hover .auth-entry-text {
@@ -617,6 +620,18 @@
     .header-actions {
         flex: 0 0 auto;
     }
+
+    /* Адаптація кнопки входу для планшетів */
+    .auth-entry-btn {
+        padding: 7px 10px;
+        min-height: 44px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 10px;
+        line-height: 1.3;
+    }
 }
 
 @media (max-width: 768px) {
@@ -640,12 +655,13 @@
     }
 
     .auth-entry-btn {
-        padding: 6px 12px;
+        padding: 6px 10px;
         min-height: 42px;
+        max-width: 90px;
     }
 
     .auth-entry-text {
-        font-size: 11px;
+        font-size: 10px;
     }
 }
 
@@ -664,12 +680,55 @@
     }
 
     .auth-entry-btn {
-        padding: 5px 10px;
+        padding: 5px 8px;
         min-height: 40px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 9px;
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .auth-entry-btn {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .auth-entry-text {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* iPad and tablet landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .auth-entry-btn {
+        padding: 6px 10px;
+        min-height: 42px;
+        max-width: 90px;
     }
 
     .auth-entry-text {
         font-size: 10px;
+        line-height: 1.3;
+    }
+}
+
+/* iPad and tablet portrait */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .auth-entry-btn {
+        padding: 7px 10px;
+        min-height: 44px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 10px;
+        line-height: 1.3;
     }
 }
 
