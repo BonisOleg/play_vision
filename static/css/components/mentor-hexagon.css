@@ -9,7 +9,7 @@
 .mentor-coaching-section {
     background: #fafafa;
     position: relative;
-    padding: 80px 0;
+    padding: 40px 0;
     overflow: hidden;
 }
 
@@ -45,7 +45,7 @@
 .hexagon-honeycomb {
     position: relative;
     width: 100%;
-    height: 950px;
+    height: 475px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,13 +54,13 @@
 /* БАЗОВИЙ ГЕКСАГОН - FLAT TOP */
 .hexagon {
     position: absolute;
-    width: 310px;
-    height: 280px;
+    width: 186px;
+    height: 140px;
     clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
     background: linear-gradient(135deg, #d8d8d8 0%, #f4f4f4 100%);
     box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.08),
-        0 3px 10px rgba(0, 0, 0, 0.05),
+        0 4px 15px rgba(0, 0, 0, 0.08),
+        0 2px 5px rgba(0, 0, 0, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
@@ -70,10 +70,10 @@
 }
 
 .hexagon:hover {
-    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-8px) scale(1.03);
+    transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-4px) scale(1.03);
     box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.12),
-        0 8px 20px rgba(0, 0, 0, 0.08),
+        0 8px 25px rgba(0, 0, 0, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
     z-index: 10;
 }
@@ -87,21 +87,21 @@
     justify-content: center;
     height: 100%;
     width: 100%;
-    padding: 30px 20px;
+    padding: 15px 10px;
     text-align: center;
 }
 
 /* ТЕКСТ */
 .hexagon h4 {
     font-family: 'Roboto', sans-serif;
-    font-size: 32px;
+    font-size: 18px;
     font-weight: 700;
     color: #2a2a2a;
     margin: 0;
     padding: 0;
     line-height: 1.2;
     text-shadow: none;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
 }
 
 /* ЦЕНТРАЛЬНИЙ ГЕКСАГОН */
@@ -109,8 +109,8 @@
     z-index: 5;
     background: linear-gradient(135deg, #dadada 0%, #f5f5f5 100%);
     box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.06),
+        0 5px 20px rgba(0, 0, 0, 0.1),
+        0 3px 8px rgba(0, 0, 0, 0.06),
         inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
@@ -120,8 +120,8 @@
 
 /* ЛОГОТИП - ЦЕНТРУВАННЯ */
 .hexagon-logo {
-    width: 220px;
-    height: 75px;
+    width: 132px;
+    height: 38px;
     object-fit: contain;
     display: block;
     margin: 0 auto;
@@ -139,26 +139,26 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .mentor-hexagon-container {
         max-width: 900px;
-        padding: 40px 20px;
+        padding: 20px 20px;
     }
 
     .hexagon-honeycomb {
-        height: 600px;
+        height: 404px;
         transform: scale(0.85);
     }
 
     .hexagon {
-        width: 260px;
-        height: 235px;
+        width: 156px;
+        height: 118px;
     }
 
     .hexagon h4 {
-        font-size: 26px;
+        font-size: 15px;
     }
 
     .hexagon-logo {
-        width: 185px;
-        height: 63px;
+        width: 112px;
+        height: 32px;
     }
 }
 
@@ -167,7 +167,7 @@
    ============================================ */
 @media (min-width: 480px) and (max-width: 768px) {
     .mentor-coaching-section {
-        padding: 60px 0;
+        padding: 30px 0;
     }
 
     .mentor-coaching-section .section-title {
@@ -182,27 +182,27 @@
 
     .mentor-hexagon-container {
         max-width: 600px;
-        padding: 30px 15px;
+        padding: 15px 15px;
     }
 
     .hexagon-honeycomb {
-        height: 550px;
+        height: 309px;
         transform: scale(0.65);
     }
 
     .hexagon {
-        width: 220px;
-        height: 200px;
+        width: 121px;
+        height: 91px;
     }
 
     .hexagon h4 {
-        font-size: 22px;
+        font-size: 12px;
         line-height: 1.15;
     }
 
     .hexagon-logo {
-        width: 155px;
-        height: 53px;
+        width: 86px;
+        height: 25px;
     }
 }
 
@@ -211,7 +211,7 @@
    ============================================ */
 @media (max-width: 479px) {
     .mentor-coaching-section {
-        padding: 40px 0;
+        padding: 20px 0;
     }
 
     .mentor-coaching-section .section-title {
@@ -221,38 +221,38 @@
 
     .mentor-coaching-section .ecosystem-subtitle {
         font-size: 1rem;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         padding: 0 15px;
         line-height: 1.4;
     }
 
     .mentor-hexagon-container {
         max-width: 400px;
-        padding: 20px 10px;
+        padding: 10px 10px;
     }
 
     .hexagon-honeycomb {
-        height: 450px;
+        height: 238px;
         transform: scale(0.5);
     }
 
     .hexagon {
-        width: 180px;
-        height: 165px;
+        width: 93px;
+        height: 70px;
     }
 
     .hexagon h4 {
-        font-size: 18px;
+        font-size: 9px;
         line-height: 1.1;
     }
 
     .hexagon-logo {
-        width: 125px;
-        height: 43px;
+        width: 66px;
+        height: 19px;
     }
 
     .hexagon:hover {
-        transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-4px) scale(1.02);
+        transform: translate(-50%, -50%) translate(var(--translate-x, 0), var(--translate-y, 0)) translateY(-2px) scale(1.02);
     }
 }
 

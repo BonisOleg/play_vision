@@ -307,8 +307,8 @@
 }
 
 .mentor-cta {
-    margin-top: var(--spacing-xxl);
-    margin-bottom: var(--spacing-xxl);
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: left;
 }
 
@@ -317,19 +317,19 @@
     background: #000000;
     color: #ffffff;
     border: none;
-    padding: 16px 24px 16px 32px;
-    font-size: 1.125rem;
+    padding: 10px 16px 10px 20px;
+    font-size: 0.9rem;
     font-weight: 600;
     border-radius: 50px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     text-decoration: none;
     white-space: nowrap;
-    min-height: 60px;
+    min-height: 42px;
     overflow: visible;
 }
 
@@ -337,12 +337,12 @@
     display: inline-block;
     line-height: 1.2;
     color: #ffffff;
-    font-size: 1.125rem;
+    font-size: 0.9rem;
 }
 
 .mentor-cta .btn-primary .btn-logo-space {
-    width: 44px;
-    height: 44px;
+    width: 30px;
+    height: 30px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -354,8 +354,8 @@
 
 .mentor-cta .btn-primary .btn-logo-space::before {
     content: '';
-    width: 28px;
-    height: 28px;
+    width: 18px;
+    height: 18px;
     background: url('/static/images/white_botton.png') no-repeat center center;
     background-size: contain;
     display: block;
@@ -364,8 +364,8 @@
 
 .mentor-cta .btn-primary:hover {
     background: #1a1a1a;
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
-    transform: translateY(-2px);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
     text-decoration: none;
 }
 
@@ -422,20 +422,20 @@
     }
 
     .mentor-cta .btn-primary {
-        padding: 14px 20px 14px 28px;
-        font-size: 1.0625rem;
-        min-height: 54px;
-        gap: 14px;
+        padding: 8px 14px 8px 18px;
+        font-size: 0.85rem;
+        min-height: 38px;
+        gap: 10px;
     }
 
     .mentor-cta .btn-primary .btn-logo-space {
-        width: 38px;
-        height: 38px;
+        width: 26px;
+        height: 26px;
     }
 
     .mentor-cta .btn-primary .btn-logo-space::before {
-        width: 24px;
-        height: 24px;
+        width: 16px;
+        height: 16px;
     }
 
     .ecosystem-diagram {
@@ -491,20 +491,20 @@
     }
 
     .mentor-cta .btn-primary {
-        padding: 12px 18px 12px 24px;
-        font-size: 1rem;
-        min-height: 48px;
-        gap: 12px;
+        padding: 8px 12px 8px 16px;
+        font-size: 0.8rem;
+        min-height: 36px;
+        gap: 8px;
     }
 
     .mentor-cta .btn-primary .btn-logo-space {
-        width: 34px;
-        height: 34px;
+        width: 24px;
+        height: 24px;
     }
 
     .mentor-cta .btn-primary .btn-logo-space::before {
-        width: 20px;
-        height: 20px;
+        width: 14px;
+        height: 14px;
     }
 }
 
