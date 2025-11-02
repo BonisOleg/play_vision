@@ -247,7 +247,7 @@
 /* ==================== КНОПКА "ОГЛЯД КУРСУ" З БІЛИМ ЛОГОТИПОМ ==================== */
 .course-btn {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 10px;
     background: #ffffff;
     border: none;
