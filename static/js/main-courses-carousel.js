@@ -7,7 +7,7 @@ class MainCoursesCarousel {
     constructor(element) {
         this.section = element;
         this.currentIndex = 0;
-        this.slidesPerView = 4;
+        this.slidesPerView = 3;
         this.track = element.querySelector('.main-courses-track');
         this.prevBtn = element.querySelector('.course-nav-prev');
         this.nextBtn = element.querySelector('.course-nav-next');
@@ -65,11 +65,11 @@ class MainCoursesCarousel {
         if (width < 576) {
             this.slidesPerView = 1;
         } else if (width < 768) {
-            this.slidesPerView = 2;
+            this.slidesPerView = 1;
         } else if (width < 1024) {
-            this.slidesPerView = 3;
+            this.slidesPerView = 2;
         } else {
-            this.slidesPerView = 4;
+            this.slidesPerView = 3;
         }
     }
 

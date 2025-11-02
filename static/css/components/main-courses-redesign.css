@@ -126,12 +126,12 @@
 
 /* ==================== СЛАЙД ==================== */
 .main-course-slide {
-    flex: 0 0 calc(25% - 15px);
-    width: calc(25% - 15px);
-    min-width: calc(25% - 15px);
-    max-width: calc(25% - 15px);
-    min-height: 500px;
-    max-height: 500px;
+    flex: 0 0 calc(27% - 15px);
+    width: calc(27% - 15px);
+    min-width: calc(27% - 15px);
+    max-width: calc(27% - 15px);
+    min-height: 460px;
+    max-height: 460px;
 }
 
 /* ==================== КАРТКА КУРСУ (НОВА СТРУКТУРА) ==================== */
@@ -212,6 +212,7 @@
     width: 100%;
     height: 100%;
     min-height: 280px;
+    max-height: 280px;
     border-radius: 12px;
     overflow: hidden;
     background: #e8e8e8;
@@ -245,21 +246,20 @@
     }
 }
 
-/* ==================== КНОПКА "ОГЛЯД КУРСУ" З ЧОРНИМ ЛОГОТИПОМ ==================== */
+/* ==================== КНОПКА "ОГЛЯД КУРСУ" З БІЛИМ ЛОГОТИПОМ ==================== */
 .course-btn {
     position: absolute;
-    bottom: 16px;
-    left: 16px;
+    bottom: 30px;
+    left: 30px;
+    width: 40%;
     background: #ffffff;
     border: none;
     border-radius: 50px;
     padding: 12px 20px 12px 24px;
-    /* ЗБІЛЬШЕНО padding щоб логотип не обрізався */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     text-decoration: none;
     color: #1a1a1a;
     font-weight: 600;
@@ -290,14 +290,12 @@
 
 .course-btn-arrow {
     width: 22px;
-    /* ШИРИНА ЛОГОТИПА - зменшено щоб не обрізався */
     height: 22px;
-    /* ВИСОТА ЛОГОТИПА - зменшено щоб не обрізався */
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: url('/static/images/black_botton.png') no-repeat center center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
     background-size: contain;
 }
 
@@ -305,7 +303,7 @@
 .course-card-bottom {
     padding: 12px 10px 16px 10px;
     background: transparent;
-    min-height: 10%;
+    min-height: calc(0.617rem * 1.5 * 2 + 28px);
 }
 
 /* ОПИС КУРСУ */
@@ -320,6 +318,7 @@
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
+    min-height: calc(0.617rem * 1.5 * 2);
 }
 
 [data-theme="dark"] .course-description {
@@ -353,10 +352,10 @@
 /* ==================== ADAPTIVE TABLET (768px - 1024px) ==================== */
 @media (max-width: 1024px) {
     .main-course-slide {
-        flex: 0 0 calc(33.333% - 14px);
-        width: calc(33.333% - 14px);
-        min-width: calc(33.333% - 14px);
-        max-width: calc(33.333% - 14px);
+        flex: 0 0 calc(36% - 14px);
+        width: calc(36% - 14px);
+        min-width: calc(36% - 14px);
+        max-width: calc(36% - 14px);
     }
 
     .main-courses-header .section-title {
@@ -388,10 +387,12 @@
     }
 
     .main-course-slide {
-        flex: 0 0 calc(50% - 10px);
-        width: calc(50% - 10px);
-        min-width: calc(50% - 10px);
-        max-width: calc(50% - 10px);
+        flex: 0 0 calc(54% - 10px);
+        width: calc(54% - 10px);
+        min-width: calc(54% - 10px);
+        max-width: calc(54% - 10px);
+        min-height: 423px;
+        max-height: 423px;
     }
 
     .main-courses-track {
@@ -400,6 +401,7 @@
 
     .course-image {
         min-height: 220px;
+        max-height: 220px;
         border-radius: 10px;
     }
 
@@ -412,25 +414,27 @@
     }
 
     .course-btn {
+        width: 40%;
         padding: 10px 16px 10px 20px;
         font-size: 0.8125rem;
-        bottom: 12px;
-        left: 12px;
+        bottom: 30px;
+        left: 30px;
         min-height: 40px;
     }
 
     .course-btn-arrow {
         width: 20px;
-        /* Планшетна версія */
         height: 20px;
     }
 
     .course-card-bottom {
         padding: 10px 12px 12px 12px;
+        min-height: calc(0.75rem * 1.5 * 2 + 22px);
     }
 
     .course-description {
         font-size: 0.75rem;
+        min-height: calc(0.75rem * 1.5 * 2);
     }
 }
 
@@ -474,6 +478,8 @@
         width: 100%;
         min-width: 100%;
         max-width: 100%;
+        min-height: 423px;
+        max-height: 423px;
     }
 
     .main-courses-track {
@@ -482,18 +488,21 @@
 
     .course-image {
         min-height: 240px;
+        max-height: 240px;
     }
 
     .course-btn {
+        width: 40%;
         padding: 8px 14px 8px 16px;
         font-size: 0.75rem;
         min-height: 36px;
         gap: 6px;
+        bottom: 30px;
+        left: 30px;
     }
 
     .course-btn-arrow {
         width: 18px;
-        /* Маленький мобільний */
         height: 18px;
     }
 }
