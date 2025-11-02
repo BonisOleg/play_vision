@@ -7,7 +7,7 @@ class MainCoursesCarousel {
     constructor(element) {
         this.section = element;
         this.currentIndex = 0;
-        this.slidesPerView = 3;
+        this.slidesPerView = 4;
         this.track = element.querySelector('.main-courses-track');
         this.prevBtn = element.querySelector('.course-nav-prev');
         this.nextBtn = element.querySelector('.course-nav-next');
@@ -65,17 +65,17 @@ class MainCoursesCarousel {
         if (width < 576) {
             this.slidesPerView = 1;
         } else if (width < 768) {
-            this.slidesPerView = 1;
-        } else if (width < 1024) {
             this.slidesPerView = 2;
-        } else {
+        } else if (width < 1024) {
             this.slidesPerView = 3;
+        } else {
+            this.slidesPerView = 4;
         }
     }
 
     get slideWidth() {
-        // Враховуємо gap між слайдами (20px)
-        const gap = 20;
+        // Враховуємо gap між слайдами (24px)
+        const gap = 24;
         return (100 / this.slidesPerView);
     }
 
@@ -87,7 +87,7 @@ class MainCoursesCarousel {
         if (!this.track) return;
 
         // Обчислюємо зсув з урахуванням gap
-        const gap = 20;
+        const gap = 24;
         const slideWidthPercent = 100 / this.slidesPerView;
         const gapInPercent = (gap * this.currentIndex * this.slidesPerView) / this.track.offsetWidth * 100;
 
