@@ -163,15 +163,14 @@
     }
 
     .hero-btn-new {
-        padding: 14px 24px 14px 28px;
+        padding: 7px 12px 7px 14px;
         font-size: 0.95rem;
-        min-height: 50px;
+        min-height: 25px;
     }
 
     .hero-btn-new .btn-logo-space {
-        width: 22px;
-        /* Мобільна версія */
-        height: 22px;
+        width: 11px;
+        height: 11px;
     }
 }
 
@@ -281,26 +280,24 @@
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
-/* NEW DESIGN - Кнопка з чорним логотипом (Hero) */
+/* NEW DESIGN - Кнопка зі світлим логотипом (Hero) */
 .hero-btn-new {
     background: #ffffff;
     color: #000000;
     border: none;
-    padding: 16px 28px 16px 32px;
-    /* ЗБІЛЬШЕНО padding щоб логотип не обрізався */
+    padding: 8px 14px 8px 16px;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 50px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 22px;
-    /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
+    gap: 11px;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     white-space: nowrap;
-    min-height: 54px;
+    min-height: 27px;
     overflow: visible;
 }
 
@@ -310,15 +307,13 @@
 }
 
 .hero-btn-new .btn-logo-space {
-    width: 38px;
-    /* ШИРИНА ЛОГОТИПА - зменшено щоб не обрізався */
-    height: 38px;
-    /* ВИСОТА ЛОГОТИПА - зменшено щоб не обрізався */
+    width: 19px;
+    height: 19px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: url('/static/images/black_botton.png') no-repeat center center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
     background-size: contain;
 }
 
@@ -1127,16 +1122,15 @@
     }
 
     .hero-btn-new {
-        padding: 12px 20px 12px 24px;
+        padding: 6px 10px 6px 12px;
         font-size: 0.9rem;
-        gap: 10px;
-        min-height: 46px;
+        gap: 5px;
+        min-height: 23px;
     }
 
     .hero-btn-new .btn-logo-space {
-        width: 20px;
-        /* Маленький мобільний */
-        height: 20px;
+        width: 10px;
+        height: 10px;
     }
 
     .hero-new-design .hero-slider-dots {
