@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="{% static 'css/components/parallax.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/mentor-hexagon.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
 <link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
 <link rel="preload" href="{% static 'images/backlast.png' %}" as="image">
 <link rel="preload" href="{% static 'images/patterns/pattern-light.webp' %}" as="image">
@@ -262,64 +263,121 @@
                     <div class="experts-grid">
                         {% if cms_experts %}
                         {% for expert in cms_experts %}
-                        <div class="expert-card">
-                            <div class="expert-photo">
-                                {% if expert.photo %}
-                                <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
-                                {% else %}
-                                <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
-                                    alt="{{ expert.name }}" loading="lazy">
-                                {% endif %}
-                            </div>
-                            <div class="expert-card-content">
-                                <h3 class="expert-name">{{ expert.name }}</h3>
-                                <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
-                                {% if expert.bio %}
-                                <a href="#" class="expert-link">огляд профілю</a>
-                                {% endif %}
+                        <div class="expert-card" data-expert-id="{{ forloop.counter }}">
+                            <div class="expert-card-inner">
+                                <div class="expert-card-front">
+                                    <div class="expert-photo">
+                                        {% if expert.photo %}
+                                        <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                        {% else %}
+                                        <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
+                                            alt="{{ expert.name }}" loading="lazy">
+                                        {% endif %}
+                                    </div>
+                                    <div class="expert-card-content">
+                                        <h3 class="expert-name">{{ expert.name }}</h3>
+                                        <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                                    </div>
+                                </div>
+                                <div class="expert-card-back">
+                                    <div class="expert-bio-content">
+                                        <h3 class="expert-name-back">{{ expert.name }}</h3>
+                                        <div class="expert-bio-text">
+                                            {% if expert.bio %}
+                                            {{ expert.bio|linebreaks }}
+                                            {% else %}
+                                            <p>Інформація про експерта скоро буде додана.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
                         {% else %}
                         <!-- Fallback: Hardcode experts -->
-                        <div class="expert-card">
-                            <div class="expert-photo">
-                                <img src="{% static 'images/prof1.png' %}" alt="Dr. Fabian Otte" loading="lazy">
-                            </div>
-                            <div class="expert-card-content">
-                                <h3 class="expert-name">Dr. Fabian Otte</h3>
-                                <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
-                                <a href="#" class="expert-link">огляд профілю</a>
-                            </div>
-                        </div>
-                        <div class="expert-card">
-                            <div class="expert-photo">
-                                <img src="{% static 'images/prof2.png' %}" alt="Dr. Adam Owen" loading="lazy">
-                            </div>
-                            <div class="expert-card-content">
-                                <h3 class="expert-name">Dr. Adam Owen</h3>
-                                <p class="expert-specialization">Training Methodology, Session Design</p>
-                                <a href="#" class="expert-link">огляд профілю</a>
-                            </div>
-                        </div>
-                        <div class="expert-card">
-                            <div class="expert-photo">
-                                <img src="{% static 'images/prof3.png' %}" alt="Prof. Hassane Zouhal" loading="lazy">
-                            </div>
-                            <div class="expert-card-content">
-                                <h3 class="expert-name">Prof. Hassane Zouhal</h3>
-                                <p class="expert-specialization">Exercise Physiology, Talent ID</p>
-                                <a href="#" class="expert-link">огляд профілю</a>
+                        <div class="expert-card" data-expert-id="1">
+                            <div class="expert-card-inner">
+                                <div class="expert-card-front">
+                                    <div class="expert-photo">
+                                        <img src="{% static 'images/prof1.png' %}" alt="Dr. Fabian Otte" loading="lazy">
+                                    </div>
+                                    <div class="expert-card-content">
+                                        <h3 class="expert-name">Dr. Fabian Otte</h3>
+                                        <p class="expert-specialization">Coaching Principles, Skill Acquisition</p>
+                                    </div>
+                                </div>
+                                <div class="expert-card-back">
+                                    <div class="expert-bio-content">
+                                        <h3 class="expert-name-back">Dr. Fabian Otte</h3>
+                                        <div class="expert-bio-text">
+                                            <p>Провідний експерт у галузі методології тренувань та розвитку навичок. Має багаторічний досвід роботи з професійними футбольними клубами Європи.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="expert-card">
-                            <div class="expert-photo">
-                                <img src="{% static 'images/prof4.png' %}" alt="Dr. Raphael Villatore" loading="lazy">
+                        <div class="expert-card" data-expert-id="2">
+                            <div class="expert-card-inner">
+                                <div class="expert-card-front">
+                                    <div class="expert-photo">
+                                        <img src="{% static 'images/prof2.png' %}" alt="Dr. Adam Owen" loading="lazy">
+                                    </div>
+                                    <div class="expert-card-content">
+                                        <h3 class="expert-name">Dr. Adam Owen</h3>
+                                        <p class="expert-specialization">Training Methodology, Session Design</p>
+                                    </div>
+                                </div>
+                                <div class="expert-card-back">
+                                    <div class="expert-bio-content">
+                                        <h3 class="expert-name-back">Dr. Adam Owen</h3>
+                                        <div class="expert-bio-text">
+                                            <p>Міжнародний консультант з методології тренувань та проектування тренувальних сесій. Працював з топ-клубами UEFA Champions League.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="expert-card-content">
-                                <h3 class="expert-name">Dr. Raphael Villatore</h3>
-                                <p class="expert-specialization">Sports Medicine & Nutrition</p>
-                                <a href="#" class="expert-link">огляд профілю</a>
+                        </div>
+                        <div class="expert-card" data-expert-id="3">
+                            <div class="expert-card-inner">
+                                <div class="expert-card-front">
+                                    <div class="expert-photo">
+                                        <img src="{% static 'images/prof3.png' %}" alt="Prof. Hassane Zouhal" loading="lazy">
+                                    </div>
+                                    <div class="expert-card-content">
+                                        <h3 class="expert-name">Prof. Hassane Zouhal</h3>
+                                        <p class="expert-specialization">Exercise Physiology, Talent ID</p>
+                                    </div>
+                                </div>
+                                <div class="expert-card-back">
+                                    <div class="expert-bio-content">
+                                        <h3 class="expert-name-back">Prof. Hassane Zouhal</h3>
+                                        <div class="expert-bio-text">
+                                            <p>Професор фізіології вправ, спеціаліст з ідентифікації талантів та оптимізації фізичної підготовки спортсменів високого рівня.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="expert-card" data-expert-id="4">
+                            <div class="expert-card-inner">
+                                <div class="expert-card-front">
+                                    <div class="expert-photo">
+                                        <img src="{% static 'images/prof4.png' %}" alt="Dr. Raphael Villatore" loading="lazy">
+                                    </div>
+                                    <div class="expert-card-content">
+                                        <h3 class="expert-name">Dr. Raphael Villatore</h3>
+                                        <p class="expert-specialization">Sports Medicine & Nutrition</p>
+                                    </div>
+                                </div>
+                                <div class="expert-card-back">
+                                    <div class="expert-bio-content">
+                                        <h3 class="expert-name-back">Dr. Raphael Villatore</h3>
+                                        <div class="expert-bio-text">
+                                            <p>Експерт зі спортивної медицини та харчування. Розробляє індивідуальні програми для професійних футболістів та команд.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {% endif %}
@@ -359,4 +417,5 @@
 {% block extra_js %}
 <script src="{% static 'js/home.js' %}" defer></script>
 <script src="{% static 'js/main-courses-carousel.js' %}" defer></script>
+<script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
 {% endblock %}
