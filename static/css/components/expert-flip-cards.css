@@ -260,6 +260,11 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+[data-theme="dark"] .expert-card:hover .expert-card-front,
+[data-theme="dark"] .expert-card:hover .expert-card-back {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
 [data-theme="dark"] .expert-name-back {
     color: var(--color-text);
 }
@@ -274,6 +279,11 @@
         background: var(--color-bg-gray);
         border: 1px solid var(--color-border);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="auto"] .expert-card:hover .expert-card-front,
+    [data-theme="auto"] .expert-card:hover .expert-card-back {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     }
 
     [data-theme="auto"] .expert-name-back {

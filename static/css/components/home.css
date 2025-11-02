@@ -1368,17 +1368,6 @@
         color: var(--color-text);
     }
 
-    .expert-card {
-        background: var(--color-bg-gray);
-        border: 1px solid var(--color-border);
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-    }
-
-    .expert-card:hover {
-        background: var(--color-bg-dark);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    }
-
     .expert-photo {
         background: var(--color-bg-dark);
     }
@@ -1390,14 +1379,6 @@
 
     .expert-specialization {
         color: var(--color-text-light);
-    }
-
-    .expert-link {
-        color: var(--color-primary);
-    }
-
-    .expert-link:hover {
-        color: var(--color-primary-light);
     }
 
     .experts-subtitle {
@@ -1689,17 +1670,6 @@
             color: var(--color-text);
         }
 
-        .expert-card {
-            background: var(--color-bg-gray);
-            border: 1px solid var(--color-border);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .expert-card:hover {
-            background: var(--color-bg-dark);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-        }
-
         .expert-photo {
             background: var(--color-bg-dark);
         }
@@ -1711,14 +1681,6 @@
 
         .expert-specialization {
             color: var(--color-text-light);
-        }
-
-        .expert-link {
-            color: var(--color-primary);
-        }
-
-        .expert-link:hover {
-            color: var(--color-primary-light);
         }
 
         .experts-subtitle {
