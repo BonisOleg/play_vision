@@ -105,13 +105,11 @@
                 </svg>
             </div>
 
-            <!-- 4. УНІКАЛЬНА МЕТОДОЛОГІЯ -->
+            <!-- 4. МЕТОДОЛОГІЯ (БЕЗ ЗАГОЛОВКА) -->
             <section class="fullscreen-section mentoring-methodology-section">
                 <div class="section-content">
-                    <h2 class="section-title">Унікальна методологія</h2>
-
                     <div class="mentoring-image-block">
-                        <img src="{% static 'images/mentormetod.png' %}" alt="Унікальна методологія" loading="lazy">
+                        <img src="{% static 'images/mentormetod.png' %}" alt="Методологія" loading="lazy">
                     </div>
                 </div>
             </section>
@@ -131,6 +129,7 @@
             <section class="fullscreen-section experts-section mentoring-team-section">
                 <div class="section-content">
                     <h2 class="section-title">Команда Ментор-коучингу</h2>
+                    <p class="mentoring-team-description">Наша команда супроводу працює 24/7 та постійно готова прийти на допомогу гравцю, підтримує ментально та організаційно, контролює прогрес та аналізує ефективність підходу для кожного футболіста індивідуально. Завдяки цьому гравець розвивається комплексно, а батьки завжди бачать прозорий результат і можуть бути впевненими, що їх футболіст отримує максимум уваги та турботи.</p>
 
                     <div class="experts-grid">
                         {% if cms_experts %}
@@ -273,17 +272,32 @@
                 <div class="section-content">
                     <h2 class="section-title">Зв'язок з нами</h2>
 
-                    <div class="mentoring-contact-content">
-                        <div class="mentoring-contact-buttons">
-                            <button class="btn btn-primary mentoring-btn">
-                                <span class="btn-text">Менторинг</span>
-                                <span class="btn-logo-space"></span>
+                    <div class="mentoring-contact-cards">
+                        <article class="mentoring-contact-card mentoring-contact-card--light">
+                            <h3 class="mentoring-contact-card-title">Консультація</h3>
+                            <p class="mentoring-contact-card-text">Отримайте безплатну консультацію з бідності нашого експерта про шляхи розвитку вашого та індивідуальну програму по зонам які потребують уваги дитини.</p>
+                            <button class="mentoring-contact-card-btn mentoring-contact-card-btn--light">
+                                <span class="btn-text">Отримати консультацію</span>
+                                <span class="btn-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
                             </button>
-                            <button class="btn btn-primary mentoring-btn">
-                                <span class="btn-text">Коучинг</span>
-                                <span class="btn-logo-space"></span>
+                        </article>
+
+                        <article class="mentoring-contact-card mentoring-contact-card--dark">
+                            <h3 class="mentoring-contact-card-title">Методологія</h3>
+                            <p class="mentoring-contact-card-text">Наша методика заснована — це передовий підхід застосовуємо в практиці, який розроблено спільно з провідними експертами з футболу застосовують повсюдно найталановітіші методологів.</p>
+                            <button class="mentoring-contact-card-btn mentoring-contact-card-btn--dark">
+                                <span class="btn-text">Дізнатись про методологію</span>
+                                <span class="btn-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
                             </button>
-                        </div>
+                        </article>
                     </div>
                 </div>
             </section>
