@@ -89,6 +89,15 @@
     width: 100%;
     padding: 15px 10px;
     text-align: center;
+    gap: 6px;
+}
+
+/* SVG ІКОНКИ */
+.hexagon-icon {
+    width: 24px;
+    height: 24px;
+    color: #2a2a2a;
+    flex-shrink: 0;
 }
 
 /* ТЕКСТ */
@@ -152,8 +161,17 @@
         height: 118px;
     }
 
+    .hexagon-inner {
+        gap: 5px;
+    }
+
     .hexagon h4 {
         font-size: 15px;
+    }
+
+    .hexagon-icon {
+        width: 20px;
+        height: 20px;
     }
 
     .hexagon-logo {
@@ -195,9 +213,18 @@
         height: 91px;
     }
 
+    .hexagon-inner {
+        gap: 4px;
+    }
+
     .hexagon h4 {
         font-size: 12px;
         line-height: 1.15;
+    }
+
+    .hexagon-icon {
+        width: 16px;
+        height: 16px;
     }
 
     .hexagon-logo {
@@ -241,9 +268,18 @@
         height: 70px;
     }
 
+    .hexagon-inner {
+        gap: 3px;
+    }
+
     .hexagon h4 {
         font-size: 9px;
         line-height: 1.1;
+    }
+
+    .hexagon-icon {
+        width: 12px;
+        height: 12px;
     }
 
     .hexagon-logo {
