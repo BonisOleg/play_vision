@@ -27,11 +27,22 @@
 }
 
 .mentoring-what-section .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--color-text);
+    color: #1a1a1a;
     text-align: center;
-    margin-bottom: 60px;
+    margin: 0 0 60px 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .mentoring-what-section .section-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-what-section .section-title {
+        color: #ffffff;
+    }
 }
 
 /* ГРІД КАРТОК */
@@ -74,7 +85,7 @@
 }
 
 .mentoring-card-content p {
-    font-size: 1rem;
+    font-size: 0.875rem;
     line-height: 1.6;
     color: var(--color-text);
     margin: 0;
@@ -87,11 +98,22 @@
 }
 
 .mentoring-structure-section .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--color-text);
+    color: #1a1a1a;
     text-align: center;
-    margin-bottom: 60px;
+    margin: 0 0 60px 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .mentoring-structure-section .section-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-structure-section .section-title {
+        color: #ffffff;
+    }
 }
 
 /* === МЕТОДОЛОГІЯ (БЕЗ ЗАГОЛОВКА) === */
@@ -118,32 +140,93 @@
 }
 
 .mentoring-team-section .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
+    color: #2a2a2a;
+    text-align: left;
+    margin: 0 0 16px 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .mentoring-team-section .section-title {
     color: var(--color-text);
-    text-align: center;
-    margin-bottom: 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-team-section .section-title {
+        color: var(--color-text);
+    }
 }
 
 .mentoring-team-description {
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #666666;
+    text-align: left;
+    max-width: 100%;
+    margin: 0 0 48px 0;
+    padding: 0;
+    font-weight: 400;
+}
+
+[data-theme="dark"] .mentoring-team-description {
     color: var(--color-text-light);
-    text-align: center;
-    max-width: 1100px;
-    margin: 0 auto 60px;
-    padding: 0 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-team-description {
+        color: var(--color-text-light);
+    }
 }
 
 .experts-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    max-width: 1400px;
+    gap: 24px;
+    max-width: 1200px;
     margin: 0 auto;
+    align-items: stretch;
 }
 
-/* СТИЛІ ЕКСПЕРТІВ ВЖЕ Є В expert-flip-cards.css */
+/* СТИЛІ ЕКСПЕРТІВ - ВАЖЛИВІ ДЛЯ МЕНТОР СТОРІНКИ */
+.mentoring-team-section .expert-card-content {
+    padding: 24px 20px;
+}
+
+.mentoring-team-section .expert-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2a2a2a;
+    line-height: 1.4;
+    text-shadow: none;
+}
+
+.mentoring-team-section .expert-specialization {
+    color: #757575;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
+
+[data-theme="dark"] .mentoring-team-section .expert-name {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .mentoring-team-section .expert-specialization {
+    color: var(--color-text-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-team-section .expert-name {
+        color: var(--color-text);
+    }
+    
+    [data-theme="auto"] .mentoring-team-section .expert-specialization {
+        color: var(--color-text-light);
+    }
+}
 
 /* === ЗВ'ЯЗОК З НАМИ === */
 .mentoring-contact-section {
@@ -151,11 +234,22 @@
 }
 
 .mentoring-contact-section .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--color-text);
+    color: #1a1a1a;
     text-align: center;
-    margin-bottom: 60px;
+    margin: 0 0 60px 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .mentoring-contact-section .section-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-contact-section .section-title {
+        color: #ffffff;
+    }
 }
 
 .mentoring-contact-cards {
@@ -265,16 +359,34 @@
 }
 
 .mentoring-contact-card-btn .btn-icon {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
+    position: relative;
+}
+
+.mentoring-contact-card-btn .btn-icon svg {
+    display: none;
+}
+
+.mentoring-contact-card-btn .btn-icon::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: url('/static/icons/horizontal_desc_white.svg') no-repeat center;
+    background-size: contain;
+    display: block;
     transition: transform 0.3s ease;
 }
 
-.mentoring-contact-card-btn:hover .btn-icon {
+.mentoring-contact-card-btn--light .btn-icon::before {
+    filter: invert(1);
+}
+
+.mentoring-contact-card-btn:hover .btn-icon::before {
     transform: translateX(4px);
 }
 
@@ -297,10 +409,14 @@
 
     .mentoring-what-section .section-title,
     .mentoring-structure-section .section-title,
-    .mentoring-team-section .section-title,
     .mentoring-contact-section .section-title {
-        font-size: 2.25rem;
+        font-size: 1.75rem;
         margin-bottom: 40px;
+    }
+    
+    .mentoring-team-section .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 14px;
     }
 
     .mentoring-cards-grid {
@@ -309,18 +425,30 @@
     }
 
     .mentoring-card-content p {
-        font-size: 0.9375rem;
+        font-size: 0.8125rem;
     }
 
     .mentoring-team-description {
-        font-size: 0.9375rem;
+        font-size: 1.0625rem;
         line-height: 1.6;
-        margin-bottom: 50px;
+        margin-bottom: 40px;
     }
 
     .experts-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 28px;
+        gap: 24px;
+    }
+    
+    .mentoring-team-section .expert-card-content {
+        padding: 20px 16px;
+    }
+
+    .mentoring-team-section .expert-name {
+        font-size: 1.0625rem;
+    }
+
+    .mentoring-team-section .expert-specialization {
+        font-size: 0.875rem;
     }
 
     .mentoring-contact-section {
@@ -364,10 +492,14 @@
 
     .mentoring-what-section .section-title,
     .mentoring-structure-section .section-title,
-    .mentoring-team-section .section-title,
     .mentoring-contact-section .section-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin-bottom: 32px;
+    }
+    
+    .mentoring-team-section .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 12px;
     }
 
     .mentoring-cards-grid {
@@ -384,21 +516,35 @@
     }
 
     .mentoring-card-content p {
-        font-size: 0.9375rem;
+        font-size: 0.8125rem;
         line-height: 1.5;
     }
 
     .mentoring-team-description {
-        font-size: 0.9375rem;
-        line-height: 1.6;
-        margin-bottom: 48px;
-        padding: 0 15px;
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 40px;
+        padding: 0;
     }
 
     .experts-grid {
         grid-template-columns: 1fr;
         gap: 24px;
         max-width: 400px;
+    }
+    
+    .mentoring-team-section .expert-card-content {
+        padding: 16px 12px;
+    }
+
+    .mentoring-team-section .expert-name {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .mentoring-team-section .expert-specialization {
+        font-size: 0.8125rem;
+        margin-bottom: 12px;
     }
 
     .mentoring-contact-section {
@@ -448,10 +594,14 @@
 
     .mentoring-what-section .section-title,
     .mentoring-structure-section .section-title,
-    .mentoring-team-section .section-title,
     .mentoring-contact-section .section-title {
-        font-size: 1.75rem;
+        font-size: 1.375rem;
         margin-bottom: 28px;
+    }
+    
+    .mentoring-team-section .section-title {
+        font-size: 1.375rem;
+        margin-bottom: 10px;
     }
 
     .mentoring-cards-grid {
@@ -473,7 +623,7 @@
     }
 
     .mentoring-card-content p {
-        font-size: 0.875rem;
+        font-size: 0.75rem;
         line-height: 1.5;
     }
 
@@ -483,15 +633,29 @@
 
     .mentoring-team-description {
         font-size: 0.875rem;
-        line-height: 1.6;
-        margin-bottom: 40px;
-        padding: 0 10px;
+        line-height: 1.5;
+        margin-bottom: 32px;
+        padding: 0;
     }
 
     .experts-grid {
         grid-template-columns: 1fr;
         gap: 20px;
         max-width: 100%;
+    }
+    
+    .mentoring-team-section .expert-card-content {
+        padding: 18px 16px;
+    }
+
+    .mentoring-team-section .expert-name {
+        font-size: 1.0625rem;
+        margin-bottom: 8px;
+    }
+
+    .mentoring-team-section .expert-specialization {
+        font-size: 0.875rem;
+        margin-bottom: 14px;
     }
 
     .mentoring-contact-section {
@@ -554,10 +718,6 @@
     color: var(--color-text);
 }
 
-[data-theme="dark"] .mentoring-team-description {
-    color: var(--color-text-light);
-}
-
 [data-theme="dark"] .mentoring-contact-card--light {
     background: #1a1a1a;
     border: 1px solid #2a2a2a;
@@ -584,10 +744,6 @@
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .mentoring-card-content p {
         color: var(--color-text);
-    }
-
-    [data-theme="auto"] .mentoring-team-description {
-        color: var(--color-text-light);
     }
 
     [data-theme="auto"] .mentoring-contact-card--light {
