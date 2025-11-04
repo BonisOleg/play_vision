@@ -390,6 +390,71 @@
     transform: translateX(4px);
 }
 
+/* === КНОПКА WHITE_BONNOM (без ефектів) === */
+.white_bonnom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 24px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    background: #ffffff;
+    color: #0a0a0a;
+    transition: none;
+}
+
+.white_bonnom:hover {
+    background: #ffffff;
+    color: #0a0a0a;
+    transform: none;
+}
+
+.white_bonnom .btn-icon {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.white_bonnom .btn-icon::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: url('/static/icons/horizontal_desc_white.svg') no-repeat center;
+    background-size: contain;
+    display: block;
+    filter: invert(1);
+}
+
+[data-theme="dark"] .white_bonnom {
+    background: #ffffff;
+    color: #0a0a0a;
+}
+
+[data-theme="dark"] .white_bonnom:hover {
+    background: #ffffff;
+    color: #0a0a0a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .white_bonnom {
+        background: #ffffff;
+        color: #0a0a0a;
+    }
+    
+    [data-theme="auto"] .white_bonnom:hover {
+        background: #ffffff;
+        color: #0a0a0a;
+    }
+}
+
 /* ============================================
    АДАПТИВНІСТЬ - ПЛАНШЕТИ (769px - 1024px)
    ============================================ */
@@ -573,6 +638,11 @@
         padding: 14px 20px;
         font-size: 0.9375rem;
     }
+
+    .white_bonnom {
+        padding: 14px 20px;
+        font-size: 0.9375rem;
+    }
 }
 
 /* ============================================
@@ -687,6 +757,11 @@
     }
 
     .mentoring-contact-card-btn {
+        padding: 12px 18px;
+        font-size: 0.875rem;
+    }
+
+    .white_bonnom {
         padding: 12px 18px;
         font-size: 0.875rem;
     }

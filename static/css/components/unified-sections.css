@@ -133,6 +133,11 @@
         padding: 0 var(--spacing-lg);
     }
 
+    /* Виключення для методології - без відступів */
+    .unified-sections-wrapper .mentoring-methodology-section .section-content {
+        padding: 0;
+    }
+
     .decorative-line-wrapper {
         padding: 10px 0;
     }
@@ -154,6 +159,11 @@
 
     .unified-sections-wrapper .section-content {
         padding: 0 var(--spacing-md);
+    }
+
+    /* Виключення для методології - без відступів */
+    .unified-sections-wrapper .mentoring-methodology-section .section-content {
+        padding: 0;
     }
 
     .decorative-line-wrapper {
