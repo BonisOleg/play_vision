@@ -25,22 +25,28 @@
 .unified-sections-wrapper .unified-sections-container {
     padding-left: 20px;
     padding-right: 20px;
+    box-sizing: border-box;
 }
 
-/* Виключення для декоративних ліній */
-.unified-sections-wrapper .unified-sections-container > .decorative-line-wrapper {
+/* Виключення для декоративних ліній - виходять за межі padding */
+.unified-sections-wrapper .unified-sections-container .decorative-line-wrapper {
     margin-left: -20px;
     margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    width: calc(100% + 40px);
 }
 
-/* Виключення для методології */
-.unified-sections-wrapper .unified-sections-container > .mentoring-methodology-section {
+/* Виключення для методології (зображення) - виходить за межі padding */
+.unified-sections-wrapper .unified-sections-container .mentoring-methodology-section {
     margin-left: -20px;
     margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    width: calc(100% + 40px);
+}
+
+/* Виключення для унікальної методології (якщо є окрема секція) - виходить за межі padding */
+.unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
 }
 
 /* === ЩО ТАКЕ МЕНТОР КОУЧИНГ === */
@@ -414,6 +420,15 @@
    АДАПТИВНІСТЬ - ПЛАНШЕТИ (769px - 1024px)
    ============================================ */
 @media (min-width: 769px) and (max-width: 1024px) {
+    /* Підтримка виключень для декоративних ліній та методології на планшетах */
+    .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
+    .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
+    .unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+    }
+
     .mentoring-hero {
         height: calc(100vh - 70px);
         min-height: 450px;
@@ -497,6 +512,15 @@
    АДАПТИВНІСТЬ - МОБІЛЬНІ (480px - 768px)
    ============================================ */
 @media (min-width: 480px) and (max-width: 768px) {
+    /* Підтримка виключень для декоративних ліній та методології на мобільних */
+    .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
+    .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
+    .unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+    }
+
     .mentoring-hero {
         height: calc(60vh - 60px);
         min-height: 350px;
@@ -599,6 +623,15 @@
    АДАПТИВНІСТЬ - МАЛІ МОБІЛЬНІ (до 479px)
    ============================================ */
 @media (max-width: 479px) {
+    /* Підтримка виключень для декоративних ліній та методології на малих мобільних */
+    .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
+    .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
+    .unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+    }
+
     .mentoring-hero {
         height: calc(50vh - 60px);
         min-height: 300px;
