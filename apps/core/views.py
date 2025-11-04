@@ -62,7 +62,7 @@ class HomeView(TemplateView):
 
 
 class MentoringView(TemplateView):
-    """Ментор-коучинг сторінка"""
+    """Ментор коучинг сторінка"""
     template_name = 'pages/mentoring.html'
     
     def get_context_data(self, **kwargs):
@@ -105,7 +105,7 @@ class ComingSoonView(TemplateView):
         # Content for different coming soon pages
         coming_soon_content = {
             'mentoring': {
-                'title': 'Ментор-коучинг',
+                'title': 'Ментор коучинг',
                 'subtitle': 'Персональний розвиток з експертами',
                 'description': 'Незабаром ви зможете отримати персональні консультації від топових тренерів та аналітиків.',
                 'features': [

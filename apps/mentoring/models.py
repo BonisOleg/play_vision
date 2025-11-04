@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class MentoringDirection(models.Model):
     """
-    6 основних напрямків ментор-коучингу Play Vision
+    6 основних напрямків ментор коучингу Play Vision
     """
     DIRECTION_CHOICES = [
         ('game_intelligence', 'Ігровий інтелект'),
@@ -60,7 +60,7 @@ class MentoringDirection(models.Model):
 
 class MentoringProgram(models.Model):
     """
-    Програми ментор-коучингу в рамках напрямків
+    Програми ментор коучингу в рамках напрямків
     """
     PROGRAM_TYPES = [
         ('individual', 'Індивідуальна'),
@@ -205,7 +205,7 @@ class MentoringMentor(models.Model):
 
 class MentoringSession(models.Model):
     """
-    Індивідуальні сесії ментор-коучингу
+    Індивідуальні сесії ментор коучингу
     """
     STATUS_CHOICES = [
         ('scheduled', 'Заплановано'),
@@ -272,7 +272,7 @@ class MentoringSession(models.Model):
 
 class MentoringEnrollment(models.Model):
     """
-    Записи на програми ментор-коучингу
+    Записи на програми ментор коучингу
     """
     STATUS_CHOICES = [
         ('pending', 'Очікує підтвердження'),

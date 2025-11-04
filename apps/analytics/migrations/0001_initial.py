@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateField()),
-                ('revenue_type', models.CharField(choices=[('subscription', 'Підписка'), ('course', 'Курс'), ('event', 'Івент'), ('mentoring', 'Ментор-коучинг')], max_length=20)),
+                ('revenue_type', models.CharField(choices=[('subscription', 'Підписка'), ('course', 'Курс'), ('event', 'Івент'), ('mentoring', 'Ментор коучинг')], max_length=20)),
                 ('gross_revenue', models.DecimalField(decimal_places=2, default=0, max_digits=12)),
                 ('net_revenue', models.DecimalField(decimal_places=2, default=0, max_digits=12)),
                 ('refunds', models.DecimalField(decimal_places=2, default=0, max_digits=12)),

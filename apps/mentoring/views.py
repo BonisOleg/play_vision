@@ -3,7 +3,7 @@ from apps.cms.models import ExpertCard
 
 def mentoring_page(request):
     """
-    Сторінка Ментор-коучингу
+    Сторінка Ментор коучингу
     """
     # Отримуємо експертів з CMS якщо вони є
     cms_experts = ExpertCard.objects.filter(

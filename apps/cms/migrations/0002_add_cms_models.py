@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('page', models.CharField(default='home', max_length=50, verbose_name='Сторінка')),
-                ('section_type', models.CharField(choices=[('hero', 'Hero'), ('featured_courses', 'Featured Курси'), ('courses', 'Курси'), ('mentor', 'Ментор-коучинг'), ('experts', 'Експерти'), ('cta', 'Call to Action'), ('custom', 'Кастомна секція')], max_length=30, verbose_name='Тип секції')),
+                ('section_type', models.CharField(choices=[('hero', 'Hero'), ('featured_courses', 'Featured Курси'), ('courses', 'Курси'), ('mentor', 'Ментор коучинг'), ('experts', 'Експерти'), ('cta', 'Call to Action'), ('custom', 'Кастомна секція')], max_length=30, verbose_name='Тип секції')),
                 ('title', models.CharField(blank=True, max_length=200, verbose_name='Заголовок')),
                 ('subtitle', models.CharField(blank=True, max_length=300, verbose_name='Підзаголовок')),
                 ('bg_image', models.ImageField(blank=True, upload_to='cms/sections/', verbose_name='Фонове зображення')),

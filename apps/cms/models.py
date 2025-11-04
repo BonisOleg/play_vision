@@ -394,7 +394,7 @@ class PageSection(models.Model):
         ('hero', 'Hero'),
         ('featured_courses', 'Featured Курси'),
         ('courses', 'Курси'),
-        ('mentor', 'Ментор-коучинг'),
+        ('mentor', 'Ментор коучинг'),
         ('experts', 'Експерти'),
         ('cta', 'Call to Action'),
         ('custom', 'Кастомна секція'),

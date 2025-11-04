@@ -1,5 +1,5 @@
 /* ============================================
-   МЕНТОР-КОУЧИНГ СТОРІНКА
+   МЕНТОР КОУЧИНГ СТОРІНКА
    ============================================ */
 
 /* === HERO SECTION === */
@@ -21,7 +21,29 @@
     opacity: 0.3;
 }
 
-/* === ЩО ТАКЕ МЕНТОР-КОУЧИНГ === */
+/* === PADDING ДЛЯ КОНТЕЙНЕРА ПОСЛЯ HERO === */
+.unified-sections-wrapper .unified-sections-container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Виключення для декоративних ліній */
+.unified-sections-wrapper .unified-sections-container > .decorative-line-wrapper {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Виключення для методології */
+.unified-sections-wrapper .unified-sections-container > .mentoring-methodology-section {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* === ЩО ТАКЕ МЕНТОР КОУЧИНГ === */
 .mentoring-what-section {
     padding: 60px 0;
 }
@@ -134,7 +156,7 @@
     display: block;
 }
 
-/* === КОМАНДА МЕНТОР-КОУЧИНГУ === */
+/* === КОМАНДА МЕНТОР КОУЧИНГУ === */
 .mentoring-team-section {
     padding: 60px 0;
 }
