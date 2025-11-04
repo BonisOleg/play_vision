@@ -8,9 +8,9 @@
     width: 100%;
     position: relative;
     background-image: url('/static/icons/pattern_2.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: top left;
+    background-repeat: repeat;
     padding: 0;
     margin: 0;
 }
