@@ -92,12 +92,12 @@
     gap: 6px;
 }
 
-/* SVG ІКОНКИ */
+/* ІКОНКИ (PNG) */
 .hexagon-icon {
     width: 24px;
     height: 24px;
-    color: #2a2a2a;
     flex-shrink: 0;
+    display: block;
 }
 
 /* ТЕКСТ */

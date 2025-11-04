@@ -420,11 +420,11 @@
 }
 
 .cta-section .btn-primary:hover {
-    background: #d32f2f;
-    color: #ffffff;
-    border-color: #d32f2f;
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(211, 47, 47, 0.4);
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.4);
 }
 
 .cta-section .btn-outline {
@@ -828,8 +828,9 @@
     }
 
     .cta-section .btn-primary:hover {
-        background: var(--color-primary);
-        color: var(--color-bg-dark);
+        background: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
     }
 
     /* === COURSES LINK === */
@@ -969,8 +970,9 @@
         }
 
         .cta-section .btn-primary:hover {
-            background: var(--color-primary);
-            color: var(--color-bg-dark);
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
         }
 
         /* === COURSES LINK === */
