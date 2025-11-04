@@ -1,13 +1,5 @@
 /* Home Page Additions - Зміни за Figma дизайном */
 
-/* Hero БЕЗ рамок */
-.hero-with-frame {
-    border: none;
-    border-radius: 12px;
-    padding: var(--spacing-xxl);
-    background: rgba(0, 0, 0, 0.4);
-}
-
 /* Featured Courses Carousel */
 .featured-courses-section {
     position: relative;
@@ -220,91 +212,7 @@
     color: var(--color-text-light);
 }
 
-/* Mentor-Coaching Ecosystem - main styles in home.css */
 
-.ecosystem-diagram {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    height: 500px;
-    margin: 0 auto var(--spacing-xxl);
-}
-
-.ecosystem-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 160px;
-    height: 160px;
-    background: var(--color-primary);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-
-.center-logo {
-    max-width: 90px;
-    height: auto;
-    filter: brightness(0) invert(1);
-}
-
-.ecosystem-item {
-    position: absolute;
-    width: 140px;
-    height: 140px;
-    background: var(--color-bg);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-xs);
-    transition: var(--transition-base);
-    cursor: pointer;
-}
-
-.ecosystem-item:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 32px var(--color-primary-alpha-20);
-}
-
-.ecosystem-item-1 {
-    left: 50%;
-    top: 20px;
-    transform: translateX(-50%);
-}
-
-.ecosystem-item-2 {
-    right: 60px;
-    top: 40%;
-}
-
-.ecosystem-item-3 {
-    left: 60px;
-    top: 40%;
-}
-
-.ecosystem-item-4 {
-    left: 50%;
-    bottom: 20px;
-    transform: translateX(-50%);
-}
-
-.item-icon {
-    font-size: 2rem;
-}
-
-.ecosystem-item h4 {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin: 0;
-    text-align: center;
-    line-height: 1.2;
-}
 
 .mentor-cta {
     margin-top: 20px;
@@ -369,7 +277,6 @@
     text-decoration: none;
 }
 
-/* Button sizes видалено - тепер у main.css */
 
 /* Responsive для Homepage */
 @media (max-width: 1200px) {
@@ -395,10 +302,6 @@
 }
 
 @media (max-width: 768px) {
-    .hero-with-frame {
-        padding: var(--spacing-lg);
-    }
-
     .carousel-slide {
         flex: 0 0 100%;
         flex-shrink: 0;
@@ -438,32 +341,6 @@
         height: 16px;
     }
 
-    .ecosystem-diagram {
-        height: 400px;
-        max-width: 400px;
-    }
-
-    .ecosystem-center {
-        width: 120px;
-        height: 120px;
-    }
-
-    .center-logo {
-        max-width: 60px;
-    }
-
-    .ecosystem-item {
-        width: 100px;
-        height: 100px;
-    }
-
-    .item-icon {
-        font-size: 1.5rem;
-    }
-
-    .ecosystem-item h4 {
-        font-size: 0.7rem;
-    }
 }
 
 /* Додаткові медіа-запити для малих екранів */
@@ -510,14 +387,8 @@
 
 /* iOS Safari специфіка */
 @supports (-webkit-touch-callout: none) {
-    .hero-with-frame {
-        backdrop-filter: none;
-    }
-
     .carousel-btn {
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
     }
 }
-
-/* Dark theme rules moved to home.css for consolidation */

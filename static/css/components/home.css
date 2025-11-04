@@ -16,11 +16,7 @@
     min-height: 600px;
 }
 
-/* Section bg, overlay styles moved to parallax.css to avoid conflicts */
-
-/* Hero background - одне зображення для всіх тем */
-
-/* Section overlay base styles moved to parallax.css */
+/* Section bg, overlay styles - see parallax.css */
 
 .section-overlay--light {
     background: var(--white-alpha-90);
@@ -43,36 +39,14 @@
             rgba(0, 0, 0, 0.65) 45%,
             rgba(0, 0, 0, 0.45) 55%,
             rgba(0, 0, 0, 0.15) 70%,
-            transparent 85%) !important;
+            transparent 85%);
 }
 
 .section-overlay--cta-gradient {
     background: linear-gradient(135deg, var(--color-secondary-alpha-20) 0%, var(--color-primary-alpha-20) 100%);
 }
 
-/* Hero with border style - БІЛІ РАМКИ */
-/* Видалено - конфлікт з градієнтом */
 
-/* БІЛА кнопка без стрілки - логотип замість неї */
-.hero-section .btn-primary {
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    font-weight: 600;
-    padding: 14px 32px 14px 28px;
-    font-size: 1.125rem;
-    border-radius: 50px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.hero-section .btn-primary:hover {
-    background: #f5f5f5;
-    color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-}
 
 .hero-section.hero-bordered .section-content {
     border: none;
@@ -82,15 +56,6 @@
     background: transparent;
 }
 
-/* Hero контент БЕЗ рамок (Figma design) */
-.hero-with-frame {
-    border: none;
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 3rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
 
 /* NEW DESIGN - 1в1 як на скріні */
 .hero-new-design {
@@ -119,11 +84,6 @@
 
     .hero-buttons {
         gap: var(--spacing-sm);
-    }
-
-    .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-lg);
     }
 
     /* NEW DESIGN Tablet */
@@ -174,7 +134,6 @@
     }
 }
 
-/* .section-content moved to parallax.css */
 
 .hero-section {
     width: 100%;
@@ -183,20 +142,7 @@
     text-align: center;
 }
 
-/* Mentor-coaching section styles moved to mentor-hexagon.css */
 
-.hero-badge {
-    display: inline-block;
-    background: var(--color-primary);
-    color: white;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: var(--spacing-lg);
-}
 
 .hero-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
@@ -259,26 +205,6 @@
     margin-bottom: var(--spacing-lg);
 }
 
-/* БІЛА кнопка без стрілки - логотип замість неї */
-.hero-buttons .btn-primary {
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 14px 32px 14px 28px;
-    font-size: 1.125rem;
-    font-weight: 600;
-    border-radius: 50px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.hero-buttons .btn-primary:hover {
-    background: #f5f5f5;
-    color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
-}
 
 /* NEW DESIGN - Кнопка зі світлим логотипом (Hero) */
 .hero-btn-new {
@@ -324,11 +250,6 @@
     text-decoration: none;
 }
 
-.hero-btn-outline {
-    color: var(--accent-dark);
-    border-color: var(--accent-dark);
-    background: var(--silver-white);
-}
 
 .hero-slider-dots {
     display: flex;
@@ -361,192 +282,8 @@
     border-radius: 6px;
 }
 
-.featured-courses-section {
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    overflow: hidden;
-}
 
-.featured-courses-section .section-title {
-    color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-}
 
-.directions-section {
-    background: var(--color-bg);
-    text-align: center;
-}
-
-.directions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xxl);
-}
-
-.direction-card {
-    background: var(--color-bg);
-    border-radius: 16px;
-    padding: var(--spacing-xxl);
-    box-shadow: 0 8px 32px var(--shadow-alpha-10);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid var(--color-border-light);
-}
-
-.direction-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px var(--shadow-alpha-15);
-}
-
-.direction-card:active {
-    transform: translateY(-2px);
-}
-
-.direction-icon {
-    display: inline-flex;
-    width: 64px;
-    height: 64px;
-    background: var(--color-primary);
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.5rem;
-}
-
-.direction-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: var(--spacing-md);
-    color: var(--color-text);
-    text-shadow: none;
-}
-
-.direction-description {
-    color: var(--color-text-light);
-    line-height: 1.6;
-}
-
-/* COURSES SECTION - ЗАКОМЕНТОВАНО (не в Figma дизайні) */
-/*
-.courses-section {
-    background: var(--color-bg) url('/static/images/blackgreed.png') no-repeat center center;
-    background-size: cover;
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    overflow: hidden;
-}
-
-.courses-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-xxl);
-}
-
-.courses-section .section-title {
-    color: var(--color-text);
-    text-shadow: none;
-}
-
-.courses-section .courses-link {
-    color: var(--color-primary);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    text-shadow: none;
-}
-
-.courses-section .courses-link:hover {
-    color: var(--color-primary-dark);
-    text-decoration: underline;
-}
-
-.courses-link {
-    color: var(--color-primary);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.courses-link:hover {
-    color: var(--color-primary-dark);
-    text-decoration: underline;
-}
-
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-xl);
-}
-
-.course-card {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border-light);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px var(--shadow-alpha-10);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.course-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px var(--shadow-alpha-15);
-}
-
-.course-card:active {
-    transform: translateY(-2px);
-}
-
-.course-image {
-    width: 100%;
-    height: 200px;
-    background: var(--color-bg-gray);
-    object-fit: cover;
-}
-
-.course-content {
-    padding: var(--spacing-lg);
-}
-
-.course-number {
-    color: var(--color-text-light);
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: var(--spacing-xs);
-}
-
-.course-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-text);
-    text-shadow: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-.course-description {
-    color: var(--color-text-light);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-lg);
-}
-
-.course-link {
-    color: var(--color-primary);
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-}
-
-.course-link:hover {
-    color: var(--color-primary-dark);
-    text-decoration: underline;
-}
-*/
 
 .experts-section {
     background: transparent;
@@ -585,64 +322,7 @@
     line-height: 1.6;
 }
 
-/* БАЗОВІ СТИЛІ ЕКСПЕРТІВ ПЕРЕНЕСЕНО В expert-cards-base.css */
 
-.values-section {
-    background: var(--color-bg-gray);
-    text-align: center;
-}
-
-.values-description {
-    color: var(--color-text-light);
-    font-size: 1.125rem;
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 0 auto var(--spacing-xxl);
-    text-shadow: 0 2px 4px var(--shadow-alpha-30);
-}
-
-.values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xxl);
-}
-
-.value-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.value-circle {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: var(--color-bg);
-    border: 2px solid var(--color-border-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: var(--spacing-md);
-    box-shadow: 0 4px 16px var(--shadow-alpha-10);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.value-circle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 24px var(--shadow-alpha-15);
-}
-
-.value-circle:active {
-    transform: scale(1.02);
-}
-
-.value-text {
-    font-weight: 600;
-    color: var(--color-text);
-    text-align: center;
-    text-shadow: 0 2px 4px var(--shadow-alpha-30);
-}
 
 .cta-section {
     text-align: center;
@@ -771,7 +451,6 @@
     box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
 }
 
-/* Media queries для експертів в expert-cards-base.css */
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .experts-section {
@@ -792,7 +471,6 @@
         margin-bottom: 40px;
     }
 
-    /* Стилі експертів в expert-cards-base.css */
 }
 
 @media (max-width: 1024px) {
@@ -805,14 +483,6 @@
         padding: var(--spacing-xxl) 0;
     }
 
-    .directions-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: var(--spacing-lg);
-    }
-
-    .courses-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
 }
 
 @media (max-width: 768px) {
@@ -853,17 +523,6 @@
         height: 24px;
     }
 
-    .courses-header {
-        flex-direction: column;
-        gap: var(--spacing-md);
-        text-align: center;
-    }
-
-    .directions-grid,
-    .courses-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-    }
 
     .experts-section {
         padding: 20px 0;
@@ -883,21 +542,6 @@
         margin-bottom: 32px;
     }
 
-    /* Стилі експертів в expert-cards-base.css */
-
-    .values-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: var(--spacing-lg);
-    }
-
-    .value-circle {
-        width: 100px;
-        height: 100px;
-    }
-
-    .direction-card {
-        padding: var(--spacing-lg);
-    }
 }
 
 @media (max-width: 480px) {
@@ -953,8 +597,6 @@
         margin-bottom: 28px;
         line-height: 1.5;
     }
-
-    /* Стилі експертів в expert-cards-base.css */
 
     /* NEW DESIGN Small Mobile */
     .hero-new-design {
@@ -1012,8 +654,6 @@
         cursor: pointer;
     }
     
-    /* .expert-card, .expert-link iOS оптимізація в expert-cards-base.css */
-
     /* Smooth scrolling */
     .fullscreen-container,
     .section-content,
@@ -1057,9 +697,6 @@
     }
 }
 
-/* fadeInUp animation moved to animations.css */
-
-/* Hexagon styles moved to mentor-hexagon.css */
 
 /* ============================================ */
 /* DARK THEME SUPPORT - HOME PAGE */
@@ -1078,117 +715,14 @@
         backdrop-filter: none;
     }
 
-    .hero-badge {
-        background: var(--color-primary);
-        color: white;
-    }
-
     .hero-title,
     .hero-subtitle {
         color: white;
         text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
     }
 
-    /* === SECTION BACKGROUNDS === */
-
-    /* === FEATURED CAROUSEL (from home-additions.css) === */
-    .hero-with-frame {
-        border: none;
-        background: transparent;
-        backdrop-filter: none;
-    }
-
-    .featured-card {
-        background: var(--color-bg-gray);
-        border: 1px solid var(--color-border);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    }
-
-    .featured-card:hover {
-        background: var(--color-bg-dark);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-    }
-
-    .featured-image {
-        background: var(--color-bg-dark);
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    .featured-category {
-        color: var(--color-primary);
-    }
-
-    .featured-title {
-        color: var(--color-text);
-    }
-
-    .featured-description {
-        color: var(--color-text-light);
-    }
-
-    .featured-link {
-        color: var(--color-primary);
-    }
-
-    .featured-link:hover {
-        color: var(--color-primary-light);
-    }
-
-    .carousel-btn {
-        background: var(--color-bg-gray);
-        border: 1px solid var(--color-border);
-        color: var(--color-text);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .carousel-btn:hover:not(:disabled) {
-        background: var(--color-bg-dark);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    }
-
-    .carousel-btn:disabled {
-        background: var(--color-bg-dark);
-        color: var(--color-text-muted);
-        opacity: 0.4;
-    }
-
     .no-courses {
         color: var(--color-text-light);
-    }
-
-    /* === COURSE CARDS (Освітні програми) === */
-    .course-card {
-        background: var(--color-bg-gray);
-        border: 1px solid var(--color-border);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .course-card:hover {
-        background: var(--color-bg-dark);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    }
-
-    .course-image {
-        background: var(--color-bg-dark);
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    .course-title {
-        color: var(--color-text);
-        text-shadow: none;
-    }
-
-    .course-description,
-    .course-number {
-        color: var(--color-text-light);
-    }
-
-    .course-link {
-        color: var(--color-primary);
-    }
-
-    .course-link:hover {
-        color: var(--color-primary-light);
     }
 
     /* === EXPERT CARDS (Команда професіоналів) === */
@@ -1199,8 +733,6 @@
     .experts-section .section-title {
         color: var(--color-text);
     }
-
-    /* Стилі експертів темної теми в expert-cards-base.css */
 
     .experts-subtitle {
         color: var(--color-text-light);
@@ -1287,51 +819,6 @@
         text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
     }
 
-    /* === DIRECTION CARDS === */
-    .direction-card {
-        background: var(--color-bg-gray);
-        border: 1px solid var(--color-border);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    .direction-card:hover {
-        background: var(--color-bg-dark);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-    }
-
-    .direction-title {
-        color: var(--color-text);
-        text-shadow: none;
-    }
-
-    .direction-description {
-        color: var(--color-text-light);
-    }
-
-    /* === VALUES SECTION === */
-    .values-section {
-        background: var(--color-bg-gray);
-    }
-
-    .values-description {
-        color: var(--color-text-light);
-        text-shadow: none;
-    }
-
-    .value-circle {
-        background: var(--color-bg-dark);
-        border: 2px solid var(--color-border);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    }
-
-    .value-circle:hover {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    .value-text {
-        color: var(--color-text);
-        text-shadow: none;
-    }
 
     /* === CTA BUTTONS === */
     .cta-section .btn-primary {
@@ -1369,117 +856,14 @@
             backdrop-filter: none;
         }
 
-        .hero-badge {
-            background: var(--color-primary);
-            color: white;
-        }
-
         .hero-title,
         .hero-subtitle {
             color: white;
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
         }
 
-        /* === SECTION BACKGROUNDS === */
-
-        /* === FEATURED CAROUSEL (from home-additions.css) === */
-        .hero-with-frame {
-            border: none;
-            background: transparent;
-            backdrop-filter: none;
-        }
-
-        .featured-card {
-            background: var(--color-bg-gray);
-            border: 1px solid var(--color-border);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        .featured-card:hover {
-            background: var(--color-bg-dark);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-        }
-
-        .featured-image {
-            background: var(--color-bg-dark);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .featured-category {
-            color: var(--color-primary);
-        }
-
-        .featured-title {
-            color: var(--color-text);
-        }
-
-        .featured-description {
-            color: var(--color-text-light);
-        }
-
-        .featured-link {
-            color: var(--color-primary);
-        }
-
-        .featured-link:hover {
-            color: var(--color-primary-light);
-        }
-
-        .carousel-btn {
-            background: var(--color-bg-gray);
-            border: 1px solid var(--color-border);
-            color: var(--color-text);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .carousel-btn:hover:not(:disabled) {
-            background: var(--color-bg-dark);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .carousel-btn:disabled {
-            background: var(--color-bg-dark);
-            color: var(--color-text-muted);
-            opacity: 0.4;
-        }
-
         .no-courses {
             color: var(--color-text-light);
-        }
-
-        /* === COURSE CARDS (Освітні програми) === */
-        .course-card {
-            background: var(--color-bg-gray);
-            border: 1px solid var(--color-border);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-        }
-
-        .course-card:hover {
-            background: var(--color-bg-dark);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-        }
-
-        .course-image {
-            background: var(--color-bg-dark);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .course-title {
-            color: var(--color-text);
-            text-shadow: none;
-        }
-
-        .course-description,
-        .course-number {
-            color: var(--color-text-light);
-        }
-
-        .course-link {
-            color: var(--color-primary);
-        }
-
-        .course-link:hover {
-            color: var(--color-primary-light);
         }
 
         /* === EXPERT CARDS (Команда професіоналів) === */
@@ -1490,8 +874,6 @@
         .experts-section .section-title {
             color: var(--color-text);
         }
-
-        /* Стилі експертів темної теми в expert-cards-base.css */
 
         .experts-subtitle {
             color: var(--color-text-light);
@@ -1578,51 +960,6 @@
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
         }
 
-        /* === DIRECTION CARDS === */
-        .direction-card {
-            background: var(--color-bg-gray);
-            border: 1px solid var(--color-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .direction-card:hover {
-            background: var(--color-bg-dark);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-        }
-
-        .direction-title {
-            color: var(--color-text);
-            text-shadow: none;
-        }
-
-        .direction-description {
-            color: var(--color-text-light);
-        }
-
-        /* === VALUES SECTION === */
-        .values-section {
-            background: var(--color-bg-gray);
-        }
-
-        .values-description {
-            color: var(--color-text-light);
-            text-shadow: none;
-        }
-
-        .value-circle {
-            background: var(--color-bg-dark);
-            border: 2px solid var(--color-border);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .value-circle:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-        }
-
-        .value-text {
-            color: var(--color-text);
-            text-shadow: none;
-        }
 
         /* === CTA BUTTONS === */
         .cta-section .btn-primary {
@@ -1644,32 +981,5 @@
         .courses-link:hover {
             color: var(--color-primary-light);
         }
-    }
-}
-
-/* === THEME BACKGROUNDS === */
-
-/* Світла тема - використовує whitegreed.png */
-[data-theme="light"] .courses-section {
-    background-image: url('/static/images/whitegreed.png');
-}
-
-/* Темна тема - використовує blackgreed.png (за замовчуванням) */
-[data-theme="dark"] .courses-section {
-    background-image: url('/static/images/blackgreed.png');
-}
-
-/* Авто режим - слідує системним налаштуванням */
-@media (prefers-color-scheme: light) {
-
-    [data-theme="auto"] .courses-section {
-        background-image: url('/static/images/whitegreed.png');
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-
-    [data-theme="auto"] .courses-section {
-        background-image: url('/static/images/blackgreed.png');
     }
 }

@@ -323,73 +323,6 @@
     color: #b0b0b0;
 }
 
-.mentoring-contact-card-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 16px 24px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.mentoring-contact-card-btn--light {
-    background: #0a0a0a;
-    color: #ffffff;
-}
-
-.mentoring-contact-card-btn--light:hover {
-    background: #1a1a1a;
-    transform: translateX(4px);
-}
-
-.mentoring-contact-card-btn--dark {
-    background: #ffffff;
-    color: #0a0a0a;
-}
-
-.mentoring-contact-card-btn--dark:hover {
-    background: #f0f0f0;
-    transform: translateX(4px);
-}
-
-.mentoring-contact-card-btn .btn-icon {
-    width: 26px;
-    height: 26px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.mentoring-contact-card-btn .btn-icon svg {
-    display: none;
-}
-
-.mentoring-contact-card-btn .btn-icon::before {
-    content: '';
-    width: 18px;
-    height: 18px;
-    background: url('/static/icons/horizontal_desc_white.svg') no-repeat center;
-    background-size: contain;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.mentoring-contact-card-btn--light .btn-icon::before {
-    filter: invert(1);
-}
-
-.mentoring-contact-card-btn:hover .btn-icon::before {
-    transform: translateX(4px);
-}
-
 /* === КНОПКА WHITE_BONNOM (без ефектів) === */
 .white_bonnom {
     display: flex;
@@ -634,11 +567,6 @@
         font-size: 0.9375rem;
     }
 
-    .mentoring-contact-card-btn {
-        padding: 14px 20px;
-        font-size: 0.9375rem;
-    }
-
     .white_bonnom {
         padding: 14px 20px;
         font-size: 0.9375rem;
@@ -754,11 +682,6 @@
     .mentoring-contact-card-text {
         font-size: 0.875rem;
         line-height: 1.5;
-    }
-
-    .mentoring-contact-card-btn {
-        padding: 12px 18px;
-        font-size: 0.875rem;
     }
 
     .white_bonnom {

@@ -295,12 +295,6 @@ class CoursesCarousel {
     }
 }
 
-/* ВИДАЛЕНО АНІМАЦІЮ ГЕКСАГОНІВ (8-й скрін - статично БЕЗ анімації) */
-/*
-class MentorHexagonAnimation {
-    ... вся анімація видалена для статичного дизайну ...
-}
-*/
 
 // Ініціалізація при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', () => {
@@ -316,9 +310,4 @@ document.addEventListener('DOMContentLoaded', () => {
         new CoursesCarousel(coursesElement);
     }
 
-    // Анімацію гексагонів видалено (8-й скрін - статичний дизайн)
-    // const mentorAnimationContainer = document.querySelector('.mentor-animation-container');
-    // if (mentorAnimationContainer) {
-    //     new MentorHexagonAnimation(mentorAnimationContainer);
-    // }
 });
