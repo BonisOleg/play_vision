@@ -1,0 +1,230 @@
+/* ============================================
+   EXPERT CARDS BASE - Базові стилі для карток експертів
+   Universal стилі, які використовуються на всіх сторінках
+   ============================================ */
+
+/* === КОНТЕЙНЕР СІТКИ === */
+.experts-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    align-items: stretch;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* === БАЗОВА КАРТКА === */
+.expert-card {
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-align: center;
+    height: 100%;
+}
+
+/* === ФОТО ЕКСПЕРТА === */
+.expert-photo {
+    width: 100%;
+    height: 250px;
+    border-radius: 0;
+    background: #e8e8e8;
+    margin: 0;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+}
+
+.expert-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* === КОНТЕНТ КАРТКИ === */
+.expert-card-content {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* === ІМ'Я ЕКСПЕРТА === */
+.expert-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2a2a2a;
+    line-height: 1.4;
+    text-shadow: none;
+}
+
+/* === СПЕЦІАЛІЗАЦІЯ === */
+.expert-specialization {
+    color: #757575;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex: 1;
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
+
+/* === ПОСИЛАННЯ === */
+.expert-link {
+    color: #d32f2f;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: auto;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+}
+
+.expert-link:hover {
+    color: #b71c1c;
+    text-decoration: underline;
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - ПЛАНШЕТИ (769px - 1024px)
+   ============================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .experts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .expert-photo {
+        height: 280px;
+    }
+
+    .expert-card-content {
+        padding: 20px 16px;
+    }
+
+    .expert-name {
+        font-size: 1.0625rem;
+    }
+
+    .expert-specialization {
+        font-size: 0.875rem;
+    }
+
+    .expert-link {
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - МОБІЛЬНІ (480px - 768px)
+   ============================================ */
+@media (min-width: 480px) and (max-width: 768px) {
+    .experts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .expert-photo {
+        height: 240px;
+    }
+
+    .expert-card-content {
+        padding: 16px 12px;
+    }
+
+    .expert-name {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .expert-specialization {
+        font-size: 0.8125rem;
+        margin-bottom: 12px;
+    }
+
+    .expert-link {
+        font-size: 0.8125rem;
+    }
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - МАЛІ МОБІЛЬНІ (до 479px)
+   ============================================ */
+@media (max-width: 479px) {
+    .experts-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .expert-photo {
+        height: 280px;
+    }
+
+    .expert-card-content {
+        padding: 18px 16px;
+    }
+
+    .expert-name {
+        font-size: 1.0625rem;
+        margin-bottom: 8px;
+    }
+
+    .expert-specialization {
+        font-size: 0.875rem;
+        margin-bottom: 14px;
+    }
+
+    .expert-link {
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   iOS SAFARI ОПТИМІЗАЦІЯ
+   ============================================ */
+@supports (-webkit-touch-callout: none) {
+    .expert-card,
+    .expert-photo {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .expert-photo img {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+}
+
+/* ============================================
+   DARK THEME
+   ============================================ */
+[data-theme="dark"] .expert-photo {
+    background: var(--color-bg-dark);
+}
+
+[data-theme="dark"] .expert-name {
+    color: var(--color-text);
+    text-shadow: none;
+}
+
+[data-theme="dark"] .expert-specialization {
+    color: var(--color-text-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .expert-photo {
+        background: var(--color-bg-dark);
+    }
+
+    [data-theme="auto"] .expert-name {
+        color: var(--color-text);
+        text-shadow: none;
+    }
+
+    [data-theme="auto"] .expert-specialization {
+        color: var(--color-text-light);
+    }
+}
+
