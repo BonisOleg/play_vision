@@ -1,6 +1,7 @@
 /**
  * FOOTER SUBSCRIBE FORM
  * Обробка форм підписки в десктопному та мобільному футері
+ * Оновлено: тільки email, без поля "ім'я"
  */
 
 (function () {
@@ -23,21 +24,14 @@
         e.preventDefault();
 
         const form = e.target;
-        const submitButton = form.querySelector('.btn-subscribe');
+        const submitButton = form.querySelector('button[type="submit"]');
         const messageContainer = form.querySelector('.form-message');
 
         // Отримання даних форми
         const formData = new FormData(form);
-        const name = formData.get('name')?.trim();
         const email = formData.get('email')?.trim();
-        const privacy = formData.get('privacy');
 
         // Валідація
-        if (!name) {
-            showMessage(messageContainer, 'error', 'Будь ласка, вкажіть ваше ім\'я');
-            return;
-        }
-
         if (!email) {
             showMessage(messageContainer, 'error', 'Будь ласка, вкажіть ваш email');
             return;
@@ -48,15 +42,10 @@
             return;
         }
 
-        if (!privacy) {
-            showMessage(messageContainer, 'error', 'Підтвердіть згоду з політикою приватності');
-            return;
-        }
-
         // Показати стан завантаження
         const originalText = submitButton.textContent;
         submitButton.disabled = true;
-        submitButton.textContent = 'Відправка...';
+        submitButton.textContent = 'відправка...';
 
         // Відправка на сервер
         const csrfToken = formData.get('csrfmiddlewaretoken');
@@ -68,7 +57,7 @@
                 'X-CSRFToken': csrfToken
             },
             body: JSON.stringify({
-                name: name,
+                name: 'User',
                 email: email
             })
         })

@@ -1,251 +1,377 @@
 /* ========================================== */
-/* FOOTER DESKTOP */
+/* FOOTER DESKTOP - НОВИЙ ДИЗАЙН ЗІ СКРІНШОТА */
 /* ========================================== */
 
+/* ===== ОСНОВНИЙ КОНТЕЙНЕР ===== */
 .footer-desktop {
-    background: var(--color-bg-dark);
+    background: #000000;
     color: #ffffff;
-    padding: var(--spacing-xxl) 0 0;
+    padding: 48px 0 32px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ===== GRID ===== */
-.footer-desktop-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
-}
-
-/* ===== SECTION ===== */
-.footer-desktop-section {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.footer-desktop-section:nth-child(1) {
-    animation-delay: 0.1s;
-}
-
-.footer-desktop-section:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.footer-desktop-section:nth-child(3) {
-    animation-delay: 0.3s;
-}
-
-.footer-desktop-section:nth-child(4) {
-    animation-delay: 0.4s;
-}
-
-/* ===== TITLES ===== */
-.footer-desktop-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: var(--spacing-md);
-    color: #ffffff;
-}
-
-.footer-desktop-text {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: var(--spacing-md);
-}
-
-/* ===== LOGO ===== */
-.footer-logo {
-    margin-top: var(--spacing-lg);
-}
-
-.footer-logo-image {
-    width: 100%;
-    max-width: 210px;
-    height: auto;
-    display: block;
-}
-
-/* ===== LINKS ===== */
-.footer-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-links li {
-    margin-bottom: var(--spacing-sm);
-}
-
-.footer-links a {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all var(--transition-base);
-    display: inline-block;
-}
-
-.footer-links a:hover {
-    color: var(--color-primary);
-    transform: translateX(3px);
-}
-
-/* ===== SOCIAL ICONS ===== */
-.footer-social {
+/* ===== HEADER: ЛОГОТИП + CTA ===== */
+.footer-header {
     display: flex;
-    gap: var(--spacing-sm);
-}
-
-.social-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    text-decoration: none;
-    transition: all var(--transition-base);
-}
-
-.social-icon svg {
-    width: 20px;
-    height: 20px;
-}
-
-.social-icon:hover {
-    background: var(--color-primary);
-    transform: translateY(-3px);
-}
-
-/* ===== SUBSCRIBE FORM ===== */
-.footer-subscribe-form {
-    margin-top: var(--spacing-md);
-}
-
-.footer-subscribe-form .form-group {
-    margin-bottom: var(--spacing-md);
-}
-
-.footer-subscribe-form .form-control {
-    width: 100%;
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 0.95rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-md);
-    color: #ffffff;
-    transition: border-color var(--transition-base);
-}
-
-.footer-subscribe-form .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.footer-subscribe-form .form-control:focus {
-    outline: none;
-    border-color: var(--color-primary);
-}
-
-/* ===== CHECKBOX ===== */
-.form-group-checkbox {
-    margin-bottom: var(--spacing-md);
-}
-
-.checkbox-label {
-    display: flex;
-    gap: var(--spacing-sm);
+    justify-content: space-between;
     align-items: flex-start;
-    cursor: pointer;
-    font-size: 0.85rem;
+    margin-bottom: 32px;
 }
 
-.checkbox-label input[type="checkbox"] {
-    margin-top: 2px;
-    cursor: pointer;
-    min-width: 16px;
-    min-height: 16px;
+.footer-branding {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
 }
 
-.checkbox-text {
-    color: rgba(255, 255, 255, 0.7);
+.footer-logo-main {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.footer-tagline {
+    font-size: 11px;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: lowercase;
+    font-weight: 400;
+    margin: 0;
+    padding-top: 4px;
+}
+
+.footer-cta-text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: right;
+    max-width: 320px;
     line-height: 1.4;
 }
 
-.checkbox-text a {
-    color: var(--color-primary);
-    text-decoration: underline;
+/* ===== СОЦІАЛЬНІ МЕРЕЖІ ===== */
+.footer-social-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
-.checkbox-text a:hover {
-    color: var(--color-primary-light);
+.footer-social-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #D32F2F;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-/* ===== SUBMIT BUTTON ===== */
-.btn-subscribe {
-    width: 100%;
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all var(--transition-base);
-}
-
-.btn-subscribe:hover {
+.footer-social-button:hover {
+    background: rgba(211, 47, 47, 0.1);
+    border-color: #FF5252;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
 }
 
-/* ===== FORM MESSAGE ===== */
-.form-message {
-    margin-top: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-md);
-    font-size: 0.9rem;
-    text-align: center;
+.footer-social-button:focus {
+    outline: 2px solid #FF5252;
+    outline-offset: 2px;
+}
+
+.social-icon {
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.social-text {
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+/* ===== КОНТАКТИ ===== */
+.footer-contacts {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-contact-item {
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 6px 0;
+    font-weight: 400;
+}
+
+.contact-link {
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    word-break: break-word;
+}
+
+.contact-link:hover {
+    color: #D32F2F;
+}
+
+.contact-link:focus {
+    outline: 2px solid #D32F2F;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ===== ФОРМА ПІДПИСКИ ===== */
+.footer-newsletter {
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.newsletter-title {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 12px;
+    position: relative;
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.newsletter-input:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.newsletter-input:focus {
+    outline: none;
+    border-color: #D32F2F;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-button {
+    padding: 12px 24px;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.newsletter-button:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+}
+
+.newsletter-button:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.newsletter-button:active {
+    transform: scale(0.98);
+}
+
+.newsletter-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ===== ПОВІДОМЛЕННЯ ФОРМИ ===== */
+.newsletter-form .form-message {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: left;
     display: none;
     animation: fadeIn 0.3s ease;
 }
 
-.form-message.success {
-    background: var(--color-success-light);
-    color: var(--color-success-dark);
+.newsletter-form .form-message.success {
+    background: rgba(76, 175, 80, 0.1);
+    color: #66BB6A;
+    border: 1px solid rgba(76, 175, 80, 0.3);
     display: block;
 }
 
-.form-message.error {
-    background: var(--color-error-light);
-    color: var(--color-error-dark);
+.newsletter-form .form-message.error {
+    background: rgba(244, 67, 54, 0.1);
+    color: #EF5350;
+    border: 1px solid rgba(244, 67, 54, 0.3);
     display: block;
 }
 
 /* ===== FOOTER BOTTOM ===== */
 .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    margin-top: 40px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: var(--spacing-lg) 0;
-    text-align: center;
 }
 
-.footer-bottom p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
+.footer-copyright {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
     margin: 0;
 }
 
-/* ===== ANIMATIONS ===== */
-/* fadeInUp animation використовується з animations.css для секцій */
+.footer-legal-links {
+    display: flex;
+    gap: 24px;
+}
 
-/* ===== RESPONSIVE ===== */
+.footer-legal-links a {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
 
-/* Tablet (768px - 992px) */
-@media (max-width: 992px) {
-    .footer-desktop-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-lg);
+.footer-legal-links a:hover {
+    color: #ffffff;
+}
+
+.footer-legal-links a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ===== АНІМАЦІЇ ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* Large Desktop (1400px+) */
+@media (min-width: 1400px) {
+    .footer-desktop .container {
+        max-width: 1320px;
+    }
+}
+
+/* Desktop (1200px - 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .footer-desktop .container {
+        max-width: 1140px;
+    }
+}
+
+/* Tablet Large (992px - 1199px) */
+@media (max-width: 1199px) {
+    .footer-header {
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .footer-cta-text {
+        text-align: left;
+        max-width: 100%;
+    }
+    
+    .footer-contacts {
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .footer-newsletter {
+        max-width: 100%;
+    }
+}
+
+/* Tablet (768px - 991px) */
+@media (max-width: 991px) {
     .footer-desktop {
-        padding: var(--spacing-xl) 0 0;
+        padding: 40px 0 28px;
+    }
+    
+    .footer-header {
+        margin-bottom: 28px;
+    }
+    
+    .footer-social-section {
+        margin-bottom: 32px;
+    }
+    
+    .footer-contacts {
+        margin-bottom: 32px;
+    }
+    
+    .footer-newsletter {
+        margin-bottom: 32px;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .newsletter-button {
+        width: 100%;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .footer-legal-links {
+        flex-direction: column;
+        gap: 12px;
     }
 }
 
@@ -256,43 +382,91 @@
     }
 }
 
-/* ===== DARK MODE ===== */
+/* ===== ACCESSIBILITY ===== */
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .footer-desktop {
+        border-top: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .footer-social-button {
+        border-width: 2px;
+        font-weight: 500;
+    }
+    
+    .contact-link,
+    .footer-legal-links a {
+        font-weight: 500;
+    }
+    
+    .newsletter-input {
+        border-width: 2px;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .footer-social-button,
+    .contact-link,
+    .newsletter-input,
+    .newsletter-button,
+    .footer-legal-links a {
+        transition: none;
+    }
+    
+    .footer-social-button:hover,
+    .newsletter-button:hover {
+        transform: none;
+    }
+    
+    .newsletter-button:active {
+        transform: none;
+    }
+    
+    .newsletter-form .form-message {
+        animation: none;
+    }
+}
+
+/* Dark Mode (already dark by default) */
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .footer-desktop {
-        background: var(--color-bg-dark);
+        background: #000000;
     }
 }
 
 [data-theme="dark"] .footer-desktop {
-    background: var(--color-bg-dark);
+    background: #000000;
 }
 
-/* ===== HIGH CONTRAST ===== */
-@media (prefers-contrast: high) {
+/* Light Mode Override (якщо потрібно) */
+@media (prefers-color-scheme: light) {
+    [data-theme="auto"] .footer-desktop {
+        background: #000000;
+    }
+}
+
+[data-theme="light"] .footer-desktop {
+    background: #000000;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
     .footer-desktop {
-        border-top: 2px solid var(--color-border);
+        background: #ffffff;
+        color: #000000;
+        border-top: 2px solid #000000;
     }
-
-    .footer-links a {
-        font-weight: 600;
+    
+    .footer-social-button,
+    .newsletter-form,
+    .footer-legal-links {
+        display: none;
     }
-}
-
-/* ===== REDUCED MOTION ===== */
-@media (prefers-reduced-motion: reduce) {
-    .footer-desktop-section {
-        animation: none;
-    }
-
-    .footer-links a,
-    .social-icon,
-    .btn-subscribe {
-        transition: none;
-    }
-
-    .footer-links a:hover,
-    .social-icon:hover,
-    .btn-subscribe:hover {
-        transform: none;
+    
+    .contact-link {
+        color: #000000;
+        text-decoration: underline;
     }
 }
