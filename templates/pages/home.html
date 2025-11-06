@@ -143,7 +143,8 @@
                                         </div>
 
                                         <div class="course-card-bottom">
-                                            <p class="course-description">{{ course.short_description|truncatewords:12 }}</p>
+                                            <p class="course-description">{{ course.short_description|truncatewords:12
+                                                }}</p>
                                         </div>
                                     </article>
                                 </div>
@@ -191,7 +192,8 @@
                                 <div class="hexagon-inner">
                                     <h4>Ігровий<br>Інтелект</h4>
                                     <div class="hexagon-icon-wrapper">
-                                        <img src="{% static 'images/game.png' %}" alt="Ігровий Інтелект" class="hexagon-icon">
+                                        <img src="{% static 'images/game.png' %}" alt="Ігровий Інтелект"
+                                            class="hexagon-icon">
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +213,8 @@
                                 <div class="hexagon-inner">
                                     <h4>Здоров'я<br>та звички</h4>
                                     <div class="hexagon-icon-wrapper">
-                                        <img src="{% static 'images/zdor.png' %}" alt="Здоров'я та звички" class="hexagon-icon">
+                                        <img src="{% static 'images/zdor.png' %}" alt="Здоров'я та звички"
+                                            class="hexagon-icon">
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +224,8 @@
                                 <div class="hexagon-inner">
                                     <h4>Життя<br>та побут</h4>
                                     <div class="hexagon-icon-wrapper">
-                                        <img src="{% static 'images/life.png' %}" alt="Життя та побут" class="hexagon-icon">
+                                        <img src="{% static 'images/life.png' %}" alt="Життя та побут"
+                                            class="hexagon-icon">
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +235,8 @@
                                 <div class="hexagon-inner">
                                     <h4>Ментальність</h4>
                                     <div class="hexagon-icon-wrapper">
-                                        <img src="{% static 'images/ment.png' %}" alt="Ментальність" class="hexagon-icon">
+                                        <img src="{% static 'images/ment.png' %}" alt="Ментальність"
+                                            class="hexagon-icon">
                                     </div>
                                 </div>
                             </div>
@@ -293,7 +298,8 @@
                                     </div>
                                     <div class="expert-card-content">
                                         <h3 class="expert-name">{{ expert.name }}</h3>
-                                        <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                                        <p class="expert-specialization">{{
+                                            expert.specialization|default:expert.position }}</p>
                                         <button class="expert-detail-btn">Детальніше</button>
                                     </div>
                                 </div>
@@ -330,7 +336,9 @@
                                     <div class="expert-bio-content">
                                         <h3 class="expert-name-back">Dr. Fabian Otte</h3>
                                         <div class="expert-bio-text">
-                                            <p>Провідний експерт у галузі методології тренувань та розвитку навичок. Має багаторічний досвід роботи з професійними футбольними клубами Європи.</p>
+                                            <p>Провідний експерт у галузі методології тренувань та розвитку навичок. Має
+                                                багаторічний досвід роботи з професійними футбольними клубами Європи.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -352,7 +360,8 @@
                                     <div class="expert-bio-content">
                                         <h3 class="expert-name-back">Dr. Adam Owen</h3>
                                         <div class="expert-bio-text">
-                                            <p>Міжнародний консультант з методології тренувань та проектування тренувальних сесій. Працював з топ-клубами UEFA Champions League.</p>
+                                            <p>Міжнародний консультант з методології тренувань та проектування
+                                                тренувальних сесій. Працював з топ-клубами UEFA Champions League.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -362,7 +371,8 @@
                             <div class="expert-card-inner">
                                 <div class="expert-card-front">
                                     <div class="expert-photo">
-                                        <img src="{% static 'images/prof3.png' %}" alt="Prof. Hassane Zouhal" loading="lazy">
+                                        <img src="{% static 'images/prof3.png' %}" alt="Prof. Hassane Zouhal"
+                                            loading="lazy">
                                     </div>
                                     <div class="expert-card-content">
                                         <h3 class="expert-name">Prof. Hassane Zouhal</h3>
@@ -374,7 +384,8 @@
                                     <div class="expert-bio-content">
                                         <h3 class="expert-name-back">Prof. Hassane Zouhal</h3>
                                         <div class="expert-bio-text">
-                                            <p>Професор фізіології вправ, спеціаліст з ідентифікації талантів та оптимізації фізичної підготовки спортсменів високого рівня.</p>
+                                            <p>Професор фізіології вправ, спеціаліст з ідентифікації талантів та
+                                                оптимізації фізичної підготовки спортсменів високого рівня.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -384,7 +395,8 @@
                             <div class="expert-card-inner">
                                 <div class="expert-card-front">
                                     <div class="expert-photo">
-                                        <img src="{% static 'images/prof4.png' %}" alt="Dr. Raphael Villatore" loading="lazy">
+                                        <img src="{% static 'images/prof4.png' %}" alt="Dr. Raphael Villatore"
+                                            loading="lazy">
                                     </div>
                                     <div class="expert-card-content">
                                         <h3 class="expert-name">Dr. Raphael Villatore</h3>
@@ -396,7 +408,8 @@
                                     <div class="expert-bio-content">
                                         <h3 class="expert-name-back">Dr. Raphael Villatore</h3>
                                         <div class="expert-bio-text">
-                                            <p>Експерт зі спортивної медицини та харчування. Розробляє індивідуальні програми для професійних футболістів та команд.</p>
+                                            <p>Експерт зі спортивної медицини та харчування. Розробляє індивідуальні
+                                                програми для професійних футболістів та команд.</p>
                                         </div>
                                     </div>
                                 </div>

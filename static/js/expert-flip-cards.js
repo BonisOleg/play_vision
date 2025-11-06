@@ -23,6 +23,11 @@ class ExpertFlipCards {
             event.preventDefault();
         }
 
+        // Запобігаємо подвійному спрацьовуванню для кнопки
+        if (event.target.classList.contains('expert-detail-btn')) {
+            event.stopPropagation();
+        }
+
         // Toggle класу flipped
         card.classList.toggle('flipped');
     }
