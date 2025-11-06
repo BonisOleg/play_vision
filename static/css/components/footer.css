@@ -1,13 +1,12 @@
 /* ========================================
-   FOOTER - ТОЧНА КОПІЯ ДРУГОГО СКРІНА
-   Компактний layout, все в рядок
+   FOOTER - ТОЧНА КОПІЯ СКРІНШОТА
    ======================================== */
 
 footer.site-footer {
     background: #000000;
     color: #ffffff;
     width: 100%;
-    padding: 40px 0 32px;
+    padding: 40px 0 28px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -22,7 +21,7 @@ footer.site-footer .footer-container {
     width: 100%;
 }
 
-/* === HEADER: Логотип + текст поруч + CTA === */
+/* === HEADER === */
 footer.site-footer .footer-header {
     display: flex;
     justify-content: space-between;
@@ -47,13 +46,13 @@ footer.site-footer .footer-logo {
 footer.site-footer .footer-brand-text {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 footer.site-footer .footer-brand-name {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.1;
     color: #ffffff;
     text-transform: lowercase;
     margin: 0;
@@ -65,10 +64,7 @@ footer.site-footer .footer-tagline {
     color: rgba(255, 255, 255, 0.7);
     text-transform: lowercase;
     margin: 0;
-}
-
-footer.site-footer .footer-cta {
-    text-align: right;
+    font-weight: 400;
 }
 
 footer.site-footer .footer-cta p {
@@ -76,13 +72,22 @@ footer.site-footer .footer-cta p {
     line-height: 1.4;
     color: #ffffff;
     margin: 0;
+    text-align: right;
 }
 
-/* === СОЦІАЛЬНІ КНОПКИ - компактні === */
+/* === СОЦІАЛЬНІ + КОНТАКТИ В ОДИН РЯДОК === */
+footer.site-footer .footer-social-contacts-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 28px;
+}
+
+/* Соціальні кнопки ЗЛІВА */
 footer.site-footer .footer-social {
     display: flex;
     gap: 12px;
-    margin-bottom: 28px;
 }
 
 footer.site-footer .social-link {
@@ -91,7 +96,7 @@ footer.site-footer .social-link {
     justify-content: space-between;
     gap: 10px;
     padding: 10px 16px;
-    min-width: 160px;
+    min-width: 150px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
@@ -117,28 +122,27 @@ footer.site-footer .social-icon {
     flex-shrink: 0;
 }
 
-/* === КОНТАКТИ В ОДИН РЯДОК === */
+/* Контакти СПРАВА */
 footer.site-footer .footer-contacts {
     display: flex;
-    gap: 48px;
-    margin-bottom: 28px;
+    gap: 40px;
     align-items: center;
 }
 
 footer.site-footer .contact-item {
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    gap: 6px;
     white-space: nowrap;
 }
 
 footer.site-footer .contact-label {
-    font-size: 13px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
 }
 
 footer.site-footer .contact-link {
-    font-size: 13px;
+    font-size: 12px;
     color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -148,22 +152,31 @@ footer.site-footer .contact-link:hover {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* === ФОРМА ПІДПИСКИ - компактна === */
+/* === НИЖНІЙ РЯДОК: Форма + Copyright в один рядок === */
+footer.site-footer .footer-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 footer.site-footer .footer-newsletter {
-    margin-bottom: 32px;
+    flex: 1;
 }
 
 footer.site-footer .newsletter-title {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.8);
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     font-weight: 400;
 }
 
 footer.site-footer .newsletter-form {
     display: flex;
     gap: 10px;
-    max-width: 500px;
+    max-width: 420px;
     position: relative;
 }
 
@@ -233,13 +246,12 @@ footer.site-footer .form-message.error {
     display: block;
 }
 
-/* === FOOTER BOTTOM === */
-footer.site-footer .footer-bottom {
+/* === ПРАВОВА ЧАСТИНА (copyright + links) === */
+footer.site-footer .footer-legal {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
 }
 
 footer.site-footer .footer-copyright {
@@ -267,34 +279,40 @@ footer.site-footer .footer-link:hover {
 /* === RESPONSIVE === */
 
 @media (max-width: 1199px) {
+    footer.site-footer .footer-social-contacts-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+    
     footer.site-footer .footer-contacts {
         flex-wrap: wrap;
-        gap: 24px 32px;
+        gap: 20px;
+    }
+    
+    footer.site-footer .footer-bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+    
+    footer.site-footer .footer-legal {
+        align-items: flex-start;
     }
 }
 
 @media (max-width: 991px) {
     footer.site-footer .footer-header {
         flex-direction: column;
+        gap: 20px;
     }
-
-    footer.site-footer .footer-cta {
+    
+    footer.site-footer .footer-cta p {
         text-align: left;
     }
-
+    
     footer.site-footer .footer-social {
         flex-wrap: wrap;
-    }
-
-    footer.site-footer .social-link {
-        flex: 1;
-        min-width: calc(50% - 6px);
-    }
-
-    footer.site-footer .footer-contacts {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
     }
 }
 
@@ -302,34 +320,55 @@ footer.site-footer .footer-link:hover {
     footer.site-footer {
         padding: 32px 0 24px;
     }
-
+    
+    footer.site-footer .footer-container {
+        padding: 0 20px;
+    }
+    
     footer.site-footer .footer-logo {
         width: 48px;
         height: 48px;
     }
-
+    
+    footer.site-footer .footer-social {
+        flex-direction: column;
+        width: 100%;
+    }
+    
     footer.site-footer .social-link {
         width: 100%;
-        max-width: none;
         min-width: 0;
     }
-
+    
+    footer.site-footer .footer-contacts {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
     footer.site-footer .newsletter-form {
         flex-direction: column;
+        max-width: 100%;
     }
-
+    
     footer.site-footer .newsletter-button {
         width: 100%;
     }
-
-    footer.site-footer .footer-bottom {
-        flex-direction: column;
-        gap: 12px;
+    
+    footer.site-footer .footer-legal {
+        align-items: center;
+        width: 100%;
         text-align: center;
     }
-
+    
     footer.site-footer .footer-links {
         flex-direction: column;
         gap: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    footer.site-footer .footer-container {
+        padding: 0 16px;
     }
 }

@@ -65,26 +65,24 @@
             </div>
         </div>
 
-        {# Форма підписки #}
-        <div class="footer-newsletter">
-            <p class="newsletter-title">Підписуйтесь, щоб отримувати актуальні новини</p>
+        {# Форма підписки + Copyright - ВСЕ В ОДИН РЯДОК #}
+        <div class="footer-bottom-row">
+            <div class="footer-newsletter">
+                <p class="newsletter-title">Підписуйтесь, щоб отримувати актуальні новини</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    {% csrf_token %}
+                    <input type="email" name="email" class="newsletter-input" placeholder="Email" required aria-label="Email для підписки">
+                    <button type="submit" class="newsletter-button">підписатися</button>
+                    <div class="form-message" role="alert" aria-live="polite"></div>
+                </form>
+            </div>
 
-            <form class="newsletter-form" id="newsletterForm">
-                {% csrf_token %}
-                <input type="email" name="email" class="newsletter-input" placeholder="Email" required
-                    aria-label="Email для підписки">
-                <button type="submit" class="newsletter-button">підписатися</button>
-                <div class="form-message" role="alert" aria-live="polite"></div>
-            </form>
-        </div>
-
-        {# Footer bottom #}
-        <div class="footer-bottom">
-            <p class="footer-copyright">&copy; Усі права захищені</p>
-
-            <div class="footer-links">
-                <a href="{% url 'core:legal' slug='terms' %}" class="footer-link">Договір оферти</a>
-                <a href="{% url 'core:legal' slug='privacy' %}" class="footer-link">Політика конфіденційності</a>
+            <div class="footer-legal">
+                <p class="footer-copyright">&copy; Усі права захищені</p>
+                <div class="footer-links">
+                    <a href="{% url 'core:legal' slug='terms' %}" class="footer-link">Договір оферти</a>
+                    <a href="{% url 'core:legal' slug='privacy' %}" class="footer-link">Політика конфіденційності</a>
+                </div>
             </div>
         </div>
 
