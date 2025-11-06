@@ -23,8 +23,8 @@ class ExpertFlipCards {
             event.preventDefault();
         }
 
-        // Запобігаємо подвійному спрацьовуванню для кнопки
-        if (event.target.classList.contains('expert-detail-btn')) {
+        // Запобігаємо подвійному спрацьовуванню для текстового посилання
+        if (event.target.classList.contains('expert-detail-link')) {
             event.stopPropagation();
         }
 
