@@ -14,87 +14,94 @@
 .footer-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 32px;
+    align-items: center;
+    margin-bottom: 40px;
+    min-height: 120px;
 }
 
 .footer-branding {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 20px;
 }
 
 .footer-logo-main {
-    width: 60px;
-    height: 60px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
     flex-shrink: 0;
 }
 
 .footer-tagline {
-    font-size: 11px;
-    line-height: 1.3;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.75);
     text-transform: lowercase;
     font-weight: 400;
     margin: 0;
-    padding-top: 4px;
+    padding-top: 8px;
+    letter-spacing: 0.3px;
 }
 
 .footer-cta-text {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     color: #ffffff;
     text-align: right;
-    max-width: 320px;
-    line-height: 1.4;
+    max-width: 420px;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
 }
 
 /* ===== СОЦІАЛЬНІ МЕРЕЖІ ===== */
 .footer-social-section {
     display: flex;
-    gap: 12px;
-    margin-bottom: 40px;
+    gap: 16px;
+    margin-bottom: 48px;
     flex-wrap: wrap;
 }
 
 .footer-social-button {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid #D32F2F;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 20px;
+    min-width: 200px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .footer-social-button:hover {
-    background: rgba(211, 47, 47, 0.1);
-    border-color: #FF5252;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .footer-social-button:focus {
-    outline: 2px solid #FF5252;
+    outline: 2px solid rgba(255, 255, 255, 0.4);
     outline-offset: 2px;
-}
-
-.social-icon {
-    width: 20px;
-    height: 20px;
-    color: #ffffff;
-    flex-shrink: 0;
 }
 
 .social-text {
     color: #ffffff;
     white-space: nowrap;
+    flex: 1;
+}
+
+.social-icon {
+    width: 22px;
+    height: 22px;
+    color: #ffffff;
+    flex-shrink: 0;
+    order: 2;
 }
 
 /* ===== КОНТАКТИ ===== */

@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 545.6 791.56">
-  <defs>
-    <pattern id="plus-pattern-light" x="0" y="0" width="15.1875" height="15.1875" patternUnits="userSpaceOnUse">
-      <!-- Вертикальна лінія плюсика -->
-      <line 
-        x1="7.59375" 
-        y1="1.96875" 
-        x2="7.59375" 
-        y2="13.21875" 
-        stroke="#231f20" 
-        stroke-width="0.13" 
-        stroke-linecap="square"
-        opacity="0.67"
-      />
-      <!-- Горизонтальна лінія плюсика -->
-      <line 
-        x1="1.96875" 
-        y1="7.59375" 
-        x2="13.21875" 
-        y2="7.59375" 
-        stroke="#231f20" 
-        stroke-width="0.13" 
-        stroke-linecap="square"
-        opacity="0.67"
-      />
-    </pattern>
-  </defs>
-  
-  <!-- Прямокутник на весь viewBox з pattern заливкою -->
-  <rect 
-    x="0" 
-    y="0" 
-    width="545.6" 
-    height="791.56" 
-    fill="url(#plus-pattern-light)"
+<svg xmlns="http://www.w3.org/2000/svg" width="15.1875" height="15.1875" viewBox="0 0 15.1875 15.1875">
+  <!-- Вертикальна лінія плюсика -->
+  <line 
+    x1="7.59375" 
+    y1="1.96875" 
+    x2="7.59375" 
+    y2="13.21875" 
+    stroke="#231f20" 
+    stroke-width="0.13" 
+    stroke-linecap="square"
+    opacity="0.67"
+  />
+  <!-- Горизонтальна лінія плюсика -->
+  <line 
+    x1="1.96875" 
+    y1="7.59375" 
+    x2="13.21875" 
+    y2="7.59375" 
+    stroke="#231f20" 
+    stroke-width="0.13" 
+    stroke-linecap="square"
+    opacity="0.67"
   />
 </svg>
