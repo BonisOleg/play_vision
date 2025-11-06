@@ -1,12 +1,12 @@
 /* ========================================
-   FOOTER - ЧИСТА КОПІЯ
+   FOOTER - 100% ВІДПОВІДНІСТЬ
    ======================================== */
 
 footer.site-footer {
     background: #000000;
     color: #ffffff;
     width: 100%;
-    padding: 40px 0 28px;
+    padding: 40px 0 32px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -27,11 +27,11 @@ footer.site-footer .footer-header {
     justify-content: space-between;
     align-items: center;
     gap: 40px;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
 }
 
 footer.site-footer .footer-logo {
-    height: 56px;
+    height: 60px;
     width: auto;
     object-fit: contain;
 }
@@ -44,27 +44,30 @@ footer.site-footer .footer-cta {
     text-align: right;
 }
 
-/* === РЯДОК 2: GRID - 3 СОЦІАЛЬНІ + 3 КОНТАКТИ === */
+/* === РЯДОК 2: СОЦІАЛЬНІ ЗЛІВА | КОНТАКТИ СПРАВА === */
 footer.site-footer .footer-social-contacts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr) repeat(3, 1fr);
-    gap: 12px 16px;
-    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 32px;
 }
 
+/* Соціальні кнопки - 3 в ряд зліва */
 footer.site-footer .social-link {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 10px 16px;
+    gap: 12px;
+    padding: 12px 18px;
+    min-width: 160px;
     background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
     color: #ffffff;
     text-decoration: none;
     font-size: 14px;
-    transition: background 0.3s ease, border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 footer.site-footer .social-link:hover {
@@ -78,21 +81,22 @@ footer.site-footer .social-text {
 }
 
 footer.site-footer .social-icon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     flex-shrink: 0;
 }
 
+/* Контакти - 3 в ряд справа */
 footer.site-footer .contact-item {
     display: flex;
     align-items: baseline;
     gap: 6px;
+    white-space: nowrap;
 }
 
 footer.site-footer .contact-label {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
-    white-space: nowrap;
 }
 
 footer.site-footer .contact-link {
@@ -100,7 +104,6 @@ footer.site-footer .contact-link {
     color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
-    word-break: break-word;
 }
 
 footer.site-footer .contact-link:hover {
@@ -113,38 +116,38 @@ footer.site-footer .footer-bottom {
     justify-content: space-between;
     align-items: center;
     gap: 40px;
-    padding-top: 28px;
+    padding-top: 32px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 footer.site-footer .footer-newsletter {
     flex: 1;
-    max-width: 500px;
+    max-width: 520px;
 }
 
 footer.site-footer .newsletter-title {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.8);
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
     font-weight: 400;
 }
 
 footer.site-footer .newsletter-form {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     position: relative;
 }
 
 footer.site-footer .newsletter-input {
     flex: 1;
-    padding: 10px 14px;
+    padding: 12px 16px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
+    border-radius: 8px;
     color: #ffffff;
-    font-size: 13px;
+    font-size: 14px;
     font-family: inherit;
-    min-height: 40px;
+    min-height: 44px;
     transition: border-color 0.3s ease, background 0.3s ease;
 }
 
@@ -159,18 +162,18 @@ footer.site-footer .newsletter-input:focus {
 }
 
 footer.site-footer .newsletter-button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     background: #ffffff;
     color: #000000;
     border: none;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 500;
     text-transform: lowercase;
     cursor: pointer;
     transition: background 0.3s ease;
     white-space: nowrap;
-    min-height: 40px;
+    min-height: 44px;
     font-family: inherit;
 }
 
@@ -188,10 +191,10 @@ footer.site-footer .form-message {
     top: 100%;
     left: 0;
     right: 0;
-    margin-top: 6px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 12px;
+    margin-top: 8px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
     display: none;
 }
 
@@ -213,7 +216,7 @@ footer.site-footer .footer-legal {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 8px;
+    gap: 10px;
 }
 
 footer.site-footer .footer-copyright {
@@ -224,7 +227,7 @@ footer.site-footer .footer-copyright {
 
 footer.site-footer .footer-links {
     display: flex;
-    gap: 20px;
+    gap: 24px;
 }
 
 footer.site-footer .footer-link {
@@ -242,7 +245,9 @@ footer.site-footer .footer-link:hover {
 
 @media (max-width: 1199px) {
     footer.site-footer .footer-social-contacts {
-        grid-template-columns: repeat(3, 1fr);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
     }
 }
 
@@ -255,10 +260,6 @@ footer.site-footer .footer-link:hover {
     
     footer.site-footer .footer-cta {
         text-align: left;
-    }
-    
-    footer.site-footer .footer-social-contacts {
-        grid-template-columns: repeat(2, 1fr);
     }
     
     footer.site-footer .footer-bottom {
@@ -278,7 +279,7 @@ footer.site-footer .footer-link:hover {
 
 @media (max-width: 767px) {
     footer.site-footer {
-        padding: 32px 0 24px;
+        padding: 32px 0 28px;
     }
     
     footer.site-footer .footer-container {
@@ -286,11 +287,16 @@ footer.site-footer .footer-link:hover {
     }
     
     footer.site-footer .footer-logo {
-        height: 48px;
+        height: 50px;
     }
     
-    footer.site-footer .footer-social-contacts {
-        grid-template-columns: 1fr;
+    footer.site-footer .social-link {
+        width: 100%;
+        min-width: 0;
+    }
+    
+    footer.site-footer .contact-item {
+        width: 100%;
     }
     
     footer.site-footer .newsletter-form {
@@ -309,7 +315,7 @@ footer.site-footer .footer-link:hover {
     
     footer.site-footer .footer-links {
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
         align-items: center;
     }
 }
