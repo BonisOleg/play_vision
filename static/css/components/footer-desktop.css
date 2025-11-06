@@ -1,322 +1,313 @@
 /* ========================================== */
-/* FOOTER DESKTOP - НОВИЙ ДИЗАЙН (ВИСОКОСПЕЦИФІЧНІ СЕЛЕКТОРИ) */
+/* FOOTER DESKTOP - 100% ВІДПОВІДНІСТЬ СКРІНШОТУ */
+/* ВИСОКА СПЕЦИФІЧНІСТЬ БЕЗ !important */
 /* ========================================== */
 
 /* ===== RESET & BASE ===== */
 footer.footer-desktop {
-    background: #000000 !important;
-    color: #ffffff !important;
-    padding: 48px 0 32px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-    margin: 0 !important;
-    width: 100% !important;
+    background: #000000;
+    color: #ffffff;
+    padding: 48px 0 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
+    width: 100%;
 }
 
 footer.footer-desktop * {
     box-sizing: border-box;
 }
 
-/* ===== HEADER: ЛОГОТИП + CTA ===== */
+/* ===== HEADER: ЛОГОТИП + КОНТАКТИ ===== */
 footer.footer-desktop .footer-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    margin-bottom: 40px !important;
-    min-height: 120px !important;
-    width: 100% !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    min-height: 120px;
+    width: 100%;
 }
 
 footer.footer-desktop .footer-branding {
-    display: flex !important;
-    align-items: flex-start !important;
-    gap: 20px !important;
-    flex-shrink: 0 !important;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex-shrink: 0;
 }
 
 footer.footer-desktop .footer-logo-main {
-    width: 120px !important;
-    height: 120px !important;
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-    display: block !important;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: block;
 }
 
 footer.footer-desktop .footer-tagline {
-    font-size: 13px !important;
-    line-height: 1.35 !important;
-    color: rgba(255, 255, 255, 0.75) !important;
-    text-transform: lowercase !important;
-    font-weight: 400 !important;
-    margin: 0 !important;
-    padding-top: 8px !important;
-    letter-spacing: 0.3px !important;
-    white-space: pre-line !important;
+    font-size: 13px;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: lowercase;
+    font-weight: 400;
+    margin: 0;
+    padding-top: 8px;
+    letter-spacing: 0.3px;
+    white-space: pre-line;
 }
 
-footer.footer-desktop .footer-cta-text {
-    font-size: 18px !important;
-    font-weight: 400 !important;
-    color: #ffffff !important;
-    text-align: right !important;
-    max-width: 420px !important;
-    line-height: 1.5 !important;
-    letter-spacing: 0.2px !important;
-    margin: 0 !important;
-    flex-shrink: 0 !important;
+/* ===== КОНТАКТИ В HEADER (3 колонки) ===== */
+footer.footer-desktop .footer-contacts-header {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-shrink: 0;
 }
 
 /* ===== СОЦІАЛЬНІ МЕРЕЖІ ===== */
 footer.footer-desktop .footer-social-section {
-    display: flex !important;
-    gap: 16px !important;
-    margin-bottom: 48px !important;
-    flex-wrap: wrap !important;
-    width: 100% !important;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 footer.footer-desktop .footer-social-button {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
-    padding: 12px 20px !important;
-    min-width: 200px !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 8px !important;
-    color: #ffffff !important;
-    font-size: 15px !important;
-    font-weight: 400 !important;
-    text-decoration: none !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    cursor: pointer !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 20px;
+    min-width: 200px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
 }
 
 footer.footer-desktop .footer-social-button:hover {
-    background: rgba(255, 255, 255, 0.12) !important;
-    border-color: rgba(255, 255, 255, 0.25) !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 footer.footer-desktop .footer-social-button:focus {
-    outline: 2px solid rgba(255, 255, 255, 0.4) !important;
-    outline-offset: 2px !important;
+    outline: 2px solid rgba(255, 255, 255, 0.4);
+    outline-offset: 2px;
 }
 
 footer.footer-desktop .social-text {
-    color: #ffffff !important;
-    white-space: nowrap !important;
-    flex: 1 !important;
-    text-align: left !important;
-    order: 1 !important;
+    color: #ffffff;
+    white-space: nowrap;
+    flex: 1;
+    text-align: left;
+    order: 1;
 }
 
 footer.footer-desktop .social-icon {
-    width: 22px !important;
-    height: 22px !important;
-    color: #ffffff !important;
-    flex-shrink: 0 !important;
-    order: 2 !important;
-    margin-left: auto !important;
+    width: 22px;
+    height: 22px;
+    color: #ffffff;
+    flex-shrink: 0;
+    order: 2;
+    margin-left: auto;
 }
 
-/* ===== КОНТАКТИ ===== */
-footer.footer-desktop .footer-contacts {
-    display: flex !important;
-    justify-content: space-between !important;
-    gap: 40px !important;
-    margin-bottom: 40px !important;
-    width: 100% !important;
-}
-
+/* ===== КОНТАКТИ - Стилі для items ===== */
 footer.footer-desktop .footer-contact-item {
-    flex: 1 !important;
-    min-width: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
 }
 
 footer.footer-desktop .contact-label {
-    font-size: 13px !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    margin: 0 0 6px 0 !important;
-    font-weight: 400 !important;
-    display: block !important;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 6px 0;
+    font-weight: 400;
+    display: block;
 }
 
 footer.footer-desktop .contact-link {
-    font-size: 14px !important;
-    color: #ffffff !important;
-    text-decoration: none !important;
-    transition: color 0.3s ease !important;
-    word-break: break-word !important;
-    display: inline-block !important;
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    word-break: break-word;
+    display: inline-block;
 }
 
 footer.footer-desktop .contact-link:hover {
-    color: #D32F2F !important;
+    color: #D32F2F;
 }
 
 footer.footer-desktop .contact-link:focus {
-    outline: 2px solid #D32F2F !important;
-    outline-offset: 2px !important;
-    border-radius: 2px !important;
+    outline: 2px solid #D32F2F;
+    outline-offset: 2px;
+    border-radius: 2px;
 }
 
 /* ===== ФОРМА ПІДПИСКИ ===== */
 footer.footer-desktop .footer-newsletter {
-    margin-bottom: 40px !important;
-    max-width: 600px !important;
-    width: 100% !important;
+    margin-bottom: 40px;
+    max-width: 600px;
+    width: 100%;
 }
 
 footer.footer-desktop .newsletter-title {
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-    margin: 0 0 16px 0 !important;
-    line-height: 1.4 !important;
-    display: block !important;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+    display: block;
 }
 
 footer.footer-desktop .newsletter-form {
-    display: flex !important;
-    gap: 12px !important;
-    position: relative !important;
-    align-items: stretch !important;
+    display: flex;
+    gap: 12px;
+    position: relative;
+    align-items: stretch;
 }
 
 footer.footer-desktop .newsletter-input {
-    flex: 1 !important;
-    padding: 12px 16px !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-radius: 6px !important;
-    color: #ffffff !important;
-    font-size: 14px !important;
-    font-family: inherit !important;
-    transition: all 0.3s ease !important;
-    min-height: 46px !important;
+    flex: 1;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    min-height: 46px;
 }
 
 footer.footer-desktop .newsletter-input::placeholder {
-    color: rgba(255, 255, 255, 0.4) !important;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 footer.footer-desktop .newsletter-input:hover {
-    border-color: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 footer.footer-desktop .newsletter-input:focus {
-    outline: none !important;
-    border-color: #D32F2F !important;
-    background: rgba(255, 255, 255, 0.1) !important;
+    outline: none;
+    border-color: #D32F2F;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 footer.footer-desktop .newsletter-button {
-    padding: 12px 24px !important;
-    background: #ffffff !important;
-    color: #000000 !important;
-    border: none !important;
-    border-radius: 6px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    text-transform: lowercase !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    white-space: nowrap !important;
-    font-family: inherit !important;
-    min-height: 46px !important;
+    padding: 12px 24px;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-family: inherit;
+    min-height: 46px;
 }
 
 footer.footer-desktop .newsletter-button:hover {
-    background: rgba(255, 255, 255, 0.9) !important;
-    transform: scale(1.02) !important;
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
 }
 
 footer.footer-desktop .newsletter-button:focus {
-    outline: 2px solid #ffffff !important;
-    outline-offset: 2px !important;
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }
 
 footer.footer-desktop .newsletter-button:active {
-    transform: scale(0.98) !important;
+    transform: scale(0.98);
 }
 
 footer.footer-desktop .newsletter-button:disabled {
-    opacity: 0.6 !important;
-    cursor: not-allowed !important;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* ===== ПОВІДОМЛЕННЯ ФОРМИ ===== */
 footer.footer-desktop .newsletter-form .form-message {
-    position: absolute !important;
-    top: 100% !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin-top: 8px !important;
-    padding: 10px 12px !important;
-    border-radius: 6px !important;
-    font-size: 13px !important;
-    text-align: left !important;
-    display: none !important;
-    animation: fadeIn 0.3s ease !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: left;
+    display: none;
+    animation: fadeIn 0.3s ease;
 }
 
 footer.footer-desktop .newsletter-form .form-message.success {
-    background: rgba(76, 175, 80, 0.1) !important;
-    color: #66BB6A !important;
-    border: 1px solid rgba(76, 175, 80, 0.3) !important;
-    display: block !important;
+    background: rgba(76, 175, 80, 0.1);
+    color: #66BB6A;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    display: block;
 }
 
 footer.footer-desktop .newsletter-form .form-message.error {
-    background: rgba(244, 67, 54, 0.1) !important;
-    color: #EF5350 !important;
-    border: 1px solid rgba(244, 67, 54, 0.3) !important;
-    display: block !important;
+    background: rgba(244, 67, 54, 0.1);
+    color: #EF5350;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    display: block;
 }
 
 /* ===== FOOTER BOTTOM ===== */
 footer.footer-desktop .footer-bottom {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding-top: 24px !important;
-    margin-top: 40px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-    width: 100% !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
 }
 
 footer.footer-desktop .footer-copyright {
-    font-size: 12px !important;
-    color: rgba(255, 255, 255, 0.5) !important;
-    margin: 0 !important;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
 }
 
 footer.footer-desktop .footer-legal-links {
-    display: flex !important;
-    gap: 24px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    list-style: none !important;
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 footer.footer-desktop .footer-legal-links a {
-    font-size: 12px !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    text-decoration: none !important;
-    transition: color 0.3s ease !important;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 footer.footer-desktop .footer-legal-links a:hover {
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 footer.footer-desktop .footer-legal-links a:focus {
-    outline: 2px solid rgba(255, 255, 255, 0.5) !important;
-    outline-offset: 2px !important;
-    border-radius: 2px !important;
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+    border-radius: 2px;
 }
 
 /* ===== АНІМАЦІЇ ===== */
@@ -337,87 +328,79 @@ footer.footer-desktop .footer-legal-links a:focus {
 /* Large Desktop (1400px+) */
 @media (min-width: 1400px) {
     footer.footer-desktop .container {
-        max-width: 1320px !important;
+        max-width: 1320px;
     }
 }
 
 /* Desktop (1200px - 1399px) */
 @media (min-width: 1200px) and (max-width: 1399px) {
     footer.footer-desktop .container {
-        max-width: 1140px !important;
+        max-width: 1140px;
     }
 }
 
 /* Tablet Large (992px - 1199px) */
 @media (max-width: 1199px) {
     footer.footer-desktop .footer-header {
-        flex-direction: column !important;
-        gap: 24px !important;
-        align-items: flex-start !important;
+        flex-direction: column;
+        gap: 32px;
+        align-items: flex-start;
     }
 
-    footer.footer-desktop .footer-cta-text {
-        text-align: left !important;
-        max-width: 100% !important;
-    }
-
-    footer.footer-desktop .footer-contacts {
-        flex-direction: column !important;
-        gap: 24px !important;
+    footer.footer-desktop .footer-contacts-header {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
     }
 
     footer.footer-desktop .footer-newsletter {
-        max-width: 100% !important;
+        max-width: 100%;
     }
 }
 
 /* Tablet (768px - 991px) */
 @media (max-width: 991px) {
     footer.footer-desktop {
-        padding: 40px 0 28px !important;
+        padding: 40px 0 28px;
     }
 
     footer.footer-desktop .footer-header {
-        margin-bottom: 28px !important;
+        margin-bottom: 28px;
     }
 
     footer.footer-desktop .footer-social-section {
-        margin-bottom: 32px !important;
-    }
-
-    footer.footer-desktop .footer-contacts {
-        margin-bottom: 32px !important;
+        margin-bottom: 32px;
     }
 
     footer.footer-desktop .footer-newsletter {
-        margin-bottom: 32px !important;
+        margin-bottom: 32px;
     }
 
     footer.footer-desktop .newsletter-form {
-        flex-direction: column !important;
+        flex-direction: column;
     }
 
     footer.footer-desktop .newsletter-button {
-        width: 100% !important;
+        width: 100%;
     }
 
     footer.footer-desktop .footer-bottom {
-        flex-direction: column !important;
-        gap: 16px !important;
-        text-align: center !important;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
     }
 
     footer.footer-desktop .footer-legal-links {
-        flex-direction: column !important;
-        gap: 12px !important;
-        align-items: center !important;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
     }
 }
 
 /* Hide desktop footer on mobile */
 @media (max-width: 767px) {
     footer.footer-desktop {
-        display: none !important;
+        display: none;
     }
 }
 
@@ -426,21 +409,21 @@ footer.footer-desktop .footer-legal-links a:focus {
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
     footer.footer-desktop {
-        border-top: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-top: 2px solid rgba(255, 255, 255, 0.3);
     }
 
     footer.footer-desktop .footer-social-button {
-        border-width: 2px !important;
-        font-weight: 500 !important;
+        border-width: 2px;
+        font-weight: 500;
     }
 
     footer.footer-desktop .contact-link,
     footer.footer-desktop .footer-legal-links a {
-        font-weight: 500 !important;
+        font-weight: 500;
     }
 
     footer.footer-desktop .newsletter-input {
-        border-width: 2px !important;
+        border-width: 2px;
     }
 }
 
@@ -452,19 +435,19 @@ footer.footer-desktop .footer-legal-links a:focus {
     footer.footer-desktop .newsletter-input,
     footer.footer-desktop .newsletter-button,
     footer.footer-desktop .footer-legal-links a {
-        transition: none !important;
+        transition: none;
     }
 
     footer.footer-desktop .footer-social-button:hover,
     footer.footer-desktop .newsletter-button:hover {
-        transform: none !important;
+        transform: none;
     }
 
     footer.footer-desktop .newsletter-button:active {
-        transform: none !important;
+        transform: none;
     }
 
     footer.footer-desktop .newsletter-form .form-message {
-        animation: none !important;
+        animation: none;
     }
 }

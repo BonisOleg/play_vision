@@ -226,13 +226,12 @@ footer.footer-desktop .footer-tagline {
     text-transform: lowercase !important;
 }
 
-footer.footer-desktop .footer-cta-text {
-    font-size: 18px !important;
-    font-weight: 400 !important;
-    color: #ffffff !important;
-    text-align: right !important;
-    max-width: 420px !important;
-    line-height: 1.5 !important;
+/* Контакти в header - 3 колонки */
+footer.footer-desktop .footer-contacts-header {
+    display: flex !important;
+    gap: 40px !important;
+    align-items: flex-start !important;
+    flex-shrink: 0 !important;
 }
 
 /* ================================================================
