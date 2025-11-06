@@ -302,6 +302,7 @@ footer.footer-mobile .footer-legal-links-mobile a:focus {
         opacity: 0;
         transform: translateY(-4px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -315,52 +316,52 @@ footer.footer-mobile .footer-legal-links-mobile a:focus {
     footer.footer-mobile {
         padding: 32px 0 calc(24px + env(safe-area-inset-bottom)) !important;
     }
-    
+
     footer.footer-mobile .footer-branding-mobile {
         gap: 12px !important;
         margin-bottom: 20px !important;
     }
-    
+
     footer.footer-mobile .footer-logo-main-mobile {
         width: 80px !important;
         height: 80px !important;
     }
-    
+
     footer.footer-mobile .footer-tagline-mobile {
         font-size: 11px !important;
     }
-    
+
     footer.footer-mobile .footer-cta-text-mobile {
         font-size: 14px !important;
         margin-bottom: 20px !important;
     }
-    
+
     footer.footer-mobile .footer-social-section-mobile {
         margin-bottom: 24px !important;
     }
-    
+
     footer.footer-mobile .footer-social-button-mobile {
         padding: 12px 16px !important;
         font-size: 14px !important;
     }
-    
+
     footer.footer-mobile .footer-contacts-mobile {
         margin-bottom: 24px !important;
     }
-    
+
     footer.footer-mobile .footer-newsletter-mobile {
         margin-bottom: 24px !important;
     }
-    
+
     footer.footer-mobile .newsletter-title-mobile {
         font-size: 12px !important;
     }
-    
+
     footer.footer-mobile .newsletter-input-mobile {
         padding: 12px 14px !important;
         font-size: 13px !important;
     }
-    
+
     footer.footer-mobile .newsletter-button-mobile {
         padding: 12px 20px !important;
         font-size: 13px !important;
@@ -372,7 +373,7 @@ footer.footer-mobile .footer-legal-links-mobile a:focus {
     footer.footer-mobile {
         padding-bottom: calc(32px + env(safe-area-inset-bottom)) !important;
     }
-    
+
     footer.footer-mobile .footer-social-button-mobile,
     footer.footer-mobile .contact-link-mobile,
     footer.footer-mobile .newsletter-input-mobile,
@@ -388,20 +389,20 @@ footer.footer-mobile .footer-legal-links-mobile a:focus {
     footer.footer-mobile .footer-social-button-mobile {
         min-height: 52px !important;
     }
-    
+
     footer.footer-mobile .contact-link-mobile {
         min-height: 44px !important;
     }
-    
+
     footer.footer-mobile .newsletter-input-mobile {
         min-height: 48px !important;
         font-size: 16px !important;
     }
-    
+
     footer.footer-mobile .newsletter-button-mobile {
         min-height: 48px !important;
     }
-    
+
     footer.footer-mobile .footer-legal-links-mobile a {
         min-height: 44px !important;
     }
@@ -414,21 +415,21 @@ footer.footer-mobile .footer-legal-links-mobile a:focus {
     footer.footer-mobile {
         border-top: 2px solid rgba(255, 255, 255, 0.3) !important;
     }
-    
+
     footer.footer-mobile .footer-social-button-mobile {
         border-width: 2px !important;
         font-weight: 500 !important;
     }
-    
+
     footer.footer-mobile .contact-link-mobile,
     footer.footer-mobile .footer-legal-links-mobile a {
         font-weight: 500 !important;
     }
-    
+
     footer.footer-mobile .newsletter-input-mobile {
         border-width: 2px !important;
     }
-    
+
     footer.footer-mobile .footer-bottom-mobile {
         border-top: 2px solid rgba(255, 255, 255, 0.3) !important;
     }
@@ -436,6 +437,7 @@ footer.footer-mobile .footer-legal-links-mobile a:focus {
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
     footer.footer-mobile .footer-social-button-mobile,
     footer.footer-mobile .contact-link-mobile,
     footer.footer-mobile .newsletter-input-mobile,
@@ -443,12 +445,12 @@ footer.footer-mobile .footer-legal-links-mobile a:focus {
     footer.footer-mobile .footer-legal-links-mobile a {
         transition: none !important;
     }
-    
+
     footer.footer-mobile .footer-social-button-mobile:active,
     footer.footer-mobile .newsletter-button-mobile:active {
         transform: none !important;
     }
-    
+
     footer.footer-mobile .newsletter-form-mobile .form-message {
         animation: none !important;
     }

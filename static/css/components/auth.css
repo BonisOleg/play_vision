@@ -334,7 +334,7 @@
     color: var(--auth-tiktok);
 }
 
-.social-icon {
+.auth-content .social-icon {
     width: 28px;
     height: 28px;
 }
@@ -482,7 +482,7 @@
         font-size: 14px;
     }
 
-    .social-icon {
+    .auth-content .social-icon {
         width: 24px;
         height: 24px;
     }
