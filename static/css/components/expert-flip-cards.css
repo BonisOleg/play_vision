@@ -73,6 +73,32 @@
     padding: 24px 20px;
 }
 
+/* КНОПКА "ДЕТАЛЬНІШЕ" */
+.expert-detail-btn {
+    display: block;
+    margin: 12px auto 0;
+    padding: 10px 24px;
+    background: #d32f2f;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.expert-detail-btn:hover {
+    background: #b71c1c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+
+.expert-detail-btn:active {
+    transform: translateY(0);
+}
+
 /* HOVER ЕФЕКТ ДЛЯ FRONT */
 .expert-card:hover .expert-card-front {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -151,6 +177,11 @@
     .expert-bio-text {
         font-size: 0.875rem;
     }
+
+    .expert-detail-btn {
+        padding: 9px 20px;
+        font-size: 0.8125rem;
+    }
 }
 
 /* ============================================
@@ -185,6 +216,12 @@
     .expert-bio-text p {
         margin: 0 0 10px 0;
     }
+
+    .expert-detail-btn {
+        padding: 8px 18px;
+        font-size: 0.75rem;
+        margin-top: 10px;
+    }
 }
 
 /* ============================================
@@ -218,6 +255,12 @@
 
     .expert-bio-text p {
         margin: 0 0 10px 0;
+    }
+
+    .expert-detail-btn {
+        padding: 9px 20px;
+        font-size: 0.8125rem;
+        margin-top: 10px;
     }
 }
 
@@ -273,7 +316,17 @@
     color: var(--color-text-light);
 }
 
+[data-theme="dark"] .expert-detail-btn {
+    background: #d32f2f;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .expert-detail-btn:hover {
+    background: #b71c1c;
+}
+
 @media (prefers-color-scheme: dark) {
+
     [data-theme="auto"] .expert-card-front,
     [data-theme="auto"] .expert-card-back {
         background: var(--color-bg-gray);
@@ -293,5 +346,13 @@
     [data-theme="auto"] .expert-bio-text {
         color: var(--color-text-light);
     }
-}
 
+    [data-theme="auto"] .expert-detail-btn {
+        background: #d32f2f;
+        color: #ffffff;
+    }
+
+    [data-theme="auto"] .expert-detail-btn:hover {
+        background: #b71c1c;
+    }
+}
