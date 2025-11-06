@@ -653,7 +653,7 @@
         appearance: none;
         cursor: pointer;
     }
-    
+
     /* Smooth scrolling */
     .fullscreen-container,
     .section-content,
@@ -768,11 +768,11 @@
         text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
     }
 
-    .hexagon {
+    .mentor-coaching-section .hexagon {
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
-    .hexagon:hover {
+    .mentor-coaching-section .hexagon:hover {
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
     }
 
@@ -910,11 +910,11 @@
             text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
         }
 
-        .hexagon {
+        .mentor-coaching-section .hexagon {
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
 
-        .hexagon:hover {
+        .mentor-coaching-section .hexagon:hover {
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
         }
 
