@@ -71,7 +71,8 @@
                 <p class="newsletter-title">Підписуйтесь, щоб отримувати актуальні новини</p>
                 <form class="newsletter-form" id="newsletterForm">
                     {% csrf_token %}
-                    <input type="email" name="email" class="newsletter-input" placeholder="Email" required aria-label="Email для підписки">
+                    <input type="email" name="email" class="newsletter-input" placeholder="Email" required
+                        aria-label="Email для підписки">
                     <button type="submit" class="newsletter-button">підписатися</button>
                     <div class="form-message" role="alert" aria-live="polite"></div>
                 </form>
