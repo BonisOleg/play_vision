@@ -1,5 +1,5 @@
 /* ========================================
-   FOOTER - ТОЧНА КОПІЯ СКРІНШОТА
+   FOOTER - 100% КОПІЯ FIGMA
    ======================================== */
 
 footer.site-footer {
@@ -21,19 +21,19 @@ footer.site-footer .footer-container {
     width: 100%;
 }
 
-/* === HEADER === */
+/* === РЯДОК 1: ЛОГОТИП + CTA === */
 footer.site-footer .footer-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 40px;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 }
 
 footer.site-footer .footer-brand {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 14px;
 }
 
 footer.site-footer .footer-logo {
@@ -75,8 +75,8 @@ footer.site-footer .footer-cta p {
     text-align: right;
 }
 
-/* === СОЦІАЛЬНІ + КОНТАКТИ В ОДИН РЯДОК === */
-footer.site-footer .footer-social-contacts-row {
+/* === РЯДОК 2: СОЦІАЛЬНІ ЗЛІВА | КОНТАКТИ СПРАВА === */
+footer.site-footer .footer-social-contacts {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -84,7 +84,6 @@ footer.site-footer .footer-social-contacts-row {
     margin-bottom: 28px;
 }
 
-/* Соціальні кнопки ЗЛІВА */
 footer.site-footer .footer-social {
     display: flex;
     gap: 12px;
@@ -103,7 +102,7 @@ footer.site-footer .social-link {
     color: #ffffff;
     text-decoration: none;
     font-size: 14px;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 footer.site-footer .social-link:hover {
@@ -122,10 +121,9 @@ footer.site-footer .social-icon {
     flex-shrink: 0;
 }
 
-/* Контакти СПРАВА */
 footer.site-footer .footer-contacts {
     display: flex;
-    gap: 40px;
+    gap: 36px;
     align-items: center;
 }
 
@@ -152,8 +150,8 @@ footer.site-footer .contact-link:hover {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* === НИЖНІЙ РЯДОК: Форма + Copyright в один рядок === */
-footer.site-footer .footer-bottom-row {
+/* === РЯДОК 3: ФОРМА ЗЛІВА | COPYRIGHT СПРАВА === */
+footer.site-footer .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -164,6 +162,7 @@ footer.site-footer .footer-bottom-row {
 
 footer.site-footer .footer-newsletter {
     flex: 1;
+    max-width: 500px;
 }
 
 footer.site-footer .newsletter-title {
@@ -176,7 +175,6 @@ footer.site-footer .newsletter-title {
 footer.site-footer .newsletter-form {
     display: flex;
     gap: 10px;
-    max-width: 420px;
     position: relative;
 }
 
@@ -190,6 +188,7 @@ footer.site-footer .newsletter-input {
     font-size: 13px;
     font-family: inherit;
     min-height: 40px;
+    transition: border-color 0.3s ease, background 0.3s ease;
 }
 
 footer.site-footer .newsletter-input::placeholder {
@@ -212,19 +211,26 @@ footer.site-footer .newsletter-button {
     font-weight: 500;
     text-transform: lowercase;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease;
     white-space: nowrap;
     min-height: 40px;
+    font-family: inherit;
 }
 
 footer.site-footer .newsletter-button:hover {
     background: rgba(255, 255, 255, 0.9);
 }
 
+footer.site-footer .newsletter-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 footer.site-footer .form-message {
     position: absolute;
     top: 100%;
     left: 0;
+    right: 0;
     margin-top: 6px;
     padding: 8px 12px;
     border-radius: 4px;
@@ -246,7 +252,6 @@ footer.site-footer .form-message.error {
     display: block;
 }
 
-/* === ПРАВОВА ЧАСТИНА (copyright + links) === */
 footer.site-footer .footer-legal {
     display: flex;
     flex-direction: column;
@@ -279,25 +284,15 @@ footer.site-footer .footer-link:hover {
 /* === RESPONSIVE === */
 
 @media (max-width: 1199px) {
-    footer.site-footer .footer-social-contacts-row {
+    footer.site-footer .footer-social-contacts {
         flex-direction: column;
         align-items: flex-start;
-        gap: 24px;
+        gap: 20px;
     }
 
     footer.site-footer .footer-contacts {
         flex-wrap: wrap;
         gap: 20px;
-    }
-
-    footer.site-footer .footer-bottom-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-    }
-
-    footer.site-footer .footer-legal {
-        align-items: flex-start;
     }
 }
 
@@ -314,6 +309,20 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-social {
         flex-wrap: wrap;
     }
+
+    footer.site-footer .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    footer.site-footer .footer-legal {
+        align-items: flex-start;
+    }
+
+    footer.site-footer .footer-newsletter {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 767px) {
@@ -328,6 +337,14 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-logo {
         width: 48px;
         height: 48px;
+    }
+
+    footer.site-footer .footer-brand-name {
+        font-size: 16px;
+    }
+
+    footer.site-footer .footer-tagline {
+        font-size: 10px;
     }
 
     footer.site-footer .footer-social {
@@ -348,7 +365,6 @@ footer.site-footer .footer-link:hover {
 
     footer.site-footer .newsletter-form {
         flex-direction: column;
-        max-width: 100%;
     }
 
     footer.site-footer .newsletter-button {
@@ -356,19 +372,25 @@ footer.site-footer .footer-link:hover {
     }
 
     footer.site-footer .footer-legal {
-        align-items: center;
         width: 100%;
+        align-items: center;
         text-align: center;
     }
 
     footer.site-footer .footer-links {
         flex-direction: column;
         gap: 10px;
+        align-items: center;
     }
 }
 
 @media (max-width: 400px) {
     footer.site-footer .footer-container {
         padding: 0 16px;
+    }
+
+    footer.site-footer .footer-logo {
+        width: 44px;
+        height: 44px;
     }
 }
