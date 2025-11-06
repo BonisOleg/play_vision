@@ -70,9 +70,7 @@
     <link rel="stylesheet" href="{% static 'css/components/ai-chat-inline.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/ai-chat-dialog.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/mobile-bottom-nav.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/footer-desktop.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/footer-mobile.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/footer-final-fix.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dark-accents.css' %}">
     {% block extra_css %}{% endblock %}
 
@@ -353,8 +351,7 @@
     </main>
 
     <!-- Footer -->
-    {% include 'partials/footer-desktop.html' %}
-    {% include 'partials/footer-mobile.html' %}
+    {% include 'partials/footer.html' %}
 
     <!-- SVG Icons -->
     <svg class="svg-icons-hidden">
@@ -400,7 +397,9 @@
     <!-- Scroll Popup -->
     <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
     <script src="{% static 'js/scroll-popup.js' %}"></script>
-    <script src="{% static 'js/footer-subscribe.js' %}" defer></script>
+
+    <!-- Footer Newsletter Form -->
+    <script src="{% static 'js/footer-newsletter.js' %}" defer></script>
 
     <!-- Mobile Bottom Navigation -->
     {% include 'partials/mobile-bottom-nav.html' %}
