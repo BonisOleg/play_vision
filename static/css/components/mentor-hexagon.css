@@ -406,3 +406,36 @@
 /* ============================================
    КІНЕЦЬ ЗАКОМЕНТОВАНОГО КОДУ HEXAGONS
    ============================================ */
+
+/* ============================================
+   СТИЛІ ДЛЯ ЗОБРАЖЕННЯ BANNER.SVG
+   ============================================ */
+
+.mentor-coaching-section .mentoring-image-block {
+    max-width: 1000px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+}
+
+.mentor-coaching-section .mentoring-image-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mentor-coaching-section .mentoring-image-block {
+        max-width: 100%;
+        margin: 30px auto 40px;
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mentor-coaching-section .mentoring-image-block {
+        margin: 20px auto 30px;
+        padding: 0 10px;
+    }
+}

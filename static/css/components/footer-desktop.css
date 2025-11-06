@@ -54,11 +54,16 @@ footer.footer-desktop .footer-tagline {
     white-space: pre-line;
 }
 
-/* ===== КОНТАКТИ В HEADER (3 колонки) ===== */
-footer.footer-desktop .footer-contacts-header {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
+/* ===== CTA ТЕКСТ В HEADER ===== */
+footer.footer-desktop .footer-cta-text {
+    font-size: 18px;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: right;
+    max-width: 420px;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+    margin: 0;
     flex-shrink: 0;
 }
 
@@ -118,12 +123,21 @@ footer.footer-desktop .social-icon {
     margin-left: auto;
 }
 
-/* ===== КОНТАКТИ - Стилі для items ===== */
+/* ===== КОНТАКТИ (окрема секція після соціальних кнопок) ===== */
+footer.footer-desktop .footer-contacts {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
 footer.footer-desktop .footer-contact-item {
     display: flex;
     flex-direction: column;
     gap: 6px;
     min-width: 0;
+    flex: 1;
 }
 
 footer.footer-desktop .contact-label {
@@ -347,10 +361,14 @@ footer.footer-desktop .footer-legal-links a:focus {
         align-items: flex-start;
     }
 
-    footer.footer-desktop .footer-contacts-header {
+    footer.footer-desktop .footer-cta-text {
+        text-align: left;
+        max-width: 100%;
+    }
+
+    footer.footer-desktop .footer-contacts {
         flex-direction: column;
         gap: 20px;
-        width: 100%;
     }
 
     footer.footer-desktop .footer-newsletter {

@@ -226,12 +226,24 @@ footer.footer-desktop .footer-tagline {
     text-transform: lowercase !important;
 }
 
-/* Контакти в header - 3 колонки */
-footer.footer-desktop .footer-contacts-header {
+/* CTA текст в header */
+footer.footer-desktop .footer-cta-text {
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    color: #ffffff !important;
+    text-align: right !important;
+    max-width: 420px !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.2px !important;
+}
+
+/* Контакти - окрема секція після соціальних кнопок */
+footer.footer-desktop .footer-contacts {
     display: flex !important;
+    justify-content: space-between !important;
     gap: 40px !important;
-    align-items: flex-start !important;
-    flex-shrink: 0 !important;
+    margin-bottom: 40px !important;
+    width: 100% !important;
 }
 
 /* ================================================================
