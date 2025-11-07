@@ -1,717 +1,266 @@
-/* About Page Styles - Повна відповідність ТЗ */
-
-.about-container {
-    min-height: calc(100vh - 160px);
-}
+/* ============================================
+   ABOUT PAGE - Сторінка "Про нас"
+   ============================================ */
 
 /* === 1. HERO SECTION === */
-.hero-section {
-    padding: var(--spacing-xxl) 0;
+.about-hero {
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    color: white;
-}
-
-.hero-video-container {
-    max-width: 900px;
-    margin: 0 auto var(--spacing-xl);
-}
-
-.video-placeholder {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    /* 16:9 */
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    overflow: hidden;
-    border: 2px solid rgba(255, 107, 53, 0.3);
-}
-
-.video-placeholder-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.video-icon {
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-md);
-    opacity: 0.8;
-}
-
-.video-placeholder-text {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-.hero-text {
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-lg);
-}
-
-.hero-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.2;
-    background: linear-gradient(135deg, #ff6b35 0%, #ffa726 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.hero-description {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* === 2. ЧОМУ МИ НАРОДИЛИСЬ === */
-.why-born-section {
-    padding: var(--spacing-xxl) 0;
-    background: var(--color-bg);
-}
-
-.triangle-problem-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-xxl);
-    align-items: center;
-    margin: var(--spacing-xxl) 0;
-}
-
-.triangle-visual {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.triangle-svg {
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 8px 16px rgba(255, 107, 53, 0.2));
-}
-
-.triangle-fill-problem {
-    fill: url(#problemGradient);
-    transition: all 0.3s ease;
-}
-
-.triangle-inner-line {
-    opacity: 0.3;
-    transition: all 0.3s ease;
-}
-
-.triangle-visual:hover .triangle-fill-problem {
-    filter: brightness(1.1);
-}
-
-.triangle-visual:hover .triangle-inner-line {
-    opacity: 0.5;
-}
-
-.triangle-labels {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.triangle-label {
-    position: absolute;
-    background: var(--color-primary);
-    color: white;
-    border-radius: 50px;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-    transition: all 0.3s ease;
-    pointer-events: auto;
-    cursor: pointer;
-}
-
-.triangle-label:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
-}
-
-.triangle-label--top {
-    top: -5%;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.triangle-label--left {
-    bottom: 15%;
-    left: 8%;
-    transform: translateY(50%);
-}
-
-.triangle-label--right {
-    bottom: 15%;
-    right: 8%;
-    transform: translateY(50%);
-}
-
-.label-text {
-    white-space: nowrap;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.triangle-description {
-    padding: var(--spacing-lg);
-}
-
-.triangle-subtitle {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-secondary);
-    margin-bottom: var(--spacing-lg);
-}
-
-.problem-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.problem-item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--color-text);
-}
-
-.problem-icon {
-    color: var(--color-primary);
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.mission-text-block {
-    max-width: 900px;
-    margin: var(--spacing-xxl) auto 0;
-    padding: var(--spacing-xl);
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.mission-paragraph {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
-}
-
-.mission-paragraph-bold {
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.6;
-    color: var(--color-primary);
-    margin: 0;
-    text-align: center;
-}
-
-/* === 3. МІСІЯ, ФІЛОСОФІЯ І ВІРА === */
-.mission-philosophy-section {
-    padding: var(--spacing-xxl) 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    color: white;
-}
-
-.mission-philosophy-section .section-title {
-    color: white;
-}
-
-.mpv-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xxl);
-}
-
-.mpv-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 107, 53, 0.3);
-    border-radius: 16px;
-    padding: var(--spacing-xl);
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.mpv-card:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--color-primary);
-    box-shadow: 0 12px 32px rgba(255, 107, 53, 0.3);
-}
-
-.mpv-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto var(--spacing-lg);
+    min-height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary);
+    position: relative;
 }
 
-.mpv-icon svg {
-    width: 100%;
-    height: 100%;
+.about-hero .section-bg {
+    background-color: #1a1a1a;
 }
 
-.mpv-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: var(--spacing-md);
-    color: var(--color-primary);
+.about-hero .section-overlay--gradient {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.7) 0%, rgba(42, 42, 42, 0.7) 100%);
 }
 
-.mpv-text {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
+.hero-about-content {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    z-index: 2;
 }
 
-/* === 4. ЦІННОСТІ ТА КУЛЬТУРА === */
-.values-section {
-    padding: var(--spacing-xxl) 0;
-    background: var(--color-bg);
-}
-
-.section-title {
+.about-hero .hero-title {
     font-size: 2.5rem;
     font-weight: 700;
-    text-align: center;
-    margin-bottom: var(--spacing-md);
-    color: var(--color-secondary);
+    color: #ffffff;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
 }
 
-.section-subtitle {
+.about-hero .hero-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* === 2. IMAGE BLOCKS (SVG СХЕМИ) === */
+.about-image-block {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-image-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* === 3. SECTION TITLES === */
+.about-triangle-section .section-content,
+.about-mission-section .section-content,
+.about-values-section .section-content {
+    padding: var(--spacing-xl) 0;
+}
+
+.about-mission-section .section-title,
+.about-values-section .section-title {
     text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Підсвітка тексту */
+.text-highlight {
+    color: var(--color-primary);
+}
+
+/* === 4. КОМАНДА ПРОФЕСІОНАЛІВ === */
+.about-team-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.about-team-section .section-title {
+    text-align: left;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-team-section .experts-subtitle {
+    text-align: left;
     font-size: 1.1rem;
     color: var(--color-text-light);
     margin-bottom: var(--spacing-xxl);
+    max-width: 800px;
 }
 
-.values-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-xl);
-    max-width: 900px;
-    margin: 0 auto;
+/* === ТЕМНА ТЕМА === */
+[data-theme="dark"] .about-hero {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 }
 
-.value-item {
-    display: flex;
-    justify-content: center;
+[data-theme="dark"] .about-hero .section-bg {
+    background-color: #0a0a0a;
 }
 
-.value-circle {
-    width: 180px;
-    height: 180px;
-    background: linear-gradient(135deg, white 0%, var(--color-bg-gray) 100%);
-    border: 3px solid var(--color-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-md);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
+[data-theme="dark"] .about-hero .section-overlay--gradient {
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%);
 }
 
-.value-circle::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+[data-theme="dark"] .about-mission-section .section-title,
+[data-theme="dark"] .about-values-section .section-title,
+[data-theme="dark"] .about-team-section .section-title {
+    color: #ffffff;
 }
 
-.value-circle:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 12px 32px rgba(255, 107, 53, 0.3);
+[data-theme="dark"] .about-team-section .experts-subtitle {
+    color: rgba(255, 255, 255, 0.7);
 }
 
-.value-circle:hover::before {
-    opacity: 1;
+/* === AUTO THEME (PREFERS-COLOR-SCHEME: DARK) === */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .about-hero {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    }
+
+    [data-theme="auto"] .about-hero .section-bg {
+        background-color: #0a0a0a;
+    }
+
+    [data-theme="auto"] .about-hero .section-overlay--gradient {
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%);
+    }
+
+    [data-theme="auto"] .about-mission-section .section-title,
+    [data-theme="auto"] .about-values-section .section-title,
+    [data-theme="auto"] .about-team-section .section-title {
+        color: #ffffff;
+    }
+
+    [data-theme="auto"] .about-team-section .experts-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+    }
 }
 
-.value-text {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-    text-align: center;
-    z-index: 1;
-    position: relative;
-    line-height: 1.3;
-}
+/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .about-hero {
+        min-height: 50vh;
+    }
 
-/* === 5. КОМАНДА === */
-.team-section {
-    padding: var(--spacing-xxl) 0;
-    background: white;
-}
-
-.experts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-xl);
-    margin-top: var(--spacing-xxl);
-}
-
-.expert-card {
-    background: var(--color-bg);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.expert-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-    border-color: var(--color-primary);
-}
-
-.expert-image {
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
-    background: var(--color-bg-gray);
-}
-
-.expert-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.expert-card:hover .expert-image img {
-    transform: scale(1.05);
-}
-
-.expert-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.expert-info {
-    padding: var(--spacing-lg);
-}
-
-.expert-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-secondary);
-    margin-bottom: var(--spacing-xs);
-}
-
-.expert-position {
-    font-size: 0.95rem;
-    color: var(--color-primary);
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-}
-
-.expert-bio {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: var(--color-text-light);
-}
-
-.team-placeholder {
-    text-align: center;
-    padding: var(--spacing-xxl);
-    color: var(--color-text-light);
-    font-size: 1.1rem;
-}
-
-/* === 6. CTA SECTION === */
-.cta-section {
-    padding: var(--spacing-xxl) 0;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    color: white;
-}
-
-.cta-content {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.cta-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: var(--spacing-md);
-}
-
-.cta-description {
-    font-size: 1.25rem;
-    margin-bottom: var(--spacing-xl);
-    color: rgba(255, 255, 255, 0.95);
-}
-
-.btn-large {
-    padding: var(--spacing-md) var(--spacing-xxl);
-    font-size: 1.1rem;
-    background: white;
-    color: var(--color-primary);
-    border: none;
-    border-radius: 50px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.btn-large:hover {
-    background: rgba(255, 255, 255, 0.95);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-/* === АДАПТИВНІСТЬ - ПЛАНШЕТ === */
-@media (max-width: 1024px) {
-    .hero-title {
+    .about-hero .hero-title {
         font-size: 2rem;
     }
 
-    .hero-description {
+    .about-hero .hero-subtitle {
         font-size: 1.1rem;
     }
 
-    .triangle-problem-container {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-xl);
+    .about-mission-section .section-title,
+    .about-values-section .section-title,
+    .about-team-section .section-title {
+        font-size: 2rem;
     }
 
-    .triangle-visual {
-        max-width: 400px;
-    }
-
-    .mpv-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-    }
-
-    .values-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .experts-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .about-image-block {
+        padding: 0 var(--spacing-md);
     }
 }
 
-/* === АДАПТИВНІСТЬ - МОБАЙЛ === */
+/* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
-    .hero-section {
-        padding: var(--spacing-xl) 0;
+    .about-hero {
+        min-height: 40vh;
     }
 
-    .hero-title {
+    .hero-about-content {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .about-hero .hero-title {
         font-size: 1.75rem;
     }
 
-    .hero-description {
+    .about-hero .hero-subtitle {
         font-size: 1rem;
     }
 
-    .video-placeholder-text {
-        font-size: 0.9rem;
+    .about-mission-section .section-title,
+    .about-values-section .section-title {
+        font-size: 1.75rem;
+        text-align: center;
     }
 
-    .section-title {
-        font-size: 2rem;
+    .about-team-section .section-title {
+        font-size: 1.75rem;
+        text-align: left;
     }
 
-    .triangle-visual {
-        max-width: 350px;
-    }
-
-    .triangle-label {
-        font-size: 0.8rem;
-        padding: 6px var(--spacing-sm);
-    }
-
-    .triangle-label--top {
-        top: -8%;
-    }
-
-    .triangle-label--left,
-    .triangle-label--right {
-        bottom: 12%;
-    }
-
-    .triangle-subtitle {
-        font-size: 1.25rem;
-    }
-
-    .problem-item {
+    .about-team-section .experts-subtitle {
         font-size: 1rem;
     }
 
-    .mission-paragraph {
-        font-size: 1.1rem;
+    .about-triangle-section .section-content,
+    .about-mission-section .section-content,
+    .about-values-section .section-content {
+        padding: var(--spacing-lg) 0;
     }
 
-    .mission-paragraph-bold {
-        font-size: 1.25rem;
-    }
-
-    .mpv-icon {
-        width: 60px;
-        height: 60px;
-    }
-
-    .mpv-title {
-        font-size: 1.25rem;
-    }
-
-    .mpv-text {
-        font-size: 1rem;
-    }
-
-    .values-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-md);
-    }
-
-    .value-circle {
-        width: 160px;
-        height: 160px;
-    }
-
-    .value-text {
-        font-size: 1rem;
-    }
-
-    .experts-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cta-title {
-        font-size: 2rem;
-    }
-
-    .cta-description {
-        font-size: 1.1rem;
+    .about-image-block {
+        padding: 0;
     }
 }
 
-/* === АДАПТИВНІСТЬ - МАЛИЙ МОБАЙЛ === */
+/* === МАЛИЙ МОБАЙЛ === */
 @media (max-width: 480px) {
-    .hero-title {
+    .about-hero {
+        min-height: 35vh;
+    }
+
+    .about-hero .hero-title {
         font-size: 1.5rem;
     }
 
-    .hero-description {
+    .about-hero .hero-subtitle {
         font-size: 0.95rem;
     }
 
-    .section-title {
-        font-size: 1.75rem;
+    .about-mission-section .section-title,
+    .about-values-section .section-title,
+    .about-team-section .section-title {
+        font-size: 1.5rem;
     }
 
-    .triangle-visual {
-        max-width: 300px;
-    }
-
-    .triangle-label {
-        font-size: 0.7rem;
-        padding: 4px var(--spacing-xs);
-    }
-
-    .triangle-label--top {
-        top: -10%;
-    }
-
-    .triangle-label--left,
-    .triangle-label--right {
-        bottom: 10%;
-    }
-
-    .value-circle {
-        width: 140px;
-        height: 140px;
-    }
-
-    .value-text {
-        font-size: 0.9rem;
-    }
-
-    .cta-title {
-        font-size: 1.75rem;
-    }
-
-    .btn-large {
-        padding: var(--spacing-sm) var(--spacing-xl);
-        font-size: 1rem;
+    .about-team-section .experts-subtitle {
+        font-size: 0.95rem;
     }
 }
 
-/* === iOS SAFARI FIXES === */
+/* === iOS SAFARI SPECIFIC === */
 @supports (-webkit-touch-callout: none) {
-    .hero-section {
+    .about-hero {
         -webkit-overflow-scrolling: touch;
     }
 
-    .value-circle:hover {
-        transform: translateY(-4px) scale(1.02);
-    }
-
-    .expert-card:hover {
-        transform: translateY(-4px);
-    }
-
-    .mpv-card:hover {
-        transform: translateY(-4px);
-    }
-
-    .btn-large:active {
-        transform: translateY(-2px);
+    .about-image-block img {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
     }
 }
 
-/* Анімації */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    .about-hero,
+    .about-image-block img {
+        transition: none;
+        animation: none;
     }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-in {
-    animation: fadeInUp 0.6s ease-out forwards;
 }
