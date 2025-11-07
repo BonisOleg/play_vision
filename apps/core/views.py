@@ -86,9 +86,10 @@ class AboutView(TemplateView):
         ).prefetch_related('blocks')
         
         # Команда/Експерти для блоку "Наша команда"
+        # Показуємо всіх активних експертів (так само, як на головній)
         context['cms_experts'] = ExpertCard.objects.filter(
             is_active=True,
-            show_on_homepage=False  # Показуємо тільки тих, хто не на головній
+            show_on_homepage=True  # Показуємо тих самих експертів, що і на головній
         )
         
         return context
