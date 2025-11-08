@@ -39,13 +39,15 @@
     padding: var(--spacing-xl) 0;
 }
 
+/* Спільні стилі для всіх заголовків секцій */
 .about-mission-section .section-title,
-.about-values-section .section-title {
-    text-align: center;
+.about-values-section .section-title,
+.about-team-section .section-title {
+    text-align: left;
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
 }
 
 .text-highlight {
@@ -55,14 +57,6 @@
 /* === 4. КОМАНДА ПРОФЕСІОНАЛІВ === */
 .about-team-section {
     padding: var(--spacing-xl) 0;
-}
-
-.about-team-section .section-title {
-    text-align: left;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
 }
 
 .about-team-section .experts-subtitle {
@@ -92,6 +86,11 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
+/* Інверсія чорних елементів у SVG для темної теми */
+[data-theme="dark"] .about-image-block img[src*=".svg"] {
+    filter: invert(1);
+}
+
 /* === AUTO THEME === */
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .about-hero .section-bg {
@@ -110,6 +109,11 @@
 
     [data-theme="auto"] .about-team-section .experts-subtitle {
         color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Інверсія чорних елементів у SVG для темної теми */
+    [data-theme="auto"] .about-image-block img[src*=".svg"] {
+        filter: invert(1);
     }
 }
 
@@ -137,14 +141,9 @@
     }
 
     .about-mission-section .section-title,
-    .about-values-section .section-title {
-        font-size: 1.75rem;
-        text-align: center;
-    }
-
+    .about-values-section .section-title,
     .about-team-section .section-title {
         font-size: 1.75rem;
-        text-align: left;
     }
 
     .about-team-section .experts-subtitle {
