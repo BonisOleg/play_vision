@@ -103,21 +103,6 @@
     transition: transform 0.3s ease;
 }
 
-/* SVG стилі для реверсивного кольору */
-.mentoring-card-image img[src$=".svg"] {
-    filter: brightness(1);
-}
-
-[data-theme="dark"] .mentoring-card-image img[src$=".svg"] {
-    filter: invert(1) hue-rotate(180deg) brightness(1);
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .mentoring-card-image img[src$=".svg"] {
-        filter: invert(1) hue-rotate(180deg) brightness(1);
-    }
-}
-
 .mentoring-card:hover .mentoring-card-image img {
     transform: scale(1.05);
 }
@@ -174,6 +159,22 @@
     width: 100%;
     height: auto;
     display: block;
+}
+
+/* SVG інверсія кольорів + червоний акцент */
+.mentoring-svg-invert {
+    filter: invert(1) sepia(0.4) saturate(2) hue-rotate(330deg);
+    transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .mentoring-svg-invert {
+    filter: invert(0) sepia(0.4) saturate(2) hue-rotate(330deg);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-svg-invert {
+        filter: invert(0) sepia(0.4) saturate(2) hue-rotate(330deg);
+    }
 }
 
 /* === КОМАНДА МЕНТОР КОУЧИНГУ === */
@@ -264,7 +265,7 @@
     [data-theme="auto"] .mentoring-team-section .expert-name {
         color: var(--color-text);
     }
-
+    
     [data-theme="auto"] .mentoring-team-section .expert-specialization {
         color: var(--color-text-light);
     }
@@ -423,7 +424,7 @@
         background: #ffffff;
         color: #0a0a0a;
     }
-
+    
     [data-theme="auto"] .white_bonnom:hover {
         background: #ffffff;
         color: #0a0a0a;
@@ -434,7 +435,6 @@
    АДАПТИВНІСТЬ - ПЛАНШЕТИ (769px - 1024px)
    ============================================ */
 @media (min-width: 769px) and (max-width: 1024px) {
-
     /* Підтримка виключень для декоративних ліній та методології на планшетах */
     .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
     .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
@@ -463,7 +463,7 @@
         font-size: 1.75rem;
         margin-bottom: 40px;
     }
-
+    
     .mentoring-team-section .section-title {
         font-size: 1.75rem;
         margin-bottom: 14px;
@@ -488,7 +488,7 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
     }
-
+    
     .mentoring-team-section .expert-card-content {
         padding: 20px 16px;
     }
@@ -527,7 +527,6 @@
    АДАПТИВНІСТЬ - МОБІЛЬНІ (480px - 768px)
    ============================================ */
 @media (min-width: 480px) and (max-width: 768px) {
-
     /* Підтримка виключень для декоративних ліній та методології на мобільних */
     .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
     .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
@@ -556,7 +555,7 @@
         font-size: 1.5rem;
         margin-bottom: 32px;
     }
-
+    
     .mentoring-team-section .section-title {
         font-size: 1.5rem;
         margin-bottom: 12px;
@@ -592,7 +591,7 @@
         gap: 24px;
         max-width: 400px;
     }
-
+    
     .mentoring-team-section .expert-card-content {
         padding: 16px 12px;
     }
@@ -639,7 +638,6 @@
    АДАПТИВНІСТЬ - МАЛІ МОБІЛЬНІ (до 479px)
    ============================================ */
 @media (max-width: 479px) {
-
     /* Підтримка виключень для декоративних ліній та методології на малих мобільних */
     .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
     .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
@@ -668,7 +666,7 @@
         font-size: 1.375rem;
         margin-bottom: 28px;
     }
-
+    
     .mentoring-team-section .section-title {
         font-size: 1.375rem;
         margin-bottom: 10px;
@@ -713,7 +711,7 @@
         gap: 20px;
         max-width: 100%;
     }
-
+    
     .mentoring-team-section .expert-card-content {
         padding: 18px 16px;
     }
@@ -839,3 +837,4 @@
         border: 1px solid #000000;
     }
 }
+
