@@ -162,18 +162,20 @@
 }
 
 /* SVG інверсія кольорів + червоний акцент */
+/* Світла тема: без інверсії, тільки червоний відтінок */
 .mentoring-svg-invert {
-    filter: invert(1) sepia(0.4) saturate(2) hue-rotate(330deg);
+    filter: brightness(0.95) sepia(0.3) saturate(1.5) hue-rotate(330deg);
     transition: filter 0.3s ease;
 }
 
+/* Темна тема: інверсія + червоний відтінок */
 [data-theme="dark"] .mentoring-svg-invert {
-    filter: invert(0) sepia(0.4) saturate(2) hue-rotate(330deg);
+    filter: invert(1) brightness(1.1) sepia(0.3) saturate(1.5) hue-rotate(330deg);
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .mentoring-svg-invert {
-        filter: invert(0) sepia(0.4) saturate(2) hue-rotate(330deg);
+        filter: invert(1) brightness(1.1) sepia(0.3) saturate(1.5) hue-rotate(330deg);
     }
 }
 

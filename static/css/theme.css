@@ -141,7 +141,19 @@
 }
 
 /* === IMAGE ADJUSTMENTS FOR DARK MODE === */
-[data-theme="dark"] img,
+[data-theme="dark"] img {
+    opacity: 0.9;
+}
+
+/* Logo and icons should stay bright */
+[data-theme="dark"] .logo,
+[data-theme="dark"] .logo-light,
+[data-theme="dark"] .logo-dark,
+[data-theme="dark"] .icon {
+    opacity: 1;
+    filter: brightness(1);
+}
+
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] img {
         opacity: 0.9;
@@ -149,25 +161,27 @@
 
     /* Logo and icons should stay bright */
     [data-theme="auto"] .logo,
+    [data-theme="auto"] .logo-light,
+    [data-theme="auto"] .logo-dark,
     [data-theme="auto"] .icon {
         opacity: 1;
-        filter: brightness(1.1);
+        filter: brightness(1);
     }
 }
 
 /* SVG інверсія для темної теми (червоний залишається червоним) */
-/* Виключення: .hexagon-icon, .btn-icon::before, .btn-logo-space::before мають власні фільтри */
-[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon),
+/* Виключення: .hexagon-icon, .logo-light, .logo-dark, .btn-icon::before, .btn-logo-space::before мають власні фільтри */
+[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark),
 [data-theme="dark"] .about-image-block img[src*=".svg"],
-[data-theme="dark"] .mentoring-image-block img[src*=".svg"] {
+[data-theme="dark"] .mentoring-image-block img[src*=".svg"]:not(.mentoring-svg-invert) {
     filter: invert(1) hue-rotate(180deg);
     opacity: 1;
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon),
+    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark),
     [data-theme="auto"] .about-image-block img[src*=".svg"],
-    [data-theme="auto"] .mentoring-image-block img[src*=".svg"] {
+    [data-theme="auto"] .mentoring-image-block img[src*=".svg"]:not(.mentoring-svg-invert) {
         filter: invert(1) hue-rotate(180deg);
         opacity: 1;
     }
