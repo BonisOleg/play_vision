@@ -24,8 +24,8 @@ footer.site-footer .footer-container {
 /* === РЯДОК 1: ЛОГОТИП + CTA === */
 footer.site-footer .footer-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 24px;
     margin-bottom: 20px;
 }
@@ -35,6 +35,7 @@ footer.site-footer .footer-logo {
     width: auto;
     object-fit: contain;
     flex: 0 0 40%;
+    align-self: flex-start;
 }
 
 footer.site-footer .footer-cta {
@@ -44,13 +45,14 @@ footer.site-footer .footer-cta {
     margin: 0;
     text-align: left;
     flex: 0 0 50%;
+    align-self: flex-start;
 }
 
 /* === РЯДОК 2: СОЦІАЛЬНІ ЗЛІВА | КОНТАКТИ СПРАВА === */
 footer.site-footer .footer-social-contacts {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 24px;
     margin-bottom: 20px;
 }
@@ -61,13 +63,14 @@ footer.site-footer .footer-social-group {
     flex-direction: row;
     gap: 6px;
     flex: 0 0 40%;
+    align-items: flex-start;
 }
 
 /* Соціальні кнопки */
 footer.site-footer .social-link {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 6px;
     padding: 6px 10px;
     flex: 1;
@@ -86,7 +89,7 @@ footer.site-footer .social-link:hover {
 }
 
 footer.site-footer .social-text {
-    text-align: center;
+    text-align: left;
 }
 
 footer.site-footer .social-icon {
@@ -102,6 +105,7 @@ footer.site-footer .footer-contacts-group {
     gap: 12px;
     flex: 0 0 50%;
     flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 /* Контакти */
@@ -131,14 +135,15 @@ footer.site-footer .contact-link:hover {
 /* === РЯДОК 3: ФОРМА + COPYRIGHT === */
 footer.site-footer .footer-bottom {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 24px;
     padding-top: 0;
 }
 
 footer.site-footer .footer-newsletter {
     flex: 0 0 40%;
+    align-self: flex-start;
 }
 
 footer.site-footer .newsletter-title {
@@ -146,6 +151,7 @@ footer.site-footer .newsletter-title {
     color: rgba(255, 255, 255, 0.8);
     margin: 0 0 6px 0;
     font-weight: 400;
+    text-align: left;
 }
 
 footer.site-footer .newsletter-form {
@@ -231,11 +237,12 @@ footer.site-footer .form-message.error {
 footer.site-footer .footer-legal {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: flex-start;
+    justify-content: flex-start;
     gap: 12px;
     flex: 0 0 50%;
     flex-wrap: nowrap;
+    align-self: flex-start;
 }
 
 footer.site-footer .footer-copyright {
@@ -243,12 +250,14 @@ footer.site-footer .footer-copyright {
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
     white-space: nowrap;
+    text-align: left;
 }
 
 footer.site-footer .footer-links {
     display: flex;
     gap: 12px;
     flex-wrap: nowrap;
+    align-items: flex-start;
 }
 
 footer.site-footer .footer-link {
@@ -257,6 +266,7 @@ footer.site-footer .footer-link {
     text-decoration: none;
     transition: color 0.3s ease;
     white-space: nowrap;
+    text-align: left;
 }
 
 footer.site-footer .footer-link:hover {

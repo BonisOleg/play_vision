@@ -161,14 +161,14 @@
     display: block;
 }
 
-/* SVG інверсія кольорів + червоний акцент */
-/* Світла тема: без інверсії, тільки червоний відтінок */
+/* SVG стилі для темної теми */
+/* Світла тема: оригінальний SVG без фільтрів */
 .mentoring-svg-invert {
-    filter: brightness(0.95) sepia(0.3) saturate(1.5) hue-rotate(330deg);
+    filter: none;
     transition: filter 0.3s ease;
 }
 
-/* Темна тема: інверсія + червоний відтінок */
+/* Темна тема: інверсія + червоний акцент */
 [data-theme="dark"] .mentoring-svg-invert {
     filter: invert(1) brightness(1.1) sepia(0.3) saturate(1.5) hue-rotate(330deg);
 }
