@@ -19,24 +19,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Lazy loading для зображень
+    // Lazy loading для зображень через IntersectionObserver
     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
     if ('IntersectionObserver' in window) {
         const lazyImageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    img.addEventListener('load', () => {
-                        img.style.opacity = '1';
-                    });
+                    img.classList.add('lazy-loaded');
                     lazyImageObserver.unobserve(img);
                 }
             });
         });
 
         lazyImages.forEach(img => {
-            img.style.opacity = '0';
-            img.style.transition = 'opacity 0.3s ease';
             lazyImageObserver.observe(img);
         });
     }

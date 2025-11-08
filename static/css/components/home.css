@@ -33,16 +33,6 @@
 }
 
 
-
-.hero-section.hero-bordered .section-content {
-    border: none;
-    border-radius: 0;
-    padding: 3rem;
-    backdrop-filter: none;
-    background: transparent;
-}
-
-
 /* NEW DESIGN - 1в1 як на скріні */
 .hero-new-design {
     border: none;
@@ -89,10 +79,6 @@
 }
 
 @media (max-width: 768px) {
-    .hero-section.hero-bordered .section-content {
-        padding: 2rem;
-    }
-
     /* NEW DESIGN Mobile */
     .hero-new-design {
         padding: 3rem 5% 3rem 5%;
@@ -695,12 +681,6 @@
         color: white;
     }
 
-    .hero-section.hero-bordered .section-content {
-        border: none;
-        background: transparent;
-        backdrop-filter: none;
-    }
-
     .hero-title,
     .hero-subtitle {
         color: white;
@@ -835,12 +815,6 @@
         /* === HERO SECTION === */
         .hero-section {
             color: white;
-        }
-
-        .hero-section.hero-bordered .section-content {
-            border: none;
-            background: transparent;
-            backdrop-filter: none;
         }
 
         .hero-title,

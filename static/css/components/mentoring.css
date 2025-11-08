@@ -7,7 +7,6 @@
     height: calc(100vh - 80px);
     min-height: 520px;
     position: relative;
-    margin-top: 80px;
 }
 
 .mentoring-hero .section-bg-image {

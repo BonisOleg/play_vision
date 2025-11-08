@@ -8,8 +8,6 @@
     perspective: 1000px;
     cursor: pointer;
     transition: none;
-    background: transparent;
-    border: none;
     box-shadow: none;
 }
 

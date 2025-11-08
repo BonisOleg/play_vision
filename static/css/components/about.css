@@ -192,11 +192,26 @@
     }
 }
 
+/* === LAZY LOADING === */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"].lazy-loaded {
+    opacity: 1;
+}
+
 /* === ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
     .about-hero,
     .about-image-block img {
         transition: none;
         animation: none;
+    }
+    
+    img[loading="lazy"] {
+        opacity: 1;
+        transition: none;
     }
 }

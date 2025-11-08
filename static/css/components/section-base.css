@@ -76,7 +76,6 @@
 /* === GPU ACCELERATION === */
 .hero-section .section-bg,
 .hero-section .section-overlay {
-    will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
 }
@@ -115,11 +114,19 @@
     }
 }
 
+/* === HERO BORDERED (спільний клас для всіх сторінок) === */
+.hero-section.hero-bordered .section-content {
+    border: none;
+    border-radius: 0;
+    padding: 3rem;
+    backdrop-filter: none;
+    background: transparent;
+}
+
 /* === PREFERS REDUCED MOTION === */
 @media (prefers-reduced-motion: reduce) {
     .hero-section .section-bg,
     .hero-section .section-overlay {
-        will-change: auto;
         transform: none;
     }
 }
