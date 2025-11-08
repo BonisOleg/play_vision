@@ -1,0 +1,126 @@
+/* ============================================
+   SECTION BASE - Базові стилі для всіх секцій
+   Мінімальний файл замість великого parallax.css
+   Використовується на: home, about, mentoring
+   ============================================ */
+
+/* === БАЗОВІ СТИЛІ СЕКЦІЙ === */
+.section-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-background);
+}
+
+.section-bg-image,
+.section-bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.section-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-overlay);
+}
+
+.section-content {
+    position: relative;
+    z-index: var(--z-content);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* === HERO SECTION === */
+.hero-section {
+    min-height: calc(100vh - 80px);
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hero контент */
+.hero-section .section-content {
+    position: relative;
+    z-index: var(--z-content);
+    pointer-events: auto;
+}
+
+/* === FULLSCREEN CONTAINER === */
+.fullscreen-container {
+    width: 100%;
+    position: relative;
+}
+
+.fullscreen-section {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+}
+
+/* === GPU ACCELERATION === */
+.hero-section .section-bg,
+.hero-section .section-overlay {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* === RESPONSIVE === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-section {
+        min-height: calc(100vh - 70px);
+    }
+    
+    .fullscreen-section {
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: calc(100vh - 60px);
+    }
+    
+    .fullscreen-section {
+        min-height: 500px;
+    }
+}
+
+/* === iOS SAFARI FIX === */
+@supports (-webkit-touch-callout: none) {
+    .hero-section {
+        min-height: -webkit-fill-available;
+    }
+
+    .hero-section .section-bg,
+    .hero-section .section-overlay {
+        -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+    }
+}
+
+/* === PREFERS REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+    .hero-section .section-bg,
+    .hero-section .section-overlay {
+        will-change: auto;
+        transform: none;
+    }
+}
+
