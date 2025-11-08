@@ -26,57 +26,57 @@ footer.site-footer .footer-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 32px;
-    margin-bottom: 24px;
+    gap: 24px;
+    margin-bottom: 20px;
 }
 
 footer.site-footer .footer-logo {
-    height: 48px;
+    height: 44px;
     width: auto;
     object-fit: contain;
-    flex: 0 0 30%;
+    flex: 0 0 40%;
 }
 
 footer.site-footer .footer-cta {
-    font-size: 13px;
-    line-height: 1.4;
+    font-size: 12px;
+    line-height: 1.3;
     color: #ffffff;
     margin: 0;
-    text-align: right;
-    flex: 0 0 60%;
+    text-align: left;
+    flex: 0 0 50%;
 }
 
 /* === РЯДОК 2: СОЦІАЛЬНІ ЗЛІВА | КОНТАКТИ СПРАВА === */
 footer.site-footer .footer-social-contacts {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 32px;
-    margin-bottom: 24px;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 20px;
 }
 
-/* Група соціальних мереж - 30% */
+/* Група соціальних мереж - 40% */
 footer.site-footer .footer-social-group {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 0 0 30%;
+    flex-direction: row;
+    gap: 6px;
+    flex: 0 0 40%;
 }
 
 /* Соціальні кнопки */
 footer.site-footer .social-link {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 8px 12px;
-    width: 100%;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 10px;
+    flex: 1;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 6px;
+    border-radius: 5px;
     color: #ffffff;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 10px;
     transition: all 0.3s ease;
 }
 
@@ -86,39 +86,39 @@ footer.site-footer .social-link:hover {
 }
 
 footer.site-footer .social-text {
-    flex: 1;
-    text-align: left;
+    text-align: center;
 }
 
 footer.site-footer .social-icon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
 }
 
-/* Група контактів - 60% */
+/* Група контактів - 50% */
 footer.site-footer .footer-contacts-group {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 0 0 60%;
+    flex-direction: row;
+    gap: 12px;
+    flex: 0 0 50%;
+    flex-wrap: wrap;
 }
 
 /* Контакти */
 footer.site-footer .contact-item {
     display: flex;
     align-items: baseline;
-    gap: 5px;
+    gap: 4px;
     white-space: nowrap;
 }
 
 footer.site-footer .contact-label {
-    font-size: 11px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.6);
 }
 
 footer.site-footer .contact-link {
-    font-size: 11px;
+    font-size: 10px;
     color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -132,38 +132,38 @@ footer.site-footer .contact-link:hover {
 footer.site-footer .footer-bottom {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 32px;
+    align-items: center;
+    gap: 24px;
     padding-top: 0;
 }
 
 footer.site-footer .footer-newsletter {
-    flex: 0 0 30%;
+    flex: 0 0 40%;
 }
 
 footer.site-footer .newsletter-title {
-    font-size: 11px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.8);
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
     font-weight: 400;
 }
 
 footer.site-footer .newsletter-form {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     position: relative;
 }
 
 footer.site-footer .newsletter-input {
     flex: 1;
-    padding: 8px 12px;
+    padding: 6px 10px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
+    border-radius: 5px;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 11px;
     font-family: inherit;
-    min-height: 36px;
+    min-height: 32px;
     transition: border-color 0.3s ease, background 0.3s ease;
 }
 
@@ -178,18 +178,18 @@ footer.site-footer .newsletter-input:focus {
 }
 
 footer.site-footer .newsletter-button {
-    padding: 8px 16px;
+    padding: 6px 14px;
     background: #ffffff;
     color: #000000;
     border: none;
-    border-radius: 6px;
-    font-size: 12px;
+    border-radius: 5px;
+    font-size: 11px;
     font-weight: 500;
     text-transform: lowercase;
     cursor: pointer;
     transition: background 0.3s ease;
     white-space: nowrap;
-    min-height: 36px;
+    min-height: 32px;
     font-family: inherit;
 }
 
@@ -207,10 +207,10 @@ footer.site-footer .form-message {
     top: 100%;
     left: 0;
     right: 0;
-    margin-top: 6px;
-    padding: 8px 10px;
+    margin-top: 5px;
+    padding: 6px 8px;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 10px;
     display: none;
 }
 
@@ -233,13 +233,13 @@ footer.site-footer .footer-legal {
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    gap: 16px;
-    flex: 0 0 60%;
-    flex-wrap: wrap;
+    gap: 12px;
+    flex: 0 0 50%;
+    flex-wrap: nowrap;
 }
 
 footer.site-footer .footer-copyright {
-    font-size: 10px;
+    font-size: 9px;
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
     white-space: nowrap;
@@ -247,12 +247,12 @@ footer.site-footer .footer-copyright {
 
 footer.site-footer .footer-links {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     flex-wrap: nowrap;
 }
 
 footer.site-footer .footer-link {
-    font-size: 10px;
+    font-size: 9px;
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     transition: color 0.3s ease;
@@ -314,7 +314,7 @@ footer.site-footer .footer-link:hover {
 
 @media (max-width: 767px) {
     footer.site-footer {
-        padding: 24px 0 20px;
+        padding: 20px 0 16px;
     }
     
     footer.site-footer .footer-container {
@@ -322,12 +322,19 @@ footer.site-footer .footer-link:hover {
     }
     
     footer.site-footer .footer-logo {
-        height: 42px;
+        height: 38px;
+    }
+    
+    footer.site-footer .footer-social-group {
+        flex-direction: column;
     }
     
     footer.site-footer .social-link {
         width: 100%;
-        min-width: 0;
+    }
+    
+    footer.site-footer .footer-contacts-group {
+        flex-direction: column;
     }
     
     footer.site-footer .contact-item {
@@ -347,12 +354,12 @@ footer.site-footer .footer-link:hover {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 12px;
+        gap: 10px;
     }
     
     footer.site-footer .footer-links {
         flex-direction: row;
-        gap: 12px;
+        gap: 10px;
         align-items: center;
         justify-content: center;
     }
