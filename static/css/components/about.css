@@ -4,11 +4,7 @@
 
 /* === 1. HERO SECTION === */
 .about-hero {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: calc(100vh - 80px);
     position: relative;
 }
 
@@ -20,40 +16,14 @@
     background: linear-gradient(135deg, rgba(26, 26, 26, 0.7) 0%, rgba(42, 42, 42, 0.7) 100%);
 }
 
-.hero-about-content {
-    position: relative;
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: var(--spacing-xxl) var(--spacing-lg);
-    z-index: 10;
-}
-
-.about-hero .hero-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.2;
-}
-
-.about-hero .hero-subtitle {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* === 2. IMAGE BLOCKS (SVG СХЕМИ) === */
+/* === 2. IMAGE BLOCKS === */
 .about-image-block {
-    position: relative;
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
 }
 
 .about-image-block img {
@@ -62,7 +32,7 @@
     display: block;
 }
 
-/* === 3. SECTION TITLES === */
+/* === 3. SECTION CONTENT === */
 .about-triangle-section .section-content,
 .about-mission-section .section-content,
 .about-values-section .section-content {
@@ -71,16 +41,13 @@
 
 .about-mission-section .section-title,
 .about-values-section .section-title {
-    position: relative;
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: var(--spacing-xl);
-    z-index: 1;
 }
 
-/* Підсвітка тексту */
 .text-highlight {
     color: var(--color-primary);
 }
@@ -91,30 +58,22 @@
 }
 
 .about-team-section .section-title {
-    position: relative;
     text-align: left;
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: var(--spacing-md);
-    z-index: 1;
 }
 
 .about-team-section .experts-subtitle {
-    position: relative;
     text-align: left;
     font-size: 1.1rem;
     color: var(--color-text-light);
     margin-bottom: var(--spacing-xxl);
     max-width: 800px;
-    z-index: 1;
 }
 
 /* === ТЕМНА ТЕМА === */
-[data-theme="dark"] .about-hero {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-}
-
 [data-theme="dark"] .about-hero .section-bg {
     background-color: #0a0a0a;
 }
@@ -133,12 +92,8 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* === AUTO THEME (PREFERS-COLOR-SCHEME: DARK) === */
+/* === AUTO THEME === */
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .about-hero {
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    }
-
     [data-theme="auto"] .about-hero .section-bg {
         background-color: #0a0a0a;
     }
@@ -161,15 +116,7 @@
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
     .about-hero {
-        min-height: 50vh;
-    }
-
-    .about-hero .hero-title {
-        font-size: 2rem;
-    }
-
-    .about-hero .hero-subtitle {
-        font-size: 1.1rem;
+        min-height: calc(100vh - 70px);
     }
 
     .about-mission-section .section-title,
@@ -186,19 +133,7 @@
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
     .about-hero {
-        min-height: 40vh;
-    }
-
-    .hero-about-content {
-        padding: var(--spacing-xl) var(--spacing-md);
-    }
-
-    .about-hero .hero-title {
-        font-size: 1.75rem;
-    }
-
-    .about-hero .hero-subtitle {
-        font-size: 1rem;
+        min-height: calc(100vh - 60px);
     }
 
     .about-mission-section .section-title,
@@ -230,15 +165,7 @@
 /* === МАЛИЙ МОБАЙЛ === */
 @media (max-width: 480px) {
     .about-hero {
-        min-height: 35vh;
-    }
-
-    .about-hero .hero-title {
-        font-size: 1.5rem;
-    }
-
-    .about-hero .hero-subtitle {
-        font-size: 0.95rem;
+        min-height: calc(100vh - 60px);
     }
 
     .about-mission-section .section-title,
