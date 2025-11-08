@@ -86,11 +86,6 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Інверсія чорних елементів у SVG для темної теми (червоний залишається червоним) */
-[data-theme="dark"] .about-image-block img[src*=".svg"] {
-    filter: invert(1) hue-rotate(180deg);
-}
-
 /* === AUTO THEME === */
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .about-hero .section-bg {
@@ -109,11 +104,6 @@
 
     [data-theme="auto"] .about-team-section .experts-subtitle {
         color: rgba(255, 255, 255, 0.7);
-    }
-
-    /* Інверсія чорних елементів у SVG для темної теми (червоний залишається червоним) */
-    [data-theme="auto"] .about-image-block img[src*=".svg"] {
-        filter: invert(1) hue-rotate(180deg);
     }
 }
 

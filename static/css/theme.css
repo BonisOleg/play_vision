@@ -155,6 +155,24 @@
     }
 }
 
+/* SVG інверсія для темної теми (червоний залишається червоним) */
+/* Виключення: .hexagon-icon, .btn-icon::before, .btn-logo-space::before мають власні фільтри */
+[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon),
+[data-theme="dark"] .about-image-block img[src*=".svg"],
+[data-theme="dark"] .mentoring-image-block img[src*=".svg"] {
+    filter: invert(1) hue-rotate(180deg);
+    opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon),
+    [data-theme="auto"] .about-image-block img[src*=".svg"],
+    [data-theme="auto"] .mentoring-image-block img[src*=".svg"] {
+        filter: invert(1) hue-rotate(180deg);
+        opacity: 1;
+    }
+}
+
 /* === SCROLLBAR THEMING === */
 [data-theme="dark"],
 @media (prefers-color-scheme: dark) {
