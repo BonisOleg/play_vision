@@ -59,6 +59,7 @@
 }
 
 /* === ВНУТРІШНІЙ КОНТЕЙНЕР === */
+/* Використовує загальну систему ширини з content-width.css */
 .unified-sections-container {
     width: 70%;
     max-width: 1400px;
@@ -129,7 +130,7 @@
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
     .unified-sections-container {
-        width: 85%;
+        width: 85%; /* Синхронізовано з content-width-container */
     }
 
     .unified-sections-wrapper .fullscreen-section {
@@ -157,7 +158,7 @@
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
     .unified-sections-container {
-        width: 90%;
+        width: 90%; /* Синхронізовано з content-width-container */
     }
 
     .unified-sections-wrapper .fullscreen-section {

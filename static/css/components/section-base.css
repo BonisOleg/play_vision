@@ -31,13 +31,31 @@
     z-index: var(--z-overlay);
 }
 
+/* === SECTION CONTENT === */
+/* Використовує загальну систему ширини */
 .section-content {
     position: relative;
     z-index: var(--z-content);
-    width: 100%;
-    max-width: 1200px;
+    width: 70%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-xl);
+}
+
+/* Планшет */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .section-content {
+        width: 85%;
+        padding: 0 var(--spacing-lg);
+    }
+}
+
+/* Мобіл */
+@media (max-width: 768px) {
+    .section-content {
+        width: 90%;
+        padding: 0 var(--spacing-md);
+    }
 }
 
 /* === HERO SECTION === */

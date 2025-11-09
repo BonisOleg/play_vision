@@ -34,12 +34,15 @@
 
 
 /* NEW DESIGN - 1в1 як на скріні */
+/* Використовує загальну систему ширини */
 .hero-new-design {
     border: none;
     background: transparent;
     backdrop-filter: none;
-    padding: 4rem 0 4rem 5%;
-    max-width: 100%;
+    width: 70%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem var(--spacing-xl);
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -48,7 +51,7 @@
     height: 100%;
 }
 
-/* Tablet responsiveness */
+/* Tablet responsiveness (Синхронізовано з content-width) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .fullscreen-section {
         min-height: 500px;
@@ -64,24 +67,26 @@
 
     /* NEW DESIGN Tablet */
     .hero-new-design {
-        padding: 3.5rem 5% 3.5rem 5%;
+        width: 85%;
+        padding: 3.5rem var(--spacing-lg);
     }
 
     .hero-new-design .hero-title {
         font-size: clamp(2rem, 4vw, 3rem);
-        max-width: 90%;
+        max-width: 100%;
     }
 
     .hero-new-design .hero-subtitle {
         font-size: clamp(1rem, 2vw, 1.2rem);
-        max-width: 90%;
+        max-width: 100%;
     }
 }
 
 @media (max-width: 768px) {
-    /* NEW DESIGN Mobile */
+    /* NEW DESIGN Mobile (Синхронізовано з content-width) */
     .hero-new-design {
-        padding: 3rem 5% 3rem 5%;
+        width: 90%;
+        padding: 3rem var(--spacing-md);
     }
 
     .hero-new-design .hero-title {
@@ -266,10 +271,9 @@
     padding: 20px 0;
 }
 
+/* Використовує загальну систему ширини з section-base.css */
 .experts-section .section-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
+    /* Наслідує з section-base.css: width: 70%, max-width: 1400px, padding з var() */
 }
 
 .experts-section .section-title {

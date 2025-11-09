@@ -33,18 +33,12 @@
 }
 
 /* === 3. SECTION CONTENT === */
+/* Використовує загальну систему ширини з section-base.css */
 .about-triangle-section .section-content,
 .about-mission-section .section-content,
 .about-values-section .section-content {
-    padding: var(--spacing-xl) 0;
-}
-
-/* Padding для SVG секцій */
-.about-triangle-section .section-content,
-.about-mission-section .section-content,
-.about-values-section .section-content {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
 }
 
 /* Спільні стилі для всіх заголовків секцій */
@@ -127,9 +121,6 @@
         font-size: 2rem;
     }
 
-    .about-image-block {
-        padding: 0 var(--spacing-md);
-    }
 }
 
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
@@ -151,11 +142,8 @@
     .about-triangle-section .section-content,
     .about-mission-section .section-content,
     .about-values-section .section-content {
-        padding: var(--spacing-lg) 0;
-    }
-
-    .about-image-block {
-        padding: 0;
+        padding-top: var(--spacing-lg);
+        padding-bottom: var(--spacing-lg);
     }
 }
 

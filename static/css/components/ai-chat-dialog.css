@@ -309,20 +309,20 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    background: transparent;
     border: none;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    transition: transform var(--transition-fast);
+    padding: 0;
 }
 
 .ai-dialog-send:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--color-primary-alpha-20);
+    transform: scale(1.1);
 }
 
 .ai-dialog-send:active {
-    transform: translateY(0);
+    transform: scale(0.95);
 }
 
 .ai-dialog-send:disabled {

@@ -18,15 +18,17 @@
 }
 
 /* ==================== HEADER З НАВІГАЦІЄЮ ==================== */
+/* Використовує загальну систему ширини */
 .main-courses-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-    max-width: 1600px;
+    width: 70%;
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 40px;
+    padding: 0 var(--spacing-xl);
 }
 
 .main-courses-header .section-title {
@@ -105,10 +107,12 @@
 }
 
 /* ==================== КАРУСЕЛЬ КОНТЕЙНЕР ==================== */
+/* Використовує загальну систему ширини */
 .main-courses-carousel-container {
-    max-width: 1600px;
+    width: 70%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 var(--spacing-xl);
     overflow: hidden;
 }
 
@@ -346,14 +350,13 @@
     }
 }
 
-/* ==================== ADAPTIVE TABLET (768px - 1024px) ==================== */
-@media (max-width: 1024px) {
-    .main-courses-header {
-        padding: 0 32px;
-    }
-
+/* ==================== ADAPTIVE TABLET (769px - 1024px) ==================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Синхронізовано з content-width */
+    .main-courses-header,
     .main-courses-carousel-container {
-        padding: 0 32px;
+        width: 85%;
+        padding: 0 var(--spacing-lg);
     }
 
     .main-course-slide {
@@ -368,22 +371,25 @@
     }
 }
 
+/* ==================== ADAPTIVE MOBILE (до 768px) ==================== */
 @media (max-width: 768px) {
+    /* Синхронізовано з content-width */
+    .main-courses-header,
+    .main-courses-carousel-container {
+        width: 90%;
+        padding: 0 var(--spacing-md);
+    }
+
     .main-courses-section {
         padding: 20px 0;
     }
 
     .main-courses-header {
         margin-bottom: 30px;
-        padding: 0 24px;
     }
 
     .main-courses-header .section-title {
         font-size: 1.5rem;
-    }
-
-    .main-courses-carousel-container {
-        padding: 0 24px;
     }
 
     .course-nav-btn {

@@ -19,15 +19,17 @@
 }
 
 /* ==================== HEADER З НАВІГАЦІЄЮ ==================== */
+/* Використовує загальну систему ширини */
 .featured-courses-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-    max-width: 1200px;
+    width: 70%;
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 16px;
+    padding: 0 var(--spacing-xl);
 }
 
 .featured-courses-header .section-title {
@@ -86,10 +88,12 @@
 }
 
 /* ==================== КАРУСЕЛЬ КОНТЕЙНЕР ==================== */
+/* Використовує загальну систему ширини */
 .featured-carousel-container {
-    max-width: 1200px;
+    width: 70%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 16px;
+    padding: 0 var(--spacing-xl);
     overflow: hidden;
 }
 
@@ -262,8 +266,15 @@
     font-size: 1.125rem;
 }
 
-/* ==================== ADAPTIVE TABLET (768px - 1024px) ==================== */
-@media (max-width: 1024px) {
+/* ==================== ADAPTIVE TABLET (769px - 1024px) ==================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Синхронізовано з content-width */
+    .featured-courses-header,
+    .featured-carousel-container {
+        width: 85%;
+        padding: 0 var(--spacing-lg);
+    }
+
     .carousel-slide {
         flex: 0 0 calc(33.333% - 14px);
         width: calc(33.333% - 14px);
@@ -276,7 +287,15 @@
     }
 }
 
+/* ==================== ADAPTIVE MOBILE (до 768px) ==================== */
 @media (max-width: 768px) {
+    /* Синхронізовано з content-width */
+    .featured-courses-header,
+    .featured-carousel-container {
+        width: 90%;
+        padding: 0 var(--spacing-md);
+    }
+
     .featured-courses-section {
         padding: 40px 0;
     }

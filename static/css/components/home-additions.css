@@ -5,11 +5,13 @@
     position: relative;
 }
 
+/* Використовує загальну систему ширини */
 .featured-carousel-container {
     position: relative;
-    max-width: 1200px;
+    width: 70%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 48px;
+    padding: 0 var(--spacing-xl);
 }
 
 .carousel-btn {

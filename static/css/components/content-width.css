@@ -1,0 +1,56 @@
+/* ============================================
+   CONTENT WIDTH SYSTEM - Єдина система ширини контенту
+   Використовується на всіх сторінках для уніфікації
+   ============================================ */
+
+/* === БАЗОВИЙ КОНТЕЙНЕР ДЛЯ ВСЬОГО КОНТЕНТУ === */
+.content-width-container {
+    width: 70%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* === КОНТЕНТ З ВНУТРІШНІМИ ПАДІНГАМИ === */
+.content-width-padded {
+    width: 70%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+    position: relative;
+}
+
+/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .content-width-container,
+    .content-width-padded {
+        width: 85%;
+    }
+    
+    .content-width-padded {
+        padding: 0 var(--spacing-lg);
+    }
+}
+
+/* === МОБІЛЬНА АДАПТАЦІЯ === */
+@media (max-width: 768px) {
+    .content-width-container,
+    .content-width-padded {
+        width: 90%;
+    }
+    
+    .content-width-padded {
+        padding: 0 var(--spacing-md);
+    }
+}
+
+/* === iOS SAFARI SPECIFIC === */
+@supports (-webkit-touch-callout: none) {
+    .content-width-container,
+    .content-width-padded {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+}
+

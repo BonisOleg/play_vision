@@ -14,11 +14,12 @@ footer.site-footer * {
     box-sizing: border-box;
 }
 
+/* Використовує загальну систему ширини */
 footer.site-footer .footer-container {
-    max-width: 1100px;
+    width: 70%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 24px;
-    width: 100%;
+    padding: 0 var(--spacing-xl);
 }
 
 /* === РЯДОК 1: ЛОГОТИП + CTA === */
@@ -453,9 +454,26 @@ footer.site-footer .footer-link:hover {
     }
 }
 
+/* === ПЛАНШЕТНА АДАПТАЦІЯ (Синхронізовано з content-width) === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    footer.site-footer .footer-container {
+        width: 85%;
+        padding: 0 var(--spacing-lg);
+    }
+}
+
+/* === МОБІЛЬНА АДАПТАЦІЯ (Синхронізовано з content-width) === */
+@media (max-width: 768px) {
+    footer.site-footer .footer-container {
+        width: 90%;
+        padding: 0 var(--spacing-md);
+    }
+}
+
 @media (max-width: 400px) {
     footer.site-footer .footer-container {
-        padding: 0 16px;
+        width: 90%;
+        padding: 0 var(--spacing-sm);
     }
     
     footer.site-footer .footer-logo-container {

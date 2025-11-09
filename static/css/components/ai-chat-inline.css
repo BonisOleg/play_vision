@@ -218,25 +218,29 @@
     height: 36px;
     border-radius: 50%;
     border: none;
-    background: #E50914;
+    background: transparent;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition: transform 0.2s ease;
     flex-shrink: 0;
+    padding: 0;
 }
 
-.ai-chat-send-btn:hover,
-.ai-chat-detach-btn:hover {
-    background: #b8070f;
-    transform: scale(1.05);
+.ai-chat-send-btn:hover {
+    transform: scale(1.1);
 }
 
-.ai-chat-send-btn:active,
-.ai-chat-detach-btn:active {
+.ai-chat-send-btn:active {
     transform: scale(0.95);
+}
+
+.ai-chat-detach-btn:hover,
+.ai-chat-detach-btn:active {
+    background: var(--color-bg-gray);
+    transform: scale(1.05);
 }
 
 .ai-chat-send-btn img {
@@ -385,18 +389,18 @@
     height: 36px;
     border-radius: 50%;
     border: none;
-    background: #E50914;
+    background: transparent;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition: transform 0.2s ease;
+    padding: 0;
 }
 
 .ai-chat-modal-send:hover {
-    background: #b8070f;
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .ai-chat-modal-send:active {
