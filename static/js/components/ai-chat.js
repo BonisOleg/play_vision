@@ -271,7 +271,7 @@ class AIChat {
 
         this.input.addEventListener('input', () => {
             this.input.style.height = 'auto';
-            this.input.style.height = Math.min(this.input.scrollHeight, 120) + 'px';
+            this.input.style.height = Math.min(this.input.scrollHeight, 118) + 'px';
         });
     }
 
