@@ -292,7 +292,8 @@
     color: var(--color-text);
     resize: none;
     outline: none;
-    max-height: 120px;
+    min-height: 42px;
+    max-height: 118px;
     overflow-y: auto;
     line-height: 1.5;
 }
@@ -332,6 +333,23 @@
 
 .ai-dialog-send svg {
     stroke: white;
+}
+
+.ai-dialog-send img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(1);
+    transition: filter var(--transition-fast);
+}
+
+.ai-dialog-send:hover img {
+    filter: brightness(1.2);
+}
+
+.ai-dialog-send:disabled img {
+    filter: brightness(0.7) grayscale(0.5);
 }
 
 .ai-dialog-counter {
@@ -436,6 +454,17 @@
     .ai-dialog-input-container {
         padding: var(--spacing-sm);
     }
+
+    .ai-dialog-input {
+        min-height: 40px;
+        max-height: 100px;
+        font-size: 16px;
+    }
+
+    .ai-dialog-send img {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 /* ===== iOS SAFARI SPECIFIC ===== */
@@ -454,6 +483,12 @@
 
         .ai-dialog-input-container {
             padding-bottom: max(var(--spacing-sm), calc(env(safe-area-inset-bottom) + var(--spacing-xs)));
+        }
+
+        .ai-dialog-input {
+            min-height: 40px;
+            max-height: 98px;
+            font-size: 16px;
         }
     }
 }
@@ -531,4 +566,12 @@
 
 [data-theme="dark"] .ai-dialog-input-wrapper {
     background: var(--color-bg-dark);
+}
+
+[data-theme="dark"] .ai-dialog-send img {
+    filter: brightness(0.95);
+}
+
+[data-theme="dark"] .ai-dialog-send:hover img {
+    filter: brightness(1.1);
 }
