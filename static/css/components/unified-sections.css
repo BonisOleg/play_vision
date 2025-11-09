@@ -32,7 +32,7 @@
 
 /* === ПАТТЕРН КОЛЬОРИ ДЛЯ СВІТЛОЇ ТЕМИ === */
 :root {
-    --unified-bg-color: #f5f5f5;
+    --unified-bg-color: #e9e9e9;
     --pattern-line-color: rgba(200, 200, 200, 0.4);
     --pattern-cross-color: rgba(150, 150, 150, 0.3);
     --decorative-line-main: #0A0A0A;
@@ -41,7 +41,7 @@
 
 /* === ПАТТЕРН КОЛЬОРИ ДЛЯ ТЕМНОЇ ТЕМИ === */
 [data-theme="dark"] {
-    --unified-bg-color: #1a1a1a;
+    --unified-bg-color: #171717;
     --pattern-line-color: rgba(80, 80, 80, 0.4);
     --pattern-cross-color: rgba(120, 120, 120, 0.3);
     --decorative-line-main: #FFFFFF;
@@ -50,7 +50,7 @@
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] {
-        --unified-bg-color: #1a1a1a;
+        --unified-bg-color: #171717;
         --pattern-line-color: rgba(80, 80, 80, 0.4);
         --pattern-cross-color: rgba(120, 120, 120, 0.3);
         --decorative-line-main: #FFFFFF;
