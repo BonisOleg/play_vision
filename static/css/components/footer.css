@@ -177,7 +177,6 @@ footer.site-footer .footer-contacts-group {
     display: flex;
     flex-direction: row;
     gap: 12px;
-    flex: 0 0 50%;
     flex-wrap: wrap;
     align-items: flex-start;
 }

@@ -200,7 +200,7 @@
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     white-space: nowrap;
-    min-height: 27px;
+    min-height: 54px;
     overflow: visible;
 }
 
