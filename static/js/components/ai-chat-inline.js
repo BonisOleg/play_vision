@@ -300,7 +300,7 @@
         const sendBtn = document.createElement('button');
         sendBtn.className = 'ai-chat-modal-send';
         sendBtn.innerHTML = `
-            <img src="/static/images/white_botton.png" alt="Надіслати" loading="lazy">
+            <img src="/static/images/white_botton.png" alt="Надіслати">
         `;
 
         inputWrapper.appendChild(input);

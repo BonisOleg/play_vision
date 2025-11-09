@@ -331,25 +331,11 @@
     transform: none;
 }
 
-.ai-dialog-send svg {
-    stroke: white;
-}
-
 .ai-dialog-send img {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
     display: block;
-    filter: brightness(1);
-    transition: filter var(--transition-fast);
-}
-
-.ai-dialog-send:hover img {
-    filter: brightness(1.2);
-}
-
-.ai-dialog-send:disabled img {
-    filter: brightness(0.7) grayscale(0.5);
 }
 
 .ai-dialog-counter {
