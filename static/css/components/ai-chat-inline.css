@@ -213,20 +213,28 @@
 }
 
 .ai-chat-send-btn,
-.ai-chat-detach-btn {
+.ai-chat-detach-btn,
+.ai-chat-close-btn {
     width: 36px;
     height: 36px;
     border-radius: 50%;
     border: none;
     background: transparent;
-    color: white;
+    color: var(--color-text);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
     flex-shrink: 0;
     padding: 0;
+}
+
+.ai-chat-send-btn img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
 }
 
 .ai-chat-send-btn:hover {
@@ -237,27 +245,58 @@
     transform: scale(0.95);
 }
 
-.ai-chat-detach-btn:hover,
-.ai-chat-detach-btn:active {
-    background: var(--color-bg-gray);
-    transform: scale(1.05);
-}
-
-.ai-chat-send-btn img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
+.ai-chat-detach-btn svg,
+.ai-chat-close-btn svg {
+    width: 18px;
+    height: 18px;
     display: block;
+    pointer-events: none;
 }
 
-.ai-chat-detach-btn {
-    background: var(--color-bg-gray);
-    color: var(--color-text);
+.ai-chat-detach-btn:hover,
+.ai-chat-close-btn:hover {
+    transform: scale(1.1);
 }
 
-.ai-chat-detach-btn:hover {
-    background: var(--color-border);
-    color: var(--color-text);
+.ai-chat-detach-btn:active,
+.ai-chat-close-btn:active {
+    transform: scale(0.95);
+}
+
+/* Теми для іконок */
+[data-theme="light"] .ai-chat-detach-btn svg,
+[data-theme="light"] .ai-chat-close-btn svg {
+    stroke: #1a1a1a;
+}
+
+[data-theme="dark"] .ai-chat-detach-btn svg,
+[data-theme="dark"] .ai-chat-close-btn svg {
+    stroke: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-detach-btn svg,
+    [data-theme="auto"] .ai-chat-close-btn svg {
+        stroke: white;
+    }
+}
+
+/* Ховер фони */
+[data-theme="light"] .ai-chat-detach-btn:hover,
+[data-theme="light"] .ai-chat-close-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .ai-chat-detach-btn:hover,
+[data-theme="dark"] .ai-chat-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-detach-btn:hover,
+    [data-theme="auto"] .ai-chat-close-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
 }
 
 /* ========================================
@@ -442,6 +481,7 @@
 .ai-chat-input:focus-visible,
 .ai-chat-send-btn:focus-visible,
 .ai-chat-detach-btn:focus-visible,
+.ai-chat-close-btn:focus-visible,
 .ai-chat-modal-input:focus-visible,
 .ai-chat-modal-send:focus-visible,
 .ai-chat-modal-close:focus-visible {
@@ -457,6 +497,7 @@
     .ai-chat-input-wrapper,
     .ai-chat-send-btn,
     .ai-chat-detach-btn,
+    .ai-chat-close-btn,
     .ai-chat-modal-close,
     .ai-chat-modal-send {
         transition: none;

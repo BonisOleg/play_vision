@@ -45,7 +45,8 @@
         messages: document.querySelector('[data-ai-messages]'),
         input: document.querySelector('[data-ai-input]'),
         sendBtn: document.querySelector('[data-ai-send]'),
-        detachBtn: document.querySelector('[data-ai-detach]')
+        detachBtn: document.querySelector('[data-ai-detach]'),
+        closeBtn: document.querySelector('[data-ai-close]')
     };
 
     // ========================================
@@ -88,6 +89,11 @@
             elements.detachBtn.addEventListener('click', handleDetachChat);
         }
 
+        // Закриття чату
+        if (elements.closeBtn) {
+            elements.closeBtn.addEventListener('click', handleCloseChat);
+        }
+
         // Оновлення максимальної висоти при зміні розміру вікна
         window.addEventListener('resize', handleWindowResize);
     }
@@ -114,9 +120,12 @@
         // Очищаємо input
         elements.input.value = '';
 
-        // Показуємо кнопку відкріплення
+        // Показуємо кнопки відкріплення та закриття
         if (elements.detachBtn) {
             elements.detachBtn.style.display = 'flex';
+        }
+        if (elements.closeBtn) {
+            elements.closeBtn.style.display = 'flex';
         }
 
         // Симулюємо відповідь AI (замість реального API)
@@ -205,6 +214,34 @@
         } else {
             detachChat();
         }
+    }
+
+    function handleCloseChat() {
+        // Очищуємо всі повідомлення з DOM
+        if (elements.messages) {
+            elements.messages.innerHTML = '';
+            elements.messages.style.display = 'none';
+        }
+
+        // Приховуємо кнопки
+        if (elements.detachBtn) {
+            elements.detachBtn.style.display = 'none';
+        }
+        if (elements.closeBtn) {
+            elements.closeBtn.style.display = 'none';
+        }
+
+        // Очищуємо input
+        if (elements.input) {
+            elements.input.value = '';
+            elements.input.focus();
+        }
+
+        // Оновлюємо стан
+        state.hasMessages = false;
+        state.chatHistory = [];
+
+        console.log('❌ Chat closed');
     }
 
     function detachChat() {
