@@ -39,6 +39,14 @@
     padding: var(--spacing-xl) 0;
 }
 
+/* Padding для SVG секцій */
+.about-triangle-section .section-content,
+.about-mission-section .section-content,
+.about-values-section .section-content {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 /* Спільні стилі для всіх заголовків секцій */
 .about-mission-section .section-title,
 .about-values-section .section-title,

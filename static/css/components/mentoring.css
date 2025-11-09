@@ -20,34 +20,6 @@
     opacity: 0.3;
 }
 
-/* === PADDING ДЛЯ КОНТЕЙНЕРА ПОСЛЯ HERO === */
-.unified-sections-wrapper .unified-sections-container {
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
-}
-
-/* Виключення для декоративних ліній - виходять за межі padding */
-.unified-sections-wrapper .unified-sections-container .decorative-line-wrapper {
-    margin-left: -20px;
-    margin-right: -20px;
-    width: calc(100% + 40px);
-}
-
-/* Виключення для методології (зображення) - виходить за межі padding */
-.unified-sections-wrapper .unified-sections-container .mentoring-methodology-section {
-    margin-left: -20px;
-    margin-right: -20px;
-    width: calc(100% + 40px);
-}
-
-/* Виключення для унікальної методології (якщо є окрема секція) - виходить за межі padding */
-.unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
-    margin-left: -20px;
-    margin-right: -20px;
-    width: calc(100% + 40px);
-}
-
 /* === ЩО ТАКЕ МЕНТОР КОУЧИНГ === */
 .mentoring-what-section {
     padding: 60px 0;
@@ -133,6 +105,12 @@
     text-shadow: none;
 }
 
+/* Padding для SVG */
+.mentoring-structure-section .section-content {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 [data-theme="dark"] .mentoring-structure-section .section-title {
     color: #ffffff;
 }
@@ -146,6 +124,12 @@
 /* === МЕТОДОЛОГІЯ (БЕЗ ЗАГОЛОВКА) === */
 .mentoring-methodology-section {
     padding: 60px 0;
+}
+
+/* Padding для SVG */
+.mentoring-methodology-section .section-content {
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .mentoring-image-block {
