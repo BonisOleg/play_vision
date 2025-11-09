@@ -30,13 +30,36 @@ footer.site-footer .footer-header {
     margin-bottom: 20px;
 }
 
+footer.site-footer .footer-logo-container {
+    height: 88px;
+    display: flex;
+    align-items: flex-start;
+    flex: 0 0 40%;
+    align-self: flex-start;
+}
+
 footer.site-footer .footer-logo {
     height: 88px;
     width: auto;
     object-fit: contain;
     object-position: left center;
-    flex: 0 0 40%;
-    align-self: flex-start;
+}
+
+/* Перемикання логотипів за темою */
+footer.site-footer .footer-logo-light {
+    display: block;
+}
+
+footer.site-footer .footer-logo-dark {
+    display: none;
+}
+
+[data-theme="dark"] footer.site-footer .footer-logo-light {
+    display: none;
+}
+
+[data-theme="dark"] footer.site-footer .footer-logo-dark {
+    display: block;
 }
 
 footer.site-footer .footer-cta {
@@ -332,6 +355,10 @@ footer.site-footer .footer-link:hover {
         padding: 0 20px;
     }
     
+    footer.site-footer .footer-logo-container {
+        height: 76px;
+    }
+    
     footer.site-footer .footer-logo {
         height: 76px;
     }
@@ -379,6 +406,10 @@ footer.site-footer .footer-link:hover {
 @media (max-width: 400px) {
     footer.site-footer .footer-container {
         padding: 0 16px;
+    }
+    
+    footer.site-footer .footer-logo-container {
+        height: 64px;
     }
     
     footer.site-footer .footer-logo {
