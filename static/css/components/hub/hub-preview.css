@@ -152,7 +152,7 @@
     position: relative;
     width: 100%;
     padding-top: 56.25%;
-    background: #000;
+    background: #171717;
 }
 
 .preview-video-container iframe {
@@ -306,7 +306,7 @@
 
 /* === DARK THEME === */
 [data-theme="dark"] .preview-modal-content {
-    background: #1a1a1a;
+    background: #171717;
 }
 
 [data-theme="dark"] .preview-modal-header {

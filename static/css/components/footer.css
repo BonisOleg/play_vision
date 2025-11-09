@@ -3,7 +3,7 @@
    ======================================== */
 
 footer.site-footer {
-    background: #000000;
+    background: #171717;
     color: #ffffff;
     width: 100%;
     padding: 28px 0 24px;
@@ -43,6 +43,7 @@ footer.site-footer .footer-logo {
     width: auto;
     object-fit: contain;
     object-position: left center;
+    filter: none;
 }
 
 /* Перемикання логотипів за темою */
@@ -60,6 +61,8 @@ footer.site-footer .footer-logo-dark {
 
 [data-theme="dark"] footer.site-footer .footer-logo-dark {
     display: block;
+    filter: none;
+    color: white;
 }
 
 footer.site-footer .footer-cta {
@@ -98,7 +101,7 @@ footer.site-footer .social-link {
     gap: 6px;
     padding: 6px 10px;
     flex: 1;
-    background: #000000;
+    background: #171717;
     border: none;
     border-radius: 5px;
     color: #ffffff;
@@ -255,7 +258,7 @@ footer.site-footer .newsletter-input:focus {
 
 footer.site-footer .newsletter-button {
     padding: 6px 14px;
-    background: #ffffff;
+    background: #e9e9e9;
     color: #000000;
     border: none;
     border-radius: 5px;

@@ -534,7 +534,7 @@
 
 .preview-video {
     position: relative;
-    background: #000;
+    background: #171717;
     border-radius: var(--hub-radius);
     overflow: hidden;
     margin-bottom: 1rem;

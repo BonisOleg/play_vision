@@ -122,13 +122,13 @@
 
 /* ТЕМНА ТЕМА - темний фон, світла обводка */
 [data-theme="dark"] .nav-tabs-container {
-    background: #1a1a1a;
+    background: #171717;
     border-color: rgba(255, 255, 255, 0.9);
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .nav-tabs-container {
-        background: #1a1a1a;
+        background: #171717;
         border-color: rgba(255, 255, 255, 0.9);
     }
 }

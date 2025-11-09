@@ -5,12 +5,12 @@
  */
 
 [data-theme="dark"] .hub-container {
-    background: #0a0a0a;
+    background: #171717;
 }
 
 /* === BOARDS === */
 [data-theme="dark"] .board-card {
-    background: #1a1a1a;
+    background: #171717;
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
 }
@@ -37,12 +37,12 @@
 
 /* === MATERIAL CARDS (CAROUSEL) === */
 [data-theme="dark"] .material-card {
-    background: #1a1a1a;
+    background: #171717;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="dark"] .material-content {
-    background: #1a1a1a;
+    background: #171717;
 }
 
 [data-theme="dark"] .material-content h3 {
@@ -63,7 +63,7 @@
 
 /* === FILTERS SIDEBAR === */
 [data-theme="dark"] .filters-sidebar {
-    background: #1a1a1a;
+    background: #171717;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -117,7 +117,7 @@
 
 /* === PRODUCT CARDS === */
 [data-theme="dark"] .product-card {
-    background: #1a1a1a;
+    background: #171717;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -194,7 +194,7 @@
 
 /* === SEARCH === */
 [data-theme="dark"] .search-input {
-    background: #1a1a1a;
+    background: #171717;
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
 }
@@ -209,7 +209,7 @@
 }
 
 [data-theme="dark"] .search-suggestions {
-    background: #1a1a1a;
+    background: #171717;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -242,7 +242,7 @@
 
 /* === PAGINATION === */
 [data-theme="dark"] .page-link {
-    background: #1a1a1a;
+    background: #171717;
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
 }
@@ -263,7 +263,7 @@
 
 /* === NAV BUTTONS === */
 [data-theme="dark"] .nav-btn {
-    background: #1a1a1a;
+    background: #171717;
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
 }
@@ -314,13 +314,13 @@
 
 /* === SECTIONS BACKGROUND === */
 [data-theme="dark"] .main-materials {
-    background: #0a0a0a;
+    background: #171717;
 }
 
 [data-theme="dark"] .all-products {
-    background: #0a0a0a;
+    background: #171717;
 }
 
 [data-theme="dark"] .hub-boards {
-    background: linear-gradient(135deg, #0a0a0a 0%, rgba(229, 9, 20, 0.05) 100%);
+    background: linear-gradient(135deg, #171717 0%, rgba(229, 9, 20, 0.05) 100%);
 }

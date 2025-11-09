@@ -123,7 +123,7 @@
 /* === DARK MODE SUPPORT === */
 @media (prefers-color-scheme: dark) {
     .notification {
-        background: #2d2d2d;
+        background: #171717;
         border-color: #404040;
     }
 

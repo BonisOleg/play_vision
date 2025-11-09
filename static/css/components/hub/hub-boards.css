@@ -89,7 +89,7 @@
 }
 
 .board-card-2::before {
-    background: linear-gradient(90deg, #000000 0%, #1a1a1a 100%);
+    background: linear-gradient(90deg, #171717 0%, #171717 100%);
 }
 
 .board-card-3::before {

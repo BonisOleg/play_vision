@@ -61,7 +61,7 @@
 }
 
 .subscription-sticky-banner .btn-banner {
-    background: white;
+    background: #e9e9e9;
     color: var(--color-primary);
     padding: 0.625rem 1.5rem;
     border-radius: 6px;

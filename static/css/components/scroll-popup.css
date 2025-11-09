@@ -188,7 +188,7 @@
 
 /* === ТЕМНИЙ ДИЗАЙН ДЛЯ НЕЗАРЕЄСТРОВАНИХ === */
 .popup-guest .popup-card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+    background: linear-gradient(135deg, #171717 0%, #171717 100%);
     border: 1px solid rgba(229, 9, 20, 0.3);
 }
 
@@ -232,13 +232,13 @@
 }
 
 .popup-guest .form-input {
-    background: white;
+    background: #e9e9e9;
     border: none;
     color: #1f2937;
 }
 
 .popup-guest .btn-popup {
-    background: white;
+    background: #e9e9e9;
     color: #1a1a2e;
     font-weight: 700;
 }
@@ -305,7 +305,7 @@
 }
 
 .popup-auth .btn-popup {
-    background: white;
+    background: #e9e9e9;
     color: #1a1a1a;
     font-weight: 700;
     width: 100%;
