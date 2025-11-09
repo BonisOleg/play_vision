@@ -63,7 +63,7 @@ footer.site-footer .footer-logo-dark {
 }
 
 footer.site-footer .footer-cta {
-    font-size: 12px;
+    font-size: 22px;
     line-height: 1.3;
     color: #ffffff;
     margin: 0;
@@ -98,28 +98,74 @@ footer.site-footer .social-link {
     gap: 6px;
     padding: 6px 10px;
     flex: 1;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #000000;
+    border: none;
     border-radius: 5px;
     color: #ffffff;
     text-decoration: none;
     font-size: 10px;
     transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-footer.site-footer .social-link:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
+footer.site-footer .social-link:hover,
+footer.site-footer .social-link:active {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+footer.site-footer .social-link:hover .social-text,
+footer.site-footer .social-link:active .social-text {
+    color: #ffffff;
+}
+
+footer.site-footer .social-link:hover .social-icon,
+footer.site-footer .social-link:active .social-icon {
+    color: #ffffff;
+}
+
+/* Instagram hover/active - червоно-рожевий */
+footer.site-footer .social-link[href*="instagram"]:hover .social-icon,
+footer.site-footer .social-link[href*="instagram"]:active .social-icon {
+    color: #E4405F;
+}
+
+footer.site-footer .social-link[href*="instagram"]:hover .social-text,
+footer.site-footer .social-link[href*="instagram"]:active .social-text {
+    color: #E4405F;
+}
+
+/* TikTok hover/active - циановий */
+footer.site-footer .social-link[href*="tiktok"]:hover .social-icon,
+footer.site-footer .social-link[href*="tiktok"]:active .social-icon {
+    color: #00F2EA;
+}
+
+footer.site-footer .social-link[href*="tiktok"]:hover .social-text,
+footer.site-footer .social-link[href*="tiktok"]:active .social-text {
+    color: #00F2EA;
+}
+
+/* Telegram hover/active - синій */
+footer.site-footer .social-link[href*="t.me"]:hover .social-icon,
+footer.site-footer .social-link[href*="t.me"]:active .social-icon {
+    color: #0088cc;
+}
+
+footer.site-footer .social-link[href*="t.me"]:hover .social-text,
+footer.site-footer .social-link[href*="t.me"]:active .social-text {
+    color: #0088cc;
 }
 
 footer.site-footer .social-text {
     text-align: left;
+    transition: color 0.3s ease;
 }
 
 footer.site-footer .social-icon {
     width: 16px;
     height: 16px;
     flex-shrink: 0;
+    transition: color 0.3s ease;
 }
 
 /* Група контактів - 50% */
@@ -146,7 +192,7 @@ footer.site-footer .contact-label {
 }
 
 footer.site-footer .contact-link {
-    font-size: 10px;
+    font-size: 11.3px;
     color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -270,7 +316,7 @@ footer.site-footer .footer-legal {
 }
 
 footer.site-footer .footer-copyright {
-    font-size: 9px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
     white-space: nowrap;
@@ -285,7 +331,7 @@ footer.site-footer .footer-links {
 }
 
 footer.site-footer .footer-link {
-    font-size: 9px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     transition: color 0.3s ease;
