@@ -310,16 +310,17 @@ footer.site-footer .form-message.error {
 footer.site-footer .footer-legal {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     gap: 12px;
     flex: 0 0 50%;
     flex-wrap: nowrap;
-    align-self: flex-start;
+    align-self: center;
+    min-height: 32px;
 }
 
 footer.site-footer .footer-copyright {
-    font-size: 12px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
     white-space: nowrap;
@@ -330,11 +331,11 @@ footer.site-footer .footer-links {
     display: flex;
     gap: 12px;
     flex-wrap: nowrap;
-    align-items: flex-start;
+    align-items: center;
 }
 
 footer.site-footer .footer-link {
-    font-size: 12px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     transition: color 0.3s ease;
