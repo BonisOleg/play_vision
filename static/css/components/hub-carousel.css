@@ -76,36 +76,56 @@
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-xl);
     background: var(--hub-bg-card);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px var(--hub-shadow);
-    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     padding: var(--spacing-xl);
 }
 
 .hub-featured-content {
+    border: 1px solid var(--hub-border);
+    border-radius: 16px;
+    padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+[data-theme="dark"] .hub-featured-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .hub-featured-content {
+    border-color: var(--hub-border);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .hub-featured-card {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    [data-theme="auto"] .hub-featured-content {
+        border-color: var(--hub-border);
+    }
+}
+
 .hub-featured-title {
     color: var(--hub-text);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     text-align: left;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     text-shadow: none;
 }
 
 .hub-featured-subtitle {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 400;
     color: var(--hub-text);
     margin-bottom: var(--spacing-md);
 }
 
 .hub-featured-description {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     color: var(--hub-text-light);
     line-height: 1.6;
     margin-bottom: var(--spacing-md);
@@ -113,7 +133,7 @@
 }
 
 .hub-featured-meta {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     color: var(--hub-text-light);
     margin-bottom: var(--spacing-md);
 }
@@ -143,7 +163,7 @@
 }
 
 .hub-featured-price {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -214,7 +234,7 @@
 
 .hub-featured-image {
     position: relative;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
 }
 
@@ -259,12 +279,18 @@
 
 @media (max-width: 768px) {
     .hub-featured-title {
-        font-size: 1.75rem;
-        margin-bottom: 12px;
+        font-size: 1.25rem;
+        margin-bottom: 10px;
     }
     
     .hub-featured-card {
         padding: var(--spacing-lg);
+        border-radius: 12px;
+    }
+    
+    .hub-featured-content {
+        border-radius: 12px;
+        padding: var(--spacing-md);
     }
     
     .hub-featured-footer {
