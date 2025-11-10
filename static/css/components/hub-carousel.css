@@ -89,10 +89,12 @@
 }
 
 .hub-featured-title {
-    font-size: 1.75rem;
-    font-weight: 700;
     color: var(--hub-text);
-    margin-bottom: var(--spacing-sm);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 16px;
+    text-shadow: none;
 }
 
 .hub-featured-subtitle {
@@ -257,7 +259,8 @@
 
 @media (max-width: 768px) {
     .hub-featured-title {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
+        margin-bottom: 12px;
     }
     
     .hub-featured-card {

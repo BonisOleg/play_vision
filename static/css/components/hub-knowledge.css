@@ -82,19 +82,35 @@
     min-height: 44px;
 }
 
-/* Section title */
+/* Section title (синхронізовано з experts-section) */
 .section-title {
-    font-size: 2rem;
-    font-weight: 700;
     color: var(--hub-text);
-    margin-bottom: var(--spacing-lg);
+    font-size: 2.5rem;
+    font-weight: 700;
     text-align: left;
+    margin-bottom: 16px;
+    text-shadow: none;
 }
 
 /* Responsive */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .section-title {
+        font-size: 2.25rem;
+        margin-bottom: 14px;
+    }
+}
+
 @media (max-width: 768px) {
     .section-title {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
         font-size: 1.75rem;
+        margin-bottom: 10px;
     }
     
     .hub-btn {
