@@ -121,10 +121,10 @@
                                 </div>
                                 <div class="hub-featured-divider"></div>
                                 <div class="hub-featured-footer">
-                                    <div class="hub-featured-price">
+                                    <a href="{{ course.get_absolute_url }}" class="hub-featured-price">
                                         <span class="price-label">Ціна:</span> 
                                         <span class="price-value">{{ course.price }}₴</span>
-                                    </div>
+                                    </a>
                                     <button type="button" class="hub-favorite-btn" data-course-id="{{ course.id }}">
                                         Улюблене
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
