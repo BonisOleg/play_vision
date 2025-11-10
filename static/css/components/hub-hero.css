@@ -6,20 +6,22 @@
     padding: var(--spacing-xl) 0;
 }
 
-/* Grid Layout */
+/* Grid Layout - 2 колонки x 3 рядки */
 .hub-hero-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto auto;
     gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
 }
 
-/* Лівий блок */
+/* Лівий блок - займає 2 рядки */
 .hub-hero-main {
     position: relative;
     min-height: 350px;
     border-radius: 12px;
     overflow: hidden;
+    grid-row: 1 / 3;
+    grid-column: 1;
 }
 
 .hub-hero-bg {
@@ -97,17 +99,34 @@
     margin-bottom: var(--spacing-xl);
 }
 
+/* Стилі для динамічних елементів JS */
+.hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.3;
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
 .hub-hero-cta {
     align-self: flex-start;
 }
 
-/* Три правих блоки */
-.hub-hero-stats {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-
+/* Картки статистики - кожна в своєму рядку */
 .hub-stat-card {
     background: #2A2A2A;
     border-radius: 8px;
@@ -116,6 +135,19 @@
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
+    grid-column: 2;
+}
+
+.hub-stat-card-1 {
+    grid-row: 1;
+}
+
+.hub-stat-card-2 {
+    grid-row: 2;
+}
+
+.hub-stat-card-3 {
+    grid-row: 3;
 }
 
 .hub-stat-card:hover {
@@ -141,7 +173,7 @@
     color: #B3B3B3;
 }
 
-/* Чорний слоган */
+/* Чорний слоган - третій рядок, ліва колонка */
 .hub-hero-slogan {
     background: #000000;
     padding: var(--spacing-md) var(--spacing-lg);
@@ -150,6 +182,8 @@
     font-weight: 600;
     color: #FFFFFF;
     border-radius: 8px;
+    grid-row: 3;
+    grid-column: 1;
 }
 
 .hub-slogan-highlight {
@@ -160,14 +194,33 @@
 @media (max-width: 1024px) {
     .hub-hero-grid {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto auto;
     }
     
-    .hub-hero-stats {
-        flex-direction: row;
+    .hub-hero-main {
+        grid-row: 1;
+        grid-column: 1;
     }
     
     .hub-stat-card {
-        flex: 1;
+        grid-column: 1;
+    }
+    
+    .hub-stat-card-1 {
+        grid-row: 2;
+    }
+    
+    .hub-stat-card-2 {
+        grid-row: 3;
+    }
+    
+    .hub-stat-card-3 {
+        grid-row: 5;
+    }
+    
+    .hub-hero-slogan {
+        grid-row: 4;
+        grid-column: 1;
     }
 }
 
@@ -187,10 +240,6 @@
     
     .hub-hero-logo {
         width: 120px;
-    }
-    
-    .hub-hero-stats {
-        flex-direction: column;
     }
     
     .hub-stat-value {
