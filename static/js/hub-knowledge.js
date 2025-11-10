@@ -1,0 +1,315 @@
+/**
+ * Hub Knowledge Page Main JS (скопійовано логіку з home.js та main-courses-carousel.js)
+ */
+
+'use strict';
+
+/**
+ * Hero Carousel для Хабу Знань (адаптовано з home.js)
+ */
+class HubHeroCarousel {
+    constructor(element) {
+        this.element = element;
+        this.currentSlide = 0;
+        
+        // Слайди для Хабу Знань
+        this.slides = [
+            {
+                title: 'Програма лояльності Хабу Знань',
+                subtitle: 'Твоя бібліотека футбольних знань',
+                ctaText: 'Дізнатися',
+                ctaUrl: '/loyalty/'
+            },
+            {
+                title: 'Ексклюзивні курси та матеріали',
+                subtitle: 'Від базових знань до професійного рівня',
+                ctaText: 'Переглянути курси',
+                ctaUrl: '/hub/'
+            },
+            {
+                title: 'Знання, що працюють на полі',
+                subtitle: 'Навчання від практиків, а не теоретиків',
+                ctaText: 'Обрати напрям',
+                ctaUrl: '/hub/'
+            }
+        ];
+
+        this.titleElement = element.querySelector('.hero-title');
+        this.subtitleElement = element.querySelector('.hero-subtitle');
+        this.ctaButton = element.querySelector('.hero-buttons a');
+        this.ctaButtonText = element.querySelector('.hero-buttons a .btn-text');
+        this.dotsContainer = element.querySelector('.hero-slider-dots');
+
+        this.init();
+    }
+
+    init() {
+        if (this.slides.length > 1) {
+            this.renderDots();
+            this.startAutoplay();
+        } else if (this.dotsContainer) {
+            this.dotsContainer.style.display = 'none';
+        }
+        this.updateSlide();
+    }
+
+    renderDots() {
+        if (!this.dotsContainer) return;
+
+        this.dotsContainer.innerHTML = '';
+        this.slides.forEach((slide, index) => {
+            const dot = document.createElement('button');
+            dot.className = 'slider-dot';
+            dot.setAttribute('aria-label', `Слайд ${index + 1}`);
+
+            if (index === 0) {
+                dot.classList.add('active');
+            }
+
+            dot.addEventListener('click', () => this.goToSlide(index));
+            this.dotsContainer.appendChild(dot);
+        });
+    }
+
+    updateSlide() {
+        const slide = this.slides[this.currentSlide];
+
+        if (this.titleElement) {
+            this.titleElement.textContent = slide.title;
+        }
+
+        if (this.subtitleElement) {
+            this.subtitleElement.textContent = slide.subtitle;
+        }
+
+        if (this.ctaButton) {
+            this.ctaButton.href = slide.ctaUrl;
+            if (this.ctaButtonText && slide.ctaText) {
+                this.ctaButtonText.textContent = slide.ctaText;
+            } else if (slide.ctaText) {
+                this.ctaButton.textContent = slide.ctaText;
+            }
+        }
+
+        this.updateDots();
+    }
+
+    updateDots() {
+        if (!this.dotsContainer) return;
+
+        const dots = this.dotsContainer.querySelectorAll('.slider-dot');
+        dots.forEach((dot, index) => {
+            if (index === this.currentSlide) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.updateSlide();
+    }
+
+    nextSlide() {
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.updateSlide();
+    }
+
+    startAutoplay() {
+        setInterval(() => {
+            this.nextSlide();
+        }, 5000);
+    }
+}
+
+/**
+ * Featured Carousel для "Найкращі" (скопійовано з main-courses-carousel.js)
+ */
+class HubFeaturedCarousel {
+    constructor(element) {
+        this.section = element;
+        this.currentIndex = 0;
+        this.track = element.querySelector('.hub-featured-carousel');
+        this.prevBtn = element.querySelector('.hub-nav-prev');
+        this.nextBtn = element.querySelector('.hub-nav-next');
+
+        if (!this.track) {
+            console.warn('Hub featured track not found');
+            return;
+        }
+
+        this.slides = this.track.querySelectorAll('.hub-featured-card');
+        this.totalSlides = this.slides.length;
+
+        if (this.totalSlides === 0) {
+            console.warn('No featured slides found');
+            return;
+        }
+
+        this.init();
+    }
+
+    init() {
+        this.updatePosition();
+        this.updateButtons();
+        this.attachEvents();
+    }
+
+    attachEvents() {
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', () => this.prevSlide());
+        }
+
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', () => this.nextSlide());
+        }
+
+        // Touch/swipe support
+        this.addTouchSupport();
+    }
+
+    get maxIndex() {
+        return Math.max(0, this.totalSlides - 1);
+    }
+
+    updatePosition() {
+        if (!this.track) return;
+        const translateX = -(this.currentIndex * 100);
+        this.track.style.transform = `translateX(${translateX}%)`;
+    }
+
+    updateButtons() {
+        if (this.prevBtn) {
+            this.prevBtn.disabled = this.currentIndex === 0;
+        }
+
+        if (this.nextBtn) {
+            this.nextBtn.disabled = this.currentIndex >= this.maxIndex;
+        }
+    }
+
+    nextSlide() {
+        if (this.currentIndex < this.maxIndex) {
+            this.currentIndex++;
+            this.updatePosition();
+            this.updateButtons();
+        }
+    }
+
+    prevSlide() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.updatePosition();
+            this.updateButtons();
+        }
+    }
+
+    addTouchSupport() {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isDragging = false;
+
+        this.track.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            isDragging = true;
+        }, { passive: true });
+
+        this.track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            touchEndX = e.touches[0].clientX;
+        }, { passive: true });
+
+        this.track.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    this.nextSlide();
+                } else {
+                    this.prevSlide();
+                }
+            }
+
+            touchStartX = 0;
+            touchEndX = 0;
+        });
+    }
+}
+
+/**
+ * Фільтри каталогу
+ */
+class HubFilters {
+    constructor(form) {
+        this.form = form;
+        this.filterGroups = form.querySelectorAll('.hub-filter-group');
+        this.resetBtn = form.querySelector('.hub-filter-btn-secondary');
+        
+        this.init();
+    }
+
+    init() {
+        // Dropdown toggles
+        this.filterGroups.forEach(group => {
+            const toggle = group.querySelector('.hub-filter-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', () => this.toggleGroup(group));
+            }
+        });
+
+        // Reset filters
+        if (this.resetBtn) {
+            this.resetBtn.addEventListener('click', () => this.resetFilters());
+        }
+    }
+
+    toggleGroup(group) {
+        const content = group.querySelector('.hub-filter-content');
+        const isOpen = group.classList.contains('active');
+
+        if (isOpen) {
+            group.classList.remove('active');
+            content.style.display = 'none';
+        } else {
+            group.classList.add('active');
+            content.style.display = 'block';
+        }
+    }
+
+    resetFilters() {
+        // Uncheck all inputs
+        this.form.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+            input.checked = false;
+        });
+        
+        // Submit form to reload without filters
+        this.form.submit();
+    }
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Hero carousel
+    const heroSection = document.querySelector('.hub-hero-section');
+    if (heroSection) {
+        new HubHeroCarousel(heroSection);
+    }
+    
+    // Featured carousel
+    const featuredSection = document.querySelector('.hub-featured-section');
+    if (featuredSection) {
+        new HubFeaturedCarousel(featuredSection);
+    }
+    
+    // Filters
+    const filtersForm = document.querySelector('.hub-filters-form');
+    if (filtersForm) {
+        new HubFilters(filtersForm);
+    }
+});

@@ -1,0 +1,395 @@
+/* ============================================
+   HUB CATALOG - Каталог з фільтрами та сіткою продуктів
+   ============================================ */
+
+.hub-catalog-section {
+    padding: var(--spacing-xl) 0;
+}
+
+/* Пошук */
+.hub-search-wrapper {
+    margin-bottom: var(--spacing-xl);
+}
+
+.hub-search-form {
+    display: flex;
+    gap: var(--spacing-sm);
+    max-width: 600px;
+}
+
+.hub-search-input {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 1px solid var(--hub-border);
+    border-radius: 8px;
+    background: var(--hub-bg-card);
+    color: var(--hub-text);
+    transition: all 0.3s ease;
+}
+
+.hub-search-input:focus {
+    outline: none;
+    border-color: var(--hub-primary);
+}
+
+.hub-search-btn {
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    background: var(--hub-primary);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hub-search-btn:hover {
+    background: #B20710;
+}
+
+/* Layout */
+.hub-catalog-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-xl);
+}
+
+/* Sidebar фільтрів */
+.hub-filters-sidebar {
+    background: var(--hub-bg-card);
+    border: 1px solid var(--hub-border);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    height: fit-content;
+}
+
+.hub-filters-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--hub-text);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Filter Groups */
+.hub-filter-group {
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--hub-border);
+    padding-bottom: var(--spacing-md);
+}
+
+.hub-filter-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--hub-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hub-filter-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .hub-filter-toggle:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.hub-filter-arrow {
+    transition: transform 0.3s ease;
+    display: inline-block;
+    font-size: 0.875rem;
+}
+
+.hub-filter-group.active .hub-filter-arrow {
+    transform: rotate(180deg);
+}
+
+.hub-filter-content {
+    display: none;
+    padding: var(--spacing-sm) 0;
+}
+
+.hub-filter-group.active .hub-filter-content {
+    display: block;
+}
+
+/* Filter Options (radio/checkbox) */
+.hub-filter-option,
+.hub-filter-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.hub-filter-option:hover,
+.hub-filter-checkbox:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .hub-filter-option:hover,
+[data-theme="dark"] .hub-filter-checkbox:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.hub-filter-option input,
+.hub-filter-checkbox input {
+    margin-right: 10px;
+}
+
+.hub-filter-option span,
+.hub-filter-checkbox span {
+    font-size: 0.9375rem;
+    color: var(--hub-text-light);
+}
+
+.hub-filter-checkbox-active {
+    background: rgba(229, 9, 20, 0.1);
+}
+
+.hub-filter-checkbox-active span {
+    color: var(--hub-primary);
+    font-weight: 600;
+}
+
+/* Checkboxes group */
+.hub-filter-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Filter Actions */
+.hub-filter-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.hub-filter-btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.hub-filter-btn-primary {
+    background: var(--hub-primary);
+    color: #FFFFFF;
+}
+
+.hub-filter-btn-primary:hover {
+    background: #B20710;
+}
+
+.hub-filter-btn-secondary {
+    background: var(--hub-secondary);
+    color: #FFFFFF;
+}
+
+.hub-filter-btn-secondary:hover {
+    background: #333333;
+}
+
+/* Grid продуктів */
+.hub-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+/* Product Card */
+.hub-product-card {
+    background: var(--hub-bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--hub-shadow);
+    transition: all 0.3s ease;
+}
+
+.hub-product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px var(--hub-shadow);
+}
+
+.hub-product-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.hub-product-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.hub-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.hub-product-card:hover .hub-product-image img {
+    transform: scale(1.05);
+}
+
+.hub-product-body {
+    padding: var(--spacing-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.hub-product-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--hub-text);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.4;
+}
+
+.hub-product-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--hub-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.hub-product-desc {
+    font-size: 0.875rem;
+    color: var(--hub-text-light);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+    flex: 1;
+}
+
+.hub-product-meta {
+    font-size: 0.8125rem;
+    color: var(--hub-text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.hub-product-rating {
+    font-size: 1rem;
+    color: #FFB800;
+    margin-bottom: var(--spacing-sm);
+}
+
+.hub-product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--spacing-md);
+}
+
+.hub-product-tag {
+    padding: 4px 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: var(--hub-text-light);
+}
+
+[data-theme="dark"] .hub-product-tag {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hub-product-footer {
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+}
+
+.hub-product-btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    background: var(--hub-primary);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.hub-product-btn:hover {
+    background: #B20710;
+}
+
+.hub-product-extra-tags {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 0.75rem;
+    color: var(--hub-text-light);
+    border-top: 1px solid var(--hub-border);
+}
+
+/* No products */
+.hub-no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-xxl);
+}
+
+.hub-no-products p {
+    font-size: 1.125rem;
+    color: var(--hub-text-light);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .hub-catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .hub-catalog-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .hub-filters-sidebar {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .hub-catalog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hub-search-form {
+        flex-direction: column;
+    }
+    
+    .hub-product-image {
+        height: 200px;
+    }
+}
+

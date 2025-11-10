@@ -1,0 +1,192 @@
+/* ============================================
+   HUB CAROUSEL - Featured courses carousel
+   ============================================ */
+
+.hub-featured-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.hub-featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hub-featured-nav {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* Кнопки навігації (скопійовано з main-courses-redesign.css) */
+.hub-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #171717;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.hub-nav-btn:hover:not(:disabled) {
+    background: #171717;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.hub-nav-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.hub-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+[data-theme="dark"] .hub-nav-btn {
+    background: #e9e9e9;
+    color: #000000;
+}
+
+[data-theme="dark"] .hub-nav-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .hub-nav-btn {
+        background: #e9e9e9;
+        color: #000000;
+    }
+    
+    [data-theme="auto"] .hub-nav-btn:hover:not(:disabled) {
+        background: #f0f0f0;
+    }
+}
+
+/* Featured Card */
+.hub-featured-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    background: var(--hub-bg-card);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--hub-shadow);
+    overflow: hidden;
+    padding: var(--spacing-xl);
+}
+
+.hub-featured-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hub-featured-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--hub-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.hub-featured-subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--hub-text);
+    margin-bottom: var(--spacing-md);
+}
+
+.hub-featured-description {
+    font-size: 0.9375rem;
+    color: var(--hub-text-light);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+    flex: 1;
+}
+
+.hub-featured-meta {
+    font-size: 0.875rem;
+    color: var(--hub-text-light);
+    margin-bottom: var(--spacing-md);
+}
+
+.hub-featured-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.hub-featured-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--hub-primary);
+}
+
+.hub-featured-image {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.hub-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hub-featured-counter {
+    position: absolute;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hub-featured-counter span {
+    font-size: 1rem;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.hub-no-featured {
+    text-align: center;
+    padding: var(--spacing-xxl);
+    color: var(--hub-text-light);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .hub-featured-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .hub-featured-image {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hub-featured-title {
+        font-size: 1.5rem;
+    }
+    
+    .hub-featured-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .hub-featured-footer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: flex-start;
+    }
+}
+
