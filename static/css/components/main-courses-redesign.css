@@ -24,28 +24,29 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-    width: 70%;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 var(--spacing-xl);
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
 }
 
 .main-courses-header .section-title {
-    font-size: 2rem;
+    color: #2a2a2a;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: #1a1a1a;
+    text-align: left;
     margin: 0;
     text-shadow: none;
 }
 
 [data-theme="dark"] .main-courses-header .section-title {
-    color: #ffffff;
+    color: var(--color-text);
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .main-courses-header .section-title {
-        color: #ffffff;
+        color: var(--color-text);
     }
 }
 
@@ -109,9 +110,9 @@
 /* ==================== КАРУСЕЛЬ КОНТЕЙНЕР ==================== */
 /* Використовує загальну систему ширини */
 .main-courses-carousel-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-xl);
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
 }
 
@@ -351,13 +352,6 @@
 
 /* ==================== ADAPTIVE TABLET (769px - 1024px) ==================== */
 @media (min-width: 769px) and (max-width: 1024px) {
-    /* Синхронізовано з content-width */
-    .main-courses-header,
-    .main-courses-carousel-container {
-        width: 85%;
-        padding: 0 var(--spacing-lg);
-    }
-
     .main-course-slide {
         flex: 0 0 calc(33.333% - 14px);
         width: calc(33.333% - 14px);
@@ -366,19 +360,12 @@
     }
 
     .main-courses-header .section-title {
-        font-size: 1.75rem;
+        font-size: 2.25rem;
     }
 }
 
 /* ==================== ADAPTIVE MOBILE (до 768px) ==================== */
 @media (max-width: 768px) {
-    /* Синхронізовано з content-width */
-    .main-courses-header,
-    .main-courses-carousel-container {
-        width: 90%;
-        padding: 0 var(--spacing-md);
-    }
-
     .main-courses-section {
         padding: 20px 0;
     }
@@ -388,7 +375,7 @@
     }
 
     .main-courses-header .section-title {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 
     .course-nav-btn {
@@ -462,11 +449,10 @@
         align-items: flex-start;
         gap: 16px;
         margin-bottom: 24px;
-        padding: 0 16px;
     }
 
     .main-courses-header .section-title {
-        font-size: 1.375rem;
+        font-size: 1.75rem;
     }
 
     .main-courses-navigation {
@@ -481,10 +467,6 @@
     .course-nav-btn svg {
         width: 18px;
         height: 18px;
-    }
-
-    .main-courses-carousel-container {
-        padding: 0 16px;
     }
 
     .main-course-slide {
