@@ -293,6 +293,57 @@ class HubFilters {
     }
 }
 
+/**
+ * Обробка кнопки "Улюблене"
+ */
+function initFavoriteButtons() {
+    const favoriteButtons = document.querySelectorAll('.hub-favorite-btn');
+    
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const courseId = button.getAttribute('data-course-id');
+            if (!courseId) return;
+            
+            try {
+                const response = await fetch(`/hub/course/${courseId}/favorite/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.is_favorite) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                }
+            } catch (error) {
+                console.error('Error toggling favorite:', error);
+            }
+        });
+    });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     // Hero carousel
@@ -312,4 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filtersForm) {
         new HubFilters(filtersForm);
     }
+    
+    // Favorite buttons
+    initFavoriteButtons();
 });

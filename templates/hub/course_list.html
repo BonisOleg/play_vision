@@ -111,7 +111,7 @@
                                 <h3 class="hub-featured-title">{{ course.title }}</h3>
                                 <p class="hub-featured-subtitle">{{ course.short_description }}</p>
                                 <div class="hub-featured-description">
-                                    {{ course.description|truncatewords:30 }}
+                                    {{ course.description|truncatewords:50 }}
                                 </div>
                                 <div class="hub-featured-meta">
                                     Кому підходить: 
@@ -119,12 +119,18 @@
                                         {{ audience }}{% if not forloop.last %}, {% endif %}
                                     {% endfor %}
                                 </div>
+                                <div class="hub-featured-divider"></div>
                                 <div class="hub-featured-footer">
-                                    <div class="hub-featured-price">Ціна: {{ course.price }}₴</div>
-                                    <a href="{{ course.get_absolute_url }}" class="btn btn-primary hub-btn-small">
-                                        <span class="btn-text">Дослідити</span>
-                                        <span class="btn-logo-space"></span>
-                                    </a>
+                                    <div class="hub-featured-price">
+                                        <span class="price-label">Ціна:</span> 
+                                        <span class="price-value">{{ course.price }}₴</span>
+                                    </div>
+                                    <button type="button" class="hub-favorite-btn" data-course-id="{{ course.id }}">
+                                        Улюблене
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
                             <div class="hub-featured-image">
