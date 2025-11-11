@@ -246,32 +246,27 @@
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'psychologist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="psychologist" {%
-                                                if 'psychologist' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="psychologist" {% if 'psychologist' in current_target_audiences %}checked{% endif %}>
                                             <span>Спортивна психологія</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'nutritionist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="nutritionist" {%
-                                                if 'nutritionist' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="nutritionist" {% if 'nutritionist' in current_target_audiences %}checked{% endif %}>
                                             <span>Нутриціологія</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'rehabilitation' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="rehabilitation" {%
-                                                if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="rehabilitation" {% if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
                                             <span>Реабілітація</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'media' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="media" {% if 'media' in
-                                                current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif %}>
                                             <span>Медіа</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'parent' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="parent" {% if 'parent'
-                                                in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{% endif %}>
                                             <span>Батьки</span>
                                         </label>
                                     </div>
