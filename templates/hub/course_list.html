@@ -3,7 +3,8 @@
 
 {% block title %}Хаб Знань - Play Vision{% endblock %}
 
-{% block meta_description %}Освітні програми та матеріали для футбольних фахівців. Курси, книги, відео від провідних експертів галузі.{% endblock %}
+{% block meta_description %}Освітні програми та матеріали для футбольних фахівців. Курси, книги, відео від провідних
+експертів галузі.{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
@@ -22,7 +23,7 @@
             <!-- HUB HERO SECTION -->
             <section class="hub-hero-section">
                 <div class="hub-hero-grid">
-                    
+
                     <!-- Лівий блок з анімованими написами -->
                     <div class="hub-hero-main">
                         <div class="hub-hero-bg">
@@ -92,12 +93,12 @@
                         <div class="hub-featured-nav">
                             <button class="hub-nav-btn hub-nav-prev" aria-label="Попередній">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
                                 </svg>
                             </button>
                             <button class="hub-nav-btn hub-nav-next" aria-label="Наступний">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="2" />
                                 </svg>
                             </button>
                         </div>
@@ -114,21 +115,22 @@
                                     {{ course.description|truncatewords:50 }}
                                 </div>
                                 <div class="hub-featured-meta">
-                                    Кому підходить: 
+                                    Кому підходить:
                                     {% for audience in course.get_target_audience_display|slice:":3" %}
-                                        {{ audience }}{% if not forloop.last %}, {% endif %}
+                                    {{ audience }}{% if not forloop.last %}, {% endif %}
                                     {% endfor %}
                                 </div>
                                 <div class="hub-featured-divider"></div>
                                 <div class="hub-featured-footer">
                                     <a href="{{ course.get_absolute_url }}" class="hub-featured-price">
-                                        <span class="price-label">Ціна:</span> 
+                                        <span class="price-label">Ціна:</span>
                                         <span class="price-value">{{ course.price }}₴</span>
                                     </a>
                                     <button type="button" class="hub-favorite-btn" data-course-id="{{ course.id }}">
                                         Улюблене
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                            <path
+                                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                         </svg>
                                     </button>
                                 </div>
@@ -137,7 +139,8 @@
                                 {% if course.thumbnail %}
                                 <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" loading="lazy">
                                 {% else %}
-                                <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}" loading="lazy">
+                                <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}"
+                                    loading="lazy">
                                 {% endif %}
                                 <div class="hub-featured-counter">01<span>/{{ featured_courses|length }}</span></div>
                             </div>
@@ -166,22 +169,30 @@
             <!-- КАТАЛОГ З ФІЛЬТРАМИ -->
             <section class="hub-catalog-section" id="catalog">
                 <div class="section-content">
-                    
-                    <!-- Заголовок + Пошук в одну лінію -->
-                    <div class="hub-catalog-header">
-                        <h2 class="hub-filters-title">Фільтрувати</h2>
+
+                    <!-- Пошук -->
+                    <div class="hub-search-wrapper">
                         <form method="get" action="{% url 'content:course_search' %}" class="hub-search-form">
-                            <input type="text" name="q" placeholder="Пошук" class="hub-search-input" value="{{ request.GET.q }}">
+                            <div class="hub-search-input-wrapper">
+                                <svg class="hub-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                                <input type="text" name="q" placeholder="Пошук" class="hub-search-input"
+                                    value="{{ request.GET.q }}">
+                            </div>
                             <button type="submit" class="hub-search-btn">Знайти</button>
                         </form>
                     </div>
 
                     <!-- Layout: Sidebar + Grid -->
                     <div class="hub-catalog-layout">
-                        
+
                         <!-- Sidebar фільтрів -->
                         <aside class="hub-filters-sidebar">
-                            
+                            <h2 class="hub-filters-title">Фільтрувати</h2>
+
                             <form method="get" class="hub-filters-form">
                                 <!-- Тематики Dropdown -->
                                 <div class="hub-filter-group">
@@ -192,7 +203,8 @@
                                     <div class="hub-filter-content">
                                         {% for category in categories %}
                                         <label class="hub-filter-option">
-                                            <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
+                                            <input type="radio" name="category" value="{{ category.slug }}" {% if
+                                                current_category==category.slug %}checked{% endif %}>
                                             <span>{{ category.name }}</span>
                                         </label>
                                         {% endfor %}
@@ -207,15 +219,18 @@
                                     </button>
                                     <div class="hub-filter-content">
                                         <label class="hub-filter-option">
-                                            <input type="checkbox" name="content_type" value="video" {% if 'video' in current_content_types %}checked{% endif %}>
+                                            <input type="checkbox" name="content_type" value="video" {% if 'video' in
+                                                current_content_types %}checked{% endif %}>
                                             <span>Відео</span>
                                         </label>
                                         <label class="hub-filter-option">
-                                            <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in current_content_types %}checked{% endif %}>
+                                            <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in
+                                                current_content_types %}checked{% endif %}>
                                             <span>PDF</span>
                                         </label>
                                         <label class="hub-filter-option">
-                                            <input type="checkbox" name="content_type" value="article" {% if 'article' in current_content_types %}checked{% endif %}>
+                                            <input type="checkbox" name="content_type" value="article" {% if 'article'
+                                                in current_content_types %}checked{% endif %}>
                                             <span>Стаття</span>
                                         </label>
                                     </div>
@@ -223,44 +238,64 @@
 
                                 <!-- Чекбокси категорій -->
                                 <div class="hub-filter-checkboxes">
-                                    <label class="hub-filter-checkbox {% if 'coach_youth' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="coach_youth" {% if 'coach_youth' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'coach_youth' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="coach_youth" {%
+                                            if 'coach_youth' in current_target_audiences %}checked{% endif %}>
                                         <span>Дитячий тренер</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'coach_fitness' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="coach_fitness" {% if 'coach_fitness' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'coach_fitness' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="coach_fitness" {%
+                                            if 'coach_fitness' in current_target_audiences %}checked{% endif %}>
                                         <span>Тренер ЗФП</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'coach' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="coach" {% if 'coach' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'coach' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="coach" {% if 'coach' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Тренер професійних команд</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'analyst' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'analyst' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Аналітика і скаутинг</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'manager' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'manager' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Менеджмент</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'psychologist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="psychologist" {% if 'psychologist' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'psychologist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="psychologist" {%
+                                            if 'psychologist' in current_target_audiences %}checked{% endif %}>
                                         <span>Спортивна психологія</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'nutritionist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="nutritionist" {% if 'nutritionist' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'nutritionist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="nutritionist" {%
+                                            if 'nutritionist' in current_target_audiences %}checked{% endif %}>
                                         <span>Нутриціологія</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'rehabilitation' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="rehabilitation" {% if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'rehabilitation' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="rehabilitation" {%
+                                            if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
                                         <span>Реабілітація</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'media' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'media' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="media" {% if 'media' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Медіа</span>
                                     </label>
-                                    <label class="hub-filter-checkbox {% if 'parent' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                        <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{% endif %}>
+                                    <label
+                                        class="hub-filter-checkbox {% if 'parent' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in
+                                            current_target_audiences %}checked{% endif %}>
                                         <span>Батьки</span>
                                     </label>
                                 </div>
@@ -270,7 +305,8 @@
                                     <button type="submit" class="hub-filter-btn hub-filter-btn-primary">
                                         Застосувати
                                     </button>
-                                    <button type="button" class="hub-filter-btn hub-filter-btn-secondary hub-filter-reset">
+                                    <button type="button"
+                                        class="hub-filter-btn hub-filter-btn-secondary hub-filter-reset">
                                         Відмінити
                                     </button>
                                 </div>
@@ -286,7 +322,8 @@
                                     {% if course.thumbnail %}
                                     <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" loading="lazy">
                                     {% else %}
-                                    <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}" loading="lazy">
+                                    <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}"
+                                        loading="lazy">
                                     {% endif %}
                                     {% if course.badge_type != 'none' %}
                                     <span class="hub-product-badge">{{ course.get_badge_type_display }}</span>
@@ -298,34 +335,38 @@
                                     <div class="hub-product-price">Ціна: {{ course.price|floatformat:0 }}</div>
                                     <p class="hub-product-desc">{{ course.short_description }}</p>
                                     <div class="hub-product-meta">
-                                        Кому підходить: 
+                                        Кому підходить:
                                         {% for audience in course.get_target_audience_display|slice:":3" %}
-                                            {{ audience }}{% if not forloop.last %}, {% endif %}
+                                        {{ audience }}{% if not forloop.last %}, {% endif %}
                                         {% empty %}
-                                            Всім
+                                        Всім
                                         {% endfor %}
                                     </div>
-                                    
+
                                     <div class="hub-product-actions">
-                                        <button type="button" class="hub-btn-favorite" data-course-id="{{ course.id }}" {% if course.id in user_favorites %}data-favorited="true"{% endif %}>
+                                        <button type="button" class="hub-btn-favorite" data-course-id="{{ course.id }}"
+                                            {% if course.id in user_favorites %}data-favorited="true" {% endif %}>
                                             <span>Улюблене</span>
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                             </svg>
                                         </button>
                                         <a href="{{ course.get_absolute_url }}" class="hub-btn-view">
                                             <span>Огляд курсу</span>
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M5 12h14M12 5l7 7-7 7" />
                                             </svg>
                                         </a>
                                     </div>
-                                    
+
                                     {% if course.subscription_tiers %}
                                     <div class="hub-product-subscription">
-                                        Краще з підпискою: 
+                                        Краще з підпискою:
                                         {% for tier in course.subscription_tiers %}
-                                            {{ tier }}{% if not forloop.last %}, {% endif %}
+                                        {{ tier }}{% if not forloop.last %}, {% endif %}
                                         {% endfor %}
                                     </div>
                                     {% endif %}
@@ -352,4 +393,3 @@
 {% block extra_js %}
 <script src="{% static 'js/hub-knowledge.js' %}" defer></script>
 {% endblock %}
-
