@@ -167,7 +167,7 @@
     background: var(--hub-bg-card);
     border: 1px solid var(--hub-border);
     border-radius: 8px;
-    padding: 12px 24px;
+    padding: 12px 12px;
     font-size: 1.125rem;
     font-weight: 700;
     display: flex;
@@ -218,7 +218,7 @@
     color: #FFFFFF;
     border: none;
     border-radius: 8px;
-    padding: 12px 24px;
+    padding: 12px 12px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;

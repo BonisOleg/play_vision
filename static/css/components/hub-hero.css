@@ -169,9 +169,11 @@
 /* Чорний слоган - третій рядок, ліва колонка */
 .hub-hero-slogan {
     background: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: var(--spacing-md) var(--spacing-lg);
-    text-align: center;
-    font-size: 1.25rem;
+    font-size: 3.25rem;
     font-weight: 600;
     color: #FFFFFF;
     border-radius: 8px;
