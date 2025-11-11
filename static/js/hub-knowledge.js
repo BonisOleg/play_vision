@@ -249,7 +249,7 @@ class HubFilters {
     constructor(form) {
         this.form = form;
         this.filterGroups = form.querySelectorAll('.hub-filter-group');
-        this.resetBtn = form.querySelector('.hub-filter-btn-secondary');
+        this.resetBtn = form.querySelector('.hub-filter-reset');
         
         this.init();
     }
@@ -263,10 +263,16 @@ class HubFilters {
             }
         });
 
-        // Reset filters
+        // Reset filters (Відмінити)
         if (this.resetBtn) {
-            this.resetBtn.addEventListener('click', () => this.resetFilters());
+            this.resetBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.resetFilters();
+            });
         }
+        
+        // Динамічне виділення активних чекбоксів
+        this.attachCheckboxListeners();
     }
 
     toggleGroup(group) {
@@ -288,8 +294,27 @@ class HubFilters {
             input.checked = false;
         });
         
-        // Submit form to reload without filters
-        this.form.submit();
+        // Remove active classes
+        this.form.querySelectorAll('.hub-filter-checkbox-active').forEach(label => {
+            label.classList.remove('hub-filter-checkbox-active');
+        });
+        
+        // Redirect to clean page
+        window.location.href = window.location.pathname;
+    }
+    
+    attachCheckboxListeners() {
+        const checkboxes = this.form.querySelectorAll('.hub-filter-checkbox input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const label = e.target.closest('.hub-filter-checkbox');
+                if (e.target.checked) {
+                    label.classList.add('hub-filter-checkbox-active');
+                } else {
+                    label.classList.remove('hub-filter-checkbox-active');
+                }
+            });
+        });
     }
 }
 
@@ -297,10 +322,13 @@ class HubFilters {
  * Обробка кнопки "Улюблене"
  */
 function initFavoriteButtons() {
-    const favoriteButtons = document.querySelectorAll('.hub-favorite-btn');
+    const favoriteButtons = document.querySelectorAll('.hub-btn-favorite, .hub-favorite-btn');
     
     favoriteButtons.forEach(button => {
-        button.addEventListener('click', async () => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
             const courseId = button.getAttribute('data-course-id');
             if (!courseId) return;
             
@@ -317,10 +345,13 @@ function initFavoriteButtons() {
                     const data = await response.json();
                     
                     if (data.is_favorite) {
-                        button.classList.add('active');
+                        button.setAttribute('data-favorited', 'true');
                     } else {
-                        button.classList.remove('active');
+                        button.removeAttribute('data-favorited');
                     }
+                } else if (response.status === 401 || response.status === 403) {
+                    // User not authenticated
+                    alert('Будь ласка, увійдіть в систему для додавання до улюблених');
                 }
             } catch (error) {
                 console.error('Error toggling favorite:', error);

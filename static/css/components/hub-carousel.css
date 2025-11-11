@@ -167,16 +167,18 @@
     background: var(--hub-bg-card);
     border: 1px solid var(--hub-border);
     border-radius: 8px;
-    padding: 12px 20px;
+    padding: 12px 24px;
     font-size: 1.125rem;
     font-weight: 700;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     text-decoration: none;
     cursor: pointer;
+    min-width: 140px;
 }
 
 .hub-featured-price:hover {
@@ -222,8 +224,10 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     transition: all 0.3s ease;
+    min-width: 140px;
 }
 
 .hub-favorite-btn:hover {
