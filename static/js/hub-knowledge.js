@@ -319,10 +319,10 @@ class HubFilters {
 }
 
 /**
- * Обробка кнопки "Улюблене"
+ * Обробка кнопки "Улюблене" (іконка сердечка)
  */
 function initFavoriteButtons() {
-    const favoriteButtons = document.querySelectorAll('.hub-btn-favorite, .hub-favorite-btn');
+    const favoriteButtons = document.querySelectorAll('.hub-favorite-icon, .hub-btn-favorite, .hub-favorite-btn');
     
     favoriteButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
