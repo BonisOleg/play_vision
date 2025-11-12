@@ -188,8 +188,7 @@
                                         <div class="hub-filter-content">
                                             {% for category in categories %}
                                             <label class="hub-filter-option">
-                                                <input type="radio" name="category" value="{{ category.slug }}" {% if
-                                                    current_category==category.slug %}checked{% endif %}>
+                                                <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
                                                 <span>{{ category.name }}</span>
                                             </label>
                                             {% endfor %}
@@ -204,18 +203,15 @@
                                         </button>
                                         <div class="hub-filter-content">
                                             <label class="hub-filter-option">
-                                                <input type="checkbox" name="content_type" value="video" {% if 'video'
-                                                    in current_content_types %}checked{% endif %}>
+                                                <input type="checkbox" name="content_type" value="video" {% if 'video' in current_content_types %}checked{% endif %}>
                                                 <span>Відео</span>
                                             </label>
                                             <label class="hub-filter-option">
-                                                <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in
-                                                    current_content_types %}checked{% endif %}>
+                                                <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in current_content_types %}checked{% endif %}>
                                                 <span>PDF</span>
                                             </label>
                                             <label class="hub-filter-option">
-                                                <input type="checkbox" name="content_type" value="article" {%
-                                                    if 'article' in current_content_types %}checked{% endif %}>
+                                                <input type="checkbox" name="content_type" value="article" {% if 'article' in current_content_types %}checked{% endif %}>
                                                 <span>Стаття</span>
                                             </label>
                                         </div>
@@ -225,62 +221,52 @@
                                     <div class="hub-filter-checkboxes">
                                         <label
                                             class="hub-filter-checkbox {% if 'coach_youth' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="coach_youth" {%
-                                                if 'coach_youth' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="coach_youth" {% if 'coach_youth' in current_target_audiences %}checked{% endif %}>
                                             <span>Дитячий тренер</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'coach_fitness' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="coach_fitness" {%
-                                                if 'coach_fitness' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="coach_fitness" {% if 'coach_fitness' in current_target_audiences %}checked{% endif %}>
                                             <span>Тренер ЗФП</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'coach' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="coach" {% if 'coach' in
-                                                current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="coach" {% if 'coach' in current_target_audiences %}checked{% endif %}>
                                             <span>Тренер професійних команд</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'analyst' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="analyst" {%
-                                                if 'analyst' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in current_target_audiences %}checked{% endif %}>
                                             <span>Аналітика і скаутинг</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'manager' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="manager" {%
-                                                if 'manager' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in current_target_audiences %}checked{% endif %}>
                                             <span>Менеджмент</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'psychologist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="psychologist" {%
-                                                if 'psychologist' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="psychologist" {% if 'psychologist' in current_target_audiences %}checked{% endif %}>
                                             <span>Спортивна психологія</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'nutritionist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="nutritionist" {%
-                                                if 'nutritionist' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="nutritionist" {% if 'nutritionist' in current_target_audiences %}checked{% endif %}>
                                             <span>Нутриціологія</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'rehabilitation' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="rehabilitation" {%
-                                                if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="rehabilitation" {% if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
                                             <span>Реабілітація</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'media' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="media" {% if 'media' in
-                                                current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif %}>
                                             <span>Медіа</span>
                                         </label>
                                         <label
                                             class="hub-filter-checkbox {% if 'parent' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="parent" {% if 'parent'
-                                                in current_target_audiences %}checked{% endif %}>
+                                            <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{% endif %}>
                                             <span>Батьки</span>
                                         </label>
                                     </div>
