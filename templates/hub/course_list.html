@@ -299,6 +299,7 @@
                                 {% if courses %}
                                 {% for course in courses %}
                                 <article class="hub-product-card">
+                                    <h3 class="hub-product-title">{{ course.title }}</h3>
                                     <div class="hub-product-image">
                                         {% if course.thumbnail %}
                                         <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" loading="lazy">
@@ -306,14 +307,12 @@
                                         <img src="{% static 'images/placeholder-1200x600.svg' %}"
                                             alt="{{ course.title }}" loading="lazy">
                                         {% endif %}
-                                        {% if course.badge_type != 'none' %}
-                                        <span class="hub-product-badge">{{ course.get_badge_type_display }}</span>
-                                        {% elif course.id in recent_courses_ids %}
-                                        <span class="hub-product-badge">Новинка</span>
-                                        {% endif %}
                                     </div>
                                     <div class="hub-product-body">
-                                        <div class="hub-product-price">Ціна: {{ course.price|floatformat:0 }}</div>
+                                        <div class="hub-product-price">
+                                            <span class="price-label">Ціна:</span>
+                                            <span class="price-value">{{ course.price|floatformat:0 }}₴</span>
+                                        </div>
                                         <p class="hub-product-desc">{{ course.short_description }}</p>
                                         <div class="hub-product-meta">
                                             Кому підходить:
@@ -327,23 +326,21 @@
                                         <div class="hub-product-actions">
                                             <button type="button" class="hub-btn-favorite"
                                                 data-course-id="{{ course.id }}" {% if course.id in user_favorites %}data-favorited="true" {% endif %}>
-                                                <span>Улюблене</span>
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2">
+                                                <span class="btn-text">Улюблене</span>
+                                                <svg class="btn-star-icon" width="16" height="16" viewBox="0 0 24 24"
+                                                    fill="none" stroke="currentColor" stroke-width="2">
                                                     <path
                                                         d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                                                 </svg>
                                             </button>
                                             <a href="{{ course.get_absolute_url }}" class="hub-btn-view">
-                                                <span>Огляд курсу</span>
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2">
-                                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                                </svg>
+                                                <span class="btn-text">Огляд курсу</span>
+                                                <span class="btn-logo-space"></span>
                                             </a>
                                         </div>
 
                                         {% if course.subscription_tiers %}
+                                        <div class="hub-product-divider"></div>
                                         <div class="hub-product-subscription">
                                             Краще з підпискою:
                                             {% for tier in course.subscription_tiers %}
