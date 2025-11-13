@@ -188,8 +188,7 @@
                                         <div class="hub-filter-content">
                                             {% for category in categories %}
                                             <label class="hub-filter-option">
-                                                <input type="radio" name="category" value="{{ category.slug }}" {% if
-                                                    current_category==category.slug %}checked{% endif %}>
+                                                <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
                                                 <span>{{ category.name }}</span>
                                             </label>
                                             {% endfor %}
