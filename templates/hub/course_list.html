@@ -219,54 +219,44 @@
 
                                     <!-- Чекбокси категорій -->
                                     <div class="hub-filter-checkboxes">
-                                        <label
-                                            class="hub-filter-checkbox {% if 'coach_youth' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'coach_youth' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="coach_youth" {% if 'coach_youth' in current_target_audiences %}checked{% endif %}>
                                             <span>Дитячий тренер</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'coach_fitness' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'coach_fitness' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="coach_fitness" {% if 'coach_fitness' in current_target_audiences %}checked{% endif %}>
                                             <span>Тренер ЗФП</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'coach' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'coach' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="coach" {% if 'coach' in current_target_audiences %}checked{% endif %}>
                                             <span>Тренер професійних команд</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'analyst' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'analyst' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in current_target_audiences %}checked{% endif %}>
                                             <span>Аналітика і скаутинг</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'manager' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'manager' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in current_target_audiences %}checked{% endif %}>
                                             <span>Менеджмент</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'psychologist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'psychologist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="psychologist" {% if 'psychologist' in current_target_audiences %}checked{% endif %}>
                                             <span>Спортивна психологія</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'nutritionist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'nutritionist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="nutritionist" {% if 'nutritionist' in current_target_audiences %}checked{% endif %}>
                                             <span>Нутриціологія</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'rehabilitation' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                        <label class="hub-filter-checkbox {% if 'rehabilitation' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
                                             <input type="checkbox" name="target_audience" value="rehabilitation" {% if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
                                             <span>Реабілітація</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'media' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif%}>
+                                        <label class="hub-filter-checkbox {% if 'media' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                            <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif %}>
                                             <span>Медіа</span>
                                         </label>
-                                        <label
-                                            class="hub-filter-checkbox {% if 'parent' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{ endif %}>
+                                        <label class="hub-filter-checkbox {% if 'parent' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
+                                            <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{% endif %}>
                                             <span>Батьки</span>
                                         </label>
                                     </div>
@@ -301,9 +291,7 @@
                                 <article class="hub-product-card">
                                     <div class="hub-product-header">
                                         <h3 class="hub-product-title">{{ course.title }}</h3>
-                                        <button type="button" class="hub-favorite-icon" data-course-id="{{ course.id }}"
-                                            {% if course.id in user_favorites %}data-favorited="true" {% endif %}
-                                            aria-label="Додати до улюблених">
+                                        <button type="button" class="hub-favorite-icon" data-course-id="{{ course.id }}" {% if course.id in user_favorites %}data-favorited="true"{% endif %} aria-label="Додати до улюблених">
                                             <svg class="icon-heart" width="18" height="18" viewBox="0 0 24 24"
                                                 fill="none" stroke="currentColor" stroke-width="2">
                                                 <path

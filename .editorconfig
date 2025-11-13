@@ -1,0 +1,47 @@
+# EditorConfig для Play Vision
+root = true
+
+# Загальні налаштування для всіх файлів
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Python файли
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 119
+
+# Django HTML шаблони - НЕ форматувати автоматично
+[*.html]
+indent_style = space
+indent_size = 2
+# Вимкнути автоформатування для HTML
+max_line_length = off
+
+# JavaScript
+[*.js]
+indent_style = space
+indent_size = 2
+
+# CSS
+[*.css]
+indent_style = space
+indent_size = 2
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
+# YAML (для render.yaml тощо)
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Markdown - не тримати пробіли
+[*.md]
+trim_trailing_whitespace = false
+

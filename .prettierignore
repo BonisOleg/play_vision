@@ -1,0 +1,29 @@
+# Django templates - не форматувати
+*.html
+templates/
+staticfiles/
+
+# Python files
+*.py
+
+# Build and dependencies
+venv/
+node_modules/
+__pycache__/
+*.pyc
+
+# Static files
+static/
+staticfiles/
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Environment
+.env
+.env.*
+
+# Backups
+backups/
+
