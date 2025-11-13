@@ -3,7 +3,7 @@
    ============================================ */
 
 .hub-hero-section {
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-xl);
 }
 
 /* Grid Layout - 2 колонки x 3 рядки */
