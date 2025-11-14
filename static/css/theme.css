@@ -170,15 +170,15 @@
 }
 
 /* SVG інверсія для темної теми (червоний залишається червоним) */
-/* Виключення: .hexagon-icon, .logo-light, .logo-dark, .mentoring-svg-invert мають власні фільтри */
-[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert),
+/* Виключення: .hexagon-icon, .logo-light, .logo-dark, .mentoring-svg-invert, .footer-logo мають власні фільтри */
+[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo),
 [data-theme="dark"] .about-image-block img[src*=".svg"] {
     filter: invert(1) hue-rotate(180deg);
     opacity: 1;
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert),
+    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo),
     [data-theme="auto"] .about-image-block img[src*=".svg"] {
         filter: invert(1) hue-rotate(180deg);
         opacity: 1;
