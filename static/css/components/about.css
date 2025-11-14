@@ -52,10 +52,6 @@
     margin-bottom: var(--spacing-md);
 }
 
-.text-highlight {
-    color: var(--color-primary);
-}
-
 /* === 4. КОМАНДА ПРОФЕСІОНАЛІВ === */
 .about-team-section {
     padding: var(--spacing-xl) 0;
