@@ -45,25 +45,7 @@ footer.site-footer .footer-logo {
     object-fit: contain;
     object-position: left center;
     filter: none;
-}
-
-/* Перемикання логотипів за темою */
-footer.site-footer .footer-logo-light {
     display: block;
-}
-
-footer.site-footer .footer-logo-dark {
-    display: none;
-}
-
-[data-theme="dark"] footer.site-footer .footer-logo-light {
-    display: none;
-}
-
-[data-theme="dark"] footer.site-footer .footer-logo-dark {
-    display: block;
-    filter: none;
-    color: white;
 }
 
 footer.site-footer .footer-cta {
