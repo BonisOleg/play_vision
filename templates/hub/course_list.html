@@ -268,7 +268,13 @@
                                 hx-include=".hub-filter-form"
                                 hx-trigger="submit">
                                 <input type="text" name="q" placeholder="Пошук" class="hub-search-input"
-                                    value="{{ search_query }}">
+                                    value="{{ search_query }}" data-search-input>
+                                <button type="button" class="hub-search-clear" aria-label="Очистити пошук" data-search-clear>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
                                 <button type="submit" class="hub-search-btn">Знайти</button>
                             </form>
 

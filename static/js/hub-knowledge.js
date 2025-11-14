@@ -377,6 +377,73 @@ function initFavoriteButtons() {
     });
 }
 
+/**
+ * Менеджер пошуку з кнопкою очищення
+ */
+class SearchManager {
+    constructor() {
+        this.searchForm = document.querySelector('.hub-search-form');
+        this.searchInput = document.querySelector('[data-search-input]');
+        this.clearButton = document.querySelector('[data-search-clear]');
+        
+        if (!this.searchForm || !this.searchInput || !this.clearButton) {
+            return;
+        }
+        
+        this.init();
+    }
+    
+    init() {
+        // Show/hide clear button based on input value
+        this.toggleClearButton();
+        
+        // Listen to input changes
+        this.searchInput.addEventListener('input', () => {
+            this.toggleClearButton();
+        });
+        
+        // Handle clear button click
+        this.clearButton.addEventListener('click', () => {
+            this.clearSearch();
+        });
+    }
+    
+    toggleClearButton() {
+        const hasValue = this.searchInput.value.trim().length > 0;
+        
+        if (hasValue) {
+            this.clearButton.classList.add('visible');
+        } else {
+            this.clearButton.classList.remove('visible');
+        }
+    }
+    
+    clearSearch() {
+        // Clear input
+        this.searchInput.value = '';
+        
+        // Hide clear button
+        this.clearButton.classList.remove('visible');
+        
+        // Trigger HTMX request with filters included
+        if (typeof htmx !== 'undefined') {
+            // Get current filter form values
+            const filterForm = document.querySelector('.hub-filter-form');
+            const formData = new FormData(filterForm);
+            const params = new URLSearchParams(formData);
+            
+            // Make HTMX request
+            htmx.ajax('GET', `${window.location.pathname}?${params.toString()}`, {
+                target: '#catalog-content',
+                swap: 'innerHTML'
+            });
+        } else {
+            // Fallback: submit form without search query
+            this.searchForm.submit();
+        }
+    }
+}
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -411,6 +478,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filtersForm) {
         new HubFilters(filtersForm);
     }
+    
+    // Search manager (clear button)
+    new SearchManager();
     
     // Favorite buttons
     initFavoriteButtons();
