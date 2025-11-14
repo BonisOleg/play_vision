@@ -1,8 +1,9 @@
+from typing import Any
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Q, Count
+from django.db.models import Q, Count, QuerySet
 from django.utils import timezone
 from .models import Course, Material, Favorite, UserCourseProgress
 from .utils import check_user_course_access
@@ -10,16 +11,26 @@ from apps.loyalty.services import LoyaltyService
 
 
 class CourseListView(ListView):
-    """Course catalog view"""
+    """Course catalog view with filtering and search"""
     model = Course
     template_name = 'hub/course_list.html'
     context_object_name = 'courses'
     paginate_by = 12
     
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Course]:
         queryset = Course.objects.filter(
             is_published=True
         ).select_related('category').prefetch_related('tags')
+        
+        # Search functionality
+        search_query = self.request.GET.get('q', '').strip()
+        if search_query:
+            queryset = queryset.filter(
+                Q(title__icontains=search_query) |
+                Q(description__icontains=search_query) |
+                Q(author__icontains=search_query) |
+                Q(tags__name__icontains=search_query)
+            ).distinct()
         
         # Category filter
         category_slug = self.request.GET.get('category')
@@ -44,12 +55,12 @@ class CourseListView(ListView):
         if training_type:
             queryset = queryset.filter(training_specialization=training_type)
         
-        # НОВИЙ: Фільтр за типом контенту
+        # Фільтр за типом контенту
         content_type = self.request.GET.getlist('content_type')
         if content_type:
             queryset = queryset.filter(content_type__in=content_type)
         
-        # НОВИЙ: Фільтр за тривалістю
+        # Фільтр за тривалістю
         duration = self.request.GET.get('duration')
         if duration:
             if duration == '0-60':
@@ -59,16 +70,15 @@ class CourseListView(ListView):
             elif duration == '180+':
                 queryset = queryset.filter(duration_minutes__gt=180)
         
-        # НОВИЙ: Фільтр за рівнем складності
+        # Фільтр за рівнем складності
         difficulty = self.request.GET.get('difficulty')
         if difficulty and difficulty in ['beginner', 'intermediate', 'advanced']:
             queryset = queryset.filter(difficulty=difficulty)
         
-        # НОВИЙ: Фільтр за цільовою аудиторією
+        # Фільтр за цільовою аудиторією
         target_audience = self.request.GET.getlist('target_audience')
         if target_audience:
             # Фільтруємо курси, які містять хоча б одну з обраних аудиторій
-            from django.db.models import Q
             query = Q()
             for audience in target_audience:
                 query |= Q(target_audience__contains=[audience])
@@ -81,7 +91,7 @@ class CourseListView(ListView):
         
         return queryset
     
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         
         # Add categories for filter
@@ -122,6 +132,9 @@ class CourseListView(ListView):
         context['current_difficulty'] = self.request.GET.get('difficulty', '')
         context['current_target_audiences'] = self.request.GET.getlist('target_audience')
         
+        # Add search query to context
+        context['search_query'] = self.request.GET.get('q', '')
+        
         # Check user favorites
         if self.request.user.is_authenticated:
             favorites = Favorite.objects.filter(
@@ -143,6 +156,12 @@ class CourseListView(ListView):
         context['course_points'] = course_points
         
         return context
+    
+    def render_to_response(self, context: dict[str, Any], **response_kwargs: Any) -> HttpResponse:
+        """Return partial template for HTMX requests"""
+        if self.request.headers.get('HX-Request'):
+            self.template_name = 'hub/partials/catalog_grid.html'
+        return super().render_to_response(context, **response_kwargs)
 
 
 class CourseDetailView(DetailView):
@@ -197,32 +216,6 @@ class CourseDetailView(DetailView):
             is_published=True
         ).exclude(id=course.id)[:4]
         
-        return context
-
-
-class CourseSearchView(ListView):
-    """Course search view"""
-    model = Course
-    template_name = 'hub/search_results.html'
-    context_object_name = 'courses'
-    paginate_by = 20
-    
-    def get_queryset(self):
-        query = self.request.GET.get('q', '')
-        if not query:
-            return Course.objects.none()
-        
-        return Course.objects.filter(
-            Q(title__icontains=query) |
-            Q(description__icontains=query) |
-            Q(author__icontains=query) |
-            Q(tags__name__icontains=query),
-            is_published=True
-        ).distinct()
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['search_query'] = self.request.GET.get('q', '')
         return context
 
 

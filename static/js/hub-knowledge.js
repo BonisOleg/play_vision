@@ -299,8 +299,25 @@ class HubFilters {
             label.classList.remove('hub-filter-checkbox-active');
         });
         
-        // Redirect to clean page
-        window.location.href = window.location.pathname;
+        // Clear search input
+        const searchForm = document.querySelector('.hub-search-form');
+        if (searchForm) {
+            const searchInput = searchForm.querySelector('input[name="q"]');
+            if (searchInput) {
+                searchInput.value = '';
+            }
+        }
+        
+        // Trigger HTMX request to reload without filters
+        if (typeof htmx !== 'undefined') {
+            htmx.ajax('GET', window.location.pathname, {
+                target: '#catalog-content',
+                swap: 'innerHTML'
+            });
+        } else {
+            // Fallback if HTMX not available
+            window.location.href = window.location.pathname;
+        }
     }
     
     attachCheckboxListeners() {
@@ -397,4 +414,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Favorite buttons
     initFavoriteButtons();
+});
+
+// Re-initialize favorite buttons after HTMX swap
+document.body.addEventListener('htmx:afterSwap', (event) => {
+    if (event.detail.target.id === 'catalog-content') {
+        initFavoriteButtons();
+    }
 });

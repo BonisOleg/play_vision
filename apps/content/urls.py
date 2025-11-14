@@ -7,7 +7,6 @@ urlpatterns = [
     # Course catalog
     path('', views.CourseListView.as_view(), name='course_list'),
     path('course/<slug:slug>/', views.CourseDetailView.as_view(), name='course_detail'),
-    path('search/', views.CourseSearchView.as_view(), name='course_search'),
     
     # Course materials
     path('course/<slug:course_slug>/material/<slug:material_slug>/', 
