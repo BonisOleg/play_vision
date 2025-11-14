@@ -65,7 +65,7 @@
 /* Clear button */
 .hub-search-clear {
     position: absolute;
-    right: 116px;
+    right: 130px;
     top: 50%;
     transform: translateY(-50%);
     width: 32px;
