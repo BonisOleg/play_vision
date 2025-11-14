@@ -265,7 +265,8 @@
                                 hx-swap="innerHTML"
                                 hx-push-url="true"
                                 hx-indicator=".htmx-loading"
-                                hx-include=".hub-filter-form">
+                                hx-include=".hub-filter-form"
+                                hx-trigger="submit">
                                 <input type="text" name="q" placeholder="Пошук" class="hub-search-input"
                                     value="{{ search_query }}">
                                 <button type="submit" class="hub-search-btn">Знайти</button>
