@@ -7,9 +7,9 @@
 
 /* СЕКЦІЯ */
 .mentor-coaching-section {
-    background: #e8e8e8;
+    background: transparent;
     position: relative;
-    padding: 60px 0;
+    padding: 0;
     overflow: hidden;
 }
 
@@ -210,7 +210,7 @@
    ============================================ */
 @media (min-width: 769px) and (max-width: 1024px) {
     .mentor-coaching-section {
-        padding: 50px 0;
+        padding: 0;
     }
 
     .mentor-hexagon-container {
@@ -258,7 +258,7 @@
    ============================================ */
 @media (min-width: 480px) and (max-width: 768px) {
     .mentor-coaching-section {
-        padding: 40px 0;
+        padding: 0;
     }
 
     .mentor-coaching-section .section-title {
@@ -318,7 +318,7 @@
    ============================================ */
 @media (max-width: 479px) {
     .mentor-coaching-section {
-        padding: 30px 0;
+        padding: 0;
     }
 
     .mentor-coaching-section .section-title {

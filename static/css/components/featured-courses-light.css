@@ -25,7 +25,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-    width: 70%;
+    width: 80%;
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
@@ -90,7 +90,7 @@
 /* ==================== КАРУСЕЛЬ КОНТЕЙНЕР ==================== */
 /* Використовує загальну систему ширини */
 .featured-carousel-container {
-    width: 70%;
+    width: 80%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-xl);
@@ -271,7 +271,7 @@
     /* Синхронізовано з content-width */
     .featured-courses-header,
     .featured-carousel-container {
-        width: 85%;
+        width: 90%;
         padding: 0 var(--spacing-lg);
     }
 
@@ -292,7 +292,7 @@
     /* Синхронізовано з content-width */
     .featured-courses-header,
     .featured-carousel-container {
-        width: 90%;
+        width: 95%;
         padding: 0 var(--spacing-md);
     }
 

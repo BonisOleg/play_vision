@@ -1,105 +1,49 @@
 /* ============================================
-   UNIFIED SECTIONS - Об'єднані секції з паттерном
+   UNIFIED SECTIONS - Окремі картки для секцій
    Секції: Наші основні програми, Ментор коучинг, Команда професіоналів
+   Без фону з плюсиками, кожна секція - окрема картка
    ============================================ */
 
-/* === WRAPPER ДЛЯ ОБ'ЄДНАНИХ СЕКЦІЙ === */
+/* === WRAPPER (БЕЗ ФОНУ) === */
 .unified-sections-wrapper {
     width: 100%;
     position: relative;
-    background-image: url('/static/icons/pattern_2.svg');
-    background-size: 21px 21px;
-    background-position: top left;
-    background-repeat: repeat;
     padding: 0;
     margin: 0;
-    /* Оптимізація для кращого рендерингу на всіх системах */
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: background-image;
 }
 
-[data-theme="dark"] .unified-sections-wrapper {
-    background-image: url('/static/icons/pattern_1.svg');
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .unified-sections-wrapper {
-        background-image: url('/static/icons/pattern_1.svg');
-    }
-}
-
-/* === ПАТТЕРН КОЛЬОРИ ДЛЯ СВІТЛОЇ ТЕМИ === */
-:root {
-    --unified-bg-color: #e9e9e9;
-    --pattern-line-color: rgba(200, 200, 200, 0.4);
-    --pattern-cross-color: rgba(150, 150, 150, 0.3);
-    --decorative-line-main: #0A0A0A;
-    --decorative-line-secondary: #CFCFCF;
-}
-
-/* === ПАТТЕРН КОЛЬОРИ ДЛЯ ТЕМНОЇ ТЕМИ === */
-[data-theme="dark"] {
-    --unified-bg-color: #171717;
-    --pattern-line-color: rgba(80, 80, 80, 0.4);
-    --pattern-cross-color: rgba(120, 120, 120, 0.3);
-    --decorative-line-main: #FFFFFF;
-    --decorative-line-secondary: #4A4A4A;
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] {
-        --unified-bg-color: #171717;
-        --pattern-line-color: rgba(80, 80, 80, 0.4);
-        --pattern-cross-color: rgba(120, 120, 120, 0.3);
-        --decorative-line-main: #FFFFFF;
-        --decorative-line-secondary: #4A4A4A;
-    }
-}
-
-/* === ВНУТРІШНІЙ КОНТЕЙНЕР === */
-/* Використовує загальну систему ширини з content-width.css */
+/* === КОНТЕЙНЕР (ВИДАЛЕНИЙ, ТЕПЕР КОЖНА СЕКЦІЯ ОКРЕМО) === */
 .unified-sections-container {
-    width: 70%;
-    max-width: 1400px;
-    margin: 0 auto;
-    background-color: var(--unified-bg-color);
-    position: relative;
-}
-
-/* === ДЕКОРАТИВНА ЛІНІЯ === */
-.decorative-line-wrapper {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 0;
     margin: 0;
-    background-color: var(--unified-bg-color);
-}
-
-.decorative-line-wrapper svg {
-    width: 100%;
-    max-width: 1300px;
-    height: auto;
-    display: block;
-}
-
-.decorative-line-wrapper svg line.line-main {
-    stroke: var(--decorative-line-main);
-}
-
-.decorative-line-wrapper svg line.line-secondary {
-    stroke: var(--decorative-line-secondary);
-}
-
-/* === СЕКЦІЇ ВСЕРЕДИНІ === */
-.unified-sections-wrapper .fullscreen-section {
-    height: auto;
-    min-height: auto;
-    padding: 10px 0;
+    padding: 0;
     background: transparent;
+}
+
+/* === СЕКЦІЇ ЯК ОКРЕМІ КАРТКИ === */
+.unified-sections-wrapper .fullscreen-section {
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    min-height: auto;
+    height: auto;
+}
+
+/* Темна тема для карток */
+[data-theme="dark"] .unified-sections-wrapper .fullscreen-section {
+    background: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .unified-sections-wrapper .fullscreen-section {
+        background: #1a1a1a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
 }
 
 /* Видалити фонові елементи секцій */
@@ -125,64 +69,44 @@
     max-width: 100%;
     height: 100%;
     z-index: 1;
+    padding: 0;
 }
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .unified-sections-container {
-        width: 85%; /* Синхронізовано з content-width-container */
-    }
-
     .unified-sections-wrapper .fullscreen-section {
-        padding: 20px 0;
+        width: 90%;
+        margin: 25px auto;
+        padding: 35px;
     }
 
     .unified-sections-wrapper .section-content {
-        padding: 0 var(--spacing-lg);
+        padding: 0;
     }
 
     /* Виключення для методології - без відступів */
     .unified-sections-wrapper .mentoring-methodology-section .section-content {
         padding: 0;
-    }
-
-    .decorative-line-wrapper {
-        padding: 10px 0;
-    }
-
-    .decorative-line-wrapper svg {
-        max-width: 100%;
     }
 }
 
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
-    .unified-sections-container {
-        width: 90%; /* Синхронізовано з content-width-container */
-    }
-
     .unified-sections-wrapper .fullscreen-section {
-        padding: 20px 0;
+        width: 95%;
+        margin: 20px auto;
+        padding: 25px;
+        border-radius: 10px;
     }
 
     .unified-sections-wrapper .section-content {
-        padding: 0 var(--spacing-md);
+        padding: 0;
     }
 
     /* Виключення для методології - без відступів */
     .unified-sections-wrapper .mentoring-methodology-section .section-content {
         padding: 0;
     }
-
-    .decorative-line-wrapper {
-        padding: 10px 0;
-    }
-
-    .decorative-line-wrapper svg {
-        max-width: 100%;
-        padding: 0 20px;
-    }
-
 }
 
 /* === СПЕЦИФІЧНІ СТИЛІ ДЛЯ СЕКЦІЙ === */
@@ -194,7 +118,7 @@
 
 /* Ментор коучинг */
 .unified-sections-wrapper .mentor-coaching-section {
-    padding: 20px 0;
+    padding: 40px;
 }
 
 .unified-sections-wrapper .mentor-coaching-section .section-title {
@@ -238,9 +162,23 @@
     }
 }
 
+/* === АДАПТАЦІЯ ВІДСТУПІВ ДЛЯ ПЛАНШЕТА === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .unified-sections-wrapper .mentor-coaching-section {
+        padding: 35px;
+    }
+}
+
+/* === АДАПТАЦІЯ ВІДСТУПІВ ДЛЯ МОБАЙЛА === */
+@media (max-width: 768px) {
+    .unified-sections-wrapper .mentor-coaching-section {
+        padding: 25px;
+    }
+}
+
 /* === iOS SAFARI SPECIFIC === */
 @supports (-webkit-touch-callout: none) {
-    .unified-sections-wrapper {
+    .unified-sections-wrapper .fullscreen-section {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         transform: translateZ(0);

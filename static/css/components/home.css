@@ -39,7 +39,7 @@
     border: none;
     background: transparent;
     backdrop-filter: none;
-    width: 70%;
+    width: 80%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 4rem var(--spacing-xl);
@@ -67,7 +67,7 @@
 
     /* NEW DESIGN Tablet */
     .hero-new-design {
-        width: 85%;
+        width: 90%;
         padding: 3.5rem var(--spacing-lg);
     }
 
@@ -85,7 +85,7 @@
 @media (max-width: 768px) {
     /* NEW DESIGN Mobile (Синхронізовано з content-width) */
     .hero-new-design {
-        width: 90%;
+        width: 95%;
         padding: 3rem var(--spacing-md);
     }
 

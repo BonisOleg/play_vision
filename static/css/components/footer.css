@@ -16,7 +16,7 @@ footer.site-footer * {
 
 /* Використовує загальну систему ширини */
 footer.site-footer .footer-container {
-    width: 70%;
+    width: 80%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-xl);
@@ -456,7 +456,7 @@ footer.site-footer .footer-link:hover {
 /* === ПЛАНШЕТНА АДАПТАЦІЯ (Синхронізовано з content-width) === */
 @media (min-width: 769px) and (max-width: 1024px) {
     footer.site-footer .footer-container {
-        width: 85%;
+        width: 90%;
         padding: 0 var(--spacing-lg);
     }
 }
@@ -464,14 +464,14 @@ footer.site-footer .footer-link:hover {
 /* === МОБІЛЬНА АДАПТАЦІЯ (Синхронізовано з content-width) === */
 @media (max-width: 768px) {
     footer.site-footer .footer-container {
-        width: 90%;
+        width: 95%;
         padding: 0 var(--spacing-md);
     }
 }
 
 @media (max-width: 400px) {
     footer.site-footer .footer-container {
-        width: 90%;
+        width: 95%;
         padding: 0 var(--spacing-sm);
     }
     

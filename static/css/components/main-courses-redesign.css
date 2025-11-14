@@ -2,18 +2,18 @@
 
 /* ==================== СЕКЦІЯ ==================== */
 .main-courses-section {
-    background: #f5f5f5;
-    padding: 20px 0;
+    background: transparent;
+    padding: 0;
     position: relative;
 }
 
 [data-theme="dark"] .main-courses-section {
-    background: #171717;
+    background: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .main-courses-section {
-        background: #171717;
+        background: transparent;
     }
 }
 
@@ -367,7 +367,7 @@
 /* ==================== ADAPTIVE MOBILE (до 768px) ==================== */
 @media (max-width: 768px) {
     .main-courses-section {
-        padding: 20px 0;
+        padding: 0;
     }
 
     .main-courses-header {
@@ -441,7 +441,7 @@
 /* ==================== ADAPTIVE MOBILE (< 576px) ==================== */
 @media (max-width: 576px) {
     .main-courses-section {
-        padding: 20px 0;
+        padding: 0;
     }
 
     .main-courses-header {

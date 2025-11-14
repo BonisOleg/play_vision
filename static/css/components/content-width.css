@@ -5,7 +5,7 @@
 
 /* === БАЗОВИЙ КОНТЕЙНЕР ДЛЯ ВСЬОГО КОНТЕНТУ === */
 .content-width-container {
-    width: 70%;
+    width: 80%;
     max-width: 1400px;
     margin: 0 auto;
     position: relative;
@@ -13,7 +13,7 @@
 
 /* === КОНТЕНТ З ВНУТРІШНІМИ ПАДІНГАМИ === */
 .content-width-padded {
-    width: 70%;
+    width: 80%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-xl);
@@ -24,7 +24,7 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .content-width-container,
     .content-width-padded {
-        width: 85%;
+        width: 90%;
     }
     
     .content-width-padded {
@@ -36,7 +36,7 @@
 @media (max-width: 768px) {
     .content-width-container,
     .content-width-padded {
-        width: 90%;
+        width: 95%;
     }
     
     .content-width-padded {

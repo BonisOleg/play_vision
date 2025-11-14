@@ -8,7 +8,7 @@
 /* Використовує загальну систему ширини */
 .featured-carousel-container {
     position: relative;
-    width: 70%;
+    width: 80%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-xl);

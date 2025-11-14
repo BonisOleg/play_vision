@@ -573,7 +573,7 @@ html.ios-safari {
 /* Tablet specific styles (768px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .container {
-        max-width: 90%;
+        max-width: 95%;
         padding: 0 var(--spacing-lg);
     }
 
