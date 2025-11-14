@@ -119,7 +119,7 @@
                             class="nav-tab-btn {% if 'hub' in request.path or 'content' in request.path %}active{% endif %}"
                             data-nav-tab aria-label="Хаб знань"
                             aria-current="{% if 'hub' in request.path or 'content' in request.path %}page{% else %}false{% endif %}">
-                            <span class="nav-tab-text"><span class="text-highlight">ХАБ</span> Знань</span>
+                            <span class="nav-tab-text text-highlight">Хаб знань</span>
                         </a>
                         <div class="nav-action-dropdown">
                             <a href="{% url 'events:event_list' %}"
@@ -191,7 +191,7 @@
                             class="nav-tab-btn {% if request.resolver_match.url_name == 'pricing' %}active{% endif %}"
                             data-nav-tab aria-label="Підписка"
                             aria-current="{% if request.resolver_match.url_name == 'pricing' %}page{% else %}false{% endif %}">
-                            <span class="nav-tab-text"><span class="text-highlight">Підписка</span></span>
+                            <span class="nav-tab-text text-highlight">Підписка</span>
                         </a>
 
                         <!-- Placeholder для інпута (резервує місце в овалі) -->
