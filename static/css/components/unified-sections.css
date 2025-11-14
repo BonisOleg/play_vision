@@ -184,3 +184,64 @@
         transform: translateZ(0);
     }
 }
+
+/* === HUB СЕКЦІЇ ЯК КАРТКИ (БЕЗ PADDING - він вже є в кожній секції) === */
+.unified-sections-wrapper .hub-hero-section,
+.unified-sections-wrapper .hub-featured-section,
+.unified-sections-wrapper .hub-catalog-section {
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+/* Темна тема для Hub-секцій */
+[data-theme="dark"] .unified-sections-wrapper .hub-hero-section,
+[data-theme="dark"] .unified-sections-wrapper .hub-featured-section,
+[data-theme="dark"] .unified-sections-wrapper .hub-catalog-section {
+    background: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .unified-sections-wrapper .hub-hero-section,
+    [data-theme="auto"] .unified-sections-wrapper .hub-featured-section,
+    [data-theme="auto"] .unified-sections-wrapper .hub-catalog-section {
+        background: #1a1a1a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* === ПЛАНШЕТНА АДАПТАЦІЯ ДЛЯ HUB === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .unified-sections-wrapper .hub-hero-section,
+    .unified-sections-wrapper .hub-featured-section,
+    .unified-sections-wrapper .hub-catalog-section {
+        width: 90%;
+        margin: 25px auto;
+    }
+}
+
+/* === МОБІЛЬНА АДАПТАЦІЯ ДЛЯ HUB === */
+@media (max-width: 768px) {
+    .unified-sections-wrapper .hub-hero-section,
+    .unified-sections-wrapper .hub-featured-section,
+    .unified-sections-wrapper .hub-catalog-section {
+        width: 95%;
+        margin: 20px auto;
+        border-radius: 10px;
+    }
+}
+
+/* === iOS SAFARI для HUB секцій === */
+@supports (-webkit-touch-callout: none) {
+    .unified-sections-wrapper .hub-hero-section,
+    .unified-sections-wrapper .hub-featured-section,
+    .unified-sections-wrapper .hub-catalog-section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+}
