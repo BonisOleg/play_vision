@@ -305,7 +305,6 @@
     color: white;
     position: relative;
     z-index: var(--z-section, 20);
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     overflow: hidden;
 }
 
