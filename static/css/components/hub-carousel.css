@@ -3,7 +3,7 @@
    ============================================ */
 
 .hub-featured-section {
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-xl);
 }
 
 .hub-featured-header {
