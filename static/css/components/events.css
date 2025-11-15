@@ -29,7 +29,7 @@
 .events-intro-subtitle {
     font-size: 1rem;
     color: var(--color-text-light);
-    margin-bottom: 40px;
+    margin-bottom: 100px;
     line-height: 1.6;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .category-block p {
-    font-size: 0.875rem;
+    font-size: 0.6rem;
     color: var(--color-text-light);
     line-height: 1.5;
     margin: 0;
@@ -72,8 +72,9 @@
 /* Відео сітка 3x3 */
 .events-video-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin-right: 20px;
 }
 
 .video-placeholder {
