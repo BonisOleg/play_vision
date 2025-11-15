@@ -1,377 +1,72 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block title %}Реєстрація на {{ event.title }}{% endblock %}
+{% block title %}Реєстрація на {{ event.title }} - Play Vision{% endblock %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/events.css' %}">
-<style>
-    .registration-container {
-        max-width: 600px;
-        margin: 3rem auto;
-        padding: 0 1rem;
-    }
-
-    .registration-header {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .registration-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--color-text-primary);
-        margin-bottom: 0.5rem;
-    }
-
-    .registration-subtitle {
-        font-size: 1.125rem;
-        color: var(--color-text-secondary);
-    }
-
-    .registration-form-card {
-        background: white;
-        border-radius: 1rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        padding: 2rem;
-    }
-
-    .form-section {
-        margin-bottom: 2rem;
-    }
-
-    .form-section:last-child {
-        margin-bottom: 0;
-    }
-
-    .section-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--color-text-primary);
-        margin-bottom: 1rem;
-    }
-
-    .form-group {
-        margin-bottom: 1rem;
-    }
-
-    .form-label {
-        display: block;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--color-text-secondary);
-        margin-bottom: 0.5rem;
-    }
-
-    .form-input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-        border: 1px solid var(--color-border);
-        border-radius: 0.5rem;
-        background: white;
-        transition: all 0.2s;
-    }
-
-    .form-input:focus {
-        outline: none;
-        border-color: var(--color-primary);
-        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-    }
-
-    .form-textarea {
-        resize: vertical;
-        min-height: 100px;
-    }
-
-    .checkbox-group {
-        display: flex;
-        align-items: start;
-        gap: 0.75rem;
-    }
-
-    .checkbox-input {
-        margin-top: 0.25rem;
-        width: 1.25rem;
-        height: 1.25rem;
-        cursor: pointer;
-    }
-
-    .checkbox-label {
-        flex: 1;
-        font-size: 0.875rem;
-        color: var(--color-text-secondary);
-        line-height: 1.5;
-    }
-
-    .checkbox-label a {
-        color: var(--color-primary);
-        text-decoration: none;
-    }
-
-    .checkbox-label a:hover {
-        text-decoration: underline;
-    }
-
-    .event-summary {
-        background: var(--color-bg-secondary);
-        border-radius: 0.75rem;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .summary-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: var(--color-text-primary);
-        margin-bottom: 1rem;
-    }
-
-    .summary-details {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .summary-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: var(--color-text-secondary);
-        font-size: 0.875rem;
-    }
-
-    .summary-icon {
-        width: 1.25rem;
-        height: 1.25rem;
-        color: var(--color-primary);
-    }
-
-    .price-summary {
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--color-border);
-    }
-
-    .price-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.5rem;
-    }
-
-    .price-total {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--color-primary);
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
-
-    .btn-cancel {
-        background: var(--color-bg-secondary);
-        color: var(--color-text-secondary);
-    }
-
-    .btn-cancel:hover {
-        background: var(--color-border);
-    }
-
-    @media (max-width: 640px) {
-        .registration-form-card {
-            padding: 1.5rem;
-        }
-
-        .form-actions {
-            flex-direction: column-reverse;
-        }
-    }
-</style>
 {% endblock %}
 
 {% block content %}
-<div class="registration-container">
-    <div class="registration-header">
-        <h1 class="registration-title">Реєстрація на подію</h1>
-        <p class="registration-subtitle">Заповніть форму для участі</p>
-    </div>
+<div class="fullscreen-container">
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
 
-    <div class="registration-form-card">
-        <!-- Інформація про подію -->
-        <div class="event-summary">
-            <h3 class="summary-title">{{ event.title }}</h3>
-            <div class="summary-details">
-                <div class="summary-item">
-                    <svg class="summary-icon">
-                        <use xlink:href="#icon-calendar"></use>
-                    </svg>
-                    <span>{{ event.start_datetime|date:"d F Y, H:i" }}</span>
-                </div>
-                <div class="summary-item">
-                    <svg class="summary-icon">
-                        <use xlink:href="#icon-location"></use>
-                    </svg>
-                    <span>{% if event.is_online %}Онлайн{% else %}{{ event.location }}{% endif %}</span>
-                </div>
-                <div class="summary-item">
-                    <svg class="summary-icon">
-                        <use xlink:href="#icon-ticket"></use>
-                    </svg>
-                    <span>{{ event.get_event_type_display }}</span>
-                </div>
-            </div>
+            <section class="fullscreen-section event-registration-section">
+                <div class="section-content">
+                    <div class="registration-container">
+                        <h1 class="registration-title">Реєстрація на подію</h1>
+                        <p class="registration-subtitle">{{ event.title }}</p>
 
-            {% if not event.is_free %}
-            <div class="price-summary">
-                <div class="price-row">
-                    <span>Вартість участі:</span>
-                    <span class="price-total">{{ event.price }} ₴</span>
+                        <form method="post" action="{% url 'events:register' event.slug %}" class="registration-form">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="name">Ім'я та прізвище</label>
+                                <input type="text" id="name" name="name" required 
+                                       value="{{ user.get_full_name|default:user.username }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required value="{{ user.email }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Телефон</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+380..." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="company">Компанія/Клуб (необов'язково)</label>
+                                <input type="text" id="company" name="company">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="position">Посада (необов'язково)</label>
+                                <input type="text" id="position" name="position">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="expectations">Ваші очікування від події (необов'язково)</label>
+                                <textarea id="expectations" name="expectations" rows="4"></textarea>
+                            </div>
+
+                            <div class="form-actions">
+                                <a href="{% url 'events:event_detail' event.slug %}" class="btn-secondary">Скасувати</a>
+                                <button type="submit" class="btn-primary">
+                                    {% if event.is_free %}Зареєструватися{% else %}Перейти до оплати{% endif %}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            {% endif %}
+            </section>
+
         </div>
-
-        <!-- Форма реєстрації -->
-        <form method="post" action="{% url 'events:register' event.slug %}" class="registration-form">
-            {% csrf_token %}
-
-            <!-- Контактна інформація -->
-            <div class="form-section">
-                <h3 class="section-title">Контактна інформація</h3>
-
-                <div class="form-group">
-                    <label for="name" class="form-label">Ім'я та прізвище</label>
-                    <input type="text" id="name" name="name" class="form-input"
-                        value="{{ user.get_full_name|default:user.username }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-input" value="{{ user.email }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone" class="form-label">Телефон</label>
-                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="+380..." required>
-                </div>
-            </div>
-
-            <!-- Додаткова інформація -->
-            <div class="form-section">
-                <h3 class="section-title">Додаткова інформація</h3>
-
-                <div class="form-group">
-                    <label for="company" class="form-label">Компанія/Клуб (необов'язково)</label>
-                    <input type="text" id="company" name="company" class="form-input">
-                </div>
-
-                <div class="form-group">
-                    <label for="position" class="form-label">Посада (необов'язково)</label>
-                    <input type="text" id="position" name="position" class="form-input">
-                </div>
-
-                <div class="form-group">
-                    <label for="expectations" class="form-label">Ваші очікування від події (необов'язково)</label>
-                    <textarea id="expectations" name="expectations" class="form-input form-textarea"></textarea>
-                </div>
-            </div>
-
-            <!-- Згода з умовами -->
-            <div class="form-section">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms" name="terms" class="checkbox-input" required>
-                    <label for="terms" class="checkbox-label">
-                        Я погоджуюсь з <a href="/terms" target="_blank">умовами участі</a>
-                        та <a href="/privacy" target="_blank">політикою конфіденційності</a>
-                    </label>
-                </div>
-
-                <div class="checkbox-group checkbox-group--spaced">
-                    <input type="checkbox" id="newsletter" name="newsletter" class="checkbox-input" checked>
-                    <label for="newsletter" class="checkbox-label">
-                        Хочу отримувати інформацію про нові події Play Vision
-                    </label>
-                </div>
-            </div>
-
-            <!-- Кнопки -->
-            <div class="form-actions">
-                <a href="{% url 'events:event_detail' event.slug %}" class="btn btn-cancel">
-                    Скасувати
-                </a>
-                <button type="submit" class="btn btn--primary btn--large">
-                    {% if event.is_free %}
-                    Зареєструватися
-                    {% else %}
-                    Перейти до оплати
-                    {% endif %}
-                </button>
-            </div>
-        </form>
     </div>
 </div>
-
-<!-- SVG іконки -->
-<svg class="svg-sprites-hidden">
-    <symbol id="icon-calendar" viewBox="0 0 24 24">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2" />
-        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" />
-        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" />
-        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" />
-    </symbol>
-    <symbol id="icon-location" viewBox="0 0 24 24">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="2" />
-        <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2" />
-    </symbol>
-    <symbol id="icon-ticket" viewBox="0 0 24 24">
-        <path
-            d="M2 9v3a1 1 0 0 0 1 1h1a2 2 0 1 0 4 0h8a2 2 0 1 0 4 0h1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-1a2 2 0 1 0-4 0H8a2 2 0 1 0-4 0H3a1 1 0 0 0-1 1z"
-            fill="none" stroke="currentColor" stroke-width="2" />
-        <path d="M2 15v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2" fill="none" stroke="currentColor" stroke-width="2" />
-    </symbol>
-</svg>
 {% endblock %}
 
-{% block extra_js %}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Автоформатування телефону
-        const phoneInput = document.getElementById('phone');
-        if (phoneInput) {
-            phoneInput.addEventListener('input', function (e) {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.startsWith('380')) {
-                    value = '+' + value;
-                } else if (value.startsWith('80')) {
-                    value = '+3' + value;
-                } else if (value.startsWith('0')) {
-                    value = '+38' + value;
-                }
-                e.target.value = value;
-            });
-        }
-
-        // Валідація форми
-        const form = document.querySelector('.registration-form');
-        form.addEventListener('submit', function (e) {
-            const terms = document.getElementById('terms');
-            if (!terms.checked) {
-                e.preventDefault();
-                alert('Будь ласка, погодьтеся з умовами участі');
-                return;
-            }
-
-            const phone = document.getElementById('phone').value;
-            if (!phone.match(/^\+380\d{9}$/)) {
-                e.preventDefault();
-                alert('Будь ласка, введіть коректний номер телефону у форматі +380XXXXXXXXX');
-                return;
-            }
-        });
-    });
-</script>
-{% endblock %}
