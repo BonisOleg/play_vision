@@ -53,6 +53,12 @@
 
 /* Tablet responsiveness (Синхронізовано з content-width) */
 @media (min-width: 769px) and (max-width: 1024px) {
+    .hero-section {
+        width: 90%;
+        margin: 25px auto;
+        min-height: 500px;
+    }
+    
     .fullscreen-section {
         min-height: 500px;
     }
@@ -112,11 +118,24 @@
 }
 
 
+/* === HERO SECTION AS CARD === */
 .hero-section {
-    width: 100%;
-    max-width: 100%;
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
     color: white;
     text-align: center;
+    position: relative;
+    min-height: 600px;
+}
+
+/* Зображення має заповнювати картку і обрізатись */
+.hero-section .section-bg-image,
+.hero-section .section-bg-video {
+    object-fit: cover;
 }
 
 
@@ -449,23 +468,36 @@
 }
 
 @media (max-width: 1024px) {
-    .fullscreen-section {
+    .hero-section {
+        width: 90%;
+        margin: 25px auto;
+        min-height: 500px;
+    }
+    
+    /* CTA залишається на всю ширину */
+    .cta-section {
         width: 100%;
         max-width: 100%;
         margin: 0;
-        height: auto;
-        min-height: calc(100vh - 80px);
-        padding: var(--spacing-xxl) 0;
+        border-radius: 0;
     }
 
 }
 
 @media (max-width: 768px) {
-    .fullscreen-section {
+    .hero-section {
+        width: 95%;
+        margin: 20px auto;
+        border-radius: 10px;
+        min-height: 500px;
+    }
+    
+    /* CTA залишається на всю ширину */
+    .cta-section {
         width: 100%;
         max-width: 100%;
         margin: 0;
-        padding: var(--spacing-xl) 0;
+        border-radius: 0;
     }
 
     .hero-buttons,
@@ -607,6 +639,12 @@
 
 /* === iOS SAFARI OPTIMIZATIONS === */
 @supports (-webkit-touch-callout: none) {
+    .hero-section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+    
     .fullscreen-section {
         height: -webkit-calc(100vh - 80px);
         min-height: -webkit-calc(100vh - 80px);
@@ -682,6 +720,7 @@
     /* === HERO SECTION === */
     .hero-section {
         color: white;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
 
     .hero-title,
@@ -818,6 +857,7 @@
         /* === HERO SECTION === */
         .hero-section {
             color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .hero-title,
