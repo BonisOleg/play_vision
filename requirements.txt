@@ -20,6 +20,10 @@ python-decouple==3.8
 Pillow==11.0.0
 requests==2.31.0
 
+# Cloudinary (обов'язково для продакшену - зображення через CDN)
+cloudinary==1.41.0
+django-cloudinary-storage==0.3.0
+
 # QR Code generation (для event tickets)
 qrcode[pil]==7.4.2
 

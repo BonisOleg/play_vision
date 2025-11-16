@@ -32,6 +32,8 @@ THIRD_PARTY_APPS = [
     'django_htmx',
     'widget_tweaks',
     'whitenoise.runserver_nostatic',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 LOCAL_APPS = [

@@ -50,10 +50,13 @@ CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 
 # CSRF trusted origins for Render
+csrf_origins_env = config('CSRF_TRUSTED_ORIGINS', default='')
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
     'https://playvision.onrender.com'
 ]
+if csrf_origins_env:
+    CSRF_TRUSTED_ORIGINS.extend(csrf_origins_env.split(','))
 
 # Static files - WhiteNoise configuration
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -61,9 +64,37 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 WHITENOISE_COMPRESS_OFFLINE = False
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['*']
 
-# Email - временно используем консольный бэкенд для отладки
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  
-# TODO: Настроить нормальный SMTP после получения учетных данных
+# Email - Gmail SMTP з App Password
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default=EMAIL_HOST_USER)
+
+# Cloudinary для зображень (обов'язково для продакшену)
+if config('CLOUDINARY_URL', default=''):
+    # Cloudinary налаштовано через CLOUDINARY_URL
+    import cloudinary
+    import cloudinary.uploader
+    import cloudinary.api
+    
+    cloudinary.config(
+        cloud_name=config('CLOUDINARY_CLOUD_NAME', default=''),
+        api_key=config('CLOUDINARY_API_KEY', default=''),
+        api_secret=config('CLOUDINARY_API_SECRET', default=''),
+        secure=True
+    )
+    
+    # Використовувати Cloudinary для MEDIA файлів
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    MEDIA_URL = f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME')}/image/upload/"
+else:
+    # Fallback якщо Cloudinary не налаштований
+    print("WARNING: Cloudinary not configured! Using local storage.")
+    MEDIA_ROOT = BASE_DIR / 'mediafiles'
+    MEDIA_URL = '/media/'
 
 # VAPID ключі для push notifications
 VAPID_PRIVATE_KEY = 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgjr19PQPYfjKqpEr6X7783aTxE-CIHkCfFHN1ePvTr66hRANCAAQDScS1jLjPfzr_ieuChn__WVxHE2oLHNhnWr4NoSDmEDuK9dEEpUy7gIRJB7CBIkVXmKXozDRa5lin1tQWp6sh'
