@@ -11,7 +11,7 @@ from apps.loyalty.services import LoyaltyService
 
 
 class CourseListView(ListView):
-    """Course catalog view with filtering and search"""
+    """Course catalog view with category filtering"""
     model = Course
     template_name = 'hub/course_list.html'
     context_object_name = 'courses'
@@ -20,74 +20,24 @@ class CourseListView(ListView):
     def get_queryset(self) -> QuerySet[Course]:
         queryset = Course.objects.filter(
             is_published=True
-        ).select_related('category').prefetch_related('tags')
+        ).select_related('category', 'category__parent')
         
-        # Search functionality
-        search_query = self.request.GET.get('q', '').strip()
-        if search_query:
+        # Category filter - підтримка множинного вибору
+        category_slugs = self.request.GET.getlist('category')
+        if category_slugs:
+            # Фільтр по головним категоріям або підкатегоріям
             queryset = queryset.filter(
-                Q(title__icontains=search_query) |
-                Q(description__icontains=search_query) |
-                Q(author__icontains=search_query) |
-                Q(tags__name__icontains=search_query)
+                Q(category__slug__in=category_slugs) |
+                Q(category__parent__slug__in=category_slugs)
             ).distinct()
         
-        # Category filter
-        category_slug = self.request.GET.get('category')
-        if category_slug:
-            queryset = queryset.filter(category__slug=category_slug)
+        # Subcategory filter (для Тренерства) - множинний вибір
+        subcategory_slugs = self.request.GET.getlist('subcategory')
+        if subcategory_slugs:
+            queryset = queryset.filter(category__slug__in=subcategory_slugs)
         
-        # Tag filter
-        tag = self.request.GET.get('tag')
-        if tag:
-            queryset = queryset.filter(tags__slug=tag)
-        
-        # Interest filter (для тегів типу interest)
-        interest = self.request.GET.get('interest')
-        if interest:
-            queryset = queryset.filter(
-                tags__slug=interest,
-                tags__tag_type='interest'
-            ).distinct()
-        
-        # Training specialization filter
-        training_type = self.request.GET.get('training_type')
-        if training_type:
-            queryset = queryset.filter(training_specialization=training_type)
-        
-        # Фільтр за типом контенту
-        content_type = self.request.GET.getlist('content_type')
-        if content_type:
-            queryset = queryset.filter(content_type__in=content_type)
-        
-        # Фільтр за тривалістю
-        duration = self.request.GET.get('duration')
-        if duration:
-            if duration == '0-60':
-                queryset = queryset.filter(duration_minutes__lte=60)
-            elif duration == '60-180':
-                queryset = queryset.filter(duration_minutes__gt=60, duration_minutes__lte=180)
-            elif duration == '180+':
-                queryset = queryset.filter(duration_minutes__gt=180)
-        
-        # Фільтр за рівнем складності
-        difficulty = self.request.GET.get('difficulty')
-        if difficulty and difficulty in ['beginner', 'intermediate', 'advanced']:
-            queryset = queryset.filter(difficulty=difficulty)
-        
-        # Фільтр за цільовою аудиторією
-        target_audience = self.request.GET.getlist('target_audience')
-        if target_audience:
-            # Фільтруємо курси, які містять хоча б одну з обраних аудиторій
-            query = Q()
-            for audience in target_audience:
-                query |= Q(target_audience__contains=[audience])
-            queryset = queryset.filter(query)
-        
-        # Sorting
-        sort = self.request.GET.get('sort', '-created_at')
-        if sort in ['price', '-price', 'title', '-title', '-created_at', 'view_count']:
-            queryset = queryset.order_by(sort)
+        # Сортування за замовчуванням
+        queryset = queryset.order_by('-created_at')
         
         return queryset
     
@@ -95,45 +45,37 @@ class CourseListView(ListView):
         context = super().get_context_data(**kwargs)
         
         # Add categories for filter
-        from .models import Category, Tag, MonthlyQuote
-        context['categories'] = Category.objects.filter(is_active=True)
+        from .models import Category
         
-        # Add interests (замість загальних тегів)
-        context['interests'] = Tag.objects.filter(
-            tag_type='interest'
-        ).order_by('display_order')
+        # Головні категорії (без parent)
+        root_categories = Category.objects.filter(
+            is_active=True,
+            parent__isnull=True
+        ).prefetch_related('subcategories').order_by('order')
         
-        # Add featured courses for main materials section (топ-7 по enrollment)
+        context['root_categories'] = root_categories
+        
+        # Знайти категорію "Тренерство" з підкатегоріями
+        trenerstvo = Category.objects.filter(
+            slug='trenerstvo',
+            is_active=True
+        ).prefetch_related('subcategories').first()
+        
+        context['trenerstvo'] = trenerstvo
+        context['trenerstvo_subcategories'] = (
+            trenerstvo.subcategories.filter(is_active=True).order_by('order')
+            if trenerstvo else []
+        )
+        
+        # Add featured courses for carousel (топ-7 по enrollment)
         context['featured_courses'] = Course.objects.filter(
             is_published=True,
             is_featured=True
-        ).select_related('category').prefetch_related('tags').order_by('-enrollment_count')[:7]
-        
-        # Автоматично додати бейдж "новинка" для курсів молодше 7 днів
-        from datetime import timedelta
-        seven_days_ago = timezone.now() - timedelta(days=7)
-        context['recent_courses_ids'] = list(
-            Course.objects.filter(
-                is_published=True,
-                created_at__gte=seven_days_ago
-            ).values_list('id', flat=True)
-        )
-        
-        # Add monthly quote
-        context['monthly_quote'] = MonthlyQuote.get_current_quote()
+        ).select_related('category', 'category__parent').order_by('-enrollment_count')[:7]
         
         # Add current filters
-        context['current_category'] = self.request.GET.get('category', '')
-        context['current_interest'] = self.request.GET.get('interest', '')
-        context['current_training_type'] = self.request.GET.get('training_type', '')
-        context['current_sort'] = self.request.GET.get('sort', '-created_at')
-        context['current_content_types'] = self.request.GET.getlist('content_type')
-        context['current_duration'] = self.request.GET.get('duration', '')
-        context['current_difficulty'] = self.request.GET.get('difficulty', '')
-        context['current_target_audiences'] = self.request.GET.getlist('target_audience')
-        
-        # Add search query to context
-        context['search_query'] = self.request.GET.get('q', '')
+        context['current_categories'] = self.request.GET.getlist('category')
+        context['current_subcategories'] = self.request.GET.getlist('subcategory')
         
         # Check user favorites
         if self.request.user.is_authenticated:

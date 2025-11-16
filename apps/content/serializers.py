@@ -9,13 +9,27 @@ from .utils import check_user_course_access, calculate_content_preview_limits
 class CategorySerializer(serializers.ModelSerializer):
     """Category serializer"""
     courses_count = serializers.SerializerMethodField()
+    parent = serializers.SerializerMethodField()
+    subcategories = serializers.SerializerMethodField()
     
     class Meta:
         model = Category
-        fields = ['id', 'name', 'slug', 'description', 'icon', 'courses_count']
+        fields = ['id', 'name', 'slug', 'description', 'icon', 'parent', 
+                 'order', 'is_subcategory_required', 'courses_count', 'subcategories']
     
     def get_courses_count(self, obj):
         return obj.courses.filter(is_published=True).count()
+    
+    def get_parent(self, obj):
+        if obj.parent:
+            return {'id': obj.parent.id, 'name': obj.parent.name, 'slug': obj.parent.slug}
+        return None
+    
+    def get_subcategories(self, obj):
+        if obj.subcategories.exists():
+            return [{'id': sub.id, 'name': sub.name, 'slug': sub.slug} 
+                   for sub in obj.subcategories.filter(is_active=True).order_by('order')]
+        return []
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -113,9 +127,6 @@ class MaterialDetailSerializer(MaterialSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     """Basic course serializer"""
     category = CategorySerializer(read_only=True)
-    tags = TagSerializer(many=True, read_only=True)
-    difficulty_display = serializers.CharField(source='get_difficulty_display', read_only=True)
-    duration_display = serializers.ReadOnlyField()
     absolute_url = serializers.ReadOnlyField(source='get_absolute_url')
     
     # User-specific fields
@@ -126,8 +137,7 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = [
-            'id', 'title', 'slug', 'short_description', 'category', 'tags',
-            'difficulty', 'difficulty_display', 'duration_minutes', 'duration_display',
+            'id', 'title', 'slug', 'short_description', 'category',
             'price', 'is_featured', 'is_free', 'requires_subscription',
             'thumbnail', 'rating', 'view_count', 'enrollment_count',
             'absolute_url', 'is_favorite', 'has_access', 'user_progress',

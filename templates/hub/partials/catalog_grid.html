@@ -30,12 +30,7 @@
             </div>
             <p class="hub-product-desc">{{ course.short_description }}</p>
             <div class="hub-product-meta">
-                Кому підходить:
-                {% for audience in course.get_target_audience_display|slice:":3" %}
-                {{ audience }}{% if not forloop.last %}, {% endif %}
-                {% empty %}
-                Всім
-                {% endfor %}
+                Категорія: {{ course.category.name }}
             </div>
 
             <a href="{{ course.get_absolute_url }}" class="hub-btn-view">

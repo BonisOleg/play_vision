@@ -6,12 +6,34 @@ from django.conf import settings
 
 class Category(models.Model):
     """
-    Course categories
+    Course categories with hierarchical structure
     """
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name='Назва')
     slug = models.SlugField(unique=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, verbose_name='Опис')
     icon = models.CharField(max_length=50, blank=True, help_text='CSS class or SVG icon')
+    
+    # Hierarchical structure
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='subcategories',
+        verbose_name='Батьківська категорія',
+        help_text='Залиште порожнім для головної категорії'
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Порядок',
+        help_text='Порядок відображення в фільтрах'
+    )
+    is_subcategory_required = models.BooleanField(
+        default=False,
+        verbose_name='Підкатегорія обов\'язкова',
+        help_text='Для "Тренерство" - обов\'язково вибирати підкатегорію'
+    )
+    
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -20,15 +42,30 @@ class Category(models.Model):
         db_table = 'categories'
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
-        ordering = ['name']
+        ordering = ['order', 'name']
+        indexes = [
+            models.Index(fields=['parent', 'order']),
+        ]
     
     def __str__(self):
+        if self.parent:
+            return f"{self.parent.name} → {self.name}"
         return self.name
     
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+    
+    def is_root(self) -> bool:
+        """Check if this is a root category (no parent)"""
+        return self.parent is None
+    
+    def get_root(self):
+        """Get the root category"""
+        if self.parent is None:
+            return self
+        return self.parent.get_root()
 
 
 class Tag(models.Model):
@@ -77,106 +114,25 @@ class Course(models.Model):
     """
     Educational courses
     """
-    DIFFICULTY_CHOICES = [
-        ('beginner', 'Початковий'),
-        ('intermediate', 'Середній'),
-        ('advanced', 'Експертний'),
-    ]
-    
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
     short_description = models.CharField(max_length=300)
     author = models.CharField(max_length=200, blank=True, verbose_name='Автор курсу', help_text='Ім\'я автора/інструктора курсу')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='courses')
-    tags = models.ManyToManyField(Tag, blank=True, related_name='courses')
-    difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES)
-    duration_minutes = models.PositiveIntegerField(help_text='Duration in minutes')
+    category = models.ForeignKey(
+        Category, 
+        on_delete=models.CASCADE, 
+        related_name='courses',
+        verbose_name='Категорія',
+        help_text='Оберіть категорію курсу. Для "Тренерство" обов\'язково вкажіть підкатегорію.'
+    )
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    
-    # Тип контенту (для фільтрації)
-    CONTENT_TYPE_CHOICES = [
-        ('video', 'Відео'),
-        ('pdf', 'PDF документ'),
-        ('article', 'Стаття'),
-        ('mixed', 'Змішаний'),
-    ]
-    content_type = models.CharField(
-        max_length=20,
-        choices=CONTENT_TYPE_CHOICES,
-        default='mixed',
-        verbose_name='Тип контенту',
-        help_text='Основний тип матеріалів у курсі',
-        db_index=True
-    )
-    
-    # Цільова аудиторія (кому підходить)
-    TARGET_AUDIENCE_CHOICES = [
-        ('player', 'Гравець'),
-        ('parent', 'Батьки'),
-        ('coach', 'Тренер'),
-        ('coach_gk', 'Тренер воротарів'),
-        ('coach_youth', 'Дитячий тренер'),
-        ('coach_fitness', 'Тренер ЗФП'),
-        ('analyst', 'Аналітик'),
-        ('scout', 'Скаут'),
-        ('psychologist', 'Психологія'),
-        ('nutritionist', 'Нутриціологія'),
-        ('rehabilitation', 'Реабілітація'),
-        ('media', 'Медіа'),
-        ('manager', 'Менеджер'),
-    ]
-    target_audience = models.JSONField(
-        default=list,
-        blank=True,
-        verbose_name='Кому підходить',
-        help_text='Список цільових аудиторій (можна обрати декілька)'
-    )
-    
-    # Training specialization
-    training_specialization = models.CharField(
-        max_length=30,
-        choices=[
-            ('', 'Загальний'),
-            ('goalkeeper', 'Тренер воротарів'),
-            ('youth', 'Дитячий тренер'),
-            ('fitness', 'Тренер ЗФП'),
-            ('professional', 'Тренер професійних команд'),
-        ],
-        blank=True,
-        default='',
-        verbose_name='Спеціалізація тренера',
-        help_text='Застосовується тільки для курсів категорії "Тренерство"',
-        db_index=True
-    )
     
     # Access control
     is_featured = models.BooleanField(default=False)
     is_free = models.BooleanField(default=False)
     requires_subscription = models.BooleanField(default=True)
     subscription_tiers = models.JSONField(default=list, help_text='List of allowed subscription tiers')
-    
-    # Badges
-    BADGE_TYPE_CHOICES = [
-        ('none', 'Без бейджа'),
-        ('bestseller', 'Топ-продажів'),
-        ('new', 'Новинка'),
-        ('recommended', 'Для вас'),
-        ('classic', 'Вічна класика'),
-    ]
-    badge_type = models.CharField(
-        max_length=20,
-        choices=BADGE_TYPE_CHOICES,
-        default='none',
-        verbose_name='Тип бейджа',
-        help_text='Оберіть бейдж для відображення на картці курсу',
-        db_index=True
-    )
-    is_classic = models.BooleanField(
-        default=False,
-        verbose_name='Вічна класика',
-        help_text='Позначити курс як класичний/вічний контент'
-    )
     
     # Media
     thumbnail = models.ImageField(upload_to='course_thumbnails/')
@@ -221,22 +177,6 @@ class Course(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
-    
-    @property
-    def duration_display(self):
-        """Get human-readable duration"""
-        hours = self.duration_minutes // 60
-        minutes = self.duration_minutes % 60
-        if hours:
-            return f"{hours}г {minutes}хв"
-        return f"{minutes}хв"
-    
-    def get_target_audience_display(self):
-        """Отримати відображувані назви цільової аудиторії"""
-        audience_dict = dict(self.TARGET_AUDIENCE_CHOICES)
-        if not self.target_audience:
-            return []
-        return [audience_dict.get(code, code) for code in self.target_audience]
     
     def get_absolute_url(self):
         from django.urls import reverse

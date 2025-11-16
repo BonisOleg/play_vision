@@ -158,88 +158,36 @@
                                     hx-target="#catalog-content"
                                     hx-swap="innerHTML"
                                     hx-push-url="true"
-                                    hx-indicator=".htmx-loading"
-                                    hx-include=".hub-search-form input[name='q']">
-                                    <!-- Тематики Dropdown -->
+                                    hx-indicator=".htmx-loading">
+                                    
+                                    <!-- Dropdown Тренерство з підкатегоріями -->
+                                    {% if trenerstvo %}
                                     <div class="hub-filter-group">
                                         <button type="button" class="hub-filter-toggle">
-                                            Тематики
+                                            Тренерство
                                             <span class="hub-filter-arrow">▼</span>
                                         </button>
                                         <div class="hub-filter-content">
-                                            {% for category in categories %}
-                                            <label class="hub-filter-option">
-                                                <input type="radio" name="category" value="{{ category.slug }}" {% if current_category == category.slug %}checked{% endif %}>
-                                                <span>{{ category.name }}</span>
+                                            {% for subcat in trenerstvo_subcategories %}
+                                            <label class="hub-filter-checkbox {% if subcat.slug in current_subcategories %}hub-filter-checkbox-active{% endif %}">
+                                                <input type="checkbox" name="subcategory" value="{{ subcat.slug }}" {% if subcat.slug in current_subcategories %}checked{% endif %}>
+                                                <span>{{ subcat.name }}</span>
                                             </label>
                                             {% endfor %}
                                         </div>
                                     </div>
+                                    {% endif %}
 
-                                    <!-- Типи контенту Dropdown -->
-                                    <div class="hub-filter-group">
-                                        <button type="button" class="hub-filter-toggle">
-                                            Типи контенту
-                                            <span class="hub-filter-arrow">▼</span>
-                                        </button>
-                                        <div class="hub-filter-content">
-                                            <label class="hub-filter-option">
-                                                <input type="checkbox" name="content_type" value="video" {% if 'video' in current_content_types %}checked{% endif %}>
-                                                <span>Відео</span>
-                                            </label>
-                                            <label class="hub-filter-option">
-                                                <input type="checkbox" name="content_type" value="pdf" {% if 'pdf' in current_content_types %}checked{% endif %}>
-                                                <span>PDF</span>
-                                            </label>
-                                            <label class="hub-filter-option">
-                                                <input type="checkbox" name="content_type" value="article" {% if 'article' in current_content_types %}checked{% endif %}>
-                                                <span>Стаття</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Чекбокси категорій -->
+                                    <!-- Інші категорії (без dropdown) -->
                                     <div class="hub-filter-checkboxes">
-                                        <label class="hub-filter-checkbox {% if 'coach_youth' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="coach_youth" {% if 'coach_youth' in current_target_audiences %}checked{% endif %}>
-                                            <span>Дитячий тренер</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'coach_fitness' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="coach_fitness" {% if 'coach_fitness' in current_target_audiences %}checked{% endif %}>
-                                            <span>Тренер ЗФП</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'coach' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="coach" {% if 'coach' in current_target_audiences %}checked{% endif %}>
-                                            <span>Тренер професійних команд</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'analyst' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="analyst" {% if 'analyst' in current_target_audiences %}checked{% endif %}>
-                                            <span>Аналітика і скаутинг</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'manager' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="manager" {% if 'manager' in current_target_audiences %}checked{% endif %}>
-                                            <span>Менеджмент</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'psychologist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="psychologist" {% if 'psychologist' in current_target_audiences %}checked{% endif %}>
-                                            <span>Спортивна психологія</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'nutritionist' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="nutritionist" {% if 'nutritionist' in current_target_audiences %}checked{% endif %}>
-                                            <span>Нутриціологія</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'rehabilitation' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="rehabilitation" {% if 'rehabilitation' in current_target_audiences %}checked{% endif %}>
-                                            <span>Реабілітація</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'media' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="media" {% if 'media' in current_target_audiences %}checked{% endif %}>
-                                            <span>Медіа</span>
-                                        </label>
-                                        <label class="hub-filter-checkbox {% if 'parent' in current_target_audiences %}hub-filter-checkbox-active{% endif %}">
-                                            <input type="checkbox" name="target_audience" value="parent" {% if 'parent' in current_target_audiences %}checked{% endif %}>
-                                            <span>Батьки</span>
-                                        </label>
+                                        {% for category in root_categories %}
+                                            {% if category.slug != 'trenerstvo' %}
+                                            <label class="hub-filter-checkbox {% if category.slug in current_categories %}hub-filter-checkbox-active{% endif %}">
+                                                <input type="checkbox" name="category" value="{{ category.slug }}" {% if category.slug in current_categories %}checked{% endif %}>
+                                                <span>{{ category.name }}</span>
+                                            </label>
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
 
                                     <!-- Кнопки дій -->
@@ -256,28 +204,8 @@
                             </aside>
                         </div>
 
-                        <!-- Права колонка: Пошук + Grid -->
+                        <!-- Права колонка: Grid -->
                         <div class="hub-content-column">
-                            <!-- Пошук -->
-                            <form method="get" action="{% url 'content:course_list' %}" class="hub-search-form"
-                                hx-get="{% url 'content:course_list' %}"
-                                hx-target="#catalog-content"
-                                hx-swap="innerHTML"
-                                hx-push-url="true"
-                                hx-indicator=".htmx-loading"
-                                hx-include=".hub-filter-form"
-                                hx-trigger="submit">
-                                <input type="text" name="q" placeholder="Пошук" class="hub-search-input"
-                                    value="{{ search_query }}" data-search-input>
-                                <button type="button" class="hub-search-clear" aria-label="Очистити пошук" data-search-clear>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </button>
-                                <button type="submit" class="hub-search-btn">Знайти</button>
-                            </form>
-
                             <!-- HTMX Loading Indicator -->
                             <div class="htmx-loading htmx-indicator">Завантаження...</div>
 

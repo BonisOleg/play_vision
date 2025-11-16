@@ -6,13 +6,15 @@ from .models import Category, Tag, Course, Material, UserCourseProgress, Favorit
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'is_active', 'created_at')
-    list_filter = ('is_active', 'created_at')
+    list_display = ('name', 'parent', 'order', 'is_subcategory_required', 'is_active', 'created_at')
+    list_filter = ('parent', 'is_active', 'is_subcategory_required')
     search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
+    ordering = ('order', 'name')
     
     fieldsets = (
         (None, {'fields': ('name', 'slug', 'description', 'icon')}),
+        ('Ієрархія', {'fields': ('parent', 'order', 'is_subcategory_required')}),
         ('Status', {'fields': ('is_active',)}),
         ('Timestamps', {'fields': ('created_at', 'updated_at')}),
     )
@@ -44,24 +46,19 @@ class MaterialInline(admin.TabularInline):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'difficulty', 'badge_type', 'price', 
-                   'is_featured', 'is_published', 'view_count', 'enrollment_count', 'created_at')
-    list_filter = ('category', 'difficulty', 'badge_type', 'content_type', 
-                  'is_featured', 'is_free', 'is_classic', 'is_published', 
+    list_display = ('title', 'category', 'price', 'is_featured', 'is_published', 
+                   'view_count', 'enrollment_count', 'created_at')
+    list_filter = ('category', 'is_featured', 'is_free', 'is_published', 
                   'requires_subscription', 'created_at')
     search_fields = ('title', 'slug', 'description', 'author')
     prepopulated_fields = {'slug': ('title',)}
-    filter_horizontal = ('tags',)
     date_hierarchy = 'created_at'
     inlines = [MaterialInline]
     
     fieldsets = (
         ('Основна інформація', {
-            'fields': ('title', 'slug', 'author', 'category', 'tags')
-        }),
-        ('Параметри курсу', {
-            'fields': ('difficulty', 'content_type', 'target_audience', 
-                      'training_specialization', 'duration_minutes')
+            'fields': ('title', 'slug', 'author', 'category'),
+            'description': 'Для категорії "Тренерство" обов\'язково оберіть підкатегорію (напр. "Дитячий тренер")'
         }),
         ('Опис', {
             'fields': ('short_description', 'description')
@@ -73,7 +70,7 @@ class CourseAdmin(admin.ModelAdmin):
             'fields': ('thumbnail', 'logo', 'preview_video')
         }),
         ('Статус та відображення', {
-            'fields': ('is_featured', 'badge_type', 'is_classic', 'is_published', 'published_at')
+            'fields': ('is_featured', 'is_published', 'published_at')
         }),
         ('Статистика', {
             'fields': ('view_count', 'enrollment_count', 'rating'),
