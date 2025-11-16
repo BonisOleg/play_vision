@@ -176,7 +176,7 @@
 }
 
 .calendar-event-name {
-    font-size: 0.875rem;
+    font-size: 0.6rem;
     font-weight: 700;
     flex: 1;
 }
@@ -195,7 +195,7 @@
 }
 
 .calendar-event-description {
-    font-size: 0.875rem;
+    font-size: 0.5rem;
     line-height: 1.5;
     margin-bottom: 16px;
     flex: 1;
