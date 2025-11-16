@@ -7,98 +7,127 @@ def create_new_categories(apps, schema_editor):
     """Створення нових категорій згідно нової структури"""
     Category = apps.get_model('content', 'Category')
     
-    # Видалити старі категорії (якщо є)
-    Category.objects.all().delete()
+    # НЕ видаляємо існуючі категорії! Створюємо тільки якщо їх немає
+    # Це безпечно для продакшену де є курси прив'язані до категорій
     
     # Головна категорія "Тренерство" з обов'язковими підкатегоріями
-    trenerstvo = Category.objects.create(
-        name='Тренерство',
+    trenerstvo, created = Category.objects.get_or_create(
         slug='trenerstvo',
-        description='Навчальні матеріали для тренерів',
-        order=1,
-        is_subcategory_required=True,
-        is_active=True
+        defaults={
+            'name': 'Тренерство',
+            'description': 'Навчальні матеріали для тренерів',
+            'order': 1,
+            'is_subcategory_required': True,
+            'is_active': True
+        }
     )
+    if not created:
+        # Оновлюємо існуючу категорію
+        trenerstvo.is_subcategory_required = True
+        trenerstvo.order = 1
+        trenerstvo.save()
     
     # Підкатегорії тренерства
-    Category.objects.create(
-        name='Тренер воротарів',
+    Category.objects.get_or_create(
         slug='coach-gk',
-        parent=trenerstvo,
-        order=1,
-        is_active=True
+        defaults={
+            'name': 'Тренер воротарів',
+            'parent': trenerstvo,
+            'order': 1,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Дитячий тренер',
+    Category.objects.get_or_create(
         slug='coach-youth',
-        parent=trenerstvo,
-        order=2,
-        is_active=True
+        defaults={
+            'name': 'Дитячий тренер',
+            'parent': trenerstvo,
+            'order': 2,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Тренер ЗФП',
+    Category.objects.get_or_create(
         slug='coach-fitness',
-        parent=trenerstvo,
-        order=3,
-        is_active=True
+        defaults={
+            'name': 'Тренер ЗФП',
+            'parent': trenerstvo,
+            'order': 3,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Тренер професійних команд',
+    Category.objects.get_or_create(
         slug='coach-pro',
-        parent=trenerstvo,
-        order=4,
-        is_active=True
+        defaults={
+            'name': 'Тренер професійних команд',
+            'parent': trenerstvo,
+            'order': 4,
+            'is_active': True
+        }
     )
     
     # Інші головні категорії (без підкатегорій)
-    Category.objects.create(
-        name='Аналітика і скаутинг',
+    Category.objects.get_or_create(
         slug='analytics',
-        description='Матеріали з аналітики та скаутингу',
-        order=2,
-        is_active=True
+        defaults={
+            'name': 'Аналітика і скаутинг',
+            'description': 'Матеріали з аналітики та скаутингу',
+            'order': 2,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Менеджмент',
+    Category.objects.get_or_create(
         slug='management',
-        description='Менеджмент у футболі',
-        order=3,
-        is_active=True
+        defaults={
+            'name': 'Менеджмент',
+            'description': 'Менеджмент у футболі',
+            'order': 3,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Спортивна психологія',
+    Category.objects.get_or_create(
         slug='psychology',
-        description='Психологія у спорті',
-        order=4,
-        is_active=True
+        defaults={
+            'name': 'Спортивна психологія',
+            'description': 'Психологія у спорті',
+            'order': 4,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Нутриціологія',
+    Category.objects.get_or_create(
         slug='nutrition',
-        description='Харчування спортсменів',
-        order=5,
-        is_active=True
+        defaults={
+            'name': 'Нутриціологія',
+            'description': 'Харчування спортсменів',
+            'order': 5,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Реабілітація',
+    Category.objects.get_or_create(
         slug='rehabilitation',
-        description='Реабілітація та відновлення',
-        order=6,
-        is_active=True
+        defaults={
+            'name': 'Реабілітація',
+            'description': 'Реабілітація та відновлення',
+            'order': 6,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Футболіст',
+    Category.objects.get_or_create(
         slug='player',
-        description='Матеріали для гравців',
-        order=7,
-        is_active=True
+        defaults={
+            'name': 'Футболіст',
+            'description': 'Матеріали для гравців',
+            'order': 7,
+            'is_active': True
+        }
     )
-    Category.objects.create(
-        name='Батько',
+    Category.objects.get_or_create(
         slug='parent',
-        description='Матеріали для батьків юних футболістів',
-        order=8,
-        is_active=True
+        defaults={
+            'name': 'Батько',
+            'description': 'Матеріали для батьків юних футболістів',
+            'order': 8,
+            'is_active': True
+        }
     )
 
 

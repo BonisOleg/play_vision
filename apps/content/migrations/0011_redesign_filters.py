@@ -15,16 +15,6 @@ class Migration(migrations.Migration):
             name='category',
             options={'ordering': ['order', 'name'], 'verbose_name': 'Category', 'verbose_name_plural': 'Categories'},
         ),
-        migrations.RenameIndex(
-            model_name='monthlyquote',
-            new_name='monthly_quo_month_cc6c8a_idx',
-            old_name='monthly_quotes_month_active_idx',
-        ),
-        migrations.RenameIndex(
-            model_name='tag',
-            new_name='tags_tag_typ_cd4419_idx',
-            old_name='tags_type_order_idx',
-        ),
         migrations.RemoveField(
             model_name='course',
             name='badge_type',
