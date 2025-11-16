@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cms', '0002_add_cms_models'),
-        ('content', '0013_rename_monthly_quotes_month_active_idx_monthly_quo_month_cc6c8a_idx_and_more'),
+        ('content', '0012_populate_new_categories'),
     ]
 
     operations = [

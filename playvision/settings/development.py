@@ -8,14 +8,8 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '*']
 
-# Development specific middleware
-# MIDDLEWARE += [
-#     'playvision.middleware.NoCacheMiddleware',
-#     'playvision.middleware.SecurityHeadersMiddleware', 
-#     'playvision.middleware.AnalyticsMiddleware',
-# ]
-
 # Django Silk profiling (development only)
+INSTALLED_APPS += ['silk']
 MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
 
 # Silk Settings

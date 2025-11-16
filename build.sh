@@ -88,7 +88,8 @@ except Exception as e:
 " || echo "⚠️ Migration fix failed, continuing..."
 
 echo "🗄️ Running migrations..."
-python manage.py migrate --noinput
+# Use fake-initial to skip migrations if tables already exist
+python manage.py migrate --fake-initial --noinput
 
 echo "✅ Migrations completed. Checking loyalty app tables..."
 python -c "
