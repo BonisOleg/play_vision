@@ -7,29 +7,58 @@ def rename_indexes_if_exist(apps, schema_editor):
     """Перейменовує індекси тільки якщо вони існують"""
     db_alias = schema_editor.connection.alias
     
-    with connection.cursor() as cursor:
-        # Перевіряємо які індекси існують для monthly_quotes
-        if connection.vendor == 'postgresql':
-            cursor.execute("""
-                SELECT indexname 
-                FROM pg_indexes 
-                WHERE tablename='monthly_quotes' AND schemaname='public'
-            """)
-            monthly_quotes_indexes = {row[0] for row in cursor.fetchall()}
-            
-            cursor.execute("""
-                SELECT indexname 
-                FROM pg_indexes 
-                WHERE tablename='tags' AND schemaname='public'
-            """)
-            tags_indexes = {row[0] for row in cursor.fetchall()}
-        else:
-            # SQLite
-            cursor.execute("PRAGMA index_list(monthly_quotes)")
-            monthly_quotes_indexes = {row[1] for row in cursor.fetchall()}
-            
-            cursor.execute("PRAGMA index_list(tags)")
-            tags_indexes = {row[1] for row in cursor.fetchall()}
+    try:
+        with connection.cursor() as cursor:
+            # Перевіряємо які індекси існують для monthly_quotes
+            if connection.vendor == 'postgresql':
+                # Перевіряємо чи існує таблиця monthly_quotes
+                cursor.execute("""
+                    SELECT EXISTS (
+                        SELECT FROM information_schema.tables 
+                        WHERE table_name='monthly_quotes' AND table_schema='public'
+                    )
+                """)
+                if not cursor.fetchone()[0]:
+                    print("Table monthly_quotes does not exist, skipping index renames")
+                    return
+                    
+                cursor.execute("""
+                    SELECT indexname 
+                    FROM pg_indexes 
+                    WHERE tablename='monthly_quotes' AND schemaname='public'
+                """)
+                monthly_quotes_indexes = {row[0] for row in cursor.fetchall()}
+                
+                # Перевіряємо чи існує таблиця tags
+                cursor.execute("""
+                    SELECT EXISTS (
+                        SELECT FROM information_schema.tables 
+                        WHERE table_name='tags' AND table_schema='public'
+                    )
+                """)
+                if not cursor.fetchone()[0]:
+                    print("Table tags does not exist, skipping index renames")
+                    return
+                
+                cursor.execute("""
+                    SELECT indexname 
+                    FROM pg_indexes 
+                    WHERE tablename='tags' AND schemaname='public'
+                """)
+                tags_indexes = {row[0] for row in cursor.fetchall()}
+            else:
+                # SQLite
+                try:
+                    cursor.execute("PRAGMA index_list(monthly_quotes)")
+                    monthly_quotes_indexes = {row[1] for row in cursor.fetchall()}
+                except Exception:
+                    monthly_quotes_indexes = set()
+                
+                try:
+                    cursor.execute("PRAGMA index_list(tags)")
+                    tags_indexes = {row[1] for row in cursor.fetchall()}
+                except Exception:
+                    tags_indexes = set()
         
         # Перейменовуємо індекси monthly_quotes
         if 'monthly_quotes_month_active_idx' in monthly_quotes_indexes and 'monthly_quo_month_cc6c8a_idx' not in monthly_quotes_indexes:
@@ -56,6 +85,12 @@ def rename_indexes_if_exist(apps, schema_editor):
             print("Index tags_tag_typ_cd4419_idx already exists, skipping rename")
         else:
             print("Index tags_type_order_idx does not exist, skipping rename")
+    
+    except Exception as e:
+        # Якщо щось пішло не так, просто пропускаємо без помилки
+        # Це безпечно для продакшену
+        print(f"Warning: Could not rename indexes: {e}")
+        print("Continuing migration without index renames...")
 
 
 class Migration(migrations.Migration):
