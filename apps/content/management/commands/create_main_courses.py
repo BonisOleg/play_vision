@@ -104,7 +104,6 @@ class Command(BaseCommand):
                 defaults={
                     **course_data,
                     'is_published': True,
-                    'is_classic': True,  # Позначаємо як "основну програму"
                     'is_free': False,
                     'requires_subscription': True,
                 }
@@ -120,11 +119,6 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.SUCCESS(
                 f'\nГотово! Створено: {created_count}, Оновлено: {updated_count}'
-            )
-        )
-        self.stdout.write(
-            self.style.WARNING(
-                '\nПримітка: Курси позначені як is_classic=True для відображення в секції "Наші основні програми"'
             )
         )
 

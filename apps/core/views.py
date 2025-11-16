@@ -34,15 +34,8 @@ class HomeView(TemplateView):
         
         # Main courses (Наші основні програми) - світлий фон, 6+ курсів
         context['main_courses'] = Course.objects.filter(
-            is_published=True,
-            is_classic=True  # Використовуємо is_classic для "основних програм"
-        ).select_related('category').prefetch_related('tags')[:8]
-        
-        # Якщо немає курсів з is_classic, беремо найпопулярніші
-        if not context['main_courses'].exists():
-            context['main_courses'] = Course.objects.filter(
-                is_published=True
-            ).select_related('category').prefetch_related('tags').order_by('-created_at')[:6]
+            is_published=True
+        ).select_related('category').order_by('-created_at')[:8]
         
         # CMS контент
         from apps.cms.models import HeroSlide, PageSection, ExpertCard, HexagonItem
