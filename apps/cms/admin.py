@@ -3,7 +3,8 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from .models import (
     Page, Banner, MenuItem, FAQ, Testimonial, Setting, ContentBlock,
-    HeroSlide, PageSection, SectionBlock, ExpertCard, HexagonItem
+    HeroSlide, PageSection, SectionBlock, ExpertCard, HexagonItem,
+    FeaturedCourse, PageSVG, EventGridCell, TrackingPixel
 )
 
 
@@ -184,8 +185,144 @@ class HexagonItemAdmin(admin.ModelAdmin):
     )
     
     class Media:
-        css = {'all': ('admin/css/cms_admin.css',)}
-        js = ('admin/js/cms_admin.js',)
+        css = {'all': ('admin/css/cms_admin.css', 'admin/css/playvision-admin.css')}
+        js = ('admin/js/cms_admin.js', 'admin/js/playvision-admin.js')
+
+
+@admin.register(FeaturedCourse)
+class FeaturedCourseAdmin(admin.ModelAdmin):
+    """Admin for featured courses carousel (7-12 courses)"""
+    list_display = ['course', 'page', 'order', 'is_active']
+    list_editable = ['order', 'is_active']
+    list_filter = ['page', 'is_active']
+    search_fields = ['course__title']
+    raw_id_fields = ('course',)
+    ordering = ['page', 'order']
+    
+    fieldsets = (
+        ('Course Selection', {
+            'fields': ('course', 'page', 'order'),
+            'description': 'Select course to feature. Order determines carousel position (1-12).'
+        }),
+        ('Display', {
+            'fields': ('is_active',),
+        }),
+    )
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('course')
+    
+    class Media:
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)
+
+
+@admin.register(PageSVG)
+class PageSVGAdmin(admin.ModelAdmin):
+    """Admin for SVG icons with 4 versions"""
+    list_display = ['name', 'page', 'section', 'is_active']
+    list_filter = ['page', 'is_active']
+    search_fields = ['name', 'page', 'section']
+    ordering = ['page', 'section', 'name']
+    
+    fieldsets = (
+        ('Location', {
+            'fields': ('name', 'page', 'section'),
+            'description': 'Where this SVG is used (e.g. page=about, section=section2)'
+        }),
+        ('Ukraine Version', {
+            'fields': ('svg_ua_light', 'svg_ua_dark'),
+            'description': 'SVG code for Ukraine audience (light and dark themes)'
+        }),
+        ('World Version (Optional)', {
+            'fields': ('svg_world_light', 'svg_world_dark'),
+            'description': 'SVG code for non-Ukraine audience (leave blank to use Ukraine version)',
+            'classes': ('collapse',)
+        }),
+        ('Display', {
+            'fields': ('is_active',),
+        }),
+    )
+    
+    class Media:
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)
+
+
+@admin.register(EventGridCell)
+class EventGridCellAdmin(admin.ModelAdmin):
+    """Admin for events hero grid (9 cells)"""
+    list_display = ['position', 'get_image_preview', 'alt_text', 'is_active']
+    list_editable = ['is_active']
+    list_filter = ['is_active']
+    ordering = ['position']
+    
+    fieldsets = (
+        ('Position', {
+            'fields': ('position',),
+            'description': 'Grid position: 1=top-left, 9=bottom-right'
+        }),
+        ('Image/GIF', {
+            'fields': ('image', 'alt_text'),
+            'description': 'Upload image or GIF animation'
+        }),
+        ('Display', {
+            'fields': ('is_active',),
+        }),
+    )
+    
+    readonly_fields = ['get_image_preview']
+    
+    def get_image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" class="pv-grid-preview" style="max-width: 150px; border-radius: 6px;" />',
+                obj.image.url
+            )
+        return "No image"
+    get_image_preview.short_description = 'Preview'
+    
+    class Media:
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)
+
+
+@admin.register(TrackingPixel)
+class TrackingPixelAdmin(admin.ModelAdmin):
+    """Admin for Facebook & Google tracking pixels"""
+    list_display = ['name', 'pixel_type', 'pixel_id', 'placement', 'is_active']
+    list_editable = ['is_active']
+    list_filter = ['pixel_type', 'placement', 'is_active']
+    search_fields = ['name', 'pixel_id']
+    
+    fieldsets = (
+        ('Pixel Information', {
+            'fields': ('name', 'pixel_type', 'pixel_id'),
+            'description': 'Basic pixel identification'
+        }),
+        ('Code Snippet', {
+            'fields': ('code_snippet',),
+            'description': mark_safe("""
+                <div class="cms-help-box">
+                    <p>Paste complete pixel code including &lt;script&gt; tags.</p>
+                    <p>Example: Facebook Pixel, Google Analytics gtag.js code</p>
+                </div>
+            """)
+        }),
+        ('Placement', {
+            'fields': ('placement',),
+            'description': 'Where to inject the pixel code in templates'
+        }),
+        ('Status', {
+            'fields': ('is_active',),
+        }),
+    )
+    
+    readonly_fields = ['created_at', 'updated_at']
+    
+    class Media:
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)
 
 
 # Реєстрація існуючих моделей (якщо ще не зареєстровані)

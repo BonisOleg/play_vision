@@ -40,3 +40,31 @@ pywebpush==1.14.1
 
 # Payments (LiqPay) - офіційний SDK з GitHub
 git+https://github.com/liqpay/sdk-python.git
+
+# Redis & Caching
+redis==5.0.1
+django-redis==5.4.0
+hiredis==2.3.2
+
+# Celery & Async
+celery==5.3.4
+flower==2.0.1
+
+# GeoIP
+geoip2==4.7.0
+
+# Monitoring & Logging
+sentry-sdk==1.38.0
+python-json-logger==2.0.7
+django-silk==5.0.4
+
+# Testing
+pytest==7.4.3
+pytest-django==4.7.0
+factory-boy==3.3.0
+pytest-cov==4.1.0
+
+# Admin Enhancements
+django-admin-sortable2==2.1.10
+django-import-export==3.3.5
+django-admin-autocomplete-filter==0.7.1

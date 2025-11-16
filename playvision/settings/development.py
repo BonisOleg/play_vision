@@ -8,12 +8,23 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '*']
 
-# Development specific middleware - disable for now
+# Development specific middleware
 # MIDDLEWARE += [
 #     'playvision.middleware.NoCacheMiddleware',
 #     'playvision.middleware.SecurityHeadersMiddleware', 
 #     'playvision.middleware.AnalyticsMiddleware',
 # ]
+
+# Django Silk profiling (development only)
+MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
+
+# Silk Settings
+SILKY_PYTHON_PROFILER = True
+SILKY_PYTHON_PROFILER_BINARY = True
+SILKY_MAX_REQUEST_BODY_SIZE = 10240  # 10KB
+SILKY_MAX_RESPONSE_BODY_SIZE = 10240
+SILKY_INTERCEPT_PERCENT = 100
+SILKY_MAX_RECORDED_REQUESTS = 1000
 
 # Maintenance mode (disabled by default)
 MAINTENANCE_MODE = False

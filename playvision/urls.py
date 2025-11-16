@@ -5,10 +5,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from apps.core import views as core_views
 
 
 urlpatterns = [
     # Admin
+    path('admin/dashboard/', core_views.admin_dashboard, name='admin_dashboard'),
     path('admin/', admin.site.urls),
     
     # Core pages
@@ -60,5 +62,11 @@ if settings.DEBUG:
         urlpatterns = [
             path('__debug__/', include(debug_toolbar.urls)),
         ] + urlpatterns
+    except ImportError:
+        pass
+    
+    # Django Silk profiling
+    try:
+        urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
     except ImportError:
         pass

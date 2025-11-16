@@ -1,0 +1,199 @@
+{% extends "admin/base_site.html" %}
+{% load static humanize %}
+
+{% block title %}Dashboard | PlayVision Admin{% endblock %}
+
+{% block content %}
+<div class="pv-dashboard">
+    <div class="pv-dashboard-header">
+        <h1>Analytics Dashboard</h1>
+        
+        <div class="pv-period-selector">
+            <a href="?period=today" class="pv-btn {% if period == 'today' %}pv-btn-primary{% else %}pv-btn-outline{% endif %}">
+                Today
+            </a>
+            <a href="?period=week" class="pv-btn {% if period == 'week' %}pv-btn-primary{% else %}pv-btn-outline{% endif %}">
+                Last 7 Days
+            </a>
+            <a href="?period=month" class="pv-btn {% if period == 'month' %}pv-btn-primary{% else %}pv-btn-outline{% endif %}">
+                Last 30 Days
+            </a>
+        </div>
+    </div>
+    
+    <div class="pv-dashboard-grid">
+        <div class="pv-stat-card">
+            <div class="pv-stat-value">{{ total_users|intcomma }}</div>
+            <div class="pv-stat-label">Total Users</div>
+            <div class="pv-stat-change">+{{ new_users|intcomma }} {{ period_display }}</div>
+        </div>
+        
+        <div class="pv-stat-card" style="background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);">
+            <div class="pv-stat-value">₴{{ period_revenue|floatformat:0|intcomma }}</div>
+            <div class="pv-stat-label">Revenue {{ period_display }}</div>
+            <div class="pv-stat-change">{{ payment_count|intcomma }} payments</div>
+        </div>
+        
+        <div class="pv-stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="pv-stat-value">{{ avg_session_minutes|floatformat:1 }}<small style="font-size: 1.5rem;">m</small></div>
+            <div class="pv-stat-label">Avg Session Duration</div>
+            <div class="pv-stat-change">{{ total_time_hours|floatformat:1 }}h total time</div>
+        </div>
+        
+        <div class="pv-stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="pv-stat-value">{{ session_count|intcomma }}</div>
+            <div class="pv-stat-label">Total Sessions</div>
+            <div class="pv-stat-change">{{ period_display }}</div>
+        </div>
+    </div>
+    
+    <div class="pv-content-grid" style="margin-top: 2rem;">
+        <div class="pv-card">
+            <div class="pv-card-header">
+                <h2 class="pv-card-title">Top Courses by Views</h2>
+            </div>
+            <div class="pv-card-body">
+                <table class="pv-table">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th style="text-align: right;">Views</th>
+                            <th style="text-align: right;">Enrollments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in top_courses %}
+                        <tr>
+                            <td>{{ course.title|truncatechars:50 }}</td>
+                            <td style="text-align: right;"><strong>{{ course.view_count|intcomma }}</strong></td>
+                            <td style="text-align: right;">{{ course.enrollment_count|intcomma }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: #999;">No data available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="pv-card">
+            <div class="pv-card-header">
+                <h2 class="pv-card-title">Quick Actions</h2>
+            </div>
+            <div class="pv-card-body">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <a href="{% url 'admin:content_course_add' %}" class="pv-btn">
+                        Add New Course
+                    </a>
+                    <a href="{% url 'admin:events_event_add' %}" class="pv-btn pv-btn-secondary">
+                        Create Event
+                    </a>
+                    <a href="{% url 'admin:cms_heroslide_changelist' %}" class="pv-btn pv-btn-outline">
+                        Manage Hero Slides
+                    </a>
+                    <a href="{% url 'admin:core_auditlog_changelist' %}" class="pv-btn pv-btn-outline">
+                        View Audit Logs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if latest_stats %}
+    <div class="pv-card" style="margin: 2rem;">
+        <div class="pv-card-header">
+            <h2 class="pv-card-title">Latest Stats Snapshot</h2>
+            <small style="color: #999;">{{ latest_stats.date }}</small>
+        </div>
+        <div class="pv-card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div>
+                    <strong>Active Users:</strong> {{ latest_stats.active_users_today }}
+                </div>
+                <div>
+                    <strong>Revenue Today:</strong> ₴{{ latest_stats.revenue_today|floatformat:2 }}
+                </div>
+                <div>
+                    <strong>Avg Session:</strong> {{ latest_stats.avg_session_minutes|floatformat:1 }}m
+                </div>
+                <div>
+                    <strong>Last Updated:</strong> {{ latest_stats.updated_at|timesince }} ago
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.pv-dashboard {
+    padding: 2rem;
+}
+
+.pv-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.pv-period-selector {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.pv-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pv-table thead tr {
+    background: #f0f0f0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.pv-table th,
+.pv-table td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.pv-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.pv-table tbody tr:hover {
+    background: #f8f8f8;
+}
+
+@media (max-width: 768px) {
+    .pv-dashboard {
+        padding: 1rem;
+    }
+    
+    .pv-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .pv-period-selector {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .pv-table {
+        font-size: 0.875rem;
+    }
+    
+    .pv-table th,
+    .pv-table td {
+        padding: 0.5rem;
+    }
+}
+</style>
+{% endblock %}
+

@@ -166,6 +166,73 @@ class AnalyticsMiddleware(MiddlewareMixin):
         return request.META.get('REMOTE_ADDR')
 
 
+class CountryDetectionMiddleware:
+    """
+    Detect user country from IP and attach to request
+    Uses GeolocationService with caching
+    """
+    
+    def __init__(self, get_response):
+        self.get_response = get_response
+    
+    def __call__(self, request):
+        # Get real client IP (handle proxies)
+        from apps.core.services import get_client_ip, GeolocationService
+        
+        ip = get_client_ip(request)
+        
+        # Attach IP to request
+        request.client_ip = ip
+        
+        # Detect country
+        country = GeolocationService.get_country_from_ip(ip)
+        
+        # Attach country info to request
+        request.country_code = country
+        request.is_ukraine = (country == 'UA')
+        
+        response = self.get_response(request)
+        
+        # Add country header for debugging (dev only)
+        if settings.DEBUG:
+            response['X-Detected-Country'] = country
+            response['X-Client-IP'] = ip
+        
+        return response
+
+
+class AdminRateLimitMiddleware:
+    """
+    Rate limit admin login attempts to prevent brute force
+    Max 5 attempts per 15 minutes per IP
+    """
+    
+    def __init__(self, get_response):
+        self.get_response = get_response
+    
+    def __call__(self, request):
+        from django.http import HttpResponseForbidden
+        
+        # Only check admin login POST requests
+        if request.path.startswith('/admin/login/') and request.method == 'POST':
+            from apps.core.services import get_client_ip
+            
+            ip = get_client_ip(request)
+            cache_key = f"admin_login_attempts:{ip}"
+            
+            attempts = cache.get(cache_key, 0)
+            
+            if attempts >= 5:
+                return HttpResponseForbidden(
+                    "Too many login attempts. Please try again in 15 minutes."
+                )
+            
+            # Increment counter
+            cache.set(cache_key, attempts + 1, 900)  # 15 minutes TTL
+        
+        return self.get_response(request)
+
+
 class PhoneRegistrationMiddleware(MiddlewareMixin):
     """Middleware for handling phone-only registration limits and reminders"""
     

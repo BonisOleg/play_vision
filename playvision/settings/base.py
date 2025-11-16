@@ -63,6 +63,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'apps.core.services.RequestContextMiddleware',  # Request context for signals
+    'playvision.middleware.CountryDetectionMiddleware',  # GeoIP detection
+    'playvision.middleware.AdminRateLimitMiddleware',  # Admin security
     'playvision.middleware.PhoneRegistrationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -86,6 +89,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'apps.events.context_processors.event_categories_menu',
                 'apps.cart.context_processors.cart_context',
+                'apps.cms.context_processors.tracking_pixels',
+                'apps.cms.context_processors.featured_content',
             ],
         },
     },
@@ -101,11 +106,20 @@ DATABASES = {
     }
 }
 
-# Cache
+# Cache - Redis for production
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/1'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'CONNECTION_POOL_KWARGS': {'max_connections': 50},
+            'SOCKET_CONNECT_TIMEOUT': 5,
+            'SOCKET_TIMEOUT': 5,
+        },
+        'KEY_PREFIX': 'playvision',
+        'TIMEOUT': 300,  # 5 minutes default
     }
 }
 
@@ -169,9 +183,18 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = 'Play Vision <noreply@playvision.com>'
 EMAIL_SUBJECT_PREFIX = '[Play Vision] '
 
-# Celery Configuration (for future use)
-# CELERY_BROKER_URL = config('REDIS_URL', default='redis://localhost:6379/0')
-# CELERY_RESULT_BACKEND = config('REDIS_URL', default='redis://localhost:6379/0')
+# Celery Configuration
+CELERY_BROKER_URL = config('REDIS_URL', default='redis://127.0.0.1:6379/0')
+CELERY_RESULT_BACKEND = config('REDIS_URL', default='redis://127.0.0.1:6379/0')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_ENABLE_UTC = True
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 minutes
+CELERY_WORKER_SEND_TASK_EVENTS = True
+CELERY_TASK_SEND_SENT_EVENT = True
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
@@ -181,8 +204,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
 
-# Session settings
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+# Session settings - Use Redis for sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+
+# GeoIP Configuration
+GEOIP_PATH = BASE_DIR / 'geoip'
 SESSION_COOKIE_AGE = 86400 * 30  # 30 days
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'

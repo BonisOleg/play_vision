@@ -53,6 +53,89 @@ class UserSession(models.Model):
         return f"{user_info} - {self.started_at}"
 
 
+class DashboardStats(models.Model):
+    """
+    Cached dashboard statistics for admin panel
+    Refreshed hourly by Celery task
+    """
+    date = models.DateField(
+        unique=True,
+        db_index=True,
+        help_text='Date for this stats snapshot'
+    )
+    
+    # User metrics
+    total_users = models.PositiveIntegerField(
+        default=0,
+        help_text='Total registered users'
+    )
+    new_users_today = models.PositiveIntegerField(
+        default=0,
+        help_text='New users registered today'
+    )
+    active_users_today = models.PositiveIntegerField(
+        default=0,
+        help_text='Unique users active today'
+    )
+    
+    # Revenue metrics
+    total_revenue = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        default=0,
+        help_text='Total revenue all time'
+    )
+    revenue_today = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        help_text='Revenue generated today'
+    )
+    
+    # Session/Time metrics (in seconds)
+    avg_session_duration = models.PositiveIntegerField(
+        default=0,
+        help_text='Average session duration today (seconds)'
+    )
+    total_time_on_site = models.PositiveIntegerField(
+        default=0,
+        help_text='Total time users spent today (seconds)'
+    )
+    
+    # Course views (JSON: {course_id: view_count})
+    course_views_json = models.JSONField(
+        default=dict,
+        help_text='Top course views: {course_id: count}'
+    )
+    
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'analytics_dashboard_stats'
+        verbose_name = 'Dashboard Stats'
+        verbose_name_plural = 'Dashboard Stats'
+        ordering = ['-date']
+        indexes = [
+            models.Index(fields=['-date']),
+            models.Index(fields=['-updated_at']),
+        ]
+    
+    def __str__(self):
+        return f"Stats for {self.date}"
+    
+    @property
+    def avg_session_minutes(self):
+        """Get average session duration in minutes"""
+        return self.avg_session_duration / 60 if self.avg_session_duration else 0
+    
+    @property
+    def total_time_hours(self):
+        """Get total time in hours"""
+        return self.total_time_on_site / 3600 if self.total_time_on_site else 0
+
+
 class PageView(models.Model):
     """
     Перегляди сторінок

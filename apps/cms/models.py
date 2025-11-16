@@ -537,3 +537,237 @@ class HexagonItem(models.Model):
     
     def __str__(self):
         return self.title
+
+
+class FeaturedCourse(models.Model):
+    """
+    Featured courses for homepage carousel (7-12 courses)
+    """
+    course = models.ForeignKey(
+        'content.Course',
+        on_delete=models.CASCADE,
+        verbose_name='Курс',
+        help_text='Курс для відображення на головній'
+    )
+    page = models.CharField(
+        'Сторінка',
+        max_length=50,
+        default='home',
+        db_index=True,
+        help_text='На якій сторінці відображати (home, hub тощо)'
+    )
+    order = models.PositiveIntegerField(
+        'Порядок',
+        help_text='Порядок відображення (1-12)'
+    )
+    is_active = models.BooleanField('Активний', default=True, db_index=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_featured_courses'
+        verbose_name = 'Вибраний курс'
+        verbose_name_plural = 'Вибрані курси'
+        ordering = ['page', 'order']
+        unique_together = [('page', 'order'), ('page', 'course')]
+        indexes = [
+            models.Index(fields=['page', 'is_active', 'order']),
+        ]
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(order__gte=1) & models.Q(order__lte=12),
+                name='featured_course_order_range'
+            ),
+        ]
+    
+    def __str__(self):
+        return f"{self.page}: {self.course.title} (#{self.order})"
+
+
+class PageSVG(models.Model):
+    """
+    SVG icons with 4 versions: UA light/dark + World light/dark
+    """
+    name = models.CharField(
+        'Назва',
+        max_length=100,
+        unique=True,
+        help_text='Унікальна назва SVG (наприклад: about_section2)'
+    )
+    page = models.CharField(
+        'Сторінка',
+        max_length=50,
+        db_index=True,
+        help_text='Сторінка де використовується (about, mentor, home)'
+    )
+    section = models.CharField(
+        'Секція',
+        max_length=50,
+        blank=True,
+        help_text='Номер секції (section2, section3 тощо)'
+    )
+    
+    # 4 versions of SVG code
+    svg_ua_light = models.TextField(
+        'SVG (Ukraine, Light)',
+        help_text='SVG код для України в світлій темі'
+    )
+    svg_ua_dark = models.TextField(
+        'SVG (Ukraine, Dark)',
+        blank=True,
+        help_text='SVG код для України в темній темі'
+    )
+    svg_world_light = models.TextField(
+        'SVG (World, Light)',
+        blank=True,
+        help_text='SVG код для світу в світлій темі (якщо порожнє - показується UA)'
+    )
+    svg_world_dark = models.TextField(
+        'SVG (World, Dark)',
+        blank=True,
+        help_text='SVG код для світу в темній темі'
+    )
+    
+    is_active = models.BooleanField('Активний', default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_page_svg'
+        verbose_name = 'SVG елемент'
+        verbose_name_plural = 'SVG елементи'
+        ordering = ['page', 'section', 'name']
+        indexes = [
+            models.Index(fields=['page', 'is_active']),
+        ]
+    
+    def __str__(self):
+        return f"{self.page}/{self.section}: {self.name}"
+    
+    def get_svg(self, country='UA', theme='light'):
+        """
+        Get appropriate SVG code based on country and theme
+        
+        Args:
+            country: 'UA' or 'WORLD'
+            theme: 'light' or 'dark'
+        
+        Returns:
+            str: SVG code
+        """
+        field_name = f"svg_{country.lower()}_{theme}"
+        svg_code = getattr(self, field_name, '')
+        
+        # Fallback to UA if World version is empty
+        if not svg_code and country != 'UA':
+            field_name = f"svg_ua_{theme}"
+            svg_code = getattr(self, field_name, '')
+        
+        # Fallback to light if dark version is empty
+        if not svg_code and theme == 'dark':
+            field_name = f"svg_{country.lower()}_light"
+            svg_code = getattr(self, field_name, '')
+        
+        return svg_code
+
+
+class EventGridCell(models.Model):
+    """
+    Grid cells for events hero section (9 cells with GIF/images)
+    """
+    position = models.PositiveIntegerField(
+        'Позиція',
+        unique=True,
+        help_text='Позиція в сітці (1-9): 1=верх зліва, 9=низ справа'
+    )
+    image = models.ImageField(
+        'Зображення/GIF',
+        upload_to='cms/event_grid/',
+        help_text='Зображення або GIF для комірки'
+    )
+    alt_text = models.CharField(
+        'Alt текст',
+        max_length=200,
+        blank=True,
+        help_text='Опис зображення для доступності'
+    )
+    is_active = models.BooleanField('Активний', default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_event_grid_cells'
+        verbose_name = 'Комірка сітки івентів'
+        verbose_name_plural = 'Комірки сітки івентів'
+        ordering = ['position']
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(position__gte=1) & models.Q(position__lte=9),
+                name='event_grid_cell_position_range'
+            ),
+        ]
+    
+    def __str__(self):
+        return f"Position {self.position}"
+
+
+class TrackingPixel(models.Model):
+    """
+    Tracking pixels for Facebook and Google Analytics
+    """
+    PIXEL_TYPES = [
+        ('facebook', 'Facebook Pixel'),
+        ('google_analytics', 'Google Analytics'),
+        ('google_tag_manager', 'Google Tag Manager'),
+        ('custom', 'Custom Pixel'),
+    ]
+    
+    PLACEMENT_CHOICES = [
+        ('head', 'Head Section'),
+        ('body_start', 'Body Start'),
+        ('body_end', 'Body End'),
+    ]
+    
+    name = models.CharField(
+        'Назва',
+        max_length=100,
+        help_text='Описова назва пікселя'
+    )
+    pixel_type = models.CharField(
+        'Тип пікселя',
+        max_length=30,
+        choices=PIXEL_TYPES
+    )
+    pixel_id = models.CharField(
+        'ID пікселя',
+        max_length=100,
+        help_text='FB Pixel ID, GA Measurement ID тощо'
+    )
+    code_snippet = models.TextField(
+        'Код пікселя',
+        help_text='Повний код для вставки в template'
+    )
+    placement = models.CharField(
+        'Розташування',
+        max_length=20,
+        choices=PLACEMENT_CHOICES,
+        default='head',
+        help_text='Де розмістити код'
+    )
+    is_active = models.BooleanField('Активний', default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_tracking_pixels'
+        verbose_name = 'Tracking Pixel'
+        verbose_name_plural = 'Tracking Pixels'
+        ordering = ['-created_at']
+        unique_together = [('pixel_type', 'pixel_id')]
+    
+    def __str__(self):
+        return f"{self.name} ({self.get_pixel_type_display()})"
