@@ -40,10 +40,6 @@ function initCalendarCarousel() {
             const pageNumber = String(currentIndex + 1).padStart(2, '0');
             currentPageEl.textContent = pageNumber;
         }
-        
-        cards.forEach((card, index) => {
-            card.classList.toggle('active', index === currentIndex);
-        });
     }
     
     prevBtn.addEventListener('click', () => {
@@ -90,9 +86,7 @@ function initEventFilters() {
             eventCards.forEach(card => {
                 const cardType = card.dataset.type;
                 
-                if (filter === 'fff') {
-                    card.style.display = 'flex';
-                } else if (filter === 'online') {
+                if (filter === 'online') {
                     card.style.display = cardType === 'online' ? 'flex' : 'none';
                 } else if (filter === 'offline') {
                     card.style.display = cardType === 'offline' ? 'flex' : 'none';
