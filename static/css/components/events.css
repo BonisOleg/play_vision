@@ -153,15 +153,6 @@
     min-height: 200px;
     display: flex;
     flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
-
-.calendar-card-disabled {
-    pointer-events: none;
-    opacity: 0.6;
-    cursor: default;
 }
 
 .calendar-card:hover {
@@ -221,13 +212,22 @@
     transition: all 0.3s ease;
     border: 2px solid #171717;
     align-self: flex-start;
-    pointer-events: none;
+}
+
+.btn-details:hover {
+    background: #ffffff;
+    color: #171717;
 }
 
 .calendar-card:hover .btn-details {
     background: #ffffff;
     color: #171717;
     border-color: #ffffff;
+}
+
+.calendar-card:hover .btn-details:hover {
+    background: #171717;
+    color: #ffffff;
 }
 
 .btn-arrow {
