@@ -69,7 +69,7 @@ def create_new_categories(apps, schema_editor):
     Category.objects.get_or_create(
         slug='analytics',
         defaults={
-            'name': 'Аналітика і скаутинг',
+            'name': 'Аналітика та скаутинг',
             'description': 'Матеріали з аналітики та скаутингу',
             'order': 2,
             'is_active': True

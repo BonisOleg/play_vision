@@ -244,7 +244,7 @@
 /* Filter Actions */
 .hub-filter-actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
     margin-top: var(--spacing-lg);
     padding-top: var(--spacing-md);
@@ -252,7 +252,7 @@
 }
 
 .hub-filter-btn {
-    width: 100%;
+    flex: 1;
     padding: 12px 20px;
     font-size: 0.9375rem;
     font-weight: 600;
@@ -267,7 +267,7 @@
 }
 
 .hub-filter-btn-primary {
-    background: var(--hub-primary);
+    background: #E50914;
     color: #FFFFFF;
 }
 
@@ -276,12 +276,12 @@
 }
 
 .hub-filter-btn-secondary {
-    background: var(--hub-secondary);
+    background: #E50914;
     color: #FFFFFF;
 }
 
 .hub-filter-btn-secondary:hover {
-    background: #333333;
+    background: #B20710;
 }
 
 /* Grid продуктів */
