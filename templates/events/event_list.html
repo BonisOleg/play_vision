@@ -124,7 +124,8 @@
                         <div class="calendar-carousel-container">
                             <div class="calendar-carousel-track">
                                 {% for day in calendar_days %}
-                                <div class="calendar-card">
+                                <a href="{% if day.event %}{% url 'events:event_detail' day.event.slug %}{% else %}#{% endif %}" 
+                                   class="calendar-card {% if not day.event %}calendar-card-disabled{% endif %}">
                                     <div class="calendar-card-header">
                                         <div class="calendar-event-name">/// {% if day.event %}{{ day.event.title }}{% else %}Назва Івенту{% endif %}</div>
                                         <div class="calendar-event-date">{{ day.date|date:"d.m.Y" }}</div>
@@ -132,11 +133,11 @@
                                     <p class="calendar-event-description">
                                         {% if day.event %}{{ day.event.short_description|truncatewords:15 }}{% else %}Опис майбутньої події. Детальна інформація буде доступна найближчим часом.{% endif %}
                                     </p>
-                                    <a href="{% if day.event %}{% url 'events:event_detail' day.event.slug %}{% else %}#{% endif %}" class="btn-details">
+                                    <span class="btn-details">
                                         <span class="btn-text">Детальніше</span>
                                         <span class="btn-arrow"></span>
-                                    </a>
-                                </div>
+                                    </span>
+                                </a>
                                 {% endfor %}
                             </div>
                         </div>
