@@ -2,14 +2,25 @@
    ABOUT PAGE - Сторінка "Про нас"
    ============================================ */
 
-/* === 1. HERO SECTION === */
+/* === 1. HERO SECTION AS CARD === */
 .about-hero {
-    min-height: calc(100vh - 80px);
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
     position: relative;
+    min-height: 600px;
 }
 
 .about-hero .section-bg {
     background-color: #171717;
+}
+
+/* Зображення має заповнювати картку і обрізатись */
+.about-hero .section-bg-image {
+    object-fit: cover;
 }
 
 .about-hero .section-overlay--gradient {
@@ -66,6 +77,10 @@
 }
 
 /* === ТЕМНА ТЕМА === */
+[data-theme="dark"] .about-hero {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
 [data-theme="dark"] .about-hero .section-bg {
     background-color: #0a0a0a;
 }
@@ -86,6 +101,10 @@
 
 /* === AUTO THEME === */
 @media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .about-hero {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
     [data-theme="auto"] .about-hero .section-bg {
         background-color: #0a0a0a;
     }
@@ -108,7 +127,9 @@
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
     .about-hero {
-        min-height: calc(100vh - 70px);
+        width: 90%;
+        margin: 25px auto;
+        min-height: 500px;
     }
 
     .about-mission-section .section-title,
@@ -122,7 +143,10 @@
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
     .about-hero {
-        min-height: calc(100vh - 60px);
+        width: 95%;
+        margin: 20px auto;
+        border-radius: 10px;
+        min-height: 500px;
     }
 
     .about-mission-section .section-title,
@@ -146,7 +170,10 @@
 /* === МАЛИЙ МОБАЙЛ === */
 @media (max-width: 480px) {
     .about-hero {
-        min-height: calc(100vh - 60px);
+        width: 95%;
+        margin: 20px auto;
+        border-radius: 10px;
+        min-height: 500px;
     }
 
     .about-mission-section .section-title,
@@ -163,6 +190,9 @@
 /* === iOS SAFARI SPECIFIC === */
 @supports (-webkit-touch-callout: none) {
     .about-hero {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
         -webkit-overflow-scrolling: touch;
     }
 

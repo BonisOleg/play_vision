@@ -2,11 +2,16 @@
    МЕНТОР КОУЧИНГ СТОРІНКА
    ============================================ */
 
-/* === HERO SECTION === */
+/* === HERO SECTION AS CARD === */
 .mentoring-hero {
-    height: calc(100vh - 80px);
-    min-height: 520px;
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
     position: relative;
+    min-height: 600px;
 }
 
 .mentoring-hero .section-bg-image {
@@ -18,6 +23,17 @@
 
 .mentoring-hero .section-overlay {
     opacity: 0.3;
+}
+
+/* Dark theme для hero-картки */
+[data-theme="dark"] .mentoring-hero {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-hero {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
 }
 
 /* === ЩО ТАКЕ МЕНТОР КОУЧИНГ === */
@@ -434,9 +450,9 @@
     }
 
     .mentoring-hero {
-        height: calc(100vh - 70px);
-        min-height: 450px;
-        margin-top: 70px;
+        width: 90%;
+        margin: 25px auto;
+        min-height: 500px;
     }
 
     .mentoring-what-section,
@@ -527,9 +543,10 @@
     }
 
     .mentoring-hero {
-        height: calc(60vh - 60px);
-        min-height: 350px;
-        margin-top: 60px;
+        width: 95%;
+        margin: 20px auto;
+        border-radius: 10px;
+        min-height: 500px;
     }
 
     .mentoring-what-section,
@@ -639,9 +656,10 @@
     }
 
     .mentoring-hero {
-        height: calc(50vh - 60px);
-        min-height: 300px;
-        margin-top: 60px;
+        width: 95%;
+        margin: 20px auto;
+        border-radius: 10px;
+        min-height: 500px;
     }
 
     .mentoring-what-section,
@@ -758,6 +776,7 @@
     .mentoring-hero {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+        transform: translateZ(0);
     }
 
     .mentoring-card-image {

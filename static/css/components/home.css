@@ -763,7 +763,6 @@
     .mentor-coaching-section .section-title {
         color: white;
         text-shadow: 0 2px 8px var(--shadow-alpha-80);
-        margin-top: var(--spacing-xxl);
     }
 
     .mentor-coaching-section .ecosystem-subtitle {
