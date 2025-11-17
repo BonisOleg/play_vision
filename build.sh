@@ -7,6 +7,11 @@ echo "🔧 Installing dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
 
+echo "🌍 Downloading GeoIP database..."
+mkdir -p geoip
+wget -q https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdb -O geoip/GeoLite2-Country.mmdb || echo "⚠️ GeoIP download failed, using fallback"
+chmod 644 geoip/GeoLite2-Country.mmdb || true
+
 echo "📦 Collecting static files..."
 python manage.py collectstatic --noinput --clear
 

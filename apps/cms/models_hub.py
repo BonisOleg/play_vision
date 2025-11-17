@@ -33,7 +33,7 @@ class HubHero(models.Model):
     class Meta:
         db_table = 'cms_hub_hero'
         verbose_name = 'Hero секція'
-        verbose_name_plural = 'Hero секція (Хаб знань)'
+        verbose_name_plural = '🎓 Хаб знань → Hero секція'
     
     def __str__(self):
         return "Hero - Хаб знань"

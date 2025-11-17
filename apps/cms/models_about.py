@@ -23,7 +23,7 @@ class AboutHero(models.Model):
     class Meta:
         db_table = 'cms_about_hero'
         verbose_name = 'Hero секція'
-        verbose_name_plural = 'Hero секція (Про нас)'
+        verbose_name_plural = '📖 Про нас → Hero секція'
     
     def __str__(self):
         return f"Hero - Про нас"
@@ -62,7 +62,7 @@ class AboutSection2(models.Model):
     class Meta:
         db_table = 'cms_about_section2'
         verbose_name = 'Секція 2'
-        verbose_name_plural = 'Секція 2 (Про нас)'
+        verbose_name_plural = '📖 Про нас → Секція 2'
     
     def __str__(self):
         return "Секція 2 - Про нас"
@@ -105,7 +105,7 @@ class AboutSection3(models.Model):
     class Meta:
         db_table = 'cms_about_section3'
         verbose_name = 'Секція 3'
-        verbose_name_plural = 'Секція 3 (Про нас)'
+        verbose_name_plural = '📖 Про нас → Секція 3'
     
     def __str__(self):
         return "Секція 3 - Про нас"
@@ -148,7 +148,7 @@ class AboutSection4(models.Model):
     class Meta:
         db_table = 'cms_about_section4'
         verbose_name = 'Секція 4'
-        verbose_name_plural = 'Секція 4 (Про нас)'
+        verbose_name_plural = '📖 Про нас → Секція 4'
     
     def __str__(self):
         return "Секція 4 - Про нас"

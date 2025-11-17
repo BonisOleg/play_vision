@@ -4,6 +4,13 @@ from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
+# Import dashboard stats
+from .models_dashboard import DashboardStats, CourseViewStats
+
+__all__ = ['DashboardStats', 'CourseViewStats', 'UserSession', 'PageView', 'Event', 
+           'ConversionFunnel', 'FunnelStep', 'ContentAnalytics', 'RevenueAnalytics', 
+           'UserBehaviorMetrics']
+
 
 class UserSession(models.Model):
     """
