@@ -73,6 +73,27 @@ def log_save_action(sender, instance, created, **kwargs):
     try:
         from apps.core.models import AuditLog
         from apps.core.services import get_current_request
+        from django.db import connection
+        
+        # Check if AuditLog table exists (skip during migrations)
+        with connection.cursor() as cursor:
+            if connection.vendor == 'postgresql':
+                cursor.execute("""
+                    SELECT EXISTS (
+                        SELECT FROM information_schema.tables 
+                        WHERE table_name='core_audit_logs' AND table_schema='public'
+                    )
+                """)
+                if not cursor.fetchone()[0]:
+                    return
+            else:
+                # SQLite
+                cursor.execute("""
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='core_audit_logs'
+                """)
+                if not cursor.fetchone():
+                    return
         
         # Get current request from thread-local storage
         request = get_current_request()
@@ -114,6 +135,27 @@ def log_delete_action(sender, instance, **kwargs):
     try:
         from apps.core.models import AuditLog
         from apps.core.services import get_current_request
+        from django.db import connection
+        
+        # Check if AuditLog table exists (skip during migrations)
+        with connection.cursor() as cursor:
+            if connection.vendor == 'postgresql':
+                cursor.execute("""
+                    SELECT EXISTS (
+                        SELECT FROM information_schema.tables 
+                        WHERE table_name='core_audit_logs' AND table_schema='public'
+                    )
+                """)
+                if not cursor.fetchone()[0]:
+                    return
+            else:
+                # SQLite
+                cursor.execute("""
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='core_audit_logs'
+                """)
+                if not cursor.fetchone():
+                    return
         
         request = get_current_request()
         
