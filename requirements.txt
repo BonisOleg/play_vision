@@ -44,7 +44,6 @@ git+https://github.com/liqpay/sdk-python.git
 # Redis & Caching
 redis==5.0.1
 django-redis==5.4.0
-hiredis==2.3.2
 
 # Celery & Async
 celery==5.3.4

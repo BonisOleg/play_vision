@@ -113,7 +113,6 @@ CACHES = {
         'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/1'),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'PARSER_CLASS': 'redis.connection.HiredisParser',
             'CONNECTION_POOL_KWARGS': {'max_connections': 50},
             'SOCKET_CONNECT_TIMEOUT': 5,
             'SOCKET_TIMEOUT': 5,
