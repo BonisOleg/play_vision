@@ -106,19 +106,11 @@ DATABASES = {
     }
 }
 
-# Cache - Redis for production
+# Cache - Simple DatabaseCache (NO REDIS!)
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config('REDIS_URL', default='redis://127.0.0.1:6379/1'),
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'CONNECTION_POOL_KWARGS': {'max_connections': 50},
-            'SOCKET_CONNECT_TIMEOUT': 5,
-            'SOCKET_TIMEOUT': 5,
-        },
-        'KEY_PREFIX': 'playvision',
-        'TIMEOUT': 300,  # 5 minutes default
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'django_cache_table',
     }
 }
 
@@ -182,9 +174,9 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = 'Play Vision <noreply@playvision.com>'
 EMAIL_SUBJECT_PREFIX = '[Play Vision] '
 
-# Celery Configuration
-CELERY_BROKER_URL = config('REDIS_URL', default='redis://127.0.0.1:6379/0')
-CELERY_RESULT_BACKEND = config('REDIS_URL', default='redis://127.0.0.1:6379/0')
+# Celery Configuration (NO REDIS - use database)
+CELERY_BROKER_URL = 'django://'  # Use Django DB as broker
+CELERY_RESULT_BACKEND = 'django-db'  # Use Django DB for results
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -203,12 +195,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
 
-# Session settings - Use Redis for sessions
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'default'
-
 # GeoIP Configuration
 GEOIP_PATH = BASE_DIR / 'geoip'
+
+# Session settings - Use database backend (NO REDIS!)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 86400 * 30  # 30 days
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'

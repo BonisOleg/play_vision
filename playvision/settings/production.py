@@ -32,34 +32,6 @@ DATABASES['default'] = dj_database_url.config(
     conn_health_checks=True,
 )
 
-# Cache - Use DatabaseCache as fallback if Redis not available
-# Override base.py Redis configuration
-redis_url = config('REDIS_URL', default='')
-if redis_url:
-    # Redis is available
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': redis_url,
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-                'CONNECTION_POOL_KWARGS': {'max_connections': 50},
-                'SOCKET_CONNECT_TIMEOUT': 5,
-                'SOCKET_TIMEOUT': 5,
-            },
-            'KEY_PREFIX': 'playvision',
-            'TIMEOUT': 300,
-        }
-    }
-else:
-    # Fallback to DatabaseCache
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-            'LOCATION': 'django_cache_table',
-        }
-    }
-
 # Security headers - Enhanced for production
 SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 31536000  # 1 year
