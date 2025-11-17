@@ -46,6 +46,7 @@ class MaterialInline(admin.TabularInline):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
+    """Курси 🧪 BETA"""
     list_display = ('title', 'category', 'price', 'is_featured', 'is_published', 
                    'view_count', 'enrollment_count', 'created_at')
     list_filter = ('category', 'is_featured', 'is_free', 'is_published', 

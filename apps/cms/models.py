@@ -320,25 +320,34 @@ class ContentBlock(models.Model):
 
 
 class HeroSlide(models.Model):
-    """Hero carousel slides"""
-    title = models.CharField('Заголовок', max_length=200)
-    subtitle = models.CharField('Підзаголовок', max_length=300, blank=True)
-    badge = models.CharField('Бейдж', max_length=50, blank=True, 
-                            help_text='Текст бейджу (ГОЛОВНЕ ЗАРАЗ)')
+    """Hero carousel slides with UA/World dual content"""
+    # Ukraine version (primary)
+    title_ua = models.CharField('Title (Ukraine)', max_length=200)
+    subtitle_ua = models.CharField('Subtitle (Ukraine)', max_length=300, blank=True)
+    cta_text_ua = models.CharField('CTA Text (Ukraine)', max_length=50, blank=True)
     
-    # Media
-    image = models.ImageField('Зображення', upload_to='cms/hero/', blank=True,
-                             help_text='Рекомендований розмір: 1920×1080 px')
-    video = models.FileField('Відео', upload_to='cms/hero/videos/', blank=True,
-                            help_text='MP4 формат')
+    # World version (fallback)
+    title_world = models.CharField('Title (World)', max_length=200, blank=True,
+                                   help_text='Leave blank to use Ukraine version worldwide')
+    subtitle_world = models.CharField('Subtitle (World)', max_length=300, blank=True)
+    cta_text_world = models.CharField('CTA Text (World)', max_length=50, blank=True)
     
-    # CTA
-    cta_text = models.CharField('Текст кнопки', max_length=50, blank=True)
-    cta_url = models.CharField('URL кнопки', max_length=200, blank=True)
+    badge = models.CharField('Badge', max_length=50, blank=True, 
+                            help_text='Badge text (e.g. "NEW", "TRENDING")')
+    
+    # Media (shared between versions)
+    image = models.ImageField('Image', upload_to='cms/hero/', blank=True,
+                             help_text='Recommended: 1920×1080 px')
+    video = models.FileField('Video', upload_to='cms/hero/videos/', blank=True,
+                            help_text='MP4 format')
+    
+    # CTA URL (shared)
+    cta_url = models.CharField('CTA URL', max_length=200, blank=True)
     
     # Display
-    order = models.PositiveIntegerField('Порядок', default=0)
-    is_active = models.BooleanField('Активний', default=True)
+    order = models.PositiveIntegerField('Order', default=0,
+                                       help_text='Position in carousel (1-7)')
+    is_active = models.BooleanField('Active', default=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -350,7 +359,25 @@ class HeroSlide(models.Model):
         ordering = ['order', '-created_at']
     
     def __str__(self):
-        return f"{self.title} (#{self.order})"
+        return f"{self.title_ua} (#{self.order})"
+    
+    def get_title(self, country_code='UA'):
+        """Get title by country with fallback"""
+        if country_code == 'UA' or not self.title_world:
+            return self.title_ua
+        return self.title_world
+    
+    def get_subtitle(self, country_code='UA'):
+        """Get subtitle by country with fallback"""
+        if country_code == 'UA' or not self.subtitle_world:
+            return self.subtitle_ua
+        return self.subtitle_world
+    
+    def get_cta_text(self, country_code='UA'):
+        """Get CTA text by country with fallback"""
+        if country_code == 'UA' or not self.cta_text_world:
+            return self.cta_text_ua
+        return self.cta_text_world
     
     def save(self, *args, **kwargs):
         """Auto-optimize images"""
@@ -771,3 +798,31 @@ class TrackingPixel(models.Model):
     
     def __str__(self):
         return f"{self.name} ({self.get_pixel_type_display()})"
+
+
+# Import моделей для різних сторінок
+from .models_about import AboutHero, AboutSection2, AboutSection3, AboutSection4
+from .models_hub import HubHero
+from .models_mentor import (
+    MentorHero,
+    MentorSection1Image,
+    MentorSection2,
+    MentorSection3,
+    MentorSection4,
+    MentorCoachingSVG
+)
+
+__all__ = [
+    # Існуючі
+    'Page', 'Banner', 'MenuItem', 'FAQ', 'Testimonial', 'Setting', 'ContentBlock',
+    'HeroSlide', 'PageSection', 'SectionBlock', 'ExpertCard', 'HexagonItem',
+    'FeaturedCourse', 'PageSVG', 'EventGridCell', 'TrackingPixel',
+    # Про нас
+    'AboutHero', 'AboutSection2', 'AboutSection3', 'AboutSection4',
+    # Хаб знань
+    'HubHero',
+    # Ментор коучинг
+    'MentorHero', 'MentorSection1Image', 'MentorSection2', 'MentorSection3', 'MentorSection4',
+    # Ментор на головній
+    'MentorCoachingSVG',
+]

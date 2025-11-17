@@ -1,87 +1,56 @@
 """
-CMS context processors
-Add tracking pixels and CMS data to all templates
+Context processor для визначення країни та теми
 """
-from django.core.cache import cache
-from apps.core.cache import CacheStrategy
+import geoip2.database
+from django.conf import settings
+import os
 
 
-def tracking_pixels(request):
+def get_client_ip(request):
+    """Отримати IP користувача"""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+def get_country_code(request):
+    """Визначити країну по IP"""
+    try:
+        ip = get_client_ip(request)
+        
+        # Локальні IP = UA
+        if ip in ['127.0.0.1', 'localhost'] or ip.startswith('192.168.'):
+            return 'UA'
+        
+        # GeoIP lookup
+        geoip_path = os.path.join(settings.BASE_DIR, 'geoip', 'GeoLite2-Country.mmdb')
+        if os.path.exists(geoip_path):
+            with geoip2.database.Reader(geoip_path) as reader:
+                response = reader.country(ip)
+                return response.country.iso_code
+        
+        return 'UA'  # Fallback
+    except Exception:
+        return 'UA'  # Fallback при будь-якій помилці
+
+
+def site_content(request):
     """
-    Add active tracking pixels to context
-    
-    Usage in base template:
-        {% for pixel in tracking_pixels_head %}
-            {{ pixel.code_snippet|safe }}
-        {% endfor %}
+    Додає country_code та theme в контекст для всіх templates
     """
-    from .models import TrackingPixel
+    # Визначити країну
+    country_code = get_country_code(request)
     
-    # Cache pixels for 1 hour
-    cache_key = 'tracking_pixels_active'
-    pixels = cache.get(cache_key)
-    
-    if pixels is None:
-        pixels = {
-            'head': list(
-                TrackingPixel.objects.filter(is_active=True, placement='head')
-                .values('pixel_type', 'code_snippet')
-            ),
-            'body_start': list(
-                TrackingPixel.objects.filter(is_active=True, placement='body_start')
-                .values('pixel_type', 'code_snippet')
-            ),
-            'body_end': list(
-                TrackingPixel.objects.filter(is_active=True, placement='body_end')
-                .values('pixel_type', 'code_snippet')
-            ),
-        }
-        cache.set(cache_key, pixels, CacheStrategy.TTL_LONG)
+    # Визначити тему (з cookies або session)
+    theme = request.COOKIES.get('theme', 'light')
+    if theme not in ['light', 'dark']:
+        theme = 'light'
     
     return {
-        'tracking_pixels_head': pixels['head'],
-        'tracking_pixels_body_start': pixels['body_start'],
-        'tracking_pixels_body_end': pixels['body_end'],
+        'country_code': country_code,
+        'theme': theme,
+        'is_ukraine': country_code == 'UA',
     }
-
-
-def featured_content(request):
-    """
-    Add featured content to context
-    
-    Optimized with caching and select_related.
-    """
-    from .models import HeroSlide, ExpertCard, FeaturedCourse
-    
-    # Get country from request (set by middleware)
-    country = getattr(request, 'country_code', 'UA')
-    
-    # Hero slides (cached)
-    cache_key = f'hero_slides_{country}'
-    hero_slides = cache.get(cache_key)
-    
-    if hero_slides is None:
-        hero_slides = list(
-            HeroSlide.objects.filter(is_active=True)
-            .order_by('order')[:7]
-        )
-        cache.set(cache_key, hero_slides, CacheStrategy.TTL_LONG)
-    
-    # Expert cards for team carousel (cached)
-    cache_key = 'expert_cards_active'
-    expert_cards = cache.get(cache_key)
-    
-    if expert_cards is None:
-        expert_cards = list(
-            ExpertCard.objects.filter(is_active=True, show_on_homepage=True)
-            .order_by('order')
-        )
-        cache.set(cache_key, expert_cards, CacheStrategy.TTL_LONG)
-    
-    return {
-        'hero_slides': hero_slides,
-        'expert_cards': expert_cards,
-        'expert_cards_count': len(expert_cards),
-        'show_carousel_arrows': len(expert_cards) > 4,
-    }
-

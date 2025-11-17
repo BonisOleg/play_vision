@@ -3,14 +3,46 @@ Core admin - AuditLog and ContentVersion
 """
 from django.contrib import admin
 from django.utils.html import format_html
+from django import views
+from django.shortcuts import render
+from django.apps import apps
 from .models import AuditLog, ContentVersion
 
 
-@admin.register(AuditLog)
+class PlayVisionAdminSite(admin.AdminSite):
+    """Custom admin site with stats on homepage"""
+    site_title = "PlayVision Admin"
+    site_header = "PlayVision Administration"
+    index_title = "Content & Analytics Dashboard"
+    
+    def index(self, request, extra_context=None):
+        """Override index to add stats"""
+        extra_context = extra_context or {}
+        
+        try:
+            User = apps.get_model('accounts', 'User')
+            Course = apps.get_model('content', 'Course')
+            Event = apps.get_model('events', 'Event')
+            HeroSlide = apps.get_model('cms', 'HeroSlide')
+            
+            extra_context.update({
+                'user_count': User.objects.count(),
+                'course_count': Course.objects.count(),
+                'event_count': Event.objects.count(),
+                'hero_count': HeroSlide.objects.filter(is_active=True).count(),
+            })
+        except:
+            pass
+        
+        return super().index(request, extra_context)
+
+# Create instance
+admin_site = PlayVisionAdminSite(name='admin')
+
+# Register models from other apps
+@admin.register(AuditLog, site=admin_site)
 class AuditLogAdmin(admin.ModelAdmin):
-    """
-    View-only audit logs - immutable history
-    """
+    """View-only audit logs - immutable history"""
     list_display = ['timestamp', 'user', 'action', 'content_type', 'object_repr', 'ip_address']
     list_filter = ['action', 'timestamp', 'content_type']
     search_fields = ['object_repr', 'user__email', 'ip_address']
@@ -43,10 +75,9 @@ class AuditLogAdmin(admin.ModelAdmin):
         return False
     
     def has_delete_permission(self, request, obj=None):
-        return False  # NEVER delete audit logs
+        return False
     
     def changes_display(self, obj):
-        """Format changes as HTML table"""
         if not obj.changes:
             return "No changes"
         
@@ -64,7 +95,6 @@ class AuditLogAdmin(admin.ModelAdmin):
     changes_display.short_description = 'Changes'
     
     def user_agent_display(self, obj):
-        """Display user agent in readable format"""
         if not obj.user_agent:
             return "N/A"
         return format_html('<code style="font-size: 0.9em;">{}</code>', obj.user_agent[:200])
@@ -77,11 +107,9 @@ class AuditLogAdmin(admin.ModelAdmin):
         css = {'all': ('admin/css/playvision-admin.css',)}
 
 
-@admin.register(ContentVersion)
+@admin.register(ContentVersion, site=admin_site)
 class ContentVersionAdmin(admin.ModelAdmin):
-    """
-    Content version history
-    """
+    """Content version history"""
     list_display = ['__str__', 'content_type', 'object_id', 'version_number', 'created_by', 'created_at']
     list_filter = ['content_type', 'created_at']
     search_fields = ['object_id', 'created_by__email', 'change_summary']
@@ -108,10 +136,9 @@ class ContentVersionAdmin(admin.ModelAdmin):
         return False
     
     def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser  # Only superuser can delete versions
+        return request.user.is_superuser
     
     def snapshot_display(self, obj):
-        """Display snapshot as formatted JSON"""
         import json
         try:
             formatted = json.dumps(obj.snapshot, indent=2)

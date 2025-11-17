@@ -7,7 +7,11 @@ class CmsConfig(AppConfig):
     verbose_name = 'Content Management'
     
     def ready(self):
-        """Import signals when app is ready"""
+        """Import admin modules and signals when app is ready"""
+        try:
+            from . import admin_pages
+        except ImportError:
+            pass
         try:
             import apps.cms.signals  # noqa F401
         except ImportError:

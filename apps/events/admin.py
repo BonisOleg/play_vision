@@ -10,6 +10,7 @@ from .models import (
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+    """Події 🧪 BETA"""
     list_display = [
         'title', 'event_type', 'event_category', 'start_datetime', 'status', 
         'tickets_sold', 'max_attendees', 'is_featured'

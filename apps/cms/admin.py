@@ -4,7 +4,14 @@ from django.utils.safestring import mark_safe
 from .models import (
     Page, Banner, MenuItem, FAQ, Testimonial, Setting, ContentBlock,
     HeroSlide, PageSection, SectionBlock, ExpertCard, HexagonItem,
-    FeaturedCourse, PageSVG, EventGridCell, TrackingPixel
+    FeaturedCourse, PageSVG, EventGridCell, TrackingPixel,
+    # Про нас
+    AboutHero, AboutSection2, AboutSection3, AboutSection4,
+    # Хаб знань
+    HubHero,
+    # Ментор коучинг
+    MentorHero, MentorSection1Image, MentorSection2, MentorSection3, MentorSection4,
+    MentorCoachingSVG
 )
 
 
@@ -18,35 +25,38 @@ class SectionBlockInline(admin.TabularInline):
 
 @admin.register(HeroSlide)
 class HeroSlideAdmin(admin.ModelAdmin):
-    list_display = ['get_preview', 'title', 'badge', 'order', 'is_active', 'created_at']
+    list_display = ['get_preview', 'title_ua', 'badge', 'order', 'is_active', 'created_at']
     list_editable = ['order', 'is_active']
     list_filter = ['is_active', 'created_at']
-    search_fields = ['title', 'subtitle', 'badge']
+    search_fields = ['title_ua', 'title_world', 'subtitle_ua', 'badge']
     readonly_fields = ['get_image_preview', 'created_at', 'updated_at']
     
     fieldsets = (
-        ('Основна інформація', {
-            'fields': ('title', 'subtitle', 'badge')
+        ('🇺🇦 Ukraine Version (Primary)', {
+            'fields': ('title_ua', 'subtitle_ua', 'cta_text_ua'),
+            'description': 'Main content shown in Ukraine'
         }),
-        ('Медіа', {
-            'fields': ('image', 'get_image_preview', 'video'),
+        ('🌍 World Version (Fallback)', {
+            'fields': ('title_world', 'subtitle_world', 'cta_text_world'),
+            'description': 'Alternative content for other countries (leave blank to use Ukraine version)',
+            'classes': ('collapse',)
+        }),
+        ('Media & CTA', {
+            'fields': ('image', 'get_image_preview', 'video', 'badge', 'cta_url'),
             'description': mark_safe("""
                 <div class="cms-help-box">
-                    <h4>📐 Рекомендовані розміри:</h4>
+                    <h4>📐 Recommended sizes:</h4>
                     <ul>
-                        <li><strong>Зображення:</strong> 1920×1080 px (16:9)</li>
-                        <li><strong>Відео:</strong> MP4, макс 50MB</li>
+                        <li><strong>Image:</strong> 1920×1080 px (16:9)</li>
+                        <li><strong>Video:</strong> MP4, max 50MB</li>
                     </ul>
                 </div>
             """)
         }),
-        ('Кнопка (Call to Action)', {
-            'fields': ('cta_text', 'cta_url'),
-        }),
-        ('Відображення', {
+        ('Display Settings', {
             'fields': ('order', 'is_active'),
         }),
-        ('Метадані', {
+        ('Metadata', {
             'fields': ('created_at', 'updated_at'),
             'classes': ['collapse']
         }),
@@ -185,8 +195,8 @@ class HexagonItemAdmin(admin.ModelAdmin):
     )
     
     class Media:
-        css = {'all': ('admin/css/cms_admin.css', 'admin/css/playvision-admin.css')}
-        js = ('admin/js/cms_admin.js', 'admin/js/playvision-admin.js')
+        css = {'all': ('admin/css/cms_admin.css',)}
+        js = ('admin/js/cms_admin.js',)
 
 
 @admin.register(FeaturedCourse)

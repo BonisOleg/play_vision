@@ -89,8 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'apps.events.context_processors.event_categories_menu',
                 'apps.cart.context_processors.cart_context',
-                'apps.cms.context_processors.tracking_pixels',
-                'apps.cms.context_processors.featured_content',
+                'apps.cms.context_processors.site_content',
             ],
         },
     },
@@ -174,18 +173,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = 'Play Vision <noreply@playvision.com>'
 EMAIL_SUBJECT_PREFIX = '[Play Vision] '
 
-# Celery Configuration (NO REDIS - use database)
-CELERY_BROKER_URL = 'django://'  # Use Django DB as broker
-CELERY_RESULT_BACKEND = 'django-db'  # Use Django DB for results
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = TIME_ZONE
-CELERY_ENABLE_UTC = True
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 minutes
-CELERY_WORKER_SEND_TASK_EVENTS = True
-CELERY_TASK_SEND_SENT_EVENT = True
+# Celery NOT USED
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
