@@ -147,7 +147,8 @@ class Command(BaseCommand):
         
         for course_data in courses_data:
             if not Course.objects.filter(slug=course_data['slug']).exists():
-                tags = course_data.pop('tags', [])
+                # Видаляємо tags, оскільки Course не має цього поля
+                course_data.pop('tags', [])
                 category_slug = course_data.pop('category')
                 
                 try:
@@ -155,14 +156,6 @@ class Command(BaseCommand):
                     course_data['category'] = category
                     
                     course = Course.objects.create(**course_data)
-                    
-                    # Додавання тегів
-                    for tag_name in tags:
-                        try:
-                            tag = Tag.objects.get(name=tag_name)
-                            course.tags.add(tag)
-                        except Tag.DoesNotExist:
-                            pass
                     
                     self.stdout.write(f'✅ Курс: {course.title}')
                 except Category.DoesNotExist:

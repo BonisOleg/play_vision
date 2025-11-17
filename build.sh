@@ -91,6 +91,9 @@ echo "🗄️ Running migrations..."
 # Use fake-initial to skip migrations if tables already exist
 python manage.py migrate --fake-initial --noinput
 
+echo "💾 Creating cache table for DatabaseCache fallback..."
+python manage.py createcachetable || echo "⚠️ Cache table already exists or creation failed, continuing..."
+
 echo "✅ Migrations completed. Checking loyalty app tables..."
 python -c "
 import os
