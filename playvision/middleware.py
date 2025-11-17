@@ -178,6 +178,7 @@ class CountryDetectionMiddleware:
     def __call__(self, request):
         # Get real client IP (handle proxies)
         from apps.core.services import get_client_ip, GeolocationService
+        from django.conf import settings
         
         ip = get_client_ip(request)
         
