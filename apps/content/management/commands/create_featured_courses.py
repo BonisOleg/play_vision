@@ -38,8 +38,6 @@ class Command(BaseCommand):
                 'category': psychology_cat,
                 'short_description': 'Формування переможного мислення',
                 'description': 'Курс про розвиток психологічної стійкості та ментальної сили спортсменів',
-                'difficulty': 'intermediate',
-                'duration_minutes': 240,
                 'price': Decimal('39.99'),
             },
             {
@@ -48,8 +46,6 @@ class Command(BaseCommand):
                 'category': analytics_cat,
                 'short_description': 'Навчіться професійно оцінювати молодих гравців',
                 'description': 'Професійний підхід до пошуку та оцінки молодих талантів у футболі',
-                'difficulty': 'advanced',
-                'duration_minutes': 300,
                 'price': Decimal('49.99'),
             },
             {
@@ -58,8 +54,6 @@ class Command(BaseCommand):
                 'category': coaching_cat,
                 'short_description': 'Основи ефективного тренерства',
                 'description': 'Фундаментальні принципи роботи тренера з командою та індивідуальними спортсменами',
-                'difficulty': 'beginner',
-                'duration_minutes': 180,
                 'price': Decimal('29.99'),
             },
             {
@@ -68,8 +62,6 @@ class Command(BaseCommand):
                 'category': physiology_cat,
                 'short_description': 'Наука про тіло спортсмена',
                 'description': 'Комплексний курс про фізіологічні процеси в організмі під час тренувань та змагань',
-                'difficulty': 'intermediate',
-                'duration_minutes': 360,
                 'price': Decimal('44.99'),
             },
             {
@@ -78,8 +70,6 @@ class Command(BaseCommand):
                 'category': analytics_cat,
                 'short_description': 'Сучасні методи скаутингу',
                 'description': 'Використання аналітичних інструментів для ефективного скаутингу та оцінки гравців',
-                'difficulty': 'advanced',
-                'duration_minutes': 320,
                 'price': Decimal('54.99'),
             },
             {
@@ -88,8 +78,6 @@ class Command(BaseCommand):
                 'category': psychology_cat,
                 'short_description': 'Розвиток лідерських якостей',
                 'description': 'Курс про розвиток лідерських навичок для капітанів команд та тренерів',
-                'difficulty': 'intermediate',
-                'duration_minutes': 220,
                 'price': Decimal('34.99'),
             },
         ]

@@ -39,8 +39,6 @@ class Command(BaseCommand):
                 'short_description': 'Основи ефективного коучингу та методології тренувального процесу.',
                 'description': 'Комплексний курс для тренерів, який охоплює найважливіші аспекти тренерської роботи: від планування тренувань до роботи з командою.',
                 'category': categories['coaching'],
-                'difficulty': 'intermediate',
-                'duration_minutes': 360,
                 'price': 1500,
             },
             {
@@ -49,8 +47,6 @@ class Command(BaseCommand):
                 'short_description': 'Науковий підхід до фізичної підготовки та відновлення спортсменів.',
                 'description': 'Глибоке розуміння фізіологічних процесів в організмі спортсмена, методики тренувань та відновлення.',
                 'category': categories['physiology'],
-                'difficulty': 'advanced',
-                'duration_minutes': 420,
                 'price': 1800,
             },
             {
@@ -59,8 +55,6 @@ class Command(BaseCommand):
                 'short_description': 'Сучасні методи аналізу гри та пошуку талантів.',
                 'description': 'Професійний курс з використання даних та аналітики для покращення результатів команди та пошуку перспективних гравців.',
                 'category': categories['analytics'],
-                'difficulty': 'intermediate',
-                'duration_minutes': 300,
                 'price': 1600,
             },
             {
@@ -69,8 +63,6 @@ class Command(BaseCommand):
                 'short_description': 'Розвиток лідерських якостей та управління командою.',
                 'description': 'Курс про розвиток лідерських навичок, мотивацію спортсменів та створення ефективної командної динаміки.',
                 'category': categories['psychology'],
-                'difficulty': 'intermediate',
-                'duration_minutes': 240,
                 'price': 1400,
             },
             {
@@ -79,8 +71,6 @@ class Command(BaseCommand):
                 'short_description': 'Тактичні схеми та стратегічне планування в футболі.',
                 'description': 'Вивчення різних тактичних схем, стратегій гри та їх адаптація під конкретні ситуації.',
                 'category': categories['coaching'],
-                'difficulty': 'advanced',
-                'duration_minutes': 480,
                 'price': 2000,
             },
             {
@@ -89,8 +79,6 @@ class Command(BaseCommand):
                 'short_description': 'Ментальна підготовка та психологічна підтримка гравців.',
                 'description': 'Робота з психологічним станом спортсменів, подолання стресу та розвиток ментальної стійкості.',
                 'category': categories['psychology'],
-                'difficulty': 'beginner',
-                'duration_minutes': 280,
                 'price': 1200,
             },
         ]
