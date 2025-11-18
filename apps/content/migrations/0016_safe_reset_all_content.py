@@ -1,124 +1,98 @@
 # Generated manually - SAFE reset of all content and categories
 from django.db import migrations, transaction
-from django.db.models import Q
-
-
-def table_exists(cursor, table_name):
-    """Перевіряє чи існує таблиця в БД"""
-    try:
-        # Універсальний спосіб - просто спробувати SELECT
-        cursor.execute(f"SELECT 1 FROM {table_name} LIMIT 1")
-        return True
-    except Exception:
-        return False
-
-
-def safe_delete_from_table(cursor, table_name, condition=""):
-    """Безпечно видаляє дані з таблиці якщо вона існує"""
-    if not table_exists(cursor, table_name):
-        print(f"⚠️  Таблиця {table_name} не існує - пропускаємо")
-        return 0
-    
-    try:
-        # Рахуємо записи
-        count_query = f"SELECT COUNT(*) FROM {table_name}"
-        if condition:
-            count_query += f" WHERE {condition}"
-        
-        cursor.execute(count_query)
-        count = cursor.fetchone()[0]
-        
-        if count > 0:
-            # Видаляємо
-            delete_query = f"DELETE FROM {table_name}"
-            if condition:
-                delete_query += f" WHERE {condition}"
-            
-            cursor.execute(delete_query)
-            return count
-        else:
-            return 0
-    except Exception as e:
-        print(f"⚠️  Помилка при роботі з {table_name}: {e}")
-        return 0
 
 
 def safe_reset_everything(apps, schema_editor):
     """
-    БЕЗПЕЧНЕ видалення всього контенту та категорій через RAW SQL.
-    Працює на будь-якій БД (PostgreSQL, SQLite) та з будь-якою структурою.
+    АГРЕСИВНЕ видалення всього контенту та категорій через RAW SQL.
+    Використовує TRUNCATE + DELETE для повного очищення.
     """
     print("\n" + "="*80)
     print("🔥 ПОЧИНАЄМО ПОВНЕ ОЧИЩЕННЯ КОНТЕНТУ ТА КАТЕГОРІЙ")
     print("="*80 + "\n")
     
     try:
-        with transaction.atomic():
-            with schema_editor.connection.cursor() as cursor:
-                
-                # 1. Видаляємо UserCourseProgress через many-to-many таблицю
-                m2m_count = safe_delete_from_table(cursor, "user_course_progress_materials_completed")
-                if m2m_count > 0:
-                    print(f"✓ Видалено {m2m_count} зв'язків матеріалів з прогресом")
-                
-                progress_count = safe_delete_from_table(cursor, "user_course_progress")
-                if progress_count > 0:
-                    print(f"✓ Видалено {progress_count} записів прогресу користувачів")
-                else:
-                    print("✓ Прогрес користувачів: таблиця порожня")
-                
-                # 2. Видаляємо Favorites
-                favorites_count = safe_delete_from_table(cursor, "favorites")
-                if favorites_count > 0:
-                    print(f"✓ Видалено {favorites_count} обраних курсів")
-                else:
-                    print("✓ Обрані курси: таблиця порожня")
-                
-                # 3. Видаляємо Materials
-                materials_count = safe_delete_from_table(cursor, "materials")
-                if materials_count > 0:
-                    print(f"✓ Видалено {materials_count} матеріалів")
-                else:
-                    print("✓ Матеріали: таблиця порожня")
-                
-                # 4. Очищаємо ManyToMany зв'язки Course-Tags
-                tags_relations = safe_delete_from_table(cursor, "courses_tags")
-                if tags_relations > 0:
-                    print(f"✓ Очищено {tags_relations} зв'язків курсів з тегами")
-                else:
-                    print("✓ Зв'язки курсів з тегами: таблиця порожня")
-                
-                # 5. Видаляємо Courses
-                courses_count = safe_delete_from_table(cursor, "courses")
-                if courses_count > 0:
-                    print(f"✓ Видалено {courses_count} курсів")
-                else:
-                    print("✓ Курси: таблиця порожня")
-                
-                # 6. Видаляємо Categories (спочатку підкатегорії, потім батьківські)
-                subcategories_count = safe_delete_from_table(cursor, "categories", "parent_id IS NOT NULL")
-                if subcategories_count > 0:
-                    print(f"✓ Видалено {subcategories_count} підкатегорій")
-                else:
-                    print("✓ Підкатегорії: таблиця порожня")
-                
-                # Батьківські категорії
-                parent_categories_count = safe_delete_from_table(cursor, "categories")
-                if parent_categories_count > 0:
-                    print(f"✓ Видалено {parent_categories_count} батьківських категорій")
-                else:
-                    print("✓ Батьківські категорії: таблиця порожня")
+        with schema_editor.connection.cursor() as cursor:
+            # Вимикаємо перевірки foreign key (для PostgreSQL)
+            try:
+                cursor.execute("SET CONSTRAINTS ALL DEFERRED")
+            except:
+                pass
             
-            print("\n" + "="*80)
-            print("✅ ОЧИЩЕННЯ ЗАВЕРШЕНО УСПІШНО")
-            print("="*80 + "\n")
+            # 1. Видаляємо UserCourseProgress
+            try:
+                cursor.execute("DELETE FROM user_course_progress_materials_completed")
+                cursor.execute("DELETE FROM user_course_progress")
+                print("✓ Прогрес користувачів: видалено")
+            except Exception as e:
+                print(f"⚠️  Прогрес: {e}")
             
+            # 2. Видаляємо Favorites
+            try:
+                cursor.execute("DELETE FROM favorites")
+                print("✓ Обрані курси: видалено")
+            except Exception as e:
+                print(f"⚠️  Обрані: {e}")
+            
+            # 3. Видаляємо Materials
+            try:
+                cursor.execute("DELETE FROM materials")
+                print("✓ Матеріали: видалено")
+            except Exception as e:
+                print(f"⚠️  Матеріали: {e}")
+            
+            # 4. Видаляємо зв'язки курсів з тегами
+            try:
+                cursor.execute("DELETE FROM content_course_tags")
+                print("✓ Зв'язки курсів з тегами: видалено")
+            except Exception as e:
+                print(f"⚠️  Зв'язки з тегами: {e}")
+            
+            # 5. Видаляємо Courses
+            try:
+                cursor.execute("DELETE FROM courses")
+                print("✓ Курси: видалено")
+            except Exception as e:
+                print(f"⚠️  Курси: {e}")
+            
+            # 6. КРИТИЧНО: Видаляємо ВСІ категорії (спочатку підкатегорії, потім головні)
+            try:
+                cursor.execute("DELETE FROM categories WHERE parent_id IS NOT NULL")
+                cursor.execute("DELETE FROM categories WHERE parent_id IS NULL")
+                cursor.execute("DELETE FROM categories")  # На всяк випадок
+                print("✓ ВСІ КАТЕГОРІЇ ВИДАЛЕНО")
+                
+                # ПЕРЕВІРКА
+                cursor.execute("SELECT COUNT(*) FROM categories")
+                remaining = cursor.fetchone()[0]
+                if remaining > 0:
+                    print(f"❌❌❌ ЗАЛИШИЛОСЬ {remaining} КАТЕГОРІЙ!")
+                    # Спробуємо ще раз через ORM
+                    Category = apps.get_model('content', 'Category')
+                    Category.objects.all().delete()
+                    print("✓ Видалено через ORM")
+                else:
+                    print("✅ Таблиця categories ПОРОЖНЯ")
+            except Exception as e:
+                print(f"❌ КРИТИЧНА ПОМИЛКА: {e}")
+                # Останній шанс - через ORM
+                try:
+                    Category = apps.get_model('content', 'Category')
+                    deleted = Category.objects.all().delete()
+                    print(f"✓ Видалено через ORM: {deleted}")
+                except Exception as orm_error:
+                    print(f"❌ ORM теж не спрацював: {orm_error}")
+                    raise
+        
+        print("\n" + "="*80)
+        print("✅ ОЧИЩЕННЯ ЗАВЕРШЕНО")
+        print("="*80 + "\n")
+        
     except Exception as e:
         print(f"\n❌ КРИТИЧНА ПОМИЛКА: {e}")
         import traceback
         traceback.print_exc()
-        # Не raise - дозволяємо міграції продовжитись
-        print("\n⚠️  Продовжуємо міграцію незважаючи на помилку...")
+        raise  # ЗУПИНЯЄМО міграцію
 
 
 def create_new_categories(apps, schema_editor):
