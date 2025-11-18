@@ -134,6 +134,27 @@ try:
                 else:
                     print(f'- Already exists: {app}.{name}')
             
+            # Check if migration 0011 was applied but 0008 was not (creates dependency issue)
+            cursor.execute(
+                'SELECT id FROM django_migrations WHERE app = %s AND name = %s',
+                ['content', '0011_redesign_filters']
+            )
+            migration_0011 = cursor.fetchone()
+            
+            cursor.execute(
+                'SELECT id FROM django_migrations WHERE app = %s AND name = %s',
+                ['content', '0008_placeholder']
+            )
+            migration_0008 = cursor.fetchone()
+            
+            # If 0011 exists but 0008 doesn't, add 0008
+            if migration_0011 and not migration_0008:
+                cursor.execute(
+                    'INSERT INTO django_migrations (app, name, applied) VALUES (%s, %s, NOW())',
+                    ['content', '0008_placeholder']
+                )
+                print('✓ Fixed migration gap: added 0008_placeholder')
+            
             print('✓ Migration history fixed')
 except Exception as e:
     print(f'⚠️ Migration history fix failed: {e}')

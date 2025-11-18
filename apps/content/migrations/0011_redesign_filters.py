@@ -2,6 +2,40 @@
 
 import django.db.models.deletion
 from django.db import migrations, models
+from django.db import connection
+
+
+def safe_remove_fields(apps, schema_editor):
+    """Safely remove fields only if they exist"""
+    Course = apps.get_model('content', 'Course')
+    
+    # Get existing field names from the model state
+    existing_fields = [f.name for f in Course._meta.get_fields()]
+    
+    # Only remove fields that exist
+    fields_to_remove = ['badge_type', 'content_type', 'difficulty', 'duration_minutes', 
+                        'is_classic', 'training_specialization']
+    
+    with connection.cursor() as cursor:
+        # Check which columns actually exist in the database
+        if connection.vendor == 'postgresql':
+            cursor.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='courses' AND table_schema='public'
+            """)
+        else:
+            cursor.execute("PRAGMA table_info(courses)")
+        
+        existing_columns = {row[0] if connection.vendor == 'postgresql' else row[1] for row in cursor.fetchall()}
+        
+        # Remove each field if it exists
+        for field_name in fields_to_remove:
+            if field_name in existing_columns:
+                try:
+                    cursor.execute(f"ALTER TABLE courses DROP COLUMN {field_name}")
+                except Exception as e:
+                    print(f"Warning: Could not remove {field_name}: {e}")
 
 
 class Migration(migrations.Migration):
@@ -15,38 +49,10 @@ class Migration(migrations.Migration):
             name='category',
             options={'ordering': ['order', 'name'], 'verbose_name': 'Category', 'verbose_name_plural': 'Categories'},
         ),
-        migrations.RemoveField(
-            model_name='course',
-            name='badge_type',
-        ),
-        migrations.RemoveField(
-            model_name='course',
-            name='content_type',
-        ),
-        migrations.RemoveField(
-            model_name='course',
-            name='difficulty',
-        ),
-        migrations.RemoveField(
-            model_name='course',
-            name='duration_minutes',
-        ),
-        migrations.RemoveField(
-            model_name='course',
-            name='is_classic',
-        ),
-        migrations.RemoveField(
-            model_name='course',
-            name='tags',
-        ),
-        migrations.RemoveField(
-            model_name='course',
-            name='target_audience',
-        ),
-        migrations.RemoveField(
-            model_name='course',
-            name='training_specialization',
-        ),
+        
+        # Run Python to safely remove fields if they exist
+        migrations.RunPython(safe_remove_fields, migrations.RunPython.noop),
+        
         migrations.AddField(
             model_name='category',
             name='is_subcategory_required',
