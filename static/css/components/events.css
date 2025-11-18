@@ -638,6 +638,19 @@
     .calendar-carousel-wrapper {
         padding-bottom: 160px; /* Більше місця на мобільних */
     }
+
+    /* Touch-friendly кнопки для iOS/Android */
+    .calendar-nav-btn,
+    .filter-btn,
+    .btn-details,
+    .pagination-link {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .filter-btn {
+        padding: 12px 20px; /* Більший padding */
+    }
 }
 
 @media (max-width: 480px) {
