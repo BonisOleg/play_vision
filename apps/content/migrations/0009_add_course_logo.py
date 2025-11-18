@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('content', '0007_add_bunny_net_fields'),
+        ('content', '0006_add_badge_fields'),
     ]
 
     operations = [
