@@ -12,6 +12,18 @@
         <span class="nav-label">Головна</span>
     </a>
 
+    {# Про нас #}
+    <a href="{% url 'core:about' %}"
+        class="nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+        aria-label="Про нас">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+        <span class="nav-label">Про нас</span>
+    </a>
+
     {# Хаб знань #}
     <a href="{% url 'content:course_list' %}"
         class="nav-item {% if 'hub' in request.path or 'content' in request.path %}active{% endif %}"
@@ -35,25 +47,13 @@
         <span class="nav-label">Івенти</span>
     </a>
 
-    {# AI Чат - Помічник #}
-    <button type="button" class="nav-item nav-item-ai" data-ai-open aria-label="AI Помічник">
+    {# Підписка #}
+    <a href="{% url 'core:pricing' %}"
+        class="nav-item {% if request.resolver_match.url_name == 'pricing' %}active{% endif %}"
+        aria-label="Підписка">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path
-                d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z" />
-            <circle cx="9" cy="16" r="1" />
-            <circle cx="15" cy="16" r="1" />
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
-        <span class="nav-label">Помічник</span>
-    </button>
-
-    {# Профіль / Вхід #}
-    <a href="{% if user.is_authenticated %}{% url 'cabinet:dashboard' %}{% else %}{% url 'accounts:login' %}{% endif %}"
-        class="nav-item {% if 'cabinet' in request.path or 'account' in request.path %}active{% endif %}"
-        aria-label="{% if user.is_authenticated %}Кабінет{% else %}Вхід{% endif %}">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-        </svg>
-        <span class="nav-label">{% if user.is_authenticated %}Кабінет{% else %}Вхід{% endif %}</span>
+        <span class="nav-label">Підписка</span>
     </a>
 </nav>
