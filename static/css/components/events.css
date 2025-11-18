@@ -1,5 +1,22 @@
 /* Events Page Styles */
 
+/* Safe Area Insets для iOS devices з notch/dynamic island */
+.events-intro-section,
+.events-calendar-section,
+.events-catalog-section {
+    padding-top: max(40px, env(safe-area-inset-top, 0));
+    padding-bottom: max(40px, env(safe-area-inset-bottom, 0));
+}
+
+@media (max-width: 768px) {
+    .events-intro-section,
+    .events-calendar-section,
+    .events-catalog-section {
+        padding-top: max(20px, env(safe-area-inset-top, 0));
+        padding-bottom: max(20px, env(safe-area-inset-bottom, 0));
+    }
+}
+
 /* ==================== СЕКЦІЯ 1: Intro ==================== */
 .events-intro-section {
     background: transparent;
@@ -566,7 +583,7 @@
     .events-intro-left .section-title,
     .events-calendar-section .section-title,
     .events-catalog-section .section-title {
-        font-size: 2rem;
+        font-size: clamp(1.5rem, 5vw, 2rem);
     }
 
     .events-categories-grid {
@@ -577,6 +594,10 @@
     .events-video-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
+    }
+
+    .video-placeholder {
+        min-height: 120px; /* Менше для мобільних */
     }
 
     .video-placeholder.video-large {
@@ -605,12 +626,17 @@
     .calendar-navigation {
         left: 50%;
         transform: translateX(-50%);
+        bottom: 40px; /* збільшено з 20px */
     }
 
     .calendar-pagination {
         right: 50%;
         transform: translateX(50%);
-        bottom: 80px;
+        bottom: 130px; /* збільшено з 80px */
+    }
+
+    .calendar-carousel-wrapper {
+        padding-bottom: 160px; /* Більше місця на мобільних */
     }
 }
 
@@ -622,7 +648,7 @@
     .events-intro-left .section-title,
     .events-calendar-section .section-title,
     .events-catalog-section .section-title {
-        font-size: 1.75rem;
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
     }
 }
 

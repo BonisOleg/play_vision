@@ -117,9 +117,6 @@ try:
             # Add dummy migration records directly to django_migrations table
             dummy_migrations = [
                 ('content', '0008_placeholder'),
-                ('cms', '0002_placeholder'),
-                ('cms', '0003_placeholder'),
-                ('cms', '0004_placeholder'),
             ]
             
             for app, name in dummy_migrations:
