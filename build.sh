@@ -103,6 +103,12 @@ except Exception as e:
     print('Continuing anyway...')
 " || echo "⚠️ Migration fix failed, continuing..."
 
+echo "🗄️ Fake applying dummy migrations..."
+python manage.py migrate content 0008_placeholder --fake || echo "⚠️ content.0008 fake failed"
+python manage.py migrate cms 0002_placeholder --fake || echo "⚠️ cms.0002 fake failed"
+python manage.py migrate cms 0003_placeholder --fake || echo "⚠️ cms.0003 fake failed"
+python manage.py migrate cms 0004_placeholder --fake || echo "⚠️ cms.0004 fake failed"
+
 echo "🗄️ Running migrations..."
 # Use fake-initial to skip migrations if tables already exist
 python manage.py migrate --fake-initial --noinput
