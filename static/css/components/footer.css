@@ -337,7 +337,7 @@ footer.site-footer .footer-link:hover {
 @media (max-width: 1199px) {
     footer.site-footer .footer-social-contacts {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 20px;
     }
 
@@ -345,39 +345,49 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-contacts-group {
         flex: 1 1 auto;
         width: 100%;
+        justify-content: center;
     }
 }
 
 @media (max-width: 991px) {
     footer.site-footer .footer-header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 16px;
     }
 
-    footer.site-footer .footer-logo,
-    footer.site-footer .footer-cta {
-        flex: 1 1 auto;
+    footer.site-footer .footer-logo-container {
+        align-items: center;
+    }
+
+    footer.site-footer .footer-logo {
+        object-position: center center;
     }
 
     footer.site-footer .footer-cta {
-        text-align: left;
+        flex: 1 1 auto;
+        text-align: center;
     }
 
     footer.site-footer .footer-bottom {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 20px;
     }
 
-    footer.site-footer .footer-newsletter,
-    footer.site-footer .footer-legal {
+    footer.site-footer .footer-newsletter {
         flex: 1 1 auto;
         max-width: 100%;
     }
 
+    footer.site-footer .newsletter-title {
+        text-align: center;
+    }
+
     footer.site-footer .footer-legal {
-        justify-content: flex-start;
+        flex: 1 1 auto;
+        max-width: 100%;
+        justify-content: center;
     }
 }
 
@@ -392,6 +402,7 @@ footer.site-footer .footer-link:hover {
     
     footer.site-footer .footer-logo-container {
         height: 76px;
+        justify-content: center;
     }
     
     footer.site-footer .footer-logo {
@@ -411,10 +422,12 @@ footer.site-footer .footer-link:hover {
 
     footer.site-footer .footer-contacts-group {
         flex-direction: column;
+        align-items: center;
     }
 
     footer.site-footer .contact-item {
         width: 100%;
+        justify-content: center;
     }
 
     footer.site-footer .newsletter-form {
@@ -431,6 +444,10 @@ footer.site-footer .footer-link:hover {
         align-items: center;
         text-align: center;
         gap: 10px;
+    }
+
+    footer.site-footer .footer-copyright {
+        text-align: center;
     }
 
     footer.site-footer .footer-links {
@@ -465,6 +482,7 @@ footer.site-footer .footer-link:hover {
     
     footer.site-footer .footer-logo-container {
         height: 64px;
+        justify-content: center;
     }
     
     footer.site-footer .footer-logo {
