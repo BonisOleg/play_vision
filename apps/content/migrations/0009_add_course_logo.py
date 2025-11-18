@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('content', '0003_add_tag_fields_and_monthly_quote'),
+        ('content', '0008_placeholder'),
     ]
 
     operations = [
