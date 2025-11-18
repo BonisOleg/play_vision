@@ -7,9 +7,9 @@ def reset_categories(apps, schema_editor):
     Category = apps.get_model('content', 'Category')
     Course = apps.get_model('content', 'Course')
     
-    # Видалити всі курси
-    Course.objects.all().delete()
-    print("✓ Видалено всі курси")
+    # Відв'язати курси від категорій
+    Course.objects.all().update(category=None)
+    print("✓ Відв'язано курси від категорій")
     
     # Видалити всі категорії
     Category.objects.all().delete()
