@@ -341,11 +341,17 @@ footer.site-footer .footer-link:hover {
         gap: 20px;
     }
 
-    footer.site-footer .footer-social-group,
-    footer.site-footer .footer-contacts-group {
-        flex: 1 1 auto;
-        width: 100%;
+    footer.site-footer .footer-social-group {
+        flex: 0 0 auto;
+        width: auto;
         justify-content: center;
+    }
+
+    footer.site-footer .footer-contacts-group {
+        flex: 0 0 auto;
+        width: auto;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }
 
@@ -357,6 +363,8 @@ footer.site-footer .footer-link:hover {
     }
 
     footer.site-footer .footer-logo-container {
+        flex: 0 0 auto;
+        width: auto;
         align-items: center;
     }
 
@@ -365,7 +373,8 @@ footer.site-footer .footer-link:hover {
     }
 
     footer.site-footer .footer-cta {
-        flex: 1 1 auto;
+        flex: 0 0 auto;
+        width: 100%;
         text-align: center;
     }
 
@@ -376,8 +385,9 @@ footer.site-footer .footer-link:hover {
     }
 
     footer.site-footer .footer-newsletter {
-        flex: 1 1 auto;
-        max-width: 100%;
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 500px;
     }
 
     footer.site-footer .newsletter-title {
@@ -385,9 +395,10 @@ footer.site-footer .footer-link:hover {
     }
 
     footer.site-footer .footer-legal {
-        flex: 1 1 auto;
-        max-width: 100%;
+        flex: 0 0 auto;
+        width: auto;
         justify-content: center;
+        padding-top: 0;
     }
 }
 
@@ -403,6 +414,7 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-logo-container {
         height: 76px;
         justify-content: center;
+        width: auto;
     }
     
     footer.site-footer .footer-logo {
@@ -413,6 +425,7 @@ footer.site-footer .footer-link:hover {
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
+        width: auto;
     }
 
     footer.site-footer .social-link {
@@ -423,11 +436,16 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-contacts-group {
         flex-direction: column;
         align-items: center;
+        width: auto;
     }
 
     footer.site-footer .contact-item {
-        width: 100%;
+        width: auto;
         justify-content: center;
+    }
+
+    footer.site-footer .footer-newsletter {
+        max-width: 100%;
     }
 
     footer.site-footer .newsletter-form {
@@ -439,7 +457,7 @@ footer.site-footer .footer-link:hover {
     }
 
     footer.site-footer .footer-legal {
-        width: 100%;
+        width: auto;
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -483,6 +501,7 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-logo-container {
         height: 64px;
         justify-content: center;
+        width: auto;
     }
     
     footer.site-footer .footer-logo {
