@@ -262,20 +262,31 @@
 }
 
 .slider-dot {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    border: 2px solid var(--accent-dark);
-    background: var(--silver-white);
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .slider-dot.active {
     background: var(--color-primary);
-    border-color: var(--color-primary);
-    width: 32px;
-    border-radius: 6px;
+    width: 24px;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .slider-dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .slider-dot.active {
+        width: 18px;
+        border-radius: 3px;
+    }
 }
 
 
