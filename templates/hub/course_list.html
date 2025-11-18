@@ -181,7 +181,7 @@
                                     <!-- Інші категорії (без dropdown) -->
                                     <div class="hub-filter-checkboxes">
                                         {% for category in root_categories %}
-                                            {% if category.slug != 'trenerstvo' %}
+                                            {% if category.slug != 'coaching' %}
                                             <label class="hub-filter-checkbox {% if category.slug in current_categories %}hub-filter-checkbox-active{% endif %}">
                                                 <input type="checkbox" name="category" value="{{ category.slug }}" {% if category.slug in current_categories %}checked{% endif %}>
                                                 <span>{{ category.name }}</span>

@@ -57,7 +57,7 @@ class CourseListView(ListView):
         
         # Знайти категорію "Тренерство" з підкатегоріями
         trenerstvo = Category.objects.filter(
-            slug='trenerstvo',
+            slug='coaching',
             is_active=True
         ).prefetch_related('subcategories').first()
         

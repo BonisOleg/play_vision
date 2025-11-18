@@ -592,16 +592,17 @@
     }
 
     .events-video-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
     }
 
     .video-placeholder {
-        min-height: 120px; /* Менше для мобільних */
+        min-height: 100px; /* Оптимальна висота для 3 колонок */
     }
 
-    .video-placeholder.video-large {
-        grid-column: span 1;
+    .video-placeholder.video-large,
+    .video-placeholder.video-medium {
+        grid-column: span 1; /* Всі однакового розміру */
     }
 
     .events-catalog-grid {
