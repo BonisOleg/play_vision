@@ -103,11 +103,46 @@ except Exception as e:
     print('Continuing anyway...')
 " || echo "⚠️ Migration fix failed, continuing..."
 
-echo "🗄️ Fake applying dummy migrations..."
-python manage.py migrate content 0008_placeholder --fake || echo "⚠️ content.0008 fake failed"
-python manage.py migrate cms 0002_placeholder --fake || echo "⚠️ cms.0002 fake failed"
-python manage.py migrate cms 0003_placeholder --fake || echo "⚠️ cms.0003 fake failed"
-python manage.py migrate cms 0004_placeholder --fake || echo "⚠️ cms.0004 fake failed"
+echo "🗄️ Fixing migration history in database..."
+python -c "
+import os
+import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'playvision.settings.production')
+django.setup()
+from django.db import connection, transaction
+
+try:
+    with transaction.atomic():
+        with connection.cursor() as cursor:
+            # Add dummy migration records directly to django_migrations table
+            dummy_migrations = [
+                ('content', '0008_placeholder'),
+                ('cms', '0002_placeholder'),
+                ('cms', '0003_placeholder'),
+                ('cms', '0004_placeholder'),
+            ]
+            
+            for app, name in dummy_migrations:
+                # Check if already exists
+                cursor.execute(
+                    'SELECT id FROM django_migrations WHERE app = %s AND name = %s',
+                    [app, name]
+                )
+                if not cursor.fetchone():
+                    cursor.execute(
+                        'INSERT INTO django_migrations (app, name, applied) VALUES (%s, %s, NOW())',
+                        [app, name]
+                    )
+                    print(f'✓ Added migration record: {app}.{name}')
+                else:
+                    print(f'- Already exists: {app}.{name}')
+            
+            print('✓ Migration history fixed')
+except Exception as e:
+    print(f'⚠️ Migration history fix failed: {e}')
+    import traceback
+    traceback.print_exc()
+" || echo "⚠️ Migration history fix failed, continuing..."
 
 echo "🗄️ Running migrations..."
 # Use fake-initial to skip migrations if tables already exist
