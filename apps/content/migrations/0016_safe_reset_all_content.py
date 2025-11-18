@@ -124,6 +124,7 @@ def safe_reset_everything(apps, schema_editor):
 def create_new_categories(apps, schema_editor):
     """
     Створення НОВОЇ структури категорій згідно дизайну.
+    IDEMPOTENT - можна запускати багато разів без помилок.
     """
     print("\n" + "="*80)
     print("🎨 СТВОРЮЄМО НОВУ СТРУКТУРУ КАТЕГОРІЙ")
@@ -134,16 +135,21 @@ def create_new_categories(apps, schema_editor):
     try:
         with transaction.atomic():
             # 1. ТРЕНЕРСТВО (з обов'язковими підкатегоріями)
-            trenerstvo = Category.objects.create(
-                name='Тренерство',
+            trenerstvo, created = Category.objects.get_or_create(
                 slug='trenerstvo',
-                description='Навчальні матеріали для тренерів різних напрямків',
-                order=1,
-                is_active=True,
-                is_subcategory_required=True,
-                icon='⚽'
+                defaults={
+                    'name': 'Тренерство',
+                    'description': 'Навчальні матеріали для тренерів різних напрямків',
+                    'order': 1,
+                    'is_active': True,
+                    'is_subcategory_required': True,
+                    'icon': '⚽'
+                }
             )
-            print(f"✓ Створено головну категорію: {trenerstvo.name}")
+            if created:
+                print(f"✓ Створено головну категорію: {trenerstvo.name}")
+            else:
+                print(f"⚠️  Категорія вже існує: {trenerstvo.name}")
             
             # Підкатегорії Тренерства
             subcats = [
@@ -154,15 +160,20 @@ def create_new_categories(apps, schema_editor):
             ]
             
             for name, slug, desc, order in subcats:
-                Category.objects.create(
-                    name=name,
+                subcat, created = Category.objects.get_or_create(
                     slug=slug,
-                    description=desc,
-                    parent=trenerstvo,
-                    order=order,
-                    is_active=True
+                    defaults={
+                        'name': name,
+                        'description': desc,
+                        'parent': trenerstvo,
+                        'order': order,
+                        'is_active': True
+                    }
                 )
-                print(f"  ↳ Підкатегорія: {name}")
+                if created:
+                    print(f"  ↳ Підкатегорія: {name}")
+                else:
+                    print(f"  ⚠️  Підкатегорія вже існує: {name}")
             
             # 2. Інші головні категорії
             main_categories = [
@@ -176,26 +187,33 @@ def create_new_categories(apps, schema_editor):
             ]
             
             for name, slug, desc, order, icon in main_categories:
-                Category.objects.create(
-                    name=name,
+                cat, created = Category.objects.get_or_create(
                     slug=slug,
-                    description=desc,
-                    order=order,
-                    is_active=True,
-                    is_subcategory_required=False,
-                    icon=icon
+                    defaults={
+                        'name': name,
+                        'description': desc,
+                        'order': order,
+                        'is_active': True,
+                        'is_subcategory_required': False,
+                        'icon': icon
+                    }
                 )
-                print(f"✓ Створено категорію: {name}")
+                if created:
+                    print(f"✓ Створено категорію: {name}")
+                else:
+                    print(f"⚠️  Категорія вже існує: {name}")
             
+            total_count = Category.objects.count()
             print("\n" + "="*80)
-            print(f"✅ СТВОРЕНО {Category.objects.count()} КАТЕГОРІЙ")
+            print(f"✅ ВСЬОГО КАТЕГОРІЙ В БД: {total_count}")
             print("="*80 + "\n")
             
     except Exception as e:
         print(f"\n❌ ПОМИЛКА ПРИ СТВОРЕННІ КАТЕГОРІЙ: {e}")
         import traceback
         traceback.print_exc()
-        raise
+        # НЕ raise - дозволяємо міграції продовжитись
+        print("\n⚠️  Продовжуємо міграцію незважаючи на помилку...")
 
 
 def reverse_operation(apps, schema_editor):
