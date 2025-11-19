@@ -4,112 +4,6 @@ from django.utils import timezone
 from django.conf import settings
 
 
-class Category(models.Model):
-    """
-    Course categories with hierarchical structure
-    """
-    name = models.CharField(max_length=100, verbose_name='Назва')
-    slug = models.SlugField(unique=True)
-    description = models.TextField(blank=True, verbose_name='Опис')
-    icon = models.CharField(max_length=50, blank=True, help_text='CSS class or SVG icon')
-    
-    # Hierarchical structure
-    parent = models.ForeignKey(
-        'self',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name='subcategories',
-        verbose_name='Батьківська категорія',
-        help_text='Залиште порожнім для головної категорії'
-    )
-    order = models.PositiveIntegerField(
-        default=0,
-        verbose_name='Порядок',
-        help_text='Порядок відображення в фільтрах'
-    )
-    is_subcategory_required = models.BooleanField(
-        default=False,
-        verbose_name='Підкатегорія обов\'язкова',
-        help_text='Для "Тренерство" - обов\'язково вибирати підкатегорію'
-    )
-    
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        db_table = 'categories'
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
-        ordering = ['order', 'name']
-        indexes = [
-            models.Index(fields=['parent', 'order']),
-        ]
-    
-    def __str__(self):
-        if self.parent:
-            return f"{self.parent.name} → {self.name}"
-        return self.name
-    
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-    
-    def is_root(self) -> bool:
-        """Check if this is a root category (no parent)"""
-        return self.parent is None
-    
-    def get_root(self):
-        """Get the root category"""
-        if self.parent is None:
-            return self
-        return self.parent.get_root()
-
-
-class Tag(models.Model):
-    """
-    Content tags and user interests
-    """
-    TAG_TYPE_CHOICES = [
-        ('interest', 'Інтерес користувача'),
-        ('category', 'Категорія контенту'),
-        ('general', 'Загальний тег'),
-    ]
-    
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(unique=True)
-    tag_type = models.CharField(
-        max_length=20, 
-        choices=TAG_TYPE_CHOICES, 
-        default='general',
-        db_index=True
-    )
-    display_order = models.PositiveIntegerField(
-        default=0, 
-        help_text='Порядок відображення (для interest type)'
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        db_table = 'tags'
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tags'
-        ordering = ['display_order', 'name']
-        indexes = [
-            models.Index(fields=['tag_type', 'display_order']),
-        ]
-    
-    def __str__(self):
-        return self.name
-    
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-
 class Course(models.Model):
     """
     Educational courses
@@ -119,13 +13,6 @@ class Course(models.Model):
     description = models.TextField()
     short_description = models.CharField(max_length=300)
     author = models.CharField(max_length=200, blank=True, verbose_name='Автор курсу', help_text='Ім\'я автора/інструктора курсу')
-    category = models.ForeignKey(
-        Category, 
-        on_delete=models.CASCADE, 
-        related_name='courses',
-        verbose_name='Категорія',
-        help_text='Оберіть категорію курсу. Для "Тренерство" обов\'язково вкажіть підкатегорію.'
-    )
     price = models.DecimalField(max_digits=10, decimal_places=2)
     
     # Access control

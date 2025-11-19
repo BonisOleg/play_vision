@@ -141,70 +141,14 @@
                 </div>
             </section>
 
-            <!-- КАТАЛОГ З ФІЛЬТРАМИ -->
+            <!-- КАТАЛОГ -->
             <section class="hub-catalog-section" id="catalog">
                 <div class="section-content">
 
-                    <!-- Layout: Sidebar + Grid -->
-                    <div class="hub-catalog-layout">
+                    <!-- Спрощений Layout без фільтрів -->
+                    <div class="hub-catalog-layout-simple">
 
-                        <!-- Ліва колонка: Заголовок + Sidebar -->
-                        <div class="hub-filters-column">
-                            <h2 class="hub-filters-title">Фільтрувати</h2>
-                            <aside class="hub-filters-sidebar">
-
-                                <form method="get" class="hub-filters-form hub-filter-form"
-                                    hx-get="{% url 'content:course_list' %}"
-                                    hx-target="#catalog-content"
-                                    hx-swap="innerHTML"
-                                    hx-push-url="true"
-                                    hx-indicator=".htmx-loading">
-                                    
-                                    <!-- Dropdown Тренерство з підкатегоріями -->
-                                    {% if trenerstvo %}
-                                    <div class="hub-filter-group">
-                                        <button type="button" class="hub-filter-toggle">
-                                            Тренерство
-                                            <span class="hub-filter-arrow">▼</span>
-                                        </button>
-                                        <div class="hub-filter-content">
-                                            {% for subcat in trenerstvo_subcategories %}
-                                            <label class="hub-filter-checkbox {% if subcat.slug in current_subcategories %}hub-filter-checkbox-active{% endif %}">
-                                                <input type="checkbox" name="subcategory" value="{{ subcat.slug }}" {% if subcat.slug in current_subcategories %}checked{% endif %}>
-                                                <span>{{ subcat.name }}</span>
-                                            </label>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                    {% endif %}
-
-                                    <!-- Інші категорії (без dropdown) -->
-                                    <div class="hub-filter-checkboxes">
-                                        {% for category in root_categories %}
-                                            {% if category.slug != 'coaching' %}
-                                            <label class="hub-filter-checkbox {% if category.slug in current_categories %}hub-filter-checkbox-active{% endif %}">
-                                                <input type="checkbox" name="category" value="{{ category.slug }}" {% if category.slug in current_categories %}checked{% endif %}>
-                                                <span>{{ category.name }}</span>
-                                            </label>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-
-                                    <!-- Кнопки дій -->
-                                    <div class="hub-filter-actions">
-                                        <button type="submit" class="hub-filter-btn hub-filter-btn-primary">
-                                            Застосувати
-                                        </button>
-                                        <button type="button"
-                                            class="hub-filter-btn hub-filter-btn-secondary hub-filter-reset">
-                                            Відмінити
-                                        </button>
-                                    </div>
-                                </form>
-                            </aside>
-                        </div>
-
-                        <!-- Права колонка: Grid -->
+                        <!-- Тільки Grid без sidebar -->
                         <div class="hub-content-column">
                             <!-- HTMX Loading Indicator -->
                             <div class="htmx-loading htmx-indicator">Завантаження...</div>

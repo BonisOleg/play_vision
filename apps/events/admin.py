@@ -21,7 +21,7 @@ class EventAdmin(admin.ModelAdmin):
     ]
     search_fields = ['title', 'description', 'location']
     prepopulated_fields = {'slug': ('title',)}
-    filter_horizontal = ['speakers', 'tags']
+    filter_horizontal = ['speakers']
     
     fieldsets = (
         ('Основна інформація', {
@@ -44,7 +44,7 @@ class EventAdmin(admin.ModelAdmin):
         }),
         ('Організація', {
             'fields': (
-                'organizer', 'speakers', 'tags'
+                'organizer', 'speakers'
             )
         }),
         ('Медіа', {

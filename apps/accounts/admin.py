@@ -40,14 +40,12 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ('completed_survey', 'created_at')
     search_fields = ('user__email', 'first_name', 'last_name', 'profession')
     raw_id_fields = ('user',)
-    filter_horizontal = ('interests',)
     
     fieldsets = (
         ('User', {'fields': ('user',)}),
         ('Personal Information', {
             'fields': ('first_name', 'last_name', 'birth_date', 'avatar', 'profession')
         }),
-        ('Interests', {'fields': ('interests',)}),
         ('Survey', {'fields': ('completed_survey', 'survey_completed_at')}),
         ('Timestamps', {'fields': ('created_at', 'updated_at')}),
     )

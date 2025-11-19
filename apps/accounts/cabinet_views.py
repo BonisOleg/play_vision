@@ -39,12 +39,6 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         context['days_count'] = days
         context['days_word'] = self._get_days_word(days)
         
-        # Додати інтереси для форми
-        from apps.content.models import Tag
-        context['interests'] = Tag.objects.filter(
-            tag_type='interest'
-        ).order_by('display_order')
-        
         # Активна підписка
         active_subscription = user.subscriptions.filter(
             status='active',

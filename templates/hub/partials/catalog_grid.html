@@ -29,9 +29,6 @@
                 <span class="price-value">{{ course.price|floatformat:0 }}₴</span>
             </div>
             <p class="hub-product-desc">{{ course.short_description }}</p>
-            <div class="hub-product-meta">
-                Категорія: {{ course.category.name }}
-            </div>
 
             <a href="{{ course.get_absolute_url }}" class="hub-btn-view">
                 <span class="btn-text">Огляд курсу</span>

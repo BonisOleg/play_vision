@@ -99,7 +99,6 @@ class Event(models.Model):
     organizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
                                 related_name='organized_events')
     speakers = models.ManyToManyField('Speaker', blank=True, related_name='events')
-    tags = models.ManyToManyField('content.Tag', blank=True, related_name='events')
     
     # Features
     is_featured = models.BooleanField(default=False)

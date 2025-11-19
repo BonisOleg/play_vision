@@ -11,7 +11,7 @@ from apps.loyalty.services import LoyaltyService
 
 
 class CourseListView(ListView):
-    """Course catalog view with category filtering"""
+    """Course catalog view"""
     model = Course
     template_name = 'hub/course_list.html'
     context_object_name = 'courses'
@@ -20,21 +20,7 @@ class CourseListView(ListView):
     def get_queryset(self) -> QuerySet[Course]:
         queryset = Course.objects.filter(
             is_published=True
-        ).select_related('category', 'category__parent')
-        
-        # Category filter - підтримка множинного вибору
-        category_slugs = self.request.GET.getlist('category')
-        if category_slugs:
-            # Фільтр по головним категоріям або підкатегоріям
-            queryset = queryset.filter(
-                Q(category__slug__in=category_slugs) |
-                Q(category__parent__slug__in=category_slugs)
-            ).distinct()
-        
-        # Subcategory filter (для Тренерства) - множинний вибір
-        subcategory_slugs = self.request.GET.getlist('subcategory')
-        if subcategory_slugs:
-            queryset = queryset.filter(category__slug__in=subcategory_slugs)
+        )
         
         # Сортування за замовчуванням
         queryset = queryset.order_by('-created_at')
@@ -44,38 +30,11 @@ class CourseListView(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         
-        # Add categories for filter
-        from .models import Category
-        
-        # Головні категорії (без parent)
-        root_categories = Category.objects.filter(
-            is_active=True,
-            parent__isnull=True
-        ).prefetch_related('subcategories').order_by('order')
-        
-        context['root_categories'] = root_categories
-        
-        # Знайти категорію "Тренерство" з підкатегоріями
-        trenerstvo = Category.objects.filter(
-            slug='coaching',
-            is_active=True
-        ).prefetch_related('subcategories').first()
-        
-        context['trenerstvo'] = trenerstvo
-        context['trenerstvo_subcategories'] = (
-            trenerstvo.subcategories.filter(is_active=True).order_by('order')
-            if trenerstvo else []
-        )
-        
         # Add featured courses for carousel (топ-7 по enrollment)
         context['featured_courses'] = Course.objects.filter(
             is_published=True,
             is_featured=True
-        ).select_related('category', 'category__parent').order_by('-enrollment_count')[:7]
-        
-        # Add current filters
-        context['current_categories'] = self.request.GET.getlist('category')
-        context['current_subcategories'] = self.request.GET.getlist('subcategory')
+        ).order_by('-enrollment_count')[:7]
         
         # Check user favorites
         if self.request.user.is_authenticated:

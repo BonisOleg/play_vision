@@ -100,7 +100,6 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True)
     profession = models.CharField(max_length=100, blank=True)
-    interests = models.ManyToManyField('content.Tag', blank=True, related_name='interested_users')
     completed_survey = models.BooleanField(default=False)
     survey_completed_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

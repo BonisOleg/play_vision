@@ -243,90 +243,6 @@ class HubFeaturedCarousel {
 }
 
 /**
- * Фільтри каталогу
- */
-class HubFilters {
-    constructor(form) {
-        this.form = form;
-        this.filterGroups = form.querySelectorAll('.hub-filter-group');
-        this.resetBtn = form.querySelector('.hub-filter-reset');
-        
-        this.init();
-    }
-
-    init() {
-        // Dropdown toggle тільки для Тренерства
-        this.filterGroups.forEach(group => {
-            const toggle = group.querySelector('.hub-filter-toggle');
-            if (toggle) {
-                toggle.addEventListener('click', () => this.toggleGroup(group));
-            }
-        });
-
-        // Reset filters (Відмінити)
-        if (this.resetBtn) {
-            this.resetBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.resetFilters();
-            });
-        }
-        
-        // Динамічне виділення активних чекбоксів
-        this.attachCheckboxListeners();
-    }
-
-    toggleGroup(group) {
-        const content = group.querySelector('.hub-filter-content');
-        const isOpen = group.classList.contains('active');
-
-        if (isOpen) {
-            group.classList.remove('active');
-            content.style.display = 'none';
-        } else {
-            group.classList.add('active');
-            content.style.display = 'block';
-        }
-    }
-
-    resetFilters() {
-        // Uncheck all inputs
-        this.form.querySelectorAll('input[type="checkbox"]').forEach(input => {
-            input.checked = false;
-        });
-        
-        // Remove active classes
-        this.form.querySelectorAll('.hub-filter-checkbox-active').forEach(label => {
-            label.classList.remove('hub-filter-checkbox-active');
-        });
-        
-        // Trigger HTMX request to reload without filters
-        if (typeof htmx !== 'undefined') {
-            htmx.ajax('GET', window.location.pathname, {
-                target: '#catalog-content',
-                swap: 'innerHTML'
-            });
-        } else {
-            // Fallback if HTMX not available
-            window.location.href = window.location.pathname;
-        }
-    }
-    
-    attachCheckboxListeners() {
-        const checkboxes = this.form.querySelectorAll('.hub-filter-checkbox input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-                const label = e.target.closest('.hub-filter-checkbox');
-                if (e.target.checked) {
-                    label.classList.add('hub-filter-checkbox-active');
-                } else {
-                    label.classList.remove('hub-filter-checkbox-active');
-                }
-            });
-        });
-    }
-}
-
-/**
  * Обробка кнопки "Улюблене" (іконка сердечка)
  */
 function initFavoriteButtons() {
@@ -395,12 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const featuredSection = document.querySelector('.hub-featured-section');
     if (featuredSection) {
         new HubFeaturedCarousel(featuredSection);
-    }
-    
-    // Filters
-    const filtersForm = document.querySelector('.hub-filters-form');
-    if (filtersForm) {
-        new HubFilters(filtersForm);
     }
     
     // Favorite buttons

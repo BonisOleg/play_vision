@@ -1,37 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.forms import TextInput
-from .models import Category, Tag, Course, Material, UserCourseProgress, Favorite, MonthlyQuote
-
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'parent', 'order', 'is_subcategory_required', 'is_active', 'created_at')
-    list_filter = ('parent', 'is_active', 'is_subcategory_required')
-    search_fields = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name',)}
-    ordering = ('order', 'name')
-    
-    fieldsets = (
-        (None, {'fields': ('name', 'slug', 'description', 'icon')}),
-        ('Ієрархія', {'fields': ('parent', 'order', 'is_subcategory_required')}),
-        ('Status', {'fields': ('is_active',)}),
-        ('Timestamps', {'fields': ('created_at', 'updated_at')}),
-    )
-    readonly_fields = ('created_at', 'updated_at')
-
-
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'tag_type', 'display_order', 'created_at')
-    list_filter = ('tag_type',)
-    search_fields = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name',)}
-    ordering = ('tag_type', 'display_order', 'name')
-    
-    fieldsets = (
-        (None, {'fields': ('name', 'slug', 'tag_type', 'display_order')}),
-    )
+from .models import Course, Material, UserCourseProgress, Favorite, MonthlyQuote
 
 
 class MaterialInline(admin.TabularInline):
@@ -47,9 +17,9 @@ class MaterialInline(admin.TabularInline):
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     """Курси 🧪 BETA"""
-    list_display = ('title', 'category', 'price', 'is_featured', 'is_published', 
+    list_display = ('title', 'price', 'is_featured', 'is_published', 
                    'view_count', 'enrollment_count', 'created_at')
-    list_filter = ('category', 'is_featured', 'is_free', 'is_published', 
+    list_filter = ('is_featured', 'is_free', 'is_published', 
                   'requires_subscription', 'created_at')
     search_fields = ('title', 'slug', 'description', 'author')
     prepopulated_fields = {'slug': ('title',)}
@@ -58,8 +28,7 @@ class CourseAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Основна інформація', {
-            'fields': ('title', 'slug', 'author', 'category'),
-            'description': 'Для категорії "Тренерство" обов\'язково оберіть підкатегорію (напр. "Дитячий тренер")'
+            'fields': ('title', 'slug', 'author')
         }),
         ('Опис', {
             'fields': ('short_description', 'description')

@@ -131,7 +131,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = [
             'first_name', 'last_name', 'birth_date', 'avatar',
-            'profession', 'interests'
+            'profession'
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={
@@ -153,9 +153,6 @@ class ProfileForm(forms.ModelForm):
             'profession': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Професія'
-            }),
-            'interests': forms.CheckboxSelectMultiple(attrs={
-                'class': 'form-check-input'
             })
         }
     
