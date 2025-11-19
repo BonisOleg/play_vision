@@ -13,10 +13,5 @@ class Migration(migrations.Migration):
             name='tier_name',
             field=models.CharField(blank=True, help_text='Назва тарифу (Базовий, ПРО, Преміум)', max_length=50),
         ),
-        migrations.AlterField(
-            model_name='event',
-            name='ticket_tiers',
-            field=models.JSONField(blank=True, default=list, help_text='Тарифи квитків: [{"name": "Базовий", "price": 350, "features": ["пункт 1", "..."], "is_popular": false}]', verbose_name='Тарифи квитків'),
-        ),
     ]
 
