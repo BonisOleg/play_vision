@@ -174,61 +174,6 @@
             </div>
         </div>
 
-        <!-- Compare Button -->
-        <div class="compare-section">
-            <button class="btn-compare" id="btn-compare">
-                Порівняти всі тарифи
-            </button>
-        </div>
-
-    </div>
-</div>
-
-<!-- Comparison Modal -->
-<div class="modal-overlay" id="comparison-modal">
-    <div class="modal-content">
-        <button class="modal-close" id="modal-close">&times;</button>
-        <h2 class="modal-title">Порівняння тарифів</h2>
-        
-        <div class="comparison-table-wrapper">
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Функція</th>
-                        {% for plan in plans %}
-                        <th>{{ plan.name }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Price Row -->
-                    <tr>
-                        <td><strong>Ціна (міс)</strong></td>
-                        {% for plan in plans %}
-                        <td>{{ plan.base_price_uah|floatformat:0 }} {{ currency_symbol }}</td>
-                        {% endfor %}
-                    </tr>
-                    
-                    <!-- Features -->
-                    {% for i in "12345" %}
-                    <tr>
-                        <td>Перевага {{ i }}</td>
-                        {% for plan in plans %}
-                        <td>
-                            {% with feature=plan|get_feature:i %}
-                            {% if feature %}
-                            <span class="check">✓</span> {{ feature }}
-                            {% else %}
-                            <span class="cross">—</span>
-                            {% endif %}
-                            {% endwith %}
-                        </td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
 {% endblock %}
