@@ -5,6 +5,7 @@ from django.utils import timezone
 def check_user_course_access(user, course):
     """
     Check if user has access to a specific course
+    TODO: Оновити для нової системи підписок
     """
     if not user or not user.is_authenticated:
         return False
@@ -25,19 +26,10 @@ def check_user_course_access(user, course):
     if purchased:
         return True
     
-    # Check if course requires subscription
-    if course.requires_subscription:
-        # Get active subscriptions
-        active_subscriptions = user.subscriptions.filter(
-            status='active',
-            start_date__lte=timezone.now(),
-            end_date__gte=timezone.now()
-        )
-        
-        for subscription in active_subscriptions:
-            # Check if subscription tier is allowed for this course
-            if not course.subscription_tiers or subscription.plan.slug in course.subscription_tiers:
-                return True
+    # TODO: Check if course requires subscription (нова система)
+    # if course.requires_subscription:
+    #     active_subscriptions = user.subscriptions.filter(...)
+    #     ...
     
     return False
 
@@ -45,6 +37,7 @@ def check_user_course_access(user, course):
 def get_user_accessible_courses(user):
     """
     Get all courses accessible by user
+    TODO: Оновити для нової системи підписок
     """
     from apps.content.models import Course
     
@@ -64,52 +57,15 @@ def get_user_accessible_courses(user):
     
     purchased_courses = Course.objects.filter(id__in=purchased_course_ids, is_published=True)
     
-    # Add subscription courses
-    active_subscriptions = user.subscriptions.filter(
-        status='active',
-        start_date__lte=timezone.now(),
-        end_date__gte=timezone.now()
-    )
+    # TODO: Add subscription courses (нова система)
+    # active_subscriptions = user.subscriptions.filter(...)
+    # if active_subscriptions.exists():
+    #     subscription_courses = ...
+    #     accessible_courses = accessible_courses | purchased_courses | subscription_courses
+    # else:
+    #     accessible_courses = accessible_courses | purchased_courses
     
-    if active_subscriptions.exists():
-        # Get subscription tiers
-        subscription_tiers = list(active_subscriptions.values_list('plan__slug', flat=True))
-        
-        # Get courses available for these tiers
-        from django.db import connection
-        
-        if connection.vendor == 'postgresql':
-            # PostgreSQL specific operations
-            subscription_courses = Course.objects.filter(
-                requires_subscription=True,
-                is_published=True
-            ).filter(
-                models.Q(subscription_tiers__len=0) |  # No tier restrictions
-                models.Q(subscription_tiers__overlap=subscription_tiers)  # Tier matches
-            )
-        else:
-            # SQLite compatible version
-            subscription_courses = Course.objects.filter(
-                requires_subscription=True,
-                is_published=True
-            )
-            
-            # Фільтрування в Python для SQLite
-            filtered_courses = []
-            for course in subscription_courses:
-                # Якщо немає обмежень по рівнях підписки
-                if not course.subscription_tiers:
-                    filtered_courses.append(course.id)
-                # Або якщо є перетин з доступними рівнями
-                elif any(tier in course.subscription_tiers for tier in subscription_tiers):
-                    filtered_courses.append(course.id)
-            
-            subscription_courses = Course.objects.filter(id__in=filtered_courses)
-        
-        # Combine all accessible courses
-        accessible_courses = accessible_courses | purchased_courses | subscription_courses
-    else:
-        accessible_courses = accessible_courses | purchased_courses
+    accessible_courses = accessible_courses | purchased_courses
     
     return accessible_courses.distinct()
 

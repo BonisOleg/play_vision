@@ -1138,90 +1138,8 @@
     line-height: 1;
 }
 
-.event-speakers-section {
+.event-experts-section {
     margin-bottom: 48px;
-}
-
-.event-speakers-section h2 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 12px;
-    text-align: center;
-}
-
-.speakers-subtitle {
-    font-size: 1rem;
-    color: var(--color-text-light);
-    text-align: center;
-    margin-bottom: 40px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.event-speakers-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-}
-
-.event-speaker-card {
-    background: transparent;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.event-speaker-card:hover {
-    transform: translateY(-4px);
-}
-
-.event-speaker-image {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 16px;
-    background: var(--color-bg-gray, #f5f5f5);
-}
-
-.event-speaker-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.event-speaker-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text-light);
-    opacity: 0.3;
-}
-
-.event-speaker-content {
-    padding: 0 8px;
-}
-
-.event-speaker-name {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: 8px;
-}
-
-.event-speaker-position {
-    font-size: 0.875rem;
-    color: var(--color-text-light);
-    margin: 0;
-}
-
-.event-speaker-company {
-    font-size: 0.875rem;
-    color: var(--color-text-light);
-    margin: 4px 0 0 0;
 }
 
 .event-pricing-section {
@@ -1378,8 +1296,7 @@
     border-color: #333333;
 }
 
-[data-theme="dark"] .event-benefits-section,
-[data-theme="dark"] .event-speaker-image {
+[data-theme="dark"] .event-benefits-section {
     background: #1a1a1a;
 }
 
@@ -1389,17 +1306,12 @@
         border-color: #333333;
     }
 
-    [data-theme="auto"] .event-benefits-section,
-    [data-theme="auto"] .event-speaker-image {
+    [data-theme="auto"] .event-benefits-section {
         background: #1a1a1a;
     }
 }
 
 @media (max-width: 1024px) {
-    .event-speakers-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .pricing-tiers {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1412,10 +1324,6 @@
         padding: 24px;
     }
 
-    .event-speakers-grid {
-        grid-template-columns: 1fr;
-    }
-
     .pricing-tiers {
         grid-template-columns: 1fr;
     }
@@ -1423,7 +1331,7 @@
     .event-hero {
         max-height: 250px;
     }
-    
+
     .event-hero-placeholder {
         min-height: 250px;
     }

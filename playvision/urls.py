@@ -29,7 +29,9 @@ urlpatterns = [
     path('ai/', include('apps.ai.urls')),
     
     # Commerce
-    path('', include('apps.subscriptions.urls')),  # Include pricing at root level
+    # Видалено підписки - буде нова система
+    # TODO: Додати нові URL для нової системи підписок
+    # path('', include('apps.subscriptions.urls')),
     path('cart/', include('apps.cart.urls')),
     path('payments/', include('apps.payments.urls')),
     path('loyalty/', include('apps.loyalty.urls')),

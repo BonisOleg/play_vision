@@ -133,7 +133,8 @@ class Cabinet {
     loadUserData() {
         // Завантаження додаткових даних користувача
         this.loadNotifications();
-        this.checkActiveSubscription();
+        // TODO: Перевірка підписки (нова система)
+        // this.checkActiveSubscription();
         this.updateLoyaltyProgress();
     }
 
@@ -1087,18 +1088,11 @@ class Cabinet {
                 this.addLoyaltyPoints(points, reason);
                 break;
 
-            case 'cancelSubscription':
-                this.cancelSubscription();
-                break;
-
-            case 'renewSubscription':
-                this.renewSubscription();
-                break;
-
-            case 'changeSubscriptionPlan':
-                const planId = element.getAttribute('data-plan-id');
-                this.changeSubscriptionPlan(planId);
-                break;
+            // Видалено обробку підписок - буде нова система
+            // TODO: Додати обробку для нової системи підписок
+            // case 'cancelSubscription': this.cancelSubscription(); break;
+            // case 'renewSubscription': this.renewSubscription(); break;
+            // case 'changeSubscriptionPlan': this.changeSubscriptionPlan(planId); break;
 
             case 'closeMaterialModal':
                 this.closeMaterialModal();
@@ -1118,39 +1112,9 @@ class Cabinet {
     }
 
     // === ЛОКАЛЬНЕ ОНОВЛЕННЯ UI ===
-
-    updateSubscriptionUI(data) {
-        // Оновлюємо інформацію про підписку без перезагрузки
-        if (data.subscription_status) {
-            const statusElements = document.querySelectorAll('.subscription-status');
-            statusElements.forEach(el => {
-                el.textContent = data.subscription_status;
-                el.className = `subscription-status status-${data.subscription_status.toLowerCase()}`;
-            });
-        }
-
-        if (data.expires_at) {
-            const expiryElements = document.querySelectorAll('.subscription-expiry');
-            expiryElements.forEach(el => {
-                el.textContent = data.expires_at;
-            });
-        }
-
-        // Оновлюємо кнопки підписки
-        if (data.can_cancel !== undefined) {
-            const cancelBtns = document.querySelectorAll('.btn-cancel-subscription');
-            cancelBtns.forEach(btn => {
-                btn.style.display = data.can_cancel ? 'block' : 'none';
-            });
-        }
-
-        if (data.can_renew !== undefined) {
-            const renewBtns = document.querySelectorAll('.btn-renew-subscription');
-            renewBtns.forEach(btn => {
-                btn.style.display = data.can_renew ? 'block' : 'none';
-            });
-        }
-    }
+    
+    // TODO: Додати методи для оновлення UI підписки (нова система)
+    // updateSubscriptionUI(data) { ... }
 
     updateLoyaltyUI(data) {
         // Оновлюємо інформацію про лояльність без перезагрузки
@@ -1240,24 +1204,11 @@ function closePaymentDetailsModal() {
     }
 }
 
-// Нові глобальні функції для кнопок кабінету
-function cancelSubscription() {
-    if (window.cabinet) {
-        window.cabinet.cancelSubscription();
-    }
-}
-
-function renewSubscription() {
-    if (window.cabinet) {
-        window.cabinet.renewSubscription();
-    }
-}
-
-function changeSubscriptionPlan(planId) {
-    if (window.cabinet) {
-        window.cabinet.changeSubscriptionPlan(planId);
-    }
-}
+// Видалено глобальні функції підписок - буде нова система
+// TODO: Додати нові глобальні функції для нової системи підписок
+// function cancelSubscription() { ... }
+// function renewSubscription() { ... }
+// function changeSubscriptionPlan(planId) { ... }
 
 function addLoyaltyPoints(points, reason) {
     if (window.cabinet) {

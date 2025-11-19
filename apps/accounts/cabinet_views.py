@@ -12,7 +12,6 @@ from datetime import timedelta
 
 from .models import User, Profile
 from .forms import ProfileForm, PasswordChangeForm
-from apps.subscriptions.models import Subscription, Plan
 from apps.loyalty.models import LoyaltyAccount, LoyaltyTier
 from apps.content.models import Course, Material, UserCourseProgress, Favorite
 try:
@@ -39,11 +38,8 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         context['days_count'] = days
         context['days_word'] = self._get_days_word(days)
         
-        # Активна підписка
-        active_subscription = user.subscriptions.filter(
-            status='active',
-            end_date__gte=timezone.now()
-        ).first()
+        # Активна підписка (видалено - буде нова система)
+        active_subscription = None
         context['active_subscription'] = active_subscription
         
         # Аккаунт лояльності
@@ -98,25 +94,16 @@ class CabinetView(LoginRequiredMixin, TemplateView):
             return "днів"
     
     def _get_subscription_context(self, user, active_subscription):
-        """Контекст для вкладки підписки"""
+        """Контекст для вкладки підписки (буде перероблено)"""
         context = {}
         
-        # Доступні плани
-        context['available_plans'] = Plan.objects.filter(is_active=True).order_by('duration_months')
-        
-        # Переваги поточного плану
-        if active_subscription:
-            context['plan_benefits'] = [
-                'Безлімітний перегляд',
-                '5-15% знижки на матеріали',
-                'Ексклюзивні матеріали (для Pro)',
-            ]
-            context['next_payment_date'] = active_subscription.end_date
-        
-        # Статистика
+        # TODO: Нова система підписок
+        context['available_plans'] = []
+        context['plan_benefits'] = []
+        context['next_payment_date'] = None
         context['subscription_stats'] = {
-            'total_subscriptions': user.subscriptions.count(),
-            'days_remaining': active_subscription.days_remaining if active_subscription else 0,
+            'total_subscriptions': 0,
+            'days_remaining': 0,
         }
         
         # Додати loyalty дані
@@ -160,13 +147,8 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         """Контекст для вкладки файлів"""
         context = {}
         
-        # Доступні курси через підписку
+        # TODO: Доступні курси через підписку (нова система)
         accessible_courses = []
-        if active_subscription:
-            accessible_courses = Course.objects.filter(
-                is_published=True,
-                requires_subscription=True
-            ).select_related('category').prefetch_related('materials')
         
         # Прогрес по курсах
         progress_map = {
@@ -203,20 +185,9 @@ class CabinetView(LoginRequiredMixin, TemplateView):
                 elif material.content_type == 'article':
                     content_type_display = "Стаття"
                 
-                # Перевірка доступу
-                has_access = bool(active_subscription)  # Є підписка = є доступ
+                # Перевірка доступу (TODO: нова система підписок)
+                has_access = False
                 purchased_separately = False
-                
-                # Перевірити чи куплений окремо (не через підписку)
-                if Payment and not active_subscription:
-                    purchased_separately = Payment.objects.filter(
-                        user=user,
-                        course=course,
-                        status='succeeded',
-                        subscription__isnull=True
-                    ).exists()
-                    if purchased_separately:
-                        has_access = True
                 
                 materials_data.append({
                     'id': material.id,
@@ -270,7 +241,7 @@ class CabinetView(LoginRequiredMixin, TemplateView):
             context['loyalty_account'] = None
             context['next_reward'] = None
             context['reward_progress'] = 0
-            context['active_subscription'] = None
+            context['active_subscription'] = None  # TODO: нова система
             context['current_discount'] = 0
             context['potential_discount'] = 0
             context['recent_transactions'] = []
@@ -278,11 +249,8 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         
         context['loyalty_account'] = loyalty_account
         
-        # Активна підписка (для відображення рівня та множників балів)
-        active_subscription = user.subscriptions.filter(
-            status='active',
-            end_date__gte=timezone.now()
-        ).first()
+        # Активна підписка (TODO: нова система підписок)
+        active_subscription = None
         context['active_subscription'] = active_subscription
         
         # Наступна винагорода (RedemptionOption)
@@ -338,12 +306,10 @@ class CabinetView(LoginRequiredMixin, TemplateView):
         context = {}
         
         if Payment:
-            # ВСІ успішні платежі (підписки, курси, івенти)
+            # ВСІ успішні платежі (курси, івенти - без підписок)
             all_payments = user.payments.filter(
                 status='succeeded'
             ).select_related(
-                'subscription',
-                'subscription__plan',
                 'course',
                 'event_ticket',
                 'event_ticket__event'
@@ -614,11 +580,8 @@ class DownloadMaterialView(LoginRequiredMixin, View):
         """Перевірити чи має користувач доступ до матеріалу"""
         course = material.course
         
-        # Перевірити активну підписку
-        active_subscription = user.subscriptions.filter(
-            status='active',
-            end_date__gte=timezone.now()
-        ).exists()
+        # TODO: Перевірити активну підписку (нова система)
+        active_subscription = False
         
         if active_subscription and course.requires_subscription:
             return True
@@ -632,109 +595,8 @@ class DownloadMaterialView(LoginRequiredMixin, View):
         return False
 
 
-class CancelSubscriptionView(LoginRequiredMixin, View):
-    """View для скасування підписки"""
-    
-    def post(self, request):
-        try:
-            # Знаходимо активну підписку
-            active_subscription = request.user.subscriptions.filter(
-                status='active',
-                end_date__gte=timezone.now()
-            ).first()
-            
-            if not active_subscription:
-                return JsonResponse({'error': 'Активна підписка не знайдена'}, status=404)
-            
-            # Скасовуємо підписку
-            active_subscription.status = 'cancelled'
-            active_subscription.cancelled_at = timezone.now()
-            active_subscription.auto_renew = False
-            active_subscription.save()
-            
-            messages.success(request, 'Підписку успішно скасовано')
-            return JsonResponse({
-                'success': True,
-                'message': 'Підписку скасовано. Доступ залишиться до кінця оплаченого періоду.'
-            })
-            
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-
-
-class RenewSubscriptionView(LoginRequiredMixin, View):
-    """View для поновлення підписки"""
-    
-    def post(self, request):
-        try:
-            # Знаходимо скасовану підписку
-            subscription = request.user.subscriptions.filter(
-                status='cancelled',
-                end_date__gte=timezone.now()
-            ).first()
-            
-            if not subscription:
-                return JsonResponse({'error': 'Підписка для поновлення не знайдена'}, status=404)
-            
-            # Поновлюємо підписку
-            subscription.status = 'active'
-            subscription.cancelled_at = None
-            subscription.auto_renew = True
-            subscription.save()
-            
-            messages.success(request, 'Підписку успішно поновлено')
-            return JsonResponse({
-                'success': True,
-                'message': 'Підписку поновлено. Автоматичне поновлення увімкнено.'
-            })
-            
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-
-
-class ChangeSubscriptionView(LoginRequiredMixin, View):
-    """View для зміни плану підписки"""
-    
-    def post(self, request):
-        try:
-            plan_id = request.POST.get('plan_id')
-            if not plan_id:
-                return JsonResponse({'error': 'Не вказано план підписки'}, status=400)
-            
-            new_plan = get_object_or_404(Plan, id=plan_id, is_active=True)
-            
-            # Знаходимо активну підписку
-            active_subscription = request.user.subscriptions.filter(
-                status='active',
-                end_date__gte=timezone.now()
-            ).first()
-            
-            if active_subscription:
-                # Оновлюємо існуючу підписку
-                active_subscription.plan = new_plan
-                active_subscription.save()
-                message = f'План підписки змінено на "{new_plan.name}"'
-            else:
-                # Створюємо нову підписку
-                Subscription.objects.create(
-                    user=request.user,
-                    plan=new_plan,
-                    status='active',
-                    start_date=timezone.now(),
-                    end_date=timezone.now() + timedelta(days=30),
-                    auto_renew=True
-                )
-                message = f'Оформлено підписку "{new_plan.name}"'
-            
-            messages.success(request, message)
-            return JsonResponse({
-                'success': True,
-                'message': message,
-                'redirect_url': '/account/'
-            })
-            
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+# Видалено views підписок - CancelSubscriptionView, RenewSubscriptionView, ChangeSubscriptionView
+# TODO: Створити нові views для нової системи підписок
 
 
 class AddLoyaltyPointsView(LoginRequiredMixin, View):

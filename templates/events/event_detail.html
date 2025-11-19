@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/events.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -85,35 +87,50 @@
                     {% endif %}
 
                     {% if event.speakers.all %}
-                    <div class="event-speakers-section">
-                        <h2>Команда спікерів</h2>
-                        <p class="speakers-subtitle">провідні футбольні фахівці, які створюють освітні продукти та супроводжують ваш розвиток</p>
-                        <div class="event-speakers-grid">
-                            {% for speaker in event.speakers.all %}
-                            <div class="event-speaker-card">
-                                <div class="event-speaker-image">
-                                    {% if speaker.photo %}
-                                    <img src="{{ speaker.photo.url }}" alt="{{ speaker.full_name }}">
-                                    {% else %}
-                                    <div class="event-speaker-placeholder">
-                                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                            <circle cx="12" cy="7" r="4"/>
-                                        </svg>
+                    <section class="fullscreen-section experts-section event-experts-section">
+                        <div class="section-content">
+                            <h2 class="section-title">Команда спікерів</h2>
+                            <p class="experts-subtitle">провідні футбольні фахівці, які створюють освітні продукти та супроводжують ваш розвиток</p>
+
+                            <div class="experts-grid">
+                                {% for speaker in event.speakers.all %}
+                                <div class="expert-card" data-expert-id="{{ forloop.counter }}">
+                                    <div class="expert-card-inner">
+                                        <div class="expert-card-front">
+                                            <div class="expert-photo">
+                                                {% if speaker.photo %}
+                                                <img src="{{ speaker.photo.url }}" alt="{{ speaker.full_name }}" loading="lazy">
+                                                {% else %}
+                                                <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png" alt="{{ speaker.full_name }}" loading="lazy">
+                                                {% endif %}
+                                            </div>
+                                            <div class="expert-card-content">
+                                                <h3 class="expert-name">{{ speaker.full_name }}</h3>
+                                                <p class="expert-specialization">{{ speaker.position }}</p>
+                                                {% if speaker.company %}
+                                                <p class="expert-company">{{ speaker.company }}</p>
+                                                {% endif %}
+                                                <span class="expert-detail-link">Детальніше</span>
+                                            </div>
+                                        </div>
+                                        <div class="expert-card-back">
+                                            <div class="expert-bio-content">
+                                                <h3 class="expert-name-back">{{ speaker.full_name }}</h3>
+                                                <div class="expert-bio-text">
+                                                    {% if speaker.bio %}
+                                                    {{ speaker.bio|linebreaks }}
+                                                    {% else %}
+                                                    <p>{{ speaker.position }}{% if speaker.company %} • {{ speaker.company }}{% endif %}</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    {% endif %}
                                 </div>
-                                <div class="event-speaker-content">
-                                    <h4 class="event-speaker-name">{{ speaker.full_name }}</h4>
-                                    <p class="event-speaker-position">{{ speaker.position }}</p>
-                                    {% if speaker.company %}
-                                    <p class="event-speaker-company">{{ speaker.company }}</p>
-                                    {% endif %}
-                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
                         </div>
-                    </div>
+                    </section>
                     {% endif %}
 
                     {% if structured_tiers %}
@@ -170,4 +187,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/expert-flip-cards.js' %}"></script>
 {% endblock %}

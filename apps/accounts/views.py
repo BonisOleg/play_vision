@@ -203,11 +203,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         
-        # Get user's active subscription
-        context['active_subscription'] = user.subscriptions.filter(
-            status='active',
-            end_date__gte=timezone.now()
-        ).first()
+        # TODO: Get user's active subscription (нова система)
+        context['active_subscription'] = None
         
         # Get recent courses
         context['recent_courses'] = user.course_progress.select_related(
@@ -269,37 +266,8 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Профіль успішно оновлено.')
         return response
 
-
-class SubscriptionView(LoginRequiredMixin, TemplateView):
-    """User subscription management"""
-    template_name = 'account/subscription.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.request.user
-        
-        # Current subscription
-        context['current_subscription'] = user.subscriptions.filter(
-            status='active',
-            end_date__gte=timezone.now()
-        ).first()
-        
-        # Subscription history
-        context['subscription_history'] = user.subscriptions.order_by('-created_at')[:10]
-        
-        # Available plans
-        from apps.subscriptions.models import Plan
-        context['available_plans'] = Plan.objects.filter(is_active=True).order_by('duration_months')
-        
-        # Ticket balance
-        from apps.subscriptions.models import TicketBalance
-        context['ticket_balance'] = TicketBalance.objects.filter(
-            user=user,
-            amount__gt=0,
-            expires_at__gt=timezone.now()
-        ).aggregate(total=models.Sum('amount'))['total'] or 0
-        
-        return context
+# Видалено SubscriptionView - буде нова система підписок
+# TODO: Створити новий SubscriptionView з новою логікою
 
 
 class MyCoursesView(LoginRequiredMixin, TemplateView):

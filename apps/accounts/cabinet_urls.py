@@ -23,10 +23,11 @@ urlpatterns = [
     path('api/toggle-favorite/', cabinet_views.ToggleFavoriteView.as_view(), name='toggle_favorite'),
     path('api/material-progress/', cabinet_views.UpdateMaterialProgressView.as_view(), name='material_progress'),
     
-    # Керування підпискою
-    path('subscription/cancel/', cabinet_views.CancelSubscriptionView.as_view(), name='cancel_subscription'),
-    path('subscription/renew/', cabinet_views.RenewSubscriptionView.as_view(), name='renew_subscription'),
-    path('subscription/change/', cabinet_views.ChangeSubscriptionView.as_view(), name='change_subscription'),
+    # Видалено керування підпискою - буде нова система
+    # TODO: Додати нові URL для нової системи підписок
+    # path('subscription/cancel/', ...)
+    # path('subscription/renew/', ...)
+    # path('subscription/change/', ...)
     
     # Лояльність та курси
     path('loyalty/add-points/', cabinet_views.AddLoyaltyPointsView.as_view(), name='add_loyalty_points'),
