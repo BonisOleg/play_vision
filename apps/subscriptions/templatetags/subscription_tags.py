@@ -71,13 +71,17 @@ def get_feature(plan, index):
     
     Args:
         plan: SubscriptionPlan object
-        index: int - номер переваги (1-5)
+        index: int або str - номер переваги (1-5)
     
     Returns:
         str: Текст переваги або порожній рядок
     """
     try:
+        # Конвертувати index в int якщо це рядок (з циклу {% for i in "12345" %})
+        if isinstance(index, str):
+            index = int(index)
+        
         feature_attr = f'feature_{index}'
         return getattr(plan, feature_attr, '') or ''
-    except Exception:
+    except (ValueError, TypeError, AttributeError):
         return ''
