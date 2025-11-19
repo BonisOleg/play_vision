@@ -32,7 +32,7 @@
             <div class="banner-mosaic">
                 {% for course in featured_courses|slice:":12" %}
                 <div class="mosaic-item"
-                    style="background-image: url('{% if course.thumbnail %}{{ course.thumbnail.url }}{% else %}{% static 'images/course-placeholder.jpg' %}{% endif %}');">
+                    style="background-image: url('{% if course.thumbnail %}{{ course.thumbnail.url }}{% else %}{% static 'images/placeholder-1200x600.svg' %}{% endif %}');">
                     <div class="mosaic-overlay">
                         <span class="mosaic-title">{{ course.title|truncatewords:3 }}</span>
                     </div>
