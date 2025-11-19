@@ -301,7 +301,7 @@ class Subscription(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'user_subscriptions'
+        db_table = 'subscriptions'
         verbose_name = 'Підписка користувача'
         verbose_name_plural = 'Підписки користувачів'
         ordering = ['-created_at']
