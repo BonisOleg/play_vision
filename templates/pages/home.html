@@ -63,7 +63,6 @@
                 {% endfor %}
             ]
             </script>
-            {% if cms_hero_slides %}
             {% with first_slide=cms_hero_slides.0 %}
             <h1 class="hero-title">{{ first_slide|get_localized_title:country_code }}</h1>
             {% with subtitle=first_slide|get_localized_subtitle:country_code %}
