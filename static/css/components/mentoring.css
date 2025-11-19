@@ -226,15 +226,6 @@
     }
 }
 
-.experts-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: stretch;
-}
-
 /* СТИЛІ ЕКСПЕРТІВ - ВАЖЛИВІ ДЛЯ МЕНТОР СТОРІНКИ */
 .mentoring-team-section .expert-card-content {
     padding: 24px 20px;

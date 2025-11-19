@@ -101,6 +101,29 @@
     text-decoration-color: #b71c1c;
 }
 
+/* КНОПКА "ДЕТАЛЬНІШЕ" */
+.expert-detail-btn {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #d32f2f;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s ease, text-decoration-color 0.3s ease;
+    margin-top: auto;
+    padding: 4px 0;
+    font-family: inherit;
+}
+
+.expert-detail-btn:hover {
+    color: #b71c1c;
+    text-decoration-color: #b71c1c;
+}
+
 /* HOVER ЕФЕКТ ДЛЯ FRONT */
 .expert-card:hover .expert-card-front {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
