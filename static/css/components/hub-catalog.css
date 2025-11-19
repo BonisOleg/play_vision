@@ -160,6 +160,14 @@
     flex: 1;
 }
 
+/* Кому підходить */
+.hub-product-audience {
+    font-size: 0.7rem;
+    color: var(--hub-text-light);
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
+
 /* Кому підходить - тонкий шрифт */
 .hub-product-meta {
     font-size: 0.7rem;

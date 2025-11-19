@@ -18,14 +18,29 @@ class CourseListView(ListView):
     paginate_by = 12
     
     def get_queryset(self) -> QuerySet[Course]:
-        queryset = Course.objects.filter(
-            is_published=True
-        )
+        from django.db.models import Q
         
-        # Сортування за замовчуванням
-        queryset = queryset.order_by('-created_at')
+        queryset = Course.objects.filter(is_published=True)
         
-        return queryset
+        # Фільтр за target_audience
+        audience_filters = self.request.GET.getlist('audience')
+        if audience_filters:
+            q_objects = Q()
+            for aud in audience_filters:
+                q_objects |= Q(target_audience__contains=[aud])
+            queryset = queryset.filter(q_objects)
+        
+        # Пошук
+        search_query = self.request.GET.get('q', '').strip()
+        if search_query:
+            queryset = queryset.filter(
+                Q(title__icontains=search_query) |
+                Q(description__icontains=search_query) |
+                Q(short_description__icontains=search_query) |
+                Q(author__icontains=search_query)
+            )
+        
+        return queryset.order_by('-created_at')
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

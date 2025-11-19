@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="{% static 'css/components/hub-carousel.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/hub-catalog.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/htmx-indicators.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/search.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub-filters.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -144,21 +146,134 @@
             <!-- КАТАЛОГ -->
             <section class="hub-catalog-section" id="catalog">
                 <div class="section-content">
-
-                    <!-- Спрощений Layout без фільтрів -->
-                    <div class="hub-catalog-layout-simple">
-
-                        <!-- Тільки Grid без sidebar -->
+                    
+                    <div class="hub-catalog-layout">
+                        
+                        <!-- SIDEBAR ФІЛЬТРІВ -->
+                        <aside class="hub-filters-sidebar">
+                            <h2 class="hub-filters-title">Фільтрувати</h2>
+                            
+                            <!-- Пошук -->
+                            <div class="hub-search-wrapper">
+                                <input type="text" 
+                                       id="hub-search-input" 
+                                       class="hub-search-input" 
+                                       placeholder="Пошук">
+                            </div>
+                            
+                            <!-- Фільтри -->
+                            <div class="hub-filters-list">
+                                <!-- Тренерство (з dropdown) -->
+                                <div class="hub-filter-item">
+                                    <div class="hub-filter-header" data-dropdown="coaching">
+                                        <span class="hub-filter-label">Тренерство</span>
+                                        <svg class="hub-filter-arrow" viewBox="0 0 24 24">
+                                            <path d="M7 10l5 5 5-5z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="hub-filter-submenu" data-submenu="coaching">
+                                        <label class="hub-filter-subitem">
+                                            <input type="checkbox" name="audience" value="coach_goalkeeper">
+                                            <span>Тренер воротарів</span>
+                                        </label>
+                                        <label class="hub-filter-subitem">
+                                            <input type="checkbox" name="audience" value="coach_youth">
+                                            <span>Дитячий тренер</span>
+                                        </label>
+                                        <label class="hub-filter-subitem">
+                                            <input type="checkbox" name="audience" value="coach_fitness">
+                                            <span>Тренер ЗФП</span>
+                                        </label>
+                                        <label class="hub-filter-subitem">
+                                            <input type="checkbox" name="audience" value="coach_pro">
+                                            <span>Тренер професійних команд</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Аналітика і скаутинг -->
+                                <div class="hub-filter-item">
+                                    <label class="hub-filter-header" data-checkbox="analyst_scout">
+                                        <input type="checkbox" name="audience" value="analyst_scout" style="display: none;">
+                                        <span class="hub-filter-label">Аналітика і скаутинг</span>
+                                        <div class="hub-filter-checkbox"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Менеджмент -->
+                                <div class="hub-filter-item">
+                                    <label class="hub-filter-header" data-checkbox="management">
+                                        <input type="checkbox" name="audience" value="management" style="display: none;">
+                                        <span class="hub-filter-label">Менеджмент</span>
+                                        <div class="hub-filter-checkbox"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Спортивна психологія -->
+                                <div class="hub-filter-item">
+                                    <label class="hub-filter-header" data-checkbox="psychology">
+                                        <input type="checkbox" name="audience" value="psychology" style="display: none;">
+                                        <span class="hub-filter-label">Спортивна психологія</span>
+                                        <div class="hub-filter-checkbox"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Нутриціологія -->
+                                <div class="hub-filter-item">
+                                    <label class="hub-filter-header" data-checkbox="nutrition">
+                                        <input type="checkbox" name="audience" value="nutrition" style="display: none;">
+                                        <span class="hub-filter-label">Нутриціологія</span>
+                                        <div class="hub-filter-checkbox"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Реабілітація -->
+                                <div class="hub-filter-item">
+                                    <label class="hub-filter-header" data-checkbox="rehabilitation">
+                                        <input type="checkbox" name="audience" value="rehabilitation" style="display: none;">
+                                        <span class="hub-filter-label">Реабілітація</span>
+                                        <div class="hub-filter-checkbox"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Футболіст -->
+                                <div class="hub-filter-item">
+                                    <label class="hub-filter-header" data-checkbox="player">
+                                        <input type="checkbox" name="audience" value="player" style="display: none;">
+                                        <span class="hub-filter-label">Футболіст</span>
+                                        <div class="hub-filter-checkbox"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Батько -->
+                                <div class="hub-filter-item">
+                                    <label class="hub-filter-header" data-checkbox="parent">
+                                        <input type="checkbox" name="audience" value="parent" style="display: none;">
+                                        <span class="hub-filter-label">Батько</span>
+                                        <div class="hub-filter-checkbox"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Кнопки -->
+                            <div class="hub-filter-actions">
+                                <button class="hub-filter-btn hub-filter-btn-apply" id="apply-filters">
+                                    Застосувати
+                                </button>
+                                <button class="hub-filter-btn hub-filter-btn-cancel" id="cancel-filters">
+                                    Відмінити
+                                </button>
+                            </div>
+                        </aside>
+                        
+                        <!-- КОНТЕНТ -->
                         <div class="hub-content-column">
-                            <!-- HTMX Loading Indicator -->
                             <div class="htmx-loading htmx-indicator">Завантаження...</div>
-
-                            <!-- Catalog Content (Grid + Pagination) -->
                             <div id="catalog-content">
                                 {% include 'hub/partials/catalog_grid.html' %}
                             </div>
                         </div>
-
+                        
                     </div>
                 </div>
             </section>
@@ -170,4 +285,5 @@
 
 {% block extra_js %}
 <script src="{% static 'js/hub-knowledge.js' %}" defer></script>
+<script src="{% static 'js/hub-filters.js' %}" defer></script>
 {% endblock %}

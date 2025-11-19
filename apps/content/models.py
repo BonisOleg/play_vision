@@ -8,11 +8,31 @@ class Course(models.Model):
     """
     Educational courses
     """
+    TARGET_AUDIENCE_CHOICES = [
+        ('coach_goalkeeper', 'Тренер воротарів'),
+        ('coach_youth', 'Дитячий тренер'),
+        ('coach_fitness', 'Тренер ЗФП'),
+        ('coach_pro', 'Тренер професійних команд'),
+        ('analyst_scout', 'Аналітика і скаутинг'),
+        ('management', 'Менеджмент'),
+        ('psychology', 'Спортивна психологія'),
+        ('nutrition', 'Нутриціологія'),
+        ('rehabilitation', 'Реабілітація'),
+        ('player', 'Футболіст'),
+        ('parent', 'Батько'),
+    ]
+    
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
     short_description = models.CharField(max_length=300)
     author = models.CharField(max_length=200, blank=True, verbose_name='Автор курсу', help_text='Ім\'я автора/інструктора курсу')
+    target_audience = models.JSONField(
+        default=list, 
+        blank=True,
+        verbose_name='Кому підходить',
+        help_text='Виберіть цільову аудиторію курсу'
+    )
     price = models.DecimalField(max_digits=10, decimal_places=2)
     
     # Access control
@@ -68,6 +88,11 @@ class Course(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('content:course_detail', kwargs={'slug': self.slug})
+    
+    def get_target_audience_display(self):
+        """Повертає список назв аудиторій"""
+        choices_dict = dict(self.TARGET_AUDIENCE_CHOICES)
+        return [choices_dict.get(code, code) for code in self.target_audience]
 
 
 class Material(models.Model):

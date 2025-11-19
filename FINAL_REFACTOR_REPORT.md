@@ -13,7 +13,7 @@
 - ✅ `home.js` - HeroCarousel, CoursesCarousel (класи)
 - ✅ `scroll-popup.js` - ScrollPopup (клас)
 - ✅ `about.js` - QuotesCarousel, MaterialsCarousel, touch handlers
-- ✅ `hub.js` - SubscriptionBanner, MaterialsCarousel, FiltersManager
+- ✅ `hub-knowledge.js` - HubHeroCarousel, HubFeaturedCarousel, Favorite buttons
 - ✅ `events.js` - EventCalendar з фільтрами
 - ✅ `main.js` - Messages system без Alpine.js
 
@@ -282,7 +282,7 @@ CSS:
 
 ### Створено:
 - `/static/js/theme-manager.js` - антимерехтіння теми
-- `/static/js/hub.js` - Hub page logic
+- `/static/js/hub-knowledge.js` - Hub page logic (carousel, favorites)
 - `/static/js/events.js` - Events calendar
 - `/static/js/cabinet-handlers.js` - Cabinet interactions
 - `/static/js/course-detail-handlers.js` - Course detail handlers

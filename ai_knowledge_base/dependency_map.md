@@ -21,7 +21,7 @@ base.html
 
 ### course_list.html
 ├─ BASE+hub.css+hub-additions.css+search.css
-├─ JS: hub.js(SubscriptionBanner,MaterialsCarousel,FiltersManager,SupportWidget)+search-autocomplete.js
+├─ JS: hub-knowledge.js(HubHeroCarousel,HubFeaturedCarousel,initFavoriteButtons)+search-autocomplete.js
 ├─ LOAD: loyalty_filters
 └─ PARTS: _monthly_quote.html
 
@@ -105,7 +105,7 @@ course-detail.js: preview modal(20s timer),favorites HTMX,start free course
 course-detail-handlers.js: HTMX handlers for course actions
 events.js: event UI,share buttons,registration
 home.js: HeroCarousel class(7 slides,autoplay 5s,dots),CoursesCarousel class(responsive 1-3 slides,nav buttons)
-hub.js: SubscriptionBanner class(localStorage),MaterialsCarousel class(prev/next),FiltersManager class(mobile toggle,clear,auto-submit),SupportWidget class(toggle)
+hub-knowledge.js: HubHeroCarousel class(slides autoplay 5s),HubFeaturedCarousel class(prev/next,touch/swipe),initFavoriteButtons(AJAX toggle favorite)
 material-detail.js: video player controls,mark complete,preview timer
 material-detail-handlers.js: progress tracking API calls
 ai-chat.js: chat interface,send message API,suggested questions

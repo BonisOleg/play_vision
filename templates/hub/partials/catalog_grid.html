@@ -30,6 +30,15 @@
             </div>
             <p class="hub-product-desc">{{ course.short_description }}</p>
 
+            {% if course.target_audience %}
+            <div class="hub-product-audience">
+                Кому підходить: 
+                {% for aud in course.get_target_audience_display %}
+                    {{ aud }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <a href="{{ course.get_absolute_url }}" class="hub-btn-view">
                 <span class="btn-text">Огляд курсу</span>
                 <span class="btn-logo-space"></span>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from django.forms import TextInput
+from django.forms import TextInput, CheckboxSelectMultiple
 from .models import Course, Material, UserCourseProgress, Favorite, MonthlyQuote
 
 
@@ -26,9 +26,13 @@ class CourseAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at'
     inlines = [MaterialInline]
     
+    formfield_overrides = {
+        models.JSONField: {'widget': CheckboxSelectMultiple(choices=Course.TARGET_AUDIENCE_CHOICES)},
+    }
+    
     fieldsets = (
         ('Основна інформація', {
-            'fields': ('title', 'slug', 'author')
+            'fields': ('title', 'slug', 'author', 'target_audience')
         }),
         ('Опис', {
             'fields': ('short_description', 'description')

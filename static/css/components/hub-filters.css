@@ -1,0 +1,187 @@
+/* Sidebar + Content Layout */
+.hub-catalog-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* Sidebar */
+.hub-filters-sidebar {
+    background: var(--hub-bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    position: sticky;
+    top: 100px;
+}
+
+.hub-filters-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--hub-text);
+    margin-bottom: 24px;
+}
+
+/* Search в sidebar */
+.hub-search-wrapper {
+    margin-bottom: 24px;
+}
+
+.hub-search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--hub-border);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.hub-search-input:focus {
+    outline: none;
+    border-color: var(--hub-primary);
+}
+
+/* Список фільтрів */
+.hub-filters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+/* Фільтр Item */
+.hub-filter-item {
+    border: 2px solid var(--hub-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Header фільтра */
+.hub-filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.hub-filter-label {
+    font-size: 1rem;
+    color: var(--hub-text);
+    flex: 1;
+}
+
+/* Custom checkbox */
+.hub-filter-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--hub-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.hub-filter-checkbox.checked {
+    background: var(--hub-primary);
+    border-color: var(--hub-primary);
+}
+
+.hub-filter-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Dropdown arrow */
+.hub-filter-arrow {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    fill: var(--hub-text);
+}
+
+.hub-filter-arrow.open {
+    transform: rotate(180deg);
+}
+
+/* Submenu */
+.hub-filter-submenu {
+    padding: 0 16px 12px 16px;
+    display: none;
+}
+
+.hub-filter-submenu.open {
+    display: block;
+}
+
+.hub-filter-subitem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.hub-filter-subitem input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Кнопки */
+.hub-filter-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.hub-filter-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.hub-filter-btn-apply {
+    background: var(--hub-border);
+    color: var(--hub-text-light);
+    pointer-events: none;
+}
+
+.hub-filter-btn-apply.active {
+    background: var(--hub-primary);
+    color: white;
+    pointer-events: auto;
+}
+
+.hub-filter-btn-apply.active:hover {
+    background: #d4190c;
+}
+
+.hub-filter-btn-cancel {
+    background: var(--hub-secondary);
+    color: white;
+}
+
+.hub-filter-btn-cancel:hover {
+    background: #333333;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .hub-catalog-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .hub-filters-sidebar {
+        position: static;
+    }
+}
+
