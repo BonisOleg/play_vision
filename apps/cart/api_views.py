@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from .models import Cart, CartItem
 from .services import CartService
 from apps.content.models import Course
-from apps.subscriptions.models import Plan
+from apps.subscriptions.models import SubscriptionPlan as Plan
 
 
 class CartAddAPIView(APIView):

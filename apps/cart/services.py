@@ -2,7 +2,9 @@ from decimal import Decimal
 from django.utils import timezone
 from django.db import transaction
 from datetime import timedelta
-from apps.subscriptions.models import Plan
+# TODO: Нова система підписок
+# from apps.subscriptions.models import SubscriptionPlan as Plan
+from apps.subscriptions.models import SubscriptionPlan as Plan
 from apps.content.models import Course
 from .models import Cart, CartItem
 

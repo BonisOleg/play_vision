@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 
 from apps.loyalty.models import LoyaltyTier, LoyaltyAccount
-from apps.subscriptions.models import Plan, Subscription
+from apps.subscriptions.models import SubscriptionPlan as Plan, Subscription
 from apps.content.models import Category, Course, Material, Tag
 from apps.accounts.models import Profile
 

@@ -218,7 +218,7 @@ class Command(BaseCommand):
     
     def create_subscription_plans(self):
         """Створення планів підписок"""
-        from apps.subscriptions.models import Plan
+        from apps.subscriptions.models import SubscriptionPlan as Plan
         
         plans_data = [
             {

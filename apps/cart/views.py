@@ -5,7 +5,8 @@ from django.contrib import messages
 from .models import Cart, CartItem
 from .services import CartService, SubscriptionSuggestionService
 from apps.content.models import Course
-from apps.subscriptions.models import Plan
+# TODO: Нова система підписок  
+from apps.subscriptions.models import SubscriptionPlan as Plan
 
 
 class CartView(TemplateView):

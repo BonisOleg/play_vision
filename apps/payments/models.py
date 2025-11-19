@@ -34,7 +34,8 @@ class Payment(models.Model):
     payment_type = models.CharField(max_length=20, choices=PAYMENT_TYPE_CHOICES)
     
     # Related objects for different payment types
-    subscription = models.ForeignKey('subscriptions.Subscription', on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
+    # TODO: subscription видалено - нова система підписок
+    # subscription = models.ForeignKey('subscriptions.Subscription', on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
     course = models.ForeignKey('content.Course', on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
     event_ticket = models.ForeignKey('events.EventTicket', on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
     

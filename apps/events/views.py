@@ -13,7 +13,9 @@ from datetime import timedelta
 import json
 
 from .models import Event, EventTicket, EventWaitlist, EventFeedback, Speaker, EventRegistration
-from apps.subscriptions.models import TicketBalance
+# TODO: Видалено TicketBalance - буде нова система підписок
+# # TODO: TicketBalance видалено - нова система підписок
+# from apps.subscriptions.models import TicketBalance
 
 
 class EventListView(ListView):

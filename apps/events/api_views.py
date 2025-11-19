@@ -13,7 +13,8 @@ from .serializers import (
     EventTicketSerializer, EventRegistrationSerializer,
     EventFeedbackSerializer
 )
-from apps.subscriptions.models import TicketBalance
+# TODO: TicketBalance видалено - нова система підписок
+# from apps.subscriptions.models import TicketBalance
 
 
 class EventViewSet(viewsets.ReadOnlyModelViewSet):

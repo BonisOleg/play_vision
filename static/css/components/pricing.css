@@ -1,0 +1,542 @@
+/* =========================================
+   PRICING PAGE STYLES - Play Vision
+   Створено: листопад 2025
+   Без inline-стилів, без !important
+   ========================================= */
+
+/* === ЗМІННІ === */
+:root {
+    --pricing-bg: #FFFFFF;
+    --pricing-text: #1F2937;
+    --pricing-text-secondary: #6B7280;
+    --pricing-border: #E5E7EB;
+    --pricing-card-bg: #FFFFFF;
+    --pricing-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --pricing-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --pricing-btn-primary: #000000;
+    --pricing-btn-hover: #1F2937;
+    --pricing-radius: 16px;
+    --pricing-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === LAYOUT === */
+.pricing-page {
+    padding: 60px 0 80px;
+    background: var(--pricing-bg);
+    min-height: 100vh;
+}
+
+.pricing-page .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* === HEADER === */
+.pricing-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.pricing-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--pricing-text);
+    letter-spacing: -0.02em;
+}
+
+.pricing-subtitle {
+    font-size: 20px;
+    color: var(--pricing-text-secondary);
+    font-weight: 400;
+}
+
+/* === PERIOD SWITCHER === */
+.period-switcher-wrapper {
+    margin-bottom: 48px;
+}
+
+.period-label {
+    text-align: center;
+    font-size: 16px;
+    color: var(--pricing-text-secondary);
+    margin-bottom: 24px;
+}
+
+/* Desktop Switcher */
+.period-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.period-btn {
+    padding: 14px 32px;
+    border: 2px solid var(--pricing-border);
+    background: var(--pricing-card-bg);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--pricing-text);
+    cursor: pointer;
+    transition: var(--pricing-transition);
+}
+
+.period-btn:hover {
+    border-color: var(--pricing-text);
+    background: #F9FAFB;
+}
+
+.period-btn.active {
+    background: var(--pricing-btn-primary);
+    color: #FFFFFF;
+    border-color: var(--pricing-btn-primary);
+}
+
+/* Mobile Dropdown */
+.period-dropdown {
+    display: none;
+}
+
+.period-select {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    border: 2px solid var(--pricing-border);
+    border-radius: 12px;
+    font-size: 16px;
+    background: var(--pricing-card-bg);
+    color: var(--pricing-text);
+    cursor: pointer;
+}
+
+/* === PLANS GRID === */
+.plans-container {
+    margin-bottom: 48px;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* === PLAN CARD === */
+.plan-card {
+    position: relative;
+    background: var(--pricing-card-bg);
+    border: 2px solid var(--pricing-border);
+    border-radius: var(--pricing-radius);
+    padding: 32px 24px;
+    box-shadow: var(--pricing-card-shadow);
+    transition: var(--pricing-transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card:hover {
+    box-shadow: var(--pricing-card-shadow-hover);
+    transform: translateY(-4px);
+}
+
+.plan-card--popular {
+    border-color: var(--pricing-btn-primary);
+    border-width: 2px;
+}
+
+/* === BADGE === */
+.plan-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #FFFFFF;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* === PLAN CONTENT === */
+.plan-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.plan-name {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--pricing-text);
+    text-align: center;
+}
+
+/* === FEATURES LIST === */
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px 0;
+    flex-grow: 1;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+.feature-number {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--pricing-text-secondary);
+    min-width: 24px;
+}
+
+.feature-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--pricing-text);
+}
+
+/* === PRICE SECTION === */
+.plan-price-section {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.price-block {
+    padding: 16px 0;
+}
+
+.price-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.price-value {
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--pricing-text);
+    line-height: 1;
+}
+
+.price-currency {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--pricing-text-secondary);
+}
+
+.price-save {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #10B981;
+}
+
+/* === ACTION BUTTON === */
+.plan-action {
+    margin-top: auto;
+}
+
+.btn-purchase {
+    display: block;
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--pricing-btn-primary);
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: var(--pricing-transition);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-purchase:hover {
+    background: var(--pricing-btn-hover);
+    transform: scale(1.02);
+}
+
+.unavailable-notice {
+    padding: 16px;
+    background: #F3F4F6;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--pricing-text-secondary);
+    font-style: italic;
+}
+
+.pro-notice {
+    margin-top: 16px;
+    padding: 12px;
+    background: #FEF3C7;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 13px;
+    color: #92400E;
+}
+
+/* === COMPARE SECTION === */
+.compare-section {
+    text-align: center;
+    margin-top: 48px;
+}
+
+.btn-compare {
+    padding: 14px 32px;
+    background: transparent;
+    border: 2px solid var(--pricing-btn-primary);
+    color: var(--pricing-btn-primary);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--pricing-transition);
+}
+
+.btn-compare:hover {
+    background: var(--pricing-btn-primary);
+    color: #FFFFFF;
+}
+
+/* === MODAL === */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-overlay.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 1000px;
+    width: 100%;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #F3F4F6;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: var(--pricing-transition);
+}
+
+.modal-close:hover {
+    background: #E5E7EB;
+}
+
+.modal-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+/* === COMPARISON TABLE === */
+.comparison-table-wrapper {
+    overflow-x: auto;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.comparison-table thead th {
+    background: #F9FAFB;
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--pricing-border);
+}
+
+.comparison-table tbody td {
+    padding: 16px;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.comparison-table .check {
+    color: #10B981;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.comparison-table .cross {
+    color: #6B7280;
+    margin-right: 8px;
+}
+
+/* === RESPONSIVE === */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .plans-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .pricing-title {
+        font-size: 36px;
+    }
+    
+    .pricing-subtitle {
+        font-size: 18px;
+    }
+    
+    /* Hide desktop switcher, show mobile dropdown */
+    .desktop-switcher {
+        display: none;
+    }
+    
+    .mobile-dropdown {
+        display: block;
+    }
+    
+    /* Cards в слайдері */
+    .plans-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 20px;
+        gap: 16px;
+        padding-bottom: 20px;
+        scrollbar-width: thin;
+    }
+    
+    .plans-grid::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .plans-grid::-webkit-scrollbar-track {
+        background: #F3F4F6;
+        border-radius: 4px;
+    }
+    
+    .plans-grid::-webkit-scrollbar-thumb {
+        background: #D1D5DB;
+        border-radius: 4px;
+    }
+    
+    .plan-card {
+        min-width: 280px;
+        max-width: 320px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+    }
+    
+    .plan-name {
+        font-size: 28px;
+    }
+    
+    .price-value {
+        font-size: 48px;
+    }
+    
+    .modal-content {
+        padding: 24px;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .pricing-page {
+        padding: 40px 0 60px;
+    }
+    
+    .pricing-title {
+        font-size: 28px;
+    }
+    
+    .plan-card {
+        padding: 24px 20px;
+    }
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.plan-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* === NO PLANS === */
+.no-plans {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--pricing-text-secondary);
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none;
+        transition: none;
+    }
+}
+
+.btn-purchase:focus,
+.period-btn:focus,
+.btn-compare:focus {
+    outline: 2px solid var(--pricing-btn-primary);
+    outline-offset: 2px;
+}
+

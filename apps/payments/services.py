@@ -192,7 +192,7 @@ class PaymentService:
     
     def create_subscription(self, user, plan_id):
         """Create user subscription"""
-        from apps.subscriptions.models import Plan, Subscription, Entitlement
+        from apps.subscriptions.models import SubscriptionPlan as Plan, Subscription, Entitlement
         
         try:
             plan = Plan.objects.get(id=plan_id)
@@ -224,7 +224,8 @@ class PaymentService:
             
             # Grant ticket balance for Pro-Vision plans
             if plan.event_tickets_balance > 0:
-                from apps.subscriptions.models import TicketBalance
+                # TODO: TicketBalance видалено - нова система підписок
+# from apps.subscriptions.models import TicketBalance
                 TicketBalance.objects.create(
                     user=user,
                     subscription=subscription,

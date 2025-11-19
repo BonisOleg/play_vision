@@ -1,0 +1,238 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ meta_title }}{% endblock %}
+
+{% block meta_description %}{{ meta_description }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/pricing.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="pricing-page">
+    <div class="container">
+        
+        <!-- Header -->
+        <header class="pricing-header">
+            <h1 class="pricing-title">Тарифи Play Vision</h1>
+            <p class="pricing-subtitle">Твої знання — в одній підписці</p>
+        </header>
+
+        <!-- Period Switcher -->
+        <div class="period-switcher-wrapper">
+            <p class="period-label">Обирай траєкторію свого розвитку на місяць, квартал або рік</p>
+            
+            <!-- Desktop Switcher -->
+            <div class="period-switcher desktop-switcher">
+                {% for period in periods %}
+                <button 
+                    class="period-btn {% if period.value == 'monthly' %}active{% endif %}" 
+                    data-period="{{ period.value }}">
+                    {{ period.label }}
+                </button>
+                {% endfor %}
+            </div>
+            
+            <!-- Mobile Dropdown -->
+            <div class="period-dropdown mobile-dropdown">
+                <select id="period-select" class="period-select">
+                    {% for period in periods %}
+                    <option value="{{ period.value }}" {% if period.value == 'monthly' %}selected{% endif %}>
+                        {{ period.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Plans Grid -->
+        <div class="plans-container">
+            <div class="plans-grid" id="plans-grid">
+                {% for plan in plans %}
+                <div class="plan-card {% if plan.is_popular %}plan-card--popular{% endif %}" 
+                     data-plan-id="{{ plan.id }}">
+                    
+                    <!-- Badge -->
+                    {% if plan.badge_text %}
+                    <div class="plan-badge" style="background-color: {{ plan.badge_color }};">
+                        {{ plan.badge_text }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Card Content -->
+                    <div class="plan-content">
+                        <!-- Plan Name -->
+                        <h3 class="plan-name">{{ plan.name }}</h3>
+
+                        <!-- Features List -->
+                        <ul class="plan-features">
+                            {% for feature in plan.get_features %}
+                            <li class="feature-item">
+                                <span class="feature-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                                <span class="feature-text">{{ feature }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <!-- Price Section -->
+                        <div class="plan-price-section">
+                            <!-- Monthly -->
+                            <div class="price-block" data-period="monthly">
+                                <div class="price-amount">
+                                    <span class="price-value">{{ plan.base_price_uah|floatformat:0 }}</span>
+                                    <span class="price-currency">{{ currency_symbol }}</span>
+                                </div>
+                            </div>
+
+                            <!-- 3 Months -->
+                            <div class="price-block" data-period="3_months" style="display: none;">
+                                <div class="price-amount">
+                                    <span class="price-value">{{ plan.calculate_price '3_months' currency|floatformat:0 }}</span>
+                                    <span class="price-currency">{{ currency_symbol }}</span>
+                                </div>
+                                {% if plan.discount_3_months > 0 %}
+                                <div class="price-save">
+                                    Економія {{ plan.discount_3_months }}%
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- 12 Months -->
+                            <div class="price-block" data-period="12_months" style="display: none;">
+                                <div class="price-amount">
+                                    <span class="price-value">{{ plan.calculate_price '12_months' currency|floatformat:0 }}</span>
+                                    <span class="price-currency">{{ currency_symbol }}</span>
+                                </div>
+                                {% if plan.discount_12_months > 0 %}
+                                <div class="price-save">
+                                    Економія {{ plan.discount_12_months }}%
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="plan-action">
+                            <!-- Monthly Button -->
+                            <div class="action-wrapper" data-period="monthly">
+                                {% if plan.available_monthly %}
+                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=monthly" 
+                                       class="btn-purchase">
+                                        Придбати {{ plan.name }}
+                                    </a>
+                                {% else %}
+                                    <div class="unavailable-notice">
+                                        {{ plan.unavailable_text }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- 3 Months Button -->
+                            <div class="action-wrapper" data-period="3_months" style="display: none;">
+                                {% if plan.available_3_months %}
+                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=3_months" 
+                                       class="btn-purchase">
+                                        Придбати {{ plan.name }}
+                                    </a>
+                                {% else %}
+                                    <div class="unavailable-notice">
+                                        {{ plan.unavailable_text }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- 12 Months Button -->
+                            <div class="action-wrapper" data-period="12_months" style="display: none;">
+                                {% if plan.available_12_months %}
+                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=12_months" 
+                                       class="btn-purchase">
+                                        Придбати {{ plan.name }}
+                                    </a>
+                                {% else %}
+                                    <div class="unavailable-notice">
+                                        {{ plan.unavailable_text }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Special Notice for PRO (if last plan) -->
+                        {% if not plan.available_monthly and forloop.last %}
+                        <div class="pro-notice">
+                            Доступно в тарифі від 3 місяців
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="no-plans">
+                    <p>Тарифи тимчасово недоступні</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Compare Button -->
+        <div class="compare-section">
+            <button class="btn-compare" id="btn-compare">
+                Порівняти всі тарифи
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Comparison Modal -->
+<div class="modal-overlay" id="comparison-modal">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <h2 class="modal-title">Порівняння тарифів</h2>
+        
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Функція</th>
+                        {% for plan in plans %}
+                        <th>{{ plan.name }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Price Row -->
+                    <tr>
+                        <td><strong>Ціна (міс)</strong></td>
+                        {% for plan in plans %}
+                        <td>{{ plan.base_price_uah|floatformat:0 }} {{ currency_symbol }}</td>
+                        {% endfor %}
+                    </tr>
+                    
+                    <!-- Features -->
+                    {% for i in "12345" %}
+                    <tr>
+                        <td>Перевага {{ i }}</td>
+                        {% for plan in plans %}
+                        {% with feature=plan|attr:"feature_"|add:i %}
+                        <td>
+                            {% if feature %}
+                            <span class="check">✓</span> {{ feature }}
+                            {% else %}
+                            <span class="cross">—</span>
+                            {% endif %}
+                        </td>
+                        {% endwith %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/pricing.js' %}"></script>
+{% endblock %}
+

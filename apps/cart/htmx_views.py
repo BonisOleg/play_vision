@@ -5,7 +5,7 @@ from django_htmx.http import HttpResponseClientRefresh
 from .models import Cart, CartItem
 from .services import SubscriptionSuggestionService
 from apps.content.models import Course
-from apps.subscriptions.models import Plan
+from apps.subscriptions.models import SubscriptionPlan as Plan
 
 
 class CartMixin:

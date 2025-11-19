@@ -170,7 +170,7 @@ class CartItem(models.Model):
             from apps.content.models import Course
             return Course.objects.filter(id=self.item_id).first()
         elif self.item_type == 'subscription':
-            from apps.subscriptions.models import Plan
+            from apps.subscriptions.models import SubscriptionPlan as Plan
             return Plan.objects.filter(id=self.item_id).first()
         elif self.item_type == 'event_ticket':
             try:

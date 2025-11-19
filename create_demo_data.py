@@ -19,7 +19,7 @@ django.setup()
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from apps.loyalty.models import LoyaltyTier, LoyaltyAccount, PointTransaction
-from apps.subscriptions.models import Plan, Subscription
+from apps.subscriptions.models import SubscriptionPlan as Plan, Subscription
 from apps.content.models import Category, Course, Material, Tag, UserCourseProgress, Favorite
 from apps.accounts.models import Profile
 

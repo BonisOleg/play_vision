@@ -447,7 +447,8 @@ class UserSubscriptionInfoAPIView(APIView):
         subscription_history = user.subscriptions.order_by('-created_at')[:5]
         
         # Ticket balance (for Pro-Vision)
-        from apps.subscriptions.models import TicketBalance
+        # TODO: TicketBalance видалено - нова система підписок
+# from apps.subscriptions.models import TicketBalance
         ticket_balance = TicketBalance.objects.filter(
             user=user,
             amount__gt=0,
