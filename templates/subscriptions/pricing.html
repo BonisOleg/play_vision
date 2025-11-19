@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load subscription_tags %}
 
 {% block title %}{{ meta_title }}{% endblock %}
 
@@ -88,7 +89,7 @@
                             <!-- 3 Months -->
                             <div class="price-block" data-period="3_months" style="display: none;">
                                 <div class="price-amount">
-                                    <span class="price-value">{{ plan.calculate_price '3_months' currency|floatformat:0 }}</span>
+                                    <span class="price-value">{% calculate_plan_price plan "3_months" currency as price_3m %}{{ price_3m|floatformat:0 }}</span>
                                     <span class="price-currency">{{ currency_symbol }}</span>
                                 </div>
                                 {% if plan.discount_3_months > 0 %}
@@ -101,7 +102,7 @@
                             <!-- 12 Months -->
                             <div class="price-block" data-period="12_months" style="display: none;">
                                 <div class="price-amount">
-                                    <span class="price-value">{{ plan.calculate_price '12_months' currency|floatformat:0 }}</span>
+                                    <span class="price-value">{% calculate_plan_price plan "12_months" currency as price_12m %}{{ price_12m|floatformat:0 }}</span>
                                     <span class="price-currency">{{ currency_symbol }}</span>
                                 </div>
                                 {% if plan.discount_12_months > 0 %}

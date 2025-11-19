@@ -446,14 +446,10 @@ class UserSubscriptionInfoAPIView(APIView):
         # Subscription history
         subscription_history = user.subscriptions.order_by('-created_at')[:5]
         
-        # Ticket balance (for Pro-Vision)
+        # Ticket balance (for Pro-Vision) - temporarily disabled
         # TODO: TicketBalance видалено - нова система підписок
-# from apps.subscriptions.models import TicketBalance
-        ticket_balance = TicketBalance.objects.filter(
-            user=user,
-            amount__gt=0,
-            expires_at__gt=timezone.now()
-        ).count()
+        # TODO: Integrate with new subscription system when ready
+        ticket_balance = 0
         
         data = {
             'has_active_subscription': bool(current_subscription),

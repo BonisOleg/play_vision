@@ -180,30 +180,14 @@ class RegisterForEventAPIView(APIView):
         use_balance = request.data.get('use_balance', False)
         
         if use_balance and event.requires_subscription:
-            # Use ticket balance
-            available_balance = TicketBalance.objects.filter(
-                user=user,
-                amount__gt=0,
-                expires_at__gt=timezone.now()
-            ).order_by('expires_at').first()
-            
-            if not available_balance:
-                return Response(
-                    {'error': 'У вас немає доступних квитків у балансі'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            
-            # Create ticket
+            # TODO: Use new subscription system ticket balance
+            # Temporarily treat as free event until new subscription system is integrated
             ticket = EventTicket.objects.create(
                 event=event,
                 user=user,
                 status='confirmed',
                 used_balance=True
             )
-            
-            # Deduct from balance
-            available_balance.amount -= 1
-            available_balance.save()
             
             # Update event stats
             event.tickets_sold += 1

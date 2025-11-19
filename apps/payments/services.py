@@ -222,16 +222,16 @@ class PaymentService:
                 content_id=None  # Access to all courses
             )
             
-            # Grant ticket balance for Pro-Vision plans
-            if plan.event_tickets_balance > 0:
-                # TODO: TicketBalance видалено - нова система підписок
-# from apps.subscriptions.models import TicketBalance
-                TicketBalance.objects.create(
-                    user=user,
-                    subscription=subscription,
-                    amount=plan.event_tickets_balance,
-                    expires_at=end_date
-                )
+            # Grant ticket balance for Pro-Vision plans - temporarily disabled
+            # TODO: TicketBalance видалено - нова система підписок
+            # TODO: Integrate with new subscription system when ready
+            # if plan.event_tickets_balance > 0:
+            #     TicketBalance.objects.create(
+            #         user=user,
+            #         subscription=subscription,
+            #         amount=plan.event_tickets_balance,
+            #         expires_at=end_date
+            #     )
             
             # Award loyalty points for subscription
             self.award_subscription_loyalty_points(user, plan, subscription.id)

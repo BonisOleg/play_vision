@@ -169,19 +169,10 @@ class EventDetailView(DetailView):
             ).first()
             context['user_in_waitlist'] = event.waitlist.filter(user=user).exists()
             
-            # Check available ticket balance
-            if event.requires_subscription:
-                balance_aggregate = TicketBalance.objects.filter(
-                    user=user,
-                    amount__gt=0,
-                    expires_at__gt=timezone.now()
-                ).aggregate(total=Sum('amount'))
-                
-                context['ticket_balance'] = balance_aggregate['total'] or 0
-                context['has_ticket_balance'] = context['ticket_balance'] > 0
-            else:
-                context['ticket_balance'] = 0
-                context['has_ticket_balance'] = False
+            # Check available ticket balance (temporarily disabled - new subscription system)
+            # TODO: Integrate with new subscription system when ready
+            context['ticket_balance'] = 0
+            context['has_ticket_balance'] = False
         
         # Registration status
         context['can_register'], context['register_message'] = event.can_register(user if user.is_authenticated else None)
@@ -240,18 +231,8 @@ def register_for_event(request, slug):
     use_balance = payment_method == 'balance'
     
     if use_balance and event.requires_subscription:
-        # Use ticket balance
-        available_balance = TicketBalance.objects.filter(
-            user=user,
-            amount__gt=0,
-            expires_at__gt=timezone.now()
-        ).order_by('expires_at').first()
-        
-        if not available_balance:
-            messages.error(request, 'У вас немає доступних квитків у балансі')
-            return redirect('events:event_detail', slug=slug)
-        
-        # Create ticket
+        # TODO: Use new subscription system ticket balance
+        # Temporarily treat as free event until new subscription system is integrated
         ticket = EventTicket.objects.create(
             event=event,
             user=user,
@@ -259,10 +240,6 @@ def register_for_event(request, slug):
             used_balance=True,
             tier_name=tier_name
         )
-        
-        # Deduct from balance
-        available_balance.amount -= 1
-        available_balance.save()
         
         # Update event stats
         event.tickets_sold += 1
