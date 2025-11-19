@@ -3,6 +3,9 @@ from django.conf import settings
 from django.utils.text import slugify
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.core.cache import cache
 
 
 
@@ -353,3 +356,22 @@ __all__ = [
     # Ментор на головній
     'MentorCoachingSVG',
 ]
+
+
+# Signals для автоматичного очищення кешу при зміні CMS даних
+@receiver([post_save, post_delete], sender=HeroSlide)
+def clear_hero_slides_cache(sender, **kwargs):
+    """Очистити кеш hero slides при додаванні/зміні/видаленні"""
+    cache.delete('cms_hero_slides')
+
+
+@receiver([post_save, post_delete], sender=ExpertCard)
+def clear_expert_cards_cache(sender, **kwargs):
+    """Очистити кеш експертів при додаванні/зміні/видаленні"""
+    cache.delete('cms_experts')
+
+
+@receiver([post_save, post_delete], sender=FeaturedCourse)
+def clear_featured_courses_cache(sender, **kwargs):
+    """Очистити кеш featured courses при додаванні/зміні/видаленні"""
+    cache.delete('cms_main_courses')

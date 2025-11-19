@@ -154,3 +154,44 @@ def for_country(obj, country_code):
     
     return obj
 
+
+# Локалізаційні фільтри для CMS моделей
+@register.filter
+def get_localized_title(obj, country_code):
+    """
+    Отримати title з урахуванням країни користувача
+    Використання: {{ slide|get_localized_title:country_code }}
+    """
+    if not obj:
+        return ''
+    if hasattr(obj, 'get_title'):
+        return obj.get_title(country_code)
+    # Fallback до прямих полів
+    return getattr(obj, 'title_ua', getattr(obj, 'title', ''))
+
+
+@register.filter
+def get_localized_subtitle(obj, country_code):
+    """
+    Отримати subtitle з урахуванням країни
+    Використання: {{ slide|get_localized_subtitle:country_code }}
+    """
+    if not obj:
+        return ''
+    if hasattr(obj, 'get_subtitle'):
+        return obj.get_subtitle(country_code)
+    return getattr(obj, 'subtitle_ua', getattr(obj, 'subtitle', ''))
+
+
+@register.filter
+def get_localized_cta_text(obj, country_code):
+    """
+    Отримати CTA button text з урахуванням країни
+    Використання: {{ slide|get_localized_cta_text:country_code }}
+    """
+    if not obj:
+        return ''
+    if hasattr(obj, 'get_cta_text'):
+        return obj.get_cta_text(country_code)
+    return getattr(obj, 'cta_text_ua', getattr(obj, 'cta_text', ''))
+

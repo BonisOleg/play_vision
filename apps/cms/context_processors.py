@@ -39,18 +39,53 @@ def get_country_code(request):
 
 def site_content(request):
     """
-    Додає country_code та theme в контекст для всіх templates
+    Додає country_code, theme та CMS контент в контекст всіх templates
     """
-    # Визначити країну
+    # Визначити країну та тему
     country_code = get_country_code(request)
-    
-    # Визначити тему (з cookies або session)
     theme = request.COOKIES.get('theme', 'light')
     if theme not in ['light', 'dark']:
         theme = 'light'
+    
+    # Імпортувати CMS моделі
+    from apps.cms.models import HeroSlide, ExpertCard, FeaturedCourse
+    from django.core.cache import cache
+    
+    # Hero Slides - кеш 5 хв
+    hero_slides = cache.get('cms_hero_slides')
+    if hero_slides is None:
+        hero_slides = list(
+            HeroSlide.objects.filter(is_active=True).order_by('order')
+        )
+        cache.set('cms_hero_slides', hero_slides, 60*5)
+    
+    # Expert Cards - кеш 10 хв
+    experts = cache.get('cms_experts')
+    if experts is None:
+        experts = list(
+            ExpertCard.objects.filter(is_active=True).order_by('order')
+        )
+        cache.set('cms_experts', experts, 60*10)
+    
+    # Featured Courses - кеш 5 хв
+    main_courses = cache.get('cms_main_courses')
+    if main_courses is None:
+        featured = FeaturedCourse.objects.filter(
+            is_active=True,
+            page='home'
+        ).select_related('course').order_by('order')
+        main_courses = [
+            f.course for f in featured 
+            if f.course and f.course.is_published
+        ]
+        cache.set('cms_main_courses', main_courses, 60*5)
     
     return {
         'country_code': country_code,
         'theme': theme,
         'is_ukraine': country_code == 'UA',
+        # CMS дані (можуть бути порожні списки якщо немає в БД):
+        'cms_hero_slides': hero_slides,
+        'cms_experts': experts,
+        'main_courses': main_courses,
     }
