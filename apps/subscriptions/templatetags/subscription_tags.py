@@ -62,3 +62,22 @@ def get_features_list(plan):
         return plan.get_features()
     except Exception:
         return []
+
+
+@register.filter
+def get_feature(plan, index):
+    """
+    Повертає конкретну перевагу плану за індексом
+    
+    Args:
+        plan: SubscriptionPlan object
+        index: int - номер переваги (1-5)
+    
+    Returns:
+        str: Текст переваги або порожній рядок
+    """
+    try:
+        feature_attr = f'feature_{index}'
+        return getattr(plan, feature_attr, '') or ''
+    except Exception:
+        return ''
