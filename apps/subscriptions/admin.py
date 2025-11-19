@@ -1,9 +1,10 @@
 """
-Адміністрування тарифних планів
+Адміністрування тарифних планів та підписок користувачів
 """
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import SubscriptionPlan
+from django.utils import timezone
+from .models import SubscriptionPlan, Subscription
 
 
 @admin.register(SubscriptionPlan)
@@ -177,4 +178,135 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
         css = {
             'all': ('admin/css/subscription_admin.css',)
         }
+
+
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    """
+    Адмін панель для керування підписками користувачів
+    """
+    
+    list_display = [
+        'id',
+        'user_email',
+        'plan_name',
+        'start_date',
+        'end_date',
+        'status_display',
+        'days_left',
+        'auto_renew',
+        'created_at'
+    ]
+    
+    list_filter = [
+        'is_active',
+        'auto_renew',
+        'plan',
+        'created_at',
+        'end_date'
+    ]
+    
+    search_fields = [
+        'user__email',
+        'user__username',
+        'user__first_name',
+        'user__last_name',
+        'plan__name'
+    ]
+    
+    date_hierarchy = 'created_at'
+    
+    readonly_fields = ['created_at', 'updated_at', 'is_expired_display']
+    
+    fieldsets = (
+        ('Основна інформація', {
+            'fields': ('user', 'plan')
+        }),
+        ('Період дії', {
+            'fields': ('start_date', 'end_date', 'is_expired_display')
+        }),
+        ('Налаштування', {
+            'fields': ('is_active', 'auto_renew')
+        }),
+        ('Службова інформація', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    raw_id_fields = ['user']
+    
+    def user_email(self, obj):
+        """Email користувача"""
+        return obj.user.email
+    user_email.short_description = 'Email користувача'
+    user_email.admin_order_field = 'user__email'
+    
+    def plan_name(self, obj):
+        """Назва тарифу"""
+        return obj.plan.name
+    plan_name.short_description = 'Тариф'
+    plan_name.admin_order_field = 'plan__name'
+    
+    def status_display(self, obj):
+        """Статус підписки з кольором"""
+        now = timezone.now()
+        
+        if not obj.is_active:
+            return format_html(
+                '<span style="color: gray; font-weight: bold;">⭘ Неактивна</span>'
+            )
+        elif now > obj.end_date:
+            return format_html(
+                '<span style="color: red; font-weight: bold;">✗ Закінчилась</span>'
+            )
+        elif now + timezone.timedelta(days=7) > obj.end_date:
+            return format_html(
+                '<span style="color: orange; font-weight: bold;">⚠ Закінчується</span>'
+            )
+        else:
+            return format_html(
+                '<span style="color: green; font-weight: bold;">✓ Активна</span>'
+            )
+    status_display.short_description = 'Статус'
+    
+    def days_left(self, obj):
+        """Скільки днів залишилось"""
+        if not obj.is_active:
+            return '-'
+        
+        now = timezone.now()
+        if now > obj.end_date:
+            days_ago = (now - obj.end_date).days
+            return format_html('<span style="color: red;">-{} днів</span>', days_ago)
+        
+        days = (obj.end_date - now).days
+        if days <= 7:
+            color = 'orange'
+        else:
+            color = 'green'
+        
+        return format_html('<span style="color: {};">{} днів</span>', color, days)
+    days_left.short_description = 'Залишилось'
+    
+    def is_expired_display(self, obj):
+        """Чи закінчилась підписка"""
+        if obj.is_expired:
+            return format_html('<span style="color: red; font-weight: bold;">Так</span>')
+        return format_html('<span style="color: green; font-weight: bold;">Ні</span>')
+    is_expired_display.short_description = 'Закінчилась?'
+    
+    actions = ['deactivate_subscriptions', 'activate_subscriptions']
+    
+    def deactivate_subscriptions(self, request, queryset):
+        """Деактивувати вибрані підписки"""
+        count = queryset.update(is_active=False)
+        self.message_user(request, f'Деактивовано {count} підписок')
+    deactivate_subscriptions.short_description = 'Деактивувати вибрані підписки'
+    
+    def activate_subscriptions(self, request, queryset):
+        """Активувати вибрані підписки"""
+        count = queryset.update(is_active=True)
+        self.message_user(request, f'Активовано {count} підписок')
+    activate_subscriptions.short_description = 'Активувати вибрані підписки'
 
