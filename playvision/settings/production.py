@@ -63,6 +63,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Temporarily disable compression for debugging staticfiles issues
 WHITENOISE_COMPRESS_OFFLINE = False
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['*']
+# Allow missing files without crashing
+WHITENOISE_MANIFEST_STRICT = False
 
 # Sentry Integration
 SENTRY_DSN = config('SENTRY_DSN', default='')
@@ -164,7 +166,7 @@ if config('CLOUDINARY_URL', default=''):
             "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
         },
         "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",  # Non-manifest version
         },
     }
     MEDIA_URL = f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME')}/image/upload/"
@@ -180,7 +182,7 @@ else:
             "BACKEND": "django.core.files.storage.FileSystemStorage",
         },
         "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",  # Non-manifest version
         },
     }
 
