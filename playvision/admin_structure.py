@@ -63,7 +63,8 @@ def custom_get_app_list(self, request):
                 
                 # === 💳 Підписка ===
                 {'name': '💳 Підписка', 'admin_url': '#', 'view_only': True, 'object_name': 'SubscriptionHeader'},
-                get_model_from_app_list(original_app_list, 'subscriptions', 'Plan'),
+                get_model_from_app_list(original_app_list, 'subscriptions', 'SubscriptionPlan'),
+                get_model_from_app_list(original_app_list, 'subscriptions', 'Subscription'),
                 
                 # === ➕ Додати курс ===
                 {'name': '➕ Додати курс', 'admin_url': '#', 'view_only': True, 'object_name': 'AddCourseHeader'},
