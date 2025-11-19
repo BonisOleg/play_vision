@@ -98,7 +98,7 @@
         <h3>Поки що немає доступних файлів</h3>
         {% if not active_subscription %}
         <p>Оформіть підписку для доступу до ексклюзивних матеріалів</p>
-        <a href="{% url 'core:pricing' %}" class="btn-primary">Оформити підписку</a>
+        <a href="{% url 'subscriptions:pricing' %}" class="btn-primary">Оформити підписку</a>
         {% else %}
         <p>Почніть вивчати курси в нашому Хабі знань</p>
         <a href="{% url 'content:course_list' %}" class="btn-primary">Перейти до курсів</a>

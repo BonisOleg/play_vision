@@ -48,7 +48,7 @@
     </a>
 
     {# Підписка #}
-    <a href="{% url 'core:pricing' %}"
+    <a href="{% url 'subscriptions:pricing' %}"
         class="nav-item {% if request.resolver_match.url_name == 'pricing' %}active{% endif %}"
         aria-label="Підписка">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

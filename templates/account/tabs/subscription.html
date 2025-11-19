@@ -130,13 +130,13 @@
         {% if active_subscription %}
         {% if active_subscription.status == 'active' %}
         <button class="btn-secondary" data-action="cancelSubscription">Скасувати підписку</button>
-        <a href="{% url 'core:pricing' %}" class="btn-primary">Змінити план</a>
+        <a href="{% url 'subscriptions:pricing' %}" class="btn-primary">Змінити план</a>
         {% elif active_subscription.status == 'cancelled' %}
         <button class="btn-primary" data-action="renewSubscription">Поновити підписку</button>
-        <a href="{% url 'core:pricing' %}" class="btn-secondary">Змінити план</a>
+        <a href="{% url 'subscriptions:pricing' %}" class="btn-secondary">Змінити план</a>
         {% endif %}
         {% else %}
-        <a href="{% url 'core:pricing' %}" class="btn-primary">Оформити підписку</a>
+        <a href="{% url 'subscriptions:pricing' %}" class="btn-primary">Оформити підписку</a>
         {% endif %}
     </div>
 

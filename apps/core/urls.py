@@ -9,7 +9,6 @@ urlpatterns = [
     path('about/', views.AboutView.as_view(), name='about'),
     path('mentor-coaching/', views.MentoringView.as_view(), name='mentoring'),
     path('contacts/', views.ContactView.as_view(), name='contacts'),
-    path('pricing/', views.PricingView.as_view(), name='pricing'),
     path('search/', views.SearchView.as_view(), name='search'),
     path('coming-soon/', views.ComingSoonView.as_view(), name='coming_soon'),
     path('pdf-backgrounds-demo/', views.PDFBackgroundsDemoView.as_view(), name='pdf_backgrounds_demo'),

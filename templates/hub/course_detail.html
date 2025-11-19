@@ -292,7 +292,7 @@
                 </a>
                 <p class="preview-hint">Товар буде автоматично доданий в кошик після реєстрації</p>
                 {% else %}
-                <a href="{% url 'core:pricing' %}" class="btn btn-primary">Оформити підписку</a>
+                <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary">Оформити підписку</a>
                 <button class="btn btn-outline" hx-post="{% url 'htmx:cart:add_to_cart' %}"
                     hx-vals='{"item_type": "course", "item_id": "{{ course.id }}"}'>
                     Купити за {{ course.price }}₴

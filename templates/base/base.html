@@ -187,7 +187,7 @@
                             aria-current="{% if request.resolver_match.url_name == 'mentoring' %}page{% else %}false{% endif %}">
                             <span class="nav-tab-text">Ментор коучинг</span>
                         </a>
-                        <a href="{% url 'core:pricing' %}"
+                        <a href="{% url 'subscriptions:pricing' %}"
                             class="nav-tab-btn {% if request.resolver_match.url_name == 'pricing' %}active{% endif %}"
                             data-nav-tab aria-label="Підписка"
                             aria-current="{% if request.resolver_match.url_name == 'pricing' %}page{% else %}false{% endif %}">

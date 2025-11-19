@@ -34,11 +34,6 @@ class ContactView(TemplateView):
     template_name = 'pages/contact.html'
 
 
-class PricingView(TemplateView):
-    """Pricing page"""
-    template_name = 'subscriptions/pricing.html'
-
-
 class SearchView(TemplateView):
     """Search page"""
     template_name = 'pages/search.html'
