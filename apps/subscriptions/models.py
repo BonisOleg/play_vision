@@ -213,6 +213,8 @@ class SubscriptionPlan(models.Model):
         Returns:
             Decimal: Фінальна ціна
         """
+        from decimal import Decimal
+        
         base_price = self.base_price_uah if currency == 'uah' else self.base_price_usd
         
         if period == 'monthly':
@@ -220,26 +222,28 @@ class SubscriptionPlan(models.Model):
         
         elif period == '3_months':
             full_price = base_price * 3
-            discount = self.discount_3_months
-            return full_price * (1 - discount / 100)
+            discount = Decimal(str(self.discount_3_months))
+            return full_price * (Decimal('1') - discount / Decimal('100'))
         
         elif period == '12_months':
             full_price = base_price * 12
-            discount = self.discount_12_months
-            return full_price * (1 - discount / 100)
+            discount = Decimal(str(self.discount_12_months))
+            return full_price * (Decimal('1') - discount / Decimal('100'))
         
         return base_price
     
     def get_monthly_price(self, period, currency='uah'):
         """Розраховує ціну за місяць для кожного періоду"""
+        from decimal import Decimal
+        
         total_price = self.calculate_price(period, currency)
         
         if period == 'monthly':
             return total_price
         elif period == '3_months':
-            return total_price / 3
+            return total_price / Decimal('3')
         elif period == '12_months':
-            return total_price / 12
+            return total_price / Decimal('12')
         
         return total_price
     
