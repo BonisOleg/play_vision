@@ -184,6 +184,9 @@ class EventDetailView(DetailView):
         # Registration status
         context['can_register'], context['register_message'] = event.can_register(user if user.is_authenticated else None)
         
+        # Structured ticket tiers for template
+        context['structured_tiers'] = event.ticket_tiers if event.ticket_tiers else []
+        
         # Рекомендовані події (5 івентів що можуть бути цікавими)
         # Спочатку шукаємо події того ж типу, потім інші майбутні події
         recommended = Event.objects.filter(
@@ -231,6 +234,7 @@ def register_for_event(request, slug):
     
     # Check payment method
     payment_method = request.POST.get('payment_method', 'purchase')
+    tier_name = request.POST.get('tier_name', '')
     use_balance = payment_method == 'balance'
     
     if use_balance and event.requires_subscription:
@@ -250,7 +254,8 @@ def register_for_event(request, slug):
             event=event,
             user=user,
             status='confirmed',
-            used_balance=True
+            used_balance=True,
+            tier_name=tier_name
         )
         
         # Deduct from balance
@@ -269,7 +274,8 @@ def register_for_event(request, slug):
         ticket = EventTicket.objects.create(
             event=event,
             user=user,
-            status='confirmed'
+            status='confirmed',
+            tier_name=tier_name
         )
         
         event.tickets_sold += 1
@@ -283,7 +289,7 @@ def register_for_event(request, slug):
         # Add event ticket to cart
         from apps.cart.services import CartService
         cart_service = CartService(request)
-        cart_service.add_event_ticket(event)
+        cart_service.add_event_ticket(event, tier_name)
         
         messages.info(request, f'Квиток на {event.title} додано до кошика')
         return redirect('cart:cart')

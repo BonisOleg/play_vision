@@ -87,7 +87,7 @@ class Event(models.Model):
     ticket_tiers = models.JSONField(
         default=list,
         blank=True,
-        help_text='Тарифи квитків у форматі JSON: [{"name": "STANDARD", "price": 5450, "features": ["..."]}]',
+        help_text='Тарифи квитків: [{"name": "Базовий", "price": 350, "features": ["пункт 1", "..."], "is_popular": false}]',
         verbose_name='Тарифи квитків'
     )
     
@@ -261,6 +261,8 @@ class EventTicket(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0, 
                                validators=[MinValueValidator(0)],
                                help_text='Ціна квитка на момент покупки')
+    tier_name = models.CharField(max_length=50, blank=True, 
+                                 help_text='Назва тарифу (Базовий, ПРО, Преміум)')
     
     # Payment
     payment = models.ForeignKey('payments.Payment', on_delete=models.SET_NULL, 

@@ -6,11 +6,13 @@ from .models import (
     Event, Speaker, EventTicket, EventRegistration, 
     EventWaitlist, EventFeedback
 )
+from .forms import EventForm
 
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     """Події 🧪 BETA"""
+    form = EventForm
     list_display = [
         'title', 'event_type', 'event_category', 'start_datetime', 'status', 
         'tickets_sold', 'max_attendees', 'is_featured'
@@ -36,11 +38,22 @@ class EventAdmin(admin.ModelAdmin):
                 'location', 'online_link'
             )
         }),
+        ('Деталі події', {
+            'fields': ('benefits', 'target_audience')
+        }),
         ('Квитки та ціни', {
             'fields': (
                 'max_attendees', 'price', 'is_free', 
                 'requires_subscription'
             )
+        }),
+        ('Тарифи квитків', {
+            'fields': (
+                'tier_1_name', 'tier_1_price', 'tier_1_features', 'tier_1_popular',
+                'tier_2_name', 'tier_2_price', 'tier_2_features', 'tier_2_popular',
+                'tier_3_name', 'tier_3_price', 'tier_3_features', 'tier_3_popular',
+            ),
+            'description': 'Налаштуйте три тарифи квитків. Кожен пункт переваг з нового рядка (максимум 8).'
         }),
         ('Організація', {
             'fields': (

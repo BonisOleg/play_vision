@@ -16,99 +16,137 @@
 
             <section class="fullscreen-section event-detail-section">
                 <div class="section-content">
-                    <div class="event-detail-layout">
-                        <div class="event-detail-main">
-                            <div class="event-detail-header">
-                                <span class="event-type">{{ event.get_event_type_display }}</span>
-                                <h1 class="event-detail-title">{{ event.title }}</h1>
-                                <p class="event-detail-subtitle">{{ event.short_description }}</p>
-                            </div>
+                    
+                    {% if event.banner_image %}
+                    <div class="event-hero">
+                        <img src="{{ event.banner_image.url }}" alt="{{ event.title }}">
+                    </div>
+                    {% endif %}
 
-                            <div class="event-detail-meta">
-                                <div class="meta-item">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                        <line x1="16" y1="2" x2="16" y2="6"/>
-                                        <line x1="8" y1="2" x2="8" y2="6"/>
-                                        <line x1="3" y1="10" x2="21" y2="10"/>
-                                    </svg>
-                                    <span>{{ event.start_datetime|date:"d F Y, H:i" }}</span>
-                                </div>
-                                <div class="meta-item">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                        <circle cx="12" cy="10" r="3"/>
-                                    </svg>
-                                    <span>{% if event.is_online %}Онлайн{% else %}{{ event.location }}{% endif %}</span>
-                                </div>
-                            </div>
-
-                            <div class="event-detail-description">
-                                <h2>Про подію</h2>
-                                {{ event.description|linebreaks }}
-                            </div>
-
-                            {% if event.speakers.all %}
-                            <div class="event-speakers">
-                                <h2>Спікери</h2>
-                                <div class="speakers-grid">
-                                    {% for speaker in event.speakers.all %}
-                                    <div class="speaker-card">
-                                        <div class="speaker-photo">
-                                            {% if speaker.photo %}
-                                            <img src="{{ speaker.photo.url }}" alt="{{ speaker.full_name }}">
-                                            {% else %}
-                                            <div class="speaker-placeholder"></div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="speaker-info">
-                                            <h3>{{ speaker.full_name }}</h3>
-                                            <p>{{ speaker.position }}</p>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            {% endif %}
+                    <div class="event-detail-meta">
+                        <div class="meta-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            <span>{{ event.start_datetime|date:"d F Y, H:i" }}</span>
                         </div>
+                        <div class="meta-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <span>{% if event.is_online %}Онлайн{% else %}{{ event.location }}{% endif %}</span>
+                        </div>
+                    </div>
 
-                        <aside class="event-detail-sidebar">
-                            <div class="event-registration-card">
-                                {% if event.is_free %}
-                                <div class="event-price">Безкоштовно</div>
-                                {% else %}
-                                <div class="event-price">{{ event.price }} ₴</div>
+                    <div class="event-description-block">
+                        <h2>Опис події</h2>
+                        {{ event.description|linebreaks }}
+                    </div>
+
+                    {% if event.target_audience or event.benefits %}
+                    <div class="event-benefits-section">
+                        {% if event.target_audience %}
+                        <div class="event-column">
+                            <h3>— Для кого:</h3>
+                            <ul class="event-list">
+                                {% for item in event.target_audience %}
+                                <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        {% if event.benefits %}
+                        <div class="event-column">
+                            <h3>— Що ти отримуєш:</h3>
+                            <ul class="event-list">
+                                {% for item in event.benefits %}
+                                <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% if event.speakers.all %}
+                    <div class="event-speakers-section">
+                        <h2>Команда спікерів</h2>
+                        <div class="speakers-grid-4col">
+                            {% for speaker in event.speakers.all %}
+                            <div class="speaker-card-new">
+                                <div class="speaker-photo-new">
+                                    {% if speaker.photo %}
+                                    <img src="{{ speaker.photo.url }}" alt="{{ speaker.full_name }}">
+                                    {% else %}
+                                    <div class="speaker-placeholder"></div>
+                                    {% endif %}
+                                </div>
+                                <div class="speaker-info-new">
+                                    <h4>{{ speaker.full_name }}</h4>
+                                    <p>{{ speaker.position }}</p>
+                                    {% if speaker.company %}
+                                    <p class="speaker-company">{{ speaker.company }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if structured_tiers %}
+                    <div class="event-pricing-section">
+                        <h2>Придбати квитки</h2>
+                        <div class="pricing-tiers">
+                            {% for tier in structured_tiers %}
+                            <div class="pricing-card {% if tier.is_popular %}popular{% endif %}">
+                                {% if tier.is_popular %}
+                                <span class="pricing-badge">Найвигідніше</span>
                                 {% endif %}
-
+                                
+                                <h3 class="pricing-tier-name">{{ tier.name }}</h3>
+                                <div class="pricing-price">{{ tier.price }} <span class="currency">грн</span></div>
+                                
+                                {% if tier.features %}
+                                <ol class="pricing-features">
+                                    {% for feature in tier.features %}
+                                    <li>{{ feature }}</li>
+                                    {% endfor %}
+                                </ol>
+                                {% endif %}
+                                
                                 {% if user.is_authenticated %}
                                     {% if user_ticket %}
-                                    <div class="registration-status success">
-                                        <p>Ви зареєстровані!</p>
+                                    <div class="pricing-status registered">
+                                        Ви зареєстровані
                                     </div>
                                     {% elif can_register %}
-                                    <a href="{% url 'events:register' event.slug %}" class="btn-register">
-                                        {% if event.is_free %}Зареєструватися{% else %}Купити квиток{% endif %}
-                                    </a>
+                                    <form method="post" action="{% url 'events:register' event.slug %}" class="pricing-form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="tier_name" value="{{ tier.name }}">
+                                        <button type="submit" class="btn-purchase">Придбати {{ tier.name }}</button>
+                                    </form>
                                     {% else %}
-                                    <div class="registration-status warning">
-                                        <p>{{ register_message }}</p>
+                                    <div class="pricing-status unavailable">
+                                        {{ register_message }}
                                     </div>
                                     {% endif %}
                                 {% else %}
-                                <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-register">
-                                    Увійти для реєстрації
+                                <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-purchase">
+                                    Увійти для покупки
                                 </a>
                                 {% endif %}
-
-                                <div class="event-stats">
-                                    <div class="stat-item">
-                                        <span class="stat-label">Місць:</span>
-                                        <span class="stat-value">{{ event.tickets_sold }} / {{ event.max_attendees }}</span>
-                                    </div>
-                                </div>
                             </div>
-                        </aside>
+                            {% endfor %}
+                        </div>
                     </div>
+                    {% endif %}
+
                 </div>
             </section>
 
@@ -116,4 +154,3 @@
     </div>
 </div>
 {% endblock %}
-

@@ -130,7 +130,7 @@ class CartService:
         item = self.cart.add_subscription(plan)
         return True, f"План '{plan.name}' додано до кошика"
     
-    def add_event_ticket(self, event):
+    def add_event_ticket(self, event, tier_name=None):
         """Add event ticket to cart"""
         # Check if user can register for event
         can_register, message = event.can_register(self.user)
@@ -146,17 +146,38 @@ class CartService:
         if existing_item:
             return False, "Квиток на цей івент вже в кошику"
         
+        # Determine price based on tier
+        price = event.price
+        tier_data = None
+        
+        if tier_name and event.ticket_tiers:
+            for tier in event.ticket_tiers:
+                if tier.get('name') == tier_name:
+                    price = tier.get('price', event.price)
+                    tier_data = tier
+                    break
+        
+        # Prepare metadata
+        metadata = {
+            'tier_name': tier_name or '',
+            'tier_features': tier_data.get('features', []) if tier_data else [],
+            'event_date': event.start_datetime.isoformat(),
+            'location': event.location
+        }
+        
         # Add to cart
         item = CartItem.objects.create(
             cart=self.cart,
             item_type='event_ticket',
             item_id=event.id,
             item_name=event.title,
-            price=event.price,
-            quantity=1
+            price=price,
+            quantity=1,
+            item_metadata=metadata
         )
         
-        return True, f"Квиток на '{event.title}' додано до кошика"
+        tier_display = f" ({tier_name})" if tier_name else ""
+        return True, f"Квиток на '{event.title}'{tier_display} додано до кошика"
     
     def remove_item(self, item_id):
         """Remove item from cart"""

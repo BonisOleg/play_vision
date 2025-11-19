@@ -171,7 +171,9 @@ class PaymentService:
             elif item.item_type == 'subscription':
                 self.create_subscription(order.user, item.item_id)
             elif item.item_type == 'event_ticket':
-                self.create_event_ticket(order.user, item.item_id, order.payment)
+                # Extract tier_name from metadata
+                tier_name = item.item_metadata.get('tier_name', '') if item.item_metadata else ''
+                self.create_event_ticket(order.user, item.item_id, order.payment, tier_name, item.price)
     
     def grant_course_access(self, user, course_id):
         """Grant user access to purchased course"""
@@ -236,17 +238,23 @@ class PaymentService:
         except Plan.DoesNotExist:
             pass
     
-    def create_event_ticket(self, user, event_id, payment):
+    def create_event_ticket(self, user, event_id, payment, tier_name='', price=None):
         """Create event ticket"""
         from apps.events.models import Event, EventTicket
         
         try:
             event = Event.objects.get(id=event_id)
+            
+            # Use provided price or event's default price
+            ticket_price = price if price is not None else event.price
+            
             ticket = EventTicket.objects.create(
                 event=event,
                 user=user,
                 payment=payment,
-                status='confirmed'
+                status='confirmed',
+                tier_name=tier_name,
+                price=ticket_price
             )
             
             # Update event ticket count
