@@ -55,28 +55,31 @@
 /* === PERIOD SWITCHER === */
 .period-switcher-wrapper {
     margin-bottom: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .period-label {
-    text-align: center;
+    text-align: left;
     font-size: 16px;
     color: var(--pricing-text-secondary);
-    margin-bottom: 24px;
+    margin-bottom: 0;
 }
 
 /* Desktop Switcher */
 .period-switcher {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 12px;
     flex-wrap: wrap;
 }
 
 .period-btn {
     padding: 14px 32px;
-    border: 2px solid var(--pricing-border);
-    background: var(--pricing-card-bg);
-    border-radius: 12px;
+    border: none;
+    background: #F3F4F6;
+    border-radius: 24px;
     font-size: 16px;
     font-weight: 500;
     color: var(--pricing-text);
@@ -85,14 +88,12 @@
 }
 
 .period-btn:hover {
-    border-color: var(--pricing-text);
-    background: #F9FAFB;
+    background: #E5E7EB;
 }
 
 .period-btn.active {
     background: var(--pricing-btn-primary);
     color: #FFFFFF;
-    border-color: var(--pricing-btn-primary);
 }
 
 /* Mobile Dropdown */
@@ -124,6 +125,7 @@
     gap: 24px;
     max-width: 1200px;
     margin: 0 auto;
+    align-items: stretch;
 }
 
 /* === PLAN CARD === */
@@ -137,6 +139,7 @@
     transition: var(--pricing-transition);
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .plan-card:hover {
@@ -146,15 +149,14 @@
 
 .plan-card--popular {
     border-color: var(--pricing-btn-primary);
-    border-width: 2px;
 }
 
 /* === BADGE === */
 .plan-badge {
     position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 20px;
+    left: 20px;
+    transform: none;
     padding: 6px 16px;
     border-radius: 20px;
     font-size: 13px;
@@ -172,8 +174,8 @@
 }
 
 .plan-name {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 40px;
+    font-weight: 800;
     margin-bottom: 24px;
     color: var(--pricing-text);
     text-align: center;
@@ -191,8 +193,8 @@
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px solid #F3F4F6;
+    padding: 16px 0;
+    border-bottom: 1px solid #E5E7EB;
 }
 
 .feature-item:last-child {
@@ -200,15 +202,15 @@
 }
 
 .feature-number {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--pricing-text-secondary);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--pricing-text);
     min-width: 24px;
 }
 
 .feature-text {
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.6;
     color: var(--pricing-text);
 }
 
@@ -428,6 +430,17 @@
         font-size: 18px;
     }
     
+    /* Period switcher на mobile */
+    .period-switcher-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .period-label {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+    
     /* Hide desktop switcher, show mobile dropdown */
     .desktop-switcher {
         display: none;
@@ -470,7 +483,7 @@
     }
     
     .plan-name {
-        font-size: 28px;
+        font-size: 32px;
     }
     
     .price-value {
