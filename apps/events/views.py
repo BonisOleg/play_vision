@@ -27,7 +27,7 @@ class EventListView(ListView):
         queryset = Event.objects.filter(
             status='published',
             start_datetime__gt=timezone.now()
-        ).select_related('organizer').prefetch_related('speakers', 'tags')
+        ).select_related('organizer').prefetch_related('speakers')
         
         # Filter by category
         category = self.request.GET.get('category')
@@ -152,7 +152,7 @@ class EventDetailView(DetailView):
         return Event.objects.filter(
             status='published'
         ).select_related('organizer').prefetch_related(
-            'speakers', 'tags', 'tickets__user'
+            'speakers', 'tickets__user'
         )
     
     def get_context_data(self, **kwargs):
