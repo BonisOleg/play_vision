@@ -1,43 +1,9 @@
 from rest_framework import serializers
 from django.utils import timezone
 from .models import (
-    Category, Tag, Course, Material, UserCourseProgress, Favorite
+    Course, Material, UserCourseProgress, Favorite
 )
 from .utils import check_user_course_access, calculate_content_preview_limits
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    """Category serializer"""
-    courses_count = serializers.SerializerMethodField()
-    parent = serializers.SerializerMethodField()
-    subcategories = serializers.SerializerMethodField()
-    
-    class Meta:
-        model = Category
-        fields = ['id', 'name', 'slug', 'description', 'icon', 'parent', 
-                 'order', 'is_subcategory_required', 'courses_count', 'subcategories']
-    
-    def get_courses_count(self, obj):
-        return obj.courses.filter(is_published=True).count()
-    
-    def get_parent(self, obj):
-        if obj.parent:
-            return {'id': obj.parent.id, 'name': obj.parent.name, 'slug': obj.parent.slug}
-        return None
-    
-    def get_subcategories(self, obj):
-        if obj.subcategories.exists():
-            return [{'id': sub.id, 'name': sub.name, 'slug': sub.slug} 
-                   for sub in obj.subcategories.filter(is_active=True).order_by('order')]
-        return []
-
-
-class TagSerializer(serializers.ModelSerializer):
-    """Tag serializer"""
-    
-    class Meta:
-        model = Tag
-        fields = ['id', 'name', 'slug']
 
 
 class MaterialSerializer(serializers.ModelSerializer):
@@ -126,7 +92,6 @@ class MaterialDetailSerializer(MaterialSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     """Basic course serializer"""
-    category = CategorySerializer(read_only=True)
     absolute_url = serializers.ReadOnlyField(source='get_absolute_url')
     
     # User-specific fields
@@ -137,7 +102,7 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = [
-            'id', 'title', 'slug', 'short_description', 'category',
+            'id', 'title', 'slug', 'short_description',
             'price', 'is_featured', 'is_free', 'requires_subscription',
             'thumbnail', 'rating', 'view_count', 'enrollment_count',
             'absolute_url', 'is_favorite', 'has_access', 'user_progress',
@@ -217,9 +182,8 @@ class CourseDetailSerializer(CourseSerializer):
         return None
     
     def get_related_courses(self, obj):
-        """Get related courses"""
+        """Get related courses (simply latest published courses)"""
         related = Course.objects.filter(
-            category=obj.category,
             is_published=True
         ).exclude(id=obj.id)[:4]
         
