@@ -15,8 +15,41 @@
     --pricing-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
     --pricing-btn-primary: #000000;
     --pricing-btn-hover: #1F2937;
+    --pricing-btn-inactive: #F3F4F6;
+    --pricing-btn-inactive-hover: #E5E7EB;
     --pricing-radius: 16px;
     --pricing-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === ТЕМНА ТЕМА === */
+[data-theme="dark"] {
+    --pricing-bg: #0F0F0F;
+    --pricing-text: #FFFFFF;
+    --pricing-text-secondary: #A0A0A0;
+    --pricing-border: #2A2A2A;
+    --pricing-card-bg: #1A1A1A;
+    --pricing-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --pricing-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --pricing-btn-primary: #FFFFFF;
+    --pricing-btn-hover: #E5E7EB;
+    --pricing-btn-inactive: #2A2A2A;
+    --pricing-btn-inactive-hover: #3A3A3A;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+        --pricing-bg: #0F0F0F;
+        --pricing-text: #FFFFFF;
+        --pricing-text-secondary: #A0A0A0;
+        --pricing-border: #2A2A2A;
+        --pricing-card-bg: #1A1A1A;
+        --pricing-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --pricing-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.6);
+        --pricing-btn-primary: #FFFFFF;
+        --pricing-btn-hover: #E5E7EB;
+        --pricing-btn-inactive: #2A2A2A;
+        --pricing-btn-inactive-hover: #3A3A3A;
+    }
 }
 
 /* === LAYOUT === */
@@ -78,7 +111,7 @@
 .period-btn {
     padding: 14px 32px;
     border: none;
-    background: #F3F4F6;
+    background: var(--pricing-btn-inactive);
     border-radius: 24px;
     font-size: 16px;
     font-weight: 500;
@@ -88,12 +121,12 @@
 }
 
 .period-btn:hover {
-    background: #E5E7EB;
+    background: var(--pricing-btn-inactive-hover);
 }
 
 .period-btn.active {
     background: var(--pricing-btn-primary);
-    color: #FFFFFF;
+    color: var(--pricing-card-bg);
 }
 
 /* Mobile Dropdown */
