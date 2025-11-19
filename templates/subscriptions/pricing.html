@@ -214,15 +214,15 @@
                     <tr>
                         <td>Перевага {{ i }}</td>
                         {% for plan in plans %}
-                        {% with feature=plan|attr:"feature_"|add:i %}
                         <td>
+                            {% with feature=plan|get_feature:i %}
                             {% if feature %}
                             <span class="check">✓</span> {{ feature }}
                             {% else %}
                             <span class="cross">—</span>
                             {% endif %}
+                            {% endwith %}
                         </td>
-                        {% endwith %}
                         {% endfor %}
                     </tr>
                     {% endfor %}

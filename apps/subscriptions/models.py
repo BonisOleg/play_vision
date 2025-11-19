@@ -3,8 +3,10 @@
 Створено: листопад 2025
 """
 from django.db import models
+from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 
 class SubscriptionPlan(models.Model):
@@ -264,4 +266,47 @@ class SubscriptionPlan(models.Model):
                 self.slug = slugify(self.name)
         
         super().save(*args, **kwargs)
+
+
+# Backward compatibility aliases
+Plan = SubscriptionPlan
+
+
+class Subscription(models.Model):
+    """
+    User subscription instance (temporarily minimal for compatibility)
+    TODO: Expand this model or integrate with external subscription service
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='subscriptions'
+    )
+    plan = models.ForeignKey(
+        SubscriptionPlan,
+        on_delete=models.CASCADE,
+        related_name='subscriptions'
+    )
+    start_date = models.DateTimeField(default=timezone.now)
+    end_date = models.DateTimeField()
+    is_active = models.BooleanField(default=True)
+    auto_renew = models.BooleanField(default=False)
+    
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'user_subscriptions'
+        verbose_name = 'Підписка користувача'
+        verbose_name_plural = 'Підписки користувачів'
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user.email} - {self.plan.name}"
+    
+    @property
+    def is_expired(self):
+        """Check if subscription is expired"""
+        return timezone.now() > self.end_date
 
