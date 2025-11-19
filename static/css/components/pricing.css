@@ -193,7 +193,7 @@
 /* === BADGE === */
 .plan-badge {
     position: absolute;
-    top: 20px;
+    top: 85px;
     left: 20px;
     transform: none;
     padding: 6px 16px;
@@ -213,11 +213,11 @@
 }
 
 .plan-name {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 800;
-    margin-bottom: 24px;
+    margin-bottom: 34px;
     color: var(--pricing-text);
-    text-align: center;
+    text-align: left;
 }
 
 /* === FEATURES LIST === */
@@ -233,7 +233,7 @@
     align-items: flex-start;
     gap: 12px;
     padding: 16px 0;
-    border-bottom: 1px solid #E5E7EB;
+    border-bottom: 1px solid var(--pricing-border);
 }
 
 .feature-item:last-child {
@@ -271,7 +271,7 @@
 }
 
 .price-value {
-    font-size: 56px;
+    font-size: 45px;
     font-weight: 700;
     color: var(--pricing-text);
     line-height: 1;
@@ -301,7 +301,7 @@
     padding: 16px 24px;
     background: var(--pricing-btn-primary);
     color: var(--pricing-btn-text-active);
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     text-align: center;
     border-radius: 12px;
