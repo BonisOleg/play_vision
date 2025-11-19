@@ -1138,8 +1138,106 @@
     line-height: 1;
 }
 
+/* ============================================
+   EVENT EXPERTS SECTION - Команда спікерів на події
+   ============================================ */
 .event-experts-section {
+    background: transparent;
+    position: relative;
+    padding: 20px 0;
     margin-bottom: 48px;
+}
+
+.event-experts-section .section-title {
+    color: #2a2a2a;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 16px;
+    text-shadow: none;
+}
+
+.event-experts-section .experts-subtitle {
+    text-align: left;
+    color: #666666;
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-bottom: 48px;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: none;
+    line-height: 1.6;
+}
+
+[data-theme="dark"] .event-experts-section .section-title {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .event-experts-section .experts-subtitle {
+    color: var(--color-text-light);
+    text-shadow: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-experts-section .section-title {
+        color: var(--color-text);
+    }
+
+    [data-theme="auto"] .event-experts-section .experts-subtitle {
+        color: var(--color-text-light);
+        text-shadow: none;
+    }
+}
+
+/* Адаптивність для event-experts-section */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .event-experts-section {
+        padding: 20px 0;
+    }
+
+    .event-experts-section .section-title {
+        font-size: 2.25rem;
+        margin-bottom: 14px;
+    }
+
+    .event-experts-section .experts-subtitle {
+        font-size: 1.0625rem;
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+    .event-experts-section {
+        padding: 20px 0;
+    }
+
+    .event-experts-section .section-title {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .event-experts-section .experts-subtitle {
+        font-size: 1rem;
+        margin-bottom: 32px;
+    }
+}
+
+@media (max-width: 479px) {
+    .event-experts-section {
+        padding: 20px 0;
+    }
+
+    .event-experts-section .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 10px;
+    }
+
+    .event-experts-section .experts-subtitle {
+        font-size: 0.9375rem;
+        margin-bottom: 28px;
+        line-height: 1.5;
+    }
 }
 
 .event-pricing-section {
