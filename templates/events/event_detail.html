@@ -106,10 +106,7 @@
                                         <div class="expert-card-content">
                                             <h3 class="expert-name">{{ speaker.full_name }}</h3>
                                             <p class="expert-specialization">{{ speaker.position }}</p>
-                                            {% if speaker.company %}
-                                            <p class="expert-company">{{ speaker.company }}</p>
-                                            {% endif %}
-                                            <span class="expert-detail-link">Детальніше</span>
+                                            <button class="expert-detail-btn">Детальніше</button>
                                         </div>
                                     </div>
                                     <div class="expert-card-back">
@@ -119,7 +116,7 @@
                                                 {% if speaker.bio %}
                                                 {{ speaker.bio|linebreaks }}
                                                 {% else %}
-                                                <p>{{ speaker.position }}{% if speaker.company %} • {{ speaker.company }}{% endif %}</p>
+                                                <p>Інформація про експерта скоро буде додана.</p>
                                                 {% endif %}
                                             </div>
                                         </div>
