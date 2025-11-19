@@ -22,6 +22,8 @@
 
 /* === СЕКЦІЇ ЯК ОКРЕМІ КАРТКИ === */
 .unified-sections-wrapper .fullscreen-section {
+    width: 80%;
+    max-width: 1400px;
     margin: 30px auto;
     background: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
