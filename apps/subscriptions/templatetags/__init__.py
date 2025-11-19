@@ -1,2 +1,1 @@
-# Template tags for subscriptions app
-
+# Empty file to make this directory a Python package

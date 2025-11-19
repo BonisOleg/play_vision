@@ -1,36 +1,64 @@
 """
-Custom template tags for subscription pricing
+Template tags для підписок
 """
 from django import template
+from decimal import Decimal
 
 register = template.Library()
 
 
 @register.simple_tag
-def calculate_plan_price(plan, period, currency):
+def calculate_plan_price(plan, period, currency='uah'):
     """
-    Calculate plan price for given period and currency
+    Розраховує ціну плану для конкретного періоду та валюти
     
-    Usage in template:
-        {% calculate_plan_price plan "3_months" currency %}
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly', '3_months', '12_months'
+        currency: 'uah' або 'usd'
+    
+    Returns:
+        Decimal: Розрахована ціна
     """
     try:
-        return plan.calculate_price(period, currency)
-    except (ValueError, AttributeError):
+        price = plan.calculate_price(period, currency)
+        return float(price) if price else 0
+    except Exception:
+        return 0
+
+
+@register.simple_tag
+def get_monthly_price(plan, period, currency='uah'):
+    """
+    Розраховує ціну за місяць для періоду
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly', '3_months', '12_months'
+        currency: 'uah' або 'usd'
+    
+    Returns:
+        Decimal: Ціна за місяць
+    """
+    try:
+        monthly_price = plan.get_monthly_price(period, currency)
+        return float(monthly_price) if monthly_price else 0
+    except Exception:
         return 0
 
 
 @register.filter
-def get_feature(plan, feature_num):
+def get_features_list(plan):
     """
-    Get plan feature by number
+    Повертає список переваг плану
     
-    Usage in template:
-        {{ plan|get_feature:1 }}
+    Args:
+        plan: SubscriptionPlan object
+    
+    Returns:
+        list: Список переваг
     """
     try:
-        feature_attr = f'feature_{feature_num}'
-        return getattr(plan, feature_attr, '')
-    except (ValueError, AttributeError):
-        return ''
-
+        return plan.get_features()
+    except Exception:
+        return []
