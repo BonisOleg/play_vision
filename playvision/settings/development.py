@@ -41,6 +41,20 @@ CACHES = {
     }
 }
 
+# Media files - LOCAL storage for development
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# STORAGES - override to use local storage (NO Cloudinary in development)
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
 # Development logging
 LOGGING = {
     'version': 1,

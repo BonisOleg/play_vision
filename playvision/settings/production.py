@@ -146,45 +146,37 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default=EMAIL_HOST_USER)
 
-# Cloudinary для зображень (обов'язково для продакшену)
-if config('CLOUDINARY_URL', default=''):
-    # Cloudinary налаштовано через CLOUDINARY_URL
-    import cloudinary
-    import cloudinary.uploader
-    import cloudinary.api
-    
-    cloudinary.config(
-        cloud_name=config('CLOUDINARY_CLOUD_NAME', default=''),
-        api_key=config('CLOUDINARY_API_KEY', default=''),
-        api_secret=config('CLOUDINARY_API_SECRET', default=''),
-        secure=True
-    )
-    
-    # Django 4.2+ STORAGES configuration
-    STORAGES = {
-        "default": {
-            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",  # Non-manifest version
-        },
-    }
-    MEDIA_URL = f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME')}/image/upload/"
-else:
-    # Fallback якщо Cloudinary не налаштований
-    print("WARNING: Cloudinary not configured! Using local storage.")
-    MEDIA_ROOT = BASE_DIR / 'mediafiles'
-    MEDIA_URL = '/media/'
-    
-    # Django 4.2+ STORAGES configuration (local fallback)
-    STORAGES = {
-        "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",  # Non-manifest version
-        },
-    }
+# Cloudinary configuration (обов'язково для production)
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name=config('CLOUDINARY_CLOUD_NAME', default='demo'),
+    api_key=config('CLOUDINARY_API_KEY', default=''),
+    api_secret=config('CLOUDINARY_API_SECRET', default=''),
+    secure=True
+)
+
+# Cloudinary storage settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default='demo'),
+    'API_KEY': config('CLOUDINARY_API_KEY', default=''),
+    'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
+}
+
+# Django 4.2+ STORAGES - використовуємо Cloudinary для media
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
+# Media URL points to Cloudinary CDN
+MEDIA_URL = f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME', default='demo')}/image/upload/"
 
 # VAPID ключі для push notifications
 VAPID_PRIVATE_KEY = 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgjr19PQPYfjKqpEr6X7783aTxE-CIHkCfFHN1ePvTr66hRANCAAQDScS1jLjPfzr_ieuChn__WVxHE2oLHNhnWr4NoSDmEDuK9dEEpUy7gIRJB7CBIkVXmKXozDRa5lin1tQWp6sh'
