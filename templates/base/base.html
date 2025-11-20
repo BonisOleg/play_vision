@@ -81,7 +81,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 
-<body>
+<body data-bunny-library-id="{{ BUNNY_LIBRARY_ID }}">
     <!-- Accessibility Skip Links -->
     <a href="#main-content" class="skip-link">Перейти до основного контенту</a>
 
@@ -265,6 +265,13 @@
                     </button>
 
                     <!-- Cabinet (desktop) / Auth (desktop + mobile незареєстровані) -->
+                    <a href="{{ external_auth_url }}" class="auth-entry-btn" aria-label="Вхід та Реєстрація" target="_blank" rel="noopener">
+                        <span class="auth-entry-text">Вхід<br>Реєстрація</span>
+                    </a>
+                    
+                    <!-- 
+                    ЗАКОММЕНТОВАНО ДЛЯ МАЙБУТНЬОГО:
+                    {% comment %}
                     {% if user.is_authenticated %}
                     <a href="{% url 'cabinet:dashboard' %}" class="navbar-icon navbar-cabinet-btn" aria-label="Кабінет">
                         <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -279,6 +286,8 @@
                         <span class="auth-entry-text">Вхід<br>Реєстрація</span>
                     </a>
                     {% endif %}
+                    {% endcomment %}
+                    -->
                 </div>
             </div>
         </div>

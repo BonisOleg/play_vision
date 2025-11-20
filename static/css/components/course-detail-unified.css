@@ -1,0 +1,417 @@
+/* Course Detail - Unified Sections Style */
+
+/* === HERO SECTION === */
+.course-detail-hero .section-content {
+    padding: var(--spacing-2xl) 0;
+}
+
+.course-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+/* Info Block */
+.course-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+}
+
+.breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-featured {
+    background: var(--color-primary);
+    color: white;
+}
+
+.course-title {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin: 0;
+}
+
+.course-author {
+    font-size: var(--font-size-md);
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+.course-description {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text);
+}
+
+.course-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: var(--color-bg-gray);
+    border-radius: var(--radius-lg);
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.meta-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+}
+
+.meta-value {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.meta-value.price {
+    color: var(--color-primary);
+    font-size: var(--font-size-2xl);
+}
+
+.course-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.btn-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    margin-right: var(--spacing-sm);
+}
+
+/* Thumbnail Block */
+.course-thumbnail-block {
+    position: sticky;
+    top: 100px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.course-thumbnail-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* === BENEFITS SECTION === */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+.benefit-item {
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.benefit-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.benefit-item h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.benefit-item p {
+    color: var(--color-text-light);
+    font-size: var(--font-size-base);
+}
+
+/* === RELATED COURSES === */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.course-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-base);
+}
+
+.course-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.course-card-image {
+    height: 180px;
+    overflow: hidden;
+}
+
+.course-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.course-card-content {
+    padding: var(--spacing-lg);
+}
+
+.course-card-content h3 {
+    margin: 0 0 var(--spacing-sm);
+    font-size: var(--font-size-lg);
+}
+
+.course-card-content h3 a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.course-card-content h3 a:hover {
+    color: var(--color-primary);
+}
+
+.course-card-content p {
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.course-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.course-card-footer .price {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* === PROMO MODAL === */
+.promo-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
+
+.modal-container {
+    position: relative;
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    z-index: 1;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-light);
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-base);
+}
+
+.modal-close:hover {
+    background: var(--color-bg-gray);
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.modal-body iframe {
+    width: 100%;
+    height: 500px;
+    display: block;
+}
+
+/* === AFTER PROMO POPUP === */
+.promo-popup {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+
+.popup-container {
+    position: relative;
+    background: var(--color-bg);
+    border-radius: var(--radius-xl);
+    max-width: 500px;
+    width: 90%;
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-xl);
+    text-align: center;
+    z-index: 1;
+}
+
+.popup-content h3 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.popup-content p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-xl);
+}
+
+.popup-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+/* === RESPONSIVE === */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .course-hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+    
+    .course-thumbnail-block {
+        position: static;
+        order: -1;
+    }
+    
+    .modal-body iframe {
+        height: 400px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .course-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .course-meta-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-container {
+        width: 95%;
+    }
+    
+    .modal-body iframe {
+        height: 300px;
+    }
+    
+    .popup-actions {
+        flex-direction: column;
+    }
+}
+
+/* Dark theme */
+[data-theme="dark"] .modal-container,
+[data-theme="dark"] .popup-container {
+    background: var(--color-bg-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .modal-container,
+    [data-theme="auto"] .popup-container {
+        background: var(--color-bg-dark);
+    }
+}
+
+/* Animation preferences */
+@media (prefers-reduced-motion: reduce) {
+    .course-card:hover {
+        transform: none;
+    }
+}
+

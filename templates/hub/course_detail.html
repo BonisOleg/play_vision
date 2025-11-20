@@ -2,309 +2,189 @@
 {% load static %}
 
 {% block title %}{{ course.title }} - Play Vision{% endblock %}
-
 {% block meta_description %}{{ course.short_description }}{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/components/hub.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/course-detail.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-favorites-hide.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/course-detail-unified.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="course-detail-container">
-    <!-- Course Hero -->
-    <section class="course-hero">
-        <div class="container">
-            <div class="course-hero-content">
-                <div class="course-info">
-                    <nav class="breadcrumb">
-                        <a href="{% url 'content:course_list' %}">Хаб знань</a>
-                        <span>/</span>
-                        <a href="{% url 'content:course_list' %}?category={{ course.category.slug }}">{{
-                            course.category.name }}</a>
-                        <span>/</span>
-                        <span>{{ course.title }}</span>
-                    </nav>
-
-                    <div class="course-badges">
-                        {% if course.is_featured %}
-                        <span class="badge badge-featured">топ-продажів</span>
-                        {% endif %}
-                        {% if course.is_free %}
-                        <span class="badge badge-free">безкоштовно</span>
-                        {% endif %}
-                        <span class="badge badge-difficulty difficulty-{{ course.difficulty }}">
-                            {{ course.get_difficulty_display }}
-                        </span>
+<div class="fullscreen-container">
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
+            
+            <!-- SECTION 1: COURSE HERO -->
+            <section class="fullscreen-section course-detail-hero">
+                <div class="section-content">
+                    <div class="course-hero-grid">
+                        
+                        <!-- Left: Info Block -->
+                        <div class="course-info-block">
+                            <nav class="breadcrumb">
+                                <a href="{% url 'content:course_list' %}">Хаб знань</a>
+                                <span>/</span>
+                                <span>{{ course.title }}</span>
+                            </nav>
+                            
+                            {% if course.is_featured %}
+                            <span class="badge badge-featured">топ-продажів</span>
+                            {% endif %}
+                            
+                            <h1 class="course-title">{{ course.title }}</h1>
+                            
+                            {% if course.author %}
+                            <p class="course-author">Автор: {{ course.author }}</p>
+                            {% endif %}
+                            
+                            <p class="course-description">{{ course.description }}</p>
+                            
+                            <div class="course-meta-grid">
+                                <div class="meta-item">
+                                    <span class="meta-label">Ціна:</span>
+                                    <span class="meta-value price">{{ course.price }}₴</span>
+                                </div>
+                                {% if course.author %}
+                                <div class="meta-item">
+                                    <span class="meta-label">Автор:</span>
+                                    <span class="meta-value">{{ course.author }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="course-actions">
+                                <a href="{{ join_url }}" class="btn btn-primary btn-large" target="_blank" rel="noopener">
+                                    Приєднатись до клубу
+                                </a>
+                                
+                                {% if has_promo %}
+                                <button class="btn btn-outline btn-large" 
+                                        data-open-promo-modal
+                                        data-bunny-id="{{ course.promo_video_bunny_id }}">
+                                    <svg class="btn-icon" viewBox="0 0 24 24">
+                                        <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+                                    </svg>
+                                    Переглянути промо
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Thumbnail -->
+                        <div class="course-thumbnail-block">
+                            {% if course.thumbnail %}
+                            <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" loading="lazy">
+                            {% else %}
+                            <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}" loading="lazy">
+                            {% endif %}
+                        </div>
+                        
                     </div>
-
-                    <h1 class="course-title">{{ course.title }}</h1>
-                    <p class="course-description">{{ course.description }}</p>
-
-                    <div class="course-meta">
-                        <div class="meta-item">
-                            <strong>Тривалість:</strong> {{ course.duration_display }}
+                </div>
+            </section>
+            
+            <!-- SECTION 2: WHAT YOU GET -->
+            <section class="fullscreen-section course-benefits-section">
+                <div class="section-content">
+                    <h2 class="section-title">Що ви отримаєте</h2>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">📚</div>
+                            <h3>Структурований контент</h3>
+                            <p>Професійно підготовлені матеріали від експертів індустрії</p>
                         </div>
-                        <div class="meta-item">
-                            <strong>Рівень:</strong> {{ course.get_difficulty_display }}
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🎯</div>
+                            <h3>Практичні навички</h3>
+                            <p>Реальні кейси та завдання для застосування знань</p>
                         </div>
-                        <div class="meta-item">
-                            <strong>Категорія:</strong> {{ course.category.name }}
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🏆</div>
+                            <h3>Професійний розвиток</h3>
+                            <p>Розвиток кар'єри у футбольній індустрії</p>
                         </div>
-                        {% if course.rating > 0 %}
-                        <div class="meta-item">
-                            <strong>Рейтинг:</strong>
-                            <span class="rating">{{ course.rating }}/5</span>
-                        </div>
-                        {% endif %}
                     </div>
-
-                    <div class="course-tags">
-                        {% for tag in course.tags.all %}
-                        <span class="tag">{{ tag.name }}</span>
+                </div>
+            </section>
+            
+            <!-- SECTION 3: RELATED COURSES -->
+            {% if related_courses %}
+            <section class="fullscreen-section related-courses-section">
+                <div class="section-content">
+                    <h2 class="section-title">Схожі курси</h2>
+                    <div class="courses-grid">
+                        {% for related in related_courses %}
+                        <article class="course-card">
+                            <div class="course-card-image">
+                                {% if related.thumbnail %}
+                                <img src="{{ related.thumbnail.url }}" alt="{{ related.title }}" loading="lazy">
+                                {% else %}
+                                <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ related.title }}" loading="lazy">
+                                {% endif %}
+                            </div>
+                            <div class="course-card-content">
+                                <h3><a href="{{ related.get_absolute_url }}">{{ related.title }}</a></h3>
+                                <p>{{ related.short_description }}</p>
+                                <div class="course-card-footer">
+                                    <span class="price">{{ related.price }}₴</span>
+                                </div>
+                            </div>
+                        </article>
                         {% endfor %}
                     </div>
                 </div>
-
-                <div class="course-media">
-                    <div class="course-preview">
-                        {% if course.thumbnail %}
-                        <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" class="course-thumbnail">
-                        {% else %}
-                        <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}"
-                            class="course-thumbnail">
-                        {% endif %}
-
-                        <!-- Content State Overlay -->
-                        {% if content_state == 'locked' %}
-                        <div class="content-overlay locked">
-                            <div class="overlay-content">
-                                <div class="lock-icon">🔒</div>
-                                <h3>Контент заблоковано</h3>
-                                <p>Цей матеріал доступний тільки з підпискою або після покупки</p>
-                            </div>
-                        </div>
-                        {% elif content_state == 'preview' %}
-                        <div class="content-overlay preview">
-                            <div class="overlay-content">
-                                <button class="preview-btn" data-action="start-preview">
-                                    <span class="play-icon">▶</span>
-                                    Переглянути 20 секунд
-                                </button>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="course-actions">
-                        <div class="price-section">
-                            {% if course.is_free %}
-                            <span class="price free">Безкоштовно</span>
-                            {% else %}
-                            <span class="price">{{ course.price }}₴</span>
-                            {% endif %}
-                        </div>
-
-                        <div class="action-buttons">
-                            {% if not user.is_authenticated %}
-                            <a href="{% url 'subscriptions:pricing' %}?next={{ request.get_full_path }}&add_to_cart=course_{{ course.id }}"
-                                class="btn btn-primary btn-large">
-                                Вступити в клуб
-                            </a>
-                            <p class="hint">Оформіть підписку або зареєструйтесь для окремої покупки</p>
-                            {% elif has_access %}
-                            <a href="#course-materials" class="btn btn-primary btn-large">
-                                Розпочати навчання
-                            </a>
-                            {% elif course.is_free %}
-                            <button class="btn btn-primary btn-large" data-action="start-free-course"
-                                data-course-id="{{ course.id }}">
-                                Розпочати безкоштовно
-                            </button>
-                            {% else %}
-                            <div class="purchase-options">
-                                <a href="{% url 'subscriptions:pricing' %}?ref=course_{{ course.id }}"
-                                    class="btn btn-primary btn-large">
-                                    Оформити підписку
-                                </a>
-                                <span class="or-divider">або</span>
-                                <button class="btn btn-outline btn-large" hx-post="{% url 'htmx:cart:add_to_cart' %}"
-                                    hx-vals='{"item_type": "course", "item_id": "{{ course.id }}"}' hx-trigger="click"
-                                    hx-swap="none">
-                                    Купити за {{ course.price }}₴
-                                </button>
-                            </div>
-                            {% endif %}
-                        </div>
-
-                        {% if user.is_authenticated %}
-                        <div class="secondary-actions">
-                            <button class="favorite-btn {% if is_favorite %}active{% endif %}"
-                                hx-post="{% url 'content:toggle_favorite' course.id %}" hx-swap="none">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
-                                </svg>
-                                <span>{{ is_favorite|yesno:"В улюблених,Додати в улюблені" }}</span>
-                            </button>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Course Materials -->
-    {% if has_access or course.is_free %}
-    <section id="course-materials" class="course-materials">
-        <div class="container">
-            <h2>Матеріали курсу</h2>
-
-            {% if user_progress %}
-            <div class="progress-bar">
-                <div class="progress-fill" data-progress="{{ user_progress.progress_percentage }}"></div>
-                <span class="progress-text">{{ user_progress.progress_percentage|floatformat:0 }}% завершено</span>
-            </div>
+            </section>
             {% endif %}
-
-            <div class="materials-list">
-                {% for material in materials %}
-                <div
-                    class="material-item {% if user_progress and material in user_progress.materials_completed.all %}completed{% endif %}">
-                    <div class="material-icon">
-                        {% if material.content_type == 'video' %}
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
-                        </svg>
-                        {% elif material.content_type == 'pdf' %}
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
-                        </svg>
-                        {% elif material.content_type == 'article' %}
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path
-                                d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19Z" />
-                        </svg>
-                        {% else %}
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M9,12L11,14L15,10L20,15H4L9,12Z" />
-                        </svg>
-                        {% endif %}
-                    </div>
-
-                    <div class="material-content">
-                        <h3>{{ material.title }}</h3>
-                        <div class="material-meta">
-                            <span class="type">{{ material.get_content_type_display }}</span>
-                            {% if material.content_type == 'video' and material.video_duration_seconds %}
-                            <span class="duration">{{ material.video_duration_seconds|floatformat:0 }} сек</span>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="material-actions">
-                        {% if has_access %}
-                        <a href="{% url 'content:material_detail' course_slug=course.slug material_slug=material.slug %}"
-                            class="btn btn-outline">Переглянути</a>
-                        {% else %}
-                        <span class="locked-hint">🔒</span>
-                        {% endif %}
-                    </div>
-                </div>
-                {% empty %}
-                <p class="no-materials">Матеріали будуть додані найближчим часом</p>
-                {% endfor %}
-            </div>
+            
         </div>
-    </section>
-    {% endif %}
-
-    <!-- Related Courses -->
-    {% if related_courses %}
-    <section class="related-courses">
-        <div class="container">
-            <h2>Схожі курси</h2>
-            <div class="courses-grid">
-                {% for related_course in related_courses %}
-                <article class="course-card">
-                    <div class="course-image">
-                        {% if related_course.thumbnail %}
-                        <img src="{{ related_course.thumbnail.url }}" alt="{{ related_course.title }}">
-                        {% else %}
-                        <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ related_course.title }}">
-                        {% endif %}
-                    </div>
-                    <div class="course-content">
-                        <h3><a href="{{ related_course.get_absolute_url }}">{{ related_course.title }}</a></h3>
-                        <p>{{ related_course.short_description }}</p>
-                        <div class="course-details">
-                            <span class="duration">{{ related_course.duration_display }}</span>
-                            <span class="price">
-                                {% if related_course.is_free %}
-                                Безкоштовно
-                                {% else %}
-                                {{ related_course.price }}₴
-                                {% endif %}
-                            </span>
-                        </div>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-    {% endif %}
+    </div>
 </div>
 
-<!-- Preview Modal -->
-<div id="previewModal" class="modal">
-    <div class="modal-content">
+<!-- PROMO VIDEO MODAL -->
+{% if has_promo %}
+<div id="promoModal" class="promo-modal" style="display: none;" role="dialog" aria-hidden="true">
+    <div class="modal-overlay" data-close-modal></div>
+    <div class="modal-container">
         <div class="modal-header">
-            <h3>Передперегляд курсу</h3>
-            <button class="modal-close">&times;</button>
+            <h3>Промо курсу</h3>
+            <button class="modal-close" data-close-modal aria-label="Закрити">&times;</button>
         </div>
         <div class="modal-body">
-            <div class="preview-video">
-                {% if course.preview_video %}
-                <video id="previewVideo" controls>
-                    <source src="{{ course.preview_video.url }}" type="video/mp4">
-                    Ваш браузер не підтримує відео.
-                </video>
-                {% else %}
-                <div class="preview-placeholder">
-                    <p>Передперегляд недоступний</p>
-                </div>
-                {% endif %}
-            </div>
-            <div class="preview-timer">
-                <span id="previewTimer">20</span> секунд залишилося
-            </div>
+            <iframe id="promoVideoFrame" 
+                    src="" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
         </div>
-        <div class="modal-footer">
-            <p>Хочете побачити повний курс?</p>
-            <div class="preview-actions">
-                {% if not user.is_authenticated %}
-                <a href="{% url 'accounts:register' %}?next={{ request.get_full_path }}&add_to_cart=course_{{ course.id }}"
-                    class="btn btn-primary">
-                    Вступити в клуб
+    </div>
+</div>
+
+<!-- AFTER PROMO POPUP -->
+<div id="afterPromoPopup" class="promo-popup" style="display: none;">
+    <div class="popup-overlay" data-close-popup></div>
+    <div class="popup-container">
+        <div class="popup-content">
+            <h3>Хочете дізнатися більше?</h3>
+            <p>Приєднуйтесь до нас та отримайте повний доступ до курсу!</p>
+            <div class="popup-actions">
+                <a href="{{ join_url }}" class="btn btn-primary" target="_blank" rel="noopener">
+                    Приєднатись зараз
                 </a>
-                <p class="preview-hint">Товар буде автоматично доданий в кошик після реєстрації</p>
-                {% else %}
-                <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary">Оформити підписку</a>
-                <button class="btn btn-outline" hx-post="{% url 'htmx:cart:add_to_cart' %}"
-                    hx-vals='{"item_type": "course", "item_id": "{{ course.id }}"}'>
-                    Купити за {{ course.price }}₴
+                <button class="btn btn-outline" data-close-popup>
+                    Закрити
                 </button>
-                {% endif %}
             </div>
         </div>
     </div>
 </div>
+{% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/course-detail.js' %}"></script>
+{% if has_promo %}
+<script src="{% static 'js/course-detail-promo.js' %}" defer></script>
+{% endif %}
 {% endblock %}

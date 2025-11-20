@@ -96,41 +96,51 @@ class CourseDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         course = self.object
-        user = self.request.user
         
-        # Check access
-        if user.is_authenticated:
-            context['has_access'] = check_user_course_access(user, course)
-            context['is_favorite'] = Favorite.objects.filter(
-                user=user, course=course
-            ).exists()
-            
-            # Get user progress
-            try:
-                progress = UserCourseProgress.objects.get(user=user, course=course)
-                context['user_progress'] = progress
-            except UserCourseProgress.DoesNotExist:
-                context['user_progress'] = None
+        # Promo video embed URL
+        promo_url = course.get_promo_embed_url()
+        context['promo_embed_url'] = promo_url
+        context['has_promo'] = bool(promo_url)
+        
+        # External join URL (fallback to default)
+        if course.external_join_url:
+            context['join_url'] = course.external_join_url
         else:
-            context['has_access'] = False
-            context['is_favorite'] = False
+            from apps.cms.models import SiteSettings
+            settings = SiteSettings.get_settings()
+            context['join_url'] = settings.external_join_url_default or '#'
         
-        # Content state for paywall
-        if course.is_free or context['has_access']:
-            context['content_state'] = 'unlocked'
-        elif course.preview_video:
-            context['content_state'] = 'preview'
-        else:
-            context['content_state'] = 'locked'
-        
-        # Get course materials
-        context['materials'] = course.materials.all().order_by('order')
-        
-        # Get related courses
+        # Related courses
         context['related_courses'] = Course.objects.filter(
-            category=course.category,
             is_published=True
         ).exclude(id=course.id)[:4]
+        
+        # Materials (закомментовано - для майбутнього)
+        # context['materials'] = course.materials.all().order_by('order')
+        
+        # === ЗАКОММЕНТОВАНО ДЛЯ МАЙБУТНЬОГО ===
+        # user = self.request.user
+        # if user.is_authenticated:
+        #     context['has_access'] = check_user_course_access(user, course)
+        #     context['is_favorite'] = Favorite.objects.filter(
+        #         user=user, course=course
+        #     ).exists()
+        #     try:
+        #         progress = UserCourseProgress.objects.get(user=user, course=course)
+        #         context['user_progress'] = progress
+        #     except UserCourseProgress.DoesNotExist:
+        #         context['user_progress'] = None
+        # else:
+        #     context['has_access'] = False
+        #     context['is_favorite'] = False
+        #
+        # # Content state for paywall
+        # if course.is_free or context['has_access']:
+        #     context['content_state'] = 'unlocked'
+        # elif course.preview_video:
+        #     context['content_state'] = 'preview'
+        # else:
+        #     context['content_state'] = 'locked'
         
         return context
 

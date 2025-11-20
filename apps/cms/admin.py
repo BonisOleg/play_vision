@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from .models import (
-    HeroSlide, FeaturedCourse, ExpertCard, EventGridCell, TrackingPixel,
+    HeroSlide, FeaturedCourse, ExpertCard, EventGridCell, TrackingPixel, SiteSettings,
     # Про нас
     AboutHero, AboutSection2, AboutSection3, AboutSection4,
     # Хаб знань
@@ -235,3 +235,37 @@ class TrackingPixelAdmin(admin.ModelAdmin):
         js = ('admin/js/playvision-admin.js',)
 
 
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    """Admin for global site settings (Singleton)"""
+    fieldsets = (
+        ('Зовнішні посилання', {
+            'fields': ('external_auth_url', 'external_join_url_default'),
+            'description': mark_safe("""
+                <div class="cms-help-box">
+                    <h4>🔗 Налаштування зовнішніх URL</h4>
+                    <ul>
+                        <li><strong>URL зовнішньої авторизації:</strong> Посилання на Квігу або інший сайт для входу/реєстрації</li>
+                        <li><strong>URL "Приєднатись" за замовчуванням:</strong> Використовується на сторінках курсів, якщо не вказано окремо</li>
+                    </ul>
+                </div>
+            """)
+        }),
+        ('Метадані', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+    readonly_fields = ('updated_at',)
+    
+    def has_add_permission(self, request):
+        # Singleton - дозволити створення тільки якщо немає запису
+        return not SiteSettings.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        # Заборонити видалення
+        return False
+    
+    class Media:
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)

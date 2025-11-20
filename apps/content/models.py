@@ -51,7 +51,42 @@ class Course(models.Model):
         verbose_name='Лого курсу',
         help_text='Квадратне лого курсу для відображення на картці (рекомендовано 200x200px)'
     )
-    preview_video = models.FileField(upload_to='course_previews/', blank=True, max_length=500)
+    preview_video = models.FileField(upload_to='course_previews/', blank=True, max_length=500)  # NOTE: Залишаємо для backward compatibility
+    
+    # ===== BUNNY.NET PROMO VIDEO =====
+    promo_video_file = models.FileField(
+        upload_to='course_promo_temp/',
+        blank=True,
+        null=True,
+        max_length=500,
+        verbose_name='Промо-відео (тимчасове)',
+        help_text='Завантажте відео - воно автоматично піде на Bunny.net CDN'
+    )
+    promo_video_bunny_id = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name='Bunny Video ID',
+        help_text='GUID відео в Bunny.net (заповнюється автоматично)',
+        db_index=True
+    )
+    promo_video_bunny_status = models.CharField(
+        max_length=20,
+        blank=True,
+        verbose_name='Bunny статус',
+        help_text='Статус обробки відео (0-6)'
+    )
+    promo_video_thumbnail_url = models.URLField(
+        blank=True,
+        verbose_name='Thumbnail URL',
+        help_text='URL thumbnail з Bunny.net'
+    )
+    
+    # ===== EXTERNAL LINKS =====
+    external_join_url = models.URLField(
+        blank=True,
+        verbose_name='Посилання "Приєднатись"',
+        help_text='URL зовнішнього сайту для кнопки "Приєднатись до клубу"'
+    )
     
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
@@ -94,6 +129,19 @@ class Course(models.Model):
         """Повертає список назв аудиторій"""
         choices_dict = dict(self.TARGET_AUDIENCE_CHOICES)
         return [choices_dict.get(code, code) for code in self.target_audience]
+    
+    def get_promo_embed_url(self):
+        """Отримати embed URL для промо-відео"""
+        if not self.promo_video_bunny_id:
+            return None
+        
+        try:
+            from apps.video_security.bunny_service import BunnyService
+            if BunnyService.is_enabled():
+                return BunnyService.get_video_embed_url(self.promo_video_bunny_id)
+        except ImportError:
+            pass
+        return None
 
 
 class Material(models.Model):

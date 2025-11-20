@@ -274,6 +274,50 @@ class TrackingPixel(models.Model):
         return f"{self.name} ({self.get_pixel_type_display()})"
 
 
+class SiteSettings(models.Model):
+    """
+    Глобальні налаштування сайту (Singleton)
+    """
+    external_auth_url = models.URLField(
+        default='#',
+        verbose_name='URL зовнішньої авторизації',
+        help_text='Посилання на зовнішній сайт для входу/реєстрації (наприклад, Квіга)'
+    )
+    
+    # Додаткові посилання
+    external_join_url_default = models.URLField(
+        blank=True,
+        verbose_name='URL "Приєднатись" за замовчуванням',
+        help_text='Використовується якщо не вказано в курсі'
+    )
+    
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'cms_site_settings'
+        verbose_name = 'Налаштування сайту'
+        verbose_name_plural = 'Налаштування сайту'
+    
+    def __str__(self):
+        return "Налаштування сайту"
+    
+    def save(self, *args, **kwargs):
+        # Singleton - тільки один запис
+        self.pk = 1
+        super().save(*args, **kwargs)
+        # Очистити кеш
+        cache.delete('site_settings')
+    
+    @classmethod
+    def get_settings(cls):
+        """Отримати налаштування з кешем"""
+        settings = cache.get('site_settings')
+        if not settings:
+            settings, _ = cls.objects.get_or_create(pk=1)
+            cache.set('site_settings', settings, 60*60*24)  # 24 години
+        return settings
+
+
 # Import моделей для різних сторінок
 from .models_about import AboutHero, AboutSection2, AboutSection3, AboutSection4
 from .models_hub import HubHero
@@ -288,7 +332,7 @@ from .models_mentor import (
 
 __all__ = [
     # Основні CMS моделі
-    'HeroSlide', 'FeaturedCourse', 'ExpertCard', 'EventGridCell', 'TrackingPixel',
+    'HeroSlide', 'FeaturedCourse', 'ExpertCard', 'EventGridCell', 'TrackingPixel', 'SiteSettings',
     # Про нас
     'AboutHero', 'AboutSection2', 'AboutSection3', 'AboutSection4',
     # Хаб знань

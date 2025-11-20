@@ -90,6 +90,7 @@ TEMPLATES = [
                 'apps.events.context_processors.event_categories_menu',
                 'apps.cart.context_processors.cart_context',
                 'apps.cms.context_processors.site_content',
+                'apps.core.context_processors.external_urls',
             ],
         },
     },

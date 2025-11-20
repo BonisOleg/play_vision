@@ -66,7 +66,12 @@ class CourseAdmin(admin.ModelAdmin):
             'fields': ('price', 'is_free', 'requires_subscription', 'subscription_tiers')
         }),
         ('Медіа', {
-            'fields': ('thumbnail', 'logo', 'preview_video')
+            'fields': ('thumbnail', 'logo', 'promo_video_file', 'promo_video_bunny_id', 
+                      'promo_video_bunny_status', 'promo_video_thumbnail_url', 'preview_video')
+        }),
+        ('Зовнішні посилання', {
+            'fields': ('external_join_url',),
+            'description': 'Якщо не вказано, використовується URL за замовчуванням з налаштувань'
         }),
         ('Статус та відображення', {
             'fields': ('is_featured', 'is_published', 'published_at')
@@ -85,7 +90,8 @@ class CourseAdmin(admin.ModelAdmin):
         }),
     )
     
-    readonly_fields = ('view_count', 'enrollment_count', 'rating', 'created_at', 'updated_at')
+    readonly_fields = ('view_count', 'enrollment_count', 'rating', 'created_at', 'updated_at',
+                      'promo_video_bunny_id', 'promo_video_bunny_status', 'promo_video_thumbnail_url')
     
     actions = ['make_featured', 'remove_featured', 'publish', 'unpublish']
     
@@ -105,6 +111,50 @@ class CourseAdmin(admin.ModelAdmin):
     def unpublish(self, request, queryset):
         queryset.update(is_published=False)
     unpublish.short_description = "Unpublish selected courses"
+    
+    def save_model(self, request, obj, form, change):
+        """Автоматичний upload промо-відео на Bunny.net"""
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        # Перевірити чи завантажено нове промо-відео
+        if 'promo_video_file' in form.changed_data and obj.promo_video_file:
+            try:
+                from apps.video_security.bunny_service import BunnyService
+                from django.contrib import messages
+                
+                if not BunnyService.is_enabled():
+                    messages.warning(request, 'Bunny.net вимкнено. Відео не завантажено.')
+                    logger.warning("Bunny.net disabled, promo video not uploaded")
+                else:
+                    # Upload на Bunny.net
+                    logger.info(f"Uploading promo video for course: {obj.title}")
+                    video_data = BunnyService.upload_video(
+                        file_path=obj.promo_video_file.path,
+                        title=f"Промо: {obj.title}",
+                        collection_id=obj.slug
+                    )
+                    
+                    if video_data:
+                        # Успішно завантажено
+                        obj.promo_video_bunny_id = video_data.get('guid')
+                        obj.promo_video_bunny_status = str(video_data.get('status', '0'))
+                        
+                        # Видалити локальний файл (опціонально)
+                        if obj.promo_video_file:
+                            obj.promo_video_file.delete(save=False)
+                        
+                        messages.success(request, f'Промо-відео успішно завантажено на Bunny.net (ID: {obj.promo_video_bunny_id})')
+                        logger.info(f"Promo video uploaded successfully: {obj.promo_video_bunny_id}")
+                    else:
+                        messages.error(request, 'Помилка завантаження на Bunny.net. Перевірте логи.')
+                        logger.error(f"Failed to upload promo video for course: {obj.title}")
+            
+            except Exception as e:
+                messages.error(request, f'Помилка upload: {str(e)}')
+                logger.exception(f"Exception uploading promo video: {e}")
+        
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(Material)
