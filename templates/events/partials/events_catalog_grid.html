@@ -1,0 +1,78 @@
+{% load static %}
+
+<!-- Grid івентів -->
+<div class="events-catalog-grid">
+    {% for event in events %}
+    <article class="event-catalog-card" data-type="{% if event.is_online_event %}online{% else %}offline{% endif %}">
+        <div class="event-card-image">
+            {% if event.thumbnail %}
+            <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}" loading="lazy">
+            {% else %}
+            <div class="event-image-placeholder">
+                <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                </svg>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="event-card-content">
+            <div class="event-card-meta">
+                <span class="event-type">{{ event.get_event_type_display }}</span>
+                <span class="event-date">{{ event.start_datetime|date:"d.m.Y" }}</span>
+            </div>
+            
+            <h3 class="event-card-title">{{ event.title }}</h3>
+            <p class="event-card-description">{{ event.short_description|truncatewords:20 }}</p>
+            
+            <div class="event-card-footer">
+                <span class="event-price">{% if event.is_free %}Безкоштовно{% else %}{{ event.price }} uah{% endif %}</span>
+                <a href="{% url 'events:event_detail' event.slug %}" class="btn-details">
+                    <span class="btn-text">детальніше</span>
+                    <span class="btn-arrow"></span>
+                </a>
+            </div>
+        </div>
+    </article>
+    {% empty %}
+    <div class="no-events">
+        <p>Наразі немає доступних подій</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Пагінація з HTMX -->
+{% if is_paginated %}
+<nav class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}"
+       hx-get="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}"
+       hx-target="#events-catalog-content"
+       hx-swap="innerHTML"
+       hx-push-url="true"
+       class="pagination-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+        </svg>
+    </a>
+    {% endif %}
+    
+    <span class="pagination-info">
+        Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+    </span>
+    
+    {% if page_obj.has_next %}
+    <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}"
+       hx-get="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}"
+       hx-target="#events-catalog-content"
+       hx-swap="innerHTML"
+       hx-push-url="true"
+       class="pagination-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+        </svg>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
+

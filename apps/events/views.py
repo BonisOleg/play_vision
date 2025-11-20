@@ -142,6 +142,12 @@ class EventListView(ListView):
         context['week_end'] = start_of_week + timedelta(days=6)
         
         return context
+    
+    def render_to_response(self, context, **response_kwargs):
+        """Return partial template for HTMX requests"""
+        if self.request.headers.get('HX-Request'):
+            self.template_name = 'events/partials/events_catalog_grid.html'
+        return super().render_to_response(context, **response_kwargs)
 
 
 class EventDetailView(DetailView):

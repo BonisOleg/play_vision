@@ -71,27 +71,38 @@ function initCalendarCarousel() {
 }
 
 function initEventFilters() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const eventCards = document.querySelectorAll('.event-catalog-card');
+    const filterBtns = document.querySelectorAll('.event-filters .filter-btn');
     
-    if (!filterBtns.length || !eventCards.length) return;
+    if (!filterBtns.length) return;
     
     filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const filter = btn.dataset.filter;
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
             
+            const format = btn.dataset.format;
+            
+            // Update active state
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            eventCards.forEach(card => {
-                const cardType = card.dataset.type;
-                
-                if (filter === 'online') {
-                    card.style.display = cardType === 'online' ? 'flex' : 'none';
-                } else if (filter === 'offline') {
-                    card.style.display = cardType === 'offline' ? 'flex' : 'none';
-                }
+            // Build URL
+            const url = new URL(window.location.href);
+            url.searchParams.delete('page');
+            
+            if (format === 'all') {
+                url.searchParams.delete('format');
+            } else {
+                url.searchParams.set('format', format);
+            }
+            
+            // HTMX request
+            htmx.ajax('GET', url.toString(), {
+                target: '#events-catalog-content',
+                swap: 'innerHTML'
             });
+            
+            // Update URL
+            window.history.pushState({}, '', url.toString());
         });
     });
 }
