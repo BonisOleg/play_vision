@@ -10,30 +10,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # Спочатку СТВОРЮЄМО модель EventGridCell
-        migrations.CreateModel(
-            name='EventGridCell',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('position', models.PositiveIntegerField(help_text='Позиція в сітці (1-9): 1=верх зліва, 9=низ справа', unique=True, verbose_name='Позиція')),
-                ('image', models.ImageField(help_text='Зображення або GIF для комірки', max_length=500, upload_to='cms/event_grid/', verbose_name='Зображення/GIF')),
-                ('alt_text', models.CharField(blank=True, help_text='Опис зображення для доступності', max_length=200, verbose_name='Alt текст')),
-                ('is_active', models.BooleanField(default=True, verbose_name='Активний')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-            ],
-            options={
-                'verbose_name': 'Комірка сітки',
-                'verbose_name_plural': '🎉 Івенти → Hero сітка',
-                'db_table': 'cms_event_grid_cells',
-                'ordering': ['position'],
-            },
-        ),
-        migrations.AddConstraint(
+        # Таблиця EventGridCell вже існує в БД, тому лише змінюємо поля
+        migrations.AlterField(
             model_name='eventgridcell',
-            constraint=models.CheckConstraint(check=models.Q(('position__gte', 1), ('position__lte', 9)), name='event_grid_cell_position_range'),
+            name='image',
+            field=models.ImageField(help_text='Зображення або GIF для комірки', max_length=500, upload_to='cms/event_grid/', verbose_name='Зображення/GIF'),
         ),
-        # ПОТІМ змінюємо інші моделі
         migrations.AlterField(
             model_name='expertcard',
             name='photo',
