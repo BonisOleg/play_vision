@@ -180,7 +180,7 @@ class HubFilters {
     
     resetFilters() {
         this.selectedFilters.clear();
-        this.searchQuery = '';
+        // НЕ очищуємо searchQuery - це робить окрема кнопка
         
         document.querySelectorAll('.hub-filter-checkbox').forEach(cb => {
             cb.classList.remove('checked');
@@ -190,11 +190,15 @@ class HubFilters {
             cb.checked = false;
         });
         
-        document.getElementById('hub-search-input').value = '';
-        
         this.updateApplyButton();
         
         const url = new URL(window.location.origin + window.location.pathname);
+        
+        // Зберігаємо пошук, якщо є
+        if (this.searchQuery.trim()) {
+            url.searchParams.set('q', this.searchQuery.trim());
+        }
+        
         htmx.ajax('GET', url.toString(), {
             target: '#catalog-content',
             swap: 'innerHTML'
