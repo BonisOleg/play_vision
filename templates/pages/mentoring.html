@@ -42,14 +42,18 @@
                     <div class="mentoring-cards-grid">
                         {% if mentor_images %}
                         {% for image_obj in mentor_images %}
+                        {% with img=image_obj|get_localized_image:country_code %}
                         <article class="mentoring-card">
                             <div class="mentoring-card-image">
-                                <img src="{{ image_obj.get_image:country_code.url }}" alt="{{ image_obj.get_caption:country_code }}" loading="lazy">
+                                {% if img %}
+                                <img src="{{ img.url }}" alt="{{ image_obj|get_localized_title:country_code }}" loading="lazy">
+                                {% endif %}
                             </div>
                             <div class="mentoring-card-content">
-                                <p>{{ image_obj.get_caption:country_code }}</p>
+                                <p>{{ image_obj|get_localized_title:country_code }}</p>
                             </div>
                         </article>
+                        {% endwith %}
                         {% endfor %}
                         {% else %}
                         <article class="mentoring-card">
@@ -91,17 +95,16 @@
             {% get_mentor_section2 as mentor_section2 %}
             <section class="fullscreen-section mentoring-structure-section">
                 <div class="section-content">
-                    <h2 class="section-title">{% if mentor_section2 %}{{ mentor_section2.get_title:country_code }}{% else %}Структура Ментор коучинга{% endif %}</h2>
+                    <h2 class="section-title">{% if mentor_section2 %}{{ mentor_section2|get_localized_title:country_code }}{% else %}Структура Ментор коучинга{% endif %}</h2>
 
                     <div class="mentoring-image-block">
                         {% if mentor_section2 %}
-                        {% with svg=mentor_section2.get_svg:country_code:theme %}
+                        {% get_localized_svg mentor_section2 country_code theme as svg %}
                         {% if svg %}
                         {{ svg|safe }}
                         {% else %}
                         <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}" alt="Структура Ментор коучинга" loading="lazy">
                         {% endif %}
-                        {% endwith %}
                         {% else %}
                         <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}" alt="Структура Ментор коучинга" loading="lazy">
                         {% endif %}
@@ -115,13 +118,12 @@
                 <div class="section-content">
                     <div class="mentoring-image-block">
                         {% if mentor_section3 %}
-                        {% with svg=mentor_section3.get_svg:country_code:theme %}
+                        {% get_localized_svg mentor_section3 country_code theme as svg %}
                         {% if svg %}
                         {{ svg|safe }}
                         {% else %}
                         <img class="mentoring-svg-invert" src="{% static 'images/mentor2.svg' %}" alt="Методологія" loading="lazy">
                         {% endif %}
-                        {% endwith %}
                         {% else %}
                         <img class="mentoring-svg-invert" src="{% static 'images/mentor2.svg' %}" alt="Методологія" loading="lazy">
                         {% endif %}

@@ -195,3 +195,32 @@ def get_localized_cta_text(obj, country_code):
         return obj.get_cta_text(country_code)
     return getattr(obj, 'cta_text_ua', getattr(obj, 'cta_text', ''))
 
+
+@register.filter
+def get_localized_image(obj, country_code):
+    """
+    Отримати image з урахуванням країни
+    Використання: {{ hero|get_localized_image:country_code }}
+    """
+    if not obj:
+        return None
+    if hasattr(obj, 'get_image'):
+        return obj.get_image(country_code)
+    # Fallback до прямих полів
+    return getattr(obj, 'image_ua', getattr(obj, 'image', None))
+
+
+@register.simple_tag
+def get_localized_svg(obj, country_code, theme='light'):
+    """
+    Отримати SVG контент з урахуванням країни і теми
+    Використання: {% get_localized_svg section country_code theme %}
+    """
+    if not obj:
+        return ''
+    if hasattr(obj, 'get_svg'):
+        return obj.get_svg(country_code, theme)
+    # Fallback
+    svg_field = f'svg_{country_code.lower()}_{theme}'
+    return getattr(obj, svg_field, '')
+

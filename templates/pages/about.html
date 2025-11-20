@@ -21,9 +21,9 @@
     <section class="fullscreen-section hero-section hero-bordered about-hero">
         <div class="section-bg">
             {% if about_hero %}
-            {% with image=about_hero.get_image:country_code %}
+            {% with image=about_hero|get_localized_image:country_code %}
             {% if image %}
-            <img class="section-bg-image" src="{{ image.url }}" alt="{{ about_hero.get_title:country_code }}" loading="eager">
+            <img class="section-bg-image" src="{{ image.url }}" alt="{{ about_hero|get_localized_title:country_code }}" loading="eager">
             {% else %}
             <img class="section-bg-image" src="{% static 'images/Hiro.png' %}" alt="Про Play Vision" loading="eager">
             {% endif %}
@@ -45,7 +45,7 @@
                 <div class="section-content">
                     <div class="about-image-block">
                         {% if about_section2 %}
-                        {% with image=about_section2.get_image:country_code:theme %}
+                        {% with image=about_section2|get_localized_image:country_code %}
                         {% if image %}
                         <img src="{{ image.url }}" alt="Український футбол" loading="lazy">
                         {% else %}
@@ -63,17 +63,16 @@
             {% get_about_section3 as about_section3 %}
             <section class="fullscreen-section about-mission-section">
                 <div class="section-content">
-                    <h2 class="section-title">{% if about_section3 %}{{ about_section3.get_title:country_code }}{% else %}Місія, <span class="text-highlight">філософія</span> і віра{% endif %}</h2>
+                    <h2 class="section-title">{% if about_section3 %}{{ about_section3|get_localized_title:country_code }}{% else %}Місія, <span class="text-highlight">філософія</span> і віра{% endif %}</h2>
                     
                     <div class="about-image-block">
                         {% if about_section3 %}
-                        {% with svg=about_section3.get_svg:country_code:theme %}
+                        {% get_localized_svg about_section3 country_code theme as svg %}
                         {% if svg %}
                         {{ svg|safe }}
                         {% else %}
                         <img src="{% static 'images/about2.svg' %}" alt="Місія, філософія і віра" loading="lazy">
                         {% endif %}
-                        {% endwith %}
                         {% else %}
                         <img src="{% static 'images/about2.svg' %}" alt="Місія, філософія і віра" loading="lazy">
                         {% endif %}
@@ -85,17 +84,16 @@
             {% get_about_section4 as about_section4 %}
             <section class="fullscreen-section about-values-section">
                 <div class="section-content">
-                    <h2 class="section-title">{% if about_section4 %}{{ about_section4.get_title:country_code }}{% else %}Цінності та культура{% endif %}</h2>
+                    <h2 class="section-title">{% if about_section4 %}{{ about_section4|get_localized_title:country_code }}{% else %}Цінності та культура{% endif %}</h2>
                     
                     <div class="about-image-block">
                         {% if about_section4 %}
-                        {% with svg=about_section4.get_svg:country_code:theme %}
+                        {% get_localized_svg about_section4 country_code theme as svg %}
                         {% if svg %}
                         {{ svg|safe }}
                         {% else %}
                         <img src="{% static 'images/about3.svg' %}" alt="Цінності та культура" loading="lazy">
                         {% endif %}
-                        {% endwith %}
                         {% else %}
                         <img src="{% static 'images/about3.svg' %}" alt="Цінності та культура" loading="lazy">
                         {% endif %}

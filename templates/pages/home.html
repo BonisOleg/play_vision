@@ -251,13 +251,12 @@
                     <!-- ЗОБРАЖЕННЯ ЗАМІСТЬ HEXAGONS -->
                     <div class="mentoring-image-block">
                         {% if mentor_svg %}
-                        {% with svg=mentor_svg.get_svg:country_code:theme %}
+                        {% get_localized_svg mentor_svg country_code theme as svg %}
                         {% if svg %}
                         {{ svg|safe }}
                         {% else %}
                         <img src="{% static 'images/banner.svg' %}" alt="Екосистема комплексного розвитку футболіста" loading="lazy">
                         {% endif %}
-                        {% endwith %}
                         {% else %}
                         <img src="{% static 'images/banner.svg' %}" alt="Екосистема комплексного розвитку футболіста" loading="lazy">
                         {% endif %}
