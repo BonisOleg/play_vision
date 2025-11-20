@@ -61,6 +61,13 @@ class Event(models.Model):
     location = models.CharField(max_length=200, blank=True, help_text='Фізична адреса або "Онлайн"')
     online_link = models.URLField(blank=True, help_text='Посилання для онлайн івенту')
     
+    # Format
+    is_online_event = models.BooleanField(
+        default=False,
+        verbose_name='Онлайн подія',
+        help_text='Поставте галочку якщо подія проводиться онлайн'
+    )
+    
     # Capacity and pricing
     max_attendees = models.PositiveIntegerField(default=100)
     tickets_sold = models.PositiveIntegerField(default=0)
@@ -137,7 +144,7 @@ class Event(models.Model):
     @property
     def is_online(self):
         """Check if event is online"""
-        return self.location.lower() == 'онлайн' or bool(self.online_link)
+        return self.is_online_event
     
     @property
     def is_upcoming(self):
