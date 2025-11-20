@@ -1245,153 +1245,334 @@
 }
 
 .event-pricing-section h2 {
-    font-size: 1.75rem;
+    font-size: 32px;
     font-weight: 700;
-    color: var(--color-text);
     margin-bottom: 32px;
-    text-align: center;
+    color: var(--color-text);
 }
 
+/* === GRID CONTAINER (ВИРІВНЮВАННЯ ВИСОТИ) === */
 .pricing-tiers {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: stretch;
+    gap: 0;
 }
 
-.pricing-card {
-    background: #ffffff;
-    border: 2px solid var(--color-border, #e0e0e0);
-    border-radius: 12px;
-    padding: 32px 24px;
+/* === PLAN CARD (базові) === */
+.event-ticket-card {
     position: relative;
-    transition: all 0.3s ease;
+    background: var(--pricing-card-bg, #FFFFFF);
+    border: 2px solid var(--pricing-border, #E5E7EB);
+    border-radius: 16px;
+    padding: 32px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.pricing-card:hover {
-    transform: translateY(-4px);
+.event-ticket-card:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
 }
 
-.pricing-card.popular {
-    border-color: var(--color-primary);
-    box-shadow: 0 4px 16px rgba(227, 30, 36, 0.2);
+/* === POPULAR CARD (чорна/біла з інвертованим текстом) === */
+.event-ticket-card.plan-card--popular {
+    background: #000000;
+    border-color: #000000;
+    color: #FFFFFF;
+    transform: scale(1.08);
+    z-index: 10;
 }
 
-.pricing-badge {
+.event-ticket-card.plan-card--popular:hover {
+    transform: scale(1.08) translateY(-4px);
+}
+
+/* ТЕМНА ТЕМА: popular card стає білою */
+[data-theme="dark"] .event-ticket-card.plan-card--popular {
+    background: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular {
+        background: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #000000;
+    }
+}
+
+/* ТЕМНА ТЕМА: звичайні картки */
+[data-theme="dark"] .event-ticket-card {
+    background: #1A1A1A;
+    border-color: #2A2A2A;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card {
+        background: #1A1A1A;
+        border-color: #2A2A2A;
+    }
+}
+
+/* === BADGE === */
+.event-ticket-card .plan-badge {
     position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--color-primary);
-    color: #ffffff;
+    top: 75px;
+    left: 20px;
     padding: 6px 16px;
     border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #E31E24;
+    color: #FFFFFF;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.pricing-tier-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-    text-align: center;
-    margin-bottom: 16px;
+/* === PLAN CONTENT === */
+.event-ticket-card .plan-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.pricing-price {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-    text-align: center;
-    margin-bottom: 24px;
+.event-ticket-card .plan-name {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 34px;
+    text-align: left;
 }
 
-.pricing-price .currency {
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: var(--color-text-light);
+/* Popular card - білий текст */
+.event-ticket-card.plan-card--popular .plan-name {
+    color: #FFFFFF;
 }
 
-.pricing-features {
+/* ТЕМНА ТЕМА: popular card - чорний текст */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .plan-name {
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .plan-name {
+        color: #000000;
+    }
+}
+
+/* === FEATURES LIST === */
+.event-ticket-card .plan-features {
     list-style: none;
     padding: 0;
-    margin: 0 0 24px 0;
-    counter-reset: feature-counter;
+    margin: 0 0 32px 0;
+    flex-grow: 1;
 }
 
-.pricing-features li {
-    position: relative;
-    padding-left: 32px;
-    margin-bottom: 12px;
-    color: var(--color-text);
-    font-size: 0.875rem;
+.event-ticket-card .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--pricing-border, #E5E7EB);
+}
+
+.event-ticket-card .feature-item:last-child {
+    border-bottom: none;
+}
+
+.event-ticket-card .feature-number {
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 24px;
+}
+
+.event-ticket-card .feature-text {
+    font-size: 16px;
     line-height: 1.6;
-    counter-increment: feature-counter;
 }
 
-.pricing-features li:before {
-    content: counter(feature-counter, decimal-leading-zero);
-    position: absolute;
-    left: 0;
-    top: 0;
+/* Popular card features - білий текст і borders */
+.event-ticket-card.plan-card--popular .feature-item {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.event-ticket-card.plan-card--popular .feature-number,
+.event-ticket-card.plan-card--popular .feature-text {
+    color: #FFFFFF;
+}
+
+/* ТЕМНА ТЕМА: popular card features - чорний текст і borders */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .feature-item {
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--popular .feature-number,
+[data-theme="dark"] .event-ticket-card.plan-card--popular .feature-text {
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .feature-item {
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .feature-number,
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .feature-text {
+        color: #000000;
+    }
+}
+
+/* === PRICE SECTION === */
+.event-ticket-card .plan-price-section {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.event-ticket-card .price-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.event-ticket-card .price-value {
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.event-ticket-card .price-currency {
+    font-size: 24px;
     font-weight: 600;
-    color: var(--color-text-light);
+    color: var(--pricing-text-secondary, #6B7280);
 }
 
-.pricing-form {
-    margin: 0;
+/* Popular card price - білий текст */
+.event-ticket-card.plan-card--popular .price-value {
+    color: #FFFFFF;
 }
 
-.btn-purchase {
+.event-ticket-card.plan-card--popular .price-currency {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ТЕМНА ТЕМА: popular card price - чорний текст */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .price-value {
+    color: #000000;
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--popular .price-currency {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .price-value {
+        color: #000000;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .price-currency {
+        color: rgba(0, 0, 0, 0.7);
+    }
+}
+
+/* === ACTION BUTTON === */
+.event-ticket-card .plan-action {
+    margin-top: auto;
+}
+
+.event-ticket-card .btn-purchase {
     display: block;
     width: 100%;
-    padding: 14px 24px;
-    background: var(--color-primary);
-    color: #ffffff;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 16px 24px;
+    background: #000000;
+    color: #FFFFFF;
+    font-size: 15px;
     font-weight: 600;
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.btn-purchase:hover {
-    background: var(--color-primary-dark, #c91f24);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(227, 30, 36, 0.3);
+.event-ticket-card .btn-purchase:hover {
+    background: #1F2937;
 }
 
-.pricing-card.popular .btn-purchase {
-    background: var(--color-primary);
-    box-shadow: 0 2px 8px rgba(227, 30, 36, 0.2);
+/* Popular card button - інвертовані кольори */
+.event-ticket-card.plan-card--popular .btn-purchase {
+    background: #FFFFFF;
+    color: #000000;
 }
 
-.pricing-status {
-    padding: 14px 24px;
-    border-radius: 8px;
+.event-ticket-card.plan-card--popular .btn-purchase:hover {
+    background: #E5E7EB;
+}
+
+/* ТЕМНА ТЕМА: звичайні кнопки білі */
+[data-theme="dark"] .event-ticket-card .btn-purchase {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+[data-theme="dark"] .event-ticket-card .btn-purchase:hover {
+    background: #E5E7EB;
+}
+
+/* ТЕМНА ТЕМА: popular card кнопка чорна */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .btn-purchase {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--popular .btn-purchase:hover {
+    background: #1F2937;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card .btn-purchase {
+        background: #FFFFFF;
+        color: #000000;
+    }
+    
+    [data-theme="auto"] .event-ticket-card .btn-purchase:hover {
+        background: #E5E7EB;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .btn-purchase {
+        background: #000000;
+        color: #FFFFFF;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .btn-purchase:hover {
+        background: #1F2937;
+    }
+}
+
+/* === STATUS MESSAGES === */
+.event-ticket-card .pricing-status {
+    padding: 16px;
+    border-radius: 12px;
     text-align: center;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 600;
 }
 
-.pricing-status.registered {
-    background: rgba(76, 175, 80, 0.1);
-    color: #4caf50;
+.event-ticket-card .pricing-status.registered {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
 }
 
-.pricing-status.unavailable {
-    background: rgba(255, 152, 0, 0.1);
-    color: #ff9800;
-}
-
-[data-theme="dark"] .pricing-card {
-    background: #1a1a1a;
-    border-color: #333333;
+.event-ticket-card .pricing-status.unavailable {
+    background: rgba(245, 158, 11, 0.1);
+    color: #F59E0B;
 }
 
 [data-theme="dark"] .event-benefits-section {
@@ -1399,19 +1580,19 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .pricing-card {
-        background: #1a1a1a;
-        border-color: #333333;
-    }
-
     [data-theme="auto"] .event-benefits-section {
         background: #1a1a1a;
     }
 }
 
+/* === RESPONSIVE === */
 @media (max-width: 1024px) {
     .pricing-tiers {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .event-ticket-card.plan-card--popular {
+        transform: scale(1.05);
     }
 }
 
@@ -1424,6 +1605,23 @@
 
     .pricing-tiers {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .event-ticket-card {
+        padding: 24px 20px;
+    }
+    
+    .event-ticket-card.plan-card--popular {
+        transform: scale(1);
+    }
+    
+    .event-ticket-card .plan-name {
+        font-size: 28px;
+    }
+    
+    .event-ticket-card .price-value {
+        font-size: 38px;
     }
 
     .event-hero {
@@ -1432,10 +1630,6 @@
 
     .event-hero-placeholder {
         min-height: 250px;
-    }
-
-    .pricing-price {
-        font-size: 2rem;
     }
 }
 

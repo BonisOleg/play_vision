@@ -133,43 +133,56 @@
                         <h2>Придбати квитки</h2>
                         <div class="pricing-tiers">
                             {% for tier in structured_tiers %}
-                            <div class="pricing-card {% if tier.is_popular %}popular{% endif %}">
+                            <div class="plan-card event-ticket-card {% if tier.is_popular %}plan-card--popular{% endif %}">
                                 {% if tier.is_popular %}
-                                <span class="pricing-badge">Найвигідніше</span>
+                                <div class="plan-badge">НАЙВИГІДНІШЕ</div>
                                 {% endif %}
                                 
-                                <h3 class="pricing-tier-name">{{ tier.name }}</h3>
-                                <div class="pricing-price">{{ tier.price }} <span class="currency">грн</span></div>
-                                
-                                {% if tier.features %}
-                                <ol class="pricing-features">
-                                    {% for feature in tier.features %}
-                                    <li>{{ feature }}</li>
-                                    {% endfor %}
-                                </ol>
-                                {% endif %}
-                                
-                                {% if user.is_authenticated %}
-                                    {% if user_ticket %}
-                                    <div class="pricing-status registered">
-                                        Ви зареєстровані
-                                    </div>
-                                    {% elif can_register %}
-                                    <form method="post" action="{% url 'events:register' event.slug %}" class="pricing-form">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="tier_name" value="{{ tier.name }}">
-                                        <button type="submit" class="btn-purchase">Придбати {{ tier.name }}</button>
-                                    </form>
-                                    {% else %}
-                                    <div class="pricing-status unavailable">
-                                        {{ register_message }}
-                                    </div>
+                                <div class="plan-content">
+                                    <h3 class="plan-name">{{ tier.name }}</h3>
+                                    
+                                    {% if tier.features %}
+                                    <ul class="plan-features">
+                                        {% for feature in tier.features %}
+                                        <li class="feature-item">
+                                            <span class="feature-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                                            <span class="feature-text">{{ feature }}</span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
                                     {% endif %}
-                                {% else %}
-                                <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-purchase">
-                                    Увійти для покупки
-                                </a>
-                                {% endif %}
+                                    
+                                    <div class="plan-price-section">
+                                        <div class="price-amount">
+                                            <span class="price-value">{{ tier.price|floatformat:1 }}</span>
+                                            <span class="price-currency">грн</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="plan-action">
+                                        {% if user.is_authenticated %}
+                                            {% if user_ticket %}
+                                            <div class="pricing-status registered">
+                                                Ви зареєстровані
+                                            </div>
+                                            {% elif can_register %}
+                                            <form method="post" action="{% url 'events:register' event.slug %}" class="pricing-form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="tier_name" value="{{ tier.name }}">
+                                                <button type="submit" class="btn-purchase">Придбати {{ tier.name }}</button>
+                                            </form>
+                                            {% else %}
+                                            <div class="pricing-status unavailable">
+                                                {{ register_message }}
+                                            </div>
+                                            {% endif %}
+                                        {% else %}
+                                        <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-purchase">
+                                            Увійти для покупки
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                             {% endfor %}
                         </div>
