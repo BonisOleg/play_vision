@@ -5,9 +5,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
 # Import dashboard stats
-from .models_dashboard import DashboardStats, CourseViewStats
+from .models_dashboard import DashboardStats
 
-__all__ = ['DashboardStats', 'CourseViewStats', 'UserSession', 'PageView', 'Event', 
+__all__ = ['DashboardStats', 'UserSession', 'PageView', 'Event', 
            'ConversionFunnel', 'FunnelStep', 'ContentAnalytics', 'RevenueAnalytics', 
            'UserBehaviorMetrics']
 

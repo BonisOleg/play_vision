@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.db.models import Sum, Avg, Count
 from django.utils import timezone
 from datetime import timedelta
-from .models_dashboard import DashboardStats, CourseViewStats
+from .models_dashboard import DashboardStats
 
 
 @admin.register(DashboardStats)
@@ -77,20 +77,3 @@ class DashboardStatsAdmin(admin.ModelAdmin):
             }
         
         return super().changelist_view(request, extra_context)
-
-
-@admin.register(CourseViewStats)
-class CourseViewStatsAdmin(admin.ModelAdmin):
-    """Admin для статистики переглядів курсів"""
-    
-    list_display = ['course', 'views_total', 'views_week', 'views_month', 'date']
-    list_filter = ['date']
-    readonly_fields = ['course', 'views_today', 'views_week', 'views_month', 'views_total', 'date', 'updated_at']
-    search_fields = ['course__title']
-    ordering = ['-views_total']
-    
-    def has_add_permission(self, request):
-        return False
-    
-    def has_delete_permission(self, request, obj=None):
-        return False

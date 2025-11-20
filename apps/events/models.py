@@ -55,16 +55,16 @@ class Event(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     
     # Dates and location
-    start_datetime = models.DateTimeField()
-    end_datetime = models.DateTimeField()
+    start_datetime = models.DateTimeField(blank=True, null=True)
+    end_datetime = models.DateTimeField(blank=True, null=True)
     timezone_name = models.CharField(max_length=50, default='Europe/Kyiv')
-    location = models.CharField(max_length=200, help_text='Фізична адреса або "Онлайн"')
+    location = models.CharField(max_length=200, blank=True, help_text='Фізична адреса або "Онлайн"')
     online_link = models.URLField(blank=True, help_text='Посилання для онлайн івенту')
     
     # Capacity and pricing
     max_attendees = models.PositiveIntegerField(default=100)
     tickets_sold = models.PositiveIntegerField(default=0)
-    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0, validators=[MinValueValidator(0)])
     is_free = models.BooleanField(default=False)
     requires_subscription = models.BooleanField(default=False, 
                                               help_text='Чи можна використати квитки з підписки')
@@ -97,7 +97,7 @@ class Event(models.Model):
     
     # Organization
     organizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
-                                related_name='organized_events')
+                                related_name='organized_events', blank=True, null=True)
     speakers = models.ManyToManyField('Speaker', blank=True, related_name='events')
     
     # Features

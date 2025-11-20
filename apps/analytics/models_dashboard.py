@@ -40,27 +40,3 @@ class DashboardStats(models.Model):
     
     def __str__(self):
         return f"Статистика {self.date}"
-
-
-class CourseViewStats(models.Model):
-    """
-    Статистика переглядів курсів
-    """
-    course = models.ForeignKey('content.Course', on_delete=models.CASCADE, related_name='view_stats')
-    views_today = models.PositiveIntegerField(default=0)
-    views_week = models.PositiveIntegerField(default=0)
-    views_month = models.PositiveIntegerField(default=0)
-    views_total = models.PositiveIntegerField(default=0)
-    
-    date = models.DateField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        db_table = 'course_view_stats'
-        verbose_name = 'Статистика курсу'
-        verbose_name_plural = 'Статистика курсів'
-        ordering = ['-views_total']
-        unique_together = [('course', 'date')]
-    
-    def __str__(self):
-        return f"{self.course.title} - {self.views_total} переглядів"
