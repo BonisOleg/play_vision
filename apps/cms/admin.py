@@ -66,11 +66,10 @@ class HeroSlideAdmin(admin.ModelAdmin):
             return format_html(
                 '<div class="admin-preview-large">'
                 '<img src="{}" class="admin-preview-image" />'
-                '<p class="admin-preview-caption">Розмір: {} | {}</p>'
+                '<p class="admin-preview-caption">URL: {}</p>'
                 '</div>',
                 obj.image.url,
-                f"{obj.image.width}×{obj.image.height}" if hasattr(obj.image, 'width') else 'N/A',
-                f"{obj.image.size / 1024:.1f} KB" if hasattr(obj.image, 'size') else ''
+                obj.image.url
             )
         return "Зображення не завантажено"
     get_image_preview.short_description = 'Превью зображення'
@@ -119,7 +118,9 @@ class ExpertCardAdmin(admin.ModelAdmin):
             return format_html(
                 '<div class="admin-preview-large">'
                 '<img src="{}" class="admin-preview-expert" />'
+                '<p class="admin-preview-caption">URL: {}</p>'
                 '</div>',
+                obj.photo.url,
                 obj.photo.url
             )
         return "Фото не завантажено"
