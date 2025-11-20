@@ -14,13 +14,17 @@
 {% endblock %}
 
 {% block content %}
+{% get_mentor_hero as mentor_hero %}
 <div class="fullscreen-container">
 
     <!-- 1. HERO SECTION -->
     <section class="fullscreen-section hero-section hero-bordered mentoring-hero">
         <div class="section-bg">
-            <img class="section-bg-image" src="{% static 'images/hiromentor.png' %}" alt="Ментор коучинг"
-                loading="eager">
+            {% if mentor_hero and mentor_hero.image %}
+            <img class="section-bg-image" src="{{ mentor_hero.image.url }}" alt="Ментор коучинг" loading="eager">
+            {% else %}
+            <img class="section-bg-image" src="{% static 'images/hiromentor.png' %}" alt="Ментор коучинг" loading="eager">
+            {% endif %}
         </div>
         <div class="section-overlay section-overlay--gradient"></div>
     </section>
@@ -30,15 +34,27 @@
         <div class="unified-sections-container">
 
             <!-- 2. ЩО ТАКЕ МЕНТОР КОУЧИНГ -->
+            {% get_mentor_section1_images as mentor_images %}
             <section class="fullscreen-section mentoring-what-section">
                 <div class="section-content">
                     <h2 class="section-title">Що таке Ментор коучинг</h2>
 
                     <div class="mentoring-cards-grid">
+                        {% if mentor_images %}
+                        {% for image_obj in mentor_images %}
                         <article class="mentoring-card">
                             <div class="mentoring-card-image">
-                                <img src="{% static 'images/mentor1.png' %}" alt="Ментор коучинг екосистема"
-                                    loading="lazy">
+                                <img src="{{ image_obj.get_image:country_code.url }}" alt="{{ image_obj.get_caption:country_code }}" loading="lazy">
+                            </div>
+                            <div class="mentoring-card-content">
+                                <p>{{ image_obj.get_caption:country_code }}</p>
+                            </div>
+                        </article>
+                        {% endfor %}
+                        {% else %}
+                        <article class="mentoring-card">
+                            <div class="mentoring-card-image">
+                                <img src="{% static 'images/mentor1.png' %}" alt="Ментор коучинг екосистема" loading="lazy">
                             </div>
                             <div class="mentoring-card-content">
                                 <p>Ментор коучинг - це екосистема індивідуального розвитку гравця з комплексним
@@ -66,28 +82,49 @@
                                     експертну підтримку гравцю.</p>
                             </div>
                         </article>
+                        {% endif %}
                     </div>
                 </div>
             </section>
 
             <!-- 3. СТРУКТУРА МЕНТОР КОУЧИНГА -->
+            {% get_mentor_section2 as mentor_section2 %}
             <section class="fullscreen-section mentoring-structure-section">
                 <div class="section-content">
-                    <h2 class="section-title">Структура Ментор коучинга</h2>
+                    <h2 class="section-title">{% if mentor_section2 %}{{ mentor_section2.get_title:country_code }}{% else %}Структура Ментор коучинга{% endif %}</h2>
 
                     <div class="mentoring-image-block">
-                        <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}"
-                            alt="Структура Ментор коучинга" loading="lazy">
+                        {% if mentor_section2 %}
+                        {% with svg=mentor_section2.get_svg:country_code:theme %}
+                        {% if svg %}
+                        {{ svg|safe }}
+                        {% else %}
+                        <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}" alt="Структура Ментор коучинга" loading="lazy">
+                        {% endif %}
+                        {% endwith %}
+                        {% else %}
+                        <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}" alt="Структура Ментор коучинга" loading="lazy">
+                        {% endif %}
                     </div>
                 </div>
             </section>
 
             <!-- 4. МЕТОДОЛОГІЯ (БЕЗ ЗАГОЛОВКА) -->
+            {% get_mentor_section3 as mentor_section3 %}
             <section class="fullscreen-section mentoring-methodology-section">
                 <div class="section-content">
                     <div class="mentoring-image-block">
-                        <img class="mentoring-svg-invert" src="{% static 'images/mentor2.svg' %}" alt="Методологія"
-                            loading="lazy">
+                        {% if mentor_section3 %}
+                        {% with svg=mentor_section3.get_svg:country_code:theme %}
+                        {% if svg %}
+                        {{ svg|safe }}
+                        {% else %}
+                        <img class="mentoring-svg-invert" src="{% static 'images/mentor2.svg' %}" alt="Методологія" loading="lazy">
+                        {% endif %}
+                        {% endwith %}
+                        {% else %}
+                        <img class="mentoring-svg-invert" src="{% static 'images/mentor2.svg' %}" alt="Методологія" loading="lazy">
+                        {% endif %}
                     </div>
                 </div>
             </section>

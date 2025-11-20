@@ -15,6 +15,8 @@
         <div class="unified-sections-container">
 
             <!-- СЕКЦІЯ 1: Івенти Play Vision -->
+            {% load cms_tags %}
+            {% get_event_grid as event_grid_cells %}
             <section class="fullscreen-section events-intro-section">
                 <div class="section-content">
                     <div class="events-intro-layout">
@@ -46,6 +48,22 @@
                         <!-- Права частина 55% -->
                         <div class="events-intro-right">
                             <div class="events-video-grid">
+                                {% if event_grid_cells %}
+                                {% for cell in event_grid_cells %}
+                                <div class="video-placeholder {% if cell.position in '1,6,7' %}video-large{% else %}video-medium{% endif %}">
+                                    {% if cell.image %}
+                                    <img src="{{ cell.image.url }}" alt="{{ cell.alt_text|default:'Event' }}" loading="lazy">
+                                    {% else %}
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <!-- Fallback якщо немає CMS даних -->
                                 <div class="video-placeholder video-large">
                                     <button class="play-button" aria-label="Відтворити відео">
                                         <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
@@ -109,6 +127,7 @@
                                         </svg>
                                     </button>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
