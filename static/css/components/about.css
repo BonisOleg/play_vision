@@ -23,9 +23,6 @@
     object-fit: cover;
 }
 
-.about-hero .section-overlay--gradient {
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.7) 0%, rgba(42, 42, 42, 0.7) 100%);
-}
 
 /* === 2. IMAGE BLOCKS === */
 .about-image-block {

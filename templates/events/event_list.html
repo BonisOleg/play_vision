@@ -51,7 +51,7 @@
                             <div class="events-video-grid">
                                 {% if event_grid_cells %}
                                 {% for cell in event_grid_cells %}
-                                <div class="video-placeholder {% if cell.position in '1,6,7' %}video-large{% else %}video-medium{% endif %}">
+                                <div class="video-placeholder {% if cell.position == 1 or cell.position == 6 or cell.position == 7 %}video-large{% else %}video-medium{% endif %}">
                                     {% if cell.image %}
                                     <img src="{{ cell.image.url }}" alt="{{ cell.alt_text|default:'Event' }}" loading="lazy">
                                     {% else %}
