@@ -15,7 +15,7 @@ class EventAdmin(admin.ModelAdmin):
     form = EventForm
     list_display = [
         'title', 'event_type', 'event_category', 'start_datetime', 'status', 
-        'tickets_sold', 'max_attendees', 'is_featured'
+        'format_display', 'tickets_sold', 'max_attendees', 'is_featured'
     ]
     list_filter = [
         'event_type', 'event_category', 'status', 'is_featured', 'requires_subscription',
@@ -35,8 +35,9 @@ class EventAdmin(admin.ModelAdmin):
         ('Дата та локація', {
             'fields': (
                 'start_datetime', 'end_datetime', 'timezone_name',
-                'location', 'online_link'
-            )
+                'event_format', 'location', 'online_link'
+            ),
+            'description': 'Оберіть формат події. Для онлайн - заповніть посилання, для офлайн - вкажіть адресу.'
         }),
         ('Деталі події', {
             'fields': ('benefits', 'target_audience')
@@ -76,6 +77,22 @@ class EventAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ['tickets_sold']
+    
+    def format_display(self, obj):
+        """Показує формат події в списку"""
+        if obj and obj.pk:
+            if obj.is_online:
+                return format_html('<span style="color: green; font-weight: bold;">🌐 Онлайн</span>')
+            else:
+                return format_html('<span style="color: blue; font-weight: bold;">📍 Офлайн</span>')
+        return '-'
+    format_display.short_description = 'Формат'
+    
+    class Media:
+        js = ('admin/js/event_format_toggle.js',)
+        css = {
+            'all': ('admin/css/event_admin.css',)
+        }
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('organizer')

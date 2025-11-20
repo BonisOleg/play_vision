@@ -1,0 +1,79 @@
+/**
+ * Стилі для Event Admin - форма вибору формату події
+ */
+
+/* Стилізація radio buttons для вибору формату */
+.field-event_format .event-format-toggle {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0;
+    margin: 5px 0;
+}
+
+.field-event_format .event-format-toggle input[type="radio"] {
+    /* Ховаємо стандартний radio button */
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.field-event_format .event-format-toggle label {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    user-select: none;
+}
+
+.field-event_format .event-format-toggle label:hover {
+    border-color: #79aec8;
+    background-color: #f8f9fa;
+}
+
+.field-event_format .event-format-toggle input[type="radio"]:checked + label {
+    border-color: #417690;
+    background-color: #e8f4f8;
+    color: #417690;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(65, 118, 144, 0.15);
+}
+
+/* Анімація появи/зникнення полів */
+.field-location,
+.field-online_link {
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+/* Додаткові стилі для обов'язкових полів */
+.field.required label:after {
+    content: " *";
+    color: #ba2121;
+    font-weight: bold;
+}
+
+/* Покращення відображення help text */
+.field-event_format .help {
+    color: #666;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Responsive для мобільних */
+@media (max-width: 768px) {
+    .field-event_format .event-format-toggle {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .field-event_format .event-format-toggle label {
+        width: 100%;
+        text-align: center;
+    }
+}
+
