@@ -7,7 +7,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class MentorHero(models.Model):
     """Hero блок - зображення"""
-    image = models.ImageField('Зображення', upload_to='cms/mentor/hero/')
+    image = models.ImageField('Зображення', upload_to='cms/mentor/hero/', max_length=500)
     
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,11 +34,11 @@ class MentorSection1Image(models.Model):
     )
     
     # Картинка UA
-    image_ua = models.ImageField('Картинка (Україна)', upload_to='cms/mentor/section1/')
+    image_ua = models.ImageField('Картинка (Україна)', upload_to='cms/mentor/section1/', max_length=500)
     caption_ua = models.CharField('Підпис (Україна)', max_length=200)
     
     # Картинка World
-    image_world = models.ImageField('Картинка (Світ)', upload_to='cms/mentor/section1/', blank=True)
+    image_world = models.ImageField('Картинка (Світ)', upload_to='cms/mentor/section1/', blank=True, max_length=500)
     caption_world = models.CharField('Підпис (Світ)', max_length=200, blank=True)
     
     is_active = models.BooleanField('Активно', default=True)

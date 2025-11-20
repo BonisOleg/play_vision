@@ -37,7 +37,7 @@ class AIKnowledgeDocument(models.Model):
     ]
     
     title = models.CharField(max_length=200, verbose_name='Назва')
-    file = models.FileField(upload_to='ai/knowledge/', verbose_name='Файл')
+    file = models.FileField(upload_to='ai/knowledge/', verbose_name='Файл', max_length=500)
     file_type = models.CharField(max_length=10, choices=FILE_TYPE_CHOICES, verbose_name='Тип файлу')
     is_indexed = models.BooleanField(default=False, verbose_name='Проіндексовано')
     

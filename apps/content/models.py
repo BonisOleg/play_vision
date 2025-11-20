@@ -42,15 +42,16 @@ class Course(models.Model):
     subscription_tiers = models.JSONField(default=list, help_text='List of allowed subscription tiers')
     
     # Media
-    thumbnail = models.ImageField(upload_to='course_thumbnails/')
+    thumbnail = models.ImageField(upload_to='course_thumbnails/', max_length=500)
     logo = models.ImageField(
         upload_to='course_logos/',
         blank=True,
         null=True,
+        max_length=500,
         verbose_name='Лого курсу',
         help_text='Квадратне лого курсу для відображення на картці (рекомендовано 200x200px)'
     )
-    preview_video = models.FileField(upload_to='course_previews/', blank=True)
+    preview_video = models.FileField(upload_to='course_previews/', blank=True, max_length=500)
     
     # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
@@ -113,9 +114,9 @@ class Material(models.Model):
     order = models.PositiveIntegerField(default=0)
     
     # Content
-    video_file = models.FileField(upload_to='materials/videos/', blank=True)
+    video_file = models.FileField(upload_to='materials/videos/', blank=True, max_length=500)
     video_duration_seconds = models.PositiveIntegerField(default=0)
-    pdf_file = models.FileField(upload_to='materials/pdfs/', blank=True)
+    pdf_file = models.FileField(upload_to='materials/pdfs/', blank=True, max_length=500)
     article_content = models.TextField(blank=True)
     
     # Access
@@ -288,6 +289,7 @@ class MonthlyQuote(models.Model):
     expert_photo = models.ImageField(
         upload_to='experts/monthly_quotes/', 
         blank=True,
+        max_length=500,
         verbose_name='Фото експерта'
     )
     quote_text = models.TextField(verbose_name='Текст цитати')

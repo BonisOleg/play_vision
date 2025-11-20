@@ -36,8 +36,8 @@ class MentoringDirection(models.Model):
     is_featured = models.BooleanField(default=False)
     
     # Медіа
-    image = models.ImageField(upload_to='mentoring/directions/', blank=True)
-    background_image = models.ImageField(upload_to='mentoring/backgrounds/', blank=True)
+    image = models.ImageField(upload_to='mentoring/directions/', blank=True, max_length=500)
+    background_image = models.ImageField(upload_to='mentoring/backgrounds/', blank=True, max_length=500)
     
     # Метадані
     created_at = models.DateTimeField(auto_now_add=True)
@@ -117,7 +117,7 @@ class MentoringProgram(models.Model):
     available_until = models.DateTimeField(null=True, blank=True)
     
     # Медіа
-    thumbnail = models.ImageField(upload_to='mentoring/programs/', blank=True)
+    thumbnail = models.ImageField(upload_to='mentoring/programs/', blank=True, max_length=500)
     
     # Метадані
     created_at = models.DateTimeField(auto_now_add=True)
@@ -187,7 +187,7 @@ class MentoringMentor(models.Model):
     telegram = models.CharField(max_length=100, blank=True)
     
     # Медіа
-    photo = models.ImageField(upload_to='mentoring/mentors/', blank=True)
+    photo = models.ImageField(upload_to='mentoring/mentors/', blank=True, max_length=500)
     
     # Метадані
     created_at = models.DateTimeField(auto_now_add=True)

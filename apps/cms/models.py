@@ -40,9 +40,9 @@ class HeroSlide(models.Model):
     
     # Media (shared between versions)
     image = models.ImageField('Image', upload_to='cms/hero/', blank=True,
-                             help_text='Recommended: 1920×1080 px')
+                             max_length=500, help_text='Recommended: 1920×1080 px')
     video = models.FileField('Video', upload_to='cms/hero/videos/', blank=True,
-                            help_text='MP4 format')
+                            max_length=500, help_text='MP4 format')
     
     # CTA URL (shared)
     cta_url = models.CharField('CTA URL', max_length=200, blank=True)
@@ -99,7 +99,7 @@ class ExpertCard(models.Model):
     bio = models.TextField('Біографія', blank=True)
     
     photo = models.ImageField('Фото', upload_to='cms/experts/', blank=True,
-                             help_text='Рекомендований розмір: 400×400 px')
+                             max_length=500, help_text='Рекомендований розмір: 400×400 px')
     
     # Display
     order = models.PositiveIntegerField('Порядок', default=0)
@@ -185,6 +185,7 @@ class EventGridCell(models.Model):
     image = models.ImageField(
         'Зображення/GIF',
         upload_to='cms/event_grid/',
+        max_length=500,
         help_text='Зображення або GIF для комірки'
     )
     alt_text = models.CharField(

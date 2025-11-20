@@ -7,7 +7,7 @@ from django.db import models
 class HubHero(models.Model):
     """Hero секція для Хаб знань - фон + 3 заголовки"""
     # Фонове зображення
-    background_image = models.ImageField('Фонове зображення', upload_to='cms/hub/hero/')
+    background_image = models.ImageField('Фонове зображення', upload_to='cms/hub/hero/', max_length=500)
     
     # Заголовок 1 (UA/World)
     title_1_ua = models.CharField('Заголовок 1 (Україна)', max_length=200)

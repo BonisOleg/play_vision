@@ -92,8 +92,8 @@ class Event(models.Model):
     )
     
     # Media
-    thumbnail = models.ImageField(upload_to='event_thumbnails/', blank=True)
-    banner_image = models.ImageField(upload_to='event_banners/', blank=True)
+    thumbnail = models.ImageField(upload_to='event_thumbnails/', blank=True, max_length=500)
+    banner_image = models.ImageField(upload_to='event_banners/', blank=True, max_length=500)
     
     # Organization
     organizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
@@ -205,7 +205,7 @@ class Speaker(models.Model):
     company = models.CharField(max_length=100, blank=True)
     
     # Media
-    photo = models.ImageField(upload_to='speaker_photos/', blank=True)
+    photo = models.ImageField(upload_to='speaker_photos/', blank=True, max_length=500)
     
     # Social links
     linkedin_url = models.URLField(blank=True)
@@ -271,7 +271,7 @@ class EventTicket(models.Model):
                                      help_text='Чи використаний баланс квитків з підписки')
     
     # QR Code
-    qr_code = models.ImageField(upload_to='ticket_qr/', blank=True)
+    qr_code = models.ImageField(upload_to='ticket_qr/', blank=True, max_length=500)
     qr_data = models.TextField(blank=True, help_text='Дані для QR коду')
     
     # Usage tracking

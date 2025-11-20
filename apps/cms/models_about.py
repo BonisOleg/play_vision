@@ -9,13 +9,13 @@ class AboutHero(models.Model):
     # Ukraine version
     title_ua = models.CharField('Заголовок (Україна)', max_length=200)
     subtitle_ua = models.CharField('Підзаголовок (Україна)', max_length=300, blank=True)
-    image_ua = models.ImageField('Зображення (Україна)', upload_to='cms/about/hero/', blank=True)
+    image_ua = models.ImageField('Зображення (Україна)', upload_to='cms/about/hero/', blank=True, max_length=500)
     
     # World version
     title_world = models.CharField('Заголовок (Світ)', max_length=200, blank=True,
                                    help_text='Залиште порожнім щоб показувати українську версію')
     subtitle_world = models.CharField('Підзаголовок (Світ)', max_length=300, blank=True)
-    image_world = models.ImageField('Зображення (Світ)', upload_to='cms/about/hero/', blank=True)
+    image_world = models.ImageField('Зображення (Світ)', upload_to='cms/about/hero/', blank=True, max_length=500)
     
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -51,10 +51,10 @@ class AboutHero(models.Model):
 class AboutSection2(models.Model):
     """Секція 2 - PNG 2 версії + чорна/біла теми"""
     # 4 картинки
-    image_ua_light = models.ImageField('Картинка UA (світла тема)', upload_to='cms/about/section2/')
-    image_ua_dark = models.ImageField('Картинка UA (темна тема)', upload_to='cms/about/section2/', blank=True)
-    image_world_light = models.ImageField('Картинка World (світла)', upload_to='cms/about/section2/', blank=True)
-    image_world_dark = models.ImageField('Картинка World (темна)', upload_to='cms/about/section2/', blank=True)
+    image_ua_light = models.ImageField('Картинка UA (світла тема)', upload_to='cms/about/section2/', max_length=500)
+    image_ua_dark = models.ImageField('Картинка UA (темна тема)', upload_to='cms/about/section2/', blank=True, max_length=500)
+    image_world_light = models.ImageField('Картинка World (світла)', upload_to='cms/about/section2/', blank=True, max_length=500)
+    image_world_dark = models.ImageField('Картинка World (темна)', upload_to='cms/about/section2/', blank=True, max_length=500)
     
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)

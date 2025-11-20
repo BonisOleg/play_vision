@@ -98,7 +98,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, max_length=500)
     profession = models.CharField(max_length=100, blank=True)
     completed_survey = models.BooleanField(default=False)
     survey_completed_at = models.DateTimeField(null=True, blank=True)
