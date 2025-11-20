@@ -175,8 +175,8 @@ STORAGES = {
     },
 }
 
-# Media URL points to Cloudinary CDN
-MEDIA_URL = f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME', default='demo')}/image/upload/"
+# Media URL - NOT needed when using MediaCloudinaryStorage (it generates full URLs automatically)
+MEDIA_URL = '/media/'  # Placeholder, MediaCloudinaryStorage ignores this
 
 # VAPID ключі для push notifications
 VAPID_PRIVATE_KEY = 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgjr19PQPYfjKqpEr6X7783aTxE-CIHkCfFHN1ePvTr66hRANCAAQDScS1jLjPfzr_ieuChn__WVxHE2oLHNhnWr4NoSDmEDuK9dEEpUy7gIRJB7CBIkVXmKXozDRa5lin1tQWp6sh'
