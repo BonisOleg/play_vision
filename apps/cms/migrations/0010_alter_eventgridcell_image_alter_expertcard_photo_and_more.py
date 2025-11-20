@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0006_new_page_models'),
+        ('cms', '0007_add_missing_models'),
     ]
 
     operations = [

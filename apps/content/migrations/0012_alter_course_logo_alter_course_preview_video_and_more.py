@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('content', '0011_course_target_audience'),
+        ('content', '0011_5_add_monthlyquote_model'),
     ]
 
     operations = [
