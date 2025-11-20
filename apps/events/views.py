@@ -58,9 +58,9 @@ class EventListView(ListView):
         format_filter = self.request.GET.get('format')
         if format_filter and format_filter != 'all':
             if format_filter == 'online':
-                queryset = queryset.filter(Q(location__icontains='онлайн') | Q(online_link__isnull=False))
+                queryset = queryset.filter(is_online_event=True)
             elif format_filter == 'offline':
-                queryset = queryset.exclude(Q(location__icontains='онлайн') | Q(online_link__isnull=False))
+                queryset = queryset.filter(is_online_event=False)
         
         # Filter by date range
         date_range = self.request.GET.get('date_range')
