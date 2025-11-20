@@ -83,38 +83,7 @@ class HeroSlide(models.Model):
         return self.cta_text_world
     
     def save(self, *args, **kwargs):
-        """Auto-optimize images"""
-        if self.image and hasattr(self.image, 'file'):
-            try:
-                from PIL import Image
-                from io import BytesIO
-                from django.core.files.uploadedfile import InMemoryUploadedFile
-                
-                img = Image.open(self.image)
-                
-                if img.height > 1080 or img.width > 1920:
-                    # Convert RGBA to RGB
-                    if img.mode in ('RGBA', 'LA', 'P'):
-                        background = Image.new('RGB', img.size, (255, 255, 255))
-                        background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
-                        img = background
-                    
-                    # Resize
-                    img.thumbnail((1920, 1080), Image.Resampling.LANCZOS)
-                    
-                    # Save
-                    output = BytesIO()
-                    img.save(output, format='JPEG', optimize=True, quality=85)
-                    output.seek(0)
-                    
-                    self.image = InMemoryUploadedFile(
-                        output, 'ImageField',
-                        f"{self.image.name.split('.')[0]}.jpg",
-                        'image/jpeg', output.getbuffer().nbytes, None
-                    )
-            except Exception:
-                pass
-        
+        """Save slide - Cloudinary optimizes automatically"""
         super().save(*args, **kwargs)
 
 
@@ -150,35 +119,7 @@ class ExpertCard(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
-        """Auto-optimize images"""
-        if self.photo and hasattr(self.photo, 'file'):
-            try:
-                from PIL import Image
-                from io import BytesIO
-                from django.core.files.uploadedfile import InMemoryUploadedFile
-                
-                img = Image.open(self.photo)
-                
-                if img.height > 400 or img.width > 400:
-                    if img.mode in ('RGBA', 'LA', 'P'):
-                        background = Image.new('RGB', img.size, (255, 255, 255))
-                        background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
-                        img = background
-                    
-                    img.thumbnail((400, 400), Image.Resampling.LANCZOS)
-                    
-                    output = BytesIO()
-                    img.save(output, format='JPEG', optimize=True, quality=85)
-                    output.seek(0)
-                    
-                    self.photo = InMemoryUploadedFile(
-                        output, 'ImageField',
-                        f"{self.photo.name.split('.')[0]}.jpg",
-                        'image/jpeg', output.getbuffer().nbytes, None
-                    )
-            except Exception:
-                pass
-        
+        """Save expert - Cloudinary optimizes automatically"""
         super().save(*args, **kwargs)
 
 

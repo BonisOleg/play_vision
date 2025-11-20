@@ -1,7 +1,35 @@
 from django.contrib import admin
 from django.db import models
 from django.forms import TextInput, CheckboxSelectMultiple
+from django import forms
+import json
 from .models import Course, Material, UserCourseProgress, Favorite, MonthlyQuote
+
+
+class CourseAdminForm(forms.ModelForm):
+    target_audience = forms.MultipleChoiceField(
+        choices=Course.TARGET_AUDIENCE_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label='Кому підходить'
+    )
+    
+    class Meta:
+        model = Course
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            if isinstance(self.instance.target_audience, list):
+                self.initial['target_audience'] = self.instance.target_audience
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.target_audience = self.cleaned_data.get('target_audience', [])
+        if commit:
+            instance.save()
+        return instance
 
 
 class MaterialInline(admin.TabularInline):
@@ -17,6 +45,7 @@ class MaterialInline(admin.TabularInline):
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     """Курси 🧪 BETA"""
+    form = CourseAdminForm
     list_display = ('title', 'price', 'is_featured', 'is_published', 
                    'view_count', 'enrollment_count', 'created_at')
     list_filter = ('is_featured', 'is_free', 'is_published', 
@@ -25,10 +54,6 @@ class CourseAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'created_at'
     inlines = [MaterialInline]
-    
-    formfield_overrides = {
-        models.JSONField: {'widget': CheckboxSelectMultiple(choices=Course.TARGET_AUDIENCE_CHOICES)},
-    }
     
     fieldsets = (
         ('Основна інформація', {
