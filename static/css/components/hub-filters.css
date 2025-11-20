@@ -17,6 +17,7 @@
 
 .hub-filters-title {
     font-size: 1.5rem;
+    text-align: center;
     font-weight: 700;
     color: var(--hub-text);
     margin-bottom: 24px;
@@ -161,11 +162,12 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
+    padding: 5px 16px;
     background: var(--hub-bg-card);
     border-radius: 12px;
     border: 2px solid var(--hub-border);
     margin-bottom: 24px;
+    margin-top: 10px;
 }
 
 .hub-search-icon {
