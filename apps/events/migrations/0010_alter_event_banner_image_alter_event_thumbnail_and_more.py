@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0006_eventfeedback_eventwaitlist_and_more'),
+        ('events', '0009_rename_registration_data_to_custom_fields'),
     ]
 
     operations = [

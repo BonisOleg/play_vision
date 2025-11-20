@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('content', '0009_add_course_logo'),
+        ('content', '0011_course_target_audience'),
     ]
 
     operations = [
