@@ -12,8 +12,40 @@ class HubHeroCarousel {
         this.element = element;
         this.currentSlide = 0;
         
-        // Слайди для Хабу Знань
-        this.slides = [
+        // Завантажити слайди з JSON або використати fallback
+        this.slides = this.loadSlidesFromJSON();
+        
+        this.titleElement = element.querySelector('.hero-title');
+        this.subtitleElement = element.querySelector('.hero-subtitle');
+        this.ctaButton = element.querySelector('.hero-buttons a');
+        this.ctaButtonText = element.querySelector('.hero-buttons a .btn-text');
+        this.dotsContainer = element.querySelector('.hero-slider-dots');
+
+        this.init();
+    }
+    
+    loadSlidesFromJSON() {
+        // Спробувати завантажити дані з JSON
+        const dataElement = document.getElementById('hub-hero-slides-data');
+        if (dataElement) {
+            try {
+                const slides = JSON.parse(dataElement.textContent);
+                if (slides && slides.length > 0) {
+                    // Додати ctaText та ctaUrl для кожного слайда
+                    return slides.map(slide => ({
+                        title: slide.title || '',
+                        subtitle: slide.subtitle || '',
+                        ctaText: 'Дізнатися',
+                        ctaUrl: '#catalog'
+                    }));
+                }
+            } catch (e) {
+                console.warn('Failed to parse hub hero slides data:', e);
+            }
+        }
+        
+        // Fallback: дефолтні слайди
+        return [
             {
                 title: 'Програма лояльності Хабу Знань',
                 subtitle: 'Твоя бібліотека футбольних знань',
@@ -33,14 +65,6 @@ class HubHeroCarousel {
                 ctaUrl: '/hub/'
             }
         ];
-
-        this.titleElement = element.querySelector('.hero-title');
-        this.subtitleElement = element.querySelector('.hero-subtitle');
-        this.ctaButton = element.querySelector('.hero-buttons a');
-        this.ctaButtonText = element.querySelector('.hero-buttons a .btn-text');
-        this.dotsContainer = element.querySelector('.hero-slider-dots');
-
-        this.init();
     }
 
     init() {

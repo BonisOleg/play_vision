@@ -1,0 +1,27 @@
+/* ============================================
+   HUB FAVORITES HIDE - Приховати кнопки улюбленого
+   ============================================ */
+
+/* Приховати всі кнопки улюбленого в Hub Knowledge */
+.hub-favorite-btn,
+.hub-favorite-icon,
+.favorite-btn {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+/* Додаткове приховання для всіх можливих варіантів */
+button.hub-favorite-btn,
+button.hub-favorite-icon,
+button.favorite-btn {
+    display: none !important;
+}
+
+/* Видалити місце, яке вони займали */
+.hub-product-header .hub-favorite-icon,
+.hub-featured-footer .hub-favorite-btn,
+.secondary-actions .favorite-btn {
+    display: none !important;
+}
+

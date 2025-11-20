@@ -56,7 +56,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 350px;
+    height: 350px;
+    overflow: hidden;
 }
 
 .hub-hero-logo {
@@ -77,6 +78,8 @@
     text-align: left;
     margin-bottom: 16px;
     text-shadow: none;
+    min-height: 80px;
+    overflow: hidden;
 }
 
 .hero-subtitle {
@@ -85,6 +88,8 @@
     margin-bottom: var(--spacing-lg);
     text-align: left;
     text-shadow: none;
+    min-height: 50px;
+    overflow: hidden;
 }
 
 .hero-buttons {
@@ -234,7 +239,7 @@
     
     .hub-hero-content {
         padding: var(--spacing-lg);
-        min-height: 300px;
+        height: 300px;
     }
     
     .hub-hero-logo {
@@ -251,20 +256,24 @@
     
     .hero-title {
         font-size: 2rem;
+        min-height: 70px;
     }
     
     .hero-subtitle {
         font-size: 1rem;
+        min-height: 45px;
     }
 }
 
 @media (max-width: 480px) {
     .hero-title {
         font-size: 1.75rem;
+        min-height: 60px;
     }
     
     .hero-subtitle {
         font-size: 0.9375rem;
+        min-height: 40px;
     }
     
     .hero-slider-dots {

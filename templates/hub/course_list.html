@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load cms_tags %}
 
 {% block title %}Хаб Знань - Play Vision{% endblock %}
 
@@ -16,15 +17,36 @@
 <link rel="stylesheet" href="{% static 'css/components/htmx-indicators.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/search.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/hub-filters.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub-favorites-hide.css' %}">
 {% endblock %}
 
 {% block content %}
+{% get_hub_hero as hub_hero %}
 <div class="fullscreen-container">
     <div class="unified-sections-wrapper">
         <div class="unified-sections-container">
 
             <!-- HUB HERO SECTION -->
             <section class="hub-hero-section">
+                {% if hub_hero %}
+                <!-- CMS Hero Data for JS -->
+                <script type="application/json" id="hub-hero-slides-data">
+                [
+                    {
+                        "title": "{% if country_code == 'UA' %}{{ hub_hero.title_1_ua|escapejs }}{% else %}{{ hub_hero.title_1_world|default:hub_hero.title_1_ua|escapejs }}{% endif %}",
+                        "subtitle": "{% if country_code == 'UA' %}{{ hub_hero.subtitle_1_ua|escapejs }}{% else %}{{ hub_hero.subtitle_1_world|default:hub_hero.subtitle_1_ua|escapejs }}{% endif %}"
+                    },
+                    {
+                        "title": "{% if country_code == 'UA' %}{{ hub_hero.title_2_ua|escapejs }}{% else %}{{ hub_hero.title_2_world|default:hub_hero.title_2_ua|escapejs }}{% endif %}",
+                        "subtitle": "{% if country_code == 'UA' %}{{ hub_hero.subtitle_2_ua|escapejs }}{% else %}{{ hub_hero.subtitle_2_world|default:hub_hero.subtitle_2_ua|escapejs }}{% endif %}"
+                    },
+                    {
+                        "title": "{% if country_code == 'UA' %}{{ hub_hero.title_3_ua|escapejs }}{% else %}{{ hub_hero.title_3_world|default:hub_hero.title_3_ua|escapejs }}{% endif %}",
+                        "subtitle": "{% if country_code == 'UA' %}{{ hub_hero.subtitle_3_ua|escapejs }}{% else %}{{ hub_hero.subtitle_3_world|default:hub_hero.subtitle_3_ua|escapejs }}{% endif %}"
+                    }
+                ]
+                </script>
+                {% endif %}
                 <div class="hub-hero-grid">
 
                     <!-- Лівий блок з анімованими написами -->
