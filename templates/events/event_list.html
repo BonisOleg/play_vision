@@ -186,8 +186,18 @@
                     <h2 class="section-title">Івенти</h2>
                     
                     <div class="event-filters">
-                        <button class="filter-btn active" data-filter="online">Онлайн</button>
-                        <button class="filter-btn" data-filter="offline">Офлайн</button>
+                        <a href="{% url 'events:event_list' %}?format=all{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" 
+                           class="filter-btn {% if current_format == 'all' or not current_format %}active{% endif %}">
+                            Всі
+                        </a>
+                        <a href="{% url 'events:event_list' %}?format=online{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" 
+                           class="filter-btn {% if current_format == 'online' %}active{% endif %}">
+                            Онлайн
+                        </a>
+                        <a href="{% url 'events:event_list' %}?format=offline{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" 
+                           class="filter-btn {% if current_format == 'offline' %}active{% endif %}">
+                            Офлайн
+                        </a>
                     </div>
                     
                     <div class="events-catalog-grid">
