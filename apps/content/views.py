@@ -110,6 +110,9 @@ class CourseDetailView(DetailView):
             settings = SiteSettings.get_settings()
             context['join_url'] = settings.external_join_url_default or '#'
         
+        # Target audience display
+        context['target_audience_display'] = course.get_target_audience_display()
+        
         # Related courses
         context['related_courses'] = Course.objects.filter(
             is_published=True

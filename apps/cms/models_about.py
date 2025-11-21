@@ -49,12 +49,18 @@ class AboutHero(models.Model):
 
 
 class AboutSection2(models.Model):
-    """Секція 2 - PNG 2 версії + чорна/біла теми"""
-    # 4 картинки
-    image_ua_light = models.ImageField('Картинка UA (світла тема)', upload_to='cms/about/section2/', max_length=500)
-    image_ua_dark = models.ImageField('Картинка UA (темна тема)', upload_to='cms/about/section2/', blank=True, max_length=500)
-    image_world_light = models.ImageField('Картинка World (світла)', upload_to='cms/about/section2/', blank=True, max_length=500)
-    image_world_dark = models.ImageField('Картинка World (темна)', upload_to='cms/about/section2/', blank=True, max_length=500)
+    """Секція 2 - PNG/SVG 4 версії (текстові поля)
+    
+    Поля приймають:
+    - SVG код безпосередньо (<svg>...</svg>)
+    - PNG в форматі base64 data URI (data:image/png;base64,...)
+    - URL зображення (для зворотної сумісності)
+    """
+    # 4 текстові поля для PNG/SVG
+    image_ua_light = models.TextField('PNG/SVG UA (світла тема)')
+    image_ua_dark = models.TextField('PNG/SVG UA (темна тема)', blank=True)
+    image_world_light = models.TextField('PNG/SVG World (світла)', blank=True)
+    image_world_dark = models.TextField('PNG/SVG World (темна)', blank=True)
     
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)

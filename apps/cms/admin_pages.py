@@ -41,22 +41,26 @@ class AboutHeroAdmin(admin.ModelAdmin):
 
 @admin.register(AboutSection2)
 class AboutSection2Admin(admin.ModelAdmin):
-    """Секція 2 - Про нас (PNG 4 версії)"""
+    """Секція 2 - Про нас (PNG/SVG 4 версії - текстові поля)"""
     
     fieldsets = (
         ('🇺🇦 Україна - Світла тема', {
-            'fields': ('image_ua_light',)
+            'fields': ('image_ua_light',),
+            'description': 'Вставте SVG код або PNG в форматі base64 (data:image/png;base64,...)'
         }),
         ('🇺🇦 Україна - Темна тема', {
-            'fields': ('image_ua_dark',)
+            'fields': ('image_ua_dark',),
+            'description': 'Вставте SVG код або PNG в форматі base64'
         }),
         ('🌍 Світ - Світла тема', {
             'fields': ('image_world_light',),
-            'classes': ('collapse',)
+            'classes': ('collapse',),
+            'description': 'Вставте SVG код або PNG в форматі base64'
         }),
         ('🌍 Світ - Темна тема', {
             'fields': ('image_world_dark',),
-            'classes': ('collapse',)
+            'classes': ('collapse',),
+            'description': 'Вставте SVG код або PNG в форматі base64'
         }),
         ('Налаштування', {
             'fields': ('is_active',)

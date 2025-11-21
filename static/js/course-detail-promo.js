@@ -1,62 +1,51 @@
 /**
- * Course Detail Promo Video Logic
- * Handles promo modal and after-video popup
+ * Course Detail Promo Video - Popup після закінчення
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    const openModalBtn = document.querySelector('[data-open-promo-modal]');
-    const modal = document.getElementById('promoModal');
-    const videoFrame = document.getElementById('promoVideoFrame');
+    const iframe = document.getElementById('promoVideoIframe');
     const popup = document.getElementById('afterPromoPopup');
     
-    if (!openModalBtn || !modal || !videoFrame || !popup) {
-        return; // Elements not found
+    if (!iframe || !popup) {
+        return;
     }
-    
-    // Get Bunny Library ID from body data attribute
-    const bunnyLibraryId = document.body.dataset.bunnyLibraryId || '';
     
     let videoWatched = false;
     
-    // Open modal
-    openModalBtn.addEventListener('click', function() {
-        const bunnyId = this.dataset.bunnyId;
-        if (!bunnyId) {
-            console.error('Bunny video ID not found');
+    // Слухати повідомлення від Bunny Player (postMessage API)
+    window.addEventListener('message', function(event) {
+        // Перевірити що повідомлення від Bunny.net
+        if (event.origin !== 'https://iframe.mediadelivery.net') {
             return;
         }
         
-        // Build embed URL
-        const embedUrl = `https://iframe.mediadelivery.net/embed/${bunnyLibraryId}/${bunnyId}?autoplay=true`;
-        videoFrame.src = embedUrl;
-        
-        modal.style.display = 'flex';
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-        
-        // Track video end (approximate - через таймер)
-        trackVideoEnd();
+        try {
+            const data = JSON.parse(event.data);
+            
+            // Bunny Player надсилає event: "ended" коли відео закінчилось
+            if (data.event === 'ended' && !videoWatched) {
+                videoWatched = true;
+                showPopup();
+            }
+        } catch (e) {
+            // Ignore parsing errors
+        }
     });
     
-    // Close modal handlers
-    const closeModalElements = modal.querySelectorAll('[data-close-modal]');
-    closeModalElements.forEach(el => {
-        el.addEventListener('click', closeModal);
-    });
-    
-    function closeModal() {
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
-        videoFrame.src = ''; // Stop video
-        document.body.classList.remove('modal-open');
-        
-        // Show popup if video was watched
-        if (videoWatched) {
+    // Fallback: якщо postMessage не працює, показати через 60 секунд
+    setTimeout(() => {
+        if (!videoWatched) {
+            videoWatched = true;
             showPopup();
         }
+    }, 60000); // 60 секунд
+    
+    // Показати popup
+    function showPopup() {
+        popup.style.display = 'flex';
     }
     
-    // Close popup handlers
+    // Закрити popup
     const closePopupElements = popup.querySelectorAll('[data-close-popup]');
     closePopupElements.forEach(el => {
         el.addEventListener('click', closePopup);
@@ -64,49 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function closePopup() {
         popup.style.display = 'none';
-        videoWatched = false; // Reset
     }
     
-    function showPopup() {
-        popup.style.display = 'flex';
-    }
-    
-    /**
-     * Track video end
-     * Простий варіант через таймер (30 секунд)
-     * TODO: Покращити через Bunny Player API postMessage
-     */
-    function trackVideoEnd() {
-        // Показати popup через 30 секунд (typical promo length)
-        setTimeout(() => {
-            videoWatched = true;
-        }, 30000); // 30 seconds
-        
-        // TODO: Альтернатива через Bunny Player API:
-        // window.addEventListener('message', function(event) {
-        //     if (event.origin === 'https://iframe.mediadelivery.net') {
-        //         try {
-        //             const data = JSON.parse(event.data);
-        //             if (data.event === 'ended') {
-        //                 videoWatched = true;
-        //             }
-        //         } catch (e) {
-        //             console.error('Error parsing video message:', e);
-        //         }
-        //     }
-        // });
-    }
-    
-    // Close on Escape key
+    // Close on Escape
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            if (modal.style.display === 'flex') {
-                closeModal();
-            }
-            if (popup.style.display === 'flex') {
-                closePopup();
-            }
+        if (e.key === 'Escape' && popup.style.display === 'flex') {
+            closePopup();
         }
     });
 });
-

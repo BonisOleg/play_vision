@@ -127,12 +127,17 @@ class CourseAdmin(admin.ModelAdmin):
                     messages.warning(request, 'Bunny.net вимкнено. Відео не завантажено.')
                     logger.warning("Bunny.net disabled, promo video not uploaded")
                 else:
-                    # Upload на Bunny.net
+                    # Upload на Bunny.net з bytes (Cloudinary не підтримує .path)
                     logger.info(f"Uploading promo video for course: {obj.title}")
+                    
+                    # Читаємо файл як bytes
+                    obj.promo_video_file.seek(0)  # На початок файлу
+                    file_content = obj.promo_video_file.read()
+                    
                     video_data = BunnyService.upload_video(
-                        file_path=obj.promo_video_file.path,
                         title=f"Промо: {obj.title}",
-                        collection_id=obj.slug
+                        collection_id=obj.slug,
+                        file_content=file_content  # Передаємо bytes
                     )
                     
                     if video_data:
@@ -140,7 +145,7 @@ class CourseAdmin(admin.ModelAdmin):
                         obj.promo_video_bunny_id = video_data.get('guid')
                         obj.promo_video_bunny_status = str(video_data.get('status', '0'))
                         
-                        # Видалити локальний файл (опціонально)
+                        # Видалити локальний файл після успішного upload
                         if obj.promo_video_file:
                             obj.promo_video_file.delete(save=False)
                         

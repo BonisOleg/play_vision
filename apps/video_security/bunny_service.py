@@ -36,20 +36,27 @@ class BunnyService:
         return f"{settings.BUNNY_STREAM_API_URL}/{library_id}"
     
     @staticmethod
-    def upload_video(file_path: str, title: str, collection_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    def upload_video(title: str, collection_id: Optional[str] = None, 
+                     file_path: Optional[str] = None, 
+                     file_content: Optional[bytes] = None) -> Optional[Dict[str, Any]]:
         """
         Завантажити відео на Bunny.net
         
         Args:
-            file_path: Шлях до відео файлу
             title: Назва відео
             collection_id: ID колекції (опціонально)
+            file_path: Шлях до відео файлу (для локальних файлів)
+            file_content: Вміст файлу в bytes (для Cloudinary/S3)
             
         Returns:
             Dict з інформацією про відео або None якщо помилка
         """
         if not BunnyService.is_enabled():
             logger.warning("Bunny.net disabled, cannot upload video")
+            return None
+        
+        if not file_path and not file_content:
+            logger.error("Either file_path or file_content must be provided")
             return None
         
         try:
@@ -78,18 +85,31 @@ class BunnyService:
             # Крок 2: Завантажити відео файл
             upload_url = f"{BunnyService._get_library_url()}/videos/{video_id}"
             
-            with open(file_path, 'rb') as video_file:
+            if file_content:
+                # Upload з bytes (Cloudinary/S3)
                 upload_response = requests.put(
                     upload_url,
                     headers={
                         'AccessKey': settings.BUNNY_API_KEY,
                         'Content-Type': 'application/octet-stream',
                     },
-                    data=video_file,
+                    data=file_content,
                     timeout=300  # 5 хвилин для великих файлів
                 )
-                upload_response.raise_for_status()
+            else:
+                # Upload з файлу (локальний)
+                with open(file_path, 'rb') as video_file:
+                    upload_response = requests.put(
+                        upload_url,
+                        headers={
+                            'AccessKey': settings.BUNNY_API_KEY,
+                            'Content-Type': 'application/octet-stream',
+                        },
+                        data=video_file,
+                        timeout=300  # 5 хвилин для великих файлів
+                    )
             
+            upload_response.raise_for_status()
             logger.info(f"Video uploaded successfully: {video_id}")
             return video_data
             

@@ -15,7 +15,7 @@
     <div class="unified-sections-wrapper">
         <div class="unified-sections-container">
             
-            <!-- SECTION 1: COURSE HERO -->
+            <!-- HERO SECTION -->
             <section class="fullscreen-section course-detail-hero">
                 <div class="section-content">
                     <div class="course-hero-grid">
@@ -28,15 +28,18 @@
                                 <span>{{ course.title }}</span>
                             </nav>
                             
+                            <!-- Logo курсу (маленьке зображення над назвою) -->
+                            {% if course.logo %}
+                            <img src="{{ course.logo.url }}" alt="{{ course.title }}" class="course-logo">
+                            {% elif course.thumbnail %}
+                            <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" class="course-logo">
+                            {% endif %}
+                            
                             {% if course.is_featured %}
                             <span class="badge badge-featured">топ-продажів</span>
                             {% endif %}
                             
                             <h1 class="course-title">{{ course.title }}</h1>
-                            
-                            {% if course.author %}
-                            <p class="course-author">Автор: {{ course.author }}</p>
-                            {% endif %}
                             
                             <p class="course-description">{{ course.description }}</p>
                             
@@ -45,10 +48,11 @@
                                     <span class="meta-label">Ціна:</span>
                                     <span class="meta-value price">{{ course.price }}₴</span>
                                 </div>
-                                {% if course.author %}
+                                
+                                {% if target_audience_display %}
                                 <div class="meta-item">
-                                    <span class="meta-label">Автор:</span>
-                                    <span class="meta-value">{{ course.author }}</span>
+                                    <span class="meta-label">Кому підходить:</span>
+                                    <span class="meta-value">{{ target_audience_display|join:", " }}</span>
                                 </div>
                                 {% endif %}
                             </div>
@@ -57,26 +61,20 @@
                                 <a href="{{ join_url }}" class="btn btn-primary btn-large" target="_blank" rel="noopener">
                                     Приєднатись до клубу
                                 </a>
-                                
-                                {% if has_promo %}
-                                <button class="btn btn-outline btn-large" 
-                                        data-open-promo-modal
-                                        data-bunny-id="{{ course.promo_video_bunny_id }}">
-                                    <svg class="btn-icon" viewBox="0 0 24 24">
-                                        <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
-                                    </svg>
-                                    Переглянути промо
-                                </button>
-                                {% endif %}
                             </div>
                         </div>
                         
-                        <!-- Right: Thumbnail -->
-                        <div class="course-thumbnail-block">
-                            {% if course.thumbnail %}
-                            <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" loading="lazy">
-                            {% else %}
-                            <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ course.title }}" loading="lazy">
+                        <!-- Right: Video Block -->
+                        <div class="course-video-block">
+                            {% if promo_embed_url %}
+                            <iframe id="promoVideoIframe"
+                                    src="{{ promo_embed_url }}?autoplay=false" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                            </iframe>
+                            {% elif course.thumbnail %}
+                            <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
                             {% endif %}
                         </div>
                         
@@ -84,54 +82,30 @@
                 </div>
             </section>
             
-            <!-- SECTION 2: WHAT YOU GET -->
-            <section class="fullscreen-section course-benefits-section">
-                <div class="section-content">
-                    <h2 class="section-title">Що ви отримаєте</h2>
-                    <div class="benefits-grid">
-                        <div class="benefit-item">
-                            <div class="benefit-icon">📚</div>
-                            <h3>Структурований контент</h3>
-                            <p>Професійно підготовлені матеріали від експертів індустрії</p>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">🎯</div>
-                            <h3>Практичні навички</h3>
-                            <p>Реальні кейси та завдання для застосування знань</p>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">🏆</div>
-                            <h3>Професійний розвиток</h3>
-                            <p>Розвиток кар'єри у футбольній індустрії</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- SECTION 3: RELATED COURSES -->
+            <!-- RELATED COURSES CAROUSEL -->
             {% if related_courses %}
             <section class="fullscreen-section related-courses-section">
                 <div class="section-content">
                     <h2 class="section-title">Схожі курси</h2>
-                    <div class="courses-grid">
-                        {% for related in related_courses %}
-                        <article class="course-card">
-                            <div class="course-card-image">
-                                {% if related.thumbnail %}
-                                <img src="{{ related.thumbnail.url }}" alt="{{ related.title }}" loading="lazy">
-                                {% else %}
-                                <img src="{% static 'images/placeholder-1200x600.svg' %}" alt="{{ related.title }}" loading="lazy">
-                                {% endif %}
-                            </div>
-                            <div class="course-card-content">
-                                <h3><a href="{{ related.get_absolute_url }}">{{ related.title }}</a></h3>
-                                <p>{{ related.short_description }}</p>
-                                <div class="course-card-footer">
-                                    <span class="price">{{ related.price }}₴</span>
+                    <div class="courses-carousel">
+                        <div class="courses-track">
+                            {% for related in related_courses %}
+                            <article class="course-card-horizontal">
+                                <div class="course-card-image">
+                                    {% if related.thumbnail %}
+                                    <img src="{{ related.thumbnail.url }}" alt="{{ related.title }}" loading="lazy">
+                                    {% endif %}
                                 </div>
-                            </div>
-                        </article>
-                        {% endfor %}
+                                <div class="course-card-content">
+                                    <h3><a href="{{ related.get_absolute_url }}">{{ related.title }}</a></h3>
+                                    <p>{{ related.short_description|truncatewords:15 }}</p>
+                                    <div class="course-card-footer">
+                                        <span class="price">{{ related.price }}₴</span>
+                                    </div>
+                                </div>
+                            </article>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -141,27 +115,8 @@
     </div>
 </div>
 
-<!-- PROMO VIDEO MODAL -->
-{% if has_promo %}
-<div id="promoModal" class="promo-modal" style="display: none;" role="dialog" aria-hidden="true">
-    <div class="modal-overlay" data-close-modal></div>
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3>Промо курсу</h3>
-            <button class="modal-close" data-close-modal aria-label="Закрити">&times;</button>
-        </div>
-        <div class="modal-body">
-            <iframe id="promoVideoFrame" 
-                    src="" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-</div>
-
-<!-- AFTER PROMO POPUP -->
+<!-- AFTER VIDEO POPUP -->
+{% if promo_embed_url %}
 <div id="afterPromoPopup" class="promo-popup" style="display: none;">
     <div class="popup-overlay" data-close-popup></div>
     <div class="popup-container">
@@ -184,7 +139,7 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if has_promo %}
+{% if promo_embed_url %}
 <script src="{% static 'js/course-detail-promo.js' %}" defer></script>
 {% endif %}
 {% endblock %}
