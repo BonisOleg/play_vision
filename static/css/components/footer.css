@@ -120,15 +120,15 @@ footer.site-footer .social-link[href*="instagram"]:active .social-text {
     color: #E4405F;
 }
 
-/* TikTok hover/active - циановий */
-footer.site-footer .social-link[href*="tiktok"]:hover .social-icon,
-footer.site-footer .social-link[href*="tiktok"]:active .social-icon {
-    color: #00F2EA;
+/* Facebook hover/active - синій Facebook */
+footer.site-footer .social-link[href*="facebook"]:hover .social-icon,
+footer.site-footer .social-link[href*="facebook"]:active .social-icon {
+    color: #1877F2;
 }
 
-footer.site-footer .social-link[href*="tiktok"]:hover .social-text,
-footer.site-footer .social-link[href*="tiktok"]:active .social-text {
-    color: #00F2EA;
+footer.site-footer .social-link[href*="facebook"]:hover .social-text,
+footer.site-footer .social-link[href*="facebook"]:active .social-text {
+    color: #1877F2;
 }
 
 /* Telegram hover/active - синій */
