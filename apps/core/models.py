@@ -136,6 +136,56 @@ class AuditedModel(TimeStampedModel):
         super().save(*args, **kwargs)
 
 
+class LegalPage(TimeStampedModel):
+    """
+    Legal documents (Privacy Policy, Terms of Service, Offer)
+    
+    Singleton-like: slug determines the document type.
+    Content stored in HTML for rich formatting.
+    """
+    SLUG_CHOICES = [
+        ('privacy', 'Політика конфіденційності'),
+        ('terms', 'Умови використання'),
+        ('offer', 'Публічна оферта'),
+    ]
+    
+    slug = models.CharField(
+        max_length=50,
+        unique=True,
+        choices=SLUG_CHOICES,
+        verbose_name='Тип документа',
+        help_text='URL-ключ документа'
+    )
+    title = models.CharField(
+        max_length=200,
+        verbose_name='Заголовок',
+        help_text='Заголовок документа'
+    )
+    content = models.TextField(
+        verbose_name='Зміст',
+        help_text='Повний текст документа (HTML дозволено)'
+    )
+    version_date = models.DateField(
+        default=timezone.now,
+        verbose_name='Дата редакції',
+        help_text='Дата поточної редакції документа'
+    )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Активний',
+        help_text='Показувати документ на сайті'
+    )
+    
+    class Meta:
+        db_table = 'core_legal_pages'
+        verbose_name = 'Юридичний документ'
+        verbose_name_plural = '📋 Юридичні документи'
+        ordering = ['slug']
+    
+    def __str__(self):
+        return f"{self.get_slug_display()} ({self.version_date})"
+
+
 class AuditLog(TimeStampedModel):
     """
     Audit trail for all admin changes

@@ -1,12 +1,12 @@
 """
-Core admin - AuditLog and ContentVersion
+Core admin - AuditLog, ContentVersion, and LegalPages
 """
 from django.contrib import admin
 from django.utils.html import format_html
 from django import views
 from django.shortcuts import render
 from django.apps import apps
-from .models import AuditLog, ContentVersion
+from .models import AuditLog, ContentVersion, LegalPage
 
 
 class PlayVisionAdminSite(admin.AdminSite):
@@ -152,3 +152,41 @@ class ContentVersionAdmin(admin.ModelAdmin):
     
     class Media:
         css = {'all': ('admin/css/playvision-admin.css',)}
+
+
+@admin.register(LegalPage, site=admin_site)
+class LegalPageAdmin(admin.ModelAdmin):
+    """Legal documents management"""
+    list_display = ['title', 'slug', 'version_date', 'is_active', 'updated_at']
+    list_filter = ['slug', 'is_active', 'version_date']
+    search_fields = ['title', 'content']
+    readonly_fields = ['created_at', 'updated_at']
+    
+    fieldsets = (
+        ('Основна інформація', {
+            'fields': ('slug', 'title', 'version_date', 'is_active')
+        }),
+        ('Зміст документа', {
+            'fields': ('content',),
+            'description': 'Використовуйте HTML для форматування тексту'
+        }),
+        ('Системна інформація', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def save_model(self, request, obj, form, change):
+        """Save with automatic version tracking"""
+        super().save_model(request, obj, form, change)
+        
+        if change:
+            ContentVersion.create_version(
+                obj, 
+                user=request.user, 
+                summary=f"Updated {obj.get_slug_display()}"
+            )
+    
+    class Media:
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/tinymce-init.js',)

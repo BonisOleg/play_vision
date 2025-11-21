@@ -62,6 +62,22 @@ class PWAInstallView(TemplateView):
 class LegalPageView(TemplateView):
     """Legal pages"""
     template_name = 'pages/legal.html'
+    
+    def get_context_data(self, **kwargs):
+        """Get legal page by slug"""
+        from apps.core.models import LegalPage
+        
+        context = super().get_context_data(**kwargs)
+        slug = kwargs.get('slug', 'privacy')
+        
+        try:
+            page = LegalPage.objects.get(slug=slug, is_active=True)
+            context['page'] = page
+        except LegalPage.DoesNotExist:
+            context['page'] = None
+            context['error'] = f'Документ "{slug}" не знайдено'
+        
+        return context
 
 
 class RobotsView(TemplateView):

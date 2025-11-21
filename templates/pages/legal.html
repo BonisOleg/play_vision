@@ -1,0 +1,150 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}{{ page.title }} | Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/legal.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="legal-container">
+    <div class="legal-sidebar">
+        <h3 class="legal-sidebar-title">Юридичні документи</h3>
+        <nav class="legal-nav">
+            <a href="{% url 'core:legal' slug='offer' %}" 
+               class="legal-nav-link {% if page.slug == 'offer' %}active{% endif %}">
+                Публічна оферта
+            </a>
+            <a href="{% url 'core:legal' slug='privacy' %}" 
+               class="legal-nav-link {% if page.slug == 'privacy' %}active{% endif %}">
+                Політика конфіденційності
+            </a>
+            <a href="{% url 'core:legal' slug='terms' %}" 
+               class="legal-nav-link {% if page.slug == 'terms' %}active{% endif %}">
+                Умови використання
+            </a>
+        </nav>
+        
+        <div class="legal-sidebar-info">
+            <h4>Контакти</h4>
+            <p>
+                <a href="mailto:info@playvision.com.ua" class="legal-contact-link">
+                    info@playvision.com.ua
+                </a>
+            </p>
+            <p>
+                <a href="tel:+380982447822" class="legal-contact-link">
+                    +38 (098) 244-78-22
+                </a>
+            </p>
+        </div>
+    </div>
+    
+    <div class="legal-content">
+        {% if page %}
+            <header class="legal-header">
+                <h1 class="legal-title">{{ page.title }}</h1>
+                <p class="legal-date">Редакція від {{ page.version_date|date:"d.m.Y" }}</p>
+            </header>
+            
+            <div class="legal-text">
+                {{ page.content|safe }}
+                
+                {% if page.slug == 'privacy' %}
+                <div class="legal-section">
+                    <h2>7. СПРЯМОВАНА (ТАРГЕТОВАНА) РЕКЛАМА</h2>
+                    <p>
+                        Ми використовуємо файли «cookie», Google Remarketing Tag, Facebook Pixel і інші рекламні технології 
+                        для того, щоб направляти вам рекламу відповідно до ваших індивідуальних інтересами та уподобаннями. 
+                        Цей розділ нашої Політики конфіденційності надає додаткову інформацію з цього питання.
+                    </p>
+                    <p>
+                        Ви можете бачити персоніфіковану рекламу Play Vision в мережі Інтернет, яка заснована на ваших інтересах.
+                    </p>
+                    <p>
+                        Ці дані дають нам можливість налаштувати звернення до користувача і клієнта з урахуванням його демографічних 
+                        інтересів, а також використовувати контекстну рекламу і персоніфікувати пропозицію послуг. Ми використовуємо 
+                        цю інформацію, щоб відображати рекламу, яка може вас зацікавити. Цей процес допомагає нам оцінювати 
+                        ефективність маркетингових інструментів і рекламних кампаній.
+                    </p>
+                    
+                    <div class="legal-opt-out">
+                        <h3>Ви можете відмовитися від відображення цільової реклами:</h3>
+                        <div class="legal-buttons">
+                            <a href="https://www.aboutads.info/choices/" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="legal-button">
+                                <span class="legal-button-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </span>
+                                AboutAds.info Choices
+                            </a>
+                            
+                            <a href="https://www.networkadvertising.org/managing/opt_out.asp" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="legal-button">
+                                <span class="legal-button-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                Network Advertising Initiative
+                            </a>
+                            
+                            <a href="https://www.evidon.com/" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="legal-button">
+                                <span class="legal-button-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10.325 4.317C11.251 2.561 13.749 2.561 14.675 4.317L15.2 5.408C15.503 6.038 16.092 6.475 16.774 6.574L17.96 6.748C19.876 7.024 20.626 9.393 19.277 10.73L18.438 11.563C17.93 12.068 17.694 12.788 17.808 13.5L18.002 14.693C18.305 16.616 16.291 18.098 14.574 17.211L13.496 16.643C12.849 16.313 12.081 16.313 11.434 16.643L10.356 17.211C8.639 18.098 6.625 16.616 6.928 14.693L7.122 13.5C7.236 12.788 7 12.068 6.492 11.563L5.653 10.73C4.304 9.393 5.054 7.024 6.97 6.748L8.156 6.574C8.838 6.475 9.427 6.038 9.73 5.408L10.325 4.317Z" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </span>
+                                Evidon
+                            </a>
+                        </div>
+                        <p class="legal-note">
+                            Будь ласка, зверніть увагу, навіть якщо ви вимкніть цю опцію, ви як і раніше будете бачити рекламу 
+                            в мережі Інтернет, проте вона не буде націлена на ваші індивідуальні інтереси.
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <footer class="legal-footer">
+                <p>
+                    Якщо у вас виникли питання щодо цього документа, будь ласка, зв'яжіться з нами:
+                </p>
+                <div class="legal-footer-contacts">
+                    <a href="mailto:info@playvision.com.ua" class="legal-footer-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 8L10.89 13.26C11.5 13.67 12.5 13.67 13.11 13.26L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        info@playvision.com.ua
+                    </a>
+                    <a href="tel:+380982447822" class="legal-footer-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        +38 (098) 244-78-22
+                    </a>
+                </div>
+            </footer>
+        {% else %}
+            <div class="legal-error">
+                <h1>Документ не знайдено</h1>
+                <p>{{ error }}</p>
+                <a href="{% url 'core:home' %}" class="legal-button">Повернутись на головну</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
