@@ -45,12 +45,20 @@
                 <div class="section-content">
                     <div class="about-image-block">
                         {% if about_section2 %}
-                        {% get_localized_svg about_section2 country_code theme as svg %}
-                        {% if svg %}
-                        {{ svg|safe }}
-                        {% else %}
-                        <img src="{% static 'images/about1.svg' %}" alt="Український футбол" loading="lazy">
-                        {% endif %}
+                        {% get_localized_svg about_section2 country_code 'light' as svg_light %}
+                        {% get_localized_svg about_section2 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                         {% else %}
                         <img src="{% static 'images/about1.svg' %}" alt="Український футбол" loading="lazy">
                         {% endif %}
@@ -66,12 +74,20 @@
                     
                     <div class="about-image-block">
                         {% if about_section3 %}
-                        {% get_localized_svg about_section3 country_code theme as svg %}
-                        {% if svg %}
-                        {{ svg|safe }}
-                        {% else %}
-                        <img src="{% static 'images/about2.svg' %}" alt="Місія, філософія і віра" loading="lazy">
-                        {% endif %}
+                        {% get_localized_svg about_section3 country_code 'light' as svg_light %}
+                        {% get_localized_svg about_section3 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                         {% else %}
                         <img src="{% static 'images/about2.svg' %}" alt="Місія, філософія і віра" loading="lazy">
                         {% endif %}
@@ -87,12 +103,20 @@
                     
                     <div class="about-image-block">
                         {% if about_section4 %}
-                        {% get_localized_svg about_section4 country_code theme as svg %}
-                        {% if svg %}
-                        {{ svg|safe }}
-                        {% else %}
-                        <img src="{% static 'images/about3.svg' %}" alt="Цінності та культура" loading="lazy">
-                        {% endif %}
+                        {% get_localized_svg about_section4 country_code 'light' as svg_light %}
+                        {% get_localized_svg about_section4 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                         {% else %}
                         <img src="{% static 'images/about3.svg' %}" alt="Цінності та культура" loading="lazy">
                         {% endif %}

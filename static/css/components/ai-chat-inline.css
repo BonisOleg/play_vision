@@ -1100,3 +1100,84 @@
         transition: none;
     }
 }
+
+/* ========================================
+   ТИМЧАСОВО: AI ПОМІЧНИК - НЕЗАБАРОМ
+   ======================================== */
+
+/* Базові стилі матового скла */
+.ai-chat-inline.coming-soon .ai-chat-input-wrapper {
+    position: relative;
+    pointer-events: none;
+    cursor: not-allowed;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Темна тема */
+[data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
+    background: rgba(23, 23, 23, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Auto тема з темним prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
+        background: rgba(23, 23, 23, 0.5);
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Текст "AI помічник - незабаром" */
+.ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+    content: 'AI помічник - незабаром';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text, #1a1a1a);
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Темна тема для тексту */
+[data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Затушовування елементів */
+.ai-chat-inline.coming-soon .ai-chat-input,
+.ai-chat-inline.coming-soon .ai-chat-send-btn,
+.ai-chat-inline.coming-soon .ai-chat-detach-btn,
+.ai-chat-inline.coming-soon .ai-chat-close-btn {
+    opacity: 0.25;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* Responsive для mobile */
+@media (max-width: 768px) {
+    .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+        font-size: 10px;
+    }
+}

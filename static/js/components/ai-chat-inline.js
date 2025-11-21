@@ -56,6 +56,12 @@
     function init() {
         if (!elements.inline) return;
 
+        // ТИМЧАСОВО: Блокуємо функціональність
+        if (elements.inline.classList.contains('coming-soon')) {
+            console.log('⏸️ AI Chat is coming soon - functionality disabled');
+            return;
+        }
+
         // Встановлюємо максимальну висоту для resize
         CONFIG.resizeMaxHeight = window.innerHeight * 0.5;
 

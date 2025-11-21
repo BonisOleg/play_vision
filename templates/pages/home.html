@@ -251,12 +251,20 @@
                     <!-- ЗОБРАЖЕННЯ ЗАМІСТЬ HEXAGONS -->
                     <div class="mentoring-image-block">
                         {% if mentor_svg %}
-                        {% get_localized_svg mentor_svg country_code theme as svg %}
-                        {% if svg %}
-                        {{ svg|safe }}
-                        {% else %}
-                        <img src="{% static 'images/banner.svg' %}" alt="Екосистема комплексного розвитку футболіста" loading="lazy">
-                        {% endif %}
+                        {% get_localized_svg mentor_svg country_code 'light' as svg_light %}
+                        {% get_localized_svg mentor_svg country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                         {% else %}
                         <img src="{% static 'images/banner.svg' %}" alt="Екосистема комплексного розвитку футболіста" loading="lazy">
                         {% endif %}

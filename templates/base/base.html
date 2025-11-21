@@ -73,6 +73,7 @@
     <link rel="stylesheet" href="{% static 'css/components/mobile-bottom-nav.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dark-accents.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/theme-svg.css' %}">
     {% block extra_css %}{% endblock %}
 
     <!-- HTMX -->
@@ -199,7 +200,7 @@
                     </div>
 
                     <!-- Inline AI Chat (виглядає всередині, але position: absolute поза flow) -->
-                    <div class="ai-chat-inline" data-ai-chat-inline>
+                    <div class="ai-chat-inline coming-soon" data-ai-chat-inline>
                         <!-- Chat Messages Container (історія над інпутом, hidden initially) -->
                         <div class="ai-chat-messages" data-ai-messages style="display: none;"></div>
 
