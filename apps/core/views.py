@@ -60,23 +60,33 @@ class PWAInstallView(TemplateView):
 
 
 class LegalPageView(TemplateView):
-    """Legal pages"""
-    template_name = 'pages/legal.html'
+    """Legal pages - privacy, terms, copyright"""
+    
+    def get_template_names(self):
+        slug = self.kwargs.get('slug', 'privacy')
+        return [f'legal/{slug}.html']
     
     def get_context_data(self, **kwargs):
-        """Get legal page by slug"""
-        from apps.core.models import LegalPage
-        
         context = super().get_context_data(**kwargs)
-        slug = kwargs.get('slug', 'privacy')
+        slug = self.kwargs.get('slug', 'privacy')
         
-        try:
-            page = LegalPage.objects.get(slug=slug, is_active=True)
-            context['page'] = page
-        except LegalPage.DoesNotExist:
-            context['page'] = None
-            context['error'] = f'Документ "{slug}" не знайдено'
+        # SEO metadata for different legal pages
+        meta_data = {
+            'privacy': {
+                'title': 'Політика конфіденційності',
+                'description': 'Політика конфіденційності компанії Play Vision'
+            },
+            'terms': {
+                'title': 'Договір оферти',
+                'description': 'Публічний договір оферти компанії Play Vision'
+            },
+            'copyright': {
+                'title': 'Права інтелектуальної власності',
+                'description': 'Інформація про захист прав інтелектуальної власності'
+            }
+        }
         
+        context['meta'] = meta_data.get(slug, meta_data['privacy'])
         return context
 
 
