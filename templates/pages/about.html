@@ -45,13 +45,12 @@
                 <div class="section-content">
                     <div class="about-image-block">
                         {% if about_section2 %}
-                        {% with image=about_section2|get_localized_image:country_code %}
-                        {% if image %}
-                        <img src="{{ image.url }}" alt="Український футбол" loading="lazy">
+                        {% get_localized_svg about_section2 country_code theme as svg %}
+                        {% if svg %}
+                        {{ svg|safe }}
                         {% else %}
                         <img src="{% static 'images/about1.svg' %}" alt="Український футбол" loading="lazy">
                         {% endif %}
-                        {% endwith %}
                         {% else %}
                         <img src="{% static 'images/about1.svg' %}" alt="Український футбол" loading="lazy">
                         {% endif %}
