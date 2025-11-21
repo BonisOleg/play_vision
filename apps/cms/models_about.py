@@ -73,7 +73,8 @@ class AboutSection2(models.Model):
     def __str__(self):
         return "Секція 2 - Про нас"
     
-    def get_image(self, country_code='UA', theme='light'):
+    def get_svg(self, country_code='UA', theme='light'):
+        """Отримати SVG/PNG контент з урахуванням країни і теми"""
         field_name = f"image_{'ua' if country_code == 'UA' else 'world'}_{theme}"
         image = getattr(self, field_name, None)
         
