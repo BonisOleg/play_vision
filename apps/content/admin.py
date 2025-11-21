@@ -127,38 +127,47 @@ class CourseAdmin(admin.ModelAdmin):
                     messages.warning(request, 'Bunny.net вимкнено. Відео не завантажено.')
                     logger.warning("Bunny.net disabled, promo video not uploaded")
                 else:
-                    # Upload на Bunny.net з bytes (Cloudinary не підтримує .path)
+                    # Читаємо файл з request (ще не збережений в Cloudinary)
                     logger.info(f"Uploading promo video for course: {obj.title}")
                     
-                    # Читаємо файл як bytes
-                    obj.promo_video_file.seek(0)  # На початок файлу
-                    file_content = obj.promo_video_file.read()
-                    
-                    video_data = BunnyService.upload_video(
-                        title=f"Промо: {obj.title}",
-                        collection_id=obj.slug,
-                        file_content=file_content  # Передаємо bytes
-                    )
-                    
-                    if video_data:
-                        # Успішно завантажено
-                        obj.promo_video_bunny_id = video_data.get('guid')
-                        obj.promo_video_bunny_status = str(video_data.get('status', '0'))
+                    # Отримати файл з form
+                    uploaded_file = request.FILES.get('promo_video_file')
+                    if uploaded_file:
+                        # Читаємо bytes з uploaded file
+                        uploaded_file.seek(0)
+                        file_content = uploaded_file.read()
+                        uploaded_file.seek(0)
                         
-                        # Видалити локальний файл після успішного upload
-                        if obj.promo_video_file:
-                            obj.promo_video_file.delete(save=False)
+                        # Upload на Bunny.net
+                        video_data = BunnyService.upload_video(
+                            title=f"Промо: {obj.title}",
+                            collection_id=obj.slug,
+                            file_content=file_content
+                        )
                         
-                        messages.success(request, f'Промо-відео успішно завантажено на Bunny.net (ID: {obj.promo_video_bunny_id})')
-                        logger.info(f"Promo video uploaded successfully: {obj.promo_video_bunny_id}")
-                    else:
-                        messages.error(request, 'Помилка завантаження на Bunny.net. Перевірте логи.')
-                        logger.error(f"Failed to upload promo video for course: {obj.title}")
+                        if video_data:
+                            # Успішно завантажено на Bunny
+                            obj.promo_video_bunny_id = video_data.get('guid')
+                            obj.promo_video_bunny_status = str(video_data.get('status', '0'))
+                            
+                            # НЕ ЗБЕРІГАТИ файл - очистити поле
+                            obj.promo_video_file = None
+                            
+                            messages.success(request, f'Промо-відео успішно завантажено на Bunny.net (ID: {obj.promo_video_bunny_id})')
+                            logger.info(f"Promo video uploaded successfully: {obj.promo_video_bunny_id}")
+                        else:
+                            messages.error(request, 'Помилка завантаження на Bunny.net. Перевірте логи.')
+                            logger.error(f"Failed to upload promo video for course: {obj.title}")
+                            # Теж не зберігати файл при помилці
+                            obj.promo_video_file = None
             
             except Exception as e:
                 messages.error(request, f'Помилка upload: {str(e)}')
                 logger.exception(f"Exception uploading promo video: {e}")
+                # Не зберігати файл при exception
+                obj.promo_video_file = None
         
+        # Зберегти об'єкт БЕЗ файлу в Cloudinary
         super().save_model(request, obj, form, change)
 
 
