@@ -157,6 +157,10 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+# Cache busting version - змінюй після кожного оновлення CSS/JS
+import datetime
+STATIC_VERSION = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+
 # Media files (default for development)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
