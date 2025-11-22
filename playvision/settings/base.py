@@ -91,6 +91,7 @@ TEMPLATES = [
                 'apps.cart.context_processors.cart_context',
                 'apps.cms.context_processors.site_content',
                 'apps.core.context_processors.external_urls',
+                'apps.core.context_processors.static_version',
             ],
         },
     },

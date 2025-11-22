@@ -375,50 +375,50 @@
         </symbol>
     </svg>
 
-    <!-- Scripts -->
+    <!-- Scripts with cache busting -->
     <!-- Theme Manager - load first to prevent flash -->
-    <script src="{% static 'js/theme-manager.js' %}"></script>
+    <script src="{% static 'js/theme-manager.js' %}?v={{ STATIC_VERSION }}"></script>
     <!-- Theme Toggle Button -->
-    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}?v={{ STATIC_VERSION }}"></script>
     <!-- Core utilities -->
-    <script src="{% static 'js/interval-manager.js' %}"></script>
-    <script src="{% static 'js/dom-utils.js' %}"></script>
-    <script src="{% static 'js/api-utils.js' %}"></script>
+    <script src="{% static 'js/interval-manager.js' %}?v={{ STATIC_VERSION }}"></script>
+    <script src="{% static 'js/dom-utils.js' %}?v={{ STATIC_VERSION }}"></script>
+    <script src="{% static 'js/api-utils.js' %}?v={{ STATIC_VERSION }}"></script>
     <!-- Shared utilities -->
-    <script src="{% static 'js/shared/notifications.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
+    <script src="{% static 'js/shared/notifications.js' %}?v={{ STATIC_VERSION }}"></script>
+    <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}?v={{ STATIC_VERSION }}">
     <!-- Main application script -->
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}?v={{ STATIC_VERSION }}"></script>
 
     <!-- AI Chat Inline -->
-    <script src="{% static 'js/components/ai-chat-inline.js' %}" defer></script>
+    <script src="{% static 'js/components/ai-chat-inline.js' %}?v={{ STATIC_VERSION }}" defer></script>
 
     <!-- AI Chat Dialog -->
-    <script src="{% static 'js/components/ai-chat-dialog.js' %}" defer></script>
+    <script src="{% static 'js/components/ai-chat-dialog.js' %}?v={{ STATIC_VERSION }}" defer></script>
 
     <!-- Cart functionality for all pages -->
     {% if user.is_authenticated %}
-    <script src="{% static 'js/core/cart-header.js' %}"></script>
+    <script src="{% static 'js/core/cart-header.js' %}?v={{ STATIC_VERSION }}"></script>
     {% endif %}
 
     <!-- Scroll Popup -->
-    <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
-    <script src="{% static 'js/scroll-popup.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}?v={{ STATIC_VERSION }}">
+    <script src="{% static 'js/scroll-popup.js' %}?v={{ STATIC_VERSION }}"></script>
 
     <!-- Footer Newsletter Form -->
-    <script src="{% static 'js/footer-newsletter.js' %}" defer></script>
+    <script src="{% static 'js/footer-newsletter.js' %}?v={{ STATIC_VERSION }}" defer></script>
 
     <!-- Mobile Bottom Navigation -->
     {% include 'partials/mobile-bottom-nav.html' %}
 
     <!-- Cart Counter -->
-    <script src="{% static 'js/cart-counter.js' %}" defer></script>
+    <script src="{% static 'js/cart-counter.js' %}?v={{ STATIC_VERSION }}" defer></script>
 
     <!-- Navigation Tabs Slider Animation -->
-    <script src="{% static 'js/nav-tabs-slider.js' %}"></script>
+    <script src="{% static 'js/nav-tabs-slider.js' %}?v={{ STATIC_VERSION }}"></script>
 
     <!-- iOS Viewport Fix -->
-    <script src="{% static 'js/viewport-fix.js' %}"></script>
+    <script src="{% static 'js/viewport-fix.js' %}?v={{ STATIC_VERSION }}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>
