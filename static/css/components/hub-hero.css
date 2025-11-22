@@ -76,7 +76,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     text-align: left;
-    margin-bottom: 16px;
+    margin-bottom: 5px;
     text-shadow: none;
     min-height: 80px;
     overflow: hidden;
@@ -85,7 +85,7 @@
 .hero-subtitle {
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: calc(var(--spacing-lg) / 2);
     text-align: left;
     text-shadow: none;
     min-height: 50px;
@@ -95,7 +95,7 @@
 .hero-buttons {
     display: flex;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: calc(var(--spacing-lg) / 2);
 }
 
 /* Слайдер-точки (синхронізовані з home.css) */

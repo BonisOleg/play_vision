@@ -42,7 +42,7 @@
     width: 80%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 4rem var(--spacing-xl);
+    padding: 1rem var(--spacing-xl);
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -156,7 +156,7 @@
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 700;
     line-height: 1.2;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: calc(var(--spacing-md) / 4);
     max-width: 600px;
     margin-left: 0;
     margin-right: 0;
@@ -177,7 +177,7 @@
 /* NEW DESIGN Subtitle */
 .hero-new-design .hero-subtitle {
     font-size: clamp(1rem, 1.5vw, 1.25rem);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: calc(var(--spacing-xl) / 4);
     opacity: 0.85;
     max-width: 550px;
     margin-left: 0;
@@ -198,7 +198,7 @@
 /* NEW DESIGN Buttons */
 .hero-new-design .hero-buttons {
     justify-content: flex-start;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: calc(var(--spacing-lg) / 4);
 }
 
 

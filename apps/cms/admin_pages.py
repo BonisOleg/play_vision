@@ -234,7 +234,15 @@ class MentorSection1ImageAdmin(admin.ModelAdmin):
             'description': 'Номер картинки: 1, 2 або 3'
         }),
         ('🇺🇦 Картинка Україна', {
-            'fields': ('image_ua', 'caption_ua')
+            'fields': ('image_ua', 'caption_ua'),
+            'description': '''
+                <div style="background: #f0f8ff; padding: 12px; border-left: 4px solid #2196F3; margin: 10px 0;">
+                    <p style="margin: 0;"><strong>📐 Рекомендований розмір:</strong> 800×500 px (формат 16:10)</p>
+                    <p style="margin: 8px 0 0 0; color: #666; font-size: 0.9em;">
+                        💡 Система автоматично адаптує зображення під картку, зберігаючи пропорції.
+                    </p>
+                </div>
+            '''
         }),
         ('🌍 Картинка Світ', {
             'fields': ('image_world', 'caption_world'),

@@ -67,7 +67,20 @@ class CourseAdmin(admin.ModelAdmin):
         }),
         ('Медіа', {
             'fields': ('thumbnail', 'logo', 'promo_video_file', 'promo_video_bunny_id', 
-                      'promo_video_bunny_status', 'promo_video_thumbnail_url', 'preview_video')
+                      'promo_video_bunny_status', 'promo_video_thumbnail_url', 'preview_video'),
+            'description': '''
+                <div style="background: #f0f8ff; padding: 12px; border-left: 4px solid #2196F3; margin: 10px 0;">
+                    <h4 style="margin: 0 0 8px 0; color: #1976D2;">📐 Рекомендовані розміри зображень:</h4>
+                    <ul style="margin: 5px 0; padding-left: 20px;">
+                        <li><strong>Thumbnail (мініатюра):</strong> 1200×600 px (формат 2:1) - для карток курсів у каталозі</li>
+                        <li><strong>Logo (логотип):</strong> 400×400 px (формат 1:1, квадрат)</li>
+                        <li><strong>Promo video:</strong> MP4, максимум 100MB</li>
+                    </ul>
+                    <p style="margin: 8px 0 0 0; color: #666; font-size: 0.9em;">
+                        💡 Якщо формат зображення не підходить, система автоматично додасть поля для збереження пропорцій.
+                    </p>
+                </div>
+            '''
         }),
         ('Зовнішні посилання', {
             'fields': ('external_join_url',),

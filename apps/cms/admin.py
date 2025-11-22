@@ -93,7 +93,14 @@ class ExpertCardAdmin(admin.ModelAdmin):
         }),
         ('Фото', {
             'fields': ('photo', 'get_photo_large'),
-            'description': '<p><strong>Розмір:</strong> 400×400 px (квадрат)</p>'
+            'description': '''
+                <div style="background: #f0f8ff; padding: 12px; border-left: 4px solid #2196F3; margin: 10px 0;">
+                    <p style="margin: 0;"><strong>📐 Розмір:</strong> 400×400 px (формат 1:1, квадрат)</p>
+                    <p style="margin: 8px 0 0 0; color: #666; font-size: 0.9em;">
+                        💡 Якщо формат не квадратний, система додасть поля для збереження пропорцій.
+                    </p>
+                </div>
+            '''
         }),
         ('Відображення', {
             'fields': ('order', 'is_active', 'show_on_homepage'),
