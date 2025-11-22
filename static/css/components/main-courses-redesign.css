@@ -384,6 +384,8 @@
     .course-nav-btn {
         width: 40px;
         height: 40px;
+        min-width: 40px;
+        min-height: 40px;
     }
 
     .course-nav-btn svg {
@@ -465,6 +467,8 @@
     .course-nav-btn {
         width: 36px;
         height: 36px;
+        min-width: 36px;
+        min-height: 36px;
     }
 
     .course-nav-btn svg {
