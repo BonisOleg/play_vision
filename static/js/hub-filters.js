@@ -63,9 +63,8 @@ class HubFilters {
         // Активувати панель
         this.sidebar.classList.add('active');
         
-        // Блокувати скрол body (iOS compatible)
+        // Блокувати скрол body
         document.body.classList.add('hub-filters-open');
-        document.body.style.top = `-${this.scrollPosition}px`;
         
         // iOS touchmove блокування
         this.preventBodyScroll = (e) => {
@@ -94,16 +93,12 @@ class HubFilters {
         
         // Розблокувати скрол
         document.body.classList.remove('hub-filters-open');
-        document.body.style.top = '';
         
         // Видалити touchmove блокування
         if (this.preventBodyScroll) {
             document.removeEventListener('touchmove', this.preventBodyScroll);
             this.preventBodyScroll = null;
         }
-        
-        // Відновити позицію скролу
-        window.scrollTo(0, this.scrollPosition);
         
         // ARIA
         if (this.toggleBtn) {
