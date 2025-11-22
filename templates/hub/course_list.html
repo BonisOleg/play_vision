@@ -285,12 +285,19 @@
                             
                             <!-- Кнопки -->
                             <div class="hub-filter-actions">
-                                <button class="hub-filter-btn hub-filter-btn-apply" id="apply-filters">
-                                    Застосувати
+                                <button type="button" class="hub-filter-btn hub-filter-btn-apply" id="apply-filters">
+                                    <svg class="hub-filter-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="M21 21l-4.35-4.35" stroke-linecap="round"/>
+                                    </svg>
+                                    <span class="hub-filter-btn-text">Шукати</span>
                                 </button>
-                                <button class="hub-filter-btn hub-filter-btn-cancel" id="cancel-filters">
-                                    <span class="cancel-text-desktop">Відмінити</span>
-                                    <span class="cancel-text-mobile">Скинути фільтри</span>
+                                <button type="button" class="hub-filter-btn hub-filter-btn-cancel" id="cancel-filters">
+                                    <svg class="hub-filter-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 6h18M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2M10 11v6M14 11v6"/>
+                                        <path d="M5 6l1 14c0 1 1 2 2 2h8c1 0 2-1 2-2l1-14"/>
+                                    </svg>
+                                    <span class="hub-filter-btn-text">Очистити</span>
                                 </button>
                             </div>
                         </aside>
