@@ -4,6 +4,8 @@
 
 .hub-catalog-section {
     padding: var(--spacing-xl);
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 /* Спрощений Content column без sidebar */
@@ -20,6 +22,7 @@
     gap: var(--spacing-lg);
     width: 100%;
     max-width: 1400px;
+    box-sizing: border-box;
 }
 
 /* Grid продуктів */
@@ -337,6 +340,27 @@
     .hub-btn-view .btn-logo-space::before {
         width: 4px;
         height: 4px;
+    }
+}
+
+/* Overflow control для мобільних */
+@media (max-width: 1024px) {
+    .hub-catalog-section {
+        padding: var(--spacing-md);
+    }
+    
+    .hub-content-column {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+        padding: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .hub-catalog-section {
+        padding: var(--spacing-sm);
     }
 }
 

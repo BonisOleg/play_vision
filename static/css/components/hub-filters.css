@@ -175,11 +175,14 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
+    z-index: 10000;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
 }
 
 /* Шапка панелі (мобільна) */
@@ -240,6 +243,7 @@
     .hub-filters-overlay.active {
         opacity: 1;
         visibility: visible;
+        pointer-events: auto;
     }
 }
 
@@ -262,10 +266,10 @@
         left: 0;
         bottom: 0;
         width: 70%;
-        max-width: 350px;
+        max-width: clamp(280px, 70vw, 350px);
         transform: translateX(-100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1001;
+        z-index: 10001;
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
@@ -273,6 +277,9 @@
         will-change: transform;
         background: var(--hub-bg-card);
         padding: 0;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+        contain: layout style;
     }
     
     .hub-filters-sidebar.active {
@@ -374,6 +381,7 @@ body.hub-filters-open {
     position: fixed;
     width: 100%;
     height: 100%;
+    overscroll-behavior: none;
 }
 
 /* iOS Safari специфіка */
@@ -382,6 +390,7 @@ body.hub-filters-open {
         position: fixed;
         overflow: hidden;
         -webkit-overflow-scrolling: auto;
+        overscroll-behavior: none;
     }
 }
 
@@ -396,6 +405,7 @@ body.hub-filters-open {
     border: 2px solid var(--hub-border);
     margin-bottom: 24px;
     margin-top: 10px;
+    box-sizing: border-box;
 }
 
 .hub-search-icon {
@@ -442,4 +452,41 @@ body.hub-filters-open {
 
 .hub-search-btn-reset:hover {
     background: #333333;
+}
+
+/* Search bar responsive */
+@media (max-width: 1024px) {
+    .hub-search-bar {
+        width: 100%;
+        max-width: 100%;
+        padding: 5px 12px;
+        gap: 8px;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+    
+    .hub-search-field {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+    }
+    
+    .hub-search-btn {
+        padding: 6px 12px;
+        font-size: 0.875rem;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .hub-search-bar {
+        padding: 4px 8px;
+        gap: 6px;
+    }
+    
+    .hub-search-btn {
+        padding: 5px 10px;
+        font-size: 0.8125rem;
+    }
 }

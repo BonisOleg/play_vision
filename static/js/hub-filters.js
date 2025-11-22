@@ -47,14 +47,16 @@ class HubFilters {
         
         // Закриття
         this.closeBtn.addEventListener('click', () => this.closePanel());
-        this.overlay.addEventListener('click', () => this.closePanel());
         
-        // Escape key
+        // Overlay з passive listener
+        this.overlay.addEventListener('click', () => this.closePanel(), { passive: true });
+        
+        // Escape key з passive listener
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.sidebar.classList.contains('active')) {
                 this.closePanel();
             }
-        });
+        }, { passive: true });
     }
     
     openPanel() {
@@ -67,6 +69,11 @@ class HubFilters {
         this.sidebar.classList.add('active');
         this.overlay.classList.add('active');
         
+        // Перевірка підтримки overscroll-behavior
+        if (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('overscroll-behavior', 'none')) {
+            document.documentElement.style.overscrollBehavior = 'none';
+        }
+        
         // Блокувати скрол body (iOS compatible)
         document.body.classList.add('hub-filters-open');
         document.body.style.top = `-${this.scrollPosition}px`;
@@ -77,10 +84,12 @@ class HubFilters {
         }
         this.overlay.setAttribute('aria-hidden', 'false');
         
-        // Focus на кнопку закриття
-        if (this.closeBtn) {
-            this.closeBtn.focus();
-        }
+        // Focus з requestAnimationFrame для smooth
+        requestAnimationFrame(() => {
+            if (this.closeBtn) {
+                this.closeBtn.focus();
+            }
+        });
     }
     
     closePanel() {
@@ -90,12 +99,19 @@ class HubFilters {
         this.sidebar.classList.remove('active');
         this.overlay.classList.remove('active');
         
+        // Розблокувати overscroll
+        if (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('overscroll-behavior', 'none')) {
+            document.documentElement.style.overscrollBehavior = '';
+        }
+        
         // Розблокувати скрол
         document.body.classList.remove('hub-filters-open');
         document.body.style.top = '';
         
-        // Відновити позицію скролу
-        window.scrollTo(0, this.scrollPosition);
+        // Відновити позицію скролу з requestAnimationFrame
+        requestAnimationFrame(() => {
+            window.scrollTo(0, this.scrollPosition);
+        });
         
         // ARIA
         if (this.toggleBtn) {
@@ -103,10 +119,12 @@ class HubFilters {
         }
         this.overlay.setAttribute('aria-hidden', 'true');
         
-        // Focus на toggle button
-        if (this.toggleBtn) {
-            this.toggleBtn.focus();
-        }
+        // Focus з requestAnimationFrame
+        requestAnimationFrame(() => {
+            if (this.toggleBtn) {
+                this.toggleBtn.focus();
+            }
+        });
     }
     
     // === DROPDOWNS (без змін) ===
@@ -345,28 +363,50 @@ class HubFilters {
         window.history.pushState({}, '', url.toString());
     }
     
-    // === RESIZE HANDLER з debounce ===
+    // === RESIZE HANDLER з ResizeObserver ===
     initResizeHandler() {
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                const wasMobile = this.isMobile;
-                this.isMobile = window.innerWidth <= 1024;
-                
-                // Якщо перейшли на десктоп - закрити панель
-                if (wasMobile && !this.isMobile) {
-                    if (this.sidebar && this.sidebar.classList.contains('active')) {
-                        this.closePanel();
+        // Сучасний підхід: ResizeObserver
+        if ('ResizeObserver' in window) {
+            const resizeObserver = new ResizeObserver(entries => {
+                for (const entry of entries) {
+                    const width = entry.contentRect.width;
+                    const wasMobile = this.isMobile;
+                    this.isMobile = width <= 1024;
+                    
+                    if (wasMobile && !this.isMobile) {
+                        if (this.sidebar?.classList.contains('active')) {
+                            this.closePanel();
+                        }
+                    }
+                    
+                    if (!wasMobile && this.isMobile && !this.sidebar) {
+                        this.initMobilePanel();
                     }
                 }
-                
-                // Якщо перейшли на мобільний - ініціалізувати панель
-                if (!wasMobile && this.isMobile && !this.sidebar) {
-                    this.initMobilePanel();
-                }
-            }, 250);
-        });
+            });
+            
+            resizeObserver.observe(document.body);
+        } else {
+            // Fallback для старих браузерів
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const wasMobile = this.isMobile;
+                    this.isMobile = window.innerWidth <= 1024;
+                    
+                    if (wasMobile && !this.isMobile) {
+                        if (this.sidebar && this.sidebar.classList.contains('active')) {
+                            this.closePanel();
+                        }
+                    }
+                    
+                    if (!wasMobile && this.isMobile && !this.sidebar) {
+                        this.initMobilePanel();
+                    }
+                }, 250);
+            });
+        }
     }
 }
 

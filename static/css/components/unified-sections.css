@@ -72,6 +72,14 @@
     padding: 0;
 }
 
+/* Overflow control для hub catalog */
+.hub-catalog-section .section-content {
+    overflow-x: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
     .unified-sections-wrapper .fullscreen-section {
