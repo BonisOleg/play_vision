@@ -263,7 +263,8 @@
         flex: 1;
         min-height: 200px;
         padding: 16px;
-        overflow-y: visible;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .hub-filter-item {
@@ -271,8 +272,7 @@
     }
     
     .hub-filter-submenu {
-        max-height: 50vh;
-        overflow-y: auto;
+        overflow-y: visible;
         -webkit-overflow-scrolling: touch;
     }
     
