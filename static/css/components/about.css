@@ -132,6 +132,7 @@
     .about-hero {
         width: 95%;
         margin: 0 auto;
+        padding-top: 8px;
         border-radius: 10px;
         box-shadow: none;
     }
@@ -159,6 +160,7 @@
     .about-hero {
         width: 95%;
         margin: 0 auto;
+        padding-top: 8px;
         border-radius: 10px;
         box-shadow: none;
     }

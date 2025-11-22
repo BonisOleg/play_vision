@@ -137,9 +137,6 @@
         min-height: auto;
     }
     
-    /* Тільки для hero головної залишаємо min-height */
-    
-    
     .hero-section .section-content,
     .about-hero .section-content,
     .mentoring-hero .section-content {
@@ -161,7 +158,6 @@
     .fullscreen-section {
         min-height: auto;
     }
-    
     
     .hero-section .section-content,
     .about-hero .section-content,
