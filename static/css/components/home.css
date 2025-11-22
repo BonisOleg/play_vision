@@ -298,14 +298,28 @@
     border-radius: 4px;
 }
 
-@media (max-width: 768px) {
+/* Tablet responsiveness */
+@media (min-width: 769px) and (max-width: 1024px) {
     .slider-dot {
-        width: 6px;
-        height: 6px;
+        width: 5px;
+        height: 5px;
     }
     
     .slider-dot.active {
-        width: 18px;
+        width: 14px;
+        border-radius: 3px;
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .slider-dot {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .slider-dot.active {
+        width: 14px;
         border-radius: 3px;
     }
 }
