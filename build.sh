@@ -96,3 +96,4 @@ echo "🎫 Creating test events..."
 python manage.py create_test_events || echo "⚠️ Test events creation failed, continuing..."
 
 echo "🎉 Build completed successfully!"
+# Force collectstatic 1763787673
