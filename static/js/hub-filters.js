@@ -67,6 +67,14 @@ class HubFilters {
         document.body.classList.add('hub-filters-open');
         document.body.style.top = `-${this.scrollPosition}px`;
         
+        // iOS touchmove блокування
+        this.preventBodyScroll = (e) => {
+            if (!this.sidebar.contains(e.target)) {
+                e.preventDefault();
+            }
+        };
+        document.addEventListener('touchmove', this.preventBodyScroll, { passive: false });
+        
         // ARIA
         if (this.toggleBtn) {
             this.toggleBtn.setAttribute('aria-expanded', 'true');
@@ -87,6 +95,12 @@ class HubFilters {
         // Розблокувати скрол
         document.body.classList.remove('hub-filters-open');
         document.body.style.top = '';
+        
+        // Видалити touchmove блокування
+        if (this.preventBodyScroll) {
+            document.removeEventListener('touchmove', this.preventBodyScroll);
+            this.preventBodyScroll = null;
+        }
         
         // Відновити позицію скролу
         window.scrollTo(0, this.scrollPosition);
@@ -159,13 +173,8 @@ class HubFilters {
     
     // Обробка зміни фільтрів
     handleFilterChange() {
-        if (this.isMobile) {
-            // На моб/планшет - автозастосування
-            this.applyFilters();
-        } else {
-            // На десктопі - активувати кнопку "Застосувати"
-            this.updateApplyButton();
-        }
+        // Фільтри застосовуються тільки через кнопку "Шукати"
+        // Нічого не робимо автоматично
     }
     
     // === ПОШУК (без змін) ===
@@ -222,17 +231,6 @@ class HubFilters {
                 this.closePanel();
             }
         });
-    }
-    
-    updateApplyButton() {
-        const btn = document.getElementById('apply-filters');
-        if (!btn) return;
-        
-        if (this.selectedFilters.size > 0) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
     }
     
     // === HTMX INTEGRATION ===
@@ -320,8 +318,6 @@ class HubFilters {
             cb.checked = false;
         });
         
-        this.updateApplyButton();
-        
         const url = new URL(window.location.origin + window.location.pathname);
         
         if (this.searchQuery.trim()) {
@@ -338,50 +334,23 @@ class HubFilters {
         window.history.pushState({}, '', url.toString());
     }
     
-    // === RESIZE HANDLER з ResizeObserver ===
+    // === RESIZE HANDLER з debounce ===
     initResizeHandler() {
-        // Сучасний підхід: ResizeObserver
-        if ('ResizeObserver' in window) {
-            const resizeObserver = new ResizeObserver(entries => {
-                for (const entry of entries) {
-                    const width = entry.contentRect.width;
-                    const wasMobile = this.isMobile;
-                    this.isMobile = width <= 1024;
-                    
-                    if (wasMobile && !this.isMobile) {
-                        if (this.sidebar?.classList.contains('active')) {
-                            this.closePanel();
-                        }
-                    }
-                    
-                    if (!wasMobile && this.isMobile && !this.sidebar) {
-                        this.initMobilePanel();
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const wasMobile = this.isMobile;
+                this.isMobile = window.innerWidth <= 1024;
+                
+                // Якщо перейшли на десктоп - закрити панель
+                if (wasMobile && !this.isMobile) {
+                    if (this.sidebar && this.sidebar.classList.contains('active')) {
+                        this.closePanel();
                     }
                 }
-            });
-            
-            resizeObserver.observe(document.body);
-        } else {
-            // Fallback для старих браузерів
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    const wasMobile = this.isMobile;
-                    this.isMobile = window.innerWidth <= 1024;
-                    
-                    if (wasMobile && !this.isMobile) {
-                        if (this.sidebar && this.sidebar.classList.contains('active')) {
-                            this.closePanel();
-                        }
-                    }
-                    
-                    if (!wasMobile && this.isMobile && !this.sidebar) {
-                        this.initMobilePanel();
-                    }
-                }, 250);
-            });
-        }
+            }, 250);
+        });
     }
 }
 
