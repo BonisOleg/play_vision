@@ -500,7 +500,7 @@
 @media (max-width: 1024px) {
     .hero-section {
         width: 90%;
-        margin: 25px auto;
+        margin: 15px auto;
         box-shadow: none;
     }
     
@@ -517,7 +517,7 @@
 @media (max-width: 768px) {
     .hero-section {
         width: 95%;
-        margin: 15px auto;
+        margin: 8px auto;
         border-radius: 10px;
         box-shadow: none;
     }
@@ -583,7 +583,7 @@
 
 @media (max-width: 480px) {
     .hero-section {
-        margin: 10px auto;
+        margin: 5px auto;
         box-shadow: none;
     }
     

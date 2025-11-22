@@ -24,7 +24,7 @@
 .unified-sections-wrapper .fullscreen-section {
     width: 80%;
     max-width: 1400px;
-    margin: 30px auto;
+    margin: 15px auto;
     background: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
@@ -76,7 +76,7 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .unified-sections-wrapper .fullscreen-section {
         width: 90%;
-        margin: 25px auto;
+        margin: 12px auto;
         padding: 35px;
     }
 
@@ -94,7 +94,7 @@
 @media (max-width: 768px) {
     .unified-sections-wrapper .fullscreen-section {
         width: 95%;
-        margin: 20px auto;
+        margin: 8px auto;
         padding: 25px;
         border-radius: 10px;
     }
@@ -191,7 +191,7 @@
 .unified-sections-wrapper .hub-catalog-section {
     width: 80%;
     max-width: 1400px;
-    margin: 30px auto;
+    margin: 15px auto;
     background: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
@@ -220,7 +220,7 @@
     .unified-sections-wrapper .hub-featured-section,
     .unified-sections-wrapper .hub-catalog-section {
         width: 90%;
-        margin: 25px auto;
+        margin: 12px auto;
     }
 }
 
@@ -230,7 +230,7 @@
     .unified-sections-wrapper .hub-featured-section,
     .unified-sections-wrapper .hub-catalog-section {
         width: 95%;
-        margin: 20px auto;
+        margin: 8px auto;
         border-radius: 10px;
     }
 }

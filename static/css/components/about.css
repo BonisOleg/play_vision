@@ -115,7 +115,7 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .about-hero {
         width: 90%;
-        margin: 25px auto;
+        margin: 15px auto;
         box-shadow: none;
     }
 
@@ -131,7 +131,7 @@
 @media (max-width: 768px) {
     .about-hero {
         width: 95%;
-        margin: 20px auto;
+        margin: 8px auto;
         border-radius: 10px;
         box-shadow: none;
     }
@@ -158,7 +158,7 @@
 @media (max-width: 480px) {
     .about-hero {
         width: 95%;
-        margin: 20px auto;
+        margin: 5px auto;
         border-radius: 10px;
         box-shadow: none;
     }
@@ -215,14 +215,4 @@ img[loading="lazy"].lazy-loaded {
 }
 
 /* === RESPONSIVE MARGIN === */
-@media (max-width: 768px) {
-    .about-hero {
-        margin: 15px auto;
-    }
-}
-
-@media (max-width: 480px) {
-    .about-hero {
-        margin: 10px auto;
-    }
-}
+/* Видалено - margin налаштовується вище в основних медіа-запитах */
