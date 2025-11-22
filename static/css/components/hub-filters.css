@@ -236,13 +236,14 @@
         transform: translateX(-100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1000;
-        overflow-y: auto;
+        overflow-y: scroll;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
         background: var(--hub-bg-card);
         padding: 0;
-        overscroll-behavior: contain;
+        overscroll-behavior-y: contain;
+        overscroll-behavior-x: none;
     }
     
     .hub-filters-sidebar.active {
@@ -321,7 +322,6 @@
 /* Body scroll lock (iOS compatible) */
 body.hub-filters-open {
     overflow: hidden;
-    touch-action: none;
     overscroll-behavior: none;
     position: relative;
 }
@@ -330,7 +330,6 @@ body.hub-filters-open {
 @supports (-webkit-touch-callout: none) {
     body.hub-filters-open {
         overflow: hidden;
-        touch-action: none;
         position: relative;
         -webkit-overflow-scrolling: auto;
         overscroll-behavior: none;
