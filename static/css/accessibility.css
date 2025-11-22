@@ -195,28 +195,7 @@ select:focus-visible {
 /* === TOUCH DEVICE IMPROVEMENTS === */
 @media (hover: none) and (pointer: coarse) {
 
-    /* Збільшені touch targets згідно WCAG 2.5.5 */
-    .btn,
-    button,
-    a.btn {
-        min-height: 54px;
-        min-width: 44px;
-        padding: 12px 16px;
-    }
-
-    input[type="checkbox"],
-    input[type="radio"] {
-        min-height: 44px;
-        min-width: 44px;
-    }
-
-    /* Better spacing for touch */
-    .nav-links a,
-    .mobile-nav a {
-        padding: 12px 16px;
-        min-height: 44px;
-    }
-
+  
     /* Видалити hover effects на touch devices */
     .card:hover,
     .btn:hover,
