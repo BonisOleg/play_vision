@@ -178,7 +178,6 @@
 .hub-search-field {
     flex: 1;
     border: none;
-    background: transparent;
     font-size: 1rem;
     color: var(--hub-text);
     outline: none;

@@ -42,7 +42,7 @@
     width: 80%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0.5rem 2rem 2rem 2rem;
+    padding: 4rem 2rem 1rem 0.5rem;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -74,7 +74,7 @@
     /* NEW DESIGN Tablet */
     .hero-new-design {
         width: 90%;
-        padding: 3.5rem var(--spacing-lg);
+        padding: 3.5rem var(--spacing-lg) 0.875rem calc(var(--spacing-lg) / 4);
     }
 
     .hero-new-design .hero-title {
@@ -92,7 +92,7 @@
     /* NEW DESIGN Mobile (Синхронізовано з content-width) */
     .hero-new-design {
         width: 95%;
-        padding: 3rem var(--spacing-md);
+        padding: 3rem var(--spacing-md) 0.75rem calc(var(--spacing-md) / 4);
     }
 
     .hero-new-design .hero-title {
@@ -156,7 +156,7 @@
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 700;
     line-height: 1.2;
-    margin-bottom: calc(var(--spacing-md) / 4);
+    margin-bottom: var(--spacing-md);
     max-width: 600px;
     margin-left: 0;
     margin-right: 0;
@@ -177,7 +177,7 @@
 /* NEW DESIGN Subtitle */
 .hero-new-design .hero-subtitle {
     font-size: clamp(1rem, 1.5vw, 1.25rem);
-    margin-bottom: calc(var(--spacing-xl) / 4);
+    margin-bottom: var(--spacing-xl);
     opacity: 0.85;
     max-width: 550px;
     margin-left: 0;
@@ -198,7 +198,7 @@
 /* NEW DESIGN Buttons */
 .hero-new-design .hero-buttons {
     justify-content: flex-start;
-    margin-bottom: calc(var(--spacing-lg) / 4);
+    margin-bottom: var(--spacing-lg);
 }
 
 
@@ -618,7 +618,7 @@
 
     /* NEW DESIGN Small Mobile */
     .hero-new-design {
-        padding: 2.5rem 5%;
+        padding: 2.5rem 5% 0.625rem 1.25%;
     }
 
     .hero-new-design .hero-title {
