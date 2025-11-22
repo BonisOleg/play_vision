@@ -815,3 +815,16 @@
         border: 1px solid #000000;
     }
 }
+
+/* === RESPONSIVE MARGIN === */
+@media (max-width: 768px) {
+    .mentoring-hero {
+        margin: 15px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .mentoring-hero {
+        margin: 10px auto;
+    }
+}

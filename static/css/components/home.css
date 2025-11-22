@@ -41,8 +41,7 @@
     backdrop-filter: none;
     width: 80%;
     max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 0 40px 40px !important;
+    padding: 0 0 90px  !important;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -55,7 +54,7 @@
 @media (min-width: 769px) and (max-width: 1024px) {
     .hero-section {
         width: 90%;
-        margin: 25px auto;
+        margin: 20px auto;
     }
     
     .fullscreen-section {
@@ -71,48 +70,78 @@
     }
 
     /* NEW DESIGN Tablet */
-    .hero-section .section-content.hero-new-design {
+    .section-content.hero-new-design {
         width: 90%;
-        padding: 0 0 30px 30px !important;
+        padding: 1rem 1.5rem 0.75rem !important;
     }
 
     .hero-new-design .hero-title {
-        font-size: clamp(2rem, 4vw, 3rem);
-        max-width: 100%;
+        font-size: 2rem; /* 70% від 2.5rem */
+        margin-bottom: 0.75rem;
     }
 
     .hero-new-design .hero-subtitle {
-        font-size: clamp(1rem, 2vw, 1.2rem);
-        max-width: 100%;
+        font-size: 1rem; /* 80% від 1.25rem */
+        margin-bottom: 1rem;
+    }
+    
+    .hero-btn-new {
+        padding: 10px 18px;
+        font-size: 0.95rem;
     }
 }
 
 @media (max-width: 768px) {
-    /* NEW DESIGN Mobile (Синхронізовано з content-width) */
-    .hero-section .section-content.hero-new-design {
+    /* NEW DESIGN Mobile */
+    .section-content.hero-new-design {
         width: 95%;
-        padding: 0 0 10px 10px !important;
+        padding: 0.75rem 1rem 0.5rem !important;
+        justify-content: flex-end;
     }
 
     .hero-new-design .hero-title {
-        font-size: clamp(1.75rem, 6vw, 2.5rem);
-        max-width: 100%;
+        font-size: 1.5rem; /* 60% від 2.5rem */
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
     }
 
     .hero-new-design .hero-subtitle {
-        font-size: clamp(0.95rem, 3vw, 1.125rem);
-        max-width: 100%;
+        font-size: 0.875rem; /* 70% від 1.25rem */
+        margin-bottom: 0.75rem;
+        line-height: 1.4;
+    }
+    
+    .hero-new-design .hero-buttons {
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .hero-btn-new {
-        padding: 7px 12px 7px 14px;
-        font-size: 0.95rem;
-        min-height: 25px;
+        padding: 8px 14px;
+        font-size: 0.875rem;
+        min-height: auto;
     }
 
     .hero-btn-new .btn-logo-space {
-        width: 11px;
-        height: 11px;
+        width: 10px;
+        height: 10px;
+    }
+    
+    /* Слайдер-точки компактні */
+    .hero-slider-dots {
+        margin-top: 0.5rem;
+        gap: 5px;
+    }
+    
+    .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-width: 1px;
+    }
+    
+    .slider-dot.active {
+        width: 20px;
+        border-radius: 4px;
     }
 }
 
@@ -488,9 +517,8 @@
 @media (max-width: 768px) {
     .hero-section {
         width: 95%;
-        margin: 20px auto;
+        margin: 15px auto;
         border-radius: 10px;
-        min-height: 500px;
     }
     
     /* CTA залишається на всю ширину */
@@ -553,12 +581,41 @@
 }
 
 @media (max-width: 480px) {
+    .hero-section {
+        margin: 10px auto;
+    }
+    
     .hero-title {
         font-size: 2rem;
     }
 
     .hero-subtitle {
         font-size: 1rem;
+    }
+    
+    /* NEW DESIGN Extra Small */
+    .hero-new-design .hero-title {
+        font-size: 1.25rem; /* 50% від 2.5rem */
+        margin-bottom: 0.4rem;
+    }
+    
+    .hero-new-design .hero-subtitle {
+        font-size: 0.8rem; /* 64% від 1.25rem */
+        margin-bottom: 0.6rem;
+    }
+    
+    .hero-btn-new {
+        padding: 7px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .slider-dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .slider-dot.active {
+        width: 16px;
     }
 
     .cta-title {

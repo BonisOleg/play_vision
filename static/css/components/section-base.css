@@ -22,6 +22,22 @@
     display: block;
 }
 
+/* Fallback для старих Android браузерів */
+@supports not (aspect-ratio: 16 / 9) {
+    .section-bg::before {
+        content: '';
+        display: block;
+        padding-top: 56.25%; /* 16:9 = 9/16 * 100% */
+    }
+    
+    .section-bg-image,
+    .section-bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
 .section-overlay {
     position: absolute;
     top: 0;
@@ -115,7 +131,7 @@
 /* === RESPONSIVE === */
 @media (min-width: 769px) and (max-width: 1024px) {
     .section-bg {
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 16 / 9; /* ЗАЛИШЕНО 16:9 */
     }
     
     .fullscreen-section {
@@ -126,13 +142,13 @@
     .about-hero .section-content,
     .mentoring-hero .section-content {
         width: 90%;
-        padding: 1.5rem var(--spacing-lg);
+        padding: 1rem 1.5rem;
     }
 }
 
 @media (max-width: 768px) {
     .section-bg {
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 16 / 9; /* ЗАЛИШЕНО 16:9 */
     }
     
     .fullscreen-section {
@@ -143,7 +159,16 @@
     .about-hero .section-content,
     .mentoring-hero .section-content {
         width: 95%;
-        padding: 1rem var(--spacing-md);
+        padding: 0.5rem 1rem 0.75rem;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section .section-content,
+    .about-hero .section-content,
+    .mentoring-hero .section-content {
+        padding: 0.5rem 0.75rem 0.5rem;
     }
 }
 

@@ -213,3 +213,16 @@ img[loading="lazy"].lazy-loaded {
         transition: none;
     }
 }
+
+/* === RESPONSIVE MARGIN === */
+@media (max-width: 768px) {
+    .about-hero {
+        margin: 15px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-hero {
+        margin: 10px auto;
+    }
+}
