@@ -3,14 +3,6 @@ Context processors для глобальних даних в templates
 """
 
 
-def static_version(request):
-    """Додає версію статики для cache busting"""
-    from django.conf import settings
-    return {
-        'STATIC_VERSION': getattr(settings, 'STATIC_VERSION', '1'),
-    }
-
-
 def external_urls(request):
     """Глобальні зовнішні URL для використання в templates"""
     from django.conf import settings

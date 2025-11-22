@@ -91,7 +91,6 @@ TEMPLATES = [
                 'apps.cart.context_processors.cart_context',
                 'apps.cms.context_processors.site_content',
                 'apps.core.context_processors.external_urls',
-                'apps.core.context_processors.static_version',
             ],
         },
     },
@@ -157,10 +156,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-
-# Cache busting version - змінюй після кожного оновлення CSS/JS
-import datetime
-STATIC_VERSION = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
 # Media files (default for development)
 MEDIA_URL = '/media/'

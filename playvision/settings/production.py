@@ -66,10 +66,6 @@ WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['*']
 # Allow missing files without crashing
 WHITENOISE_MANIFEST_STRICT = False
 
-# ВИМКНУТИ КЕШ СТАТИКИ (для швидкого редеплою)
-WHITENOISE_MAX_AGE = 0  # Вимкнути browser caching
-WHITENOISE_IMMUTABLE_FILE_TEST = lambda path, url: False  # Ніколи не кешувати
-
 # Sentry Integration
 SENTRY_DSN = config('SENTRY_DSN', default='')
 
@@ -175,8 +171,7 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # Використовуємо базовий WhiteNoise БЕЗ compression для швидкого deploy
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
