@@ -11,16 +11,10 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     position: relative;
-    min-height: 600px;
 }
 
 .about-hero .section-bg {
     background-color: #171717;
-}
-
-/* Зображення має заповнювати картку і обрізатись */
-.about-hero .section-bg-image {
-    object-fit: cover;
 }
 
 

@@ -35,14 +35,14 @@
 
 /* NEW DESIGN - 1в1 як на скріні */
 /* Використовує загальну систему ширини */
-.section-content.hero-new-design {
+.hero-section .section-content.hero-new-design {
     border: none;
     background: transparent;
     backdrop-filter: none;
     width: 80%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 4rem 2rem 1rem 0.5rem !important;
+    padding: 0 0 40px 40px !important;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -56,7 +56,6 @@
     .hero-section {
         width: 90%;
         margin: 25px auto;
-        min-height: 500px;
     }
     
     .fullscreen-section {
@@ -72,9 +71,9 @@
     }
 
     /* NEW DESIGN Tablet */
-    .section-content.hero-new-design {
+    .hero-section .section-content.hero-new-design {
         width: 90%;
-        padding: 3.5rem var(--spacing-lg) 0.875rem calc(var(--spacing-lg) / 4) !important;
+        padding: 0 0 30px 30px !important;
     }
 
     .hero-new-design .hero-title {
@@ -90,9 +89,9 @@
 
 @media (max-width: 768px) {
     /* NEW DESIGN Mobile (Синхронізовано з content-width) */
-    .section-content.hero-new-design {
+    .hero-section .section-content.hero-new-design {
         width: 95%;
-        padding: 3rem var(--spacing-md) 0.75rem calc(var(--spacing-md) / 4) !important;
+        padding: 0 0 10px 10px !important;
     }
 
     .hero-new-design .hero-title {
@@ -129,13 +128,6 @@
     color: white;
     text-align: center;
     position: relative;
-    min-height: 600px;
-}
-
-/* Зображення має заповнювати картку і обрізатись */
-.hero-section .section-bg-image,
-.hero-section .section-bg-video {
-    object-fit: cover;
 }
 
 
@@ -302,9 +294,7 @@
 }
 
 /* Використовує загальну систему ширини з section-base.css */
-.experts-section .section-content {
-    /* Наслідує з section-base.css: width: 70%, max-width: 1400px, padding з var() */
-}
+/* .experts-section .section-content наслідує з section-base.css: width: 70%, max-width: 1400px, padding з var() */
 
 .experts-section .section-title {
     color: #2a2a2a;
@@ -340,7 +330,7 @@
 
 .cta-simple {
     background-image: url('/static/images/backlast.png');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -617,8 +607,8 @@
     }
 
     /* NEW DESIGN Small Mobile */
-    .section-content.hero-new-design {
-        padding: 2.5rem 5% 0.625rem 1.25% !important;
+    .hero-section .section-content.hero-new-design {
+        padding: 0 0 10px 10px !important;
     }
 
     .hero-new-design .hero-title {
