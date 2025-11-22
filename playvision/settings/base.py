@@ -265,13 +265,6 @@ LOGGING = {
     },
 }
 
-# WhiteNoise settings
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    },
-}
-
 # Video Security settings (НОВІ налаштування)
 VIDEO_SECURITY_ENABLED = config('VIDEO_SECURITY_ENABLED', default=False, cast=bool)
 VIDEO_TOKEN_LIFETIME = config('VIDEO_TOKEN_LIFETIME', default=3600, cast=int)  # 1 година

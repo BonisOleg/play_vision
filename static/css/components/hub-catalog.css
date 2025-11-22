@@ -287,6 +287,8 @@
 @media (max-width: 768px) {
     .hub-catalog-grid {
         grid-template-columns: 1fr;
+        max-width: 70%;
+        margin: auto;
     }
     
     .hub-product-title {

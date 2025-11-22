@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -75,6 +75,8 @@
     <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dark-accents.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/theme-svg.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
     {% block extra_css %}{% endblock %}
 
     <!-- HTMX -->
@@ -386,7 +388,6 @@
     <script src="{% static 'js/api-utils.js' %}"></script>
     <!-- Shared utilities -->
     <script src="{% static 'js/shared/notifications.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
     <!-- Main application script -->
     <script src="{% static 'js/main.js' %}"></script>
 
@@ -402,7 +403,6 @@
     {% endif %}
 
     <!-- Scroll Popup -->
-    <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
     <script src="{% static 'js/scroll-popup.js' %}"></script>
 
     <!-- Footer Newsletter Form -->
