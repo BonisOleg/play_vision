@@ -22,6 +22,9 @@
 .hub-nav-btn {
     width: 48px;
     height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: #171717;
     color: #ffffff;
@@ -48,6 +51,11 @@
     opacity: 0.3;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+.hub-nav-btn svg {
+    max-width: 24px;
+    max-height: 24px;
 }
 
 [data-theme="dark"] .hub-nav-btn {
