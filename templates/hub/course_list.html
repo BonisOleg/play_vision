@@ -165,6 +165,9 @@
                 </div>
             </section>
 
+            <!-- Overlay для мобільної панелі фільтрів -->
+            <div class="hub-filters-overlay" aria-hidden="true"></div>
+
             <!-- КАТАЛОГ -->
             <section class="hub-catalog-section" id="catalog">
                 <div class="section-content">
@@ -173,6 +176,20 @@
                         
                         <!-- SIDEBAR ФІЛЬТРІВ -->
                         <aside class="hub-filters-sidebar">
+                            <!-- Шапка для мобільної версії -->
+                            <div class="hub-filters-header">
+                                <h2 class="hub-filters-title-mobile">Фільтрувати</h2>
+                                <button type="button" 
+                                        class="hub-filters-close-btn" 
+                                        id="hub-filters-close"
+                                        aria-label="Закрити фільтри">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"/>
+                                        <line x1="6" y1="6" x2="18" y2="18"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
                             <h2 class="hub-filters-title">Фільтрувати</h2>
                             
                             <!-- Фільтри -->
@@ -275,13 +292,28 @@
                                     Застосувати
                                 </button>
                                 <button class="hub-filter-btn hub-filter-btn-cancel" id="cancel-filters">
-                                    Відмінити
+                                    <span class="cancel-text-desktop">Відмінити</span>
+                                    <span class="cancel-text-mobile">Скинути фільтри</span>
                                 </button>
                             </div>
                         </aside>
                         
                         <!-- КОНТЕНТ -->
                         <div class="hub-content-column">
+                            
+                            <!-- Плаваюча кнопка фільтрів (тільки моб/планшет) -->
+                            <button type="button" 
+                                    class="hub-filters-toggle-btn" 
+                                    id="hub-filters-toggle"
+                                    aria-label="Відкрити фільтри"
+                                    aria-expanded="false">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="4" y1="6" x2="20" y2="6"/>
+                                    <line x1="4" y1="12" x2="20" y2="12"/>
+                                    <line x1="4" y1="18" x2="20" y2="18"/>
+                                </svg>
+                                <span>Фільтри</span>
+                            </button>
                             
                             <!-- ПОШУК -->
                             <div class="hub-search-bar">

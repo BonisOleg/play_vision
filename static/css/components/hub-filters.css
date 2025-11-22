@@ -157,6 +157,234 @@
     background: #333333;
 }
 
+/* ============================================
+   МОБІЛЬНА/ПЛАНШЕТНА ПАНЕЛЬ ФІЛЬТРІВ
+   ============================================ */
+
+/* Кнопка відкриття фільтрів - тільки моб/планшет */
+.hub-filters-toggle-btn {
+    display: none;
+}
+
+/* Overlay для мобільної панелі */
+.hub-filters-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Шапка панелі (мобільна) */
+.hub-filters-header {
+    display: none;
+}
+
+/* Текст кнопок - desktop за замовчуванням */
+.cancel-text-mobile {
+    display: none;
+}
+
+.cancel-text-desktop {
+    display: inline;
+}
+
+@media (max-width: 1024px) {
+    /* Toggle button */
+    .hub-filters-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: var(--hub-bg-card);
+        border: 2px solid var(--hub-border);
+        border-radius: 12px;
+        color: var(--hub-text);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 6px var(--hub-shadow);
+        position: sticky;
+        top: 110px;
+        z-index: 90;
+        width: fit-content;
+    }
+    
+    .hub-filters-toggle-btn:hover,
+    .hub-filters-toggle-btn:active {
+        background: var(--hub-primary);
+        color: white;
+        border-color: var(--hub-primary);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px var(--hub-shadow);
+    }
+    
+    .hub-filters-toggle-btn svg {
+        flex-shrink: 0;
+    }
+    
+    /* Overlay активний стан */
+    .hub-filters-overlay {
+        display: block;
+    }
+    
+    .hub-filters-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 480px) {
+    .hub-filters-toggle-btn {
+        padding: 8px 12px;
+        font-size: 0.875rem;
+    }
+}
+
+/* Side Panel (виїжджаюча панель) */
+@media (max-width: 1024px) {
+    .hub-catalog-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .hub-filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 70%;
+        max-width: 350px;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
+        will-change: transform;
+        background: var(--hub-bg-card);
+        padding: 0;
+    }
+    
+    .hub-filters-sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* Ховати десктопний заголовок */
+    .hub-filters-sidebar .hub-filters-title {
+        display: none;
+    }
+    
+    /* Внутрішній контент з padding */
+    .hub-filters-sidebar .hub-filters-list {
+        padding: 20px;
+        padding-top: 0;
+    }
+    
+    /* Кнопки внизу панелі */
+    .hub-filters-sidebar .hub-filter-actions {
+        padding: 20px;
+        padding-top: 0;
+        position: sticky;
+        bottom: 0;
+        background: var(--hub-bg-card);
+        border-top: 2px solid var(--hub-border);
+        margin-top: 20px;
+    }
+    
+    /* Шапка панелі */
+    .hub-filters-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 2px solid var(--hub-border);
+        position: sticky;
+        top: 0;
+        background: var(--hub-bg-card);
+        z-index: 10;
+    }
+    
+    .hub-filters-title-mobile {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--hub-text);
+        margin: 0;
+    }
+    
+    .hub-filters-close-btn {
+        background: transparent;
+        border: none;
+        padding: 4px;
+        cursor: pointer;
+        color: var(--hub-text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+    }
+    
+    .hub-filters-close-btn:hover,
+    .hub-filters-close-btn:active {
+        background: var(--hub-border);
+        transform: scale(1.1);
+    }
+    
+    /* Адаптація кнопок футеру */
+    .hub-filter-btn-apply {
+        display: none;
+    }
+    
+    .hub-filter-btn-cancel {
+        flex: 1;
+        background: var(--hub-secondary);
+        color: white;
+        pointer-events: auto;
+    }
+    
+    .cancel-text-desktop {
+        display: none;
+    }
+    
+    .cancel-text-mobile {
+        display: inline;
+    }
+}
+
+@media (max-width: 480px) {
+    .hub-filters-sidebar {
+        width: 85%;
+        max-width: none;
+    }
+}
+
+/* Body scroll lock (iOS compatible) */
+body.hub-filters-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* iOS Safari специфіка */
+@supports (-webkit-touch-callout: none) {
+    body.hub-filters-open {
+        position: fixed;
+        overflow: hidden;
+        -webkit-overflow-scrolling: auto;
+    }
+}
+
 /* Horizontal search bar над каталогом */
 .hub-search-bar {
     display: flex;
@@ -215,36 +443,3 @@
 .hub-search-btn-reset:hover {
     background: #333333;
 }
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .hub-catalog-layout {
-        grid-template-columns: 1fr;
-    }
-    
-    .hub-filters-sidebar {
-        position: static;
-    }
-}
-
-@media (max-width: 768px) {
-    .hub-search-bar {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    
-    .hub-search-field {
-        flex-basis: 100%;
-        order: 2;
-    }
-    
-    .hub-search-icon {
-        order: 1;
-    }
-    
-    .hub-search-btn {
-        flex: 1;
-        order: 3;
-    }
-}
-

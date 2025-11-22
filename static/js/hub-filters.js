@@ -2,16 +2,114 @@ class HubFilters {
     constructor() {
         this.selectedFilters = new Set();
         this.searchQuery = '';
+        this.scrollPosition = 0;
+        this.isMobile = window.innerWidth <= 1024;
+        
+        // Кешування DOM елементів
+        this.sidebar = null;
+        this.overlay = null;
+        this.toggleBtn = null;
+        this.closeBtn = null;
+        
         this.init();
     }
     
     init() {
+        // Основні обробники
         this.initDropdowns();
         this.initCheckboxes();
         this.initSearch();
         this.initButtons();
+        
+        // Мобільна панель
+        if (this.isMobile) {
+            this.initMobilePanel();
+        }
+        
+        // Resize handler з debounce
+        this.initResizeHandler();
     }
     
+    // === МОБІЛЬНА ПАНЕЛЬ ===
+    initMobilePanel() {
+        this.sidebar = document.querySelector('.hub-filters-sidebar');
+        this.overlay = document.querySelector('.hub-filters-overlay');
+        this.toggleBtn = document.getElementById('hub-filters-toggle');
+        this.closeBtn = document.getElementById('hub-filters-close');
+        
+        if (!this.sidebar || !this.overlay || !this.toggleBtn || !this.closeBtn) {
+            console.warn('Mobile panel elements not found');
+            return;
+        }
+        
+        // Відкриття
+        this.toggleBtn.addEventListener('click', () => this.openPanel());
+        
+        // Закриття
+        this.closeBtn.addEventListener('click', () => this.closePanel());
+        this.overlay.addEventListener('click', () => this.closePanel());
+        
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.sidebar.classList.contains('active')) {
+                this.closePanel();
+            }
+        });
+    }
+    
+    openPanel() {
+        if (!this.sidebar || !this.overlay) return;
+        
+        // Зберегти позицію скролу
+        this.scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Активувати панель і overlay
+        this.sidebar.classList.add('active');
+        this.overlay.classList.add('active');
+        
+        // Блокувати скрол body (iOS compatible)
+        document.body.classList.add('hub-filters-open');
+        document.body.style.top = `-${this.scrollPosition}px`;
+        
+        // ARIA
+        if (this.toggleBtn) {
+            this.toggleBtn.setAttribute('aria-expanded', 'true');
+        }
+        this.overlay.setAttribute('aria-hidden', 'false');
+        
+        // Focus на кнопку закриття
+        if (this.closeBtn) {
+            this.closeBtn.focus();
+        }
+    }
+    
+    closePanel() {
+        if (!this.sidebar || !this.overlay) return;
+        
+        // Деактивувати
+        this.sidebar.classList.remove('active');
+        this.overlay.classList.remove('active');
+        
+        // Розблокувати скрол
+        document.body.classList.remove('hub-filters-open');
+        document.body.style.top = '';
+        
+        // Відновити позицію скролу
+        window.scrollTo(0, this.scrollPosition);
+        
+        // ARIA
+        if (this.toggleBtn) {
+            this.toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+        this.overlay.setAttribute('aria-hidden', 'true');
+        
+        // Focus на toggle button
+        if (this.toggleBtn) {
+            this.toggleBtn.focus();
+        }
+    }
+    
+    // === DROPDOWNS (без змін) ===
     initDropdowns() {
         document.querySelectorAll('[data-dropdown]').forEach(header => {
             header.addEventListener('click', (e) => {
@@ -19,13 +117,17 @@ class HubFilters {
                 const submenu = document.querySelector(`[data-submenu="${key}"]`);
                 const arrow = e.currentTarget.querySelector('.hub-filter-arrow');
                 
-                submenu.classList.toggle('open');
-                arrow.classList.toggle('open');
+                if (submenu && arrow) {
+                    submenu.classList.toggle('open');
+                    arrow.classList.toggle('open');
+                }
             });
         });
     }
     
+    // === CHECKBOXES з автозастосуванням ===
     initCheckboxes() {
+        // Головні чекбокси
         document.querySelectorAll('[data-checkbox]').forEach(label => {
             const value = label.dataset.checkbox;
             const checkbox = label.querySelector('.hub-filter-checkbox');
@@ -33,22 +135,23 @@ class HubFilters {
             
             label.addEventListener('click', (e) => {
                 if (e.target.tagName === 'INPUT') return;
-                
                 e.preventDefault();
                 
                 if (this.selectedFilters.has(value)) {
                     this.selectedFilters.delete(value);
-                    checkbox.classList.remove('checked');
-                    realCheckbox.checked = false;
+                    if (checkbox) checkbox.classList.remove('checked');
+                    if (realCheckbox) realCheckbox.checked = false;
                 } else {
                     this.selectedFilters.add(value);
-                    checkbox.classList.add('checked');
-                    realCheckbox.checked = true;
+                    if (checkbox) checkbox.classList.add('checked');
+                    if (realCheckbox) realCheckbox.checked = true;
                 }
-                this.updateApplyButton();
+                
+                this.handleFilterChange();
             });
         });
         
+        // Субпункти (тренерство)
         document.querySelectorAll('.hub-filter-subitem input[type="checkbox"]').forEach(cb => {
             cb.addEventListener('change', (e) => {
                 if (e.target.checked) {
@@ -56,22 +159,37 @@ class HubFilters {
                 } else {
                     this.selectedFilters.delete(e.target.value);
                 }
-                this.updateApplyButton();
+                this.handleFilterChange();
             });
         });
     }
     
+    // Обробка зміни фільтрів
+    handleFilterChange() {
+        if (this.isMobile) {
+            // На моб/планшет - автозастосування
+            this.applyFilters();
+        } else {
+            // На десктопі - активувати кнопку "Застосувати"
+            this.updateApplyButton();
+        }
+    }
+    
+    // === ПОШУК (без змін) ===
     initSearch() {
         const searchInput = document.getElementById('hub-search-field');
         const searchFindBtn = document.getElementById('hub-search-find');
         const searchResetBtn = document.getElementById('hub-search-reset');
         
-        // Оновлюємо значення при введенні
+        if (!searchInput || !searchFindBtn || !searchResetBtn) {
+            console.warn('Search elements not found');
+            return;
+        }
+        
         searchInput.addEventListener('input', (e) => {
             this.searchQuery = e.target.value;
         });
         
-        // Пошук по Enter
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -79,30 +197,44 @@ class HubFilters {
             }
         });
         
-        // Кнопка "Знайти"
         searchFindBtn.addEventListener('click', () => {
             this.performSearch();
         });
         
-        // Кнопка "Скинути"
         searchResetBtn.addEventListener('click', () => {
             this.resetSearch();
         });
     }
     
+    // === КНОПКИ ===
     initButtons() {
-        document.getElementById('apply-filters').addEventListener('click', () => {
+        const applyBtn = document.getElementById('apply-filters');
+        const cancelBtn = document.getElementById('cancel-filters');
+        
+        if (!applyBtn || !cancelBtn) {
+            console.warn('Filter buttons not found');
+            return;
+        }
+        
+        applyBtn.addEventListener('click', () => {
             this.applyFilters();
+            if (this.isMobile) {
+                this.closePanel();
+            }
         });
         
-        document.getElementById('cancel-filters').addEventListener('click', () => {
+        cancelBtn.addEventListener('click', () => {
             this.resetFilters();
+            if (this.isMobile) {
+                this.closePanel();
+            }
         });
     }
     
     updateApplyButton() {
         const btn = document.getElementById('apply-filters');
-        // Активуємо тільки при наявності фільтрів, НЕ пошуку
+        if (!btn) return;
+        
         if (this.selectedFilters.size > 0) {
             btn.classList.add('active');
         } else {
@@ -110,23 +242,24 @@ class HubFilters {
         }
     }
     
+    // === HTMX INTEGRATION ===
     performSearch() {
         const url = new URL(window.location.href);
         url.searchParams.delete('page');
         
         if (this.searchQuery.trim()) {
             url.searchParams.set('q', this.searchQuery.trim());
-            
-            // Застосовуємо також активні фільтри
             url.searchParams.delete('audience');
             this.selectedFilters.forEach(filter => {
                 url.searchParams.append('audience', filter);
             });
             
-            htmx.ajax('GET', url.toString(), {
-                target: '#catalog-content',
-                swap: 'innerHTML'
-            });
+            if (typeof htmx !== 'undefined') {
+                htmx.ajax('GET', url.toString(), {
+                    target: '#catalog-content',
+                    swap: 'innerHTML'
+                });
+            }
             
             window.history.pushState({}, '', url.toString());
         }
@@ -134,13 +267,15 @@ class HubFilters {
     
     resetSearch() {
         this.searchQuery = '';
-        document.getElementById('hub-search-field').value = '';
+        const searchInput = document.getElementById('hub-search-field');
+        if (searchInput) {
+            searchInput.value = '';
+        }
         
         const url = new URL(window.location.href);
         url.searchParams.delete('q');
         url.searchParams.delete('page');
         
-        // Зберігаємо фільтри, якщо є
         if (this.selectedFilters.size > 0) {
             url.searchParams.delete('audience');
             this.selectedFilters.forEach(filter => {
@@ -148,10 +283,12 @@ class HubFilters {
             });
         }
         
-        htmx.ajax('GET', url.toString(), {
-            target: '#catalog-content',
-            swap: 'innerHTML'
-        });
+        if (typeof htmx !== 'undefined') {
+            htmx.ajax('GET', url.toString(), {
+                target: '#catalog-content',
+                swap: 'innerHTML'
+            });
+        }
         
         window.history.pushState({}, '', url.toString());
     }
@@ -165,22 +302,22 @@ class HubFilters {
             url.searchParams.append('audience', filter);
         });
         
-        // Зберігаємо пошуковий запит, якщо є
         if (this.searchQuery.trim()) {
             url.searchParams.set('q', this.searchQuery.trim());
         }
         
-        htmx.ajax('GET', url.toString(), {
-            target: '#catalog-content',
-            swap: 'innerHTML'
-        });
+        if (typeof htmx !== 'undefined') {
+            htmx.ajax('GET', url.toString(), {
+                target: '#catalog-content',
+                swap: 'innerHTML'
+            });
+        }
         
         window.history.pushState({}, '', url.toString());
     }
     
     resetFilters() {
         this.selectedFilters.clear();
-        // НЕ очищуємо searchQuery - це робить окрема кнопка
         
         document.querySelectorAll('.hub-filter-checkbox').forEach(cb => {
             cb.classList.remove('checked');
@@ -194,24 +331,49 @@ class HubFilters {
         
         const url = new URL(window.location.origin + window.location.pathname);
         
-        // Зберігаємо пошук, якщо є
         if (this.searchQuery.trim()) {
             url.searchParams.set('q', this.searchQuery.trim());
         }
         
-        htmx.ajax('GET', url.toString(), {
-            target: '#catalog-content',
-            swap: 'innerHTML'
-        });
+        if (typeof htmx !== 'undefined') {
+            htmx.ajax('GET', url.toString(), {
+                target: '#catalog-content',
+                swap: 'innerHTML'
+            });
+        }
         
         window.history.pushState({}, '', url.toString());
     }
+    
+    // === RESIZE HANDLER з debounce ===
+    initResizeHandler() {
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const wasMobile = this.isMobile;
+                this.isMobile = window.innerWidth <= 1024;
+                
+                // Якщо перейшли на десктоп - закрити панель
+                if (wasMobile && !this.isMobile) {
+                    if (this.sidebar && this.sidebar.classList.contains('active')) {
+                        this.closePanel();
+                    }
+                }
+                
+                // Якщо перейшли на мобільний - ініціалізувати панель
+                if (!wasMobile && this.isMobile && !this.sidebar) {
+                    this.initMobilePanel();
+                }
+            }, 250);
+        });
+    }
 }
 
+// Ініціалізація
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.querySelector('.hub-filters-sidebar');
     if (sidebar) {
         new HubFilters();
     }
 });
-
