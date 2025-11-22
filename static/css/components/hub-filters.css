@@ -215,7 +215,6 @@
         box-shadow: 4px 0 20px rgba(0,0,0,0.15);
         display: flex;
         flex-direction: column;
-        padding: 0;
     }
     
     .hub-filters-sidebar.active {
