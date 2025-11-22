@@ -1105,169 +1105,58 @@
    ТИМЧАСОВО: AI ПОМІЧНИК - НЕЗАБАРОМ
    ======================================== */
 
-/* Keyframe анімація для pulse ефекту */
-@keyframes comingSoonPulse {
-    0%, 100% {
-        box-shadow: 
-            0 0 0 1px rgba(229, 9, 20, 0.3),
-            0 0 20px rgba(229, 9, 20, 0.15),
-            0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    50% {
-        box-shadow: 
-            0 0 0 1px rgba(229, 9, 20, 0.5),
-            0 0 30px rgba(229, 9, 20, 0.3),
-            0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-}
-
-@keyframes comingSoonPulseDark {
-    0%, 100% {
-        box-shadow: 
-            0 0 0 1px rgba(229, 9, 20, 0.4),
-            0 0 25px rgba(229, 9, 20, 0.2),
-            0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-    50% {
-        box-shadow: 
-            0 0 0 1px rgba(229, 9, 20, 0.6),
-            0 0 35px rgba(229, 9, 20, 0.4),
-            0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-}
-
-/* Базові стилі з градієнтом та frosted glass */
+/* Базові стилі - чисте матове скло */
 .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
     position: relative;
     pointer-events: none;
     cursor: not-allowed;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(229, 9, 20, 0.08) 100%);
-    border: none;
-    animation: comingSoonPulse 3s ease-in-out infinite;
-    overflow: hidden;
-}
-
-/* Додатковий шар для frosted glass ефекту */
-.ai-chat-inline.coming-soon .ai-chat-input-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.03) 0px,
-            transparent 1px,
-            transparent 2px,
-            rgba(255, 255, 255, 0.03) 3px
-        );
-    pointer-events: none;
-    z-index: 1;
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Темна тема */
 [data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
-    background: linear-gradient(135deg, rgba(23, 23, 23, 0.7) 0%, rgba(229, 9, 20, 0.15) 100%);
-    animation: comingSoonPulseDark 3s ease-in-out infinite;
-}
-
-[data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::after {
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.02) 0px,
-            transparent 1px,
-            transparent 2px,
-            rgba(255, 255, 255, 0.02) 3px
-        );
+    background: rgba(23, 23, 23, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Auto тема з темним prefers-color-scheme */
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
-        background: linear-gradient(135deg, rgba(23, 23, 23, 0.7) 0%, rgba(229, 9, 20, 0.15) 100%);
-        animation: comingSoonPulseDark 3s ease-in-out infinite;
-    }
-
-    [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::after {
-        background: 
-            repeating-linear-gradient(
-                0deg,
-                rgba(255, 255, 255, 0.02) 0px,
-                transparent 1px,
-                transparent 2px,
-                rgba(255, 255, 255, 0.02) 3px
-            );
+        background: rgba(23, 23, 23, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 }
 
-/* Текст "AI помічник - незабаром" з градієнтом */
+/* Текст "AI помічник - незабаром" */
 .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
-    content: '🔒 AI помічник - незабаром';
+    content: 'AI помічник - незабаром';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 13px;
     font-weight: 600;
-    background: linear-gradient(135deg, #1a1a1a 0%, #E50914 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #1a1a1a;
     white-space: nowrap;
     z-index: 10;
     pointer-events: none;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
-}
-
-/* Fallback для браузерів без підтримки background-clip */
-@supports not (background-clip: text) {
-    .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
-        color: #1a1a1a;
-        background: none;
-        -webkit-text-fill-color: initial;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
+    letter-spacing: 0.3px;
 }
 
 /* Темна тема для тексту */
 [data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, #E50914 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 1px 3px rgba(229, 9, 20, 0.3));
-}
-
-@supports not (background-clip: text) {
-    [data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
-        color: rgba(255, 255, 255, 0.95);
-        background: none;
-        -webkit-text-fill-color: initial;
-        text-shadow: 0 1px 3px rgba(229, 9, 20, 0.3);
-    }
+    color: rgba(255, 255, 255, 0.95);
 }
 
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, #E50914 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        filter: drop-shadow(0 1px 3px rgba(229, 9, 20, 0.3));
-    }
-
-    @supports not (background-clip: text) {
-        [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
-            color: rgba(255, 255, 255, 0.95);
-            background: none;
-            -webkit-text-fill-color: initial;
-            text-shadow: 0 1px 3px rgba(229, 9, 20, 0.3);
-        }
+        color: rgba(255, 255, 255, 0.95);
     }
 }
 
@@ -1276,14 +1165,9 @@
 .ai-chat-inline.coming-soon .ai-chat-send-btn,
 .ai-chat-inline.coming-soon .ai-chat-detach-btn,
 .ai-chat-inline.coming-soon .ai-chat-close-btn {
-    opacity: 0.2;
+    opacity: 0;
     pointer-events: none;
     cursor: not-allowed;
-}
-
-/* Hover ефект - легке посилення свічення */
-.ai-chat-inline.coming-soon .ai-chat-input-wrapper:hover {
-    animation-duration: 2s;
 }
 
 /* Responsive для mobile */
@@ -1296,23 +1180,5 @@
 @media (max-width: 480px) {
     .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
         font-size: 10px;
-    }
-}
-
-/* Вимкнення анімації для prefers-reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-    .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
-        animation: none;
-        box-shadow: 
-            0 0 0 1px rgba(229, 9, 20, 0.4),
-            0 0 25px rgba(229, 9, 20, 0.2),
-            0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    [data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
-        box-shadow: 
-            0 0 0 1px rgba(229, 9, 20, 0.5),
-            0 0 30px rgba(229, 9, 20, 0.3),
-            0 4px 12px rgba(0, 0, 0, 0.3);
     }
 }
