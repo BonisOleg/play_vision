@@ -215,6 +215,7 @@
         box-shadow: 4px 0 20px rgba(0,0,0,0.15);
         display: flex;
         flex-direction: column;
+        padding: 0;
     }
     
     .hub-filters-sidebar.active {
@@ -259,14 +260,9 @@
     
     .hub-filters-sidebar .hub-filters-list {
         flex: 1;
-        min-height: 200px;
         padding: 16px;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-    }
-    
-    .hub-filter-item {
-        min-height: 48px;
     }
     
     .hub-filter-submenu {
@@ -301,6 +297,7 @@
             bottom: calc(60px + env(safe-area-inset-bottom));
             -webkit-font-smoothing: antialiased;
             -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         
         .hub-filter-label,
@@ -309,12 +306,25 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        .hub-filters-list {
-            display: block;
+        .hub-filters-sidebar .hub-filters-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
         }
         
-        .hub-filter-item {
+        .hub-filters-list .hub-filter-item {
             margin-bottom: 8px;
+            height: auto;
+            overflow: visible;
+        }
+        
+        .hub-filters-list .hub-filter-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .hub-filter-submenu.open {
+            display: block;
+            height: auto;
         }
     }
     
