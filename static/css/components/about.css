@@ -116,7 +116,7 @@
     .about-hero {
         width: 90%;
         margin: 25px auto;
-        min-height: 500px;
+        box-shadow: none;
     }
 
     .about-mission-section .section-title,
@@ -133,7 +133,7 @@
         width: 95%;
         margin: 20px auto;
         border-radius: 10px;
-        min-height: 500px;
+        box-shadow: none;
     }
 
     .about-mission-section .section-title,
@@ -160,7 +160,7 @@
         width: 95%;
         margin: 20px auto;
         border-radius: 10px;
-        min-height: 500px;
+        box-shadow: none;
     }
 
     .about-mission-section .section-title,

@@ -501,7 +501,7 @@
     .hero-section {
         width: 90%;
         margin: 25px auto;
-        min-height: 500px;
+        box-shadow: none;
     }
     
     /* CTA залишається на всю ширину */
@@ -519,6 +519,7 @@
         width: 95%;
         margin: 15px auto;
         border-radius: 10px;
+        box-shadow: none;
     }
     
     /* CTA залишається на всю ширину */
@@ -583,6 +584,7 @@
 @media (max-width: 480px) {
     .hero-section {
         margin: 10px auto;
+        box-shadow: none;
     }
     
     .hero-title {
