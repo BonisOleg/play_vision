@@ -283,8 +283,8 @@
 }
 
 .slider-dot {
-    width: 3px;
-    height: 3px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     border: none;
     background: rgba(255, 255, 255, 0.5);
@@ -294,19 +294,19 @@
 
 .slider-dot.active {
     background: var(--color-primary);
-    width: 8px;
-    border-radius: 2px;
+    width: 24px;
+    border-radius: 4px;
 }
 
 @media (max-width: 768px) {
     .slider-dot {
-        width: 2px;
-        height: 2px;
+        width: 6px;
+        height: 6px;
     }
     
     .slider-dot.active {
-        width: 6px;
-        border-radius: 2px;
+        width: 18px;
+        border-radius: 3px;
     }
 }
 
@@ -610,7 +610,7 @@
         padding: 7px 12px;
         font-size: 0.8rem;
     }
-
+    
     .cta-title {
         font-size: 1.75rem;
         line-height: 1.3;
