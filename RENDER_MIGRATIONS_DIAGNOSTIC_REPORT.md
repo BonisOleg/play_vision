@@ -288,3 +288,4 @@ curl https://playvision.onrender.com/healthz
 **Проєкт:** Play Vision  
 **Середовище:** Render Production (Frankfurt)
 
+

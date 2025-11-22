@@ -229,12 +229,14 @@
         top: 0;
         left: 0;
         bottom: 0;
+        height: 100vh;
+        height: -webkit-fill-available;
         width: 70%;
         max-width: 350px;
         transform: translateX(-100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1000;
-        overflow-y: auto !important;
+        overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
@@ -319,17 +321,17 @@
 /* Body scroll lock (iOS compatible) */
 body.hub-filters-open {
     overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
+    touch-action: none;
     overscroll-behavior: none;
+    position: relative;
 }
 
 /* iOS Safari специфіка */
 @supports (-webkit-touch-callout: none) {
     body.hub-filters-open {
-        position: fixed;
         overflow: hidden;
+        touch-action: none;
+        position: relative;
         -webkit-overflow-scrolling: auto;
         overscroll-behavior: none;
     }
