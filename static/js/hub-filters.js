@@ -136,8 +136,8 @@ class HubFilters {
                 const arrow = e.currentTarget.querySelector('.hub-filter-arrow');
                 
                 if (submenu && arrow) {
-                    submenu.classList.toggle('open');
-                    arrow.classList.toggle('open');
+                submenu.classList.toggle('open');
+                arrow.classList.toggle('open');
                 }
             });
         });
@@ -273,10 +273,10 @@ class HubFilters {
             });
             
             if (typeof htmx !== 'undefined') {
-                htmx.ajax('GET', url.toString(), {
-                    target: '#catalog-content',
-                    swap: 'innerHTML'
-                });
+            htmx.ajax('GET', url.toString(), {
+                target: '#catalog-content',
+                swap: 'innerHTML'
+            });
             }
             
             window.history.pushState({}, '', url.toString());
@@ -302,10 +302,10 @@ class HubFilters {
         }
         
         if (typeof htmx !== 'undefined') {
-            htmx.ajax('GET', url.toString(), {
-                target: '#catalog-content',
-                swap: 'innerHTML'
-            });
+        htmx.ajax('GET', url.toString(), {
+            target: '#catalog-content',
+            swap: 'innerHTML'
+        });
         }
         
         window.history.pushState({}, '', url.toString());
@@ -325,10 +325,10 @@ class HubFilters {
         }
         
         if (typeof htmx !== 'undefined') {
-            htmx.ajax('GET', url.toString(), {
-                target: '#catalog-content',
-                swap: 'innerHTML'
-            });
+        htmx.ajax('GET', url.toString(), {
+            target: '#catalog-content',
+            swap: 'innerHTML'
+        });
         }
         
         window.history.pushState({}, '', url.toString());
@@ -354,10 +354,10 @@ class HubFilters {
         }
         
         if (typeof htmx !== 'undefined') {
-            htmx.ajax('GET', url.toString(), {
-                target: '#catalog-content',
-                swap: 'innerHTML'
-            });
+        htmx.ajax('GET', url.toString(), {
+            target: '#catalog-content',
+            swap: 'innerHTML'
+        });
         }
         
         window.history.pushState({}, '', url.toString());
