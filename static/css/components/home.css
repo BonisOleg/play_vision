@@ -42,11 +42,11 @@
     width: 80%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 1rem var(--spacing-xl);
+    padding: 0.5rem 2rem 2rem 2rem;
     text-align: left;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: flex-start;
     height: 100%;
 }

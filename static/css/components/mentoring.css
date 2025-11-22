@@ -164,26 +164,6 @@
     display: block;
 }
 
-/* SVG стилі для темної теми */
-/* Світла тема: оригінальний SVG без фільтрів */
-.mentoring-svg-invert {
-    filter: none;
-    transition: filter 0.3s ease;
-}
-
-/* Темна тема: інверсія зі збереженням червоного кольору */
-[data-theme="dark"] .mentoring-svg-invert {
-    filter: invert(1) hue-rotate(180deg);
-    opacity: 1;
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .mentoring-svg-invert {
-        filter: invert(1) hue-rotate(180deg);
-        opacity: 1;
-    }
-}
-
 /* === КОМАНДА МЕНТОР КОУЧИНГУ === */
 .mentoring-team-section {
     padding: 60px 0;
@@ -379,13 +359,15 @@
     width: 100%;
     background: #e9e9e9;
     color: #0a0a0a;
-    transition: none;
+    transition: all 0.3s ease;
 }
 
 .white_bonnom:hover {
-    background: #e9e9e9;
+    background: #f5f5f5;
     color: #0a0a0a;
-    transform: none;
+    border-color: #d32f2f;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
 }
 
 .white_bonnom .btn-icon {

@@ -55,14 +55,14 @@
     padding: var(--spacing-xl);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     height: 350px;
     overflow: hidden;
 }
 
 .hub-hero-logo {
     width: 150px;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 10px;
 }
 
 .hub-hero-logo img {
@@ -76,7 +76,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     text-align: left;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     text-shadow: none;
     min-height: 80px;
     overflow: hidden;
@@ -85,7 +85,7 @@
 .hero-subtitle {
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: calc(var(--spacing-lg) / 2);
+    margin-bottom: 10px;
     text-align: left;
     text-shadow: none;
     min-height: 50px;
@@ -95,7 +95,7 @@
 .hero-buttons {
     display: flex;
     gap: var(--spacing-md);
-    margin-bottom: calc(var(--spacing-lg) / 2);
+    margin-bottom: 10px;
 }
 
 /* Слайдер-точки (синхронізовані з home.css) */
