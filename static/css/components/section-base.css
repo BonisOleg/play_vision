@@ -138,9 +138,7 @@
     }
     
     /* Тільки для hero головної залишаємо min-height */
-    .hero-section.hero-bordered {
-        min-height: 450px;
-    }
+    
     
     .hero-section .section-content,
     .about-hero .section-content,
@@ -164,10 +162,6 @@
         min-height: auto;
     }
     
-    /* Тільки для hero головної залишаємо min-height */
-    .hero-section.hero-bordered {
-        min-height: 400px;
-    }
     
     .hero-section .section-content,
     .about-hero .section-content,
