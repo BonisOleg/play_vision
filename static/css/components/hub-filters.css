@@ -166,25 +166,6 @@
     display: none;
 }
 
-/* Overlay для мобільної панелі */
-.hub-filters-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    -webkit-tap-highlight-color: transparent;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-}
-
 /* Шапка панелі (мобільна) */
 .hub-filters-header {
     display: none;
@@ -233,17 +214,6 @@
     
     .hub-filters-toggle-btn svg {
         flex-shrink: 0;
-    }
-    
-    /* Overlay активний стан */
-    .hub-filters-overlay {
-        display: block;
-    }
-    
-    .hub-filters-overlay.active {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
     }
 }
 

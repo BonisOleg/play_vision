@@ -7,7 +7,6 @@ class HubFilters {
         
         // Кешування DOM елементів
         this.sidebar = null;
-        this.overlay = null;
         this.toggleBtn = null;
         this.closeBtn = null;
         
@@ -33,11 +32,10 @@ class HubFilters {
     // === МОБІЛЬНА ПАНЕЛЬ ===
     initMobilePanel() {
         this.sidebar = document.querySelector('.hub-filters-sidebar');
-        this.overlay = document.querySelector('.hub-filters-overlay');
         this.toggleBtn = document.getElementById('hub-filters-toggle');
         this.closeBtn = document.getElementById('hub-filters-close');
         
-        if (!this.sidebar || !this.overlay || !this.toggleBtn || !this.closeBtn) {
+        if (!this.sidebar || !this.toggleBtn || !this.closeBtn) {
             console.warn('Mobile panel elements not found');
             return;
         }
@@ -48,31 +46,22 @@ class HubFilters {
         // Закриття
         this.closeBtn.addEventListener('click', () => this.closePanel());
         
-        // Overlay з passive listener
-        this.overlay.addEventListener('click', () => this.closePanel(), { passive: true });
-        
-        // Escape key з passive listener
+        // Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.sidebar.classList.contains('active')) {
                 this.closePanel();
             }
-        }, { passive: true });
+        });
     }
     
     openPanel() {
-        if (!this.sidebar || !this.overlay) return;
+        if (!this.sidebar) return;
         
         // Зберегти позицію скролу
         this.scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         
-        // Активувати панель і overlay
+        // Активувати панель
         this.sidebar.classList.add('active');
-        this.overlay.classList.add('active');
-        
-        // Перевірка підтримки overscroll-behavior
-        if (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('overscroll-behavior', 'none')) {
-            document.documentElement.style.overscrollBehavior = 'none';
-        }
         
         // Блокувати скрол body (iOS compatible)
         document.body.classList.add('hub-filters-open');
@@ -82,49 +71,35 @@ class HubFilters {
         if (this.toggleBtn) {
             this.toggleBtn.setAttribute('aria-expanded', 'true');
         }
-        this.overlay.setAttribute('aria-hidden', 'false');
         
-        // Focus з requestAnimationFrame для smooth
-        requestAnimationFrame(() => {
-            if (this.closeBtn) {
-                this.closeBtn.focus();
-            }
-        });
+        // Focus
+        if (this.closeBtn) {
+            this.closeBtn.focus();
+        }
     }
     
     closePanel() {
-        if (!this.sidebar || !this.overlay) return;
+        if (!this.sidebar) return;
         
         // Деактивувати
         this.sidebar.classList.remove('active');
-        this.overlay.classList.remove('active');
-        
-        // Розблокувати overscroll
-        if (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('overscroll-behavior', 'none')) {
-            document.documentElement.style.overscrollBehavior = '';
-        }
         
         // Розблокувати скрол
         document.body.classList.remove('hub-filters-open');
         document.body.style.top = '';
         
-        // Відновити позицію скролу з requestAnimationFrame
-        requestAnimationFrame(() => {
-            window.scrollTo(0, this.scrollPosition);
-        });
+        // Відновити позицію скролу
+        window.scrollTo(0, this.scrollPosition);
         
         // ARIA
         if (this.toggleBtn) {
             this.toggleBtn.setAttribute('aria-expanded', 'false');
         }
-        this.overlay.setAttribute('aria-hidden', 'true');
         
-        // Focus з requestAnimationFrame
-        requestAnimationFrame(() => {
-            if (this.toggleBtn) {
-                this.toggleBtn.focus();
-            }
-        });
+        // Focus
+        if (this.toggleBtn) {
+            this.toggleBtn.focus();
+        }
     }
     
     // === DROPDOWNS (без змін) ===
