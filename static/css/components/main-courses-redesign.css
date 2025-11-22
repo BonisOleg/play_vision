@@ -59,9 +59,6 @@
 .course-nav-btn {
     width: 48px;
     height: 48px;
-    min-width: 48px;
-    min-height: 48px;
-    flex-shrink: 0;
     border-radius: 50%;
     background: #171717;
     color: #ffffff;
@@ -108,13 +105,6 @@
     [data-theme="auto"] .course-nav-btn:hover:not(:disabled) {
         background: #f0f0f0;
     }
-}
-
-.course-nav-btn svg {
-    width: 100%;
-    height: 100%;
-    max-width: 24px;
-    max-height: 24px;
 }
 
 /* ==================== КАРУСЕЛЬ КОНТЕЙНЕР ==================== */
@@ -394,13 +384,11 @@
     .course-nav-btn {
         width: 40px;
         height: 40px;
-        min-width: 40px;
-        min-height: 40px;
     }
 
     .course-nav-btn svg {
-        max-width: 20px;
-        max-height: 20px;
+        width: 20px;
+        height: 20px;
     }
 
     .main-course-slide {
@@ -477,13 +465,11 @@
     .course-nav-btn {
         width: 36px;
         height: 36px;
-        min-width: 36px;
-        min-height: 36px;
     }
 
     .course-nav-btn svg {
-        max-width: 18px;
-        max-height: 18px;
+        width: 18px;
+        height: 18px;
     }
 
     .main-course-slide {

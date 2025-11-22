@@ -610,15 +610,6 @@
         padding: 7px 12px;
         font-size: 0.8rem;
     }
-    
-    .slider-dot {
-        width: 6px;
-        height: 6px;
-    }
-    
-    .slider-dot.active {
-        width: 16px;
-    }
 
     .cta-title {
         font-size: 1.75rem;
