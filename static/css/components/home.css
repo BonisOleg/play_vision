@@ -35,14 +35,14 @@
 
 /* NEW DESIGN - 1в1 як на скріні */
 /* Використовує загальну систему ширини */
-.hero-new-design {
+.section-content.hero-new-design {
     border: none;
     background: transparent;
     backdrop-filter: none;
     width: 80%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 4rem 2rem 1rem 0.5rem;
+    padding: 4rem 2rem 1rem 0.5rem !important;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -72,9 +72,9 @@
     }
 
     /* NEW DESIGN Tablet */
-    .hero-new-design {
+    .section-content.hero-new-design {
         width: 90%;
-        padding: 3.5rem var(--spacing-lg) 0.875rem calc(var(--spacing-lg) / 4);
+        padding: 3.5rem var(--spacing-lg) 0.875rem calc(var(--spacing-lg) / 4) !important;
     }
 
     .hero-new-design .hero-title {
@@ -90,9 +90,9 @@
 
 @media (max-width: 768px) {
     /* NEW DESIGN Mobile (Синхронізовано з content-width) */
-    .hero-new-design {
+    .section-content.hero-new-design {
         width: 95%;
-        padding: 3rem var(--spacing-md) 0.75rem calc(var(--spacing-md) / 4);
+        padding: 3rem var(--spacing-md) 0.75rem calc(var(--spacing-md) / 4) !important;
     }
 
     .hero-new-design .hero-title {
@@ -617,8 +617,8 @@
     }
 
     /* NEW DESIGN Small Mobile */
-    .hero-new-design {
-        padding: 2.5rem 5% 0.625rem 1.25%;
+    .section-content.hero-new-design {
+        padding: 2.5rem 5% 0.625rem 1.25% !important;
     }
 
     .hero-new-design .hero-title {
