@@ -1,12 +1,16 @@
 {% load static %}
 {% load cms_tags %}
 
-<!-- Page-specific CSS -->
-<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/events.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/htmx-indicators.css' %}">
+<head>
+    <title>Івенти - Play Vision</title>
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/events.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/htmx-indicators.css' %}">
+</head>
 
+<body>
 <!-- Main content -->
 <div class="fullscreen-container">
     <div class="unified-sections-wrapper">
@@ -219,4 +223,5 @@
 <!-- Page-specific JS -->
 <script src="{% static 'js/shared/tab-slider.js' %}"></script>
 <script src="{% static 'js/events.js' %}" defer></script>
+</body>
 

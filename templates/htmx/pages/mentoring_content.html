@@ -1,13 +1,17 @@
 {% load static %}
 {% load cms_tags %}
 
-<!-- Page-specific CSS -->
-<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/mentoring.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+<head>
+    <title>Ментор коучинг - Play Vision</title>
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/mentoring.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+</head>
 
+<body>
 <!-- Main content -->
 {% get_mentor_hero as mentor_hero %}
 <div class="fullscreen-container">
@@ -235,4 +239,5 @@
 <!-- Page-specific JS -->
 <script src="{% static 'js/mentoring.js' %}" defer></script>
 <script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
+</body>
 

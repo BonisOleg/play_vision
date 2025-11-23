@@ -1,18 +1,22 @@
 {% load static %}
 {% load cms_tags %}
 
-<!-- Page-specific CSS -->
-<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-knowledge.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-hero.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-carousel.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-catalog.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/htmx-indicators.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/search.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-filters.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/hub-favorites-hide.css' %}">
+<head>
+    <title>Хаб знань - Play Vision</title>
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/hub-knowledge.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/hub-hero.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/hub-carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/hub-catalog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/htmx-indicators.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/hub-filters.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/hub-favorites-hide.css' %}">
+</head>
 
+<body>
 <!-- Main content - Full Hub page -->
 {% get_hub_hero as hub_hero %}
 <div class="fullscreen-container">
@@ -347,4 +351,5 @@
 <!-- Page-specific JS -->
 <script src="{% static 'js/hub-knowledge.js' %}" defer></script>
 <script src="{% static 'js/hub-filters.js' %}" defer></script>
+</body>
 

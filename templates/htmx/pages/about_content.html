@@ -1,13 +1,17 @@
 {% load static %}
 {% load cms_tags %}
 
-<!-- Page-specific CSS -->
-<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/about.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+<head>
+    <title>Про нас - Play Vision</title>
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+</head>
 
+<body>
 <!-- Main content -->
 {% get_about_hero as about_hero %}
 <div class="fullscreen-container">
@@ -177,4 +181,5 @@
 <!-- Page-specific JS -->
 <script src="{% static 'js/about.js' %}" defer></script>
 <script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
+</body>
 

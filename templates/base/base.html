@@ -80,13 +80,15 @@
     <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
     {% block extra_css %}{% endblock %}
 
-    <!-- HTMX -->
+    <!-- HTMX Core -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- HTMX head-support extension для обробки <link> тегів в partial responses -->
+    <script src="https://unpkg.com/htmx.org@1.9.10/dist/ext/head-support.js"></script>
 
     {% block extra_head %}{% endblock %}
 </head>
 
-<body data-bunny-library-id="{{ BUNNY_LIBRARY_ID }}">
+<body data-bunny-library-id="{{ BUNNY_LIBRARY_ID }}" hx-ext="head-support">
     <!-- Accessibility Skip Links -->
     <a href="#main-content" class="skip-link">Перейти до основного контенту</a>
 

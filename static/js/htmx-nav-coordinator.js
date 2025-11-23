@@ -131,6 +131,41 @@
     }
 
     /**
+     * Чекає завантаження всіх CSS перед тим як продовжити
+     */
+    function waitForStyles(timeout = 1000) {
+        return new Promise((resolve, reject) => {
+            const startTime = Date.now();
+            
+            function checkStyles() {
+                // Перевіряємо чи всі <link> завантажені
+                const links = document.querySelectorAll('link[rel="stylesheet"]');
+                const allLoaded = Array.from(links).every(link => {
+                    // link.sheet буде null поки CSS не завантажиться
+                    try {
+                        return link.sheet !== null && link.sheet.cssRules !== null;
+                    } catch (e) {
+                        // Може бути CORS помилка для external stylesheets
+                        return true;
+                    }
+                });
+                
+                if (allLoaded) {
+                    console.log(`[HTMX Nav] All styles loaded in ${Date.now() - startTime}ms`);
+                    resolve();
+                } else if (Date.now() - startTime > timeout) {
+                    console.warn('[HTMX Nav] Timeout waiting for styles, proceeding anyway');
+                    reject(new Error('Timeout waiting for styles'));
+                } else {
+                    requestAnimationFrame(checkStyles);
+                }
+            }
+            
+            checkStyles();
+        });
+    }
+
+    /**
      * Головний обробник afterSwap
      */
     function handleAfterSwap(event) {
@@ -148,19 +183,21 @@
         // 1. Оновлюємо активну кнопку
         updateActiveNavButton(page);
 
-        // 2. Оновлюємо slider (з невеликою затримкою для rendering)
-        setTimeout(() => {
+        // 2. Чекаємо завантаження CSS перед оновленням UI
+        waitForStyles().then(() => {
+            // Оновлюємо slider
             updateNavSlider();
-        }, 50);
-
-        // 3. Ре-ініціалізуємо page-specific scripts (з затримкою для DOM)
-        setTimeout(() => {
+            
+            // Ре-ініціалізуємо page-specific scripts (з невеликою затримкою для DOM)
+            setTimeout(() => {
+                reinitializePageScripts(page);
+            }, 50);
+        }).catch(err => {
+            // Якщо timeout - продовжуємо в будь-якому випадку
+            console.warn('[HTMX Nav] Proceeding without waiting for all styles');
+            updateNavSlider();
             reinitializePageScripts(page);
-        }, 100);
-
-        // 4. Scroll до верху (вже зроблено через hx-swap="show:top scroll:top")
-        // але якщо потрібно додаткове - розкоментуйте:
-        // window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
         console.log('[HTMX Nav] Navigation completed:', page);
     }
