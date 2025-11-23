@@ -111,13 +111,10 @@
 
 /* ЗЕЛЕНИЙ ТЕКСТ "СКРІЗЬ ЗМІНИТИ" */
 .expert-change-everywhere {
-    display: block;
     color: #4caf50;
     font-size: 0.9375rem;
     font-weight: 500;
-    text-align: center;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
 .expert-change-everywhere:hover {
@@ -126,19 +123,15 @@
 
 /* ЧЕРВОНИЙ ТЕКСТ "ОГЛЯД ПРОФІЛЮ →" */
 .expert-profile-link {
-    display: block;
     color: #d32f2f;
     font-size: 0.9375rem;
     font-weight: 500;
-    text-align: center;
     text-decoration: none;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
 .expert-profile-link:hover {
     color: #b71c1c;
-    text-decoration: none;
 }
 
 /* КНОПКА "ДЕТАЛЬНІШЕ" */
@@ -163,7 +156,6 @@
     text-decoration-color: #b71c1c;
 }
 
-/* ОНОВЛЕННЯ КНОПКИ В КОНТЕЙНЕРІ */
 .expert-links .expert-detail-btn {
     margin-top: 0;
 }
