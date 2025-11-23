@@ -329,36 +329,11 @@
     margin-bottom: 32px;
 }
 
-.event-filters {
-    display: flex;
-    gap: 16px;
+/* === EVENT FILTERS - використовуємо shared tab component === */
+/* Базові стилі (.tab-container, .tab-button, .tab-slider) беруться з tabs-shared.css */
+
+.events-catalog-section .event-filters {
     margin-bottom: 40px;
-}
-
-.filter-btn {
-    padding: 12px 32px;
-    border: 2px solid var(--color-border, #e0e0e0);
-    border-radius: 24px;
-    background: #ffffff;
-    color: var(--color-text);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-}
-
-
-
-.filter-btn:hover {
-    border-color: var(--color-primary);
-}
-
-.filter-btn.active {
-    background: var(--color-primary);
-    color: #ffffff;
-    border-color: var(--color-primary);
 }
 
 .events-catalog-grid {
@@ -509,22 +484,12 @@
 /* ==================== ТЕМНА ТЕМА ==================== */
 [data-theme="dark"] .category-block,
 [data-theme="dark"] .calendar-card,
-[data-theme="dark"] .event-catalog-card,
-[data-theme="dark"] .filter-btn {
+[data-theme="dark"] .event-catalog-card {
     background: #1a1a1a;
     border-color: #333333;
 }
 
 [data-theme="dark"] .calendar-card:hover {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-[data-theme="dark"] .event-filters button.filter-btn {
-    background: transparent;
-}
-
-[data-theme="dark"] .filter-btn.active {
     background: var(--color-primary);
     border-color: var(--color-primary);
 }
@@ -546,22 +511,12 @@
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .category-block,
     [data-theme="auto"] .calendar-card,
-    [data-theme="auto"] .event-catalog-card,
-    [data-theme="auto"] .filter-btn {
+    [data-theme="auto"] .event-catalog-card {
         background: #1a1a1a;
         border-color: #333333;
     }
 
     [data-theme="auto"] .calendar-card:hover {
-        background: var(--color-primary);
-        border-color: var(--color-primary);
-    }
-
-    [data-theme="auto"] .event-filters button.filter-btn {
-        background: transparent;
-    }
-
-    [data-theme="auto"] .filter-btn.active {
         background: var(--color-primary);
         border-color: var(--color-primary);
     }
@@ -637,16 +592,6 @@
         flex: 0 0 calc(50% - 12px);
     }
 
-    .event-filters {
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .filter-btn {
-        padding: 10px 24px;
-        font-size: 0.875rem;
-    }
-
     .calendar-navigation {
         left: 50%;
         transform: translateX(-50%);
@@ -665,15 +610,10 @@
 
     /* Touch-friendly кнопки для iOS/Android */
     .calendar-nav-btn,
-    .filter-btn,
     .btn-details,
     .pagination-link {
         min-width: 44px;
         min-height: 44px;
-    }
-
-    .filter-btn {
-        padding: 12px 20px; /* Більший padding */
     }
 }
 

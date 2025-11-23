@@ -71,19 +71,19 @@ function initCalendarCarousel() {
 }
 
 function initEventFilters() {
-    const filterBtns = document.querySelectorAll('.event-filters .filter-btn');
-    
-    if (!filterBtns.length) return;
-    
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
+    // Ініціалізація event filters з shared slider компонентом
+    const eventFilterSlider = window.initTabSlider ? window.initTabSlider('.event-filters', {
+        sliderAttr: 'data-event-filter-slider',
+        tabAttr: 'data-event-filter-tab',
+        activeClass: 'active',
+        containerPadding: 3.6,
+        widthReduction: 5,
+        rightOffset: 10,
+        onTabChange: function(tab, index) {
+            // Shared модуль УЖЕ оновив active class і slider позицію
+            // Нам потрібно ТІЛЬКИ виконати HTMX запит
             
-            const format = btn.dataset.format;
-            
-            // Update active state
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            const format = tab.dataset.format;
             
             // Build URL
             const url = new URL(window.location.href);
@@ -95,15 +95,19 @@ function initEventFilters() {
                 url.searchParams.set('format', format);
             }
             
-            // HTMX request
+            // HTMX request - БЕЗ оновлення сторінки ✅
             htmx.ajax('GET', url.toString(), {
                 target: '#events-catalog-content',
                 swap: 'innerHTML'
             });
             
-            // Update URL
+            // Update URL in browser
             window.history.pushState({}, '', url.toString());
-        });
-    });
+        }
+    }) : null;
+    
+    if (!eventFilterSlider) {
+        console.warn('Events: tab-slider.js не завантажено');
+    }
 }
 

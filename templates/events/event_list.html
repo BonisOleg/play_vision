@@ -186,19 +186,24 @@
                 <div class="section-content">
                     <h2 class="section-title">Івенти</h2>
                     
-                    <div class="event-filters">
+                    <!-- Використовуємо shared tab component -->
+                    <div class="event-filters tab-container">
+                        <div class="tab-slider" data-event-filter-slider></div>
                         <button type="button" 
-                                class="filter-btn {% if current_format == 'all' or not current_format %}active{% endif %}" 
+                                class="tab-button {% if current_format == 'all' or not current_format %}active{% endif %}" 
+                                data-event-filter-tab
                                 data-format="all">
                             Всі
                         </button>
                         <button type="button" 
-                                class="filter-btn {% if current_format == 'online' %}active{% endif %}" 
+                                class="tab-button {% if current_format == 'online' %}active{% endif %}" 
+                                data-event-filter-tab
                                 data-format="online">
                             Онлайн
                         </button>
                         <button type="button" 
-                                class="filter-btn {% if current_format == 'offline' %}active{% endif %}" 
+                                class="tab-button {% if current_format == 'offline' %}active{% endif %}" 
+                                data-event-filter-tab
                                 data-format="offline">
                             Офлайн
                         </button>
@@ -217,6 +222,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/shared/tab-slider.js' %}"></script>
 <script src="{% static 'js/events.js' %}" defer></script>
 {% endblock %}
 
