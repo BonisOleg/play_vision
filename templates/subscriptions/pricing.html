@@ -159,13 +159,6 @@
                                 {% endif %}
                             </div>
                         </div>
-
-                        <!-- Special Notice for PRO (if last plan) -->
-                        {% if not plan.available_monthly and forloop.last %}
-                        <div class="pro-notice">
-                            Доступно в тарифі від 3 місяців
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
                 {% empty %}
