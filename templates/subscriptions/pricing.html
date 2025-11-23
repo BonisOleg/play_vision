@@ -24,11 +24,13 @@
         <div class="period-switcher-wrapper">
             <p class="period-label">Обирай траєкторію свого розвитку на місяць, квартал або рік</p>
             
-            <!-- Desktop Switcher -->
-            <div class="period-switcher desktop-switcher">
+            <!-- Desktop Tabs - використовуємо shared tab component -->
+            <div class="period-tabs tab-container desktop-switcher">
+                <div class="tab-slider" data-period-slider></div>
                 {% for period in periods %}
                 <button 
-                    class="period-btn {% if period.value == 'monthly' %}active{% endif %}" 
+                    class="tab-button {% if period.value == 'monthly' %}active{% endif %}" 
+                    data-period-tab
                     data-period="{{ period.value }}">
                     {{ period.label }}
                 </button>
@@ -179,6 +181,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/shared/tab-slider.js' %}"></script>
 <script src="{% static 'js/pricing.js' %}"></script>
 {% endblock %}
 

@@ -66,7 +66,7 @@
 }
 
 .pricing-page .container {
-    max-width: 1280px;
+    max-width: 1170px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -104,35 +104,14 @@
     font-size: 16px;
     color: var(--pricing-text-secondary);
     margin-bottom: 0;
+    padding-left: 7px;
 }
 
-/* Desktop Switcher */
-.period-switcher {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.period-btn {
-    padding: 14px 32px;
-    border: none;
-    background: var(--pricing-btn-inactive);
-    border-radius: 24px;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--pricing-btn-text-inactive);
-    cursor: pointer;
-    transition: var(--pricing-transition);
-}
-
-.period-btn:hover {
-    background: var(--pricing-btn-inactive-hover);
-}
-
-.period-btn.active {
-    background: var(--pricing-btn-primary);
-    color: var(--pricing-btn-text-active);
+/* Desktop Tabs - використовуємо shared tab component */
+.period-tabs {
+    /* Базові стилі беруться з tabs-shared.css (.tab-container) */
+    /* Контекст-специфічні правила для pricing можна додати тут */
+    display: inline-flex; /* Ensures the container doesn't stretch */
 }
 
 /* Mobile Dropdown */
@@ -584,9 +563,10 @@
 }
 
 .btn-purchase:focus,
-.period-btn:focus,
 .btn-compare:focus {
     outline: 2px solid var(--pricing-btn-primary);
     outline-offset: 2px;
 }
+
+/* Tab buttons використовують accessibility стилі з tabs-shared.css */
 
