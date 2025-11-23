@@ -1,0 +1,180 @@
+{% load static %}
+{% load cms_tags %}
+
+<!-- Page-specific CSS -->
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/about.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+
+<!-- Main content -->
+{% get_about_hero as about_hero %}
+<div class="fullscreen-container">
+
+    <!-- 1. HERO SECTION -->
+    <section class="fullscreen-section hero-section hero-bordered about-hero">
+        <div class="section-bg">
+            {% if about_hero %}
+            {% with image=about_hero|get_localized_image:country_code %}
+            {% if image %}
+            <img class="section-bg-image" src="{{ image.url }}" alt="{{ about_hero|get_localized_title:country_code }}" loading="eager">
+            {% else %}
+            <img class="section-bg-image" src="{% static 'images/Hiro.png' %}" alt="Про Play Vision" loading="eager">
+            {% endif %}
+            {% endwith %}
+            {% else %}
+            <img class="section-bg-image" src="{% static 'images/Hiro.png' %}" alt="Про Play Vision" loading="eager">
+            {% endif %}
+        </div>
+        <div class="section-overlay section-overlay--gradient"></div>
+    </section>
+
+    <!-- UNIFIED SECTIONS WRAPPER -->
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
+
+            <!-- 2. УКРАЇНСЬКИЙ ФУТБОЛ -->
+            {% get_about_section2 as about_section2 %}
+            <section class="fullscreen-section about-triangle-section">
+                <div class="section-content">
+                    <div class="about-image-block">
+                        {% if about_section2 %}
+                        {% get_localized_svg about_section2 country_code 'light' as svg_light %}
+                        {% get_localized_svg about_section2 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <img src="{% static 'images/about1.svg' %}" alt="Український футбол" loading="lazy">
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. МІСІЯ, ФІЛОСОФІЯ І ВІРА -->
+            {% get_about_section3 as about_section3 %}
+            <section class="fullscreen-section about-mission-section">
+                <div class="section-content">
+                    <h2 class="section-title">{% if about_section3 %}{{ about_section3|get_localized_title:country_code }}{% else %}Місія, <span class="text-highlight">філософія</span> і віра{% endif %}</h2>
+                    
+                    <div class="about-image-block">
+                        {% if about_section3 %}
+                        {% get_localized_svg about_section3 country_code 'light' as svg_light %}
+                        {% get_localized_svg about_section3 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <img src="{% static 'images/about2.svg' %}" alt="Місія, філософія і віра" loading="lazy">
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ЦІННОСТІ ТА КУЛЬТУРА -->
+            {% get_about_section4 as about_section4 %}
+            <section class="fullscreen-section about-values-section">
+                <div class="section-content">
+                    <h2 class="section-title">{% if about_section4 %}{{ about_section4|get_localized_title:country_code }}{% else %}Цінності та культура{% endif %}</h2>
+                    
+                    <div class="about-image-block">
+                        {% if about_section4 %}
+                        {% get_localized_svg about_section4 country_code 'light' as svg_light %}
+                        {% get_localized_svg about_section4 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <img src="{% static 'images/about3.svg' %}" alt="Цінності та культура" loading="lazy">
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. КОМАНДА ПРОФЕСІОНАЛІВ -->
+            <section class="fullscreen-section experts-section about-team-section">
+                <div class="section-content">
+                    <h2 class="section-title">Backstage team Play Vision</h2>
+                    <p class="experts-subtitle">Люди, які працюють за бровкою, але без них нічого не існує. Наша команда щоденної дії.</p>
+
+                    <div class="experts-grid">
+                        {% if cms_experts %}
+                        {% for expert in cms_experts %}
+                        <div class="expert-card" data-expert-id="{{ forloop.counter }}">
+                            <div class="expert-card-inner">
+                                <div class="expert-card-front">
+                                    <div class="expert-photo">
+                                        {% if expert.photo %}
+                                        <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                        {% else %}
+                                        <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
+                                            alt="{{ expert.name }}" loading="lazy">
+                                        {% endif %}
+                                    </div>
+                                    <div class="expert-card-content">
+                                        <h3 class="expert-name">{{ expert.name }}</h3>
+                                        <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                                        <span class="expert-detail-link">Огляд профілю →</span>
+                                    </div>
+                                </div>
+                                <div class="expert-card-back">
+                                    <div class="expert-bio-content">
+                                        <h3 class="expert-name-back">{{ expert.name }}</h3>
+                                        <div class="expert-bio-text">
+                                            {% if expert.bio %}
+                                            {{ expert.bio|linebreaks }}
+                                            {% else %}
+                                            <p>Інформація про експерта скоро буде додана.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="no-experts-placeholder">
+                            <p>Експерти будуть додані найближчим часом</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Page-specific JS -->
+<script src="{% static 'js/about.js' %}" defer></script>
+<script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
+

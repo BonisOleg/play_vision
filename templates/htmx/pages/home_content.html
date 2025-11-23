@@ -1,0 +1,276 @@
+{% load static %}
+{% load cms_tags %}
+
+<!-- Page-specific CSS -->
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/home-additions.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/featured-courses-light.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/main-courses-redesign.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/mentor-hexagon.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+
+<!-- Main content -->
+<div class="fullscreen-container">
+
+    <!-- 1. HERO SECTION -->
+    <section class="fullscreen-section hero-section hero-bordered">
+        <!-- Background Video/Image -->
+        {% if cms_hero_slides %}
+        {% with first_slide=cms_hero_slides.0 %}
+        <div class="section-bg">
+            {% if first_slide.video %}
+            <video class="section-bg-video" muted loop preload="metadata">
+                <source src="{{ first_slide.video.url }}" type="video/mp4">
+                {% if first_slide.image %}
+                <img class="section-bg-image" src="{{ first_slide.image.url }}" alt="{{ first_slide.title }}"
+                    loading="eager">
+                {% endif %}
+            </video>
+            {% elif first_slide.image %}
+            <img class="section-bg-image" src="{{ first_slide.image.url }}" alt="{{ first_slide.title }}"
+                loading="eager">
+            {% endif %}
+        </div>
+        {% endwith %}
+        {% else %}
+        <div class="section-bg">
+            <img class="section-bg-image" src="{% static 'images/Hiro.png' %}" alt="Play Vision Hero" loading="eager">
+        </div>
+        {% endif %}
+        <div class="section-overlay section-overlay--gradient"></div>
+
+        <div class="section-content hero-new-design" {% if cms_hero_slides %}data-cms-slides="true" {% endif %}>
+            {% if cms_hero_slides %}
+            <!-- CMS Slides Data for JS -->
+            <script type="application/json" id="hero-slides-data">
+            [
+                {% for slide in cms_hero_slides %}
+                {
+                    "title": "{{ slide|get_localized_title:country_code|escapejs }}",
+                    "subtitle": "{{ slide|get_localized_subtitle:country_code|escapejs }}",
+                    "ctaText": "{{ slide|get_localized_cta_text:country_code|escapejs }}",
+                    "ctaUrl": "{{ slide.cta_url|escapejs }}"
+                }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]
+            </script>
+            {% with first_slide=cms_hero_slides.0 %}
+            <h1 class="hero-title">{{ first_slide|get_localized_title:country_code }}</h1>
+            {% with subtitle=first_slide|get_localized_subtitle:country_code %}
+            {% if subtitle %}
+            <p class="hero-subtitle">{{ subtitle }}</p>
+            {% endif %}
+            {% endwith %}
+            {% with cta_text=first_slide|get_localized_cta_text:country_code %}
+            {% if cta_text and first_slide.cta_url %}
+            <div class="hero-buttons">
+                <a href="{{ first_slide.cta_url }}" class="btn btn-primary hero-btn-new">
+                    <span class="btn-text">{{ cta_text }}</span>
+                    <span class="btn-logo-space"></span>
+                </a>
+            </div>
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            {% else %}
+            <!-- Fallback: показується ТІЛЬКИ якщо немає HeroSlide в БД -->
+            <h1 class="hero-title">Продуктивна практика<br>у футбольних клубах</h1>
+            <p class="hero-subtitle">Реальні кейси, стажування та менторинг з<br>професіоналами індустрії</p>
+            <div class="hero-buttons">
+                <a href="/about/" class="btn btn-primary hero-btn-new">
+                    <span class="btn-text">Детальніше</span>
+                    <span class="btn-logo-space"></span>
+                </a>
+            </div>
+            {% endif %}
+
+            <div class="hero-slider-dots"></div>
+        </div>
+    </section>
+
+    <!-- UNIFIED SECTIONS WRAPPER -->
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
+
+            <!-- 2. COURSES SECTION -->
+            <section class="fullscreen-section main-courses-section">
+                <div class="section-content">
+                    <div class="main-courses-header">
+                        <h2 class="section-title">Наші освітні курси</h2>
+
+                        <div class="main-courses-navigation">
+                            <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+                            <button class="course-nav-btn course-nav-next" aria-label="Наступні курси">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="main-courses-carousel-container">
+                        <div class="main-courses-carousel">
+                            <div class="main-courses-track">
+                                {% for course in main_courses %}
+                                <div class="main-course-slide">
+                                    <article class="main-course-card">
+                                        <div class="course-card-top">
+                                            <span class="course-number">КУРС #{{ forloop.counter }}</span>
+                                            <h3 class="course-title">{{ course.title }}</h3>
+                                        </div>
+
+                                        <div class="course-image-wrapper">
+                                            <div class="course-image">
+                                                {% if course.thumbnail %}
+                                                <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                                {% else %}
+                                                <img src="{% static 'images/course' %}{{ forloop.counter|default:1 }}.png"
+                                                    alt="{{ course.title }}">
+                                                {% endif %}
+                                            </div>
+
+                                            <a href="{{ course.get_absolute_url }}" class="course-btn">
+                                                <span class="course-btn-text">Огляд курсу</span>
+                                                <span class="course-btn-arrow"></span>
+                                            </a>
+                                        </div>
+
+                                        <div class="course-card-bottom">
+                                            <p class="course-description">{{ course.short_description|truncatewords:12 }}</p>
+                                        </div>
+                                    </article>
+                                </div>
+                                {% empty %}
+                                <div class="main-course-slide">
+                                    <p class="no-main-courses">Курси скоро з'являться</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. MENTOR-COACHING ECOSYSTEM -->
+            {% get_mentor_coaching_svg as mentor_svg %}
+            <section class="fullscreen-section mentor-coaching-section">
+                <div class="section-content">
+                    <h2 class="section-title">Ментор коучинг</h2>
+                    <h3 class="ecosystem-subtitle">Екосистема комплексного розвитку футболіста</h3>
+
+                    <div class="mentoring-image-block">
+                        {% if mentor_svg %}
+                        {% get_localized_svg mentor_svg country_code 'light' as svg_light %}
+                        {% get_localized_svg mentor_svg country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper mentor-coaching-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <img src="{% static 'images/banner.svg' %}" alt="Екосистема комплексного розвитку футболіста" loading="lazy">
+                        {% endif %}
+                    </div>
+
+                    <div class="mentor-cta">
+                        <a href="/mentor-coaching/" class="btn btn-primary">
+                            <span class="btn-text">Детальніше</span>
+                            <span class="btn-logo-space"></span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. EXPERTS SECTION -->
+            <section class="fullscreen-section experts-section">
+                <div class="section-content">
+                    <h2 class="section-title">Команда Play Vision</h2>
+                    <p class="experts-subtitle">Спеціалісти, які створюють освітні програми та супроводжують твій футбольний розвиток.</p>
+
+                    <div class="experts-grid">
+                        {% if cms_experts %}
+                        {% for expert in cms_experts %}
+                        <div class="expert-card" data-expert-id="{{ forloop.counter }}">
+                            <div class="expert-card-inner">
+                                <div class="expert-card-front">
+                                    <div class="expert-photo">
+                                        {% if expert.photo %}
+                                        <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                        {% else %}
+                                        <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
+                                            alt="{{ expert.name }}" loading="lazy">
+                                        {% endif %}
+                                    </div>
+                                    <div class="expert-card-content">
+                                        <h3 class="expert-name">{{ expert.name }}</h3>
+                                        <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                                        <span class="expert-detail-link">Огляд профілю →</span>
+                                    </div>
+                                </div>
+                                <div class="expert-card-back">
+                                    <div class="expert-bio-content">
+                                        <h3 class="expert-name-back">{{ expert.name }}</h3>
+                                        <div class="expert-bio-text">
+                                            {% if expert.bio %}
+                                            {{ expert.bio|linebreaks }}
+                                            {% else %}
+                                            <p>Інформація про експерта скоро буде додана.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="no-experts-placeholder">
+                            <p>Експерти будуть додані найближчим часом</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- 6. CTA SECTION -->
+    <section class="fullscreen-section cta-section cta-simple">
+        <div class="cta-content">
+            <h2 class="cta-title">Приєднуйся до ком'юніті PlayVision!</h2>
+            <div class="cta-buttons">
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary">
+                    <span class="btn-text">Ставай частиною Play Vision</span>
+                    <span class="btn-logo-space"></span>
+                </a>
+                <a href="{% url 'subscriptions:pricing' %}" class="btn btn-outline">Детальніше про підписку</a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- Scroll Popup -->
+{% include 'partials/scroll-popup.html' %}
+
+<!-- Page-specific JS -->
+<script src="{% static 'js/home.js' %}" defer></script>
+<script src="{% static 'js/main-courses-carousel.js' %}" defer></script>
+<script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
+

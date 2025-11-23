@@ -29,10 +29,17 @@ function initializeHTMX() {
         }
     });
 
-    // Захист навігації від HTMX
+    // Захист навігації від HTMX (оновлено для підтримки navigation)
     document.body.addEventListener('htmx:beforeSwap', function (event) {
-        if (event.detail.target.closest('.header') ||
-            event.detail.target.classList.contains('mobile-menu')) {
+        const target = event.detail.target;
+        
+        // Дозволити swap для #main-content та cart-icon
+        const allowedTargets = ['main-content'];
+        const isAllowed = target.id && allowedTargets.includes(target.id) ||
+                         target.closest('.cart-icon');
+        
+        // Блокувати інші swaps в header
+        if (!isAllowed && target.closest('.header')) {
             event.preventDefault();
             return false;
         }
