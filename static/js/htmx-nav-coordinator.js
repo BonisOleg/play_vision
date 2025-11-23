@@ -173,8 +173,8 @@
             return;
         }
 
-        // 1. SCROLL ДО ВЕРХУ ОДРАЗУ (instant, без анімації)
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        // 1. SCROLL ДО ВЕРХУ ОДРАЗУ (синхронно, без behavior для сумісності)
+        window.scrollTo(0, 0);
         console.log('[HTMX Nav] Scrolled to top');
 
         // 2. Оновлюємо активну кнопку

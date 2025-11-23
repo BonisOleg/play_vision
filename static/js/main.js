@@ -200,6 +200,23 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// === DROPDOWN MANAGEMENT ===
+// Закриття dropdown при кліці поза його межами
+document.addEventListener('click', function(e) {
+    const dropdown = document.querySelector('.nav-action-dropdown');
+    if (dropdown && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('active');
+    }
+});
+
+// Закриття dropdown при HTMX навігації
+document.body.addEventListener('htmx:beforeRequest', function() {
+    const dropdown = document.querySelector('.nav-action-dropdown');
+    if (dropdown) {
+        dropdown.classList.remove('active');
+    }
+});
+
 function initializeProgressBars() {
     const progressFills = document.querySelectorAll('.progress-fill');
     progressFills.forEach(fill => {
