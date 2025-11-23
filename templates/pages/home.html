@@ -136,8 +136,8 @@
 
                                         <div class="course-image-wrapper">
                                             <div class="course-image">
-                                                {% if course.thumbnail %}
-                                                <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+                                                {% if course.logo %}
+                                                <img src="{{ course.logo.url }}" alt="{{ course.title }}">
                                                 {% else %}
                                                 <img src="{% static 'images/course' %}{{ forloop.counter|default:1 }}.png"
                                                     alt="{{ course.title }}">
