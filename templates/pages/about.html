@@ -127,8 +127,8 @@
             <!-- 5. КОМАНДА ПРОФЕСІОНАЛІВ -->
             <section class="fullscreen-section experts-section about-team-section">
                 <div class="section-content">
-                    <h2 class="section-title">Команда професіоналів</h2>
-                    <p class="experts-subtitle">провідні футбольні фахівці, які створюють освітні продукти та супроводжують ваш розвиток</p>
+                    <h2 class="section-title">Backstage team Play Vision</h2>
+                    <p class="experts-subtitle">Люди, які працюють за бровкою, але без них нічого не існує. Наша команда щоденної дії.</p>
 
                     <div class="experts-grid">
                         {% if cms_experts %}
@@ -147,7 +147,11 @@
                                     <div class="expert-card-content">
                                         <h3 class="expert-name">{{ expert.name }}</h3>
                                         <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
-                                        <span class="expert-detail-link">Детальніше</span>
+                                        <div class="expert-links">
+                                            <span class="expert-detail-link">Детальніше</span>
+                                            <span class="expert-change-everywhere">Скрізь змінити</span>
+                                            <a href="#" class="expert-profile-link">Огляд профілю →</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="expert-card-back">

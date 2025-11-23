@@ -105,7 +105,7 @@
             <section class="fullscreen-section main-courses-section">
                 <div class="section-content">
                     <div class="main-courses-header">
-                        <h2 class="section-title">Наші основні програми</h2>
+                        <h2 class="section-title">Наші освітні курси</h2>
 
                         <div class="main-courses-navigation">
                             <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
@@ -282,10 +282,8 @@
             <!-- 4. EXPERTS SECTION -->
             <section class="fullscreen-section experts-section">
                 <div class="section-content">
-                    <h2 class="section-title">Команда професіоналів</h2>
-                    <p class="experts-subtitle">Міжнародні експерти, які створюють освітні програми та супроводжують ваш
-                        розвиток
-                    </p>
+                    <h2 class="section-title">Команда Play Vision</h2>
+                    <p class="experts-subtitle">Спеціалісти, які створюють освітні програми та супроводжують твій футбольний розвиток.</p>
 
                     <div class="experts-grid">
                         {% if cms_experts %}
@@ -304,7 +302,11 @@
                                     <div class="expert-card-content">
                                         <h3 class="expert-name">{{ expert.name }}</h3>
                                         <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
-                                        <span class="expert-detail-link">Детальніше</span>
+                                        <div class="expert-links">
+                                            <span class="expert-detail-link">Детальніше</span>
+                                            <span class="expert-change-everywhere">Скрізь змінити</span>
+                                            <a href="#" class="expert-profile-link">Огляд профілю →</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="expert-card-back">
@@ -343,10 +345,10 @@
     <!-- 6. CTA SECTION -->
     <section class="fullscreen-section cta-section cta-simple">
         <div class="cta-content">
-            <h2 class="cta-title">Готові приєднатись до спільноти PlayVision?</h2>
+            <h2 class="cta-title">Приєднуйся до ком'юніті PlayVision!</h2>
             <div class="cta-buttons">
                 <a href="{% url 'accounts:register' %}" class="btn btn-primary">
-                    <span class="btn-text">Доєднатись</span>
+                    <span class="btn-text">Ставай частиною Play Vision</span>
                     <span class="btn-logo-space"></span>
                 </a>
                 <a href="{% url 'subscriptions:pricing' %}" class="btn btn-outline">Детальніше про підписку</a>
