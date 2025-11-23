@@ -12,10 +12,9 @@
 }
 
 .theme-svg svg {
-    width: 50%;
+    width: 100%;
     height: auto;
     display: block;
-    margin: 70px auto;
 }
 
 /* Світла тема - ховаємо темний SVG */
