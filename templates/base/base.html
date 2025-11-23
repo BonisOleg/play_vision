@@ -109,27 +109,43 @@
                     <div class="nav-tabs-container">
                         <div class="nav-tabs-slider" data-nav-slider></div>
                         <a href="{% url 'core:home' %}"
+                            hx-get="{% url 'htmx:pages_home' %}"
+                            hx-target="#main-content"
+                            hx-swap="innerHTML show:top scroll:top"
+                            hx-push-url="{% url 'core:home' %}"
                             class="nav-tab-btn {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                            data-nav-tab aria-label="Головна"
+                            data-nav-tab data-page="home" aria-label="Головна"
                             aria-current="{% if request.resolver_match.url_name == 'home' %}page{% else %}false{% endif %}">
                             <span class="nav-tab-text">Головна</span>
                         </a>
                         <a href="{% url 'core:about' %}"
+                            hx-get="{% url 'htmx:pages_about' %}"
+                            hx-target="#main-content"
+                            hx-swap="innerHTML show:top scroll:top"
+                            hx-push-url="{% url 'core:about' %}"
                             class="nav-tab-btn {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
-                            data-nav-tab aria-label="Про нас"
+                            data-nav-tab data-page="about" aria-label="Про нас"
                             aria-current="{% if request.resolver_match.url_name == 'about' %}page{% else %}false{% endif %}">
                             <span class="nav-tab-text">Про нас</span>
                         </a>
                         <a href="{% url 'content:course_list' %}"
+                            hx-get="{% url 'content_htmx:course_list' %}"
+                            hx-target="#main-content"
+                            hx-swap="innerHTML show:top scroll:top"
+                            hx-push-url="{% url 'content:course_list' %}"
                             class="nav-tab-btn {% if 'hub' in request.path or 'content' in request.path %}active{% endif %}"
-                            data-nav-tab aria-label="Хаб знань"
+                            data-nav-tab data-page="hub" aria-label="Хаб знань"
                             aria-current="{% if 'hub' in request.path or 'content' in request.path %}page{% else %}false{% endif %}">
                             <span class="nav-tab-text text-highlight">Хаб знань</span>
                         </a>
                         <div class="nav-action-dropdown">
                             <a href="{% url 'events:event_list' %}"
-                                class="nav-tab-btn {% if 'events' in request.path %}active{% endif %}" data-nav-tab
-                                aria-label="Івенти"
+                                hx-get="{% url 'events_htmx:event_list' %}"
+                                hx-target="#main-content"
+                                hx-swap="innerHTML show:top scroll:top"
+                                hx-push-url="{% url 'events:event_list' %}"
+                                class="nav-tab-btn {% if 'events' in request.path %}active{% endif %}"
+                                data-nav-tab data-page="events" aria-label="Івенти"
                                 aria-current="{% if 'events' in request.path %}page{% else %}false{% endif %}">
                                 <span class="nav-tab-text">Івенти</span>
                             </a>
@@ -187,14 +203,22 @@
                             </div>
                         </div>
                         <a href="{% url 'core:mentoring' %}"
+                            hx-get="{% url 'htmx:pages_mentoring' %}"
+                            hx-target="#main-content"
+                            hx-swap="innerHTML show:top scroll:top"
+                            hx-push-url="{% url 'core:mentoring' %}"
                             class="nav-tab-btn {% if request.resolver_match.url_name == 'mentoring' %}active{% endif %}"
-                            data-nav-tab aria-label="Ментор коучинг"
+                            data-nav-tab data-page="mentoring" aria-label="Ментор коучинг"
                             aria-current="{% if request.resolver_match.url_name == 'mentoring' %}page{% else %}false{% endif %}">
                             <span class="nav-tab-text">Ментор коучинг</span>
                         </a>
                         <a href="{% url 'subscriptions:pricing' %}"
+                            hx-get="{% url 'subscriptions_htmx:pricing' %}"
+                            hx-target="#main-content"
+                            hx-swap="innerHTML show:top scroll:top"
+                            hx-push-url="{% url 'subscriptions:pricing' %}"
                             class="nav-tab-btn {% if request.resolver_match.url_name == 'pricing' %}active{% endif %}"
-                            data-nav-tab aria-label="Підписка"
+                            data-nav-tab data-page="pricing" aria-label="Підписка"
                             aria-current="{% if request.resolver_match.url_name == 'pricing' %}page{% else %}false{% endif %}">
                             <span class="nav-tab-text text-highlight">Підписка</span>
                         </a>
@@ -356,7 +380,7 @@
     {% endif %}
 
     <!-- Main Content -->
-    <main class="main" id="main-content">
+    <main class="main" id="main-content" hx-history-elt>
         {% block content %}{% endblock %}
     </main>
 
@@ -420,6 +444,9 @@
     
     <!-- Navigation Tabs Slider Animation -->
     <script src="{% static 'js/nav-tabs-slider.js' %}"></script>
+
+    <!-- HTMX Navigation Coordinator -->
+    <script src="{% static 'js/htmx-nav-coordinator.js' %}"></script>
 
     <!-- iOS Viewport Fix -->
     <script src="{% static 'js/viewport-fix.js' %}"></script>

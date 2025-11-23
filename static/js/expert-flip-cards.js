@@ -55,11 +55,17 @@ class ExpertFlipCards {
     }
 }
 
-// Ініціалізація при завантаженні DOM
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize Expert Flip Cards
+function initExpertFlipCards() {
     const expertFlipCards = new ExpertFlipCards();
 
     // Експортуємо в глобальну область для можливого доступу ззовні
     window.expertFlipCards = expertFlipCards;
-});
+}
+
+// Експорт для HTMX coordinator
+window.initExpertFlipCards = initExpertFlipCards;
+
+// Ініціалізація при завантаженні DOM
+document.addEventListener('DOMContentLoaded', initExpertFlipCards);
 

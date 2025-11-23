@@ -3,8 +3,7 @@
  * Про нас - Чиста версія без паралакс ефектів
  */
 
-document.addEventListener('DOMContentLoaded', function () {
-
+function initAbout() {
     // Smooth scrolling для якорних посилань
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -55,4 +54,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     console.log('✅ About page initialized successfully');
-});
+}
+
+// Експорт для HTMX coordinator
+window.initAbout = initAbout;
+
+document.addEventListener('DOMContentLoaded', initAbout);

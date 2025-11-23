@@ -16,11 +16,16 @@
     let periodSlider = null;
 
     // === ІНІЦІАЛІЗАЦІЯ ===
-    document.addEventListener('DOMContentLoaded', function() {
+    function init() {
         initPeriodSwitcher();
         initComparisonModal();
         initMobileSlider();
-    });
+    }
+
+    // Експорт для HTMX coordinator
+    window.initPricing = init;
+
+    document.addEventListener('DOMContentLoaded', init);
 
     // === ПЕРЕМИКАЧ ПЕРІОДІВ ===
     function initPeriodSwitcher() {

@@ -1,7 +1,13 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize Events page
+function initEvents() {
     initCalendarCarousel();
     initEventFilters();
-});
+}
+
+// Експорт для HTMX coordinator
+window.initEvents = initEvents;
+
+document.addEventListener('DOMContentLoaded', initEvents);
 
 function initCalendarCarousel() {
     const track = document.querySelector('.calendar-carousel-track');

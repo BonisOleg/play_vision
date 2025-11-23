@@ -296,8 +296,8 @@ class CoursesCarousel {
 }
 
 
-// Ініціалізація при завантаженні сторінки
-document.addEventListener('DOMContentLoaded', () => {
+// Ініціалізація home page
+function initHome() {
     new ViewportHeightManager();
 
     const heroElement = document.querySelector('.hero-section');
@@ -309,5 +309,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (coursesElement) {
         new CoursesCarousel(coursesElement);
     }
+}
 
-});
+// Експорт для HTMX coordinator
+window.initHome = initHome;
+
+// Ініціалізація при завантаженні сторінки
+document.addEventListener('DOMContentLoaded', initHome);

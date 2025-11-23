@@ -323,8 +323,8 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize Hub page
+function initHub() {
     // Hero carousel
     const heroSection = document.querySelector('.hub-hero-section');
     if (heroSection) {
@@ -339,7 +339,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Favorite buttons
     initFavoriteButtons();
-});
+}
+
+// Експорт для HTMX coordinator
+window.initHub = initHub;
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', initHub);
 
 // Re-initialize favorite buttons after HTMX swap
 document.body.addEventListener('htmx:afterSwap', (event) => {

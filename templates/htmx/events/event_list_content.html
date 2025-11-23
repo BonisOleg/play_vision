@@ -1,0 +1,222 @@
+{% load static %}
+{% load cms_tags %}
+
+<!-- Page-specific CSS -->
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/events.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/htmx-indicators.css' %}">
+
+<!-- Main content -->
+<div class="fullscreen-container">
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
+
+            <!-- СЕКЦІЯ 1: Івенти Play Vision -->
+            {% get_event_grid as event_grid_cells %}
+            <section class="fullscreen-section events-intro-section">
+                <div class="section-content">
+                    <div class="events-intro-layout">
+                        <!-- Ліва частина 45% -->
+                        <div class="events-intro-left">
+                            <h2 class="section-title">Івенти Play Vision</h2>
+                            <p class="events-intro-subtitle">Трохи тексту загального про Івенти від PV щось мотиваційне можливо</p>
+                            
+                            <div class="events-categories-grid">
+                                <div class="category-block">
+                                    <h3>Вебінари</h3>
+                                    <p>Проведено 4 великих конференції</p>
+                                </div>
+                                <div class="category-block">
+                                    <h3>Стажування</h3>
+                                    <p>Проведено 13 стажувань в клубах УПЛ та ПВПЛ</p>
+                                </div>
+                                <div class="category-block">
+                                    <h3>Семінари</h3>
+                                    <p>Важливо дізнати текст про семінари</p>
+                                </div>
+                                <div class="category-block">
+                                    <h3>Форуми</h3>
+                                    <p>Проведено 10+ з українськими 18 європейськими експертами</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Права частина 55% -->
+                        <div class="events-intro-right">
+                            <div class="events-video-grid">
+                                {% if event_grid_cells %}
+                                {% for cell in event_grid_cells %}
+                                <div class="video-placeholder {% if cell.position == 1 or cell.position == 6 or cell.position == 7 %}video-large{% else %}video-medium{% endif %}">
+                                    {% if cell.image %}
+                                    <img src="{{ cell.image.url }}" alt="{{ cell.alt_text|default:'Event' }}" loading="lazy">
+                                    {% else %}
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <!-- Fallback якщо немає CMS даних -->
+                                <div class="video-placeholder video-large">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-medium">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-medium">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-medium">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-medium">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-large">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-large">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-medium">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="video-placeholder video-medium">
+                                    <button class="play-button" aria-label="Відтворити відео">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- СЕКЦІЯ 2: Календар подій -->
+            <section class="fullscreen-section events-calendar-section">
+                <div class="section-content">
+                    <h2 class="section-title">Календар подій</h2>
+                    
+                    <div class="calendar-carousel-wrapper">
+                        <div class="calendar-carousel-container">
+                            <div class="calendar-carousel-track">
+                                {% for day in calendar_days %}
+                                <div class="calendar-card">
+                                    <div class="calendar-card-header">
+                                        <div class="calendar-event-name">/// {% if day.event %}{{ day.event.title }}{% else %}Назва Івенту{% endif %}</div>
+                                        <div class="calendar-event-date">{{ day.date|date:"d.m.Y" }}</div>
+                                    </div>
+                                    <p class="calendar-event-description">
+                                        {% if day.event %}{{ day.event.short_description|truncatewords:15 }}{% else %}Опис майбутньої події. Детальна інформація буде доступна найближчим часом.{% endif %}
+                                    </p>
+                                    <a href="{% if day.event %}{% url 'events:event_detail' day.event.slug %}{% else %}#{% endif %}" class="btn-details">
+                                        <span class="btn-text">Детальніше</span>
+                                        <span class="btn-arrow"></span>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-navigation">
+                            <button class="calendar-nav-btn calendar-nav-prev" aria-label="Попередні події">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button class="calendar-nav-btn calendar-nav-next" aria-label="Наступні події">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="calendar-pagination">
+                            <span class="current-page">01</span> /07
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- СЕКЦІЯ 3: Каталог івентів -->
+            <section class="fullscreen-section events-catalog-section">
+                <div class="section-content">
+                    <h2 class="section-title">Івенти</h2>
+                    
+                    <!-- Використовуємо shared tab component -->
+                    <div class="event-filters tab-container">
+                        <div class="tab-slider" data-event-filter-slider></div>
+                        <button type="button" 
+                                class="tab-button {% if current_format == 'all' or not current_format %}active{% endif %}" 
+                                data-event-filter-tab
+                                data-format="all">
+                            Всі
+                        </button>
+                        <button type="button" 
+                                class="tab-button {% if current_format == 'online' %}active{% endif %}" 
+                                data-event-filter-tab
+                                data-format="online">
+                            Онлайн
+                        </button>
+                        <button type="button" 
+                                class="tab-button {% if current_format == 'offline' %}active{% endif %}" 
+                                data-event-filter-tab
+                                data-format="offline">
+                            Офлайн
+                        </button>
+                    </div>
+                    
+                    <div class="htmx-loading htmx-indicator">Завантаження...</div>
+                    <div id="events-catalog-content">
+                        {% include 'events/partials/events_catalog_grid.html' %}
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<!-- Page-specific JS -->
+<script src="{% static 'js/shared/tab-slider.js' %}"></script>
+<script src="{% static 'js/events.js' %}" defer></script>
+

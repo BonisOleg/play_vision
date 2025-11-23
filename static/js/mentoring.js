@@ -113,13 +113,19 @@ class MentoringPage {
     }
 }
 
-// Ініціалізація при завантаженні DOM
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize Mentoring page
+function initMentoring() {
     const mentoringPage = new MentoringPage();
     
     // Експортуємо в глобальну область для можливого доступу ззовні
     window.mentoringPage = mentoringPage;
-});
+}
+
+// Експорт для HTMX coordinator
+window.initMentoring = initMentoring;
+
+// Ініціалізація при завантаженні DOM
+document.addEventListener('DOMContentLoaded', initMentoring);
 
 // Додаємо стилі для анімації скролу
 const style = document.createElement('style');

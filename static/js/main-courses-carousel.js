@@ -168,14 +168,20 @@ class MainCoursesCarousel {
     }
 }
 
-// Ініціалізація при завантаженні DOM
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize Main Courses Carousel
+function initMainCoursesCarousel() {
     const mainCoursesSection = document.querySelector('.main-courses-section');
 
     if (mainCoursesSection) {
         new MainCoursesCarousel(mainCoursesSection);
     }
-});
+}
+
+// Експорт для HTMX coordinator
+window.initMainCoursesCarousel = initMainCoursesCarousel;
+
+// Ініціалізація при завантаженні DOM
+document.addEventListener('DOMContentLoaded', initMainCoursesCarousel);
 
 // Export для використання в інших модулях
 if (typeof module !== 'undefined' && module.exports) {
