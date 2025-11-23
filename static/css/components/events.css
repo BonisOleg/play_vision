@@ -334,6 +334,8 @@
 
 .events-catalog-section .event-filters {
     margin-bottom: 40px;
+    min-height: 60px;
+    
 }
 
 .events-catalog-grid {
