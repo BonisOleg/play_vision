@@ -423,6 +423,11 @@
     margin: 0 auto;
 }
 
+.mentor-coaching-section .mentor-coaching-svg-wrapper {
+    width: 50%;
+    margin: 0 auto;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .mentor-coaching-section .mentoring-image-block {
@@ -430,11 +435,19 @@
         margin: 30px auto 40px;
         padding: 0 15px;
     }
+
+    .mentor-coaching-section .mentor-coaching-svg-wrapper {
+        width: 70%;
+    }
 }
 
 @media (max-width: 480px) {
     .mentor-coaching-section .mentoring-image-block {
         margin: 20px auto 30px;
         padding: 0 10px;
+    }
+
+    .mentor-coaching-section .mentor-coaching-svg-wrapper {
+        width: 90%;
     }
 }
