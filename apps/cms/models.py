@@ -133,7 +133,7 @@ class FeaturedCourse(models.Model):
         'content.Course',
         on_delete=models.CASCADE,
         verbose_name='Курс',
-        help_text='Курс для відображення на головній'
+        help_text='Курс для відображення (home/hub)'
     )
     page = models.CharField(
         'Сторінка',
@@ -154,7 +154,7 @@ class FeaturedCourse(models.Model):
     class Meta:
         db_table = 'cms_featured_courses'
         verbose_name = 'Курс'
-        verbose_name_plural = '🏠 Головна → Основні програми'
+        verbose_name_plural = 'Featured Courses'
         ordering = ['page', 'order']
         unique_together = [('page', 'order'), ('page', 'course')]
         indexes = [
@@ -171,6 +171,20 @@ class FeaturedCourse(models.Model):
         return f"{self.page}: {self.course.title} (#{self.order})"
 
 
+class FeaturedCourseHome(FeaturedCourse):
+    """Proxy model for home page featured courses"""
+    class Meta:
+        proxy = True
+        verbose_name = 'Курс'
+        verbose_name_plural = '🏠 Головна → Основні програми'
+
+
+class FeaturedCourseHub(FeaturedCourse):
+    """Proxy model for hub page featured courses"""
+    class Meta:
+        proxy = True
+        verbose_name = 'Курс'
+        verbose_name_plural = '🎓 Хаб знань → Найпопулярніші продукти'
 
 
 class EventGridCell(models.Model):
@@ -332,7 +346,7 @@ from .models_mentor import (
 
 __all__ = [
     # Основні CMS моделі
-    'HeroSlide', 'FeaturedCourse', 'ExpertCard', 'EventGridCell', 'TrackingPixel', 'SiteSettings',
+    'HeroSlide', 'FeaturedCourse', 'FeaturedCourseHome', 'FeaturedCourseHub', 'ExpertCard', 'EventGridCell', 'TrackingPixel', 'SiteSettings',
     # Про нас
     'AboutHero', 'AboutSection2', 'AboutSection3', 'AboutSection4',
     # Хаб знань

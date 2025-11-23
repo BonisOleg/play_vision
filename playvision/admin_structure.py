@@ -34,7 +34,7 @@ def custom_get_app_list(self, request):
                 # === 🏠 Головна ===
                 {'name': '🏠 Головна', 'admin_url': '#', 'view_only': True, 'object_name': 'HomeHeader'},
                 get_model_from_app_list(original_app_list, 'cms', 'HeroSlide'),
-                get_model_from_app_list(original_app_list, 'cms', 'FeaturedCourse'),
+                get_model_from_app_list(original_app_list, 'cms', 'FeaturedCourseHome'),
                 get_model_from_app_list(original_app_list, 'cms', 'MentorCoachingSVG'),
                 get_model_from_app_list(original_app_list, 'cms', 'ExpertCard'),
                 
@@ -48,6 +48,7 @@ def custom_get_app_list(self, request):
                 # === 🎓 Хаб знань ===
                 {'name': '🎓 Хаб знань', 'admin_url': '#', 'view_only': True, 'object_name': 'HubHeader'},
                 get_model_from_app_list(original_app_list, 'cms', 'HubHero'),
+                get_model_from_app_list(original_app_list, 'cms', 'FeaturedCourseHub'),
                 
                 # === 🎉 Івенти ===
                 {'name': '🎉 Івенти', 'admin_url': '#', 'view_only': True, 'object_name': 'EventsHeader'},

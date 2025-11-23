@@ -120,7 +120,7 @@
 
                     <div class="hub-featured-carousel">
                         {% if featured_courses %}
-                        {% for course in featured_courses|slice:":1" %}
+                        {% for course in featured_courses %}
                         <article class="hub-featured-card">
                             <div class="hub-featured-content">
                                 <h3 class="hub-featured-title">{{ course.title }}</h3>

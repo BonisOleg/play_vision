@@ -45,11 +45,18 @@ class CourseListView(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         
-        # Add featured courses for carousel (топ-7 по enrollment)
-        context['featured_courses'] = Course.objects.filter(
-            is_published=True,
-            is_featured=True
-        ).order_by('-enrollment_count')[:7]
+        # Featured courses for hub carousel
+        from apps.cms.models import FeaturedCourse
+        
+        featured_hub = FeaturedCourse.objects.filter(
+            is_active=True,
+            page='hub'
+        ).select_related('course').order_by('order')
+        
+        context['featured_courses'] = [
+            f.course for f in featured_hub 
+            if f.course and f.course.is_published
+        ]
         
         # Check user favorites
         if self.request.user.is_authenticated:

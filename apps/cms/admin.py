@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from .models import (
-    HeroSlide, FeaturedCourse, ExpertCard, EventGridCell, TrackingPixel, SiteSettings,
+    HeroSlide, FeaturedCourse, FeaturedCourseHome, FeaturedCourseHub, ExpertCard, EventGridCell, TrackingPixel, SiteSettings,
     # Про нас
     AboutHero, AboutSection2, AboutSection3, AboutSection4,
     # Хаб знань
@@ -138,28 +138,66 @@ class ExpertCardAdmin(admin.ModelAdmin):
         js = ('admin/js/cms_admin.js',)
 
 
-@admin.register(FeaturedCourse)
-class FeaturedCourseAdmin(admin.ModelAdmin):
-    """Admin for featured courses carousel (7-12 courses)"""
-    list_display = ['course', 'page', 'order', 'is_active']
+@admin.register(FeaturedCourseHome)
+class FeaturedCourseHomeAdmin(admin.ModelAdmin):
+    """Admin for featured courses on HOME page"""
+    list_display = ['course', 'order', 'is_active']
     list_editable = ['order', 'is_active']
-    list_filter = ['page', 'is_active']
+    list_filter = ['is_active']
     search_fields = ['course__title']
     raw_id_fields = ('course',)
-    ordering = ['page', 'order']
+    ordering = ['order']
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(page='home').select_related('course')
+    
+    def save_model(self, request, obj, form, change):
+        obj.page = 'home'
+        super().save_model(request, obj, form, change)
     
     fieldsets = (
-        ('Course Selection', {
-            'fields': ('course', 'page', 'order'),
-            'description': 'Select course to feature. Order determines carousel position (1-12).'
+        ('Вибір курсу', {
+            'fields': ('course', 'order'),
+            'description': 'Оберіть курс для головної. Порядок: 1-12.'
         }),
-        ('Display', {
+        ('Відображення', {
             'fields': ('is_active',),
         }),
     )
     
+    class Media:
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)
+
+
+@admin.register(FeaturedCourseHub)
+class FeaturedCourseHubAdmin(admin.ModelAdmin):
+    """Admin for featured courses on HUB page"""
+    list_display = ['course', 'order', 'is_active']
+    list_editable = ['order', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['course__title']
+    raw_id_fields = ('course',)
+    ordering = ['order']
+    
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('course')
+        qs = super().get_queryset(request)
+        return qs.filter(page='hub').select_related('course')
+    
+    def save_model(self, request, obj, form, change):
+        obj.page = 'hub'
+        super().save_model(request, obj, form, change)
+    
+    fieldsets = (
+        ('Вибір курсу', {
+            'fields': ('course', 'order'),
+            'description': 'Оберіть курс для хабу. Порядок: 1-12.'
+        }),
+        ('Відображення', {
+            'fields': ('is_active',),
+        }),
+    )
     
     class Media:
         css = {'all': ('admin/css/playvision-admin.css',)}
