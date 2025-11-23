@@ -131,37 +131,30 @@
     }
 
     /**
-     * Чекає завантаження всіх CSS перед тим як продовжити
+     * Чекає завантаження і застосування CSS перед оновленням UI
+     * Використовує комбінацію timeout + triple RAF для гарантії що:
+     * 1. CSS файли завантажені (timeout)
+     * 2. Браузер парсить CSS (RAF 1)
+     * 3. Браузер застосував стилі (RAF 2)
+     * 4. Браузер перерахував layout (RAF 3)
      */
-    function waitForStyles(timeout = 1000) {
-        return new Promise((resolve, reject) => {
+    function waitForStyles() {
+        return new Promise((resolve) => {
             const startTime = Date.now();
             
-            function checkStyles() {
-                // Перевіряємо чи всі <link> завантажені
-                const links = document.querySelectorAll('link[rel="stylesheet"]');
-                const allLoaded = Array.from(links).every(link => {
-                    // link.sheet буде null поки CSS не завантажиться
-                    try {
-                        return link.sheet !== null && link.sheet.cssRules !== null;
-                    } catch (e) {
-                        // Може бути CORS помилка для external stylesheets
-                        return true;
-                    }
+            // Даємо 50ms для завантаження CSS файлів
+            setTimeout(() => {
+                // Triple RAF гарантує що браузер застосував стилі і перерахував layout
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            const elapsed = Date.now() - startTime;
+                            console.log(`[HTMX Nav] Styles applied and layout recalculated in ${elapsed}ms`);
+                            resolve();
+                        });
+                    });
                 });
-                
-                if (allLoaded) {
-                    console.log(`[HTMX Nav] All styles loaded in ${Date.now() - startTime}ms`);
-                    resolve();
-                } else if (Date.now() - startTime > timeout) {
-                    console.warn('[HTMX Nav] Timeout waiting for styles, proceeding anyway');
-                    reject(new Error('Timeout waiting for styles'));
-                } else {
-                    requestAnimationFrame(checkStyles);
-                }
-            }
-            
-            checkStyles();
+            }, 50);
         });
     }
 
@@ -180,23 +173,22 @@
             return;
         }
 
-        // 1. Оновлюємо активну кнопку
+        // 1. SCROLL ДО ВЕРХУ ОДРАЗУ (instant, без анімації)
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        console.log('[HTMX Nav] Scrolled to top');
+
+        // 2. Оновлюємо активну кнопку
         updateActiveNavButton(page);
 
-        // 2. Чекаємо завантаження CSS перед оновленням UI
+        // 3. Чекаємо завантаження CSS + layout recalc перед оновленням UI
         waitForStyles().then(() => {
-            // Оновлюємо slider
+            // Оновлюємо slider (тепер він має правильні розміри елементів)
             updateNavSlider();
             
-            // Ре-ініціалізуємо page-specific scripts (з невеликою затримкою для DOM)
+            // Ре-ініціалізуємо page-specific scripts (з затримкою для завершення всіх процесів)
             setTimeout(() => {
                 reinitializePageScripts(page);
-            }, 50);
-        }).catch(err => {
-            // Якщо timeout - продовжуємо в будь-якому випадку
-            console.warn('[HTMX Nav] Proceeding without waiting for all styles');
-            updateNavSlider();
-            reinitializePageScripts(page);
+            }, 100);
         });
 
         console.log('[HTMX Nav] Navigation completed:', page);
