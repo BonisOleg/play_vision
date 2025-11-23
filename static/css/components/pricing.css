@@ -9,7 +9,7 @@
     --pricing-bg: #FFFFFF;
     --pricing-text: #1F2937;
     --pricing-text-secondary: #6B7280;
-    --pricing-border: #E5E7EB;
+    --pricing-border: #000000;
     --pricing-card-bg: #FFFFFF;
     --pricing-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     --pricing-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -28,7 +28,7 @@
     --pricing-bg: #0F0F0F;
     --pricing-text: #FFFFFF;
     --pricing-text-secondary: #A0A0A0;
-    --pricing-border: #2A2A2A;
+    --pricing-border: #FFFFFF;
     --pricing-card-bg: #1A1A1A;
     --pricing-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     --pricing-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.6);
@@ -45,7 +45,7 @@
         --pricing-bg: #0F0F0F;
         --pricing-text: #FFFFFF;
         --pricing-text-secondary: #A0A0A0;
-        --pricing-border: #2A2A2A;
+        --pricing-border: #FFFFFF;
         --pricing-card-bg: #1A1A1A;
         --pricing-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         --pricing-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.6);
@@ -149,7 +149,7 @@
 .plan-card {
     position: relative;
     background: var(--pricing-card-bg);
-    border: 2px solid var(--pricing-border);
+    border: 2px solid black;
     border-radius: var(--pricing-radius);
     padding: 32px 24px;
     box-shadow: var(--pricing-card-shadow);
