@@ -359,7 +359,8 @@
 
 .cta-simple {
     background-image: url('/static/images/backlast.png');
-    background-size: contain;
+    background-size: cover;
+    padding: 50px;
     background-position: center;
     background-repeat: no-repeat;
 }
