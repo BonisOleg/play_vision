@@ -60,8 +60,6 @@ if csrf_origins_env:
 
 # Static files - WhiteNoise configuration
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# WhiteNoise будує manifest з хешами для кеш-бастингу
-WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 # Sentry Integration
 SENTRY_DSN = config('SENTRY_DSN', default='')
@@ -168,7 +166,7 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
