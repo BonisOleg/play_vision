@@ -11,8 +11,16 @@ urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
     
-    # Core pages
-    path('', include('apps.core.urls')),
+    # ========================================
+    # LANDING PAGE (ТИМЧАСОВО на головній '/')
+    # Для повернення основного сайту:
+    # 1. Закоментувати наступний рядок
+    # 2. Розкоментувати: path('', include('apps.core.urls'))
+    # ========================================
+    path('', include('apps.landing.urls')),
+    
+    # Core pages (ЗАКОМЕНТОВАНО під час landing page)
+    # path('', include('apps.core.urls')),
     
     # User authentication and accounts
     path('auth/', include('apps.accounts.urls')),

@@ -1,0 +1,383 @@
+/**
+ * LANDING PAGE STYLES
+ * Темна тема з фоновими зображеннями та статичним виділенням
+ * ВСІ елементи відцентровані по центру сторінки
+ */
+
+/* === RESET === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* === LANDING CONTAINER === */
+.landing-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    
+    /* КРИТИЧНО: Центрування всіх елементів */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    /* Фонове зображення для DESKTOP */
+    background-image: url('/static/desclendback.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    /* Темний оверлей для читабельності */
+    background-color: #000000;
+}
+
+/* Фон для TABLET */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .landing-container {
+        background-image: url('/static/desclendback.png');
+    }
+}
+
+/* Фон для MOBILE */
+@media (max-width: 767px) {
+    .landing-container {
+        background-image: url('/static/moblendback.png');
+    }
+}
+
+/* === CONTENT WRAPPER === */
+.landing-content {
+    max-width: 600px;
+    width: 90%;
+    padding: var(--spacing-xl);
+    
+    /* КРИТИЧНО: Центрування контенту */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    gap: var(--spacing-xl);
+}
+
+@media (max-width: 767px) {
+    .landing-content {
+        max-width: 95%;
+        padding: var(--spacing-lg);
+        gap: var(--spacing-lg);
+    }
+}
+
+/* === РЯДОК 1: COMING SOON === */
+.landing-coming-soon {
+    text-align: center;
+}
+
+.coming-soon-text {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #ffffff;
+    padding: 8px 24px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 767px) {
+    .coming-soon-text {
+        font-size: 12px;
+        letter-spacing: 3px;
+        padding: 6px 20px;
+    }
+}
+
+/* === РЯДОК 2: TITLE === */
+.landing-title {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.3;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 767px) {
+    .landing-title {
+        font-size: 24px;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 480px) {
+    .landing-title {
+        font-size: 20px;
+    }
+}
+
+/* === РЯДОК 3: SUBTITLE З СТАТИЧНИМ ВИДІЛЕННЯМ === */
+.landing-subtitle {
+    text-align: center;
+}
+
+/* Desktop version */
+.landing-subtitle-desktop {
+    display: block;
+}
+
+.landing-subtitle-mobile {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .landing-subtitle-desktop {
+        display: none;
+    }
+    
+    .landing-subtitle-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
+
+.subtitle-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.5;
+    display: inline-block;
+    padding: 9px 18px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+}
+
+@media (max-width: 767px) {
+    .subtitle-text {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .subtitle-text {
+        font-size: 14px;
+        padding: 7px 14px;
+    }
+}
+
+/* Статичне виділення слів (як повзунок в меню але БЕЗ анімації) */
+.subtitle-highlight {
+    position: relative;
+    display: inline-block;
+    padding: 4px 12px;
+    margin: 0 4px;
+    color: #E50914;
+    font-weight: 900;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    z-index: 2;
+}
+
+/* Mobile - окремі виділення для кожного рядка */
+.subtitle-mobile-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === РЯДОК 4: FORM === */
+.landing-form {
+    width: 100%;
+    max-width: 500px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.landing-input {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.landing-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.landing-input:focus {
+    border-color: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.landing-input:invalid:not(:placeholder-shown) {
+    border-color: #E50914;
+}
+
+@media (max-width: 767px) {
+    .landing-input {
+        padding: 14px 18px;
+        font-size: 16px;
+    }
+}
+
+/* Form errors */
+.form-error {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #E50914;
+    text-align: left;
+    padding-left: 4px;
+}
+
+/* Form message (success/error) */
+.form-message {
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.form-message.success {
+    background: rgba(0, 128, 0, 0.2);
+    border: 2px solid rgba(0, 255, 0, 0.5);
+    color: #00ff00;
+}
+
+.form-message.error {
+    background: rgba(229, 9, 20, 0.2);
+    border: 2px solid #E50914;
+    color: #E50914;
+}
+
+/* === РЯДОК 5: SUBMIT BUTTON === */
+.landing-submit-btn {
+    width: 100%;
+    padding: 18px 32px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #E50914;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 16px rgba(229, 9, 20, 0.4);
+}
+
+.landing-submit-btn:hover {
+    background: #b8070f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(229, 9, 20, 0.6);
+}
+
+.landing-submit-btn:active {
+    transform: translateY(0);
+}
+
+.landing-submit-btn:disabled {
+    background: rgba(229, 9, 20, 0.5);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-loader {
+    display: none;
+}
+
+.landing-submit-btn.loading .btn-text {
+    display: none;
+}
+
+.landing-submit-btn.loading .btn-loader {
+    display: inline;
+}
+
+@media (max-width: 767px) {
+    .landing-submit-btn {
+        padding: 16px 28px;
+        font-size: 16px;
+    }
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* Focus visible для keyboard navigation */
+.landing-input:focus-visible,
+.landing-submit-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .landing-input,
+    .landing-submit-btn,
+    .subtitle-text,
+    .coming-soon-text {
+        border-width: 3px;
+    }
+}
+
+/* === iOS SPECIFIC FIXES === */
+@supports (-webkit-touch-callout: none) {
+    .landing-input {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: auto;
+    }
+    
+    .landing-submit-btn {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* Prevent zoom on input focus on iOS */
+@media (max-width: 767px) {
+    .landing-input {
+        font-size: 16px;
+    }
+}
+

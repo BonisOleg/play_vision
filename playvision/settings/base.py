@@ -51,6 +51,7 @@ LOCAL_APPS = [
     'apps.notifications',  # Стандартизована назва
     'apps.cms',  # Стандартизована назва
     'apps.video_security',  # Стандартизована назва
+    'apps.landing',  # Landing page для збору заявок
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -91,6 +92,7 @@ TEMPLATES = [
                 'apps.cart.context_processors.cart_context',
                 'apps.cms.context_processors.site_content',
                 'apps.core.context_processors.external_urls',
+                'apps.landing.context_processors.analytics',  # Analytics pixels
             ],
         },
     },
@@ -308,3 +310,11 @@ PWA_APP_ORIENTATION = 'portrait-primary'
 VAPID_PRIVATE_KEY = config('VAPID_PRIVATE_KEY', default='')
 VAPID_PUBLIC_KEY = config('VAPID_PUBLIC_KEY', default='')
 VAPID_EMAIL = config('VAPID_EMAIL', default=DEFAULT_FROM_EMAIL)
+
+# SendPulse CRM Integration
+SENDPULSE_ID = config('SENDPULSE_ID', default='')
+SENDPULSE_SECRET = config('SENDPULSE_SECRET', default='')
+
+# Analytics (Google Analytics & Facebook Pixel)
+GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID', default='')
+FACEBOOK_PIXEL_ID = config('FACEBOOK_PIXEL_ID', default='')

@@ -1,0 +1,341 @@
+/**
+ * LANDING FORM - Валідація та AJAX відправка
+ * Форматування телефону, валідація полів, відправка без перезавантаження
+ * CSP-compliant (немає inline JS)
+ */
+
+(function() {
+    'use strict';
+    
+    // Елементи DOM
+    const form = document.getElementById('leadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formMessage = document.getElementById('formMessage');
+    
+    const fullNameInput = document.getElementById('id_full_name');
+    const phoneInput = document.getElementById('id_phone');
+    const emailInput = document.getElementById('id_email');
+    const promoCodeInput = document.getElementById('id_promo_code');
+    
+    const fullNameError = document.getElementById('error_full_name');
+    const phoneError = document.getElementById('error_phone');
+    const emailError = document.getElementById('error_email');
+    const promoCodeError = document.getElementById('error_promo_code');
+    
+    if (!form) return;
+    
+    /**
+     * Форматування українського номера телефону
+     */
+    function formatPhoneNumber(value) {
+        // Видалити всі символи крім цифр
+        const numbers = value.replace(/\D/g, '');
+        
+        // Якщо починається з 0, замінити на 380
+        let formatted = numbers;
+        if (formatted.startsWith('0')) {
+            formatted = '380' + formatted.substring(1);
+        } else if (!formatted.startsWith('380')) {
+            formatted = '380' + formatted;
+        }
+        
+        // Обмежити до 12 цифр (380 + 9 цифр)
+        formatted = formatted.substring(0, 12);
+        
+        // Форматувати у вигляді +380(XX)XXX-XX-XX
+        if (formatted.length >= 3) {
+            let result = '+380';
+            const rest = formatted.substring(3);
+            
+            if (rest.length > 0) {
+                result += '(' + rest.substring(0, 2);
+                if (rest.length >= 2) {
+                    result += ')';
+                    if (rest.length > 2) {
+                        result += ' ' + rest.substring(2, 5);
+                        if (rest.length > 5) {
+                            result += '-' + rest.substring(5, 7);
+                            if (rest.length > 7) {
+                                result += '-' + rest.substring(7, 9);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return result;
+        }
+        
+        return '+' + formatted;
+    }
+    
+    /**
+     * Обробка введення номера телефону
+     */
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            const cursorPos = e.target.selectionStart;
+            const oldValue = e.target.value;
+            const newValue = formatPhoneNumber(oldValue);
+            
+            e.target.value = newValue;
+            
+            // Зберегти позицію курсора
+            if (newValue.length >= cursorPos) {
+                e.target.setSelectionRange(cursorPos, cursorPos);
+            }
+        });
+        
+        // Встановити початкове значення
+        phoneInput.addEventListener('focus', function(e) {
+            if (e.target.value === '') {
+                e.target.value = '+380';
+            }
+        });
+    }
+    
+    /**
+     * Валідація імені
+     */
+    function validateFullName(value) {
+        if (!value || value.trim().length < 2) {
+            return 'Ім\'я занадто коротке (мінімум 2 символи)';
+        }
+        
+        const nameRegex = /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ\s'\-]+$/;
+        if (!nameRegex.test(value)) {
+            return 'Ім\'я може містити лише літери, пробіли, апострофи та дефіси';
+        }
+        
+        const words = value.trim().split(/\s+/);
+        if (words.length < 2) {
+            return 'Вкажіть ім\'я та прізвище';
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Валідація телефону
+     */
+    function validatePhone(value) {
+        const phoneRegex = /^\+380\d{9}$/;
+        const cleanPhone = value.replace(/\D/g, '');
+        
+        if (cleanPhone.length < 12) {
+            return 'Введіть повний номер телефону';
+        }
+        
+        const formattedPhone = '+' + cleanPhone.substring(0, 12);
+        if (!phoneRegex.test(formattedPhone)) {
+            return 'Введіть коректний український номер';
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Валідація email
+     */
+    function validateEmail(value) {
+        if (!value || value.trim().length === 0) {
+            return 'Будь ласка, вкажіть вашу email адресу';
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            return 'Введіть коректну email адресу';
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Показати помилку поля
+     */
+    function showError(input, errorElement, message) {
+        if (errorElement && message) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            input.classList.add('error');
+        }
+    }
+    
+    /**
+     * Очистити помилку поля
+     */
+    function clearError(input, errorElement) {
+        if (errorElement) {
+            errorElement.textContent = '';
+            errorElement.style.display = 'none';
+            input.classList.remove('error');
+        }
+    }
+    
+    /**
+     * Показати повідомлення форми
+     */
+    function showMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.className = 'form-message ' + type;
+        formMessage.style.display = 'block';
+        
+        // Автоматично приховати через 10 секунд
+        setTimeout(() => {
+            formMessage.style.display = 'none';
+        }, 10000);
+    }
+    
+    /**
+     * Валідація форми перед відправкою
+     */
+    function validateForm() {
+        let isValid = true;
+        
+        // Валідація імені
+        const nameError = validateFullName(fullNameInput.value);
+        if (nameError) {
+            showError(fullNameInput, fullNameError, nameError);
+            isValid = false;
+        } else {
+            clearError(fullNameInput, fullNameError);
+        }
+        
+        // Валідація телефону
+        const phoneError = validatePhone(phoneInput.value);
+        if (phoneError) {
+            showError(phoneInput, phoneError, phoneError);
+            isValid = false;
+        } else {
+            clearError(phoneInput, phoneError);
+        }
+        
+        // Валідація email
+        const emailError = validateEmail(emailInput.value);
+        if (emailError) {
+            showError(emailInput, emailError, emailError);
+            isValid = false;
+        } else {
+            clearError(emailInput, emailError);
+        }
+        
+        return isValid;
+    }
+    
+    /**
+     * Відправка форми через AJAX
+     */
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Очистити попередні помилки та повідомлення
+        formMessage.style.display = 'none';
+        clearError(fullNameInput, fullNameError);
+        clearError(phoneInput, phoneError);
+        clearError(emailInput, emailError);
+        clearError(promoCodeInput, promoCodeError);
+        
+        // Валідація
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Показати loader
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+        
+        // Отримати дані форми
+        const formData = new FormData(form);
+        
+        // Очистити телефон від форматування
+        const cleanPhone = phoneInput.value.replace(/\D/g, '');
+        formData.set('phone', '+' + cleanPhone.substring(0, 12));
+        
+        // Відправити через fetch
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => {
+            if (!response.ok && response.status !== 400) {
+                throw new Error('Network error');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Успіх
+                showMessage(data.message, 'success');
+                form.reset();
+                
+                // Facebook Pixel - Track Lead
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead');
+                }
+                
+                // Google Analytics - Track Event
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'generate_lead', {
+                        'event_category': 'engagement',
+                        'event_label': 'Landing Page Form'
+                    });
+                }
+            } else {
+                // Помилки валідації
+                if (data.errors) {
+                    Object.keys(data.errors).forEach(field => {
+                        const input = document.getElementById('id_' + field);
+                        const errorElement = document.getElementById('error_' + field);
+                        if (input && errorElement) {
+                            showError(input, errorElement, data.errors[field][0]);
+                        }
+                    });
+                }
+                
+                showMessage(data.message || 'Виникла помилка при обробці заявки', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Form submission error:', error);
+            showMessage('Виникла помилка при відправці форми. Спробуйте ще раз.', 'error');
+        })
+        .finally(() => {
+            // Приховати loader
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        });
+    });
+    
+    // Real-time валідація при введенні
+    fullNameInput.addEventListener('blur', function() {
+        const error = validateFullName(this.value);
+        if (error) {
+            showError(this, fullNameError, error);
+        } else {
+            clearError(this, fullNameError);
+        }
+    });
+    
+    phoneInput.addEventListener('blur', function() {
+        const error = validatePhone(this.value);
+        if (error) {
+            showError(this, phoneError, error);
+        } else {
+            clearError(this, phoneError);
+        }
+    });
+    
+    emailInput.addEventListener('blur', function() {
+        const error = validateEmail(this.value);
+        if (error) {
+            showError(this, emailError, error);
+        } else {
+            clearError(this, emailError);
+        }
+    });
+    
+})();
+
