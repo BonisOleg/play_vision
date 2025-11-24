@@ -148,8 +148,8 @@
                                     </div>
                             </div>
                                 <div class="hub-featured-image">
-                                    {% if course.thumbnail %}
-                                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" loading="lazy">
+                                    {% if course.logo %}
+                                    <img src="{{ course.logo.url }}" alt="{{ course.title }}" loading="lazy">
                                     {% else %}
                                     <img src="{% static 'images/placeholder-square.svg' %}" alt="{{ course.title }}" loading="lazy">
                                     {% endif %}

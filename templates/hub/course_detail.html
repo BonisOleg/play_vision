@@ -28,13 +28,6 @@
                                 <span>{{ course.title }}</span>
                             </nav>
                             
-                            <!-- Logo курсу (маленьке зображення над назвою) -->
-                            {% if course.logo %}
-                            <img src="{{ course.logo.url }}" alt="{{ course.title }}" class="course-logo">
-                            {% elif course.thumbnail %}
-                            <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" class="course-logo">
-                            {% endif %}
-                            
                             {% if course.is_featured %}
                             <span class="badge badge-featured">топ-продажів</span>
                             {% endif %}

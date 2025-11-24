@@ -62,10 +62,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'playvision.middleware.DomainRoutingMiddleware',  # Domain-based routing
-    'playvision.middleware.LandingDomainRestrictionMiddleware',  # Landing domain access control
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'playvision.middleware.DomainRoutingMiddleware',  # Domain-based routing (AFTER auth)
+    'playvision.middleware.LandingDomainRestrictionMiddleware',  # Landing domain access control
     'apps.core.services.RequestContextMiddleware',  # Request context for signals
     'playvision.middleware.CountryDetectionMiddleware',  # GeoIP detection
     'playvision.middleware.AdminRateLimitMiddleware',  # Admin security
