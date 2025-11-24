@@ -176,13 +176,18 @@ class HubFeaturedCarousel {
     }
 
     init() {
-        this.updatePosition();
-        this.updateButtons();
+        // Затримка для коректного обчислення розмірів після завантаження
+        requestAnimationFrame(() => {
+            this.updatePosition();
+            this.updateButtons();
+        });
         this.attachEvents();
         
         // Обробка зміни розміру вікна для коректного перерахунку позиції
         window.addEventListener('resize', () => {
-            this.updatePosition();
+            requestAnimationFrame(() => {
+                this.updatePosition();
+            });
         });
     }
 
@@ -206,16 +211,22 @@ class HubFeaturedCarousel {
     updatePosition() {
         if (!this.track || this.slides.length === 0) return;
         
-        // Отримуємо реальну ширину картки + gap (24px)
+        // Отримуємо реальну ширину картки
         const firstSlide = this.slides[0];
         const slideWidth = firstSlide.offsetWidth;
-        const gap = 24; // gap між картками
+        
+        // Отримуємо gap з CSS (48px)
+        const trackStyles = window.getComputedStyle(this.track);
+        const gap = parseFloat(trackStyles.gap) || 48;
+        
         const slideWithGap = slideWidth + gap;
         
-        // Отримуємо ширину контейнера для обчислення центрування
-        const containerWidth = this.track.parentElement.offsetWidth;
-        // 2.5% відступ для центрування картки (95% картка + 5% вільний простір / 2)
-        const centerOffset = containerWidth * 0.025;
+        // Отримуємо ширину контейнера (section-content) для обчислення центрування
+        const container = this.track.parentElement; // section-content
+        const containerWidth = container.offsetWidth;
+        
+        // Обчислюємо відступ для центрування: (100% - 95%) / 2 = 2.5%
+        const centerOffset = (containerWidth - slideWidth) / 2;
         
         // Обчислюємо зсув: для першої картки центруємо, для інших зсуваємо на ширину + gap
         const translateX = centerOffset - (this.currentIndex * slideWithGap);

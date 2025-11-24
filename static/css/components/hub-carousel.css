@@ -4,7 +4,11 @@
 
 .hub-featured-section {
     padding: var(--spacing-xl);
+}
+
+.hub-featured-section .section-content {
     overflow-x: hidden;
+    position: relative;
 }
 
 .hub-featured-header {
@@ -82,10 +86,10 @@
 /* Carousel Container */
 .hub-featured-carousel {
     display: flex;
-    overflow: hidden;
+    overflow: visible;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
-    gap: 24px;
+    gap: 48px;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     box-sizing: border-box;
