@@ -100,7 +100,7 @@ body {
 
 /* === CONTENT WRAPPER === */
 .landing-content {
-    max-width: 600px;
+    max-width: 900px;
     width: 90%;
     padding: var(--spacing-xl);
     
@@ -159,6 +159,7 @@ body {
 /* === РЯДОК 2: TITLE === */
 .landing-title {
     font-size: 30px;
+    max-width: 700px;
     font-weight: 400;
     font-family: 'AtypText', sans-serif;
     line-height: 1.4;
@@ -206,7 +207,7 @@ body {
 }
 
 .landing-logo {
-    max-width: 80%;
+    max-width: 30%;
     height: auto;
     margin-bottom: 8px;
 }
@@ -243,7 +244,7 @@ body {
     font-weight: 400;
     color: #333333;
     background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid #d0d0d0;
     border-radius: 12px;
     outline: none;
     transition: all 0.3s ease;
@@ -253,8 +254,12 @@ body {
     color: rgba(0, 0, 0, 0.5);
 }
 
+.landing-input.error::placeholder {
+    color: #E50914;
+}
+
 .landing-input:focus {
-    border-color: #ffffff;
+    border-color: #999999;
     background: #ffffff;
 }
 
@@ -288,12 +293,7 @@ body {
 
 /* Form errors */
 .form-error {
-    display: block;
-    margin-top: 6px;
-    font-size: 13px;
-    color: #ffffff;
-    text-align: left;
-    padding-left: 4px;
+    display: none;
 }
 
 /* Form message (success/error) */
@@ -306,15 +306,17 @@ body {
 }
 
 .form-message.success {
-    background: rgba(0, 128, 0, 0.2);
-    border: 2px solid rgba(0, 255, 0, 0.5);
-    color: #00ff00;
+    background: rgba(0, 200, 0, 0.15);
+    border: 3px solid #00cc00;
+    color: #00cc00;
+    font-weight: 600;
 }
 
 .form-message.error {
-    background: rgba(229, 9, 20, 0.2);
-    border: 2px solid #E50914;
+    background: rgba(229, 9, 20, 0.15);
+    border: 3px solid #E50914;
     color: #E50914;
+    font-weight: 600;
 }
 
 /* === РЯДОК 5: SUBMIT BUTTON === */

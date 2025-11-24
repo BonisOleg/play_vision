@@ -191,10 +191,9 @@
      * Показати помилку поля
      */
     function showError(input, errorElement, message) {
-        if (errorElement && message) {
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
+        if (input && message) {
             input.classList.add('error');
+            input.setAttribute('placeholder', message);
         }
     }
     
@@ -202,10 +201,17 @@
      * Очистити помилку поля
      */
     function clearError(input, errorElement) {
-        if (errorElement) {
-            errorElement.textContent = '';
-            errorElement.style.display = 'none';
+        if (input) {
             input.classList.remove('error');
+            // Відновити оригінальний placeholder
+            const originalPlaceholders = {
+                'id_full_name': 'Ваше ім\'я та прізвище',
+                'id_phone': '+380(__) ___-__-__',
+                'id_email': 'Ваш email'
+            };
+            if (originalPlaceholders[input.id]) {
+                input.setAttribute('placeholder', originalPlaceholders[input.id]);
+            }
         }
     }
     
