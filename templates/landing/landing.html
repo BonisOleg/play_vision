@@ -57,16 +57,15 @@
             
             <!-- Рядок 2: Заголовок з білим жирним текстом -->
             <h1 class="landing-title">
-                Реєструйся та отримай <span class="title-semibold">15% знижки</span> на подію Форум Футбольних Фахівців
+                Реєструйся та отримай <span class="title-semibold">15% знижки</span> на подію <span class="title-semibold">Форум Футбольних Фахівців</span>
             </h1>
             
-            <!-- Рядок 3: Білий блок з логотипом -->
-            <div class="landing-logo-block">
-                <img src="{% static 'logolend.svg' %}" alt="Play Vision">
-            </div>
-            
-            <!-- Рядок 4: Форма заявки -->
-            <form id="leadForm" class="landing-form" method="post" action="{% url 'landing:submit_lead' %}">
+            <!-- Рядок 3: Білий блок з логотипом та формою -->
+            <div class="landing-form-wrapper">
+                <img src="{% static 'logolend.svg' %}" alt="Play Vision" class="landing-logo">
+                
+                <!-- Форма заявки -->
+                <form id="leadForm" class="landing-form" method="post" action="{% url 'landing:submit_lead' %}">
                 {% csrf_token %}
                 
                 <div class="form-group">
@@ -75,7 +74,7 @@
                         name="full_name" 
                         id="id_full_name"
                         class="landing-input" 
-                        placeholder="Ваше ім'я"
+                        placeholder="Ваше ім'я та прізвище"
                         required
                         autocomplete="name"
                     >
@@ -118,6 +117,7 @@
                     <span class="btn-loader" style="display: none;">Відправка...</span>
                 </button>
             </form>
+            </div>
             
             <!-- Фраза внизу -->
             <p class="landing-footer-text">Приєднуйся першим до спільноти футбольного навігатора Play Vision</p>

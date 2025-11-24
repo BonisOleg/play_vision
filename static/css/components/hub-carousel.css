@@ -90,6 +90,7 @@
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
     gap: 48px;
+    padding-bottom: 20px;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     box-sizing: border-box;

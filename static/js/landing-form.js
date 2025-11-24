@@ -144,6 +144,11 @@
             return 'Ім\'я може містити лише літери, пробіли, апострофи та дефіси';
         }
         
+        const words = value.trim().split(/\s+/);
+        if (words.length < 2) {
+            return 'Вкажіть ім\'я та прізвище';
+        }
+        
         return null;
     }
     

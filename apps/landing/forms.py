@@ -19,17 +19,17 @@ class LeadForm(forms.Form):
     )
     
     full_name = forms.CharField(
-        label='Ваше ім\'я',
+        label='Ваше ім\'я та прізвище',
         max_length=255,
         required=True,
         validators=[name_regex],
         widget=forms.TextInput(attrs={
-            'placeholder': 'Іван',
+            'placeholder': 'Ваше ім\'я та прізвище',
             'class': 'landing-input',
             'autocomplete': 'name',
         }),
         error_messages={
-            'required': 'Будь ласка, вкажіть ваше ім\'я',
+            'required': 'Будь ласка, вкажіть ваше ім\'я та прізвище',
             'max_length': 'Ім\'я занадто довге (максимум 255 символів)',
         }
     )
@@ -98,6 +98,13 @@ class LeadForm(forms.Form):
         if len(full_name) < 2:
             raise forms.ValidationError(
                 'Ім\'я занадто коротке (мінімум 2 символи)'
+            )
+        
+        # Перевірити що є хоча б 2 слова (ім'я та прізвище)
+        words = full_name.split()
+        if len(words) < 2:
+            raise forms.ValidationError(
+                'Вкажіть ім\'я та прізвище'
             )
         
         return full_name
