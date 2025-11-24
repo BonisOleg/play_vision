@@ -11,14 +11,17 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+html {
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
+    min-height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
     font-family: var(--font-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -27,8 +30,15 @@ body {
 /* === LANDING CONTAINER === */
 .landing-container {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
     position: relative;
+    
+    /* Умовний scroll - тільки якщо контент не влазить */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     
     /* КРИТИЧНО: Центрування всіх елементів */
     display: flex;
@@ -67,6 +77,13 @@ body {
     width: 90%;
     padding: var(--spacing-xl);
     
+    /* Ледь помітна темна тінь */
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border-radius: 24px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    
     /* КРИТИЧНО: Центрування контенту */
     display: flex;
     flex-direction: column;
@@ -80,8 +97,16 @@ body {
 @media (max-width: 767px) {
     .landing-content {
         max-width: 95%;
-        padding: var(--spacing-lg);
-        gap: var(--spacing-lg);
+        padding: 16px;
+        gap: 14px;
+    }
+}
+
+/* Маленькі екрани - компактність */
+@media (max-width: 767px) and (max-height: 650px) {
+    .landing-content {
+        gap: 10px;
+        padding: 12px;
     }
 }
 
@@ -92,12 +117,12 @@ body {
 
 .coming-soon-text {
     display: inline-block;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: #ffffff;
-    padding: 8px 24px;
+    padding: 12px 32px;
     border: 2px solid rgba(255, 255, 255, 0.9);
     border-radius: 50px;
     background: rgba(0, 0, 0, 0.5);
@@ -105,8 +130,15 @@ body {
 
 @media (max-width: 767px) {
     .coming-soon-text {
-        font-size: 12px;
+        font-size: 14px;
         letter-spacing: 3px;
+        padding: 8px 24px;
+    }
+}
+
+@media (max-width: 767px) and (max-height: 650px) {
+    .coming-soon-text {
+        font-size: 12px;
         padding: 6px 20px;
     }
 }
@@ -134,6 +166,12 @@ body {
     }
 }
 
+@media (max-width: 767px) and (max-height: 650px) {
+    .landing-title {
+        font-size: 20px;
+    }
+}
+
 /* === РЯДОК 3: SUBTITLE З СТАТИЧНИМ ВИДІЛЕННЯМ === */
 .landing-subtitle {
     text-align: center;
@@ -145,20 +183,10 @@ body {
 }
 
 .landing-subtitle-mobile {
-    display: none;
+    display: none !important;
 }
 
-@media (max-width: 767px) {
-    .landing-subtitle-desktop {
-        display: none;
-    }
-    
-    .landing-subtitle-mobile {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-sm);
-    }
-}
+/* Підзаголовок завжди в 1 рядок (як на desktop) */
 
 .subtitle-text {
     font-size: 18px;
@@ -213,7 +241,7 @@ body {
     
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: 12px;
 }
 
 .form-group {
@@ -247,10 +275,27 @@ body {
     border-color: #E50914;
 }
 
+/* Прибрати жовте автозаповнення браузера */
+.landing-input:-webkit-autofill,
+.landing-input:-webkit-autofill:hover,
+.landing-input:-webkit-autofill:focus,
+.landing-input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.7) inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 @media (max-width: 767px) {
     .landing-input {
         padding: 14px 18px;
         font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) and (max-height: 650px) {
+    .landing-input {
+        padding: 12px 16px;
+        font-size: 15px;
     }
 }
 
@@ -334,6 +379,13 @@ body {
     .landing-submit-btn {
         padding: 16px 28px;
         font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) and (max-height: 650px) {
+    .landing-submit-btn {
+        padding: 14px 24px;
+        font-size: 15px;
     }
 }
 

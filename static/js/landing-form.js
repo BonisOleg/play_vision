@@ -70,26 +70,50 @@
     }
     
     /**
-     * Обробка введення номера телефону
+     * Обробка введення номера телефону (БЕЗ стрибання курсора)
      */
     if (phoneInput) {
+        // Під час введення - показувати сирі цифри
         phoneInput.addEventListener('input', function(e) {
-            const cursorPos = e.target.selectionStart;
-            const oldValue = e.target.value;
-            const newValue = formatPhoneNumber(oldValue);
+            let value = e.target.value.replace(/\D/g, '');
             
-            e.target.value = newValue;
+            if (value.length === 0) {
+                e.target.value = '+380';
+                return;
+            }
             
-            // Зберегти позицію курсора
-            if (newValue.length >= cursorPos) {
-                e.target.setSelectionRange(cursorPos, cursorPos);
+            // Переконатися що починається з 380
+            if (!value.startsWith('380')) {
+                if (value.startsWith('0')) {
+                    value = '380' + value.substring(1);
+                } else {
+                    value = '380' + value;
+                }
+            }
+            
+            // Обмежити до 12 цифр
+            value = value.substring(0, 12);
+            
+            // Показувати з + під час введення
+            e.target.value = '+' + value;
+        });
+        
+        // При blur - форматувати красиво
+        phoneInput.addEventListener('blur', function(e) {
+            const value = e.target.value;
+            if (value && value.length > 4) {
+                e.target.value = formatPhoneNumber(value);
             }
         });
         
-        // Встановити початкове значення
+        // При focus - встановити +380 якщо порожньо
         phoneInput.addEventListener('focus', function(e) {
-            if (e.target.value === '') {
+            if (!e.target.value || e.target.value === '+' || e.target.value === '+3') {
                 e.target.value = '+380';
+                // Встановити курсор в кінець
+                setTimeout(() => {
+                    e.target.setSelectionRange(4, 4);
+                }, 0);
             }
         });
     }
