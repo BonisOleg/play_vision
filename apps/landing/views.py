@@ -46,14 +46,12 @@ def submit_lead(request):
         full_name = form.cleaned_data['full_name']
         phone = form.cleaned_data['phone']
         email = form.cleaned_data['email']
-        promo_code = form.cleaned_data.get('promo_code', '')
         
         # Зберегти в базу даних
         lead = LeadSubmission.objects.create(
             full_name=full_name,
             phone=phone,
             email=email,
-            promo_code=promo_code,
         )
         
         logger.info(f'Lead submission saved: {lead.id} - {full_name} ({email})')
@@ -66,7 +64,6 @@ def submit_lead(request):
                 phone=phone,
                 variables={
                     'full_name': full_name,
-                    'promo_code': promo_code,
                     'source': 'Landing Page - Форум Футбольних Фахівців',
                     'discount': '15%',
                 }

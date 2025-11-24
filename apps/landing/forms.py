@@ -19,17 +19,17 @@ class LeadForm(forms.Form):
     )
     
     full_name = forms.CharField(
-        label='Ваше ім\'я та прізвище',
+        label='Ваше ім\'я',
         max_length=255,
         required=True,
         validators=[name_regex],
         widget=forms.TextInput(attrs={
-            'placeholder': 'Іван Іваненко',
+            'placeholder': 'Іван',
             'class': 'landing-input',
             'autocomplete': 'name',
         }),
         error_messages={
-            'required': 'Будь ласка, вкажіть ваше ім\'я та прізвище',
+            'required': 'Будь ласка, вкажіть ваше ім\'я',
             'max_length': 'Ім\'я занадто довге (максимум 255 символів)',
         }
     )
@@ -63,16 +63,6 @@ class LeadForm(forms.Form):
             'required': 'Будь ласка, вкажіть вашу електронну адресу',
             'invalid': 'Введіть коректну email адресу',
         }
-    )
-    
-    promo_code = forms.CharField(
-        label='Промокод',
-        max_length=50,
-        required=False,
-        widget=forms.TextInput(attrs={
-            'placeholder': 'PROMO2025 (необов\'язково)',
-            'class': 'landing-input',
-        })
     )
     
     def clean_phone(self):
@@ -110,22 +100,10 @@ class LeadForm(forms.Form):
                 'Ім\'я занадто коротке (мінімум 2 символи)'
             )
         
-        # Перевірити що є хоча б 2 слова (ім'я та прізвище)
-        words = full_name.split()
-        if len(words) < 2:
-            raise forms.ValidationError(
-                'Вкажіть ім\'я та прізвище'
-            )
-        
         return full_name
     
     def clean_email(self):
         """Очистка email"""
         email = self.cleaned_data.get('email', '').strip().lower()
         return email
-    
-    def clean_promo_code(self):
-        """Очистка промокоду"""
-        promo_code = self.cleaned_data.get('promo_code', '').strip().upper()
-        return promo_code
 

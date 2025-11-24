@@ -57,33 +57,13 @@
             
             <!-- Рядок 2: Заголовок з білим жирним текстом -->
             <h1 class="landing-title">
-                Реєструйся та отримай 15% знижки на подію<br>
-                Форум Футбольних Фахівців
+                Реєструйся та отримай <span class="title-semibold">15% знижки</span> на подію<br>
+                <span class="title-semibold">Форум Футбольних Фахівців</span>
             </h1>
             
-            <!-- Рядок 3: Підзаголовок з статичним виділенням (стиль меню) -->
-            <div class="landing-subtitle">
-                <!-- Desktop version -->
-                <div class="landing-subtitle-desktop">
-                    <span class="subtitle-text">
-                        Приєднуйся першим до спільноти футбольного навігатора 
-                        <span class="subtitle-highlight">Play Vision</span>
-                    </span>
-                </div>
-                
-                <!-- Mobile version (2 рядки) -->
-                <div class="landing-subtitle-mobile">
-                    <div class="subtitle-mobile-line">
-                        <span class="subtitle-text">
-                            <span class="subtitle-highlight">Приєднуйся</span> першим до
-                        </span>
-                    </div>
-                    <div class="subtitle-mobile-line">
-                        <span class="subtitle-text">
-                            спільноти <span class="subtitle-highlight">Play Vision</span>
-                        </span>
-                    </div>
-                </div>
+            <!-- Рядок 3: Білий блок з логотипом -->
+            <div class="landing-logo-block">
+                <img src="{% static 'logolend.svg' %}" alt="Play Vision">
             </div>
             
             <!-- Рядок 4: Форма заявки -->
@@ -96,7 +76,7 @@
                         name="full_name" 
                         id="id_full_name"
                         class="landing-input" 
-                        placeholder="Ваше ім'я та прізвище"
+                        placeholder="Ваше ім'я"
                         required
                         autocomplete="name"
                     >
@@ -130,18 +110,6 @@
                     <span class="form-error" id="error_email"></span>
                 </div>
                 
-                <div class="form-group">
-                    <input 
-                        type="text" 
-                        name="promo_code" 
-                        id="id_promo_code"
-                        class="landing-input" 
-                        placeholder="Промокод (необов'язково)"
-                        autocomplete="off"
-                    >
-                    <span class="form-error" id="error_promo_code"></span>
-                </div>
-                
                 <!-- Повідомлення про успіх/помилку -->
                 <div id="formMessage" class="form-message" style="display: none;"></div>
                 
@@ -151,6 +119,9 @@
                     <span class="btn-loader" style="display: none;">Відправка...</span>
                 </button>
             </form>
+            
+            <!-- Фраза внизу -->
+            <p class="landing-footer-text">Приєднуйся першим до спільноти футбольного навігатора Play Vision</p>
             
         </div>
     </div>

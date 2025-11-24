@@ -15,12 +15,10 @@
     const fullNameInput = document.getElementById('id_full_name');
     const phoneInput = document.getElementById('id_phone');
     const emailInput = document.getElementById('id_email');
-    const promoCodeInput = document.getElementById('id_promo_code');
     
     const fullNameError = document.getElementById('error_full_name');
     const phoneError = document.getElementById('error_phone');
     const emailError = document.getElementById('error_email');
-    const promoCodeError = document.getElementById('error_promo_code');
     
     if (!form) return;
     
@@ -70,10 +68,10 @@
     }
     
     /**
-     * Обробка введення номера телефону (БЕЗ стрибання курсора)
+     * Обробка введення номера телефону з форматуванням в реальному часі
      */
     if (phoneInput) {
-        // Під час введення - показувати сирі цифри
+        // Під час введення - форматувати одразу з дужками
         phoneInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             
@@ -94,15 +92,30 @@
             // Обмежити до 12 цифр
             value = value.substring(0, 12);
             
-            // Показувати з + під час введення
-            e.target.value = '+' + value;
-        });
-        
-        // При blur - форматувати красиво
-        phoneInput.addEventListener('blur', function(e) {
-            const value = e.target.value;
-            if (value && value.length > 4) {
-                e.target.value = formatPhoneNumber(value);
+            // Форматувати одразу як +380(XX) XXX-XX-XX
+            if (value.length >= 3) {
+                let formatted = '+380';
+                const rest = value.substring(3);
+                
+                if (rest.length > 0) {
+                    formatted += '(' + rest.substring(0, 2);
+                    if (rest.length >= 2) {
+                        formatted += ')';
+                        if (rest.length > 2) {
+                            formatted += ' ' + rest.substring(2, 5);
+                            if (rest.length > 5) {
+                                formatted += '-' + rest.substring(5, 7);
+                                if (rest.length > 7) {
+                                    formatted += '-' + rest.substring(7, 9);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                e.target.value = formatted;
+            } else {
+                e.target.value = '+' + value;
             }
         });
         
@@ -129,11 +142,6 @@
         const nameRegex = /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ\s'\-]+$/;
         if (!nameRegex.test(value)) {
             return 'Ім\'я може містити лише літери, пробіли, апострофи та дефіси';
-        }
-        
-        const words = value.trim().split(/\s+/);
-        if (words.length < 2) {
-            return 'Вкажіть ім\'я та прізвище';
         }
         
         return null;
@@ -257,7 +265,6 @@
         clearError(fullNameInput, fullNameError);
         clearError(phoneInput, phoneError);
         clearError(emailInput, emailError);
-        clearError(promoCodeInput, promoCodeError);
         
         // Валідація
         if (!validateForm()) {

@@ -10,12 +10,11 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
         'full_name',
         'phone',
         'email',
-        'promo_code',
         'submitted_at',
         'sendpulse_synced'
     ]
     list_filter = ['sendpulse_synced', 'submitted_at']
-    search_fields = ['full_name', 'phone', 'email', 'promo_code']
+    search_fields = ['full_name', 'phone', 'email']
     readonly_fields = ['submitted_at', 'sendpulse_contact_id']
     date_hierarchy = 'submitted_at'
     
@@ -34,7 +33,6 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
                     phone=lead.phone,
                     variables={
                         'full_name': lead.full_name,
-                        'promo_code': lead.promo_code,
                         'source': 'Landing Page - Форум Футбольних Фахівців'
                     }
                 )
