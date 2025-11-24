@@ -149,7 +149,7 @@ body {
 
 @media (max-width: 767px) {
     .coming-soon-text {
-        font-size: 14px;
+        font-size: 25px;
         letter-spacing: 1.5px;
     }
 }
@@ -223,7 +223,7 @@ body {
     }
     
     .landing-logo {
-        max-width: 85%;
+        max-width: 45%;
     }
 }
 
@@ -437,7 +437,7 @@ body {
 
 @media (max-width: 767px) {
     .landing-footer-text {
-        font-size: 13px;
+        font-size: 18px;
     }
 }
 
