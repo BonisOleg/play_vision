@@ -179,6 +179,11 @@ class HubFeaturedCarousel {
         this.updatePosition();
         this.updateButtons();
         this.attachEvents();
+        
+        // Обробка зміни розміру вікна для коректного перерахунку позиції
+        window.addEventListener('resize', () => {
+            this.updatePosition();
+        });
     }
 
     attachEvents() {
@@ -199,9 +204,23 @@ class HubFeaturedCarousel {
     }
 
     updatePosition() {
-        if (!this.track) return;
-        const translateX = -(this.currentIndex * 100);
-        this.track.style.transform = `translateX(${translateX}%)`;
+        if (!this.track || this.slides.length === 0) return;
+        
+        // Отримуємо реальну ширину картки + gap (24px)
+        const firstSlide = this.slides[0];
+        const slideWidth = firstSlide.offsetWidth;
+        const gap = 24; // gap між картками
+        const slideWithGap = slideWidth + gap;
+        
+        // Отримуємо ширину контейнера для обчислення центрування
+        const containerWidth = this.track.parentElement.offsetWidth;
+        // 2.5% відступ для центрування картки (95% картка + 5% вільний простір / 2)
+        const centerOffset = containerWidth * 0.025;
+        
+        // Обчислюємо зсув: для першої картки центруємо, для інших зсуваємо на ширину + gap
+        const translateX = centerOffset - (this.currentIndex * slideWithGap);
+        
+        this.track.style.transform = `translateX(${translateX}px)`;
     }
 
     updateButtons() {
