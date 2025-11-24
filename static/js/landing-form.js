@@ -136,17 +136,17 @@
      */
     function validateFullName(value) {
         if (!value || value.trim().length < 2) {
-            return 'Ім\'я занадто коротке (мінімум 2 символи)';
+            return 'Введіть ваше ім\'я та прізвище';
         }
         
         const nameRegex = /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ\s'\-]+$/;
         if (!nameRegex.test(value)) {
-            return 'Ім\'я може містити лише літери, пробіли, апострофи та дефіси';
+            return 'Введіть ваше ім\'я та прізвище';
         }
         
         const words = value.trim().split(/\s+/);
         if (words.length < 2) {
-            return 'Вкажіть ім\'я та прізвище';
+            return 'Введіть ваше ім\'я та прізвище';
         }
         
         return null;

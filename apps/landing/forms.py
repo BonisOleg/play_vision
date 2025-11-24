@@ -97,14 +97,14 @@ class LeadForm(forms.Form):
         
         if len(full_name) < 2:
             raise forms.ValidationError(
-                'Ім\'я занадто коротке (мінімум 2 символи)'
+                'Введіть ваше ім\'я та прізвище'
             )
         
         # Перевірити що є хоча б 2 слова (ім'я та прізвище)
         words = full_name.split()
         if len(words) < 2:
             raise forms.ValidationError(
-                'Вкажіть ім\'я та прізвище'
+                'Введіть ваше ім\'я та прізвище'
             )
         
         return full_name

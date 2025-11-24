@@ -11,6 +11,7 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
 }
 
 @font-face {
@@ -19,6 +20,7 @@
     font-weight: 600;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
 }
 
 @font-face {
@@ -27,7 +29,9 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
 }
+
 
 /* === RESET === */
 * {
@@ -47,7 +51,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), 'RobotoForN', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -136,7 +140,7 @@ body {
 }
 
 .coming-soon-text {
-    font-size: 16px;
+    font-size: 50px;
     font-weight: 600;
     font-family: 'AtypDisplay', sans-serif;
     letter-spacing: 2px;
@@ -195,7 +199,6 @@ body {
 /* === FORM WRAPPER - білий блок з логотипом та формою === */
 .landing-form-wrapper {
     width: 100%;
-    max-width: 550px;
     background: #ffffff;
     border-radius: 40px;
     padding: 40px;
@@ -424,7 +427,7 @@ body {
 
 /* === FOOTER TEXT === */
 .landing-footer-text {
-    font-size: 15px;
+    font-size: 30px;
     font-weight: 400;
     font-family: 'AtypText', sans-serif;
     color: #ffffff;
