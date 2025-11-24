@@ -5,6 +5,26 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import Http404
+
+
+def root_view(request):
+    """Роутер для головної сторінки залежно від домену"""
+    if getattr(request, 'is_landing_domain', False):
+        from apps.landing.views import landing_page
+        return landing_page(request)
+    else:
+        from apps.core.views import HomeView
+        return HomeView.as_view()(request)
+
+
+def submit_view(request):
+    """Форма submit доступна тільки на landing domain"""
+    if getattr(request, 'is_landing_domain', False):
+        from apps.landing.views import submit_lead
+        return submit_lead(request)
+    else:
+        raise Http404("Ця сторінка недоступна на даному домені")
 
 
 urlpatterns = [
@@ -12,15 +32,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # ========================================
-    # LANDING PAGE (ТИМЧАСОВО на головній '/')
-    # Для повернення основного сайту:
-    # 1. Закоментувати наступний рядок
-    # 2. Розкоментувати: path('', include('apps.core.urls'))
+    # DOMAIN-BASED ROUTING
+    # playvision.com.ua → Landing
+    # playvision.onrender.com → Full site
     # ========================================
-    path('', include('apps.landing.urls')),
-    
-    # Core pages (ЗАКОМЕНТОВАНО під час landing page)
-    # path('', include('apps.core.urls')),
+    path('', root_view, name='root'),
+    path('submit/', submit_view, name='submit_lead'),
     
     # User authentication and accounts
     path('auth/', include('apps.accounts.urls')),

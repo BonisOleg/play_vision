@@ -62,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'playvision.middleware.DomainRoutingMiddleware',  # Domain-based routing
+    'playvision.middleware.LandingDomainRestrictionMiddleware',  # Landing domain access control
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'apps.core.services.RequestContextMiddleware',  # Request context for signals

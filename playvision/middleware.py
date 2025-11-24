@@ -282,3 +282,36 @@ class PhoneRegistrationMiddleware(MiddlewareMixin):
                     f'Залишилось днів: {days_left}')
         
         return None
+
+
+class DomainRoutingMiddleware:
+    """Визначає тип домену та встановлює флаг"""
+    
+    def __init__(self, get_response):
+        self.get_response = get_response
+    
+    def __call__(self, request):
+        host = request.get_host().lower().split(':')[0]
+        
+        landing_domains = ['playvision.com.ua', 'www.playvision.com.ua']
+        request.is_landing_domain = host in landing_domains
+        
+        return self.get_response(request)
+
+
+class LandingDomainRestrictionMiddleware:
+    """Обмежує доступ на landing domain тільки до landing URLs"""
+    
+    def __init__(self, get_response):
+        self.get_response = get_response
+    
+    def __call__(self, request):
+        from django.http import Http404
+        
+        if getattr(request, 'is_landing_domain', False):
+            allowed_paths = ['/', '/submit/']
+            
+            if request.path not in allowed_paths:
+                raise Http404("Ця сторінка недоступна на даному домені")
+        
+        return self.get_response(request)
