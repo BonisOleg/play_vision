@@ -20,10 +20,13 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# Add common Render patterns
+# Add common Render patterns and custom domain
 ALLOWED_HOSTS.extend([
     '*.onrender.com',
-    'playvision.onrender.com'
+    'playvision.onrender.com',
+    'playvision.com.ua',
+    'www.playvision.com.ua',
+    '*.playvision.com.ua'
 ])
 
 # Database - Use DATABASE_URL from Render
@@ -49,11 +52,14 @@ CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 
-# CSRF trusted origins for Render
+# CSRF trusted origins for Render and custom domain
 csrf_origins_env = config('CSRF_TRUSTED_ORIGINS', default='')
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
-    'https://playvision.onrender.com'
+    'https://playvision.onrender.com',
+    'https://playvision.com.ua',
+    'https://www.playvision.com.ua',
+    'https://*.playvision.com.ua'
 ]
 if csrf_origins_env:
     CSRF_TRUSTED_ORIGINS.extend(csrf_origins_env.split(','))

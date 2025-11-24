@@ -67,4 +67,8 @@ services:
       # ANTHROPIC_API_KEY - your Anthropic API key (sk-ant-...)
       # VAPID_PRIVATE_KEY - for PWA push notifications
       # VAPID_PUBLIC_KEY - for PWA push notifications
+      # SENDPULSE_ID - SendPulse CRM Client ID (for landing page)
+      # SENDPULSE_SECRET - SendPulse CRM Client Secret (for landing page)
+      # GOOGLE_ANALYTICS_ID - Google Analytics tracking ID (optional, for landing page)
+      # FACEBOOK_PIXEL_ID - Facebook Pixel ID (optional, for landing page)
     autoDeploy: true
