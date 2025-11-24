@@ -5,26 +5,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.http import Http404
-
-
-def root_view(request):
-    """Роутер для головної сторінки залежно від домену"""
-    if getattr(request, 'is_landing_domain', False):
-        from apps.landing.views import landing_page
-        return landing_page(request)
-    else:
-        from apps.core.views import HomeView
-        return HomeView.as_view()(request)
-
-
-def submit_view(request):
-    """Форма submit доступна тільки на landing domain"""
-    if getattr(request, 'is_landing_domain', False):
-        from apps.landing.views import submit_lead
-        return submit_lead(request)
-    else:
-        raise Http404("Ця сторінка недоступна на даному домені")
 
 
 urlpatterns = [
@@ -32,12 +12,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # ========================================
-    # DOMAIN-BASED ROUTING
-    # playvision.com.ua → Landing
-    # playvision.onrender.com → Full site
+    # DOMAIN-BASED ROUTING via DomainRoutingMiddleware
+    # playvision.com.ua → Landing (handled by middleware)
+    # playvision.onrender.com → Core site
     # ========================================
-    path('', root_view, name='root'),
-    path('submit/', submit_view, name='submit_lead'),
+    path('', include('apps.core.urls')),  # Core site (default)
+    path('', include('apps.landing.urls')),  # Landing (when middleware routes to it)
     
     # User authentication and accounts
     path('auth/', include('apps.accounts.urls')),

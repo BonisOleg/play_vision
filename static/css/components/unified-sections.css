@@ -47,12 +47,6 @@
 }
 
 /* Видалити фонові елементи секцій */
-.unified-sections-wrapper .main-courses-section,
-.unified-sections-wrapper .mentor-coaching-section,
-.unified-sections-wrapper .experts-section {
-    background: transparent;
-}
-
 .unified-sections-wrapper .section-bg,
 .unified-sections-wrapper .section-overlay {
     display: none;

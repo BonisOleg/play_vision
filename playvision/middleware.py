@@ -285,7 +285,7 @@ class PhoneRegistrationMiddleware(MiddlewareMixin):
 
 
 class DomainRoutingMiddleware:
-    """Визначає тип домену та встановлює флаг"""
+    """Визначає тип домену та перенаправляє root request"""
     
     def __init__(self, get_response):
         self.get_response = get_response
@@ -294,13 +294,21 @@ class DomainRoutingMiddleware:
         host = request.get_host().lower().split(':')[0]
         
         landing_domains = ['playvision.com.ua', 'www.playvision.com.ua']
-        request.is_landing_domain = host in landing_domains
+        is_landing_domain = host in landing_domains
+        request.is_landing_domain = is_landing_domain
+        
+        # Handle root path routing based on domain
+        if request.path == '/':
+            if is_landing_domain:
+                from apps.landing.views import landing_page
+                return landing_page(request)
+            # For other domains, let it continue to core.urls HomeView
         
         return self.get_response(request)
 
 
 class LandingDomainRestrictionMiddleware:
-    """Обмежує доступ на landing domain тільки до landing URLs"""
+    """Обмежує доступ на landing domain тільки до landing URLs та блокує landing URLs на інших доменах"""
     
     def __init__(self, get_response):
         self.get_response = get_response
@@ -308,10 +316,16 @@ class LandingDomainRestrictionMiddleware:
     def __call__(self, request):
         from django.http import Http404
         
-        if getattr(request, 'is_landing_domain', False):
+        is_landing_domain = getattr(request, 'is_landing_domain', False)
+        
+        if is_landing_domain:
+            # На landing domain дозволені тільки / та /submit/
             allowed_paths = ['/', '/submit/']
-            
             if request.path not in allowed_paths:
+                raise Http404("Ця сторінка недоступна на даному домені")
+        else:
+            # На non-landing domains заборонений /submit/ (це landing-only endpoint)
+            if request.path == '/submit/':
                 raise Http404("Ця сторінка недоступна на даному домені")
         
         return self.get_response(request)
