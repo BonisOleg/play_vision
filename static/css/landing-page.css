@@ -32,7 +32,6 @@ body {
     width: 100%;
     min-height: 100vh;
     min-height: 100dvh;
-    min-height: -webkit-fill-available;
     position: relative;
     
     /* Умовний scroll - тільки якщо контент не влазить */
@@ -57,10 +56,13 @@ body {
     background-color: #000000;
 }
 
-/* Фон для TABLET */
+/* Фон для TABLET - використовуємо мобільний фон */
 @media (max-width: 1024px) and (min-width: 768px) {
     .landing-container {
-        background-image: url('/static/desclendback.png');
+        background-image: url('/static/moblendback.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
     }
 }
 
