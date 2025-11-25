@@ -94,6 +94,10 @@ def custom_get_app_list(self, request):
                 # === 📈 Статистика ===
                 {'name': '📈 Статистика', 'admin_url': '#', 'view_only': True, 'object_name': 'StatsHeader'},
                 get_model_from_app_list(original_app_list, 'analytics', 'DashboardStats'),
+                
+                # === 📥 Заявки з лендінгу ===
+                {'name': '📥 Заявки з лендінгу', 'admin_url': '#', 'view_only': True, 'object_name': 'LeadsHeader'},
+                get_model_from_app_list(original_app_list, 'landing', 'LeadSubmission'),
             ]
         },
         # Додати інші застосунки (Users, Auth тощо)
