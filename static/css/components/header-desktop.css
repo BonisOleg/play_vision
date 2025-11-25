@@ -9,6 +9,7 @@
    ======================================== */
 
 .main-header {
+    overflow-x: hidden;
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
     position: sticky;
@@ -599,6 +600,8 @@
     }
 
     .header-content {
+        max-width: 100%;
+        overflow-x: hidden;
         display: flex;
         justify-content: space-between;
         gap: var(--spacing-md);
@@ -606,6 +609,8 @@
     }
 
     .header-actions {
+        flex-shrink: 0;
+        min-width: 0;
         display: flex;
         align-items: center;
         gap: var(--spacing-sm);

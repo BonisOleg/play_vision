@@ -13,6 +13,7 @@
 }
 
 html {
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
     /* iOS Safari specific fixes */
@@ -21,6 +22,7 @@ html {
 }
 
 body {
+    overflow-x: hidden;
     margin: 0;
     font-family: var(--font-primary);
     font-size: var(--font-size-base);
@@ -582,6 +584,11 @@ html.ios-safari {
 
 /* Mobile adaptations */
 @media (max-width: 768px) {
+    .container {
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+    }
+
     .messages {
         right: 10px;
         left: 10px;
@@ -597,6 +604,7 @@ html.ios-safari {
 /* Tablet specific styles (768px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .container {
+        margin: 0 auto;
         max-width: 95%;
         padding: 0 var(--spacing-lg);
     }
@@ -632,6 +640,7 @@ html.ios-safari {
     }
 
     .container {
+        margin: 0 auto;
         padding: 0 var(--spacing-sm);
     }
 
