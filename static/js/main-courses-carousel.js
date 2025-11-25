@@ -63,7 +63,7 @@ class MainCoursesCarousel {
         const width = window.innerWidth;
 
         if (width < 576) {
-            this.slidesPerView = 1;
+            this.slidesPerView = 2;
         } else if (width < 768) {
             this.slidesPerView = 2;
         } else if (width < 1024) {
