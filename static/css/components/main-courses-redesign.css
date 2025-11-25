@@ -400,6 +400,7 @@
     .main-courses-navigation {
         order: 3;
         align-self: center;
+        padding-top: 20px;
     }
 
     .course-nav-btn {
@@ -480,6 +481,7 @@
         order: 3;
         align-self: center;
         width: fit-content;
+        padding-top: 20px;
     }
 
     .course-nav-btn {

@@ -221,10 +221,15 @@ select:focus-visible {
 /* === iOS SAFARI SPECIFIC === */
 @supports (-webkit-touch-callout: none) {
 
-    /* Fix for iOS viewport units */
     .fullscreen-section,
     .hero-section,
     .vh-100 {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+
+    .hero-new-design {
+        min-height: 100vh;
         min-height: -webkit-fill-available;
     }
 

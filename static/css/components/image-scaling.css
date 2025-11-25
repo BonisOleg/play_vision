@@ -101,13 +101,3 @@
 [class*="-photo"] img {
     object-fit: cover !important;
 }
-
-/* === ВИКЛЮЧЕННЯ: HERO БЛОКИ НА БАЗІ .section-bg === */
-/* Контроль через section-base.css */
-.hero-section .section-bg-image,
-.hero-section .section-bg-video,
-.about-hero .section-bg-image,
-.mentoring-hero .section-bg-image {
-    object-fit: contain;
-}
-

@@ -41,13 +41,14 @@
     backdrop-filter: none;
     width: 80%;
     max-width: 1400px;
-    padding: 0 0 90px  !important;
+    padding: 0 0 90px;
     text-align: left;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
     height: 100%;
+    min-height: 100%;
 }
 
 /* Tablet responsiveness (Синхронізовано з content-width) */
@@ -72,7 +73,7 @@
     /* NEW DESIGN Tablet */
     .section-content.hero-new-design {
         width: 90%;
-        padding: 1rem 1.5rem 0.75rem !important;
+        padding: 1rem 1.5rem 0.75rem;
     }
 
     .hero-new-design .hero-title {
@@ -95,7 +96,7 @@
     /* NEW DESIGN Mobile */
     .section-content.hero-new-design {
         width: 95%;
-        padding: 0.75rem 1rem 0.5rem !important;
+        padding: 0.75rem 1rem 0.5rem;
         justify-content: flex-end;
     }
 
@@ -659,7 +660,7 @@
 
     /* NEW DESIGN Small Mobile */
     .hero-section .section-content.hero-new-design {
-        padding: 0 0 10px 10px !important;
+        padding: 0 0 10px 10px;
     }
 
     .hero-new-design .hero-title {
@@ -689,20 +690,13 @@
     }
 }
 
-/* === iOS SAFARI OPTIMIZATIONS === */
 @supports (-webkit-touch-callout: none) {
     .hero-section {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         transform: translateZ(0);
     }
-    
-    .fullscreen-section {
-        height: -webkit-calc(100vh - 80px);
-        min-height: -webkit-calc(100vh - 80px);
-    }
 
-    /* Buttons */
     .btn,
     .cta-section .btn-primary,
     .cta-section .btn-outline,
@@ -719,7 +713,6 @@
         cursor: pointer;
     }
 
-    /* Smooth scrolling */
     .fullscreen-container,
     .section-content,
     .hero-new-design,
@@ -727,7 +720,6 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Hexagons - prevent blur */
     .hexagon,
     .hexagon-inner {
         -webkit-backface-visibility: hidden;
@@ -736,29 +728,14 @@
         transform-style: preserve-3d;
     }
 
-    /* Expert cards iOS оптимізація в expert-cards-base.css */
-
-    /* Video */
     .section-bg-video {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
 
-    /* NEW DESIGN - gradient optimization */
     .section-overlay--gradient {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
-    }
-
-    /* Fix iOS Safari address bar height issues */
-    @media screen and (max-width: 768px) {
-        .fullscreen-section {
-            min-height: -webkit-fill-available;
-        }
-
-        .hero-new-design {
-            min-height: -webkit-fill-available;
-        }
     }
 }
 
