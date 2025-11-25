@@ -437,17 +437,47 @@
     }
 
     .mentor-coaching-section .mentor-coaching-svg-wrapper {
-        width: 70%;
+        width: 85%;
     }
 }
 
 @media (max-width: 480px) {
     .mentor-coaching-section .mentoring-image-block {
         margin: 20px auto 30px;
-        padding: 0 10px;
+        padding: 0;
+        max-width: 100%;
     }
 
     .mentor-coaching-section .mentor-coaching-svg-wrapper {
-        width: 90%;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+    
+    .mentor-coaching-section .mentor-coaching-svg-wrapper svg {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    @media (max-width: 480px) {
+        .mentor-coaching-section .mentoring-image-block {
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .mentor-coaching-section .mentor-coaching-svg-wrapper {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            transform: translateZ(0);
+        }
+        
+        .mentor-coaching-section .mentor-coaching-svg-wrapper svg {
+            width: 100%;
+            max-width: 100%;
+            backface-visibility: hidden;
+        }
     }
 }
