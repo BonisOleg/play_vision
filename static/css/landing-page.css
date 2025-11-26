@@ -140,7 +140,7 @@ body {
 }
 
 .coming-soon-text {
-    font-size: 50px;
+    font-size: 70px;
     font-weight: 600;
     font-family: 'AtypDisplay', sans-serif;
     letter-spacing: 2px;
@@ -149,7 +149,7 @@ body {
 
 @media (max-width: 767px) {
     .coming-soon-text {
-        font-size: 25px;
+        font-size: 40px;
         letter-spacing: 1.5px;
     }
 }
@@ -177,7 +177,24 @@ body {
     font-family: 'AtypDisplay', sans-serif;
 }
 
+/* Контроль видимості br тегів для різних екранів */
+.br-mobile-only {
+    display: none;
+}
+
+.br-desktop-only {
+    display: block;
+}
+
 @media (max-width: 767px) {
+    .br-mobile-only {
+        display: block;
+    }
+    
+    .br-desktop-only {
+        display: none;
+    }
+    
     .landing-title {
         font-size: 22px;
         line-height: 1.4;
