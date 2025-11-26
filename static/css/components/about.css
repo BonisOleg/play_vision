@@ -176,7 +176,6 @@
         width: 100%;
         height: 100%;
         min-height: 100%;
-        display: block;
     }
     
     .about-triangle-section .theme-svg svg {
@@ -185,6 +184,20 @@
         min-height: 100%;
         display: block;
         object-fit: contain;
+    }
+
+    /* ДОДАНО: більш специфічні правила для ховання SVG (вища специфічність: 0,3,0) */
+    [data-theme="light"] .about-triangle-section .theme-svg--dark {
+        display: none;
+    }
+
+    [data-theme="dark"] .about-triangle-section .theme-svg--light {
+        display: none;
+    }
+
+    /* Fallback для темної теми */
+    [data-theme="dark"] .about-triangle-section .theme-svg--light:only-child {
+        display: block;
     }
 }
 
@@ -230,7 +243,6 @@
         width: 100%;
         height: 100%;
         min-height: 100%;
-        display: block;
     }
     
     .about-triangle-section .theme-svg svg {
@@ -239,6 +251,20 @@
         min-height: 100%;
         display: block;
         object-fit: contain;
+    }
+
+    /* ДОДАНО: більш специфічні правила для ховання SVG (вища специфічність: 0,3,0) */
+    [data-theme="light"] .about-triangle-section .theme-svg--dark {
+        display: none;
+    }
+
+    [data-theme="dark"] .about-triangle-section .theme-svg--light {
+        display: none;
+    }
+
+    /* Fallback для темної теми */
+    [data-theme="dark"] .about-triangle-section .theme-svg--light:only-child {
+        display: block;
     }
 }
 
@@ -288,7 +314,6 @@
             width: 100%;
             height: 100%;
             min-height: 100%;
-            display: block;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -303,6 +328,20 @@
             backface-visibility: hidden;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
+        }
+
+        /* ДОДАНО: більш специфічні правила для ховання SVG (вища специфічність: 0,3,0) */
+        [data-theme="light"] .about-triangle-section .theme-svg--dark {
+            display: none;
+        }
+
+        [data-theme="dark"] .about-triangle-section .theme-svg--light {
+            display: none;
+        }
+
+        /* Fallback для темної теми */
+        [data-theme="dark"] .about-triangle-section .theme-svg--light:only-child {
+            display: block;
         }
     }
 }
