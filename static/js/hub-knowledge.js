@@ -17,8 +17,8 @@ class HubHeroCarousel {
         
         this.titleElement = element.querySelector('.hero-title');
         this.subtitleElement = element.querySelector('.hero-subtitle');
-        this.ctaButton = element.querySelector('.hero-btn-right');
-        this.ctaButtonText = element.querySelector('.hero-btn-right .btn-text');
+        this.ctaButton = element.querySelector('.hero-buttons a');
+        this.ctaButtonText = element.querySelector('.hero-buttons a .btn-text');
         this.dotsContainer = element.querySelector('.hero-slider-dots');
 
         this.init();
