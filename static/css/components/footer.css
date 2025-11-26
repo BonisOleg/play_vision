@@ -27,11 +27,11 @@ footer.site-footer .footer-header {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 85px;
+    gap: 30px;
 }
 
 footer.site-footer .footer-logo-container {
-    height: 88px;
+    height: 60px;
     display: flex;
     align-items: flex-start;
     flex: 0 0 40%;
@@ -39,7 +39,7 @@ footer.site-footer .footer-logo-container {
 }
 
 footer.site-footer .footer-logo {
-    height: 58px;
+    height: 40px;
     width: auto;
     object-fit: contain;
     object-position: left center;
@@ -63,8 +63,8 @@ footer.site-footer .footer-social-contacts {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 85px;
-    margin-bottom: 40px;
+    gap: 30px;
+    margin-bottom: 15px;
 }
 
 /* Група соціальних мереж - 40% */
@@ -123,16 +123,16 @@ footer.site-footer .social-link[href*="t.me"]:active .social-icon {
 }
 
 footer.site-footer .social-icon {
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
     flex-shrink: 0;
     transition: color 0.3s ease;
 }
 
 /* Збільшуємо тільки іконку Telegram */
 footer.site-footer .social-link[href*="t.me"] .social-icon {
-    width: 19px;
-    height: 19px;
+    width: 26px;
+    height: 26px;
 }
 
 /* Група контактів - 50% */
@@ -174,7 +174,7 @@ footer.site-footer .footer-bottom {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 85px;
+    gap: 30px;
     padding-top: 0;
     margin-bottom: 20px;
 }
