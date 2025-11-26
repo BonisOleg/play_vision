@@ -185,7 +185,7 @@ footer.site-footer .footer-newsletter {
 }
 
 footer.site-footer .newsletter-title {
-    font-size: 10px;
+    font-size: 15px;
     color: rgba(255, 255, 255, 0.8);
     margin: 0 0 6px 0;
     font-weight: 400;
@@ -396,13 +396,16 @@ footer.site-footer .footer-link:hover {
     
     footer.site-footer .footer-header {
         margin-bottom: 15px;
+        flex-direction: column;
+        align-items: center;
     }
     
     footer.site-footer .footer-logo-container {
         height: 45px;
+        display: flex;
         justify-content: center;
         align-items: center;
-        width: auto;
+        width: 100%;
     }
     
     footer.site-footer .footer-logo {
