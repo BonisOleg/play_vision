@@ -216,7 +216,7 @@
     }
 
     .expert-card-front .expert-photo {
-        height: 240px;
+        height: 50%;
     }
 
     .expert-card-front .expert-card-content {
@@ -255,7 +255,7 @@
     }
 
     .expert-card-front .expert-photo {
-        height: 280px;
+        height: 50%;
     }
 
     .expert-card-front .expert-card-content {
