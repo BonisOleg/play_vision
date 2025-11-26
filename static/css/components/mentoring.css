@@ -457,11 +457,6 @@
         margin-bottom: 40px;
     }
 
-    .experts-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-    }
-
     .mentoring-team-section .expert-card-content {
         padding: 20px 16px;
     }
@@ -559,12 +554,6 @@
         line-height: 1.5;
         margin-bottom: 40px;
         padding: 0;
-    }
-
-    .experts-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-        max-width: 400px;
     }
 
     .mentoring-team-section .expert-card-content {
@@ -682,12 +671,6 @@
         line-height: 1.5;
         margin-bottom: 32px;
         padding: 0;
-    }
-
-    .experts-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        max-width: 100%;
     }
 
     .mentoring-team-section .expert-card-content {

@@ -119,66 +119,183 @@
 }
 
 /* ============================================
-   АДАПТИВНІСТЬ - МОБІЛЬНІ (480px - 768px)
+   КАРУСЕЛЬ ДЛЯ МОБІЛЬНИХ (≤768px)
    ============================================ */
-@media (min-width: 480px) and (max-width: 768px) {
-    .experts-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+
+/* Обгортка каруселі - прозора на desktop */
+.experts-carousel-container {
+    width: 100%;
+}
+
+/* Навігація - прихована на desktop */
+.experts-navigation {
+    display: none;
+}
+
+/* ==================== MOBILE CAROUSEL (≤768px) ==================== */
+@media (max-width: 768px) {
+    /* Обгортка каруселі */
+    .experts-carousel-container {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
     }
 
+    /* Перетворення grid на flex track */
+    .experts-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 16px;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(0);
+    }
+
+    /* Картки - фіксована ширина для 2 на екран */
+    .experts-grid .expert-card {
+        flex: 0 0 calc(50% - 8px);
+        width: calc(50% - 8px);
+        min-width: calc(50% - 8px);
+        max-width: calc(50% - 8px);
+    }
+
+    /* Зменшені розміри карток на мобільних */
     .expert-photo {
-        height: 240px;
+        height: 200px;
     }
 
     .expert-card-content {
-        padding: 16px 12px;
+        padding: 14px 10px;
     }
 
     .expert-name {
-        font-size: 1rem;
-        margin-bottom: 6px;
+        font-size: 0.9375rem;
+        margin-bottom: 4px;
     }
 
     .expert-specialization {
-        font-size: 0.8125rem;
-        margin-bottom: 12px;
+        font-size: 0.75rem;
+        margin-bottom: 10px;
     }
 
-    .expert-link {
-        font-size: 0.8125rem;
+    .expert-link,
+    .expert-detail-link {
+        font-size: 0.75rem;
+    }
+
+    /* Навігація - показуємо на мобільних */
+    .experts-navigation {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    /* Стрілки навігації */
+    .expert-nav-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #171717;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .expert-nav-btn:hover:not(:disabled) {
+        background: #171717;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .expert-nav-btn:active:not(:disabled) {
+        transform: scale(0.95);
+    }
+
+    .expert-nav-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    [data-theme="dark"] .expert-nav-btn {
+        background: #e9e9e9;
+        color: #000000;
+    }
+
+    [data-theme="dark"] .expert-nav-btn:hover:not(:disabled) {
+        background: #f0f0f0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        [data-theme="auto"] .expert-nav-btn {
+            background: #e9e9e9;
+            color: #000000;
+        }
+
+        [data-theme="auto"] .expert-nav-btn:hover:not(:disabled) {
+            background: #f0f0f0;
+        }
+    }
+
+    .expert-nav-btn svg {
+        width: 20px;
+        height: 20px;
     }
 }
 
-/* ============================================
-   АДАПТИВНІСТЬ - МАЛІ МОБІЛЬНІ (до 479px)
-   ============================================ */
-@media (max-width: 479px) {
+/* ==================== SMALL MOBILE (< 576px) ==================== */
+@media (max-width: 576px) {
     .experts-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 12px;
+    }
+
+    .experts-grid .expert-card {
+        flex: 0 0 calc(50% - 6px);
+        width: calc(50% - 6px);
+        min-width: calc(50% - 6px);
+        max-width: calc(50% - 6px);
     }
 
     .expert-photo {
-        height: 280px;
+        height: 180px;
     }
 
     .expert-card-content {
-        padding: 18px 16px;
+        padding: 12px 8px;
     }
 
     .expert-name {
-        font-size: 1.0625rem;
-        margin-bottom: 8px;
+        font-size: 0.875rem;
     }
 
     .expert-specialization {
-        font-size: 0.875rem;
-        margin-bottom: 14px;
+        font-size: 0.6875rem;
     }
 
-    .expert-link {
-        font-size: 0.875rem;
+    .expert-link,
+    .expert-detail-link {
+        font-size: 0.6875rem;
+    }
+
+    .expert-nav-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .expert-nav-btn svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -197,6 +314,21 @@
     .expert-photo img {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+    }
+
+    /* iOS Safari оптимізація для каруселі */
+    @media (max-width: 768px) {
+        .experts-grid {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .expert-nav-btn {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
     }
 }
 
