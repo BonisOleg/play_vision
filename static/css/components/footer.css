@@ -277,7 +277,7 @@ footer.site-footer .footer-legal {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: 50px;
+    gap: 30px;
     flex: 0 0 50%;
     flex-wrap: nowrap;
     align-self: center;
@@ -295,7 +295,7 @@ footer.site-footer .footer-copyright {
 
 footer.site-footer .footer-links {
     display: flex;
-    gap: 50px;
+    gap: 25px;
     flex-wrap: nowrap;
     align-items: center;
 }
@@ -387,7 +387,7 @@ footer.site-footer .footer-link:hover {
 
 @media (max-width: 767px) {
     footer.site-footer {
-        padding: 20px 0 16px;
+        padding: 20px 0 90px;
     }
     
     footer.site-footer .footer-container {
