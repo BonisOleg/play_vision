@@ -6,15 +6,16 @@
     padding: var(--spacing-xl);
 }
 
-/* Grid Layout - 2 колонки x 3 рядки */
+/* Grid Layout - 3 колонки x 3 рядки */
 .hub-hero-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: auto auto auto;
     gap: var(--spacing-lg);
+    position: relative;
 }
 
-/* Лівий блок - займає 2 рядки */
+/* Лівий блок - займає 2 рядки, перша колонка */
 .hub-hero-main {
     position: relative;
     min-height: 350px;
@@ -22,6 +23,8 @@
     overflow: hidden;
     grid-row: 1 / 3;
     grid-column: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .hub-hero-bg {
@@ -55,19 +58,23 @@
     padding: var(--spacing-xl);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     height: 350px;
     overflow: hidden;
 }
 
 .hub-hero-logo {
     width: 150px;
-    margin-bottom: 10px;
+    margin-bottom: auto;
+    position: relative;
+    z-index: 2;
+    mix-blend-mode: screen;
 }
 
 .hub-hero-logo img {
     width: 100%;
     height: auto;
+    object-fit: contain;
 }
 
 /* Стилі для динамічних елементів JS (синхронізовані з experts-section) */
@@ -93,9 +100,24 @@
 }
 
 .hero-buttons {
+    display: none;
+}
+
+/* Кнопка "Дізнатися" - в окремому контейнері справа */
+.hero-button-wrapper {
+    grid-row: 1 / 3;
+    grid-column: 3;
     display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-btn-right {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Слайдер-точки (синхронізовані з home.css) */
@@ -103,7 +125,7 @@
     display: flex;
     justify-content: flex-start;
     gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
+    margin-top: auto;
     margin-left: 0;
 }
 
@@ -133,19 +155,21 @@
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
-    grid-column: 2;
 }
 
 .hub-stat-card-1 {
     grid-row: 1;
+    grid-column: 2;
 }
 
 .hub-stat-card-2 {
     grid-row: 2;
+    grid-column: 2;
 }
 
 .hub-stat-card-3 {
     grid-row: 3;
+    grid-column: 3;
 }
 
 .hub-stat-card:hover {
@@ -171,7 +195,7 @@
     color: #B3B3B3;
 }
 
-/* Чорний слоган - третій рядок, ліва колонка */
+/* Чорний слоган - третій рядок, 1 та 2 колонка */
 .hub-hero-slogan {
     background: #000000;
     display: flex;
@@ -183,7 +207,7 @@
     color: #FFFFFF;
     border-radius: 8px;
     grid-row: 3;
-    grid-column: 1;
+    grid-column: 1 / 3;
 }
 
 .hub-slogan-highlight {
@@ -194,11 +218,22 @@
 @media (max-width: 1024px) {
     .hub-hero-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto auto auto;
     }
     
     .hub-hero-main {
         grid-row: 1;
+        grid-column: 1;
+    }
+    
+    .hero-button-wrapper {
+        grid-row: 2;
+        grid-column: 1;
+        min-height: 60px;
+    }
+    
+    .hub-hero-slogan {
+        grid-row: 3;
         grid-column: 1;
     }
     
@@ -207,20 +242,15 @@
     }
     
     .hub-stat-card-1 {
-        grid-row: 3;
-    }
-    
-    .hub-stat-card-2 {
         grid-row: 4;
     }
     
-    .hub-stat-card-3 {
+    .hub-stat-card-2 {
         grid-row: 5;
     }
     
-    .hub-hero-slogan {
-        grid-row: 2;
-        grid-column: 1;
+    .hub-stat-card-3 {
+        grid-row: 6;
     }
     
     .hero-title {
@@ -263,6 +293,10 @@
         font-size: 1rem;
         min-height: 45px;
     }
+    
+    .hero-button-wrapper {
+        min-height: 60px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -287,17 +321,53 @@
     color: var(--color-text);
 }
 
+[data-theme="dark"] .hub-hero-logo {
+    mix-blend-mode: lighten;
+    opacity: 1;
+    filter: invert(0);
+}
+
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .hero-title,
     [data-theme="auto"] .hero-subtitle {
         color: var(--color-text);
     }
+    
+    [data-theme="auto"] .hub-hero-logo {
+        mix-blend-mode: lighten;
+        opacity: 1;
+        filter: invert(0);
+    }
+}
+
+/* Спеціальні стилі для кнопки в hero справа */
+.hero-btn-right {
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    min-height: auto;
+    background: #e9e9e9;
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.hero-btn-right:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero-btn-right .btn-logo-space {
+    display: none;
 }
 
 /* iOS Safari оптимізація */
 @supports (-webkit-touch-callout: none) {
     .slider-dot,
-    .hub-btn {
+    .hub-btn,
+    .hero-btn-right {
         -webkit-appearance: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
