@@ -26,9 +26,9 @@ class PricingView(TemplateView):
         
         # Періоди для перемикача
         context['periods'] = [
-            {'value': 'monthly', 'label': 'Ціна за місяць', 'label_short': '1 міс'},
-            {'value': '3_months', 'label': 'Ціна за 3 місяці', 'label_short': '3 міс'},
-            {'value': '12_months', 'label': 'Ціна за рік', 'label_short': '12 міс'},
+            {'value': 'monthly', 'label': 'за місяць', 'label_short': '1 міс'},
+            {'value': '3_months', 'label': 'за 3 місяці', 'label_short': '3 міс'},
+            {'value': '12_months', 'label': 'за рік', 'label_short': '12 міс'},
         ]
         
         # SEO метадані

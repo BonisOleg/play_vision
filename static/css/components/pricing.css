@@ -474,10 +474,12 @@
     
     .period-tabs .tab-button {
         font-size: 14px;
-        padding: 8px 14px;
+        padding: 10px 8px;
         min-height: 44px;
         flex: 1;
-        max-width: 120px;
+        max-width: none;
+        text-align: center;
+        white-space: nowrap;
     }
     
     .mobile-dropdown {
