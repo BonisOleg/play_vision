@@ -24,8 +24,6 @@
 
     // === ПЕРЕМИКАЧ ПЕРІОДІВ ===
     function initPeriodSwitcher() {
-        // Ініціалізація period tabs з shared slider компонентом
-        // Перевірка чи існує функція initTabSlider (підключена з tab-slider.js)
         if (typeof window.initTabSlider === 'function') {
             periodSlider = window.initTabSlider('.period-tabs', {
                 sliderAttr: 'data-period-slider',
@@ -38,33 +36,12 @@
             });
         }
 
-        // Desktop кнопки - нова структура з tab-button класом
-        const periodBtns = document.querySelectorAll('[data-period-tab]');
-        periodBtns.forEach((btn, index) => {
-            btn.addEventListener('click', function() {
-                const period = this.getAttribute('data-period');
-                switchPeriod(period);
-                
-                // Оновлюємо активну кнопку
-                periodBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Оновлюємо слайдер через shared модуль
-                if (periodSlider) {
-                    periodSlider.setActiveTab(index);
-                }
-            });
-        });
-
-        // Mobile dropdown
         const periodSelect = document.getElementById('period-select');
         if (periodSelect) {
             periodSelect.addEventListener('change', function() {
                 switchPeriod(this.value);
                 
-                // Синхронізуємо з desktop tabs
-                const periodValue = this.value;
-                const correspondingTab = document.querySelector(`[data-period-tab][data-period="${periodValue}"]`);
+                const correspondingTab = document.querySelector(`[data-period-tab][data-period="${this.value}"]`);
                 if (correspondingTab && periodSlider) {
                     const allTabs = document.querySelectorAll('[data-period-tab]');
                     const index = Array.from(allTabs).indexOf(correspondingTab);
@@ -270,14 +247,9 @@
         };
     }
 
-    // Реагування на зміну розміру вікна
     window.addEventListener('resize', debounce(function() {
-        // Переініціалізація при зміні breakpoint
-        const wasMobile = document.querySelector('.mobile-dropdown').style.display !== 'none';
-        const isMobile = window.innerWidth <= 768;
-
-        if (wasMobile !== isMobile) {
-            location.reload();
+        if (periodSlider) {
+            periodSlider.refresh();
         }
     }, 250));
 

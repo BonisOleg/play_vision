@@ -447,7 +447,10 @@
         font-size: 18px;
     }
     
-    /* Period switcher на mobile */
+    .pricing-header {
+        margin-bottom: 24px;
+    }
+    
     .period-switcher-wrapper {
         flex-direction: column;
         align-items: center;
@@ -455,16 +458,30 @@
     
     .period-label {
         text-align: center;
-        margin-bottom: 16px;
+        margin-bottom: 8px;
     }
     
-    /* Hide desktop switcher, show mobile dropdown */
     .desktop-switcher {
-        display: none;
+        display: flex;
+    }
+    
+    .period-tabs {
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+        min-height: 50px;
+    }
+    
+    .period-tabs .tab-button {
+        font-size: 14px;
+        padding: 8px 14px;
+        min-height: 44px;
+        flex: 1;
+        max-width: 120px;
     }
     
     .mobile-dropdown {
-        display: block;
+        display: none;
     }
     
     /* Cards в слайдері */
