@@ -83,7 +83,7 @@ footer.site-footer .social-link {
     justify-content: center;
     gap: 6px;
     padding: 8px;
-    flex: 1;
+    flex: 0 0 auto;
     background: #171717;
     border: none;
     border-radius: 5px;
@@ -176,7 +176,7 @@ footer.site-footer .footer-bottom {
     align-items: flex-start;
     gap: 30px;
     padding-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 footer.site-footer .footer-newsletter {
@@ -466,7 +466,7 @@ footer.site-footer .footer-link:hover {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 10px;
+        gap: 1px;
     }
 
     footer.site-footer .footer-copyright {
