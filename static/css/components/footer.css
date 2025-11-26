@@ -400,6 +400,7 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-logo-container {
         height: 45px;
         justify-content: center;
+        align-items: center;
         width: auto;
     }
     
@@ -407,10 +408,19 @@ footer.site-footer .footer-link:hover {
         height: 45px;
     }
 
-    footer.site-footer .footer-social-group {
+    footer.site-footer .footer-social-contacts {
         flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    footer.site-footer .footer-social-group {
+        flex-direction: column;
         justify-content: center;
-        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        flex: 0 0 auto;
         width: auto;
     }
 
@@ -422,12 +432,18 @@ footer.site-footer .footer-link:hover {
     footer.site-footer .footer-contacts-group {
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        gap: 8px;
         width: auto;
+        text-align: center;
     }
 
     footer.site-footer .contact-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 4px;
         width: auto;
-        justify-content: center;
     }
 
     footer.site-footer .footer-newsletter {
