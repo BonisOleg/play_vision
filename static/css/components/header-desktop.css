@@ -9,14 +9,34 @@
    ======================================== */
 
 .main-header {
-    overflow-x: hidden;
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 100;
-    -webkit-position: sticky;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: var(--z-header, 1000);
     padding-top: env(safe-area-inset-top, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+@supports (-webkit-touch-callout: none) {
+    .main-header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
 }
 
 .header-content {

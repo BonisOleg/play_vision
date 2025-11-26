@@ -13,12 +13,11 @@
 }
 
 html {
-    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
-    /* iOS Safari specific fixes */
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+    height: 100%;
 }
 
 body {
@@ -557,9 +556,16 @@ html.ios-safari body {
 }
 
 /* Fix for sticky positioning on iOS */
-html.ios-safari .header {
-    position: -webkit-sticky;
-    position: sticky;
+html.ios-safari .main-header,
+@supports (-webkit-touch-callout: none) {
+    .main-header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 /* Fix for smooth scrolling on iOS */
