@@ -737,6 +737,18 @@
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
+
+    @media (max-width: 480px) {
+        .cta-section .btn-primary {
+            font-size: 0.9375rem;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .cta-section .btn-primary {
+            font-size: 0.875rem;
+        }
+    }
 }
 
 
