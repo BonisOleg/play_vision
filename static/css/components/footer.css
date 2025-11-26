@@ -80,9 +80,9 @@ footer.site-footer .footer-social-group {
 footer.site-footer .social-link {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 6px;
-    padding: 6px 0;
+    padding: 8px;
     flex: 1;
     background: #171717;
     border: none;
@@ -99,11 +99,6 @@ footer.site-footer .social-link:active {
     background: rgba(255, 255, 255, 0.1);
 }
 
-footer.site-footer .social-link:hover .social-text,
-footer.site-footer .social-link:active .social-text {
-    color: #ffffff;
-}
-
 footer.site-footer .social-link:hover .social-icon,
 footer.site-footer .social-link:active .social-icon {
     color: #ffffff;
@@ -115,19 +110,9 @@ footer.site-footer .social-link[href*="instagram"]:active .social-icon {
     color: #E4405F;
 }
 
-footer.site-footer .social-link[href*="instagram"]:hover .social-text,
-footer.site-footer .social-link[href*="instagram"]:active .social-text {
-    color: #E4405F;
-}
-
 /* Facebook hover/active - синій Facebook */
 footer.site-footer .social-link[href*="facebook"]:hover .social-icon,
 footer.site-footer .social-link[href*="facebook"]:active .social-icon {
-    color: #1877F2;
-}
-
-footer.site-footer .social-link[href*="facebook"]:hover .social-text,
-footer.site-footer .social-link[href*="facebook"]:active .social-text {
     color: #1877F2;
 }
 
@@ -137,21 +122,17 @@ footer.site-footer .social-link[href*="t.me"]:active .social-icon {
     color: #0088cc;
 }
 
-footer.site-footer .social-link[href*="t.me"]:hover .social-text,
-footer.site-footer .social-link[href*="t.me"]:active .social-text {
-    color: #0088cc;
-}
-
-footer.site-footer .social-text {
-    text-align: left;
-    transition: color 0.3s ease;
-}
-
 footer.site-footer .social-icon {
     width: 16px;
     height: 16px;
     flex-shrink: 0;
     transition: color 0.3s ease;
+}
+
+/* Збільшуємо тільки іконку Telegram */
+footer.site-footer .social-link[href*="t.me"] .social-icon {
+    width: 19px;
+    height: 19px;
 }
 
 /* Група контактів - 50% */
@@ -412,13 +393,13 @@ footer.site-footer .footer-link:hover {
     }
     
     footer.site-footer .footer-logo-container {
-        height: 76px;
+        height: 45px;
         justify-content: center;
         width: auto;
     }
     
     footer.site-footer .footer-logo {
-        height: 76px;
+        height: 45px;
     }
 
     footer.site-footer .footer-social-group {
@@ -499,13 +480,13 @@ footer.site-footer .footer-link:hover {
     }
     
     footer.site-footer .footer-logo-container {
-        height: 64px;
+        height: 45px;
         justify-content: center;
         width: auto;
     }
     
     footer.site-footer .footer-logo {
-        height: 64px;
+        height: 45px;
     }
     
     footer.site-footer .footer-links {
