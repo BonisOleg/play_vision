@@ -398,6 +398,19 @@ function initDescriptionToggles() {
                 handleToggle(e);
             }
         });
+        
+        // Touch events для запобігання конфлікту з carousel swipe
+        button.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+        }, { passive: false });
+        
+        button.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+        }, { passive: false });
+        
+        button.addEventListener('touchend', (e) => {
+            e.stopPropagation();
+        }, { passive: false });
     });
 }
 

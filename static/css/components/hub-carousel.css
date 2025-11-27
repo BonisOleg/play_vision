@@ -397,6 +397,11 @@
         padding: var(--spacing-sm);
     }
     
+    /* Прибираємо відступ після subtitle на мобільних */
+    .hub-featured-subtitle {
+        margin-bottom: 0;
+    }
+    
     .hub-featured-footer {
         flex-direction: row;
         gap: var(--spacing-md);
@@ -426,6 +431,7 @@
         font-weight: 600;
         cursor: pointer;
         padding: 4px 0;
+        margin-top: 2px;
         margin-bottom: var(--spacing-sm);
         transition: opacity 0.2s ease;
         -webkit-tap-highlight-color: transparent;
