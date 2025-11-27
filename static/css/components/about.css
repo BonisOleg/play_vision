@@ -15,6 +15,15 @@
 
 .about-hero .section-bg {
     background-color: #171717;
+    z-index: 1;
+}
+
+.about-hero .section-overlay {
+    z-index: 2;
+}
+
+.about-hero-bg {
+    z-index: 3;
 }
 
 
@@ -426,6 +435,9 @@ img[loading="lazy"].lazy-loaded {
     height: 100%;
     z-index: 15;
     background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     will-change: contents;
     isolation: isolate;
 }
@@ -514,6 +526,36 @@ img[loading="lazy"].lazy-loaded {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+}
+
+.about-hero-play.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Loading State */
+.video-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 1.2rem;
+    z-index: 30;
+    font-weight: 500;
+}
+
+.video-loading::after {
+    content: '.';
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
 }
 
 /* iOS Safari Fixes */

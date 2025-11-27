@@ -66,6 +66,9 @@
             
             if (!this.libraryId || !this.videoId) {
                 console.warn('⚠️ Video IDs missing for About Hero');
+                if (this.section.querySelector('.about-hero-play')) {
+                    this.section.querySelector('.about-hero-play').style.display = 'none';
+                }
                 return;
             }
 
@@ -81,6 +84,10 @@
             this.iframe = null;
             this.isActive = false;
             this.hasError = false;
+            
+            // Bound listeners (для cleanup)
+            this.boundFullscreenChange = null;
+            this.boundMessageHandler = null;
 
             this.init();
         }
@@ -126,80 +133,140 @@
         }
 
         playDesktop() {
-            // Hide background
+            console.log('🖥️ Desktop: Play clicked');
+            
+            // Hide background with transition
             if (this.bgContainer) {
                 this.bgContainer.classList.add('is-hidden');
             }
             
-            // Show video container
-            this.videoContainer.style.display = 'block';
-            this.playBtn.style.display = 'none';
+            // Hide play button with transition
+            if (this.playBtn) {
+                this.playBtn.classList.add('is-hidden');
+            }
             
-            // Create player
-            this.createPlayer(false); // No autoplay
-            this.isActive = true;
+            // Show video container - remove inline display
+            this.videoContainer.removeAttribute('style');
+            this.videoContainer.style.opacity = '1';
+            
+            // Small delay for smooth transition
+            setTimeout(() => {
+                this.createPlayer(false); // No autoplay
+                this.isActive = true;
+                console.log('✅ Desktop player created');
+            }, 300);
         }
 
         playMobile() {
-            // Одразу fullscreen на мобільному
+            console.log('📱 Mobile: Play clicked');
+            
+            // Hide background
             this.bgContainer?.classList.add('is-hidden');
-            this.videoContainer.style.display = 'block';
-            this.playBtn.style.display = 'none';
+            
+            // Hide play button
+            this.playBtn?.classList.add('is-hidden');
+            
+            // Show video container
+            this.videoContainer.removeAttribute('style');
+            this.videoContainer.style.opacity = '1';
             
             // Create player з autoplay
             this.createPlayer(true);
+            this.isActive = true;
             
-            // Спробувати відкрити fullscreen
+            // Check fullscreen support
+            if (!document.fullscreenEnabled && 
+                !document.webkitFullscreenEnabled && 
+                !document.mozFullScreenEnabled) {
+                console.warn('⚠️ Fullscreen not supported, playing inline');
+                return;
+            }
+            
+            // Fullscreen з затримкою (iOS потребує user interaction)
             setTimeout(() => {
                 if (this.iframe) {
                     fullscreenAPI.request(this.iframe)
-                        .catch(err => console.warn('Fullscreen denied:', err));
+                        .then(() => console.log('✅ Fullscreen activated'))
+                        .catch(err => {
+                            console.warn('⚠️ Fullscreen denied:', err);
+                        });
                 }
             }, 500);
-            
-            this.isActive = true;
         }
 
         createPlayer(autoplay = false) {
             if (this.iframe) {
-                console.log('Player already exists');
+                console.log('⚠️ Player already exists, reusing');
                 return;
             }
+            
+            console.log(`🎬 Creating player (autoplay: ${autoplay})`);
 
             try {
                 const baseUrl = 'https://iframe.mediadelivery.net/embed';
+                
+                // Validate IDs
+                if (!this.libraryId || !this.videoId) {
+                    throw new Error('Missing library or video ID');
+                }
+                
+                // Quality selection based on device
+                const quality = isMobile() ? '720p' : 'auto';
+                
                 const params = new URLSearchParams({
                     autoplay: autoplay ? 'true' : 'false',
                     preload: 'false',
-                    responsive: 'true'
+                    responsive: 'true',
+                    quality: quality
                 });
                 
                 const iframeUrl = `${baseUrl}/${this.libraryId}/${this.videoId}?${params}`;
+                
+                console.log('📺 Video URL:', iframeUrl);
 
                 this.iframe = document.createElement('iframe');
                 this.iframe.src = iframeUrl;
                 this.iframe.allow = 'accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen';
                 this.iframe.allowFullscreen = true;
-                this.iframe.style.cssText = 'width:100%;height:100%;border:0;';
+                this.iframe.webkitAllowFullscreen = true;
+                this.iframe.style.cssText = 'width:100%;height:100%;border:0;position:absolute;top:0;left:0;';
                 
                 // Error handling
-                this.iframe.addEventListener('error', () => this.showError());
+                this.iframe.addEventListener('error', () => {
+                    console.error('❌ Iframe error event');
+                    this.showError();
+                });
                 
-                // Network timeout
+                // Show loading
+                const loading = document.createElement('div');
+                loading.className = 'video-loading';
+                loading.textContent = 'Завантаження відео';
+                this.playerWrapper.appendChild(loading);
+                
+                // Network timeout (збільшено для 3G)
                 const loadTimeout = setTimeout(() => {
                     if (!this.iframe.contentWindow) {
+                        console.error('❌ Load timeout (15s)');
                         this.showError();
                     }
-                }, 10000); // 10 sec
+                }, 15000); // 15 sec
                 
                 this.iframe.addEventListener('load', () => {
                     clearTimeout(loadTimeout);
+                    // Remove loading spinner
+                    const loadingEl = this.playerWrapper.querySelector('.video-loading');
+                    if (loadingEl) {
+                        loadingEl.remove();
+                    }
+                    console.log('✅ Iframe loaded');
                 });
 
+                // Append to DOM
                 this.playerWrapper.innerHTML = '';
+                this.playerWrapper.appendChild(loading);
                 this.playerWrapper.appendChild(this.iframe);
 
-                // Listen for video end через postMessage
+                // Listen for video events
                 this.listenForVideoEvents();
 
             } catch (err) {
@@ -209,52 +276,112 @@
         }
 
         listenForVideoEvents() {
-            // BunnyNet може надсилати events через postMessage
-            window.addEventListener('message', (event) => {
-                // Validate origin
-                if (!event.origin.includes('mediadelivery.net')) return;
-                
-                const data = event.data;
-                
-                // Handle video ended
-                if (data && (data.event === 'ended' || data.type === 'ended')) {
-                    console.log('✅ Video ended');
-                    this.handleClose();
-                }
-            });
-            
-            // Fullscreen exit listener
-            const fullscreenChange = () => {
-                if (!fullscreenAPI.element && this.isActive) {
-                    console.log('Exited fullscreen, player stays in Hero');
-                    // На мобільному при виході з fullscreen - закрити
-                    if (isMobile()) {
+            // Message handler (один раз)
+            if (!this.boundMessageHandler) {
+                this.boundMessageHandler = (event) => {
+                    // Validate origin
+                    if (!event.origin.includes('mediadelivery.net')) return;
+                    
+                    const data = event.data;
+                    
+                    // Handle video ended
+                    if (data && (data.event === 'ended' || data.type === 'ended')) {
+                        console.log('✅ Video ended');
                         this.handleClose();
                     }
-                }
-            };
+                };
+                
+                window.addEventListener('message', this.boundMessageHandler);
+            }
             
-            document.addEventListener('fullscreenchange', fullscreenChange);
-            document.addEventListener('webkitfullscreenchange', fullscreenChange);
-            document.addEventListener('mozfullscreenchange', fullscreenChange);
-            document.addEventListener('MSFullscreenChange', fullscreenChange);
+            // Fullscreen change handler (один раз)
+            if (!this.boundFullscreenChange) {
+                this.boundFullscreenChange = () => {
+                    if (!fullscreenAPI.element && this.isActive) {
+                        console.log('📹 Exited fullscreen');
+                        
+                        // Mobile: закрити відео
+                        if (isMobile()) {
+                            console.log('📱 Mobile: closing video');
+                            this.handleClose();
+                        } else {
+                            console.log('🖥️ Desktop: video stays in Hero');
+                        }
+                    }
+                };
+                
+                // Add for all browsers
+                document.addEventListener('fullscreenchange', this.boundFullscreenChange);
+                document.addEventListener('webkitfullscreenchange', this.boundFullscreenChange);
+                document.addEventListener('mozfullscreenchange', this.boundFullscreenChange);
+                document.addEventListener('MSFullscreenChange', this.boundFullscreenChange);
+            }
         }
 
         handleClose() {
-            // Reset state
+            console.log('🔴 Closing video player');
+            
+            // Exit fullscreen якщо active
+            if (fullscreenAPI.element) {
+                fullscreenAPI.exit()
+                    .then(() => console.log('✅ Exited fullscreen'))
+                    .catch(err => console.warn('⚠️ Fullscreen exit failed:', err));
+            }
+            
+            // Reset UI
             this.videoContainer.style.display = 'none';
+            this.videoContainer.style.opacity = '0';
+            
+            // Show background
             this.bgContainer?.classList.remove('is-hidden');
-            this.playBtn.style.display = 'block';
+            
+            // Show play button
+            this.playBtn?.classList.remove('is-hidden');
 
             // Remove iframe
             if (this.iframe) {
-                this.iframe.src = '';
+                this.iframe.src = ''; // Stop loading
                 this.iframe.remove();
                 this.iframe = null;
             }
+            
+            // Clear player wrapper
+            if (this.playerWrapper) {
+                this.playerWrapper.innerHTML = '';
+            }
 
+            // Cleanup listeners
+            this.cleanup();
+
+            // Reset state
             this.isActive = false;
-            console.log('✅ Video closed');
+            this.hasError = false;
+            
+            // Hide error if shown
+            if (this.errorMessage) {
+                this.errorMessage.style.display = 'none';
+            }
+            
+            console.log('✅ Video closed and cleaned up');
+        }
+        
+        cleanup() {
+            // Remove message listener
+            if (this.boundMessageHandler) {
+                window.removeEventListener('message', this.boundMessageHandler);
+                this.boundMessageHandler = null;
+            }
+            
+            // Remove fullscreen listeners
+            if (this.boundFullscreenChange) {
+                document.removeEventListener('fullscreenchange', this.boundFullscreenChange);
+                document.removeEventListener('webkitfullscreenchange', this.boundFullscreenChange);
+                document.removeEventListener('mozfullscreenchange', this.boundFullscreenChange);
+                document.removeEventListener('MSFullscreenChange', this.boundFullscreenChange);
+                this.boundFullscreenChange = null;
+            }
+            
+            console.log('🧹 Listeners cleaned up');
         }
 
         showError() {
