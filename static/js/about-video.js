@@ -65,13 +65,13 @@
             // Створюємо BunnyNet iframe
             const iframe = document.createElement('iframe');
             iframe.src = `https://iframe.mediadelivery.net/embed/${libraryId}/${videoId}?autoplay=false&preload=false&responsive=true`;
-            iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+            iframe.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
             iframe.allowFullscreen = true;
             iframe.webkitAllowFullscreen = true; // iOS Safari
             iframe.setAttribute('playsinline', ''); // iOS inline playback
-            iframe.setAttribute('webkit-playsinline', ''); // iOS Safari strict
-            iframe.setAttribute('muted', ''); // For autoplay
-            iframe.style.cssText = 'width:100%;height:100%;border:0;display:block;background:#000;';
+            iframe.setAttribute('webkit-playsinline', 'true'); // iOS Safari strict
+            iframe.setAttribute('touch-action', 'manipulation'); // iOS touch events
+            iframe.style.cssText = 'width:100%;height:100%;border:0;display:block;background:#000;pointer-events:auto;';
             
             container.appendChild(iframe);
             

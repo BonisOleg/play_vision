@@ -9,7 +9,7 @@
     margin: 30px auto;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     background: #000;
     min-height: 400px;
@@ -47,6 +47,8 @@
     height: 100%;
     position: relative;
     display: block;
+    z-index: 100;
+    pointer-events: auto;
 }
 
 .bunny-player-container iframe {
@@ -54,6 +56,9 @@
     height: 100%;
     border: none;
     display: block;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .about-hero-fallback {
@@ -393,6 +398,10 @@
     .bunny-player-container iframe {
         -webkit-backface-visibility: hidden;
         -webkit-transform: translateZ(0);
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        pointer-events: auto !important;
+        touch-action: manipulation;
     }
 
     .about-hero {
