@@ -192,9 +192,6 @@
 }
 
 /* === IMAGE ADJUSTMENTS FOR DARK MODE === */
-[data-theme="dark"] img {
-    opacity: 0.9;
-}
 
 /* Logo and icons should stay bright */
 [data-theme="dark"] .logo,

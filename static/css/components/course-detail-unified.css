@@ -143,11 +143,6 @@
     object-fit: cover;
 }
 
-/* Logo image - вписати повністю, не кропити */
-.course-logo-display {
-    object-fit: contain !important;
-    padding: var(--spacing-lg);
-}
 
 /* === RELATED COURSES CAROUSEL === */
 .related-courses-section .section-title {
