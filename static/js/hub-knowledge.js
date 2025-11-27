@@ -353,6 +353,54 @@ function getCookie(name) {
     return cookieValue;
 }
 
+/**
+ * Обробка згортання/розгортання опису в featured картках (тільки мобільні)
+ */
+function initDescriptionToggles() {
+    const toggleButtons = document.querySelectorAll('.hub-featured-toggle');
+    
+    toggleButtons.forEach(button => {
+        const handleToggle = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const wrapper = button.nextElementSibling;
+            if (!wrapper || !wrapper.classList.contains('hub-featured-description-wrapper')) {
+                console.warn('Description wrapper not found');
+                return;
+            }
+            
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            const toggleText = button.querySelector('.toggle-text');
+            
+            if (isExpanded) {
+                // Згортаємо
+                button.setAttribute('aria-expanded', 'false');
+                button.setAttribute('aria-label', 'Показати повний опис');
+                wrapper.classList.remove('expanded');
+                if (toggleText) toggleText.textContent = 'ще...';
+            } else {
+                // Розгортаємо
+                button.setAttribute('aria-expanded', 'true');
+                button.setAttribute('aria-label', 'Сховати повний опис');
+                wrapper.classList.add('expanded');
+                if (toggleText) toggleText.textContent = 'згорнути';
+            }
+        };
+        
+        // Click event
+        button.addEventListener('click', handleToggle);
+        
+        // Keyboard support (Enter/Space)
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleToggle(e);
+            }
+        });
+    });
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     // Hero carousel
@@ -369,6 +417,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Favorite buttons
     initFavoriteButtons();
+    
+    // Description toggles
+    initDescriptionToggles();
 });
 
 // Re-initialize favorite buttons after HTMX swap

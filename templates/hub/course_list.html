@@ -131,9 +131,22 @@
                             <div class="hub-featured-content">
                                 <h3 class="hub-featured-title">{{ course.title }}</h3>
                                 <p class="hub-featured-subtitle">{{ course.short_description }}</p>
-                                <div class="hub-featured-description">
-                                    {{ course.description|truncatewords:50 }}
+                                
+                                <!-- Кнопка toggle для мобільних -->
+                                <button type="button" 
+                                        class="hub-featured-toggle" 
+                                        aria-expanded="false" 
+                                        aria-label="Показати повний опис">
+                                    <span class="toggle-text">ще...</span>
+                                </button>
+                                
+                                <!-- Обгортка для згортаємого контенту -->
+                                <div class="hub-featured-description-wrapper">
+                                    <div class="hub-featured-description">
+                                        {{ course.description|truncatewords:50 }}
+                                    </div>
                                 </div>
+                                
                                 <div class="hub-featured-meta">
                                     Кому підходить:
                                     {% for audience in course.get_target_audience_display|slice:":3" %}

@@ -94,6 +94,7 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     box-sizing: border-box;
+    overscroll-behavior-x: contain;
 }
 
 /* Featured Card */
@@ -358,6 +359,14 @@
     color: var(--hub-text-light);
 }
 
+/* ============================================
+   TOGGLE DESCRIPTION - За замовчуванням прихований
+   ============================================ */
+
+.hub-featured-toggle {
+    display: none;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .hub-featured-card {
@@ -402,6 +411,55 @@
     
     .hub-favorite-btn {
         flex-shrink: 0;
+    }
+    
+    /* === TOGGLE DESCRIPTION (мобільні) === */
+    
+    /* Показуємо кнопку toggle */
+    .hub-featured-toggle {
+        display: inline-flex;
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: var(--hub-primary);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 4px 0;
+        margin-bottom: var(--spacing-sm);
+        transition: opacity 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .hub-featured-toggle:active {
+        opacity: 0.6;
+    }
+    
+    /* Wrapper для згортання/розгортання */
+    .hub-featured-description-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+    }
+    
+    /* Розгорнутий стан */
+    .hub-featured-description-wrapper.expanded {
+        grid-template-rows: 1fr;
+    }
+    
+    /* Description всередині wrapper */
+    .hub-featured-description-wrapper > .hub-featured-description {
+        min-height: 0;
+        overflow: hidden;
+        flex: none;
+        margin-bottom: 0;
+    }
+    
+    /* Відступ тільки коли розгорнуто */
+    .hub-featured-description-wrapper.expanded > .hub-featured-description {
+        margin-bottom: var(--spacing-md);
     }
 }
 
