@@ -62,6 +62,7 @@
 .hub-hero-logo {
     width: 150px;
     margin-bottom: 0;
+    padding-top: 40px;
     position: relative;
     z-index: 2;
     flex-shrink: 0;
@@ -79,7 +80,8 @@
     font-weight: 700;
     text-align: left;
     margin-top: 5px;
-    margin-bottom: 5px;
+    padding-top: 40px;
+    margin-bottom: -20px;
     text-shadow: none;
     min-height: 80px;
     overflow: hidden;
@@ -89,11 +91,12 @@
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.9);
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: -30px;
     text-align: left;
     text-shadow: none;
     min-height: 50px;
     overflow: hidden;
+    padding-top: 40px;
 }
 
 /* Нижня лінія: точки (ліворуч) + кнопка (праворуч) */
