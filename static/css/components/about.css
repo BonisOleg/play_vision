@@ -451,7 +451,7 @@ img[loading="lazy"].lazy-loaded {
     height: 100%;
     z-index: 15;
     background: #000;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     will-change: contents;
@@ -542,6 +542,35 @@ img[loading="lazy"].lazy-loaded {
     background: var(--color-primary-dark, #e55a24);
 }
 
+/* === Z-INDEX STACKING ORDER === */
+.about-hero-section .section-bg {
+    z-index: 1;
+}
+
+.about-hero-section .section-overlay {
+    z-index: 2;
+}
+
+.about-hero-bg {
+    z-index: 3;
+}
+
+.about-hero-play {
+    z-index: 10;
+}
+
+.about-hero-video {
+    z-index: 15;
+}
+
+.about-video-close {
+    z-index: 20;
+}
+
+.about-video-error {
+    z-index: 25;
+}
+
 /* States */
 .about-hero-bg.is-hidden {
     opacity: 0;
@@ -577,6 +606,26 @@ img[loading="lazy"].lazy-loaded {
     0%, 20% { content: '.'; }
     40% { content: '..'; }
     60%, 100% { content: '...'; }
+}
+
+/* Fallback State */
+.about-hero-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: #ccc;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 2rem;
+    z-index: 5;
+}
+
+.about-hero-fallback p {
+    margin: 0;
+    color: #999;
 }
 
 /* iOS Safari Fixes */
