@@ -11,8 +11,27 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     position: relative;
-    aspect-ratio: 16 / 9;
     background: #000;
+    
+    /* Modern browsers: aspect-ratio */
+    aspect-ratio: 16 / 9;
+}
+
+/* Fallback для браузерів без aspect-ratio (Safari < 15, Chrome < 88, Firefox < 89) */
+@supports not (aspect-ratio: 16 / 9) {
+    .about-hero-section {
+        position: relative;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 ratio */
+    }
+    
+    .about-hero-section .about-hero-player-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .about-hero-player-wrapper {
@@ -29,6 +48,7 @@
     width: 100%;
     height: 100%;
     border: none;
+    display: block;
 }
 
 .about-hero-fallback {
@@ -93,6 +113,14 @@
 }
 
 /* === ТЕМНА ТЕМА === */
+[data-theme="dark"] .about-hero-section {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .about-hero-fallback {
+    background-color: #0a0a0a;
+}
+
 [data-theme="dark"] .about-hero {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
@@ -113,6 +141,14 @@
 
 /* === AUTO THEME === */
 @media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .about-hero-section {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="auto"] .about-hero-fallback {
+        background-color: #0a0a0a;
+    }
+
     [data-theme="auto"] .about-hero {
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
@@ -138,6 +174,19 @@
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 769px) and (max-width: 1024px) {
+    .about-hero-section {
+        width: 90%;
+        margin: 15px auto;
+        box-shadow: none;
+    }
+    
+    /* Fallback для старих браузерів */
+    @supports not (aspect-ratio: 16 / 9) {
+        .about-hero-section {
+            padding-bottom: 56.25%;
+        }
+    }
+
     .about-hero {
         width: 90%;
         margin: 15px auto;
@@ -154,6 +203,21 @@
 
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
+    .about-hero-section {
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 8px;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+    
+    /* Fallback для старих браузерів на Mobile */
+    @supports not (aspect-ratio: 16 / 9) {
+        .about-hero-section {
+            padding-bottom: 56.25%;
+        }
+    }
+
     .about-hero {
         width: 95%;
         margin: 0 auto;
@@ -228,6 +292,21 @@
 
 /* === МАЛИЙ МОБАЙЛ === */
 @media (max-width: 480px) {
+    .about-hero-section {
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 8px;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+    
+    /* Fallback для старих браузерів */
+    @supports not (aspect-ratio: 16 / 9) {
+        .about-hero-section {
+            padding-bottom: 56.25%;
+        }
+    }
+
     .about-hero {
         width: 95%;
         margin: 0 auto;
@@ -295,6 +374,18 @@
 
 /* === iOS SAFARI SPECIFIC === */
 @supports (-webkit-touch-callout: none) {
+    .about-hero-section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .bunny-player-container iframe {
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+    }
+
     .about-hero {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
@@ -398,290 +489,3 @@ img[loading="lazy"].lazy-loaded {
 /* === RESPONSIVE MARGIN === */
 /* Видалено - margin налаштовується вище в основних медіа-запитах */
 
-/* ============================================
-   VIDEO HERO FUNCTIONALITY - 27.11.2025
-   ============================================ */
-
-/* Play Button */
-.about-hero-play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.95);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-.about-hero-play .play-icon {
-    width: 100%;
-    height: 100%;
-    color: var(--color-primary, #1a1a1a);
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-}
-
-.about-hero-play:hover {
-    transform: translate(-50%, -50%) scale(1.15);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
-}
-
-.about-hero-play:active {
-    transform: translate(-50%, -50%) scale(1.05);
-}
-
-/* Video Container */
-.about-hero-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 15;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    will-change: contents;
-    isolation: isolate;
-}
-
-/* Video Container Visible State */
-.about-hero-video[style*="display: flex"] {
-    display: flex !important;
-}
-
-.about-hero-player {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-}
-
-.about-hero-player::before {
-    padding-bottom: 0 !important;
-}
-
-.about-hero-player iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-/* Close Button */
-.about-video-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 20;
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    color: #fff;
-    transition: background 0.2s ease, transform 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-.about-video-close:hover {
-    background: rgba(0, 0, 0, 0.9);
-    transform: scale(1.1);
-}
-
-.about-video-close svg {
-    width: 20px;
-    height: 20px;
-}
-
-/* Error State */
-.about-video-error {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #fff;
-    z-index: 25;
-    padding: 2rem;
-}
-
-.about-video-error p {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
-.btn-error-retry {
-    padding: 10px 20px;
-    background: var(--color-primary, #ff6b35);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.2s ease;
-}
-
-.btn-error-retry:hover {
-    background: var(--color-primary-dark, #e55a24);
-}
-
-/* === Z-INDEX STACKING ORDER === */
-.about-hero-section .section-bg {
-    z-index: 1;
-}
-
-.about-hero-section .section-overlay {
-    z-index: 2;
-}
-
-.about-hero-bg {
-    z-index: 3;
-}
-
-.about-hero-play {
-    z-index: 10;
-}
-
-.about-hero-video {
-    z-index: 15;
-}
-
-.about-video-close {
-    z-index: 20;
-}
-
-.about-video-error {
-    z-index: 25;
-}
-
-/* States */
-.about-hero-bg.is-hidden {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.about-hero-play.is-hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* Loading State */
-.video-loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 1.2rem;
-    z-index: 30;
-    font-weight: 500;
-}
-
-.video-loading::after {
-    content: '.';
-    animation: dots 1.5s infinite;
-}
-
-@keyframes dots {
-    0%, 20% { content: '.'; }
-    40% { content: '..'; }
-    60%, 100% { content: '...'; }
-}
-
-/* Fallback State */
-.about-hero-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    color: #ccc;
-    font-size: 1.1rem;
-    text-align: center;
-    padding: 2rem;
-    z-index: 5;
-}
-
-.about-hero-fallback p {
-    margin: 0;
-    color: #999;
-}
-
-/* iOS Safari Fixes */
-@supports (-webkit-touch-callout: none) {
-    .about-hero-play {
-        -webkit-transform: translate(-50%, -50%);
-        -webkit-backface-visibility: hidden;
-    }
-    
-    .about-hero-video {
-        -webkit-backface-visibility: hidden;
-        -webkit-transform: translateZ(0);
-    }
-    
-    .about-hero-player iframe {
-        -webkit-overflow-scrolling: touch;
-        -webkit-mask-image: -webkit-radial-gradient(white, black);
-    }
-}
-
-/* Dark Theme */
-[data-theme="dark"] .about-hero-play {
-    background: rgba(26, 26, 26, 0.95);
-}
-
-[data-theme="dark"] .about-hero-play .play-icon {
-    color: #fff;
-}
-
-/* Tablet */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .about-hero-play {
-        width: 70px;
-        height: 70px;
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .about-hero-play {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .about-video-close {
-        top: 10px;
-        right: 10px;
-        width: 36px;
-        height: 36px;
-    }
-    
-    .about-video-error {
-        padding: 1rem;
-    }
-    
-    .about-video-error p {
-        font-size: 1rem;
-    }
-}
