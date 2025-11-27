@@ -24,7 +24,7 @@ class LeadForm(forms.Form):
         required=True,
         validators=[name_regex],
         widget=forms.TextInput(attrs={
-            'placeholder': 'Ваше ім\'я',
+            'placeholder': 'Ваше ім\'я та прізвище',
             'class': 'landing-input',
             'autocomplete': 'given-name',
         }),

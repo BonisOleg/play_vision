@@ -200,7 +200,7 @@
             input.classList.remove('error');
             // Відновити оригінальний placeholder
             const originalPlaceholders = {
-                'id_first_name': 'Ваше ім\'я',
+                'id_first_name': 'Ваше ім\'я та прізвище',
                 'id_phone': '+380(__) ___-__-__',
                 'id_email': 'Ваш email'
             };
