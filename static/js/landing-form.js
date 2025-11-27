@@ -12,11 +12,11 @@
     const submitBtn = document.getElementById('submitBtn');
     const formMessage = document.getElementById('formMessage');
     
-    const fullNameInput = document.getElementById('id_full_name');
+    const firstNameInput = document.getElementById('id_first_name');
     const phoneInput = document.getElementById('id_phone');
     const emailInput = document.getElementById('id_email');
     
-    const fullNameError = document.getElementById('error_full_name');
+    const firstNameError = document.getElementById('error_first_name');
     const phoneError = document.getElementById('error_phone');
     const emailError = document.getElementById('error_email');
     
@@ -134,19 +134,14 @@
     /**
      * Валідація імені
      */
-    function validateFullName(value) {
+    function validateFirstName(value) {
         if (!value || value.trim().length < 2) {
-            return 'Введіть ваше ім\'я та прізвище';
+            return 'Введіть ваше ім\'я';
         }
         
         const nameRegex = /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ\s'\-]+$/;
         if (!nameRegex.test(value)) {
-            return 'Введіть ваше ім\'я та прізвище';
-        }
-        
-        const words = value.trim().split(/\s+/);
-        if (words.length < 2) {
-            return 'Введіть ваше ім\'я та прізвище';
+            return 'Ім\'я може містити лише літери';
         }
         
         return null;
@@ -205,7 +200,7 @@
             input.classList.remove('error');
             // Відновити оригінальний placeholder
             const originalPlaceholders = {
-                'id_full_name': 'Ваше ім\'я та прізвище',
+                'id_first_name': 'Ваше ім\'я',
                 'id_phone': '+380(__) ___-__-__',
                 'id_email': 'Ваш email'
             };
@@ -236,12 +231,12 @@
         let isValid = true;
         
         // Валідація імені
-        const nameError = validateFullName(fullNameInput.value);
+        const nameError = validateFirstName(firstNameInput.value);
         if (nameError) {
-            showError(fullNameInput, fullNameError, nameError);
+            showError(firstNameInput, firstNameError, nameError);
             isValid = false;
         } else {
-            clearError(fullNameInput, fullNameError);
+            clearError(firstNameInput, firstNameError);
         }
         
         // Валідація телефону
@@ -273,7 +268,7 @@
         
         // Очистити попередні помилки та повідомлення
         formMessage.style.display = 'none';
-        clearError(fullNameInput, fullNameError);
+        clearError(firstNameInput, firstNameError);
         clearError(phoneInput, phoneError);
         clearError(emailInput, emailError);
         
@@ -352,12 +347,12 @@
     });
     
     // Real-time валідація при введенні
-    fullNameInput.addEventListener('blur', function() {
-        const error = validateFullName(this.value);
+    firstNameInput.addEventListener('blur', function() {
+        const error = validateFirstName(this.value);
         if (error) {
-            showError(this, fullNameError, error);
+            showError(this, firstNameError, error);
         } else {
-            clearError(this, fullNameError);
+            clearError(this, firstNameError);
         }
     });
     

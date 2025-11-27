@@ -7,14 +7,14 @@ from .services import SendPulseService
 @admin.register(LeadSubmission)
 class LeadSubmissionAdmin(admin.ModelAdmin):
     list_display = [
-        'full_name',
+        'first_name',
         'phone',
         'email',
         'submitted_at',
         'sendpulse_synced'
     ]
     list_filter = ['sendpulse_synced', 'submitted_at']
-    search_fields = ['full_name', 'phone', 'email']
+    search_fields = ['first_name', 'phone', 'email']
     readonly_fields = ['submitted_at', 'sendpulse_contact_id']
     date_hierarchy = 'submitted_at'
     
@@ -32,7 +32,7 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
                     email=lead.email,
                     phone=lead.phone,
                     variables={
-                        'full_name': lead.full_name,
+                        'first_name': lead.first_name,
                         'source': 'Landing Page - Форум Футбольних Фахівців'
                     }
                 )
@@ -48,7 +48,7 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
                 error_count += 1
                 self.message_user(
                     request,
-                    f'Помилка синхронізації {lead.full_name}: {str(e)}',
+                    f'Помилка синхронізації {lead.first_name}: {str(e)}',
                     level=messages.ERROR
                 )
         

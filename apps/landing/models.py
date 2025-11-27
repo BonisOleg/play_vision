@@ -5,10 +5,10 @@ from django.core.validators import RegexValidator
 class LeadSubmission(models.Model):
     """Модель для збереження заявок з landing page"""
     
-    full_name = models.CharField(
-        'Повне ім\'я',
+    first_name = models.CharField(
+        'Ім\'я',
         max_length=255,
-        help_text='Ім\'я та прізвище учасника'
+        help_text='Ім\'я учасника'
     )
     
     phone_validator = RegexValidator(
@@ -60,5 +60,5 @@ class LeadSubmission(models.Model):
         ordering = ['-submitted_at']
     
     def __str__(self):
-        return f'{self.full_name} - {self.phone} ({self.submitted_at.strftime("%d.%m.%Y %H:%M")})'
+        return f'{self.first_name} - {self.phone} ({self.submitted_at.strftime("%d.%m.%Y %H:%M")})'
 

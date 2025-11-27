@@ -18,18 +18,18 @@ class LeadForm(forms.Form):
         message='Ім\'я може містити лише літери, пробіли, апострофи та дефіси'
     )
     
-    full_name = forms.CharField(
-        label='Ваше ім\'я та прізвище',
+    first_name = forms.CharField(
+        label='Ваше ім\'я',
         max_length=255,
         required=True,
         validators=[name_regex],
         widget=forms.TextInput(attrs={
-            'placeholder': 'Ваше ім\'я та прізвище',
+            'placeholder': 'Ваше ім\'я',
             'class': 'landing-input',
-            'autocomplete': 'name',
+            'autocomplete': 'given-name',
         }),
         error_messages={
-            'required': 'Будь ласка, вкажіть ваше ім\'я та прізвище',
+            'required': 'Будь ласка, вкажіть ваше ім\'я',
             'max_length': 'Ім\'я занадто довге (максимум 255 символів)',
         }
     )
@@ -91,23 +91,16 @@ class LeadForm(forms.Form):
         
         return phone
     
-    def clean_full_name(self):
+    def clean_first_name(self):
         """Очистка та валідація імені"""
-        full_name = self.cleaned_data.get('full_name', '').strip()
+        first_name = self.cleaned_data.get('first_name', '').strip()
         
-        if len(full_name) < 2:
+        if len(first_name) < 2:
             raise forms.ValidationError(
-                'Введіть ваше ім\'я та прізвище'
+                'Введіть ваше ім\'я'
             )
         
-        # Перевірити що є хоча б 2 слова (ім'я та прізвище)
-        words = full_name.split()
-        if len(words) < 2:
-            raise forms.ValidationError(
-                'Введіть ваше ім\'я та прізвище'
-            )
-        
-        return full_name
+        return first_name
     
     def clean_email(self):
         """Очистка email"""

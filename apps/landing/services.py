@@ -68,7 +68,7 @@ class SendPulseService:
         Args:
             email: Email контакту
             phone: Телефон контакту
-            variables: Додаткові змінні (full_name, promo_code, source)
+            variables: Додаткові змінні (first_name, promo_code, source)
         
         Returns:
             ID створеного контакту або None у разі помилки

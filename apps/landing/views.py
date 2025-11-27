@@ -43,18 +43,18 @@ def submit_lead(request):
     
     try:
         # Отримати очищені дані
-        full_name = form.cleaned_data['full_name']
+        first_name = form.cleaned_data['first_name']
         phone = form.cleaned_data['phone']
         email = form.cleaned_data['email']
         
         # Зберегти в базу даних
         lead = LeadSubmission.objects.create(
-            full_name=full_name,
+            first_name=first_name,
             phone=phone,
             email=email,
         )
         
-        logger.info(f'Lead submission saved: {lead.id} - {full_name} ({email})')
+        logger.info(f'Lead submission saved: {lead.id} - {first_name} ({email})')
         
         # Спробувати відправити в SendPulse CRM
         try:
@@ -63,7 +63,7 @@ def submit_lead(request):
                 email=email,
                 phone=phone,
                 variables={
-                    'full_name': full_name,
+                    'first_name': first_name,
                     'source': 'Landing Page - Форум Футбольних Фахівців',
                     'discount': '15%',
                 }
