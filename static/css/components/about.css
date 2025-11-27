@@ -435,11 +435,16 @@ img[loading="lazy"].lazy-loaded {
     height: 100%;
     z-index: 15;
     background: #000;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     will-change: contents;
     isolation: isolate;
+}
+
+/* Video Container Visible State */
+.about-hero-video[style*="display: flex"] {
+    display: flex !important;
 }
 
 .about-hero-player {
