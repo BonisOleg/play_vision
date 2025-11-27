@@ -224,3 +224,33 @@ def get_localized_svg(obj, country_code, theme='light'):
     svg_field = f'svg_{country_code.lower()}_{theme}'
     return getattr(obj, svg_field, '')
 
+
+@register.filter
+def get_video_library_id(obj, country_code):
+    """Отримати Library ID для відео"""
+    if not obj:
+        return ''
+    if hasattr(obj, 'get_video_library_id'):
+        return obj.get_video_library_id(country_code)
+    return ''
+
+
+@register.filter
+def get_video_id(obj, country_code):
+    """Отримати Video ID для відео"""
+    if not obj:
+        return ''
+    if hasattr(obj, 'get_video_id'):
+        return obj.get_video_id(country_code)
+    return ''
+
+
+@register.filter
+def has_video(obj, country_code):
+    """Перевірити чи є відео"""
+    if not obj:
+        return False
+    if hasattr(obj, 'has_video'):
+        return obj.has_video(country_code)
+    return False
+

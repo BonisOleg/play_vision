@@ -20,6 +20,41 @@ class AboutHero(models.Model):
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    # === VIDEO FIELDS ===
+    video_enabled = models.BooleanField(
+        'Відео увімкнено',
+        default=False,
+        help_text='Показати кнопку Play та відео замість статичного зображення'
+    )
+
+    # Ukraine version
+    video_library_id_ua = models.CharField(
+        'BunnyNet Library ID (Україна)',
+        max_length=100,
+        blank=True,
+        help_text='ID бібліотеки BunnyNet (напр. "123456")'
+    )
+    video_id_ua = models.CharField(
+        'BunnyNet Video ID (Україна)',
+        max_length=100,
+        blank=True,
+        help_text='ID відео в BunnyNet (напр. "abc123-def456")'
+    )
+
+    # World version
+    video_library_id_world = models.CharField(
+        'BunnyNet Library ID (Світ)',
+        max_length=100,
+        blank=True,
+        help_text='Залиште порожнім щоб використовувати українську версію'
+    )
+    video_id_world = models.CharField(
+        'BunnyNet Video ID (Світ)',
+        max_length=100,
+        blank=True,
+        help_text='Залиште порожнім щоб використовувати українську версію'
+    )
+    
     class Meta:
         db_table = 'cms_about_hero'
         verbose_name = 'Hero секція'
@@ -42,6 +77,26 @@ class AboutHero(models.Model):
         if country_code == 'UA' or not self.image_world:
             return self.image_ua
         return self.image_world
+    
+    def get_video_library_id(self, country_code='UA'):
+        """Отримати Library ID залежно від країни"""
+        if country_code == 'UA' or not self.video_library_id_world:
+            return self.video_library_id_ua
+        return self.video_library_id_world
+
+    def get_video_id(self, country_code='UA'):
+        """Отримати Video ID залежно від країни"""
+        if country_code == 'UA' or not self.video_id_world:
+            return self.video_id_ua
+        return self.video_id_world
+
+    def has_video(self, country_code='UA'):
+        """Перевірити чи є відео для цієї версії"""
+        return (
+            self.video_enabled and
+            self.get_video_library_id(country_code) and
+            self.get_video_id(country_code)
+        )
     
     def save(self, *args, **kwargs):
         self.pk = 1

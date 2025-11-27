@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
 <link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
+<link rel="preconnect" href="https://iframe.mediadelivery.net">
+<link rel="dns-prefetch" href="https://iframe.mediadelivery.net">
 {% endblock %}
 
 {% block content %}
@@ -18,8 +20,15 @@
 <div class="fullscreen-container">
 
     <!-- 1. HERO SECTION -->
-    <section class="fullscreen-section hero-section hero-bordered about-hero">
-        <div class="section-bg">
+    <section class="fullscreen-section hero-section hero-bordered about-hero" 
+             data-video-enabled="{{ about_hero.video_enabled|yesno:'true,false' }}"
+             {% if about_hero.video_enabled %}
+             data-video-library="{{ about_hero|get_video_library_id:country_code }}"
+             data-video-id="{{ about_hero|get_video_id:country_code }}"
+             {% endif %}>
+        
+        <!-- Background Image -->
+        <div class="section-bg about-hero-bg">
             {% if about_hero %}
             {% with image=about_hero|get_localized_image:country_code %}
             {% if image %}
@@ -32,6 +41,33 @@
             <img class="section-bg-image" src="{% static 'images/Hiro.png' %}" alt="Про Play Vision" loading="eager">
             {% endif %}
         </div>
+        
+        <!-- Play Button -->
+        {% if about_hero.video_enabled and about_hero|has_video:country_code %}
+        <button class="about-hero-play" aria-label="Відтворити відео" type="button">
+            <svg class="play-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="38" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M32 26 L32 54 L54 40 Z" fill="currentColor"/>
+            </svg>
+        </button>
+        {% endif %}
+        
+        <!-- Video Container -->
+        <div class="about-hero-video" style="display: none;">
+            <button class="about-video-close" aria-label="Закрити відео" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 6 L18 18 M18 6 L6 18"/>
+                </svg>
+            </button>
+            
+            <div class="bunny-video-container about-hero-player"></div>
+            
+            <div class="about-video-error" style="display: none;">
+                <p>Помилка завантаження відео</p>
+                <button class="btn-error-retry" type="button">Спробувати ще раз</button>
+            </div>
+        </div>
+        
         <div class="section-overlay section-overlay--gradient"></div>
     </section>
 
@@ -198,6 +234,7 @@
 
 {% block extra_js %}
 <script src="{% static 'js/about.js' %}" defer></script>
+<script src="{% static 'js/about-video.js' %}" defer></script>
 <script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
 <script src="{% static 'js/expert-mobile-carousel.js' %}" defer></script>
 {% endblock %}

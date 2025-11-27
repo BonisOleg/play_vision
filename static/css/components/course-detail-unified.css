@@ -118,8 +118,17 @@
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-lg);
-    aspect-ratio: 16 / 9;
     background: var(--color-bg-dark);
+}
+
+/* Default: Video format (16:9) */
+.course-video-block--video {
+    aspect-ratio: 16 / 9;
+}
+
+/* Logo format (1:1 - квадрат) */
+.course-video-block--logo {
+    aspect-ratio: 1 / 1;
 }
 
 .course-video-block iframe,
@@ -127,7 +136,17 @@
     width: 100%;
     height: 100%;
     display: block;
+}
+
+/* Video iframe - кроп */
+.course-video-block--video iframe {
     object-fit: cover;
+}
+
+/* Logo image - вписати повністю, не кропити */
+.course-logo-display {
+    object-fit: contain !important;
+    padding: var(--spacing-lg);
 }
 
 /* === RELATED COURSES CAROUSEL === */
@@ -288,6 +307,11 @@
     .course-video-block {
         position: static;
         order: -1;
+    }
+    
+    /* Обмежити ширину логе на планшеті */
+    .course-video-block--logo {
+        max-width: 400px;
     }
 }
 
