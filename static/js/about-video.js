@@ -145,8 +145,8 @@
                 this.playBtn.classList.add('is-hidden');
             }
             
-            // Show video container - remove inline display
-            this.videoContainer.removeAttribute('style');
+            // Show video container - explicit flex display
+            this.videoContainer.style.display = 'flex';
             this.videoContainer.style.opacity = '1';
             
             // Small delay for smooth transition
@@ -166,8 +166,8 @@
             // Hide play button
             this.playBtn?.classList.add('is-hidden');
             
-            // Show video container
-            this.videoContainer.removeAttribute('style');
+            // Show video container - explicit flex display
+            this.videoContainer.style.display = 'flex';
             this.videoContainer.style.opacity = '1';
             
             // Create player з autoplay
