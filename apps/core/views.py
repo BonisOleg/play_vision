@@ -24,6 +24,11 @@ class AboutView(TemplateView):
     template_name = 'pages/about.html'
 
 
+class TestBunnyView(TemplateView):
+    """Test Bunny.net video player"""
+    template_name = 'test_bunny.html'
+
+
 class MentoringView(TemplateView):
     """Mentoring page"""
     template_name = 'pages/mentoring.html'
