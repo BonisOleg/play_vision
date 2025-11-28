@@ -17,27 +17,11 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .about-hero-section {
-        width: 90%;
-        margin: 15px auto;
-    }
-}
-
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
 @media (max-width: 768px) {
     .about-hero-section {
         width: 90%;
         margin: 8px auto 0;
-        border-radius: 10px;
-    }
-}
-
-/* === МАЛИЙ МОБАЙЛ === */
-@media (max-width: 480px) {
-    .about-hero-section {
-        width: 90%;
     }
 }
 
