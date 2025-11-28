@@ -22,17 +22,62 @@
     <!-- 1. HERO SECTION - BunnyNet Video Player -->
     {% if about_hero and about_hero.video_enabled and about_hero|has_video:country_code %}
     <section class="about-hero-section">
-        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000;">
+        <!-- Iframe спроба -->
+        <div id="about-video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000;">
             <iframe 
+                id="about-hero-iframe"
                 src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}?autoplay=false&loop=false&muted=false&preload=true&responsive=true"
-                sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
                 allowfullscreen
                 title="Play Vision Video">
             </iframe>
         </div>
+        
+        <!-- Fallback кнопка для iPhone -->
+        <div id="video-fallback" style="display: none; position: relative; padding-bottom: 56.25%; height: 0; background: #000;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10;">
+                <a href="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}" 
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: #ff0000; border-radius: 50%; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </a>
+                <p style="color: white; margin-top: 20px; font-size: 16px; font-family: system-ui, -apple-system, sans-serif;">Натисніть щоб відкрити відео</p>
+            </div>
+        </div>
     </section>
+
+    <script>
+    // Перевірка для iPhone/iPad - якщо iframe не завантажується, показуємо fallback
+    (function() {
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            var iframe = document.getElementById('about-hero-iframe');
+            var wrapper = document.getElementById('about-video-wrapper');
+            var fallback = document.getElementById('video-fallback');
+            
+            if (iframe && wrapper && fallback) {
+                var iframeLoaded = false;
+                
+                iframe.addEventListener('load', function() {
+                    iframeLoaded = true;
+                    console.log('✅ Bunny.net iframe loaded');
+                });
+                
+                // Якщо через 3 секунди iframe не завантажився - показуємо fallback
+                setTimeout(function() {
+                    if (!iframeLoaded) {
+                        console.warn('⚠️ Iframe не завантажився - показуємо fallback кнопку');
+                        wrapper.style.display = 'none';
+                        fallback.style.display = 'block';
+                    }
+                }, 3000);
+            }
+        }
+    })();
+    </script>
     {% endif %}
 
     <!-- UNIFIED SECTIONS WRAPPER -->
