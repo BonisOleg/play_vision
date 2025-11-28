@@ -22,13 +22,16 @@
     <!-- 1. HERO SECTION - BunnyNet Video Player -->
     {% if about_hero and about_hero.video_enabled and about_hero|has_video:country_code %}
     <section class="about-hero-section">
-        <iframe 
-            src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}"
-            loading="lazy"
-            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-            allowfullscreen="true"
-            playsinline>
-        </iframe>
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000;">
+            <iframe 
+                src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}?autoplay=false&loop=false&muted=false&preload=true&responsive=true"
+                sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                allowfullscreen
+                title="Play Vision Video">
+            </iframe>
+        </div>
     </section>
     {% endif %}
 
