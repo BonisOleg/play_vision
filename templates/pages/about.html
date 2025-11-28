@@ -19,22 +19,18 @@
 {% get_about_hero as about_hero %}
 <div class="fullscreen-container">
 
-    <!-- 1. HERO SECTION - BunnyNet Video -->
-    <section class="about-hero-section" 
-             data-video-library="{{ about_hero|get_video_library_id:country_code }}"
-             data-video-id="{{ about_hero|get_video_id:country_code }}">
-        
-        <!-- Video Player or Fallback -->
-        <div class="about-hero-player-wrapper">
-            {% if about_hero.video_enabled and about_hero|has_video:country_code %}
-                <div class="bunny-player-container" id="about-hero-player"></div>
-            {% else %}
-                <div class="about-hero-fallback">
-                    <p>Відео не налаштоване</p>
-                </div>
-            {% endif %}
-        </div>
+    <!-- 1. HERO SECTION - BunnyNet Video Player -->
+    {% if about_hero and about_hero.video_enabled and about_hero|has_video:country_code %}
+    <section class="about-hero-section">
+        <iframe 
+            src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}"
+            loading="lazy"
+            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+            allowfullscreen="true"
+            playsinline>
+        </iframe>
     </section>
+    {% endif %}
 
     <!-- UNIFIED SECTIONS WRAPPER -->
     <div class="unified-sections-wrapper">
@@ -199,7 +195,6 @@
 
 {% block extra_js %}
 <script src="{% static 'js/about.js' %}" defer></script>
-<script src="{% static 'js/about-video.js' %}" defer></script>
 <script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
 <script src="{% static 'js/expert-mobile-carousel.js' %}" defer></script>
 {% endblock %}

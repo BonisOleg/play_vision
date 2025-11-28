@@ -1,77 +1,70 @@
 /* ============================================
    ABOUT PAGE - Сторінка "Про нас"
+   Очищена версія - тільки необхідні стилі
    ============================================ */
 
-/* === 1. HERO SECTION - VIDEO PLAYER === */
+/* === HERO SECTION - VIDEO PLAYER === */
 .about-hero-section {
+    position: relative;
     width: 80%;
     max-width: 1400px;
     margin: 30px auto;
+    aspect-ratio: 16 / 9;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    overflow: visible;
-    position: relative;
+    overflow: hidden;
     background: #000;
-    min-height: 400px;
-    
-    /* Modern browsers: aspect-ratio */
-    aspect-ratio: 16 / 9;
 }
 
-/* Fallback для браузерів без aspect-ratio (Safari < 15, Chrome < 88, Firefox < 89) */
-@supports not (aspect-ratio: 16 / 9) {
+.about-hero-section iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+/* === ТЕМНА ТЕМА === */
+[data-theme="dark"] .about-hero-section {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* === AUTO THEME === */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .about-hero-section {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
+@media (min-width: 769px) and (max-width: 1024px) {
     .about-hero-section {
-        position: relative;
-        height: 0;
-        padding-bottom: 56.25%; /* 16:9 ratio */
-        min-height: 0; /* Override min-height для padding-bottom fallback */
-    }
-    
-    .about-hero-section .about-hero-player-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        margin: 15px auto;
     }
 }
 
-.about-hero-player-wrapper {
-    width: 100%;
-    height: 100%;
-    position: relative;
+/* === МОБІЛЬНА АДАПТАЦІЯ === */
+@media (max-width: 768px) {
+    .about-hero-section {
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 8px;
+        border-radius: 10px;
+        min-height: 250px;
+    }
 }
 
-.bunny-player-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: block;
-    z-index: 100;
-    pointer-events: auto;
+/* === МАЛИЙ МОБАЙЛ === */
+@media (max-width: 480px) {
+    .about-hero-section {
+        width: 90%;
+        margin: 0 auto;
+        min-height: 200px;
+    }
 }
-
-.bunny-player-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-    pointer-events: auto !important;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.about-hero-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #1a1a1a;
-    color: #fff;
-    font-size: 1.2rem;
-}
-
 
 /* === 2. IMAGE BLOCKS === */
 .about-image-block {
@@ -90,7 +83,6 @@
 }
 
 /* === 3. SECTION CONTENT === */
-/* Використовує загальну систему ширини з section-base.css */
 .about-triangle-section .section-content,
 .about-mission-section .section-content,
 .about-values-section .section-content {
@@ -122,23 +114,7 @@
     max-width: 800px;
 }
 
-/* === ТЕМНА ТЕМА === */
-[data-theme="dark"] .about-hero-section {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-[data-theme="dark"] .about-hero-fallback {
-    background-color: #0a0a0a;
-}
-
-[data-theme="dark"] .about-hero {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-[data-theme="dark"] .about-hero .section-bg {
-    background-color: #0a0a0a;
-}
-
+/* === ТЕМНА ТЕМА - ТЕКСТ === */
 [data-theme="dark"] .about-mission-section .section-title,
 [data-theme="dark"] .about-values-section .section-title,
 [data-theme="dark"] .about-team-section .section-title {
@@ -149,28 +125,8 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* === AUTO THEME === */
+/* === AUTO THEME - ТЕКСТ === */
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .about-hero-section {
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    [data-theme="auto"] .about-hero-fallback {
-        background-color: #0a0a0a;
-    }
-
-    [data-theme="auto"] .about-hero {
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    [data-theme="auto"] .about-hero .section-bg {
-        background-color: #0a0a0a;
-    }
-
-    [data-theme="auto"] .about-hero .section-overlay--gradient {
-        background: linear-gradient(135deg, rgba(10, 10, 10, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%);
-    }
-
     [data-theme="auto"] .about-mission-section .section-title,
     [data-theme="auto"] .about-values-section .section-title,
     [data-theme="auto"] .about-team-section .section-title {
@@ -182,62 +138,17 @@
     }
 }
 
-/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
+/* === ПЛАНШЕТНА АДАПТАЦІЯ - ТЕКСТ === */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .about-hero-section {
-        width: 90%;
-        margin: 15px auto;
-        box-shadow: none;
-    }
-    
-    /* Fallback для старих браузерів */
-    @supports not (aspect-ratio: 16 / 9) {
-        .about-hero-section {
-            padding-bottom: 56.25%;
-        }
-    }
-
-    .about-hero {
-        width: 90%;
-        margin: 15px auto;
-        box-shadow: none;
-    }
-
     .about-mission-section .section-title,
     .about-values-section .section-title,
     .about-team-section .section-title {
         font-size: 2rem;
     }
-
 }
 
-/* === МОБІЛЬНА АДАПТАЦІЯ === */
+/* === МОБІЛЬНА АДАПТАЦІЯ - ТЕКСТ === */
 @media (max-width: 768px) {
-    .about-hero-section {
-        width: 90%;
-        margin: 0 auto;
-        padding-top: 8px;
-        border-radius: 10px;
-        box-shadow: none;
-        min-height: 250px;
-    }
-    
-    /* Fallback для старих браузерів на Mobile */
-    @supports not (aspect-ratio: 16 / 9) {
-        .about-hero-section {
-            padding-bottom: 56.25%;
-            min-height: 0;
-        }
-    }
-
-    .about-hero {
-        width: 95%;
-        margin: 0 auto;
-        padding-top: 8px;
-        border-radius: 10px;
-        box-shadow: none;
-    }
-
     .about-mission-section .section-title,
     .about-values-section .section-title,
     .about-team-section .section-title {
@@ -287,7 +198,6 @@
         object-fit: contain;
     }
 
-    /* ДОДАНО: більш специфічні правила для ховання SVG (вища специфічність: 0,3,0) */
     [data-theme="light"] .about-triangle-section .theme-svg--dark {
         display: none;
     }
@@ -296,39 +206,13 @@
         display: none;
     }
 
-    /* Fallback для темної теми */
     [data-theme="dark"] .about-triangle-section .theme-svg--light:only-child {
         display: block;
     }
 }
 
-/* === МАЛИЙ МОБАЙЛ === */
+/* === МАЛИЙ МОБАЙЛ - ТЕКСТ === */
 @media (max-width: 480px) {
-    .about-hero-section {
-        width: 90%;
-        margin: 0 auto;
-        padding-top: 8px;
-        border-radius: 10px;
-        box-shadow: none;
-        min-height: 200px;
-    }
-    
-    /* Fallback для старих браузерів */
-    @supports not (aspect-ratio: 16 / 9) {
-        .about-hero-section {
-            padding-bottom: 56.25%;
-            min-height: 0;
-        }
-    }
-
-    .about-hero {
-        width: 95%;
-        margin: 0 auto;
-        padding-top: 8px;
-        border-radius: 10px;
-        box-shadow: none;
-    }
-
     .about-mission-section .section-title,
     .about-values-section .section-title,
     .about-team-section .section-title {
@@ -339,7 +223,6 @@
         font-size: 0.95rem;
     }
 
-    /* === 2-Й БЛОК: SVG на 100% для малих екранів (ТІЛЬКИ для about-triangle-section) === */
     .about-triangle-section .about-image-block {
         width: 100%;
         max-width: 100%;
@@ -371,7 +254,6 @@
         object-fit: contain;
     }
 
-    /* ДОДАНО: більш специфічні правила для ховання SVG (вища специфічність: 0,3,0) */
     [data-theme="light"] .about-triangle-section .theme-svg--dark {
         display: none;
     }
@@ -380,103 +262,8 @@
         display: none;
     }
 
-    /* Fallback для темної теми */
     [data-theme="dark"] .about-triangle-section .theme-svg--light:only-child {
         display: block;
-    }
-}
-
-/* === iOS SAFARI SPECIFIC === */
-@supports (-webkit-touch-callout: none) {
-    .about-hero-section {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        transform: translateZ(0);
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .bunny-player-container iframe {
-        -webkit-backface-visibility: hidden;
-        -webkit-transform: translateZ(0);
-        -webkit-user-select: none;
-        -webkit-touch-callout: none;
-        pointer-events: auto !important;
-        touch-action: manipulation;
-    }
-
-    .about-hero {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        transform: translateZ(0);
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .about-image-block img {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        transform: translateZ(0);
-    }
-
-    /* === 2-Й БЛОК: iOS Safari специфічні виправлення (ТІЛЬКИ для about-triangle-section) === */
-    @media (max-width: 768px) {
-        .about-triangle-section .about-image-block {
-            width: 100%;
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
-            display: block;
-            min-height: 100%;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-        
-        .about-triangle-section .theme-svg-wrapper {
-            width: 100%;
-            height: 100%;
-            min-height: 100%;
-            position: relative;
-            display: block;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-        
-        .about-triangle-section .theme-svg {
-            width: 100%;
-            height: 100%;
-            min-height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-        
-        .about-triangle-section .theme-svg svg {
-            width: 100%;
-            height: 100%;
-            min-height: 100%;
-            display: block;
-            object-fit: contain;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-
-        /* ДОДАНО: більш специфічні правила для ховання SVG (вища специфічність: 0,3,0) */
-        [data-theme="light"] .about-triangle-section .theme-svg--dark {
-            display: none;
-        }
-
-        [data-theme="dark"] .about-triangle-section .theme-svg--light {
-            display: none;
-        }
-
-        /* Fallback для темної теми */
-        [data-theme="dark"] .about-triangle-section .theme-svg--light:only-child {
-            display: block;
-        }
     }
 }
 
@@ -492,7 +279,7 @@ img[loading="lazy"].lazy-loaded {
 
 /* === ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
-    .about-hero,
+    .about-hero-section,
     .about-image-block img {
         transition: none;
         animation: none;
@@ -503,7 +290,3 @@ img[loading="lazy"].lazy-loaded {
         transition: none;
     }
 }
-
-/* === RESPONSIVE MARGIN === */
-/* Видалено - margin налаштовується вище в основних медіа-запитах */
-
