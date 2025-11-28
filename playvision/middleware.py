@@ -15,7 +15,8 @@ class SecurityHeadersMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         # Add security headers
         response['X-Content-Type-Options'] = 'nosniff'
-        response['X-Frame-Options'] = 'DENY'
+        # X-Frame-Options is managed by settings.X_FRAME_OPTIONS (SAMEORIGIN)
+        # response['X-Frame-Options'] = 'DENY'  # Commented: see Django settings
         response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
         response['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
         
