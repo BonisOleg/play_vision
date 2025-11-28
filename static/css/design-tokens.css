@@ -3,6 +3,73 @@
  * Централізовані змінні для всього проекту
  */
 
+/* === CUSTOM FONTS (AtypDisplay, AtypText) === */
+
+@font-face {
+    font-family: 'AtypDisplay';
+    src: url('/static/AtypDisplay-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
+}
+
+@font-face {
+    font-family: 'AtypDisplay';
+    src: url('/static/AtypDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
+}
+
+@font-face {
+    font-family: 'AtypDisplay';
+    src: url('/static/AtypDisplay-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
+}
+
+@font-face {
+    font-family: 'AtypText';
+    src: url('/static/AtypText-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
+}
+
+/* === ROBOTO FOR CYRILLIC н (U+043D) and Н (U+041D) === */
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxP.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+/* === CROSS-PLATFORM FONT RENDERING === */
+
+body,
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
 :root {
     /* === BRAND COLORS === */
     --color-primary: #E50914;
@@ -104,8 +171,8 @@
     --color-pink-light: #ff2b33;
 
     /* === TYPOGRAPHY === */
-    --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-heading: 'Roboto', sans-serif;
+    --font-primary: 'AtypText', 'RobotoForN', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-heading: 'AtypDisplay', 'RobotoForN', 'Roboto', sans-serif;
     --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
 
     /* === FONT SIZES === */

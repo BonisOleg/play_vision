@@ -16,6 +16,15 @@
 
 @font-face {
     font-family: 'AtypDisplay';
+    src: url('/static/AtypDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-043C, U+043E-FFFF;
+}
+
+@font-face {
+    font-family: 'AtypDisplay';
     src: url('/static/AtypDisplay-Semibold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
@@ -30,6 +39,26 @@
     font-style: normal;
     font-display: swap;
     unicode-range: U+0000-043C, U+043E-FFFF;
+}
+
+/* === ROBOTO FOR CYRILLIC н (U+043D) and Н (U+041D) === */
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxP.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
 }
 
 
@@ -51,9 +80,10 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    font-family: var(--font-primary), 'RobotoForN', sans-serif;
+    font-family: 'AtypText', 'RobotoForN', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 /* === LANDING CONTAINER === */

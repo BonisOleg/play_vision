@@ -54,6 +54,10 @@
         media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
         href="{% static 'splash/ipad.png' %}">
 
+    <!-- Preload Custom Fonts -->
+    <link rel="preload" href="{% static 'AtypDisplay-Regular.ttf' %}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{% static 'AtypText-Regular.ttf' %}" as="font" type="font/ttf" crossorigin>
+
     <!-- Google Fonts - Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
