@@ -193,6 +193,7 @@
     min-height: 39.6px;
     font-size: 15px;
     font-weight: 500;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text);
     background: transparent;
     border: none;
@@ -256,6 +257,7 @@
 .nav-tab-text {
     position: relative;
     z-index: 3;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Жирніший шрифт для "ХАБ знань" та "Підписка" */
