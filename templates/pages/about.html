@@ -23,14 +23,11 @@
     {% if about_hero and about_hero.video_enabled and about_hero|has_video:country_code %}
     <section class="about-hero-section">
         <iframe 
-            src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}?autoplay=false&preload=true&responsive=true"
-            frameborder="0"
-            scrolling="no"
+            src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}"
+            loading="lazy"
             allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
             allowfullscreen="true"
-            playsinline
-            webkit-playsinline
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;">
+            playsinline>
         </iframe>
     </section>
     {% endif %}
