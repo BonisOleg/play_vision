@@ -54,6 +54,15 @@
 
 @font-face {
     font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmVknXSpBc4.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoForN';
     src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
