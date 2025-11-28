@@ -50,10 +50,12 @@
 @media (max-width: 768px) {
     .about-hero-section {
         width: 90%;
-        margin: 0 auto;
-        padding-top: 8px;
+        margin: 8px auto 0;
         border-radius: 10px;
-        min-height: 250px;
+        aspect-ratio: auto;
+        height: 0;
+        padding-bottom: 56.25%;
+        min-height: 0;
     }
 }
 
@@ -62,7 +64,10 @@
     .about-hero-section {
         width: 90%;
         margin: 0 auto;
-        min-height: 200px;
+        aspect-ratio: auto;
+        height: 0;
+        padding-bottom: 56.25%;
+        min-height: 0;
     }
 }
 
