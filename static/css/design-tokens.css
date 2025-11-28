@@ -11,7 +11,7 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+0000-043C, U+043E-FFFF;
+    unicode-range: U+0000-041C, U+043E-FFFF;
 }
 
 @font-face {
@@ -20,7 +20,7 @@
     font-weight: 500;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+0000-043C, U+043E-FFFF;
+    unicode-range: U+0000-041C, U+043E-FFFF;
 }
 
 @font-face {
@@ -29,7 +29,7 @@
     font-weight: 600;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+0000-043C, U+043E-FFFF;
+    unicode-range: U+0000-041C, U+043E-FFFF;
 }
 
 @font-face {
@@ -38,7 +38,7 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+0000-043C, U+043E-FFFF;
+    unicode-range: U+0000-041C, U+043E-FFFF;
 }
 
 /* === ROBOTO FOR CYRILLIC н (U+043D) and Н (U+041D) === */
@@ -65,6 +65,15 @@
     font-family: 'RobotoForN';
     src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.ttf') format('truetype');
     font-weight: 600;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.ttf') format('truetype');
+    font-weight: 700;
     font-style: normal;
     unicode-range: U+041D, U+043D;
     font-display: swap;
