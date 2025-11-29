@@ -375,16 +375,6 @@
     border-radius: var(--radius-lg);
 }
 
-[data-theme="dark"] .cta-simple {
-    background-image: url('/static/images/backlast.png');
-}
-
-@media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .cta-simple {
-        background-image: url('/static/images/backlast.png');
-    }
-}
-
 .cta-title {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
@@ -394,7 +384,6 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: var(--spacing-xl);
 }
 
 .cta-buttons {
@@ -411,14 +400,12 @@
     border: 2px solid #1a1a1a;
     font-weight: 600;
     padding: 18px 36px;
-    /* ЗБІЛЬШЕНО padding щоб логотип не обрізався */
     border-radius: 50px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    /* ВІДСТУП МІЖ ТЕКСТОМ І ЛОГОТИПОМ - можна міняти */
     font-size: 1.125rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
@@ -434,9 +421,7 @@
 
 .cta-section .btn-primary .btn-logo-space {
     width: 26px;
-    /* ШИРИНА БІЛОГО ЛОГОТИПА - зменшено щоб не обрізався */
     height: 26px;
-    /* ВИСОТА БІЛОГО ЛОГОТИПА - зменшено щоб не обрізався */
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -455,7 +440,6 @@
 
 .cta-section .btn-outline {
     background: rgba(255, 255, 255, 0.9);
-    /* Світла сіра кнопка (8-й скрін) */
     color: #1a1a1a;
     border: 2px solid transparent;
     font-weight: 600;
@@ -558,7 +542,6 @@
 
     .cta-section .btn-primary .btn-logo-space {
         width: 24px;
-        /* Планшетна версія */
         height: 24px;
     }
 
@@ -631,7 +614,6 @@
 
     .cta-section .btn-primary .btn-logo-space {
         width: 22px;
-        /* Маленький мобільний */
         height: 22px;
     }
 
@@ -852,14 +834,8 @@
         text-shadow: none;
     }
 
-    .mentor-coaching-section .section-title,
-    .cta-section .section-title {
+    .mentor-coaching-section .section-title {
         color: white;
-    }
-
-    /* === CTA SECTION === */
-    .cta-section:not(.cta-simple) {
-        background: var(--color-bg);
     }
 
     .cta-title {
@@ -989,14 +965,8 @@
             text-shadow: none;
         }
 
-        .mentor-coaching-section .section-title,
-        .cta-section .section-title {
+        .mentor-coaching-section .section-title {
             color: white;
-        }
-
-        /* === CTA SECTION === */
-        .cta-section:not(.cta-simple) {
-            background: var(--color-bg);
         }
 
         .cta-title {
