@@ -352,38 +352,48 @@
 
 .cta-section {
     text-align: center;
-    color: white;
     position: relative;
     z-index: var(--z-section, 20);
     overflow: hidden;
 }
 
 .cta-simple {
-    background-image: url('/static/images/backlast.png');
+    background-image: url('/static/images/backgroundCTAmain.jpg');
     background-size: cover;
     padding: 50px;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    transform: translateZ(0);
 }
 
 .cta-content {
     width: 100%;
     max-width: 800px;
-    padding: var(--spacing-xxl) var(--spacing-xl);
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius-lg);
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    transform: translateZ(0);
+    contain: layout style paint;
 }
 
 .cta-title {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
-    margin-bottom: var(--spacing-xl);
-    color: white;
-    text-shadow: 0 4px 8px var(--shadow-alpha-80), 0 2px 4px var(--shadow-alpha-60);
+    color: #000000;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    white-space: nowrap;
+    font-family: var(--font-heading);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 .cta-buttons {
@@ -393,25 +403,30 @@
     flex-wrap: wrap;
 }
 
-/* CTA кнопка "Доєднатись" з білим логотипом */
+/* CTA кнопка "Ставай частиною Play Vision" */
 .cta-section .btn-primary {
-    background: #171717;
-    color: #d32f2f;
-    border: 2px solid #1a1a1a;
-    font-weight: 600;
-    padding: 18px 36px;
-    border-radius: 50px;
+    background: linear-gradient(90deg, #E50914 0%, #000000 100%);
+    color: #ffffff;
+    border: none;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 12px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    font-size: 1.125rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
     white-space: nowrap;
     overflow: visible;
-    min-height: 58px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
 }
 
 .cta-section .btn-primary .btn-text {
@@ -420,8 +435,8 @@
 }
 
 .cta-section .btn-primary .btn-logo-space {
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -431,35 +446,12 @@
 }
 
 .cta-section .btn-primary:hover {
-    background: #e9e9e9;
-    color: #000000;
-    border-color: #ffffff;
+    background: linear-gradient(90deg, #b8070f 0%, #1a1a1a 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+    -webkit-transform: translateY(-2px);
 }
 
-.cta-section .btn-outline {
-    background: rgba(255, 255, 255, 0.9);
-    color: #1a1a1a;
-    border: 2px solid transparent;
-    font-weight: 600;
-    padding: 16px 32px;
-    border-radius: 50px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    font-size: 1.125rem;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
-
-.cta-section .btn-outline:hover {
-    background: #e9e9e9;
-    color: #1a1a1a;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
-}
 
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -524,25 +516,26 @@
     }
 
     .cta-content {
-        padding: var(--spacing-lg) var(--spacing-md);
+        padding: 32px 24px;
+        border-radius: 32px;
+        gap: 20px;
     }
 
-    .cta-section .btn-primary,
-    .cta-section .btn-outline {
-        width: 100%;
-        max-width: 280px;
-        justify-content: center;
-        padding: var(--spacing-lg) var(--spacing-xl);
-        font-size: 1.1rem;
+    .cta-title {
+        font-size: clamp(1.125rem, 4vw, 1.5rem);
+        white-space: normal;
     }
 
     .cta-section .btn-primary {
-        padding: 16px 32px;
+        width: 100%;
+        max-width: 280px;
+        padding: 14px 28px;
+        font-size: 1rem;
     }
 
     .cta-section .btn-primary .btn-logo-space {
-        width: 24px;
-        height: 24px;
+        width: 18px;
+        height: 18px;
     }
 
 
@@ -596,25 +589,24 @@
         font-size: 0.8rem;
     }
     
-    .cta-title {
-        font-size: 1.75rem;
-        line-height: 1.3;
+    .cta-content {
+        padding: 24px 20px;
+        gap: 16px;
     }
 
-    .cta-section .btn-primary,
-    .cta-section .btn-outline {
-        padding: var(--spacing-md) var(--spacing-lg);
-        font-size: 1rem;
-        min-height: 48px;
+    .cta-title {
+        font-size: 1.125rem;
+        white-space: normal;
     }
 
     .cta-section .btn-primary {
-        padding: 14px 28px;
+        padding: 12px 24px;
+        font-size: 0.95rem;
     }
 
     .cta-section .btn-primary .btn-logo-space {
-        width: 22px;
-        height: 22px;
+        width: 16px;
+        height: 16px;
     }
 
     .values-grid {
@@ -681,7 +673,6 @@
 
     .btn,
     .cta-section .btn-primary,
-    .cta-section .btn-outline,
     .carousel-btn,
     .slider-dot,
     .hexagon,
@@ -838,23 +829,25 @@
         color: white;
     }
 
-    .cta-title {
-        color: white;
-        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    .cta-content {
+        background: #ffffff;
     }
 
+    .cta-title {
+        color: #000000;
+    }
 
     /* === CTA BUTTONS === */
     .cta-section .btn-primary {
-        background: var(--color-bg-dark);
-        border-color: var(--color-bg-dark);
-        color: var(--color-primary);
+        background: linear-gradient(90deg, #E50914 0%, #000000 100%);
+        border: none;
+        color: #ffffff;
     }
 
     .cta-section .btn-primary:hover {
-        background: #e9e9e9;
-        color: #000000;
-        border-color: #ffffff;
+        background: linear-gradient(90deg, #b8070f 0%, #1a1a1a 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
     }
 
     /* === COURSES LINK === */
@@ -969,23 +962,25 @@
             color: white;
         }
 
-        .cta-title {
-            color: white;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        .cta-content {
+            background: #ffffff;
         }
 
+        .cta-title {
+            color: #000000;
+        }
 
         /* === CTA BUTTONS === */
         .cta-section .btn-primary {
-            background: var(--color-bg-dark);
-            border-color: var(--color-bg-dark);
-            color: var(--color-primary);
+            background: linear-gradient(90deg, #E50914 0%, #000000 100%);
+            border: none;
+            color: #ffffff;
         }
 
         .cta-section .btn-primary:hover {
-            background: #e9e9e9;
-            color: #000000;
-            border-color: #ffffff;
+            background: linear-gradient(90deg, #b8070f 0%, #1a1a1a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
         }
 
         /* === COURSES LINK === */
