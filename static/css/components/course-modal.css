@@ -257,6 +257,10 @@
     background: var(--color-bg-gray);
 }
 
+[data-theme="dark"] .read-more-btn {
+    color: var(--color-primary);
+}
+
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .course-modal-container {
         background: var(--color-bg-dark);
@@ -268,6 +272,36 @@
 
     [data-theme="auto"] .course-modal-meta {
         background: var(--color-bg-gray);
+    }
+
+    [data-theme="auto"] .read-more-btn {
+        color: var(--color-primary);
+    }
+}
+
+@media (max-width: 767px) {
+    [data-theme="dark"] .course-modal-meta {
+        background: transparent;
+        border-top-color: rgba(255, 255, 255, 0.1);
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="dark"] .course-modal-actions {
+        background: var(--color-bg-dark);
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        [data-theme="auto"] .course-modal-meta {
+            background: transparent;
+            border-top-color: rgba(255, 255, 255, 0.1);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="auto"] .course-modal-actions {
+            background: var(--color-bg-dark);
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
     }
 }
 
@@ -314,40 +348,195 @@
     }
 
     .course-modal-close {
-        position: sticky;
+        position: fixed;
         top: var(--spacing-md);
-        align-self: flex-end;
-        margin-right: var(--spacing-md);
-        margin-left: 0;
-        margin-bottom: var(--spacing-md);
+        right: var(--spacing-md);
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .course-modal-close:hover {
+        background: rgba(0, 0, 0, 0.8);
     }
 
     .course-modal-content {
-        padding: var(--spacing-lg);
+        padding: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         flex: 1;
     }
 
+    /* Мобільна сітка: фото зверху, потім контент */
     .course-modal-grid.two-columns,
     .course-modal-grid.single-column {
         grid-template-columns: 1fr;
+        gap: 0;
     }
 
+    .course-modal-grid.two-columns {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Фото/відео на верху (full width) */
     .course-modal-right {
-        min-height: 250px;
+        order: -1;
+        min-height: 280px;
+        max-height: 320px;
+        border-radius: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .course-modal-right iframe,
+    .course-modal-logo {
+        border-radius: 0;
+    }
+
+    /* Контент під фото */
+    .course-modal-left {
+        padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-2xl);
+        gap: var(--spacing-lg);
+    }
+
+    .course-modal-breadcrumb {
+        font-size: 0.75rem;
+        margin-bottom: var(--spacing-xs);
     }
 
     .course-modal-title {
-        font-size: var(--font-size-2xl);
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: var(--spacing-sm);
     }
 
+    /* Обрізаний текст з кнопкою "Читати далі" */
+    .course-modal-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.6;
+        margin-bottom: var(--spacing-sm);
+        transition: all 0.3s ease;
+    }
+
+    .course-modal-description.expanded {
+        -webkit-line-clamp: unset;
+    }
+
+    .read-more-btn {
+        background: none;
+        border: none;
+        color: var(--color-primary);
+        font-weight: 600;
+        font-size: 0.875rem;
+        padding: 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: var(--spacing-md);
+        transition: var(--transition-base);
+    }
+
+    .read-more-btn:hover {
+        opacity: 0.8;
+    }
+
+    .read-more-btn svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
+    }
+
+    .read-more-btn.expanded svg {
+        transform: rotate(180deg);
+    }
+
+    /* Мета-інформація (компактна) */
     .course-modal-meta {
-        padding: var(--spacing-md);
+        background: transparent;
+        padding: 0;
+        gap: var(--spacing-md);
+        border-top: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-border);
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
     }
 
+    .meta-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .meta-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .meta-value {
+        font-size: 0.875rem;
+        text-align: right;
+    }
+
+    .meta-value.price {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    /* Кнопка "Приєднатись" */
     .course-modal-actions {
-        margin-top: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+        position: sticky;
+        bottom: 0;
+        background: var(--color-bg);
+        padding: var(--spacing-md) 0;
+        border-top: 1px solid var(--color-border);
+        margin-left: calc(var(--spacing-lg) * -1);
+        margin-right: calc(var(--spacing-lg) * -1);
+        padding-left: var(--spacing-lg);
+        padding-right: var(--spacing-lg);
+        margin-bottom: calc(var(--spacing-2xl) * -1);
+    }
+
+    .course-modal-actions .btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #E50914 0%, #b8070f 100%);
+        border: none;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-sm);
+        box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .course-modal-actions .btn:hover {
+        background: linear-gradient(135deg, #b8070f 0%, #8a0509 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(229, 9, 20, 0.4);
+    }
+
+    .course-modal-actions .btn:active {
+        transform: translateY(0);
+    }
+
+    /* Badge */
+    .badge-featured {
+        font-size: 0.625rem;
+        padding: 4px 12px;
+        margin-bottom: var(--spacing-xs);
     }
 }
 

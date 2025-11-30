@@ -128,7 +128,13 @@
 
                         <h2 class="course-modal-title" id="course-modal-title">${this.escapeHtml(data.title)}</h2>
 
-                        <p class="course-modal-description">${this.escapeHtml(data.description)}</p>
+                        <p class="course-modal-description" id="course-description">${this.escapeHtml(data.description)}</p>
+                        <button type="button" class="read-more-btn" id="read-more-btn">
+                            <span class="read-more-text">Читати далі</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
 
                         <div class="course-modal-meta">
                             <div class="meta-item">
@@ -154,6 +160,26 @@
 
             if (this.modalBody) {
                 this.modalBody.innerHTML = html;
+                this.attachReadMoreListener();
+            }
+        }
+
+        attachReadMoreListener() {
+            const readMoreBtn = document.getElementById('read-more-btn');
+            const description = document.getElementById('course-description');
+
+            if (readMoreBtn && description) {
+                readMoreBtn.addEventListener('click', () => {
+                    description.classList.toggle('expanded');
+                    readMoreBtn.classList.toggle('expanded');
+                    
+                    const textSpan = readMoreBtn.querySelector('.read-more-text');
+                    if (description.classList.contains('expanded')) {
+                        textSpan.textContent = 'Згорнути';
+                    } else {
+                        textSpan.textContent = 'Читати далі';
+                    }
+                });
             }
         }
 
