@@ -724,6 +724,10 @@
         gap: 16px;
     }
 
+    .events-intro-subtitle {
+        margin-bottom: 10px;
+    }
+
     /* КРИТИЧНО: Відео сітка */
     .events-video-grid {
         grid-template-columns: repeat(4, 1fr);
