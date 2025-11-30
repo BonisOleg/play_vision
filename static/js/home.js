@@ -57,6 +57,7 @@ class HeroCarousel {
         this.ctaButton = element.querySelector('.hero-buttons a');
         this.ctaButtonText = element.querySelector('.hero-buttons a .btn-text');
         this.dotsContainer = element.querySelector('.hero-slider-dots');
+        this.sectionBg = element.querySelector('.section-bg');
 
         this.init();
     }
@@ -159,6 +160,70 @@ class HeroCarousel {
             } else if (slide.ctaText) {
                 // Fallback для старого дизайну
                 this.ctaButton.textContent = slide.ctaText;
+            }
+        }
+
+        // Оновлюємо background-зображення/відео
+        if (this.sectionBg) {
+            const existingVideo = this.sectionBg.querySelector('.section-bg-video');
+            const existingImage = this.sectionBg.querySelector('.section-bg-image');
+
+            // Видаляємо існуючі елементи
+            if (existingVideo) {
+                existingVideo.remove();
+            }
+            if (existingImage) {
+                existingImage.remove();
+            }
+
+            // Додаємо новий контент
+            if (slide.video && slide.video.trim() !== '') {
+                const video = document.createElement('video');
+                video.className = 'section-bg-video';
+                video.muted = true;
+                video.loop = true;
+                video.preload = 'metadata';
+                video.playsInline = true;
+                const source = document.createElement('source');
+                source.src = slide.video;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                
+                // Обробка помилок завантаження відео - fallback на зображення
+                video.addEventListener('error', () => {
+                    if (slide.image && slide.image.trim() !== '') {
+                        video.style.display = 'none';
+                        const img = document.createElement('img');
+                        img.className = 'section-bg-image';
+                        img.src = slide.image;
+                        img.alt = slide.title || '';
+                        img.loading = 'eager';
+                        this.sectionBg.appendChild(img);
+                    }
+                });
+                
+                // Якщо є зображення, додаємо його як fallback всередині відео
+                if (slide.image && slide.image.trim() !== '') {
+                    const img = document.createElement('img');
+                    img.className = 'section-bg-image';
+                    img.src = slide.image;
+                    img.alt = slide.title || '';
+                    img.loading = 'eager';
+                    video.appendChild(img);
+                }
+                
+                this.sectionBg.appendChild(video);
+                // Спробувати відтворити відео
+                video.play().catch(() => {
+                    // Якщо автоплей не працює, відео все одно показуватиметься
+                });
+            } else if (slide.image && slide.image.trim() !== '') {
+                const img = document.createElement('img');
+                img.className = 'section-bg-image';
+                img.src = slide.image;
+                img.alt = slide.title || '';
+                img.loading = 'eager';
+                this.sectionBg.appendChild(img);
             }
         }
 

@@ -58,7 +58,9 @@
                     "title": "{{ slide|get_localized_title:country_code|escapejs }}",
                     "subtitle": "{{ slide|get_localized_subtitle:country_code|escapejs }}",
                     "ctaText": "{{ slide|get_localized_cta_text:country_code|escapejs }}",
-                    "ctaUrl": "{{ slide.cta_url|escapejs }}"
+                    "ctaUrl": "{{ slide.cta_url|escapejs }}",
+                    "image": {% if slide.image %}"{{ slide.image.url|escapejs }}"{% else %}null{% endif %},
+                    "video": {% if slide.video %}"{{ slide.video.url|escapejs }}"{% else %}null{% endif %}
                 }{% if not forloop.last %},{% endif %}
                 {% endfor %}
             ]
