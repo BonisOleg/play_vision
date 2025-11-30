@@ -699,6 +699,9 @@
     .events-video-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
+        margin-right: 0;
+        margin-left: 0;
+        width: 100%;
     }
 
     .video-placeholder {
