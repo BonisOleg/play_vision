@@ -3,14 +3,22 @@
    Universal стилі, які використовуються на всіх сторінках
    ============================================ */
 
+/* === КОНТЕЙНЕР КАРУСЕЛІ === */
+.experts-carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
 /* === КОНТЕЙНЕР СІТКИ === */
 .experts-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: nowrap;
     gap: 24px;
     align-items: stretch;
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* === БАЗОВА КАРТКА === */
@@ -20,6 +28,10 @@
     padding: 0;
     text-align: center;
     height: 100%;
+    flex: 0 0 calc(25% - 18px);
+    width: calc(25% - 18px);
+    min-width: calc(25% - 18px);
+    max-width: calc(25% - 18px);
 }
 
 /* === ФОТО ЕКСПЕРТА === */
@@ -93,8 +105,14 @@
    ============================================ */
 @media (min-width: 769px) and (max-width: 1024px) {
     .experts-grid {
-        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
+    }
+
+    .expert-card {
+        flex: 0 0 calc(33.333% - 13px);
+        width: calc(33.333% - 13px);
+        min-width: calc(33.333% - 13px);
+        max-width: calc(33.333% - 13px);
     }
 
     .expert-photo {
@@ -119,39 +137,88 @@
 }
 
 /* ============================================
+   НАВІГАЦІЯ - ПОКАЗУЄМО НА ВСІХ ПРИСТРОЯХ
+   ============================================ */
+.experts-navigation {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Стрілки навігації */
+.expert-nav-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #171717;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.expert-nav-btn:hover:not(:disabled) {
+    background: #171717;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.expert-nav-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.expert-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+[data-theme="dark"] .expert-nav-btn {
+    background: #e9e9e9;
+    color: #000000;
+}
+
+[data-theme="dark"] .expert-nav-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .expert-nav-btn {
+        background: #e9e9e9;
+        color: #000000;
+    }
+
+    [data-theme="auto"] .expert-nav-btn:hover:not(:disabled) {
+        background: #f0f0f0;
+    }
+}
+
+.expert-nav-btn svg {
+    max-width: 24px;
+    max-height: 24px;
+}
+
+/* ============================================
    КАРУСЕЛЬ ДЛЯ МОБІЛЬНИХ (≤768px)
    ============================================ */
 
-/* Обгортка каруселі - прозора на desktop */
-.experts-carousel-container {
-    width: 100%;
-}
-
-/* Навігація - прихована на desktop */
-.experts-navigation {
-    display: none;
-}
-
 /* ==================== MOBILE CAROUSEL (≤768px) ==================== */
 @media (max-width: 768px) {
-    /* Обгортка каруселі */
-    .experts-carousel-container {
-        overflow: hidden;
-        position: relative;
-        width: 100%;
-    }
-
-    /* Перетворення grid на flex track */
-    .experts-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 16px;
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translateX(0);
-    }
-
     /* Картки - фіксована ширина для 2 на екран */
-    .experts-grid .expert-card {
+    .experts-grid {
+        gap: 16px;
+    }
+
+    .expert-card {
         flex: 0 0 calc(50% - 8px);
         width: calc(50% - 8px);
         min-width: calc(50% - 8px);
@@ -182,68 +249,12 @@
         font-size: 0.75rem;
     }
 
-    /* Навігація - показуємо на мобільних */
-    .experts-navigation {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    /* Стрілки навігації */
+    /* Стрілки на мобільних - менший розмір */
     .expert-nav-btn {
         width: 40px;
         height: 40px;
         min-width: 40px;
         min-height: 40px;
-        flex-shrink: 0;
-        border-radius: 50%;
-        background: #171717;
-        color: #ffffff;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .expert-nav-btn:hover:not(:disabled) {
-        background: #171717;
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    }
-
-    .expert-nav-btn:active:not(:disabled) {
-        transform: scale(0.95);
-    }
-
-    .expert-nav-btn:disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
-        pointer-events: none;
-    }
-
-    [data-theme="dark"] .expert-nav-btn {
-        background: #e9e9e9;
-        color: #000000;
-    }
-
-    [data-theme="dark"] .expert-nav-btn:hover:not(:disabled) {
-        background: #f0f0f0;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        [data-theme="auto"] .expert-nav-btn {
-            background: #e9e9e9;
-            color: #000000;
-        }
-
-        [data-theme="auto"] .expert-nav-btn:hover:not(:disabled) {
-            background: #f0f0f0;
-        }
     }
 
     .expert-nav-btn svg {

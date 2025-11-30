@@ -97,77 +97,76 @@
         </div>
     </section>
 
-    <!-- UNIFIED SECTIONS WRAPPER (Наші основні програми, Ментор коучинг, Команда професіоналів) -->
+    <!-- UNIFIED SECTIONS WRAPPER (Команда професіоналів, Ментор коучинг, Наші основні програми) -->
     <div class="unified-sections-wrapper">
         <div class="unified-sections-container">
 
-            <!-- 2. COURSES SECTION (Наші основні програми) -->
-            <section class="fullscreen-section main-courses-section">
+            <!-- 1. EXPERTS SECTION (Команда) -->
+            <section class="fullscreen-section experts-section">
                 <div class="section-content">
-                    <div class="main-courses-header">
-                        <h2 class="section-title">Наші освітні курси</h2>
+                    <h2 class="section-title">Команда Play Vision</h2>
+                    <p class="experts-subtitle">Спеціалісти, які створюють освітні програми та супроводжують твій футбольний розвиток.</p>
 
-                        <div class="main-courses-navigation">
-                            <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M15 18l-6-6 6-6" />
-                                </svg>
-                            </button>
-                            <button class="course-nav-btn course-nav-next" aria-label="Наступні курси">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M9 18l6-6-6-6" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="main-courses-carousel-container">
-                        <div class="main-courses-carousel">
-                            <div class="main-courses-track">
-                                {% for course in main_courses %}
-                                <div class="main-course-slide">
-                                    <article class="main-course-card">
-                                        <div class="course-card-top">
-                                            <span class="course-number">КУРС #{{ forloop.counter }}</span>
-                                            <h3 class="course-title">{{ course.title }}</h3>
+                    <div class="experts-carousel-container">
+                        <div class="experts-grid">
+                            {% if cms_experts %}
+                            {% for expert in cms_experts %}
+                            <div class="expert-card" data-expert-id="{{ forloop.counter }}">
+                                <div class="expert-card-inner">
+                                    <div class="expert-card-front">
+                                        <div class="expert-photo">
+                                            {% if expert.photo %}
+                                            <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                            {% else %}
+                                            <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
+                                                alt="{{ expert.name }}" loading="lazy">
+                                            {% endif %}
                                         </div>
-
-                                        <div class="course-image-wrapper">
-                                            <div class="course-image">
-                                                {% if course.logo %}
-                                                <img src="{{ course.logo.url }}" alt="{{ course.title }}">
+                                        <div class="expert-card-content">
+                                            <h3 class="expert-name">{{ expert.name }}</h3>
+                                            <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                                            <span class="expert-detail-link">Огляд профілю →</span>
+                                        </div>
+                                    </div>
+                                    <div class="expert-card-back">
+                                        <div class="expert-bio-content">
+                                            <h3 class="expert-name-back">{{ expert.name }}</h3>
+                                            <div class="expert-bio-text">
+                                                {% if expert.bio %}
+                                                {{ expert.bio|linebreaks }}
                                                 {% else %}
-                                                <img src="{% static 'images/course' %}{{ forloop.counter|default:1 }}.png"
-                                                    alt="{{ course.title }}">
+                                                <p>Інформація про експерта скоро буде додана.</p>
                                                 {% endif %}
                                             </div>
-
-                                            <a href="{{ course.get_absolute_url }}" class="course-btn">
-                                                <span class="course-btn-text">Огляд курсу</span>
-                                                <span class="course-btn-arrow"></span>
-                                            </a>
                                         </div>
-
-
-                                        <div class="course-card-bottom">
-                                            <p class="course-description">{{ course.short_description|truncatewords:12 }}</p>
-                                        </div>
-                                    </article>
+                                    </div>
                                 </div>
-                                {% empty %}
-                                <div class="main-course-slide">
-                                    <p class="no-main-courses">Курси скоро з'являться</p>
-                                </div>
-                                {% endfor %}
                             </div>
+                            {% endfor %}
+                            {% else %}
+                            <!-- Немає експертів в БД - показуємо заглушку -->
+                            <div class="no-experts-placeholder">
+                                <p>Експерти будуть додані найближчим часом</p>
+                            </div>
+                            {% endif %}
                         </div>
+                    </div>
+                    <div class="experts-navigation">
+                        <button class="expert-nav-btn expert-nav-prev" aria-label="Попередні експерти">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                        </button>
+                        <button class="expert-nav-btn expert-nav-next" aria-label="Наступні експерти">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </section>
 
-            <!-- 3. MENTOR-COACHING ECOSYSTEM -->
+            <!-- 2. MENTOR-COACHING ECOSYSTEM -->
             {% get_mentor_coaching_svg as mentor_svg %}
             <section class="fullscreen-section mentor-coaching-section">
                 <div class="section-content">
@@ -279,67 +278,68 @@
                 </div>
             </section>
 
-            <!-- 4. EXPERTS SECTION -->
-            <section class="fullscreen-section experts-section">
+            <!-- 3. COURSES SECTION (Освіта) -->
+            <section class="fullscreen-section main-courses-section">
                 <div class="section-content">
-                    <h2 class="section-title">Команда Play Vision</h2>
-                    <p class="experts-subtitle">Спеціалісти, які створюють освітні програми та супроводжують твій футбольний розвиток.</p>
+                    <div class="main-courses-header">
+                        <h2 class="section-title">ОСВІТА З PLAY VISION</h2>
 
-                    <div class="experts-carousel-container">
-                        <div class="experts-grid">
-                            {% if cms_experts %}
-                            {% for expert in cms_experts %}
-                            <div class="expert-card" data-expert-id="{{ forloop.counter }}">
-                                <div class="expert-card-inner">
-                                    <div class="expert-card-front">
-                                        <div class="expert-photo">
-                                            {% if expert.photo %}
-                                            <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
-                                            {% else %}
-                                            <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
-                                                alt="{{ expert.name }}" loading="lazy">
-                                            {% endif %}
-                                        </div>
-                                        <div class="expert-card-content">
-                                            <h3 class="expert-name">{{ expert.name }}</h3>
-                                            <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
-                                            <span class="expert-detail-link">Огляд профілю →</span>
-                                        </div>
-                                    </div>
-                                    <div class="expert-card-back">
-                                        <div class="expert-bio-content">
-                                            <h3 class="expert-name-back">{{ expert.name }}</h3>
-                                            <div class="expert-bio-text">
-                                                {% if expert.bio %}
-                                                {{ expert.bio|linebreaks }}
-                                                {% else %}
-                                                <p>Інформація про експерта скоро буде додана.</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                            {% else %}
-                            <!-- Немає експертів в БД - показуємо заглушку -->
-                            <div class="no-experts-placeholder">
-                                <p>Експерти будуть додані найближчим часом</p>
-                            </div>
-                            {% endif %}
+                        <div class="main-courses-navigation">
+                            <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+                            <button class="course-nav-btn course-nav-next" aria-label="Наступні курси">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                    <div class="experts-navigation">
-                        <button class="expert-nav-btn expert-nav-prev" aria-label="Попередні експерти">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M15 18l-6-6 6-6" />
-                            </svg>
-                        </button>
-                        <button class="expert-nav-btn expert-nav-next" aria-label="Наступні експерти">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 18l6-6-6-6" />
-                            </svg>
-                        </button>
+
+                    <div class="main-courses-carousel-container">
+                        <div class="main-courses-carousel">
+                            <div class="main-courses-track">
+                                {% for course in main_courses %}
+                                <div class="main-course-slide">
+                                    <article class="main-course-card">
+                                        <div class="course-card-top">
+                                            <span class="course-number">КУРС #{{ forloop.counter }}</span>
+                                            <h3 class="course-title">{{ course.title }}</h3>
+                                        </div>
+
+                                        <div class="course-image-wrapper">
+                                            <div class="course-image">
+                                                {% if course.logo %}
+                                                <img src="{{ course.logo.url }}" alt="{{ course.title }}">
+                                                {% else %}
+                                                <img src="{% static 'images/course' %}{{ forloop.counter|default:1 }}.png"
+                                                    alt="{{ course.title }}">
+                                                {% endif %}
+                                            </div>
+
+                                            <a href="{{ course.get_absolute_url }}" class="course-btn">
+                                                <span class="course-btn-text">Огляд курсу</span>
+                                                <span class="course-btn-arrow"></span>
+                                            </a>
+                                        </div>
+
+
+                                        <div class="course-card-bottom">
+                                            <p class="course-description">{{ course.short_description|truncatewords:12 }}</p>
+                                        </div>
+                                    </article>
+                                </div>
+                                {% empty %}
+                                <div class="main-course-slide">
+                                    <p class="no-main-courses">Курси скоро з'являться</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -376,5 +376,5 @@
 <script src="{% static 'js/home.js' %}" defer></script>
 <script src="{% static 'js/main-courses-carousel.js' %}" defer></script>
 <script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
-<script src="{% static 'js/expert-mobile-carousel.js' %}" defer></script>
+<script src="{% static 'js/expert-carousel-unified.js' %}" defer></script>
 {% endblock %}
