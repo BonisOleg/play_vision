@@ -84,7 +84,7 @@ class EventAdmin(admin.ModelAdmin):
     readonly_fields = ['tickets_sold']
     
     class Media:
-        js = ('admin/js/event_admin.js',)
+        js = ('admin/js/playvision-admin.js',)
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('organizer')

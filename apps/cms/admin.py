@@ -75,8 +75,8 @@ class HeroSlideAdmin(admin.ModelAdmin):
     get_image_preview.short_description = 'Превью зображення'
     
     class Media:
-        css = {'all': ('admin/css/cms_admin.css',)}
-        js = ('admin/js/cms_admin.js',)
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)
 
 
 @admin.register(ExpertCard)
@@ -134,8 +134,8 @@ class ExpertCardAdmin(admin.ModelAdmin):
     get_photo_large.short_description = 'Превью фото'
     
     class Media:
-        css = {'all': ('admin/css/cms_admin.css',)}
-        js = ('admin/js/cms_admin.js',)
+        css = {'all': ('admin/css/playvision-admin.css',)}
+        js = ('admin/js/playvision-admin.js',)
 
 
 @admin.register(FeaturedCourseHome)
