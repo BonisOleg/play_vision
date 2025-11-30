@@ -1233,45 +1233,76 @@
     margin-bottom: 20px;
 }
 
-.event-benefits-section {
+/* === СТИЛЬНІ КАРТКИ ІНФОРМАЦІЇ (в стилі карток підписки) === */
+.event-info-cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    gap: 24px;
     margin-bottom: 48px;
-    padding: 32px;
-    background: var(--color-bg-gray, #f5f5f5);
-    border-radius: 12px;
 }
 
-.event-column h3 {
+.event-info-card {
+    background: var(--color-bg);
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all var(--transition-base);
+}
+
+.event-info-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+.event-info-card-title {
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--color-text);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    margin-top: 0;
 }
 
-.event-list {
+.event-info-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.event-list li {
+.event-info-list li {
     position: relative;
     padding-left: 24px;
     margin-bottom: 12px;
     color: var(--color-text);
     line-height: 1.6;
+    font-size: 0.95rem;
 }
 
-.event-list li:before {
+.event-info-list li:last-child {
+    margin-bottom: 0;
+}
+
+.event-info-list li:before {
     content: '•';
     position: absolute;
     left: 0;
     color: var(--color-primary);
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     line-height: 1;
+}
+
+/* Старі селектори для зворотної сумісності */
+.event-benefits-section {
+    display: none;
+}
+
+.event-column {
+    display: none;
+}
+
+.event-list {
+    display: none;
 }
 
 /* ============================================
@@ -1722,13 +1753,56 @@
     color: #F59E0B;
 }
 
-[data-theme="dark"] .event-benefits-section {
+/* === ТЕМНА ТЕМА === */
+[data-theme="dark"] .event-info-card {
     background: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e5e5e5;
+}
+
+[data-theme="dark"] .event-info-card-title {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .event-info-list li {
+    color: #e5e5e5;
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .event-benefits-section {
+    [data-theme="auto"] .event-info-card {
         background: #1a1a1a;
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #e5e5e5;
+    }
+
+    [data-theme="auto"] .event-info-card-title {
+        color: #ffffff;
+    }
+
+    [data-theme="auto"] .event-info-list li {
+        color: #e5e5e5;
+    }
+}
+
+/* === АДАПТИВНІСТЬ === */
+@media (max-width: 768px) {
+    .event-info-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .event-info-card {
+        padding: 24px;
+    }
+
+    .event-info-card-title {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
+
+    .event-info-list li {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
     }
 }
 

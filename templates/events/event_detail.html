@@ -61,11 +61,11 @@
                     </div>
 
                     {% if event.target_audience or event.benefits %}
-                    <div class="event-benefits-section">
+                    <div class="event-info-cards">
                         {% if event.target_audience %}
-                        <div class="event-column">
-                            <h3>— Для кого:</h3>
-                            <ul class="event-list">
+                        <div class="event-info-card">
+                            <h3 class="event-info-card-title">— Для кого:</h3>
+                            <ul class="event-info-list">
                                 {% for item in event.target_audience %}
                                 <li>{{ item }}</li>
                                 {% endfor %}
@@ -74,9 +74,9 @@
                         {% endif %}
 
                         {% if event.benefits %}
-                        <div class="event-column">
-                            <h3>— Що ти отримуєш:</h3>
-                            <ul class="event-list">
+                        <div class="event-info-card">
+                            <h3 class="event-info-card-title">— Що ти отримуєш:</h3>
+                            <ul class="event-info-list">
                                 {% for item in event.benefits %}
                                 <li>{{ item }}</li>
                                 {% endfor %}

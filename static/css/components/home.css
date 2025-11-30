@@ -98,7 +98,7 @@
         left: 5px;
         transform: none;
         width: calc(100% - 5px);
-        padding: 0.75rem 1rem 0.5rem 0;
+        padding: 0.75rem 1rem 1.5rem 0;
         justify-content: flex-end;
     }
 
@@ -106,17 +106,21 @@
         font-size: 1.5rem; /* 60% від 2.5rem */
         margin-bottom: -1rem;
         line-height: 1.2;
+        max-width: 70%;
     }
 
     .hero-new-design .hero-subtitle {
         font-size: 0.875rem; /* 70% від 1.25rem */
         margin-bottom: 0.3rem;
         line-height: 1.4;
+        max-width: 50%;
     }
     
     .hero-new-design .hero-buttons {
         gap: 0.5rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
     }
 
     .hero-btn-new {
@@ -131,8 +135,11 @@
     }
     
     /* Слайдер-точки компактні */
-    .hero-slider-dots {
-        margin-top: 0.5rem;
+    .hero-new-design .hero-slider-dots {
+        margin-top: 0;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
         gap: 5px;
     }
     
@@ -634,14 +641,6 @@
         line-height: 1.5;
     }
 
-    /* NEW DESIGN Small Mobile */
-    .hero-section .section-content.hero-new-design {
-        left: 5px;
-        transform: none;
-        width: calc(100% - 5px);
-        padding: 0 0 10px 0;
-    }
-
     .hero-new-design .hero-title {
         font-size: 1.5rem;
         line-height: 1.3;
@@ -662,10 +661,6 @@
     .hero-btn-new .btn-logo-space {
         width: 10px;
         height: 10px;
-    }
-
-    .hero-new-design .hero-slider-dots {
-        margin-top: var(--spacing-sm);
     }
 }
 
@@ -714,6 +709,44 @@
     .section-overlay--gradient {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
+    }
+
+    @media (max-width: 768px) {
+        .hero-new-design .hero-buttons {
+            gap: 0.5rem;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-new-design .hero-slider-dots {
+            margin-top: 0;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cta-section .btn-primary {
+            font-size: 0.875rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-new-design .hero-buttons {
+            gap: 0.5rem;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-new-design .hero-slider-dots {
+            margin-top: 0;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
     }
 }
 
