@@ -118,6 +118,13 @@ class Event(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(null=True, blank=True)
     
+    # Архівність
+    is_archived = models.BooleanField(
+        default=False,
+        verbose_name='Архівний івент',
+        help_text='Відмітьте якщо подія вже відбулася. Дата/час необов\'язкові для архівних подій'
+    )
+    
     # SEO
     meta_title = models.CharField(max_length=200, blank=True)
     meta_description = models.TextField(max_length=300, blank=True)
@@ -141,6 +148,50 @@ class Event(models.Model):
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
     
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        super().clean()
+        
+        # Валідація дат для не-архівних подій
+        if not self.is_archived:
+            if not self.start_datetime:
+                raise ValidationError({
+                    'start_datetime': 'Дата початку обов\'язкова для майбутніх подій'
+                })
+            if self.start_datetime and self.end_datetime:
+                if self.end_datetime <= self.start_datetime:
+                    raise ValidationError({
+                        'end_datetime': 'Дата завершення має бути пізніше дати початку'
+                    })
+        
+        # Валідація тарифів для платних івентів
+        if not self.is_free and not self.ticket_tiers:
+            raise ValidationError({
+                'ticket_tiers': 'Для платних подій потрібно заповнити тарифи квитків'
+            })
+    
+    @property
+    def is_truly_free(self):
+        """Івент безкоштовний (is_free=True або всі тарифи з ціною 0)"""
+        if self.is_free:
+            return True
+        if self.ticket_tiers:
+            return all(tier.get('price', 0) == 0 for tier in self.ticket_tiers)
+        return False
+    
+    @property
+    def display_scenario(self):
+        """
+        Повертає сценарій відображення квитків:
+        'paid' - платний (3 тарифи)
+        'free_upcoming' - безкоштовний майбутній
+        'free_archived' - безкоштовний архівний (без квитків)
+        'paid_archived' - платний архівний (без квитків)
+        """
+        if self.is_archived:
+            return 'free_archived' if self.is_truly_free else 'paid_archived'
+        return 'free_upcoming' if self.is_truly_free else 'paid'
+    
     @property
     def is_online(self):
         """Check if event is online"""
@@ -148,7 +199,11 @@ class Event(models.Model):
     
     @property
     def is_upcoming(self):
-        """Check if event is upcoming"""
+        """Перевірка чи подія майбутня"""
+        if self.is_archived:
+            return False
+        if not self.start_datetime:
+            return False
         return self.start_datetime > timezone.now()
     
     @property

@@ -1,37 +1,44 @@
 {% load static %}
 
-<!-- Grid івентів -->
 <div class="events-catalog-grid">
     {% for event in events %}
     <article class="event-catalog-card" data-type="{% if event.is_online_event %}online{% else %}offline{% endif %}">
-        <div class="event-card-image">
-            {% if event.thumbnail %}
-            <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}" loading="lazy">
-            {% else %}
-            <div class="event-image-placeholder">
-                <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                </svg>
+        <!-- Зображення з кліком -->
+        <a href="{% url 'events:event_detail' event.slug %}" class="event-card-image-link">
+            <div class="event-card-image">
+                {% if event.is_archived %}
+                <div class="event-badge event-badge--archive">АРХІВНА</div>
+                {% endif %}
+                
+                {% if event.thumbnail %}
+                <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}" loading="lazy">
+                {% else %}
+                <div class="event-image-placeholder">
+                    <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
-        </div>
+        </a>
         
         <div class="event-card-content">
             <div class="event-card-meta">
                 <span class="event-type">{{ event.get_event_type_display }}</span>
+                {% if event.start_datetime %}
                 <span class="event-date">{{ event.start_datetime|date:"d.m.Y" }}</span>
+                {% endif %}
+                {% if event.available_tickets <= 10 and event.available_tickets > 0 %}
+                <span class="event-seats">{{ event.available_tickets }} місць</span>
+                {% endif %}
             </div>
             
             <h3 class="event-card-title">{{ event.title }}</h3>
-            <p class="event-card-description">{{ event.short_description|truncatewords:20 }}</p>
+            <p class="event-card-description">{{ event.short_description|truncatewords:15 }}</p>
             
-            <div class="event-card-footer">
-                <span class="event-price">{% if event.is_free %}Безкоштовно{% else %}{{ event.price }} uah{% endif %}</span>
-                <a href="{% url 'events:event_detail' event.slug %}" class="btn-details">
-                    <span class="btn-text">детальніше</span>
-                    <span class="btn-arrow"></span>
-                </a>
-            </div>
+            <a href="{% url 'events:event_detail' event.slug %}" class="event-card-button">
+                Детальніше
+            </a>
         </div>
     </article>
     {% empty %}
@@ -41,7 +48,7 @@
     {% endfor %}
 </div>
 
-<!-- Пагінація з HTMX -->
+<!-- Пагінація без змін -->
 {% if is_paginated %}
 <nav class="pagination">
     {% if page_obj.has_previous %}
@@ -75,4 +82,3 @@
     {% endif %}
 </nav>
 {% endif %}
-

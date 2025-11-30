@@ -145,7 +145,8 @@
                     </div>
                     {% endif %}
 
-                    {% if structured_tiers %}
+                    {% if display_scenario == 'paid' %}
+                    <!-- СЦЕНАРІЙ 1: Платний івент (3 тарифи) -->
                     <div class="event-pricing-section">
                         <h2>Придбати квитки</h2>
                         <div class="pricing-tiers">
@@ -171,7 +172,7 @@
                                     
                                     <div class="plan-price-section">
                                         <div class="price-amount">
-                                            <span class="price-value">{{ tier.price|floatformat:1 }}</span>
+                                            <span class="price-value">{{ tier.price|floatformat:0 }}</span>
                                             <span class="price-currency">грн</span>
                                         </div>
                                     </div>
@@ -179,9 +180,7 @@
                                     <div class="plan-action">
                                         {% if user.is_authenticated %}
                                             {% if user_ticket %}
-                                            <div class="pricing-status registered">
-                                                Ви зареєстровані
-                                            </div>
+                                            <div class="pricing-status registered">Ви зареєстровані</div>
                                             {% elif can_register %}
                                             <form method="post" action="{% url 'events:register' event.slug %}" class="pricing-form">
                                                 {% csrf_token %}
@@ -189,9 +188,7 @@
                                                 <button type="submit" class="btn-purchase">Придбати {{ tier.name }}</button>
                                             </form>
                                             {% else %}
-                                            <div class="pricing-status unavailable">
-                                                {{ register_message }}
-                                            </div>
+                                            <div class="pricing-status unavailable">{{ register_message }}</div>
                                             {% endif %}
                                         {% else %}
                                         <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-purchase">
@@ -204,6 +201,86 @@
                             {% endfor %}
                         </div>
                     </div>
+
+                    {% elif display_scenario == 'free_upcoming' %}
+                    <!-- СЦЕНАРІЙ 2: Безкоштовний майбутній івент -->
+                    <div class="event-pricing-section">
+                        <h2>Реєстрація на подію</h2>
+                        <div class="pricing-tiers">
+                            <div class="plan-card event-ticket-card plan-card--free">
+                                <div class="plan-badge plan-badge--free">БЕЗКОШТОВНО</div>
+                                
+                                <div class="plan-content">
+                                    <h3 class="plan-name">Безкоштовний квиток</h3>
+                                    
+                                    <ul class="plan-features">
+                                        {% for benefit in event.benefits %}
+                                        <li class="feature-item">
+                                            <span class="feature-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                                            <span class="feature-text">{{ benefit }}</span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    
+                                    <div class="plan-price-section">
+                                        <div class="price-amount">
+                                            <span class="price-value">0</span>
+                                            <span class="price-currency">грн</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="plan-action">
+                                        {% if user.is_authenticated %}
+                                            {% if user_ticket %}
+                                            <div class="pricing-status registered">Ви зареєстровані</div>
+                                            {% else %}
+                                            <button type="button" class="btn-purchase" data-open-free-modal>
+                                                Отримати безкоштовний квиток
+                                            </button>
+                                            {% endif %}
+                                        {% else %}
+                                        <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-purchase">
+                                            Увійти для реєстрації
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Модальне вікно реєстрації -->
+                    {% if user.is_authenticated and not user_ticket %}
+                    <div class="modal-overlay" id="free-registration-modal">
+                        <div class="modal-content">
+                            <button class="modal-close" data-close-modal>&times;</button>
+                            <h3>Реєстрація на подію</h3>
+                            <form method="post" action="{% url 'events:register_free' event.slug %}" class="free-registration-form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="id_attendee_name">Ім'я</label>
+                                    <input type="text" id="id_attendee_name" name="attendee_name" 
+                                           value="{{ user.get_full_name }}" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_attendee_email">Email</label>
+                                    <input type="email" id="id_attendee_email" name="attendee_email" 
+                                           value="{{ user.email }}" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_attendee_phone">Телефон (опціонально)</label>
+                                    <input type="tel" id="id_attendee_phone" name="attendee_phone" 
+                                           class="form-input" placeholder="+380...">
+                                </div>
+                                <button type="submit" class="btn-submit">Зареєструватися</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% elif display_scenario in 'free_archived,paid_archived' %}
+                    <!-- СЦЕНАРІЙ 3: Архівний івент (квитки не показуються) -->
+                    <!-- Нічого не виводимо - секція pricing відсутня -->
                     {% endif %}
 
                 </div>

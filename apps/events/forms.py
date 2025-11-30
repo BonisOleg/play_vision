@@ -82,26 +82,59 @@ class EventForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super().save(commit=False)
         
-        tiers = []
-        for i in range(1, 4):
-            name = self.cleaned_data.get(f'tier_{i}_name')
-            price = self.cleaned_data.get(f'tier_{i}_price')
-            features_text = self.cleaned_data.get(f'tier_{i}_features', '')
-            is_popular = self.cleaned_data.get(f'tier_{i}_popular', False)
+        # Тільки якщо NOT is_free - створюємо тарифи
+        if not instance.is_free:
+            tiers = []
+            for i in range(1, 4):
+                name = self.cleaned_data.get(f'tier_{i}_name')
+                price = self.cleaned_data.get(f'tier_{i}_price')
+                features_text = self.cleaned_data.get(f'tier_{i}_features', '')
+                is_popular = self.cleaned_data.get(f'tier_{i}_popular', False)
+                
+                if name and price is not None:
+                    features = [f.strip() for f in features_text.split('\n') if f.strip()][:8]
+                    tiers.append({
+                        'name': name,
+                        'price': float(price),
+                        'features': features,
+                        'is_popular': is_popular
+                    })
             
-            if name and price is not None:
-                features = [f.strip() for f in features_text.split('\n') if f.strip()][:8]
-                tiers.append({
-                    'name': name,
-                    'price': float(price),
-                    'features': features,
-                    'is_popular': is_popular
-                })
-        
-        instance.ticket_tiers = tiers
+            instance.ticket_tiers = tiers
+        else:
+            # Якщо безкоштовний - очищаємо тарифи
+            instance.ticket_tiers = []
         
         if commit:
             instance.save()
         
         return instance
+
+
+class FreeEventRegistrationForm(forms.Form):
+    """Form for free event registration"""
+    attendee_name = forms.CharField(
+        max_length=200,
+        label='Ім\'я',
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Ваше ім\'я'
+        })
+    )
+    attendee_email = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'example@email.com'
+        })
+    )
+    attendee_phone = forms.CharField(
+        max_length=20,
+        required=False,
+        label='Телефон',
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': '+380...'
+        })
+    )
 

@@ -11,6 +11,7 @@ urlpatterns = [
     
     # Registration actions
     path('<slug:slug>/register/', views.event_register, name='register'),
+    path('<slug:slug>/register-free/', views.register_free_event, name='register_free'),
     path('<slug:slug>/waitlist/', views.join_waitlist, name='join_waitlist'),
     path('<slug:slug>/cancel/', views.cancel_registration, name='cancel_registration'),
     path('<slug:slug>/feedback/', views.submit_feedback, name='submit_feedback'),

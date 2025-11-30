@@ -12,7 +12,9 @@ from django.views.generic import ListView, DetailView
 from datetime import timedelta
 import json
 
+from django.db import models as django_models
 from .models import Event, EventTicket, EventWaitlist, EventFeedback, Speaker, EventRegistration
+from .forms import FreeEventRegistrationForm
 # TODO: Видалено TicketBalance - буде нова система підписок
 # # TODO: TicketBalance видалено - нова система підписок
 # from apps.subscriptions.models import TicketBalance
@@ -26,10 +28,19 @@ class EventListView(ListView):
     paginate_by = 12
     
     def get_queryset(self):
-        queryset = Event.objects.filter(
-            status='published',
-            start_datetime__gt=timezone.now()
-        ).select_related('organizer').prefetch_related('speakers')
+        # Базовий queryset - published
+        queryset = Event.objects.filter(status='published')
+        
+        # За замовчуванням - тільки майбутні (не архівні)
+        show_archive = self.request.GET.get('show_archive') == 'true'
+        if not show_archive:
+            # Фільтруємо: або не архівні, або архівні але з датою в минулому
+            queryset = queryset.filter(
+                Q(is_archived=False) | 
+                Q(is_archived=True, start_datetime__isnull=False, start_datetime__lt=timezone.now())
+            )
+        
+        queryset = queryset.select_related('organizer').prefetch_related('speakers')
         
         # Filter by category
         category = self.request.GET.get('category')
@@ -76,8 +87,13 @@ class EventListView(ListView):
         
         # Ordering
         order = self.request.GET.get('order', 'start_datetime')
-        if order in ['start_datetime', '-start_datetime', 'price', '-price', 'title']:
-            queryset = queryset.order_by(order)
+        if order in ['start_datetime', '-start_datetime', 'title']:
+            # Сортування з NULL в кінці
+            queryset = queryset.order_by(
+                django_models.F('start_datetime').desc(nulls_last=True) if order == '-start_datetime'
+                else django_models.F('start_datetime').asc(nulls_last=True) if order == 'start_datetime'
+                else order
+            )
         
         return queryset
     
@@ -111,9 +127,10 @@ class EventListView(ListView):
         calendar_days = []
         today = timezone.now().date()
         
-        # 1. Сьогодні - всі івенти або порожній плейсхолдер
+        # 1. Сьогодні - всі івенти або порожній плейсхолдер (ТІЛЬКИ НЕ АРХІВНІ)
         today_events = Event.objects.filter(
             status='published',
+            is_archived=False,
             start_datetime__date=today
         ).select_related('organizer').order_by('start_datetime')
         
@@ -133,9 +150,10 @@ class EventListView(ListView):
                 'is_empty': True
             })
         
-        # 2. Майбутні івенти (максимум 14, щоб разом з сьогодні <= 15)
+        # 2. Майбутні івенти (максимум 14, ТІЛЬКИ НЕ АРХІВНІ)
         future_events = Event.objects.filter(
             status='published',
+            is_archived=False,
             start_datetime__date__gt=today
         ).select_related('organizer').order_by('start_datetime')[:14]
         
@@ -188,11 +206,20 @@ class EventDetailView(DetailView):
             context['ticket_balance'] = 0
             context['has_ticket_balance'] = False
         
-        # Registration status
-        context['can_register'], context['register_message'] = event.can_register(user if user.is_authenticated else None)
+        # ДОДАТИ: визначення сценарію відображення
+        context['display_scenario'] = event.display_scenario
         
-        # Structured ticket tiers for template
-        context['structured_tiers'] = event.ticket_tiers if event.ticket_tiers else []
+        # Для безкоштовних майбутніх - structured_tiers пустий
+        if event.display_scenario == 'free_upcoming':
+            context['structured_tiers'] = []
+            context['can_register'] = event.is_upcoming
+        elif event.display_scenario in ['free_archived', 'paid_archived']:
+            context['structured_tiers'] = []
+            context['can_register'] = False
+        else:
+            # Платний івент
+            context['structured_tiers'] = event.ticket_tiers if event.ticket_tiers else []
+            context['can_register'], context['register_message'] = event.can_register(user if user.is_authenticated else None)
         
         # Рекомендовані події (5 івентів що можуть бути цікавими)
         # Спочатку шукаємо події того ж типу, потім інші майбутні події
@@ -622,3 +649,58 @@ def event_register(request, slug):
         'event': event
     }
     return render(request, 'events/event_registration_form.html', context)
+
+
+@login_required
+@require_POST
+def register_free_event(request, slug):
+    """Реєстрація на безкоштовний івент"""
+    event = get_object_or_404(Event, slug=slug, status='published')
+    user = request.user
+    
+    # Перевірки
+    if not event.is_truly_free:
+        messages.error(request, 'Ця подія не є безкоштовною')
+        return redirect('events:event_detail', slug=slug)
+    
+    if event.is_archived:
+        messages.error(request, 'Реєстрація на архівні події неможлива')
+        return redirect('events:event_detail', slug=slug)
+    
+    if event.has_user_ticket(user):
+        messages.warning(request, 'Ви вже зареєстровані на цю подію')
+        return redirect('events:event_detail', slug=slug)
+    
+    # Форма
+    form = FreeEventRegistrationForm(request.POST)
+    if form.is_valid():
+        # Створюємо квиток
+        ticket = EventTicket.objects.create(
+            event=event,
+            user=user,
+            status='confirmed',
+            price=0,
+            tier_name='Безкоштовний',
+            used_balance=False
+        )
+        
+        # Створюємо реєстрацію
+        EventRegistration.objects.create(
+            event=event,
+            user=user,
+            ticket=ticket,
+            attendee_name=form.cleaned_data['attendee_name'],
+            attendee_email=form.cleaned_data['attendee_email'],
+            attendee_phone=form.cleaned_data.get('attendee_phone', '')
+        )
+        
+        # Оновлюємо лічильник
+        event.tickets_sold += 1
+        event.save()
+        
+        messages.success(request, f'Ви успішно зареєстровані на {event.title}!')
+        return redirect('accounts:profile')
+    
+    else:
+        messages.error(request, 'Помилка в формі реєстрації')
+        return redirect('events:event_detail', slug=slug)

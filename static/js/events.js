@@ -173,3 +173,41 @@ function initEventFilters() {
     }
 }
 
+// Модальне вікно для безкоштовної реєстрації
+(function() {
+    const modal = document.getElementById('free-registration-modal');
+    if (!modal) return;
+    
+    const openBtn = document.querySelector('[data-open-free-modal]');
+    const closeBtn = document.querySelector('[data-close-modal]');
+    
+    if (openBtn) {
+        openBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+    
+    // Закриття при кліку поза вікном
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Закриття при ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+})();

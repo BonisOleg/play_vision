@@ -15,11 +15,13 @@ class EventAdmin(admin.ModelAdmin):
     form = EventForm
     list_display = [
         'title', 'event_type', 'event_category', 'start_datetime', 'status', 
+        'is_archived', 'is_free',
         'tickets_sold', 'max_attendees', 'is_featured'
     ]
     list_filter = [
-        'event_type', 'event_category', 'status', 'is_featured', 'requires_subscription',
-        'is_free', 'start_datetime'
+        'event_type', 'event_category', 'status', 
+        'is_archived', 'is_free',
+        'is_featured', 'requires_subscription', 'start_datetime'
     ]
     search_fields = ['title', 'description', 'location']
     prepopulated_fields = {'slug': ('title',)}
@@ -34,19 +36,21 @@ class EventAdmin(admin.ModelAdmin):
         }),
         ('Дата та локація', {
             'fields': (
+                'is_archived',
                 'start_datetime', 'end_datetime', 'timezone_name',
                 'is_online_event', 'location', 'online_link'
             ),
-            'description': 'Поставте галочку "Онлайн подія" якщо подія онлайн. Для онлайн - заповніть посилання, для офлайн - вкажіть адресу.'
+            'description': 'Для архівних подій дата необов\'язкова. Для майбутніх - обов\'язкова.'
         }),
         ('Деталі події', {
             'fields': ('benefits', 'target_audience')
         }),
         ('Квитки та ціни', {
             'fields': (
-                'max_attendees', 'price', 'is_free', 
+                'max_attendees', 'is_free',
                 'requires_subscription'
-            )
+            ),
+            'description': 'Якщо "Безкоштовний івент" - тарифи не заповнюються'
         }),
         ('Тарифи квитків', {
             'fields': (
@@ -54,7 +58,8 @@ class EventAdmin(admin.ModelAdmin):
                 'tier_2_name', 'tier_2_price', 'tier_2_features', 'tier_2_popular',
                 'tier_3_name', 'tier_3_price', 'tier_3_features', 'tier_3_popular',
             ),
-            'description': 'Налаштуйте три тарифи квитків. Кожен пункт переваг з нового рядка (максимум 8).'
+            'description': 'Для платних подій (is_free=False). Кожен пункт переваг з нового рядка.',
+            'classes': ('collapse',)
         }),
         ('Організація', {
             'fields': (
@@ -77,6 +82,9 @@ class EventAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ['tickets_sold']
+    
+    class Media:
+        js = ('admin/js/event_admin.js',)
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('organizer')
