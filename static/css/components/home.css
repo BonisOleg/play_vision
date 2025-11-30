@@ -97,6 +97,7 @@
     .section-content.hero-new-design {
         width: 95%;
         padding: 0.75rem 1rem 0.5rem;
+        padding-left: 2px;
         justify-content: flex-end;
     }
 
@@ -634,7 +635,7 @@
 
     /* NEW DESIGN Small Mobile */
     .hero-section .section-content.hero-new-design {
-        padding: 0 0 10px 10px;
+        padding: 0 0 10px 2px;
     }
 
     .hero-new-design .hero-title {
