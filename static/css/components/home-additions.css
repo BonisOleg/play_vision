@@ -404,3 +404,36 @@
         -webkit-touch-callout: none;
     }
 }
+
+/* === DARK THEME - MENTOR CTA BUTTON === */
+[data-theme="dark"] .mentor-cta .btn-primary {
+    background: #e9e9e9;
+    color: #000000;
+}
+
+[data-theme="dark"] .mentor-cta .btn-primary .btn-text {
+    color: #000000;
+}
+
+[data-theme="dark"] .mentor-cta .btn-primary:hover {
+    background: #e9e9e9;
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentor-cta .btn-primary {
+        background: #e9e9e9;
+        color: #000000;
+    }
+
+    [data-theme="auto"] .mentor-cta .btn-primary .btn-text {
+        color: #000000;
+    }
+
+    [data-theme="auto"] .mentor-cta .btn-primary:hover {
+        background: #e9e9e9;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+}

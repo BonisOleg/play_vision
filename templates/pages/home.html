@@ -287,7 +287,7 @@
             <section class="fullscreen-section main-courses-section">
                 <div class="section-content">
                     <div class="main-courses-header">
-                        <h2 class="section-title">Освіта Play Vision</h2>
+                        <h2 class="section-title">Освіта з Play Vision</h2>
 
                         <div class="main-courses-navigation">
                             <button class="course-nav-btn course-nav-prev" aria-label="Попередні курси">
@@ -312,7 +312,6 @@
                                 <div class="main-course-slide">
                                     <article class="main-course-card">
                                         <div class="course-card-top">
-                                            <span class="course-number">КУРС #{{ forloop.counter }}</span>
                                             <h3 class="course-title">{{ course.title }}</h3>
                                         </div>
 
@@ -362,7 +361,7 @@
         <div class="cta-content">
             <h2 class="cta-title">Приєднуйся до ком'юніті PlayVision!</h2>
             <div class="cta-buttons">
-                <a href="{% url 'accounts:register' %}" class="btn btn-primary">
+                <a href="{% url 'subscriptions:pricing' %}" class="btn btn-primary">
                     <span class="btn-text">Ставай частиною Play Vision</span>
                     <span class="btn-logo-space"></span>
                 </a>
