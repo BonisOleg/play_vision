@@ -223,11 +223,7 @@
 }
 
 /* === LAZY LOADING === */
-img[loading="lazy"] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
+/* Картинки видимі одразу, Intersection Observer додає клас при завантаженні */
 img[loading="lazy"].lazy-loaded {
     opacity: 1;
 }
@@ -238,10 +234,5 @@ img[loading="lazy"].lazy-loaded {
     .about-image-block img {
         transition: none;
         animation: none;
-    }
-    
-    img[loading="lazy"] {
-        opacity: 1;
-        transition: none;
     }
 }

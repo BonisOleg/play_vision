@@ -81,7 +81,6 @@
     <link rel="stylesheet" href="{% static 'css/components/dark-accents.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/theme-svg.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/scroll-popup.css' %}">
     {% block extra_css %}{% endblock %}
 
     <!-- HTMX -->
@@ -406,9 +405,6 @@
     {% if user.is_authenticated %}
     <script src="{% static 'js/core/cart-header.js' %}"></script>
     {% endif %}
-
-    <!-- Scroll Popup -->
-    <script src="{% static 'js/scroll-popup.js' %}"></script>
 
     <!-- Footer Newsletter Form -->
     <script src="{% static 'js/footer-newsletter.js' %}" defer></script>
