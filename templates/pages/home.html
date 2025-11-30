@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/course-modal.css' %}">
 <link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
 <link rel="preload" href="{% static 'images/backgroundCTAmain.jpg' %}" as="image">
 {% endblock %}
@@ -325,10 +326,21 @@
                                                 {% endif %}
                                             </div>
 
-                                            <a href="{{ course.get_absolute_url }}" class="course-btn">
+                                            <button type="button" class="course-btn course-modal-trigger"
+                                                data-course-id="{{ course.id }}"
+                                                data-course-title="{{ course.title }}"
+                                                data-course-description="{{ course.description }}"
+                                                data-course-price="{{ course.price }}"
+                                                data-course-featured="{{ course.is_featured }}"
+                                                data-course-audience="{{ course.get_target_audience_display|join:', ' }}"
+                                                data-course-logo="{{ course.logo.url|default:'' }}"
+                                                data-course-video="{{ course.get_promo_embed_url|default:'' }}"
+                                                data-course-join-url="{{ course.external_join_url|default:'#' }}"
+                                                data-course-author="{{ course.author|default:'' }}"
+                                                aria-label="Огляд курсу {{ course.title }}">
                                                 <span class="course-btn-text">Огляд курсу</span>
                                                 <span class="course-btn-arrow"></span>
-                                            </a>
+                                            </button>
                                         </div>
 
 
@@ -374,6 +386,9 @@
 <!-- Scroll Popup -->
 {% include 'partials/scroll-popup.html' %}
 
+<!-- Course Modal -->
+{% include 'partials/course-modal.html' %}
+
 {% endblock %}
 
 {% block extra_js %}
@@ -381,4 +396,5 @@
 <script src="{% static 'js/main-courses-carousel.js' %}" defer></script>
 <script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
 <script src="{% static 'js/expert-carousel-unified.js' %}" defer></script>
+<script src="{% static 'js/course-modal.js' %}" defer></script>
 {% endblock %}
