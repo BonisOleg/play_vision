@@ -78,12 +78,12 @@
 
     .hero-new-design .hero-title {
         font-size: 2rem; /* 70% від 2.5rem */
-        margin-bottom: 0.75rem;
+        margin-bottom: -1rem;
     }
 
     .hero-new-design .hero-subtitle {
         font-size: 1rem; /* 80% від 1.25rem */
-        margin-bottom: 1rem;
+        margin-bottom: 0.3rem;
     }
     
     .hero-btn-new {
@@ -102,13 +102,13 @@
 
     .hero-new-design .hero-title {
         font-size: 1.5rem; /* 60% від 2.5rem */
-        margin-bottom: 0.5rem;
+        margin-bottom: -1rem;
         line-height: 1.2;
     }
 
     .hero-new-design .hero-subtitle {
         font-size: 0.875rem; /* 70% від 1.25rem */
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.3rem;
         line-height: 1.4;
     }
     
@@ -522,7 +522,7 @@
     }
 
     .cta-title {
-        font-size: clamp(1.125rem, 4vw, 1.5rem);
+        font-size: 1.8rem;
         white-space: normal;
     }
 
@@ -530,7 +530,7 @@
         width: 100%;
         max-width: 280px;
         padding: 14px 28px;
-        font-size: 1rem;
+        font-size: 0.65rem;
     }
 
     .cta-section .btn-primary .btn-logo-space {
@@ -576,12 +576,12 @@
     /* NEW DESIGN Extra Small */
     .hero-new-design .hero-title {
         font-size: 1.25rem; /* 50% від 2.5rem */
-        margin-bottom: 0.4rem;
+        margin-bottom: -1rem;
     }
     
     .hero-new-design .hero-subtitle {
         font-size: 0.8rem; /* 64% від 1.25rem */
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.3rem;
     }
     
     .hero-btn-new {
@@ -595,13 +595,13 @@
     }
 
     .cta-title {
-        font-size: 1.125rem;
+        font-size: 1.8rem;
         white-space: normal;
     }
 
     .cta-section .btn-primary {
         padding: 12px 24px;
-        font-size: 0.95rem;
+        font-size: 0.65rem;
     }
 
     .cta-section .btn-primary .btn-logo-space {
