@@ -61,10 +61,6 @@
 }
 
 /* === 4. КОМАНДА ПРОФЕСІОНАЛІВ === */
-.about-team-section {
-    padding: var(--spacing-xl) 0;
-}
-
 .about-team-section .experts-subtitle {
     text-align: left;
     font-size: 1.1rem;

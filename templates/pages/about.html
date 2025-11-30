@@ -125,7 +125,22 @@
             <!-- 5. КОМАНДА ПРОФЕСІОНАЛІВ -->
             <section class="fullscreen-section experts-section about-team-section">
                 <div class="section-content">
-                    <h2 class="section-title">Backstage team Play Vision</h2>
+                    <div class="experts-header">
+                        <h2 class="section-title">Backstage team Play Vision</h2>
+
+                        <div class="experts-navigation">
+                            <button class="expert-nav-btn expert-nav-prev" aria-label="Попередні експерти">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+                            <button class="expert-nav-btn expert-nav-next" aria-label="Наступні експерти">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                     <p class="experts-subtitle">Люди, які працюють за бровкою, але без них нічого не існує. Наша команда щоденної дії.</p>
 
                     <div class="experts-carousel-container">
@@ -172,18 +187,6 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="experts-navigation">
-                        <button class="expert-nav-btn expert-nav-prev" aria-label="Попередні експерти">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M15 18l-6-6 6-6" />
-                            </svg>
-                        </button>
-                        <button class="expert-nav-btn expert-nav-next" aria-label="Наступні експерти">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 18l6-6-6-6" />
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </section>
 
@@ -197,5 +200,5 @@
 {% block extra_js %}
 <script src="{% static 'js/about.js' %}" defer></script>
 <script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
-<script src="{% static 'js/expert-mobile-carousel.js' %}" defer></script>
+<script src="{% static 'js/expert-carousel-unified.js' %}" defer></script>
 {% endblock %}
