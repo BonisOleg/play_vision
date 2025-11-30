@@ -32,6 +32,7 @@ class MainCoursesCarousel {
         this.updateSlidesPerView();
         this.updatePosition();
         this.updateButtons();
+        this.updateArrowsVisibility();
         this.attachEvents();
     }
 
@@ -52,6 +53,7 @@ class MainCoursesCarousel {
                 this.currentIndex = Math.min(this.currentIndex, this.maxIndex);
                 this.updatePosition();
                 this.updateButtons();
+                this.updateArrowsVisibility();
             }, 150);
         });
 
@@ -102,6 +104,16 @@ class MainCoursesCarousel {
 
         if (this.nextBtn) {
             this.nextBtn.disabled = this.currentIndex >= this.maxIndex;
+        }
+    }
+
+    updateArrowsVisibility() {
+        // Показуємо стрілки тільки якщо карток >= 5
+        const shouldShow = this.totalSlides >= 5;
+        const navigation = this.section.querySelector('.main-courses-navigation');
+        
+        if (navigation) {
+            navigation.style.display = shouldShow ? 'flex' : 'none';
         }
     }
 

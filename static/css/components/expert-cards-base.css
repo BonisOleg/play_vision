@@ -137,14 +137,47 @@
 }
 
 /* ============================================
-   НАВІГАЦІЯ - ПОКАЗУЄМО НА ВСІХ ПРИСТРОЯХ
+   HEADER З НАВІГАЦІЄЮ (ЯК В MAIN-COURSES)
+   ============================================ */
+.experts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+}
+
+.experts-header .section-title {
+    color: #2a2a2a;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: left;
+    margin: 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .experts-header .section-title {
+    color: var(--color-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .experts-header .section-title {
+        color: var(--color-text);
+    }
+}
+
+/* ============================================
+   НАВІГАЦІЯ - В HEADER (ЯК В MAIN-COURSES)
    ============================================ */
 .experts-navigation {
     display: flex;
     gap: 12px;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    margin-top: 20px;
 }
 
 /* Стрілки навігації */
@@ -213,6 +246,26 @@
 
 /* ==================== MOBILE CAROUSEL (≤768px) ==================== */
 @media (max-width: 768px) {
+    .experts-header {
+        display: contents;
+    }
+
+    .experts-header .section-title {
+        font-size: 2rem;
+        order: 1;
+        margin-bottom: 20px;
+    }
+
+    .experts-carousel-container {
+        order: 2;
+    }
+
+    .experts-navigation {
+        order: 3;
+        align-self: center;
+        padding-top: 20px;
+    }
+
     /* Картки - фіксована ширина для 2 на екран */
     .experts-grid {
         gap: 16px;
@@ -265,6 +318,27 @@
 
 /* ==================== SMALL MOBILE (< 576px) ==================== */
 @media (max-width: 576px) {
+    .experts-header {
+        display: contents;
+    }
+
+    .experts-header .section-title {
+        font-size: 1.75rem;
+        order: 1;
+        margin-bottom: 16px;
+    }
+
+    .experts-carousel-container {
+        order: 2;
+    }
+
+    .experts-navigation {
+        order: 3;
+        align-self: center;
+        width: fit-content;
+        padding-top: 20px;
+    }
+
     .experts-grid {
         gap: 12px;
     }

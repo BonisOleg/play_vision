@@ -33,6 +33,7 @@ class ExpertCarouselUnified {
         this.updateSlidesPerView();
         this.updatePosition();
         this.updateButtons();
+        this.updateArrowsVisibility();
         this.attachEvents();
     }
 
@@ -53,6 +54,7 @@ class ExpertCarouselUnified {
                 this.currentIndex = Math.min(this.currentIndex, this.maxIndex);
                 this.updatePosition();
                 this.updateButtons();
+                this.updateArrowsVisibility();
             }, 150);
         });
 
@@ -103,6 +105,16 @@ class ExpertCarouselUnified {
 
         if (this.nextBtn) {
             this.nextBtn.disabled = this.currentIndex >= this.maxIndex;
+        }
+    }
+
+    updateArrowsVisibility() {
+        // Показуємо стрілки тільки якщо карток >= 5
+        const shouldShow = this.totalSlides >= 5;
+        const navigation = this.section.querySelector('.experts-navigation');
+        
+        if (navigation) {
+            navigation.style.display = shouldShow ? 'flex' : 'none';
         }
     }
 
