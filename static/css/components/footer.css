@@ -385,7 +385,7 @@ footer.site-footer .footer-link:hover {
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     footer.site-footer {
         padding: 20px 0 90px;
     }
@@ -497,7 +497,7 @@ footer.site-footer .footer-link:hover {
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 768px) {
     footer.site-footer .footer-container {
         width: 95%;
         padding: 0 var(--spacing-sm);

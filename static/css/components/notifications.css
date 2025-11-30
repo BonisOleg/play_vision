@@ -100,7 +100,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .app-notifications {
         left: var(--spacing-sm, 0.5rem);
         right: var(--spacing-sm, 0.5rem);

@@ -354,7 +354,7 @@
 }
 
 /* Додаткові медіа-запити для малих екранів */
-@media (max-width: 375px) {
+@media (max-width: 768px) {
     .featured-carousel-container {
         padding: 0 36px;
     }

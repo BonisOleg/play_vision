@@ -316,7 +316,7 @@
 /* ============================================
    АДАПТИВНІСТЬ - SMALL MOBILE (до 479px)
    ============================================ */
-@media (max-width: 479px) {
+@media (max-width: 768px) {
     .mentor-coaching-section {
         padding: 0;
     }
@@ -441,7 +441,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .mentor-coaching-section .mentoring-image-block {
         margin: 20px auto 30px;
         padding: 0;
@@ -461,7 +461,7 @@
 }
 
 @supports (-webkit-touch-callout: none) {
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
         .mentor-coaching-section .mentoring-image-block {
             padding: 0;
             box-sizing: border-box;

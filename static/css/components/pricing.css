@@ -610,7 +610,7 @@
 }
 
 /* Small Mobile - ЩЕ БІЛЬШЕ ЗМЕНШЕННЯ */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .pricing-page {
         padding: 40px 0 60px;
     }

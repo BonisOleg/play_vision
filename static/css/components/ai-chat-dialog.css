@@ -498,7 +498,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .ai-dialog-container {
         top: 0;
         right: 0;
@@ -541,7 +541,7 @@
         }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
         .ai-dialog-container {
             max-height: calc(100vh - env(safe-area-inset-bottom));
             padding-bottom: env(safe-area-inset-bottom);

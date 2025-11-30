@@ -525,7 +525,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .profile-stats-grid {
         grid-template-columns: 1fr;
     }
@@ -1501,7 +1501,7 @@
 }
 
 /* Малі мобільні пристрої */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
 
     .avatar-img,
     .avatar-placeholder {
@@ -1828,7 +1828,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .courses-section {
         padding: 20px;
         margin-top: 20px;
@@ -2782,7 +2782,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
 
     .approximate-purchase-section h2,
     .loyalty-info-section h2,

@@ -367,7 +367,7 @@
 }
 
 /* ==================== ADAPTIVE MOBILE (< 576px) ==================== */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .featured-courses-section {
         padding: 32px 0;
     }

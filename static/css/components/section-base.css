@@ -173,7 +173,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .hero-section .section-content,
     .about-hero .section-content,
     .mentoring-hero .section-content {

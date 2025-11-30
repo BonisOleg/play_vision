@@ -171,7 +171,7 @@
 }
 
 /* === МАЛИЙ МОБАЙЛ - ТЕКСТ === */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .about-mission-section .section-title,
     .about-values-section .section-title,
     .about-team-section .section-title {

@@ -890,7 +890,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .ai-fab {
         width: 56px;
         height: 56px;

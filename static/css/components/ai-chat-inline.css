@@ -1030,7 +1030,7 @@
 }
 
 /* Малі мобільні екрани */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .ai-chat-inline {
         width: 100%;
     }
@@ -1177,7 +1177,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
         font-size: 10px;
     }
