@@ -201,14 +201,41 @@
         attachCloseListeners() {
             if (!this.modal) return;
 
-            // Кнопки закриття з data-close-modal
-            this.modal.addEventListener('click', (e) => {
-                const closeBtn = e.target.closest('[data-close-modal]');
-                if (closeBtn) {
+            // Безпосередній listener на кнопку закриття (для iOS)
+            const closeBtn = this.modal.querySelector('.course-modal-close');
+            if (closeBtn) {
+                // Click event
+                closeBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     this.close();
-                }
-            });
+                });
+
+                // Touch events для iOS Safari
+                closeBtn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.close();
+                }, { passive: false });
+            }
+
+            // Overlay закриття
+            const overlay = this.modal.querySelector('.course-modal-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        this.close();
+                    }
+                });
+
+                // Touch для overlay на iOS
+                overlay.addEventListener('touchend', (e) => {
+                    if (e.target === overlay) {
+                        e.preventDefault();
+                        this.close();
+                    }
+                }, { passive: false });
+            }
         }
 
         attachKeyboardListeners() {
