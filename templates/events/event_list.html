@@ -144,7 +144,7 @@
                         <div class="calendar-carousel-container">
                             <div class="calendar-carousel-track">
                                 {% for day in calendar_days %}
-                                <div class="calendar-card{% if day.is_empty %} calendar-card--empty{% endif %}">
+                                <div class="calendar-card{% if day.is_empty %} calendar-card--empty{% endif %}{% if day.is_today %} calendar-card--today{% endif %}">
                                     <div class="calendar-card-header">
                                         <div class="calendar-event-name">
                                             {% if day.event %}
