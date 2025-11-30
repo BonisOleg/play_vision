@@ -20,6 +20,11 @@
 /* ==================== СЕКЦІЯ 1: Intro ==================== */
 .events-intro-section {
     background: transparent;
+    overflow-x: hidden;
+}
+
+.events-intro-section .section-content {
+    overflow-x: hidden;
 }
 
 .events-intro-layout {
@@ -30,10 +35,13 @@
 
 .events-intro-left {
     flex: 0 0 45%;
+    min-width: 0;
 }
 
 .events-intro-right {
     flex: 0 0 55%;
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .events-intro-left .section-title {
@@ -664,6 +672,9 @@
     .events-intro-left,
     .events-intro-right {
         flex: 0 0 100%;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
     }
 
     .events-catalog-grid {
@@ -677,80 +688,93 @@
 }
 
 @media (max-width: 768px) {
+    /* Layout контейнери */
+    .events-intro-layout {
+        gap: 20px;
+        overflow-x: hidden;
+    }
+
     .events-intro-right {
         order: 1;
+        flex: 0 0 100%;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        overflow-x: hidden;
     }
 
     .events-intro-left {
         order: 2;
+        flex: 0 0 100%;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
     }
 
+    /* Заголовки */
     .events-intro-left .section-title,
     .events-calendar-section .section-title,
     .events-catalog-section .section-title {
-        font-size: clamp(1.5rem, 5vw, 2rem);
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
     }
 
+    /* Категорії 2x2 */
     .events-categories-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
 
+    /* КРИТИЧНО: Відео сітка */
     .events-video-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
-        margin-right: 0;
-        margin-left: 0;
+        margin: 0;
+        padding: 0;
         width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .video-placeholder {
-        min-height: 100px; /* Оптимальна висота для 3 колонок */
+        min-height: 100px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
+    /* Каталог */
     .events-catalog-grid {
         grid-template-columns: 1fr;
         gap: 20px;
     }
 
+    /* Календар */
     .calendar-card {
-        flex: 0 0 calc(50% - 12px);
+        flex: 0 0 100%;
+        min-width: 0;
     }
 
     .calendar-navigation {
         left: 50%;
         transform: translateX(-50%);
-        bottom: 40px; /* збільшено з 20px */
+        bottom: 40px;
     }
 
     .calendar-pagination {
         right: 50%;
         transform: translateX(50%);
-        bottom: 130px; /* збільшено з 80px */
+        bottom: 130px;
     }
 
     .calendar-carousel-wrapper {
-        padding-bottom: 160px; /* Більше місця на мобільних */
+        padding-bottom: 160px;
     }
 
-    /* Touch-friendly кнопки для iOS/Android */
+    /* Touch-friendly кнопки */
     .calendar-nav-btn,
     .btn-details,
     .pagination-link {
         min-width: 44px;
         min-height: 44px;
-    }
-}
-
-@media (max-width: 768px) {
-    .calendar-card {
-        flex: 0 0 calc(100% - 0px);
-    }
-
-    .events-intro-left .section-title,
-    .events-calendar-section .section-title,
-    .events-catalog-section .section-title {
-        font-size: clamp(1.25rem, 4vw, 1.75rem);
     }
 }
 

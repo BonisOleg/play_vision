@@ -384,16 +384,32 @@
     /* Фото/відео на верху (full width) */
     .course-modal-right {
         order: -1;
-        min-height: 280px;
-        max-height: 320px;
+        min-height: auto;
+        max-height: none;
+        height: auto;
         border-radius: 0;
         margin: 0;
         width: 100%;
+        padding: var(--spacing-lg);
+        background: var(--color-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .course-modal-right iframe,
+    .course-modal-right iframe {
+        border-radius: 16px;
+        aspect-ratio: 16 / 9;
+        width: 100%;
+    }
+
     .course-modal-logo {
-        border-radius: 0;
+        border-radius: 16px;
+        object-fit: contain;
+        width: 100%;
+        height: auto;
+        max-height: 320px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     /* Контент під фото */
