@@ -88,42 +88,59 @@
 
                     {% if event.speakers.all %}
                     <div class="event-experts-section">
-                        <h2 class="section-title">Команда спікерів</h2>
+                        <div class="experts-header">
+                            <h2 class="section-title">Команда спікерів</h2>
+
+                            <div class="experts-navigation">
+                                <button class="expert-nav-btn expert-nav-prev" aria-label="Попередні експерти">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 18l-6-6 6-6" />
+                                    </svg>
+                                </button>
+                                <button class="expert-nav-btn expert-nav-next" aria-label="Наступні експерти">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 18l6-6-6-6" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                         <p class="experts-subtitle">провідні футбольні фахівці, які створюють освітні продукти та супроводжують ваш розвиток</p>
 
-                        <div class="experts-grid">
-                            {% for speaker in event.speakers.all %}
-                            <div class="expert-card" data-expert-id="{{ forloop.counter }}">
-                                <div class="expert-card-inner">
-                                    <div class="expert-card-front">
-                                        <div class="expert-photo">
-                                            {% if speaker.photo %}
-                                            <img src="{{ speaker.photo.url }}" alt="{{ speaker.full_name }}" loading="lazy">
-                                            {% else %}
-                                            <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png" alt="{{ speaker.full_name }}" loading="lazy">
-                                            {% endif %}
-                                        </div>
-                                        <div class="expert-card-content">
-                                            <h3 class="expert-name">{{ speaker.full_name }}</h3>
-                                            <p class="expert-specialization">{{ speaker.position }}</p>
-                                            <button class="expert-detail-btn">Огляд профілю →</button>
-                                        </div>
-                                    </div>
-                                    <div class="expert-card-back">
-                                        <div class="expert-bio-content">
-                                            <h3 class="expert-name-back">{{ speaker.full_name }}</h3>
-                                            <div class="expert-bio-text">
-                                                {% if speaker.bio %}
-                                                {{ speaker.bio|linebreaks }}
+                        <div class="experts-carousel-container">
+                            <div class="experts-grid">
+                                {% for speaker in event.speakers.all %}
+                                <div class="expert-card" data-expert-id="{{ forloop.counter }}">
+                                    <div class="expert-card-inner">
+                                        <div class="expert-card-front">
+                                            <div class="expert-photo">
+                                                {% if speaker.photo %}
+                                                <img src="{{ speaker.photo.url }}" alt="{{ speaker.full_name }}" loading="lazy">
                                                 {% else %}
-                                                <p>Інформація про експерта скоро буде додана.</p>
+                                                <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png" alt="{{ speaker.full_name }}" loading="lazy">
                                                 {% endif %}
+                                            </div>
+                                            <div class="expert-card-content">
+                                                <h3 class="expert-name">{{ speaker.full_name }}</h3>
+                                                <p class="expert-specialization">{{ speaker.position }}</p>
+                                                <span class="expert-detail-link">Огляд профілю →</span>
+                                            </div>
+                                        </div>
+                                        <div class="expert-card-back">
+                                            <div class="expert-bio-content">
+                                                <h3 class="expert-name-back">{{ speaker.full_name }}</h3>
+                                                <div class="expert-bio-text">
+                                                    {% if speaker.bio %}
+                                                    {{ speaker.bio|linebreaks }}
+                                                    {% else %}
+                                                    <p>Інформація про експерта скоро буде додана.</p>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
                         </div>
                     </div>
                     {% endif %}
@@ -198,5 +215,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/expert-flip-cards.js' %}"></script>
+<script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
+<script src="{% static 'js/expert-carousel-unified.js' %}" defer></script>
 {% endblock %}

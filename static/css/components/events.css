@@ -229,21 +229,22 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #171717;
-    color: #ffffff;
+    background: #ffffff;
+    color: #171717;
     padding: 10px 20px;
     border-radius: 8px;
     text-decoration: none;
     font-size: 0.875rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    border: 2px solid #171717;
+    border: 2px solid #ffffff;
     align-self: flex-start;
 }
 
 .btn-details:hover {
-    background: #ffffff;
-    color: #171717;
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
 }
 
 .calendar-card:hover .btn-details {
@@ -255,6 +256,7 @@
 .calendar-card:hover .btn-details:hover {
     background: #171717;
     color: #ffffff;
+    border-color: #171717;
 }
 
 /* Ячейка сьогодні - без hover ефектів */
@@ -572,6 +574,18 @@
     color: rgba(23, 23, 23, 0.8);
 }
 
+[data-theme="dark"] .calendar-card .btn-details {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+}
+
+[data-theme="dark"] .calendar-card .btn-details:hover {
+    background: #ffffff;
+    color: #171717;
+    border-color: #ffffff;
+}
+
 [data-theme="dark"] .calendar-nav-btn {
     background: #e9e9e9;
     color: #000000;
@@ -614,6 +628,18 @@
         color: rgba(23, 23, 23, 0.8);
     }
 
+    [data-theme="auto"] .calendar-card .btn-details {
+        background: #171717;
+        color: #ffffff;
+        border-color: #171717;
+    }
+
+    [data-theme="auto"] .calendar-card .btn-details:hover {
+        background: #ffffff;
+        color: #171717;
+        border-color: #ffffff;
+    }
+
     [data-theme="auto"] .calendar-nav-btn {
         background: #e9e9e9;
         color: #000000;
@@ -651,6 +677,14 @@
 }
 
 @media (max-width: 768px) {
+    .events-intro-right {
+        order: 1;
+    }
+
+    .events-intro-left {
+        order: 2;
+    }
+
     .events-intro-left .section-title,
     .events-calendar-section .section-title,
     .events-catalog-section .section-title {
@@ -658,7 +692,7 @@
     }
 
     .events-categories-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
 
@@ -669,11 +703,6 @@
 
     .video-placeholder {
         min-height: 100px; /* Оптимальна висота для 3 колонок */
-    }
-
-    .video-placeholder.video-large,
-    .video-placeholder.video-medium {
-        grid-column: span 1; /* Всі однакового розміру */
     }
 
     .events-catalog-grid {
