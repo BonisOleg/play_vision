@@ -2780,9 +2780,6 @@
         width: 100%;
         justify-content: center;
     }
-}
-
-@media (max-width: 768px) {
 
     .approximate-purchase-section h2,
     .loyalty-info-section h2,

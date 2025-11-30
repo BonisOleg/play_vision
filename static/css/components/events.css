@@ -176,7 +176,8 @@
 }
 
 .calendar-card {
-    flex: 0 0 calc(20% - 20px);
+    flex: 0 0 calc(30% - 16px);
+    min-width: 280px;
     background: #171717;
     color: #ffffff;
     border: 2px solid #171717;
@@ -683,7 +684,8 @@
     }
 
     .calendar-card {
-        flex: 0 0 calc(33.333% - 16px);
+        flex: 0 0 calc(50% - 12px);
+        min-width: 280px;
     }
 }
 
@@ -751,26 +753,44 @@
         gap: 20px;
     }
 
-    /* Календар */
+    /* Календар - мобільна логіка як у курсів */
+    .calendar-carousel-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    .calendar-carousel-container::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .calendar-carousel-track {
+        flex-wrap: nowrap;
+        gap: 16px;
+    }
+
     .calendar-card {
-        flex: 0 0 100%;
-        min-width: 0;
+        flex: 0 0 calc(50% - 8px);
+        min-width: calc(50% - 8px);
+        max-width: calc(50% - 8px);
     }
 
     .calendar-navigation {
         left: 50%;
         transform: translateX(-50%);
-        bottom: 40px;
+        bottom: 20px;
     }
 
     .calendar-pagination {
         right: 50%;
         transform: translateX(50%);
-        bottom: 130px;
+        bottom: 80px;
     }
 
     .calendar-carousel-wrapper {
-        padding-bottom: 160px;
+        padding-bottom: 40px;
     }
 
     /* Touch-friendly кнопки */

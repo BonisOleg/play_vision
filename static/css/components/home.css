@@ -51,7 +51,7 @@
     min-height: 100%;
 }
 
-/* Tablet responsiveness (769px - 1024px) */
+/* Tablet responsiveness (Синхронізовано з content-width) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .hero-section {
         width: 90%;
@@ -77,65 +77,52 @@
     }
 
     .hero-new-design .hero-title {
-        font-size: 2rem;
+        font-size: 2rem; /* 70% від 2.5rem */
         margin-bottom: -1rem;
     }
 
     .hero-new-design .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1rem; /* 80% від 1.25rem */
         margin-bottom: 0.3rem;
     }
     
     .hero-btn-new {
         padding: 10px 18px;
         font-size: 0.95rem;
-        min-height: auto;
-    }
-
-    .hero-btn-new .btn-logo-space {
-        width: 12px;
-        height: 12px;
     }
 }
 
-/* Mobile (769px max) - не включає small mobile <480px */
 @media (max-width: 768px) {
-    /* NEW DESIGN Mobile General */
+    /* NEW DESIGN Mobile */
     .hero-section .section-content.hero-new-design {
         left: 5px;
         transform: none;
         width: calc(100% - 5px);
-        padding: 0.75rem 1rem 1.5rem 0;
+        padding: 0.75rem 1rem 0.5rem 0;
         justify-content: flex-end;
     }
 
     .hero-new-design .hero-title {
-        font-size: 1.5rem;
+        font-size: 1.5rem; /* 60% від 2.5rem */
         margin-bottom: -1rem;
         line-height: 1.2;
-        max-width: 70%;
     }
 
     .hero-new-design .hero-subtitle {
-        font-size: 0.875rem;
+        font-size: 0.875rem; /* 70% від 1.25rem */
         margin-bottom: 0.3rem;
         line-height: 1.4;
-        max-width: 50%;
     }
     
     .hero-new-design .hero-buttons {
         gap: 0.5rem;
-        margin-bottom: 0;
-        display: flex;
-        align-items: center;
+        margin-bottom: 0.5rem;
     }
 
     .hero-btn-new {
         padding: 8px 14px;
         font-size: 0.875rem;
         min-height: auto;
-        -webkit-appearance: none;
-        -webkit-tap-highlight-color: transparent;
     }
 
     .hero-btn-new .btn-logo-space {
@@ -144,14 +131,6 @@
     }
     
     /* Слайдер-точки компактні */
-    .hero-new-design .hero-slider-dots {
-        margin-top: 0;
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    
     .hero-slider-dots {
         margin-top: 0.5rem;
         gap: 5px;
@@ -498,7 +477,6 @@
 
 }
 
-/* Tablet & Mobile responsive (max-width: 1024px) */
 @media (max-width: 1024px) {
     .hero-section {
         width: 90%;
@@ -513,9 +491,9 @@
         margin: 0;
         border-radius: 0;
     }
+
 }
 
-/* Mobile (max-width: 768px) - додаткові стилі */
 @media (max-width: 768px) {
     .hero-section {
         width: 95%;
@@ -562,6 +540,7 @@
         height: 18px;
     }
 
+
     .experts-section {
         padding: 20px 0;
     }
@@ -579,10 +558,10 @@
         font-size: 1rem;
         margin-bottom: 32px;
     }
+
 }
 
-/* Small Mobile (≤480px) */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .hero-section {
         margin: 5px auto;
         box-shadow: none;
@@ -598,13 +577,18 @@
     
     /* NEW DESIGN Extra Small */
     .hero-new-design .hero-title {
-        font-size: 1.25rem;
+        font-size: 1.25rem; /* 50% від 2.5rem */
         margin-bottom: -1rem;
     }
     
     .hero-new-design .hero-subtitle {
-        font-size: 0.8rem;
+        font-size: 0.8rem; /* 64% від 1.25rem */
         margin-bottom: 0.3rem;
+    }
+    
+    .hero-btn-new {
+        padding: 7px 12px;
+        font-size: 0.8rem;
     }
     
     .cta-content {
@@ -619,7 +603,7 @@
 
     .cta-section .btn-primary {
         padding: 12px 24px;
-        font-size: 0.875rem;
+        font-size: 0.4rem;
     }
 
     .cta-section .btn-primary .btn-logo-space {
@@ -669,17 +653,15 @@
     }
 
     .hero-btn-new {
-        padding: 5px 8px 5px 10px;
-        font-size: 0.75rem;
-        gap: 3px;
-        min-height: auto;
-        -webkit-appearance: none;
-        -webkit-tap-highlight-color: transparent;
+        padding: 6px 10px 6px 12px;
+        font-size: 0.9rem;
+        gap: 5px;
+        min-height: 23px;
     }
 
     .hero-btn-new .btn-logo-space {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
     }
 
     .hero-new-design .hero-slider-dots {
@@ -687,7 +669,6 @@
     }
 }
 
-/* iOS Safari Specific (@supports -webkit-touch-callout: none) */
 @supports (-webkit-touch-callout: none) {
     .hero-section {
         -webkit-backface-visibility: hidden;
@@ -733,43 +714,6 @@
     .section-overlay--gradient {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
-    }
-
-    /* iOS - Mobile (max-width: 768px) */
-    @media (max-width: 768px) {
-        .hero-btn-new {
-            padding: 8px 14px;
-            font-size: 0.875rem;
-            min-height: auto;
-            -webkit-appearance: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .hero-btn-new .btn-logo-space {
-            width: 10px;
-            height: 10px;
-        }
-
-        .cta-section .btn-primary {
-            font-size: 0.875rem;
-        }
-    }
-
-    /* iOS - Small Mobile (max-width: 480px) */
-    @media (max-width: 480px) {
-        .hero-btn-new {
-            padding: 5px 8px 5px 10px;
-            font-size: 0.75rem;
-            gap: 3px;
-            min-height: auto;
-            -webkit-appearance: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .hero-btn-new .btn-logo-space {
-            width: 8px;
-            height: 8px;
-        }
     }
 }
 
