@@ -168,6 +168,7 @@
     display: flex;
     gap: 24px;
     transition: transform 0.4s ease;
+    justify-content: flex-start;
 }
 
 .calendar-card {
@@ -257,6 +258,37 @@
     color: #ffffff;
 }
 
+/* Порожня ячейка - не кликабельна, без hover primary */
+.calendar-card--empty {
+    cursor: default;
+}
+
+.calendar-card--empty:hover {
+    background: #ffffff;
+    color: inherit;
+    border-color: var(--color-border, #e0e0e0);
+    transform: none;
+}
+
+.calendar-card--empty .calendar-event-name,
+.calendar-card--empty .calendar-event-date,
+.calendar-card--empty .calendar-event-description {
+    color: inherit;
+}
+
+/* Темна тема для порожньої ячейки */
+[data-theme="dark"] .calendar-card--empty:hover {
+    background: #1a1a1a;
+    border-color: #333333;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .calendar-card--empty:hover {
+        background: #1a1a1a;
+        border-color: #333333;
+    }
+}
+
 .btn-arrow {
     width: 18px;
     height: 18px;
@@ -266,6 +298,11 @@
     justify-content: center;
     background: url('/static/images/white_botton.png') no-repeat center center;
     background-size: contain;
+}
+
+/* Приховування навігації (замість inline display:none) */
+.calendar-navigation--hidden {
+    display: none !important;
 }
 
 .calendar-navigation {
@@ -300,20 +337,6 @@
 .calendar-nav-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
-}
-
-.calendar-pagination {
-    position: absolute;
-    bottom: 30px;
-    right: 0;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-text);
-}
-
-.calendar-pagination .current-page {
-    font-size: 1.5rem;
-    color: var(--color-text);
 }
 
 /* ==================== СЕКЦІЯ 3: Каталог ==================== */
@@ -481,6 +504,20 @@
     text-align: center;
     padding: 60px 20px;
     color: var(--color-text-light);
+}
+
+/* ==================== HOVER ТІЛЬКИ ДЛЯ NON-TOUCH ==================== */
+@media (hover: hover) and (pointer: fine) {
+    .calendar-card:not(.calendar-card--empty):hover {
+        background: var(--color-primary);
+        color: #ffffff;
+        border-color: var(--color-primary);
+    }
+    
+    .calendar-nav-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
 }
 
 /* ==================== ТЕМНА ТЕМА ==================== */

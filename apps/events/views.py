@@ -107,39 +107,47 @@ class EventListView(ListView):
             start_datetime__gt=timezone.now()
         )[:3]
         
-        # Генерація календаря-тижня
-        week_offset = int(self.request.GET.get('week', 0))
-        base_date = timezone.now().date()
-        start_date = base_date + timedelta(weeks=week_offset)
-        
-        # Знайти понеділок цього тижня
-        start_of_week = start_date - timedelta(days=start_date.weekday())
-        
-        # Згенерувати 7 днів
+        # НОВА ЛОГІКА: Генерація календаря (сьогодні + майбутні івенти)
         calendar_days = []
-        day_names = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
+        today = timezone.now().date()
         
-        for day_offset in range(7):
-            current_date = start_of_week + timedelta(days=day_offset)
-            
-            # Знайти ПЕРШУ подію цього дня
-            event = Event.objects.filter(
-                status='published',
-                start_datetime__date=current_date
-            ).select_related('organizer').first()
-            
+        # 1. Сьогодні - всі івенти або порожній плейсхолдер
+        today_events = Event.objects.filter(
+            status='published',
+            start_datetime__date=today
+        ).select_related('organizer').order_by('start_datetime')
+        
+        if today_events.exists():
+            for event in today_events:
+                calendar_days.append({
+                    'date': today,
+                    'event': event,
+                    'is_today': True,
+                    'is_empty': False
+                })
+        else:
             calendar_days.append({
-                'date': current_date,
-                'day_number': current_date.day,
-                'day_name': day_names[day_offset],
+                'date': today,
+                'event': None,
+                'is_today': True,
+                'is_empty': True
+            })
+        
+        # 2. Майбутні івенти (максимум 14, щоб разом з сьогодні <= 15)
+        future_events = Event.objects.filter(
+            status='published',
+            start_datetime__date__gt=today
+        ).select_related('organizer').order_by('start_datetime')[:14]
+        
+        for event in future_events:
+            calendar_days.append({
+                'date': event.start_datetime.date(),
                 'event': event,
-                'is_today': current_date == base_date
+                'is_today': False,
+                'is_empty': False
             })
         
         context['calendar_days'] = calendar_days
-        context['week_offset'] = week_offset
-        context['week_start'] = start_of_week
-        context['week_end'] = start_of_week + timedelta(days=6)
         
         return context
     

@@ -4,20 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initCalendarCarousel() {
+    const section = document.querySelector('.events-calendar-section');
     const track = document.querySelector('.calendar-carousel-track');
     const prevBtn = document.querySelector('.calendar-nav-prev');
     const nextBtn = document.querySelector('.calendar-nav-next');
-    const currentPageEl = document.querySelector('.current-page');
     
-    if (!track || !prevBtn || !nextBtn) return;
+    if (!track || !section) return;
     
     const cards = Array.from(track.querySelectorAll('.calendar-card'));
     const totalCards = cards.length;
     
-    let currentIndex = 0;
-    const cardsPerView = getCardsPerView();
-    const maxIndex = Math.max(0, totalCards - cardsPerView);
+    if (totalCards === 0) return;
     
+    let currentIndex = 0;
+    
+    // Визначення кількості карток на екрані
     function getCardsPerView() {
         const width = window.innerWidth;
         if (width <= 480) return 1;
@@ -26,47 +27,108 @@ function initCalendarCarousel() {
         return 5;
     }
     
+    let cardsPerView = getCardsPerView();
+    let maxIndex = Math.max(0, totalCards - cardsPerView);
+    
+    // КЛЮЧОВА ФУНКЦІЯ: показ/приховування стрілок
+    // БЕЗ INLINE STYLES - тільки CSS класи
+    function updateArrowsVisibility() {
+        const shouldShow = totalCards >= 6;
+        const navigation = section.querySelector('.calendar-navigation');
+        
+        if (navigation) {
+            if (shouldShow) {
+                navigation.classList.remove('calendar-navigation--hidden');
+            } else {
+                navigation.classList.add('calendar-navigation--hidden');
+            }
+        }
+    }
+    
     function updateCarousel() {
+        if (!track || cards.length === 0) return;
+        
         const cardWidth = cards[0].offsetWidth;
         const gap = 24;
         const offset = currentIndex * (cardWidth + gap);
         
         track.style.transform = `translateX(-${offset}px)`;
         
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex >= maxIndex;
-        
-        if (currentPageEl) {
-            const pageNumber = String(currentIndex + 1).padStart(2, '0');
-            currentPageEl.textContent = pageNumber;
-        }
+        // Disabled стан кнопок
+        if (prevBtn) prevBtn.disabled = currentIndex === 0;
+        if (nextBtn) nextBtn.disabled = currentIndex >= maxIndex;
     }
     
-    prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
+    // Події для кнопок
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+    }
+    
+    // Touch/Swipe для мобільних (iOS/Android)
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+    
+    track.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        isDragging = true;
+    }, { passive: true });
+    
+    track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        touchEndX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    track.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0 && currentIndex < maxIndex) {
+                currentIndex++;
+                updateCarousel();
+            } else if (diff < 0 && currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
         }
+        
+        touchStartX = 0;
+        touchEndX = 0;
     });
     
-    nextBtn.addEventListener('click', () => {
-        if (currentIndex < maxIndex) {
-            currentIndex++;
-            updateCarousel();
-        }
-    });
-    
+    // Resize з debounce
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        const newCardsPerView = getCardsPerView();
-        const newMaxIndex = Math.max(0, totalCards - newCardsPerView);
-        
-        if (currentIndex > newMaxIndex) {
-            currentIndex = newMaxIndex;
-        }
-        
-        updateCarousel();
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            cardsPerView = getCardsPerView();
+            maxIndex = Math.max(0, totalCards - cardsPerView);
+            currentIndex = Math.min(currentIndex, maxIndex);
+            updateCarousel();
+            updateArrowsVisibility();
+        }, 150);
     });
     
+    // Ініціалізація
+    updateArrowsVisibility();
     updateCarousel();
 }
 

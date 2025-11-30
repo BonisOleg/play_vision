@@ -144,24 +144,37 @@
                         <div class="calendar-carousel-container">
                             <div class="calendar-carousel-track">
                                 {% for day in calendar_days %}
-                                <div class="calendar-card">
+                                <div class="calendar-card{% if day.is_empty %} calendar-card--empty{% endif %}">
                                     <div class="calendar-card-header">
-                                        <div class="calendar-event-name">/// {% if day.event %}{{ day.event.title }}{% else %}Назва Івенту{% endif %}</div>
+                                        <div class="calendar-event-name">
+                                            {% if day.event %}
+                                                /// {{ day.event.title }}
+                                            {% else %}
+                                                На сьогодні подій не заплановано
+                                            {% endif %}
+                                        </div>
                                         <div class="calendar-event-date">{{ day.date|date:"d.m.Y" }}</div>
                                     </div>
                                     <p class="calendar-event-description">
-                                        {% if day.event %}{{ day.event.short_description|truncatewords:15 }}{% else %}Опис майбутньої події. Детальна інформація буде доступна найближчим часом.{% endif %}
+                                        {% if day.event %}
+                                            {{ day.event.short_description|truncatewords:15 }}
+                                        {% else %}
+                                            Перегляньте наші майбутні події нижче або поверніться пізніше.
+                                        {% endif %}
                                     </p>
-                                    <a href="{% if day.event %}{% url 'events:event_detail' day.event.slug %}{% else %}#{% endif %}" class="btn-details">
+                                    {% if day.event %}
+                                    <a href="{% url 'events:event_detail' day.event.slug %}" class="btn-details">
                                         <span class="btn-text">Детальніше</span>
                                         <span class="btn-arrow"></span>
                                     </a>
+                                    {% endif %}
                                 </div>
                                 {% endfor %}
                             </div>
                         </div>
                         
-                        <div class="calendar-navigation">
+                        <!-- Навігація: початково прихована через CSS клас -->
+                        <div class="calendar-navigation calendar-navigation--hidden">
                             <button class="calendar-nav-btn calendar-nav-prev" aria-label="Попередні події">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M15 18l-6-6 6-6"/>
@@ -172,10 +185,6 @@
                                     <path d="M9 18l6-6-6-6"/>
                                 </svg>
                             </button>
-                        </div>
-                        
-                        <div class="calendar-pagination">
-                            <span class="current-page">01</span> /07
                         </div>
                     </div>
                 </div>
