@@ -428,7 +428,7 @@ body.modal-open {
     grid-template-columns: repeat(4, 1fr);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
 
     .grid-cols-2,
     .grid-cols-3,
@@ -613,7 +613,7 @@ html.ios-safari {
 }
 
 /* Small mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 375px) {
     .btn {
         font-size: 0.875rem;
         padding: var(--spacing-xs) var(--spacing-md);
