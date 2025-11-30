@@ -474,6 +474,13 @@ body {
     .landing-submit-btn {
         -webkit-tap-highlight-color: transparent;
     }
+
+    /* iOS - Mobile (max-width: 768px) */
+    @media (max-width: 768px) {
+        .landing-input {
+            font-size: 15px;
+        }
+    }
 }
 
 /* Prevent zoom on input focus on iOS */

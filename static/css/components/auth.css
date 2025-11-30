@@ -523,6 +523,38 @@
         -webkit-tap-highlight-color: transparent;
         -webkit-appearance: none;
     }
+
+    /* iOS - Mobile (max-width: 768px) */
+    @media (max-width: 768px) {
+        .auth-card {
+            padding: 30px 20px;
+        }
+
+        .auth-title {
+            font-size: 26px;
+        }
+
+        .auth-subtitle {
+            font-size: 16px;
+        }
+
+        .auth-tab {
+            font-size: 15px;
+        }
+
+        .form-input {
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            font-size: 16px;
+        }
+
+        .social-btn {
+            width: 70px;
+        }
+    }
 }
 
 /* Dark Mode Support */

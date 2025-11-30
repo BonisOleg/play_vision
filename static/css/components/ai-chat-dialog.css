@@ -553,7 +553,7 @@
 
         .ai-dialog-input {
             min-height: 40px;
-            max-height: 98px;
+            max-height: 100px;
             font-size: 16px;
         }
     }

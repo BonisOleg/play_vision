@@ -1027,6 +1027,19 @@
         /* Виправлення rubber band effect */
         overscroll-behavior: contain;
     }
+
+    /* iOS - Mobile (max-width: 768px) */
+    @media (max-width: 768px) {
+        .ai-chat-modal {
+            width: 95vw;
+            border-radius: 12px;
+        }
+
+        .ai-chat-messages {
+            max-height: 40vh;
+            border-radius: 20px 20px 0 0;
+        }
+    }
 }
 
 /* Малі мобільні екрани */
