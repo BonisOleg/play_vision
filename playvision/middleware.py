@@ -286,7 +286,7 @@ class PhoneRegistrationMiddleware(MiddlewareMixin):
 
 
 class DomainRoutingMiddleware:
-    """Визначає тип домену та перенаправляє root request"""
+    """Визначає тип домену та встановлює прапор"""
     
     def __init__(self, get_response):
         self.get_response = get_response
@@ -294,22 +294,19 @@ class DomainRoutingMiddleware:
     def __call__(self, request):
         host = request.get_host().lower().split(':')[0]
         
-        landing_domains = ['playvision.com.ua', 'www.playvision.com.ua']
-        is_landing_domain = host in landing_domains
-        request.is_landing_domain = is_landing_domain
-        
-        # Handle root path routing based on domain
-        if request.path == '/':
-            if is_landing_domain:
-                from apps.landing.views import landing_page
-                return landing_page(request)
-            # For other domains, let it continue to core.urls HomeView
+        com_ua_domains = ['playvision.com.ua', 'www.playvision.com.ua']
+        is_com_ua_domain = host in com_ua_domains
+        request.is_com_ua_domain = is_com_ua_domain
         
         return self.get_response(request)
 
 
 class LandingDomainRestrictionMiddleware:
-    """Обмежує доступ на landing domain тільки до landing URLs та блокує landing URLs на інших доменах"""
+    """
+    На playvision.com.ua показує Landing Page для сторінок /mentor-coaching/*, /hub/*, /pricing/*
+    На інших доменах ці сторінки доступні нормально.
+    Блокує /submit/ для non-landing domains.
+    """
     
     def __init__(self, get_response):
         self.get_response = get_response
@@ -317,16 +314,21 @@ class LandingDomainRestrictionMiddleware:
     def __call__(self, request):
         from django.http import Http404
         
-        is_landing_domain = getattr(request, 'is_landing_domain', False)
+        is_com_ua_domain = getattr(request, 'is_com_ua_domain', False)
+        path = request.path
         
-        if is_landing_domain:
-            # На landing domain дозволені тільки / та /submit/
-            allowed_paths = ['/', '/submit/']
-            if request.path not in allowed_paths:
-                raise Http404("Ця сторінка недоступна на даному домені")
+        # Шляхи, що показують Landing Page на playvision.com.ua
+        stub_paths = ['/mentor-coaching/', '/hub/', '/pricing/']
+        is_stub_path = any(path.startswith(p) for p in stub_paths)
+        
+        if is_com_ua_domain:
+            # На com.ua для заглушок показуємо Landing Page
+            if is_stub_path:
+                from apps.landing.views import landing_page
+                return landing_page(request)
         else:
-            # На non-landing domains заборонений /submit/ (це landing-only endpoint)
-            if request.path == '/submit/':
+            # На інших доменах блокуємо /submit/ (це landing-only endpoint)
+            if path == '/submit/':
                 raise Http404("Ця сторінка недоступна на даному домені")
         
         return self.get_response(request)

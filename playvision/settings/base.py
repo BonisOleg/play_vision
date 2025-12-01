@@ -14,6 +14,9 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-temp-key-change-in-pr
 DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '*']
 
+# Site URL - основний домен
+SITE_URL = config('SITE_URL', default='https://playvision.com.ua')
+
 # Application definition
 DJANGO_APPS = [
     'django.contrib.admin',

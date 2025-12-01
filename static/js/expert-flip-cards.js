@@ -60,6 +60,7 @@ class ExpertFlipCards {
         let touchStartX = 0;
         let touchStartY = 0;
         let touchStartTime = 0;
+        let isMoved = false;
 
         card.addEventListener('touchstart', (e) => {
             // Якщо touch на посиланні - пропустити
@@ -70,6 +71,12 @@ class ExpertFlipCards {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
             touchStartTime = Date.now();
+            isMoved = false;
+        }, { passive: true });
+
+        card.addEventListener('touchmove', (e) => {
+            // Відмічаємо що був рух
+            isMoved = true;
         }, { passive: true });
 
         card.addEventListener('touchend', (e) => {
@@ -80,14 +87,15 @@ class ExpertFlipCards {
             const deltaX = Math.abs(touchEndX - touchStartX);
             const deltaY = Math.abs(touchEndY - touchStartY);
 
-            // Якщо це швидкий tap (< 200ms) з мінімальним рухом (< 10px)
-            if (touchDuration < 200 && deltaX < 10 && deltaY < 10) {
-                // Запобігти спливанню до каруселі
-                e.stopPropagation();
+            // Якщо це tap: швидкий (< 300ms) і без значного руху (< 20px) і не було touchmove
+            if (!isMoved && touchDuration < 300 && deltaX < 20 && deltaY < 20) {
                 // Перегорнути картку
                 card.classList.toggle('flipped');
+                // Запобігти click після touchend (щоб не було подвійного спрацювання)
+                e.preventDefault();
             }
-            // Якщо це був swipe - не перегортати, дозволити каруселі обробити
+            // Якщо був рух (isMoved = true) - це swipe, дозволяємо каруселі обробити
+            // НЕ викликаємо stopPropagation() - дозволяємо події спливти до каруселі
         }, { passive: false });
     }
 }
