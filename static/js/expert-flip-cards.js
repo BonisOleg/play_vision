@@ -15,7 +15,41 @@ class ExpertFlipCards {
         this.cards.forEach(card => {
             card.addEventListener('click', (e) => this.handleCardClick(e, card));
             this.addTouchSupport(card);
+            this.truncateNameOnMobile(card);
         });
+
+        // Обробка зміни розміру вікна для оновлення обрізки
+        window.addEventListener('resize', () => {
+            this.cards.forEach(card => {
+                this.truncateNameOnMobile(card);
+            });
+        });
+    }
+
+    truncateNameOnMobile(card) {
+        const nameBackElement = card.querySelector('.expert-name-back');
+        if (!nameBackElement) return;
+
+        const isMobile = window.innerWidth <= 767;
+        const originalText = nameBackElement.dataset.originalText || nameBackElement.textContent.trim();
+
+        // Зберігаємо оригінальний текст при першому виклику
+        if (!nameBackElement.dataset.originalText) {
+            nameBackElement.dataset.originalText = originalText;
+        }
+
+        if (isMobile) {
+            // Обрізаємо до 2 перших слів
+            const words = originalText.split(/\s+/);
+            if (words.length > 2) {
+                nameBackElement.textContent = words.slice(0, 2).join(' ');
+            } else {
+                nameBackElement.textContent = originalText;
+            }
+        } else {
+            // На десктопі показуємо повний текст
+            nameBackElement.textContent = originalText;
+        }
     }
 
     handleCardClick(event, card) {

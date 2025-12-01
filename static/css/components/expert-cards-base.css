@@ -71,6 +71,7 @@
     color: #2a2a2a;
     line-height: 1.2;
     text-shadow: none;
+    text-align: right;
 }
 
 /* === СПЕЦІАЛІЗАЦІЯ === */
@@ -299,7 +300,8 @@
     }
 
     .expert-name {
-        font-size: 0.875rem;
+        font-size: 0.667rem;
+        text-align: right;
     }
 
     .expert-specialization {

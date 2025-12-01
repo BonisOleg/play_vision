@@ -212,6 +212,7 @@
     color: #2a2a2a;
     line-height: 1.4;
     text-shadow: none;
+    text-align: right;
 }
 
 .mentoring-team-section .expert-specialization {
@@ -462,6 +463,7 @@
 
     .mentoring-team-section .expert-name {
         font-size: 1.0625rem;
+        text-align: right;
     }
 
     .mentoring-team-section .expert-specialization {
@@ -560,8 +562,9 @@
     }
 
     .mentoring-team-section .expert-name {
-        font-size: 1rem;
+        font-size: 0.667rem;
         margin-bottom: 6px;
+        text-align: right;
     }
 
     .mentoring-team-section .expert-specialization {
@@ -677,8 +680,9 @@
     }
 
     .mentoring-team-section .expert-name {
-        font-size: 1.0625rem;
+        font-size: 0.667rem;
         margin-bottom: 8px;
+        text-align: right;
     }
 
     .mentoring-team-section .expert-specialization {
