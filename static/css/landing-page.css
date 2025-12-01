@@ -512,38 +512,40 @@ body {
     align-items: center;
     justify-content: center;
     
-    padding: 12px 20px;
-    font-size: 16px;
+    padding: 16px 28px;
+    font-size: 18px;
     font-weight: 600;
     font-family: 'AtypDisplay', sans-serif;
-    color: #ffffff;
+    color: #E50914;
     
-    background: linear-gradient(135deg, #E50914 0%, #b8070f 100%);
-    border: none;
+    background: #ffffff;
+    border: 2px solid #E50914;
     border-radius: 8px;
     
     text-decoration: none;
     cursor: pointer;
     
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     
     letter-spacing: 0.5px;
 }
 
 .landing-home-button:hover {
-    background: linear-gradient(135deg, #b8070f 0%, #8b0510 100%);
+    background: #f8f8f8;
+    border-color: #b8070f;
+    color: #b8070f;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(229, 9, 20, 0.6);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 .landing-home-button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(229, 9, 20, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .landing-home-button:focus-visible {
-    outline: 2px solid #ffffff;
+    outline: 2px solid #E50914;
     outline-offset: 2px;
 }
 
@@ -559,14 +561,14 @@ body {
     .landing-home-button {
         top: 16px;
         right: 16px;
-        padding: 10px 16px;
-        font-size: 14px;
+        padding: 14px 20px;
+        font-size: 16px;
         border-radius: 6px;
-        box-shadow: 0 2px 8px rgba(229, 9, 20, 0.3);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
     
     .landing-home-button:hover {
-        box-shadow: 0 4px 12px rgba(229, 9, 20, 0.5);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
     }
 }
 
@@ -575,8 +577,8 @@ body {
     .landing-home-button {
         top: 12px;
         right: 12px;
-        padding: 8px 12px;
-        font-size: 13px;
+        padding: 12px 16px;
+        font-size: 15px;
         letter-spacing: 0.3px;
     }
     
