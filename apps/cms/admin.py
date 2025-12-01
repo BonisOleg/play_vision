@@ -81,9 +81,9 @@ class HeroSlideAdmin(admin.ModelAdmin):
 
 @admin.register(ExpertCard)
 class ExpertCardAdmin(admin.ModelAdmin):
-    list_display = ['get_photo_preview', 'name', 'position', 'order', 'is_active', 'show_on_homepage']
-    list_editable = ['order', 'is_active', 'show_on_homepage']
-    list_filter = ['is_active', 'show_on_homepage']
+    list_display = ['get_photo_preview', 'name', 'position', 'order_home', 'is_active', 'show_on_home', 'show_on_about', 'show_on_mentoring']
+    list_editable = ['order_home', 'is_active', 'show_on_home', 'show_on_about', 'show_on_mentoring']
+    list_filter = ['is_active', 'show_on_home', 'show_on_about', 'show_on_mentoring']
     search_fields = ['name', 'position', 'specialization']
     readonly_fields = ['get_photo_large', 'created_at', 'updated_at']
     
@@ -102,8 +102,14 @@ class ExpertCardAdmin(admin.ModelAdmin):
                 </div>
             '''
         }),
-        ('Відображення', {
-            'fields': ('order', 'is_active', 'show_on_homepage'),
+        ('Відображення на сторінках', {
+            'fields': (
+                ('show_on_home', 'order_home'),
+                ('show_on_about', 'order_about'),
+                ('show_on_mentoring', 'order_mentoring'),
+                'is_active'
+            ),
+            'description': 'Оберіть сторінки та порядок відображення для кожної'
         }),
         ('Метадані', {
             'fields': ('created_at', 'updated_at'),

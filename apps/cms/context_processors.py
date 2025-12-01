@@ -59,13 +59,30 @@ def site_content(request):
         )
         cache.set('cms_hero_slides', hero_slides, 60*5)
     
-    # Expert Cards - кеш 10 хв
-    experts = cache.get('cms_experts')
-    if experts is None:
-        experts = list(
-            ExpertCard.objects.filter(is_active=True).order_by('order')
+    # Expert Cards - окремо для кожної сторінки (кеш 10 хв)
+    experts_home = cache.get('cms_experts_home')
+    if experts_home is None:
+        experts_home = list(
+            ExpertCard.objects.filter(is_active=True, show_on_home=True).order_by('order_home')
         )
-        cache.set('cms_experts', experts, 60*10)
+        cache.set('cms_experts_home', experts_home, 60*10)
+    
+    experts_about = cache.get('cms_experts_about')
+    if experts_about is None:
+        experts_about = list(
+            ExpertCard.objects.filter(is_active=True, show_on_about=True).order_by('order_about')
+        )
+        cache.set('cms_experts_about', experts_about, 60*10)
+    
+    experts_mentoring = cache.get('cms_experts_mentoring')
+    if experts_mentoring is None:
+        experts_mentoring = list(
+            ExpertCard.objects.filter(is_active=True, show_on_mentoring=True).order_by('order_mentoring')
+        )
+        cache.set('cms_experts_mentoring', experts_mentoring, 60*10)
+    
+    # Backward compatibility
+    experts = experts_home
     
     # Featured Courses - кеш 5 хв
     main_courses = cache.get('cms_main_courses')
@@ -86,6 +103,9 @@ def site_content(request):
         'is_ukraine': country_code == 'UA',
         # CMS дані (можуть бути порожні списки якщо немає в БД):
         'cms_hero_slides': hero_slides,
-        'cms_experts': experts,
+        'cms_experts': experts,  # Backward compatibility
+        'cms_experts_home': experts_home,
+        'cms_experts_about': experts_about,
+        'cms_experts_mentoring': experts_mentoring,
         'main_courses': main_courses,
     }

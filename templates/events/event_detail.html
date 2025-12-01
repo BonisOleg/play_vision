@@ -86,7 +86,7 @@
                     </div>
                     {% endif %}
 
-                    {% if event.speakers.all %}
+                    {% if event.experts.all %}
                     <div class="event-experts-section">
                         <div class="experts-header">
                             <h2 class="section-title">Команда спікерів</h2>
@@ -108,29 +108,29 @@
 
                         <div class="experts-carousel-container">
                             <div class="experts-grid">
-                                {% for speaker in event.speakers.all %}
+                                {% for expert in event.experts.all %}
                                 <div class="expert-card" data-expert-id="{{ forloop.counter }}">
                                     <div class="expert-card-inner">
                                         <div class="expert-card-front">
                                             <div class="expert-photo">
-                                                {% if speaker.photo %}
-                                                <img src="{{ speaker.photo.url }}" alt="{{ speaker.full_name }}" loading="lazy">
+                                                {% if expert.photo %}
+                                                <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
                                                 {% else %}
-                                                <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png" alt="{{ speaker.full_name }}" loading="lazy">
+                                                <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png" alt="{{ expert.name }}" loading="lazy">
                                                 {% endif %}
                                             </div>
                                             <div class="expert-card-content">
-                                                <h3 class="expert-name">{{ speaker.full_name }}</h3>
-                                                <p class="expert-specialization">{{ speaker.position }}</p>
+                                                <h3 class="expert-name">{{ expert.name }}</h3>
+                                                <p class="expert-specialization">{{ expert.position }}</p>
                                                 <span class="expert-detail-link">Огляд профілю →</span>
                                             </div>
                                         </div>
                                         <div class="expert-card-back">
                                             <div class="expert-bio-content">
-                                                <h3 class="expert-name-back">{{ speaker.full_name }}</h3>
+                                                <h3 class="expert-name-back">{{ expert.name }}</h3>
                                                 <div class="expert-bio-text">
-                                                    {% if speaker.bio %}
-                                                    {{ speaker.bio|linebreaks }}
+                                                    {% if expert.bio %}
+                                                    {{ expert.bio|linebreaks }}
                                                     {% else %}
                                                     <p>Інформація про експерта скоро буде додана.</p>
                                                     {% endif %}

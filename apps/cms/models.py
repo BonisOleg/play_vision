@@ -101,10 +101,19 @@ class ExpertCard(models.Model):
     photo = models.ImageField('Фото', upload_to='cms/experts/', blank=True,
                              max_length=500, help_text='Рекомендований розмір: 400×400 px')
     
-    # Display
-    order = models.PositiveIntegerField('Порядок', default=0)
+    # Display - per page visibility
+    show_on_home = models.BooleanField('Показувати на головній', default=False)
+    show_on_about = models.BooleanField('Показувати на "Про нас"', default=False)
+    show_on_mentoring = models.BooleanField('Показувати на "Ментор коучинг"', default=False)
+    
+    # Ordering per page
+    order_home = models.PositiveIntegerField('Порядок на головній', default=0)
+    order_about = models.PositiveIntegerField('Порядок на "Про нас"', default=0)
+    order_mentoring = models.PositiveIntegerField('Порядок на "Ментор коучинг"', default=0)
+    
+    # General display
+    order = models.PositiveIntegerField('Порядок', default=0)  # для сумісності
     is_active = models.BooleanField('Активний', default=True)
-    show_on_homepage = models.BooleanField('Показувати на головній', default=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -113,7 +122,7 @@ class ExpertCard(models.Model):
         db_table = 'cms_expert_cards'
         verbose_name = 'Спеціаліст'
         verbose_name_plural = 'Команда (використовується скрізь)'
-        ordering = ['order']
+        ordering = ['order_home', 'order_about', 'order_mentoring']
     
     def __str__(self):
         return self.name

@@ -106,6 +106,13 @@ class Event(models.Model):
     organizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
                                 related_name='organized_events', blank=True, null=True)
     speakers = models.ManyToManyField('Speaker', blank=True, related_name='events')
+    experts = models.ManyToManyField(
+        'cms.ExpertCard', 
+        blank=True, 
+        related_name='expert_events',
+        verbose_name='Експерти команди',
+        help_text='Члени команди Play Vision як спікери'
+    )
     
     # Features
     is_featured = models.BooleanField(default=False)

@@ -33,8 +33,13 @@ class ExpertCardFactory(DjangoModelFactory):
     specialization = factory.Faker('sentence', nb_words=4)
     bio = factory.Faker('text', max_nb_chars=200)
     order = factory.Sequence(lambda n: n)
+    order_home = factory.Sequence(lambda n: n)
+    order_about = factory.Sequence(lambda n: n)
+    order_mentoring = factory.Sequence(lambda n: n)
     is_active = True
-    show_on_homepage = True
+    show_on_home = True
+    show_on_about = False
+    show_on_mentoring = False
 
 
 class FeaturedCourseFactory(DjangoModelFactory):
