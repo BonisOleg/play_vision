@@ -120,22 +120,20 @@
                     <div class="values-grid">
                         {% if about_section4 %}
                             {% for i in "123456" %}
-                                {% with field="svg_"|add:i|add:"_ua_light" %}
-                                    {% with svg_light=about_section4|getattr:field %}
+                                {% get_svg_light_by_index about_section4 i country_code "light" as svg_light %}
+                                {% get_svg_dark_by_index about_section4 i country_code "light" as svg_dark %}
+                                <div class="grid-cell">
+                                    <div class="theme-svg-wrapper">
                                         {% if svg_light %}
-                                        <div class="grid-cell">
-                                            <div class="theme-svg-wrapper">
-                                                <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
-                                                {% with dark_field="svg_"|add:i|add:"_ua_dark" %}
-                                                    {% with svg_dark=about_section4|getattr:dark_field %}
-                                                        {% if svg_dark %}<div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>{% else %}{{ svg_light|safe }}{% endif %}
-                                                    {% endwith %}
-                                                {% endwith %}
-                                            </div>
-                                        </div>
+                                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
                                         {% endif %}
-                                    {% endwith %}
-                                {% endwith %}
+                                        {% if svg_dark %}
+                                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                                        {% elif svg_light %}
+                                            <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             {% endfor %}
                         {% else %}
                             <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 1" loading="lazy"></div>

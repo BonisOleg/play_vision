@@ -31,6 +31,53 @@ def getattr(obj, attr_name):
 
 
 @register.simple_tag
+def get_svg_light_by_index(section, index, country_code='UA', theme='light'):
+    """Отримати SVG light за індексом (1-6) для секції 4"""
+    try:
+        if not section:
+            return ''
+        
+        # Формуємо назву поля
+        field_light = f"svg_{index}_{'ua' if country_code == 'UA' else 'world'}_{theme}"
+        svg_light = getattr(section, field_light, '')
+        
+        # Fallback: World → UA
+        if not svg_light and country_code != 'UA':
+            svg_light = getattr(section, f"svg_{index}_ua_{theme}", '')
+        
+        return svg_light or ''
+    except Exception:
+        return ''
+
+
+@register.simple_tag
+def get_svg_dark_by_index(section, index, country_code='UA', theme='light'):
+    """Отримати SVG dark за індексом (1-6) для секції 4"""
+    try:
+        if not section:
+            return ''
+        
+        # Формуємо назву поля
+        field_dark = f"svg_{index}_{'ua' if country_code == 'UA' else 'world'}_dark"
+        svg_dark = getattr(section, field_dark, '')
+        
+        # Fallback: World → UA
+        if not svg_dark and country_code != 'UA':
+            svg_dark = getattr(section, f"svg_{index}_ua_dark", '')
+        
+        # Fallback: Dark → Light (використовуємо той самий логічний підхід)
+        if not svg_dark:
+            field_light = f"svg_{index}_{'ua' if country_code == 'UA' else 'world'}_{theme}"
+            svg_dark = getattr(section, field_light, '')
+            if not svg_dark and country_code != 'UA':
+                svg_dark = getattr(section, f"svg_{index}_ua_{theme}", '')
+        
+        return svg_dark or ''
+    except Exception:
+        return ''
+
+
+@register.simple_tag
 def get_hero_slides():
     """Отримати активні Hero слайди"""
     return HeroSlide.objects.filter(is_active=True).order_by('order')
