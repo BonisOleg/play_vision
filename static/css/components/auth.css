@@ -448,7 +448,7 @@
 /* spin animation moved to animations.css */
 
 /* Mobile Responsive */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .auth-card {
         padding: 30px 20px;
     }
@@ -524,47 +524,7 @@
         -webkit-appearance: none;
     }
 
-    /* iOS - Mobile (max-width: 768px) */
-    @media (max-width: 768px) {
-        .auth-card {
-            padding: 30px 20px;
-        }
-
-        .auth-title {
-            font-size: 26px;
-        }
-
-        .auth-subtitle {
-            font-size: 16px;
-        }
-
-        .auth-tab {
-            font-size: 15px;
-        }
-
-        .form-input {
-            font-size: 16px;
-        }
-
-        .btn {
-            padding: 14px 24px;
-            font-size: 16px;
-        }
-
-        .social-btn {
-            width: 70px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .form-input {
-            font-size: 16px;
-        }
-
-        .auth-subtitle {
-            font-size: 16px;
-        }
-    }
+    /* iOS-специфічні властивості залишаємо, візуальні властивості (padding, font-size) винесено в стандартні медіа-запити */
 }
 
 /* Dark Mode Support */
@@ -639,7 +599,7 @@
 }
 
 /* Mobile (max 768px) */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .auth-container {
         padding: 16px;
     }
@@ -687,7 +647,7 @@
 }
 
 /* Small mobile (max 480px) */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .auth-card {
         padding: 24px 16px;
     }

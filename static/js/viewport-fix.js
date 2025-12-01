@@ -20,9 +20,21 @@ window.addEventListener('orientationchange', () => {
     setTimeout(setVhProperty, 100);
 });
 
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-if (isIOS) {
-    document.documentElement.classList.add('ios-safari');
+// Використовуємо єдину функцію для додавання класу (якщо ios-detection.js вже завантажений)
+// Якщо ні, використовуємо fallback
+(function() {
+    if (typeof window.isIOS === 'function') {
+        if (window.isIOS()) {
+            window.addIOSClass();
+        }
+    } else {
+        // Fallback якщо ios-detection.js ще не завантажений
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+            document.documentElement.classList.add('ios-safari');
+        }
+    }
+})();
     
     const header = document.querySelector('.main-header');
     if (header) {

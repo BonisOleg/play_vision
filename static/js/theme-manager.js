@@ -20,9 +20,20 @@ const ThemeManager = (() => {
         applyTheme(currentTheme, false);
         watchSystemTheme();
 
-        // iOS Safari specific fix
-        if (isIOSSafari()) {
-            document.documentElement.classList.add('ios-safari');
+        // iOS Safari specific fix - використовуємо єдину функцію (якщо ios-detection.js вже завантажений)
+        if (typeof window.isIOS === 'function') {
+            if (window.isIOS()) {
+                window.addIOSClass();
+            }
+        } else {
+            // Fallback якщо ios-detection.js ще не завантажений
+            const ua = navigator.userAgent;
+            const iOS = /iPad|iPhone|iPod/.test(ua);
+            const webkit = /WebKit/.test(ua);
+            const notChrome = !/CriOS|Chrome/.test(ua);
+            if (iOS && webkit && notChrome) {
+                document.documentElement.classList.add('ios-safari');
+            }
         }
     }
 
@@ -150,8 +161,13 @@ const ThemeManager = (() => {
 
     /**
      * Перевірка чи це iOS Safari
+     * Використовує глобальну функцію якщо доступна, інакше fallback
      */
     function isIOSSafari() {
+        if (typeof window.isIOSSafari === 'function') {
+            return window.isIOSSafari();
+        }
+        // Fallback
         const ua = navigator.userAgent;
         const iOS = /iPad|iPhone|iPod/.test(ua);
         const webkit = /WebKit/.test(ua);

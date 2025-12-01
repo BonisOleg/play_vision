@@ -92,7 +92,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     /* NEW DESIGN Mobile */
     .hero-section.hero-bordered .section-content.hero-new-design {
         left: 5px;
@@ -308,7 +308,7 @@
     border-radius: 4px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .slider-dot {
         width: 6px;
         height: 6px;
@@ -501,7 +501,7 @@
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hero-section {
         width: 95%;
         margin: 8px auto;
@@ -615,43 +615,9 @@
         transform: translateZ(0);
     }
 
-    @media (max-width: 768px) {
-        .hero-new-design .hero-buttons {
-            gap: 0.5rem;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-        }
+    /* iOS-специфічні властивості залишаємо, візуальні властивості винесено в стандартні медіа-запити */
 
-        .hero-new-design .hero-slider-dots {
-            margin-top: 0;
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .cta-section .btn-primary {
-            font-size: 0.875rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .hero-new-design .hero-buttons {
-            gap: 0.5rem;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-new-design .hero-slider-dots {
-            margin-top: 0;
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-    }
+    /* 480px breakpoint видалено - використовуємо 767px для уніфікації */
 }
 
 
