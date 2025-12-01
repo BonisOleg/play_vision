@@ -377,7 +377,10 @@ def clear_hero_slides_cache(sender, **kwargs):
 @receiver([post_save, post_delete], sender=ExpertCard)
 def clear_expert_cards_cache(sender, **kwargs):
     """Очистити кеш експертів при додаванні/зміні/видаленні"""
-    cache.delete('cms_experts')
+    cache.delete('cms_experts')  # Backward compatibility
+    cache.delete('cms_experts_home')
+    cache.delete('cms_experts_about')
+    cache.delete('cms_experts_mentoring')
 
 
 @receiver([post_save, post_delete], sender=FeaturedCourse)

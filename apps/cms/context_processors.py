@@ -79,6 +79,9 @@ def site_content(request):
         experts_mentoring = list(
             ExpertCard.objects.filter(is_active=True, show_on_mentoring=True).order_by('order_mentoring')
         )
+        # Fallback: якщо немає експертів з show_on_mentoring=True, використовуємо тих що на головній
+        if not experts_mentoring:
+            experts_mentoring = experts_home
         cache.set('cms_experts_mentoring', experts_mentoring, 60*10)
     
     # Backward compatibility
