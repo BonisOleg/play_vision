@@ -230,13 +230,13 @@
 
 /* ЧОРНА кнопка з білим текстом і білим колом з логотипом */
 .mentor-cta .btn-primary {
-    background: #171717;
+    background: #171717 !important;
     color: #ffffff;
     border: none;
     padding: 10px 16px 10px 20px;
     font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: 50px !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;

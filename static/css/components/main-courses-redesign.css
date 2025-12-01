@@ -426,7 +426,14 @@
     }
 
     .course-card-top {
-        display: none;
+        display: block;
+        padding: 8px 8px 6px 8px;
+    }
+
+    .course-card-top .course-title {
+        font-size: 0.65rem;
+        line-height: 1.2;
+        -webkit-line-clamp: 1;
     }
 
     .course-card-bottom {
@@ -503,7 +510,14 @@
     }
 
     .course-card-top {
-        display: none;
+        display: block;
+        padding: 6px 6px 4px 6px;
+    }
+
+    .course-card-top .course-title {
+        font-size: 0.55rem;
+        line-height: 1.2;
+        -webkit-line-clamp: 1;
     }
 
     .course-card-bottom {

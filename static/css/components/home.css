@@ -461,7 +461,6 @@
     transition: all 0.3s ease;
     white-space: nowrap;
     overflow: visible;
-    text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
     -webkit-backface-visibility: hidden;
@@ -568,8 +567,8 @@
     .cta-section .btn-primary {
         width: 100%;
         max-width: 280px;
-        padding: 14px 28px;
-        font-size: 0.875rem;
+        padding: 10px 20px;
+        font-size: 0.4375rem;
     }
 
     .cta-section .btn-primary .btn-logo-space {
