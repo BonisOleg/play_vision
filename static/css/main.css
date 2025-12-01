@@ -119,22 +119,6 @@ a:hover {
     border: 0;
 }
 
-/* Skip link для accessibility */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--color-primary);
-    color: white;
-    padding: 8px;
-    text-decoration: none;
-    z-index: 10000;
-}
-
-.skip-link:focus {
-    top: 0;
-}
-
 .icon {
     width: 24px;
     height: 24px;
