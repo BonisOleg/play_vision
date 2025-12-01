@@ -84,6 +84,11 @@
 }
 
 @media (max-width: 767px) {
+    .hub-featured-section .section-content {
+        display: flex;
+        flex-direction: column;
+    }
+
     .hub-featured-header {
         display: contents;
     }

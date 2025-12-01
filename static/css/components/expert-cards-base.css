@@ -247,6 +247,11 @@
 
 /* ==================== SMALL MOBILE (< 576px) ==================== */
 @media (max-width: 767px) {
+    .experts-section .section-content {
+        display: flex;
+        flex-direction: column;
+    }
+
     .experts-header {
         display: contents;
     }
