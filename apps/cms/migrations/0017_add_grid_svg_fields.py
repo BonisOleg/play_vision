@@ -1,4 +1,4 @@
-# Generated migration for grid SVG fields
+# Migration to add grid SVG fields to AboutSection3 and AboutSection4
 
 from django.db import migrations, models
 
@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # AboutSection3 - Grid SVG 1
+        # AboutSection3 - Add 12 grid SVG fields (3 SVG × 4 versions each)
         migrations.AddField(
             model_name='aboutsection3',
             name='svg_1_ua_light',
@@ -31,7 +31,6 @@ class Migration(migrations.Migration):
             name='svg_1_world_dark',
             field=models.TextField(blank=True, verbose_name='SVG 1 - World (темна)'),
         ),
-        # AboutSection3 - Grid SVG 2
         migrations.AddField(
             model_name='aboutsection3',
             name='svg_2_ua_light',
@@ -52,7 +51,6 @@ class Migration(migrations.Migration):
             name='svg_2_world_dark',
             field=models.TextField(blank=True, verbose_name='SVG 2 - World (темна)'),
         ),
-        # AboutSection3 - Grid SVG 3
         migrations.AddField(
             model_name='aboutsection3',
             name='svg_3_ua_light',
@@ -73,7 +71,8 @@ class Migration(migrations.Migration):
             name='svg_3_world_dark',
             field=models.TextField(blank=True, verbose_name='SVG 3 - World (темна)'),
         ),
-        # AboutSection4 - Grid SVG 1-6
+        
+        # AboutSection4 - Add 24 grid SVG fields (6 SVG × 4 versions each)
         migrations.AddField(
             model_name='aboutsection4',
             name='svg_1_ua_light',
