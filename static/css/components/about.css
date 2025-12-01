@@ -102,6 +102,15 @@
     }
 }
 
+/* === ДЕСКТОПНА АДАПТАЦІЯ - ВІДСТУП === */
+@media (min-width: 1025px) {
+    .about-mission-section .section-title,
+    .about-values-section .section-title,
+    .about-team-section .section-title {
+        margin-bottom: var(--spacing-xl);
+    }
+}
+
 /* === МОБІЛЬНА АДАПТАЦІЯ - ТЕКСТ === */
 @media (max-width: 767px) {
     .about-mission-section .section-title,
