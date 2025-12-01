@@ -204,7 +204,7 @@
 }
 
 .calendar-event-name {
-    font-size: 0.6rem;
+    font-size: max(0.6rem, 12px);
     font-weight: 700;
     flex: 1;
     color: #ffffff;
@@ -223,7 +223,7 @@
 }
 
 .calendar-event-description {
-    font-size: 0.5rem;
+    font-size: max(0.5rem, 12px);
     line-height: 1.5;
     margin-bottom: 16px;
     flex: 1;
@@ -320,6 +320,31 @@
     [data-theme="auto"] .calendar-card--empty:hover {
         background: #1a1a1a;
         border-color: #333333;
+    }
+}
+
+/* ==================== iOS SAFARI ОПТИМІЗАЦІЯ ==================== */
+@supports (-webkit-touch-callout: none) {
+    .calendar-card {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0); /* Hardware acceleration */
+    }
+    
+    .calendar-event-name,
+    .calendar-event-description,
+    .calendar-event-date {
+        -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Safe area для padding на мобільних */
+    @media (max-width: 767px) {
+        .calendar-card {
+            padding-top: max(20px, env(safe-area-inset-top, 0));
+            padding-right: max(20px, env(safe-area-inset-right, 0));
+            padding-bottom: max(20px, env(safe-area-inset-bottom, 0));
+            padding-left: max(20px, env(safe-area-inset-left, 0));
+        }
     }
 }
 
