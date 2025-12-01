@@ -68,6 +68,11 @@ class ExpertFlipCards {
                 return;
             }
 
+            // Якщо touch на контенті який має скролитися - пропустити
+            if (e.target.closest('.expert-bio-content')) {
+                return;
+            }
+
             // БЛОКУЄМО scroll на Android (критично для Android Chrome)
             e.preventDefault();
             
@@ -78,6 +83,11 @@ class ExpertFlipCards {
         }, { passive: false });
 
         card.addEventListener('touchmove', (e) => {
+            // Якщо touch на контенті який має скролитися - пропустити
+            if (e.target.closest('.expert-bio-content')) {
+                return;
+            }
+
             if (!isMoved) {
                 const currentX = e.touches[0].clientX;
                 const currentY = e.touches[0].clientY;
@@ -95,6 +105,11 @@ class ExpertFlipCards {
         }, { passive: false });
 
         card.addEventListener('touchend', (e) => {
+            // Якщо touch на контенті який має скролитися - пропустити
+            if (e.target.closest('.expert-bio-content')) {
+                return;
+            }
+
             const touchEndX = e.changedTouches[0].clientX;
             const touchEndY = e.changedTouches[0].clientY;
             const touchDuration = Date.now() - touchStartTime;

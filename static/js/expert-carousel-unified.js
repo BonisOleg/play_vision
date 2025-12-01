@@ -169,6 +169,15 @@ class ExpertCarouselUnified {
             if (!isDragging) return;
             isDragging = false;
 
+            // КРИТИЧНА ПЕРЕВІРКА: якщо touch на контенті який скролиться - ігнорувати
+            if (e.target.closest('.expert-bio-content')) {
+                touchStartX = 0;
+                touchEndX = 0;
+                touchStartY = 0;
+                touchEndY = 0;
+                return;
+            }
+
             const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
             
