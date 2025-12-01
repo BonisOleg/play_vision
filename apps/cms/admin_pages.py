@@ -94,28 +94,73 @@ class AboutSection2Admin(admin.ModelAdmin):
 
 @admin.register(AboutSection3)
 class AboutSection3Admin(admin.ModelAdmin):
-    """Секція 3 - Про нас (Заголовок + SVG)"""
+    """Секція 3 - Про нас (Заголовок + Grid 3 SVG)"""
     
     fieldsets = (
         ('🇺🇦 Заголовок Україна', {
             'fields': ('title_ua',)
         }),
-        ('🇺🇦 SVG Україна - Світла', {
-            'fields': ('svg_ua_light',)
-        }),
-        ('🇺🇦 SVG Україна - Темна', {
-            'fields': ('svg_ua_dark',)
-        }),
         ('🌍 Заголовок Світ', {
             'fields': ('title_world',),
             'classes': ('collapse',)
         }),
-        ('🌍 SVG Світ - Світла', {
+        ('🇺🇦 Legacy SVG (зворотна сумісність) - Світла', {
+            'fields': ('svg_ua_light',),
+            'classes': ('collapse',),
+            'description': 'Старе поле - для сумісності'
+        }),
+        ('🇺🇦 Legacy SVG - Темна', {
+            'fields': ('svg_ua_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 Legacy SVG - Світла', {
             'fields': ('svg_world_light',),
             'classes': ('collapse',)
         }),
-        ('🌍 SVG Світ - Темна', {
+        ('🌍 Legacy SVG - Темна', {
             'fields': ('svg_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 1 (Україна) - Світла', {
+            'fields': ('svg_1_ua_light',)
+        }),
+        ('🇺🇦 SVG 1 (Україна) - Темна', {
+            'fields': ('svg_1_ua_dark',)
+        }),
+        ('🌍 SVG 1 (Світ) - Світла', {
+            'fields': ('svg_1_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 1 (Світ) - Темна', {
+            'fields': ('svg_1_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 2 (Україна) - Світла', {
+            'fields': ('svg_2_ua_light',)
+        }),
+        ('🇺🇦 SVG 2 (Україна) - Темна', {
+            'fields': ('svg_2_ua_dark',)
+        }),
+        ('🌍 SVG 2 (Світ) - Світла', {
+            'fields': ('svg_2_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 2 (Світ) - Темна', {
+            'fields': ('svg_2_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 3 (Україна) - Світла', {
+            'fields': ('svg_3_ua_light',)
+        }),
+        ('🇺🇦 SVG 3 (Україна) - Темна', {
+            'fields': ('svg_3_ua_dark',)
+        }),
+        ('🌍 SVG 3 (Світ) - Світла', {
+            'fields': ('svg_3_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 3 (Світ) - Темна', {
+            'fields': ('svg_3_world_dark',),
             'classes': ('collapse',)
         }),
         ('Налаштування', {
@@ -132,28 +177,115 @@ class AboutSection3Admin(admin.ModelAdmin):
 
 @admin.register(AboutSection4)
 class AboutSection4Admin(admin.ModelAdmin):
-    """Секція 4 - Про нас (Заголовок + SVG)"""
+    """Секція 4 - Про нас (Заголовок + Grid 6 SVG 3x2)"""
     
     fieldsets = (
         ('🇺🇦 Заголовок Україна', {
             'fields': ('title_ua',)
         }),
-        ('🇺🇦 SVG Україна - Світла', {
-            'fields': ('svg_ua_light',)
-        }),
-        ('🇺🇦 SVG Україна - Темна', {
-            'fields': ('svg_ua_dark',)
-        }),
         ('🌍 Заголовок Світ', {
             'fields': ('title_world',),
             'classes': ('collapse',)
         }),
-        ('🌍 SVG Світ - Світла', {
+        ('🇺🇦 Legacy SVG (зворотна сумісність) - Світла', {
+            'fields': ('svg_ua_light',),
+            'classes': ('collapse',),
+            'description': 'Старе поле - для сумісності'
+        }),
+        ('🇺🇦 Legacy SVG - Темна', {
+            'fields': ('svg_ua_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 Legacy SVG - Світла', {
             'fields': ('svg_world_light',),
             'classes': ('collapse',)
         }),
-        ('🌍 SVG Світ - Темна', {
+        ('🌍 Legacy SVG - Темна', {
             'fields': ('svg_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 1 (Україна) - Світла', {
+            'fields': ('svg_1_ua_light',)
+        }),
+        ('🇺🇦 SVG 1 (Україна) - Темна', {
+            'fields': ('svg_1_ua_dark',)
+        }),
+        ('🌍 SVG 1 (Світ) - Світла', {
+            'fields': ('svg_1_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 1 (Світ) - Темна', {
+            'fields': ('svg_1_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 2 (Україна) - Світла', {
+            'fields': ('svg_2_ua_light',)
+        }),
+        ('🇺🇦 SVG 2 (Україна) - Темна', {
+            'fields': ('svg_2_ua_dark',)
+        }),
+        ('🌍 SVG 2 (Світ) - Світла', {
+            'fields': ('svg_2_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 2 (Світ) - Темна', {
+            'fields': ('svg_2_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 3 (Україна) - Світла', {
+            'fields': ('svg_3_ua_light',)
+        }),
+        ('🇺🇦 SVG 3 (Україна) - Темна', {
+            'fields': ('svg_3_ua_dark',)
+        }),
+        ('🌍 SVG 3 (Світ) - Світла', {
+            'fields': ('svg_3_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 3 (Світ) - Темна', {
+            'fields': ('svg_3_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 4 (Україна) - Світла', {
+            'fields': ('svg_4_ua_light',)
+        }),
+        ('🇺🇦 SVG 4 (Україна) - Темна', {
+            'fields': ('svg_4_ua_dark',)
+        }),
+        ('🌍 SVG 4 (Світ) - Світла', {
+            'fields': ('svg_4_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 4 (Світ) - Темна', {
+            'fields': ('svg_4_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 5 (Україна) - Світла', {
+            'fields': ('svg_5_ua_light',)
+        }),
+        ('🇺🇦 SVG 5 (Україна) - Темна', {
+            'fields': ('svg_5_ua_dark',)
+        }),
+        ('🌍 SVG 5 (Світ) - Світла', {
+            'fields': ('svg_5_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 5 (Світ) - Темна', {
+            'fields': ('svg_5_world_dark',),
+            'classes': ('collapse',)
+        }),
+        ('🇺🇦 SVG 6 (Україна) - Світла', {
+            'fields': ('svg_6_ua_light',)
+        }),
+        ('🇺🇦 SVG 6 (Україна) - Темна', {
+            'fields': ('svg_6_ua_dark',)
+        }),
+        ('🌍 SVG 6 (Світ) - Світла', {
+            'fields': ('svg_6_world_light',),
+            'classes': ('collapse',)
+        }),
+        ('🌍 SVG 6 (Світ) - Темна', {
+            'fields': ('svg_6_world_dark',),
             'classes': ('collapse',)
         }),
         ('Налаштування', {

@@ -150,16 +150,34 @@ class AboutSection2(models.Model):
 
 
 class AboutSection3(models.Model):
-    """Секція 3 - Заголовок + SVG"""
+    """Секція 3 - Заголовок + Grid з 3 SVG"""
     # Заголовок UA/World
     title_ua = models.CharField('Заголовок (Україна)', max_length=200)
     title_world = models.CharField('Заголовок (Світ)', max_length=200, blank=True)
     
-    # SVG 4 версії
+    # Legacy SVG (зворотна сумісність)
     svg_ua_light = models.TextField('SVG UA (світла тема)')
     svg_ua_dark = models.TextField('SVG UA (темна тема)', blank=True)
     svg_world_light = models.TextField('SVG World (світла)', blank=True)
     svg_world_dark = models.TextField('SVG World (темна)', blank=True)
+    
+    # Grid SVG 1 (4 версії)
+    svg_1_ua_light = models.TextField('SVG 1 - UA (світла)', blank=True)
+    svg_1_ua_dark = models.TextField('SVG 1 - UA (темна)', blank=True)
+    svg_1_world_light = models.TextField('SVG 1 - World (світла)', blank=True)
+    svg_1_world_dark = models.TextField('SVG 1 - World (темна)', blank=True)
+    
+    # Grid SVG 2 (4 версії)
+    svg_2_ua_light = models.TextField('SVG 2 - UA (світла)', blank=True)
+    svg_2_ua_dark = models.TextField('SVG 2 - UA (темна)', blank=True)
+    svg_2_world_light = models.TextField('SVG 2 - World (світла)', blank=True)
+    svg_2_world_dark = models.TextField('SVG 2 - World (темна)', blank=True)
+    
+    # Grid SVG 3 (4 версії)
+    svg_3_ua_light = models.TextField('SVG 3 - UA (світла)', blank=True)
+    svg_3_ua_dark = models.TextField('SVG 3 - UA (темна)', blank=True)
+    svg_3_world_light = models.TextField('SVG 3 - World (світла)', blank=True)
+    svg_3_world_dark = models.TextField('SVG 3 - World (темна)', blank=True)
     
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -187,22 +205,72 @@ class AboutSection3(models.Model):
         
         return svg or self.svg_ua_light
     
+    def get_svg_list(self, country_code='UA', theme='light'):
+        """Отримати список з 3 SVG для grid"""
+        svgs = []
+        for i in range(1, 4):
+            field_name = f"svg_{i}_{'ua' if country_code == 'UA' else 'world'}_{theme}"
+            svg = getattr(self, field_name, '')
+            
+            # Fallback: World → UA
+            if not svg and country_code != 'UA':
+                svg = getattr(self, f"svg_{i}_ua_{theme}", '')
+            # Fallback: Dark → Light
+            if not svg and theme == 'dark':
+                svg = getattr(self, f"svg_{i}_{'ua' if country_code == 'UA' else 'world'}_light", '')
+            
+            if svg:
+                svgs.append(svg)
+        
+        return svgs
+    
     def save(self, *args, **kwargs):
         self.pk = 1
         super().save(*args, **kwargs)
 
 
 class AboutSection4(models.Model):
-    """Секція 4 - Заголовок + SVG"""
+    """Секція 4 - Заголовок + Grid з 6 SVG (3x2)"""
     # Заголовок UA/World
     title_ua = models.CharField('Заголовок (Україна)', max_length=200)
     title_world = models.CharField('Заголовок (Світ)', max_length=200, blank=True)
     
-    # SVG 4 версії
+    # Legacy SVG (зворотна сумісність)
     svg_ua_light = models.TextField('SVG UA (світла тема)')
     svg_ua_dark = models.TextField('SVG UA (темна тема)', blank=True)
     svg_world_light = models.TextField('SVG World (світла)', blank=True)
     svg_world_dark = models.TextField('SVG World (темна)', blank=True)
+    
+    # Grid SVG 1-6 (кожен 4 версії: UA light/dark, World light/dark)
+    svg_1_ua_light = models.TextField('SVG 1 - UA (світла)', blank=True)
+    svg_1_ua_dark = models.TextField('SVG 1 - UA (темна)', blank=True)
+    svg_1_world_light = models.TextField('SVG 1 - World (світла)', blank=True)
+    svg_1_world_dark = models.TextField('SVG 1 - World (темна)', blank=True)
+    
+    svg_2_ua_light = models.TextField('SVG 2 - UA (світла)', blank=True)
+    svg_2_ua_dark = models.TextField('SVG 2 - UA (темна)', blank=True)
+    svg_2_world_light = models.TextField('SVG 2 - World (світла)', blank=True)
+    svg_2_world_dark = models.TextField('SVG 2 - World (темна)', blank=True)
+    
+    svg_3_ua_light = models.TextField('SVG 3 - UA (світла)', blank=True)
+    svg_3_ua_dark = models.TextField('SVG 3 - UA (темна)', blank=True)
+    svg_3_world_light = models.TextField('SVG 3 - World (світла)', blank=True)
+    svg_3_world_dark = models.TextField('SVG 3 - World (темна)', blank=True)
+    
+    svg_4_ua_light = models.TextField('SVG 4 - UA (світла)', blank=True)
+    svg_4_ua_dark = models.TextField('SVG 4 - UA (темна)', blank=True)
+    svg_4_world_light = models.TextField('SVG 4 - World (світла)', blank=True)
+    svg_4_world_dark = models.TextField('SVG 4 - World (темна)', blank=True)
+    
+    svg_5_ua_light = models.TextField('SVG 5 - UA (світла)', blank=True)
+    svg_5_ua_dark = models.TextField('SVG 5 - UA (темна)', blank=True)
+    svg_5_world_light = models.TextField('SVG 5 - World (світла)', blank=True)
+    svg_5_world_dark = models.TextField('SVG 5 - World (темна)', blank=True)
+    
+    svg_6_ua_light = models.TextField('SVG 6 - UA (світла)', blank=True)
+    svg_6_ua_dark = models.TextField('SVG 6 - UA (темна)', blank=True)
+    svg_6_world_light = models.TextField('SVG 6 - World (світла)', blank=True)
+    svg_6_world_dark = models.TextField('SVG 6 - World (темна)', blank=True)
     
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -228,6 +296,25 @@ class AboutSection4(models.Model):
             svg = getattr(self, f"svg_{'ua' if country_code == 'UA' else 'world'}_light", '')
         
         return svg or self.svg_ua_light
+    
+    def get_svg_list(self, country_code='UA', theme='light'):
+        """Отримати список з 6 SVG для grid"""
+        svgs = []
+        for i in range(1, 7):
+            field_name = f"svg_{i}_{'ua' if country_code == 'UA' else 'world'}_{theme}"
+            svg = getattr(self, field_name, '')
+            
+            # Fallback: World → UA
+            if not svg and country_code != 'UA':
+                svg = getattr(self, f"svg_{i}_ua_{theme}", '')
+            # Fallback: Dark → Light
+            if not svg and theme == 'dark':
+                svg = getattr(self, f"svg_{i}_{'ua' if country_code == 'UA' else 'world'}_light", '')
+            
+            if svg:
+                svgs.append(svg)
+        
+        return svgs
     
     def save(self, *args, **kwargs):
         self.pk = 1

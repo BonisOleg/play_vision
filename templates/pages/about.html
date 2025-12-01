@@ -64,59 +64,86 @@
                 </div>
             </section>
 
-            <!-- 3. МІСІЯ, ФІЛОСОФІЯ І ВІРА -->
+            <!-- 3. МІСІЯ, ФІЛОСОФІЯ І ВІРА (Grid 3x1) -->
             {% get_about_section3 as about_section3 %}
             <section class="fullscreen-section about-mission-section">
                 <div class="section-content">
                     <h2 class="section-title">{% if about_section3 %}{{ about_section3|get_localized_title:country_code }}{% else %}Місія, <span class="text-highlight">філософія</span> і віра{% endif %}</h2>
                     
-                    <div class="about-image-block">
+                    <div class="mission-grid">
                         {% if about_section3 %}
-                        {% get_localized_svg about_section3 country_code 'light' as svg_light %}
-                        {% get_localized_svg about_section3 country_code 'dark' as svg_dark %}
-                        <div class="theme-svg-wrapper">
-                            {% if svg_light %}
-                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
-                            {% endif %}
-                            {% if svg_dark %}
-                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
-                            {% else %}
-                                {% if svg_light %}
-                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
-                                {% endif %}
-                            {% endif %}
-                        </div>
+                            {% with svg1_light=about_section3.svg_1_ua_light|default:about_section3.svg_1_world_light svg1_dark=about_section3.svg_1_ua_dark|default:about_section3.svg_1_world_dark %}
+                                {% with svg2_light=about_section3.svg_2_ua_light|default:about_section3.svg_2_world_light svg2_dark=about_section3.svg_2_ua_dark|default:about_section3.svg_2_world_dark %}
+                                    {% with svg3_light=about_section3.svg_3_ua_light|default:about_section3.svg_3_world_light svg3_dark=about_section3.svg_3_ua_dark|default:about_section3.svg_3_world_dark %}
+                                        {% if svg1_light %}
+                                        <div class="grid-cell">
+                                            <div class="theme-svg-wrapper">
+                                                <div class="theme-svg theme-svg--light">{{ svg1_light|safe }}</div>
+                                                {% if svg1_dark %}<div class="theme-svg theme-svg--dark">{{ svg1_dark|safe }}</div>{% else %}{{ svg1_light|safe }}{% endif %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        {% if svg2_light %}
+                                        <div class="grid-cell">
+                                            <div class="theme-svg-wrapper">
+                                                <div class="theme-svg theme-svg--light">{{ svg2_light|safe }}</div>
+                                                {% if svg2_dark %}<div class="theme-svg theme-svg--dark">{{ svg2_dark|safe }}</div>{% else %}{{ svg2_light|safe }}{% endif %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        {% if svg3_light %}
+                                        <div class="grid-cell">
+                                            <div class="theme-svg-wrapper">
+                                                <div class="theme-svg theme-svg--light">{{ svg3_light|safe }}</div>
+                                                {% if svg3_dark %}<div class="theme-svg theme-svg--dark">{{ svg3_dark|safe }}</div>{% else %}{{ svg3_light|safe }}{% endif %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endwith %}
+                            {% endwith %}
                         {% else %}
-                        <img src="{% static 'images/about2.svg' %}" alt="Місія, філософія і віра" loading="lazy">
+                            <div class="grid-cell"><img src="{% static 'images/about2.svg' %}" alt="SVG 1" loading="lazy"></div>
+                            <div class="grid-cell"><img src="{% static 'images/about2.svg' %}" alt="SVG 2" loading="lazy"></div>
+                            <div class="grid-cell"><img src="{% static 'images/about2.svg' %}" alt="SVG 3" loading="lazy"></div>
                         {% endif %}
                     </div>
                 </div>
             </section>
 
-            <!-- 4. ЦІННОСТІ ТА КУЛЬТУРА -->
+            <!-- 4. ЦІННОСТІ ТА КУЛЬТУРА (Grid 3x2) -->
             {% get_about_section4 as about_section4 %}
             <section class="fullscreen-section about-values-section">
                 <div class="section-content">
                     <h2 class="section-title">{% if about_section4 %}{{ about_section4|get_localized_title:country_code }}{% else %}Цінності та культура{% endif %}</h2>
                     
-                    <div class="about-image-block">
+                    <div class="values-grid">
                         {% if about_section4 %}
-                        {% get_localized_svg about_section4 country_code 'light' as svg_light %}
-                        {% get_localized_svg about_section4 country_code 'dark' as svg_dark %}
-                        <div class="theme-svg-wrapper">
-                            {% if svg_light %}
-                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
-                            {% endif %}
-                            {% if svg_dark %}
-                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
-                            {% else %}
-                                {% if svg_light %}
-                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
-                                {% endif %}
-                            {% endif %}
-                        </div>
+                            {% for i in "123456" %}
+                                {% with field="svg_"|add:i|add:"_ua_light" %}
+                                    {% with svg_light=about_section4|getattr:field %}
+                                        {% if svg_light %}
+                                        <div class="grid-cell">
+                                            <div class="theme-svg-wrapper">
+                                                <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                                                {% with dark_field="svg_"|add:i|add:"_ua_dark" %}
+                                                    {% with svg_dark=about_section4|getattr:dark_field %}
+                                                        {% if svg_dark %}<div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>{% else %}{{ svg_light|safe }}{% endif %}
+                                                    {% endwith %}
+                                                {% endwith %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endwith %}
+                            {% endfor %}
                         {% else %}
-                        <img src="{% static 'images/about3.svg' %}" alt="Цінності та культура" loading="lazy">
+                            <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 1" loading="lazy"></div>
+                            <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 2" loading="lazy"></div>
+                            <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 3" loading="lazy"></div>
+                            <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 4" loading="lazy"></div>
+                            <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 5" loading="lazy"></div>
+                            <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 6" loading="lazy"></div>
                         {% endif %}
                     </div>
                 </div>

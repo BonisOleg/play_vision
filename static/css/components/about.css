@@ -222,6 +222,94 @@
     }
 }
 
+/* === GRID CELLS для Блоків 3 та 4 === */
+.mission-grid,
+.values-grid {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+}
+
+/* Блок 3: 3 колонки на desktop */
+.mission-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Блок 4: 3x2 (3 колонки, 2 ряди) на desktop */
+.values-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.grid-cell {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-cell .theme-svg-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-cell .theme-svg {
+    width: 100%;
+    height: auto;
+}
+
+.grid-cell .theme-svg svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* === ПЛАНШЕТНА АДАПТАЦІЯ (768px-1024px) === */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Як на desktop */
+    .mission-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .values-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+}
+
+/* === МОБІЛЬНА АДАПТАЦІЯ (max-width: 767px) === */
+@media (max-width: 767px) {
+    /* Блок 3: 1 колонка (вертикально) */
+    .mission-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Блок 4: 2 колонки, 3 ряди (2x3) */
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    
+    /* Зменшення gap на мобільних */
+    .mission-grid,
+    .values-grid {
+        gap: 8px;
+    }
+}
+
+/* === iOS SAFARI SPECIFIC === */
+@supports (-webkit-touch-callout: none) {
+    .mission-grid,
+    .values-grid {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+}
+
 /* === LAZY LOADING === */
 /* Картинки видимі одразу, Intersection Observer додає клас при завантаженні */
 img[loading="lazy"].lazy-loaded {
@@ -231,7 +319,8 @@ img[loading="lazy"].lazy-loaded {
 /* === ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
     .about-hero-section,
-    .about-image-block img {
+    .about-image-block img,
+    .grid-cell .theme-svg {
         transition: none;
         animation: none;
     }

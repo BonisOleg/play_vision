@@ -12,6 +12,24 @@ from apps.cms.models import (
 register = template.Library()
 
 
+@register.filter
+def get_item(lst, index):
+    """Отримати елемент за індексом з лісту"""
+    try:
+        return lst[index] if isinstance(lst, (list, tuple)) else None
+    except (IndexError, TypeError):
+        return None
+
+
+@register.filter
+def getattr(obj, attr_name):
+    """Отримати атрибут об'єкта за назвою"""
+    try:
+        return getattr(obj, attr_name, None)
+    except Exception:
+        return None
+
+
 @register.simple_tag
 def get_hero_slides():
     """Отримати активні Hero слайди"""
@@ -71,6 +89,30 @@ def get_about_section4():
         return AboutSection4.objects.filter(is_active=True).first()
     except AboutSection4.DoesNotExist:
         return None
+
+
+@register.simple_tag
+def get_about_section3_svg_list(country_code='UA', theme='light'):
+    """Отримати список 3 SVG для grid Секції 3"""
+    try:
+        section = AboutSection3.objects.filter(is_active=True).first()
+        if section:
+            return section.get_svg_list(country_code, theme)
+        return []
+    except Exception:
+        return []
+
+
+@register.simple_tag
+def get_about_section4_svg_list(country_code='UA', theme='light'):
+    """Отримати список 6 SVG для grid Секції 4"""
+    try:
+        section = AboutSection4.objects.filter(is_active=True).first()
+        if section:
+            return section.get_svg_list(country_code, theme)
+        return []
+    except Exception:
+        return []
 
 
 @register.simple_tag
