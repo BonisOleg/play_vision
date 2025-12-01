@@ -1923,7 +1923,7 @@
 }
 
 .event-badge--archive {
-    background: rgba(158, 158, 158, 0.9);
+    background: rgba(158, 158, 158, 0.45);
     color: #fff;
     backdrop-filter: blur(8px);
 }
