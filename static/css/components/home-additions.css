@@ -319,7 +319,7 @@
     }
 
     .featured-carousel-container {
-        padding: 0 40px;
+        padding: 0 12px;
     }
 
     .carousel-btn {
@@ -330,8 +330,8 @@
     }
 
     .carousel-btn svg {
-        max-width: 18px;
-        max-height: 18px;
+        width: 18px;
+        height: 18px;
     }
 
     .mentor-cta .btn-primary {
