@@ -501,3 +501,104 @@ body {
     }
 }
 
+/* === HOME BUTTON - ПОВЕРНУТИСЬ НА ГОЛОВНУ === */
+.landing-home-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: var(--z-fixed, 300);
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'AtypDisplay', sans-serif;
+    color: #ffffff;
+    
+    background: linear-gradient(135deg, #E50914 0%, #b8070f 100%);
+    border: none;
+    border-radius: 8px;
+    
+    text-decoration: none;
+    cursor: pointer;
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
+    
+    letter-spacing: 0.5px;
+}
+
+.landing-home-button:hover {
+    background: linear-gradient(135deg, #b8070f 0%, #8b0510 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(229, 9, 20, 0.6);
+}
+
+.landing-home-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(229, 9, 20, 0.4);
+}
+
+.landing-home-button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.button-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+/* Mobile optimization */
+@media (max-width: 767px) {
+    .landing-home-button {
+        top: 16px;
+        right: 16px;
+        padding: 10px 16px;
+        font-size: 14px;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(229, 9, 20, 0.3);
+    }
+    
+    .landing-home-button:hover {
+        box-shadow: 0 4px 12px rgba(229, 9, 20, 0.5);
+    }
+}
+
+/* Малі екрани - додаткова компактність */
+@media (max-width: 480px) {
+    .landing-home-button {
+        top: 12px;
+        right: 12px;
+        padding: 8px 12px;
+        font-size: 13px;
+        letter-spacing: 0.3px;
+    }
+    
+    .button-text {
+        gap: 4px;
+    }
+}
+
+/* Tall mobile devices - не перекривати контент */
+@media (max-width: 767px) and (min-height: 800px) {
+    .landing-home-button {
+        top: 20px;
+        right: 20px;
+    }
+}
+
+/* Prevent overlap with content on very small viewports */
+@media (max-width: 380px) and (max-height: 600px) {
+    .landing-home-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+}
+

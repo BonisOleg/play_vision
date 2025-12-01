@@ -75,9 +75,20 @@ class ExpertFlipCards {
         }, { passive: true });
 
         card.addEventListener('touchmove', (e) => {
+            if (!isMoved) {
+                const currentX = e.touches[0].clientX;
+                const currentY = e.touches[0].clientY;
+                const deltaX = Math.abs(currentX - touchStartX);
+                const deltaY = Math.abs(currentY - touchStartY);
+                
+                // Якщо це малий рух (можливо tap) - блокуємо scroll
+                if (deltaX < 5 && deltaY < 5) {
+                    e.preventDefault();
+                }
+            }
             // Відмічаємо що був рух
             isMoved = true;
-        }, { passive: true });
+        }, { passive: false });
 
         card.addEventListener('touchend', (e) => {
             const touchEndX = e.changedTouches[0].clientX;
