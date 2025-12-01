@@ -130,6 +130,8 @@
 .unified-sections-wrapper .ecosystem-subtitle {
     color: var(--color-text-light);
     text-shadow: none;
+    text-align: left;
+    margin-bottom: 0;
 }
 
 /* Команда професіоналів */

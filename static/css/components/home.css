@@ -176,6 +176,8 @@
     }
     
     .hero-btn-new {
+        background: #ffffff;
+        color: #000000;
         padding: 6px 10px;
         font-size: 0.7rem;
         min-height: auto;

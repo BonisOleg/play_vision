@@ -162,12 +162,12 @@ a:hover {
     transform: translateY(0);
 }
 
-.btn-primary {
+.btn-primary:not(.hero-btn-new) {
     background: var(--color-primary);
     color: white;
 }
 
-.btn-primary:hover {
+.btn-primary:not(.hero-btn-new):hover {
     background: var(--color-primary-dark);
 }
 
