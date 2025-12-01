@@ -215,7 +215,7 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 4px 8px var(--shadow-alpha-80), 0 2px 4px var(--shadow-alpha-60);
+    text-shadow: none;
 }
 
 /* NEW DESIGN Title - Desktop */
@@ -228,7 +228,7 @@
         max-width: 600px;
         margin-left: 0;
         margin-right: 0;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        text-shadow: none;
     }
 }
 
@@ -239,7 +239,7 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 2px 4px var(--shadow-alpha-70);
+    text-shadow: none;
 }
 
 /* NEW DESIGN Subtitle - Desktop */
@@ -251,7 +251,7 @@
         max-width: 550px;
         margin-left: 0;
         margin-right: 0;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+        text-shadow: none;
         line-height: 1.5;
     }
 }
@@ -667,7 +667,7 @@
     .hero-title,
     .hero-subtitle {
         color: white;
-        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        text-shadow: none;
     }
 
     .hero-btn-new {
@@ -715,17 +715,17 @@
 
     .mentor-coaching-section .section-title {
         color: white;
-        text-shadow: 0 2px 8px var(--shadow-alpha-80);
+        text-shadow: none;
     }
 
     .mentor-coaching-section .ecosystem-subtitle {
         color: white;
-        text-shadow: 0 2px 8px var(--shadow-alpha-80);
+        text-shadow: none;
     }
 
     .mentor-coaching-section .hexagon h4 {
         color: white;
-        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+        text-shadow: none;
     }
 
     .mentor-coaching-section .hexagon {
@@ -756,7 +756,7 @@
 
     .featured-courses-section .section-title {
         color: white;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        text-shadow: none;
     }
 
     .courses-section .section-title {
@@ -811,7 +811,7 @@
         .hero-title,
         .hero-subtitle {
             color: white;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            text-shadow: none;
         }
 
         .hero-btn-new {
@@ -859,18 +859,18 @@
 
         .mentor-coaching-section .section-title {
             color: white;
-            text-shadow: 0 2px 8px var(--shadow-alpha-80);
+            text-shadow: none;
             margin-top: var(--spacing-xxl);
         }
 
         .mentor-coaching-section .ecosystem-subtitle {
             color: white;
-            text-shadow: 0 2px 8px var(--shadow-alpha-80);
+            text-shadow: none;
         }
 
         .mentor-coaching-section .hexagon h4 {
             color: white;
-            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+            text-shadow: none;
         }
 
         .mentor-coaching-section .hexagon {
@@ -901,7 +901,7 @@
 
         .featured-courses-section .section-title {
             color: white;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            text-shadow: none;
         }
 
         .courses-section .section-title {
