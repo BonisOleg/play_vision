@@ -793,6 +793,18 @@
         }
     }
 
+    .calendar-card-header {
+        gap: 6px;
+    }
+
+    .calendar-event-date {
+        font-size: 0.75rem;
+        flex-shrink: 0;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .calendar-navigation {
         left: 50%;
         transform: translateX(-50%);
