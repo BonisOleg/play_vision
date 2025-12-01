@@ -262,12 +262,18 @@
         margin-bottom: 16px;
     }
 
-    .experts-carousel-container {
+    .experts-subtitle {
         order: 2;
+        margin-bottom: 24px;
+    }
+
+    .experts-carousel-container {
+        order: 3;
+        overflow: visible;
     }
 
     .experts-navigation {
-        order: 3;
+        order: 4;
         align-self: center;
         width: fit-content;
         padding-top: 20px;
