@@ -308,18 +308,6 @@
     border-radius: 4px;
 }
 
-@media (max-width: 767px) {
-    .slider-dot {
-        width: 6px;
-        height: 6px;
-    }
-    
-    .slider-dot.active {
-        width: 18px;
-        border-radius: 3px;
-    }
-}
-
 
 
 
@@ -517,7 +505,6 @@
         border-radius: 0;
     }
 
-    .hero-buttons,
     .cta-buttons {
         flex-direction: column;
         align-items: center;
