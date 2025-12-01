@@ -85,6 +85,9 @@
         }
 
         renderContent(data) {
+            // Визначити мобільну версію
+            const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
             // Визначити, чи є медіа для правої колонки
             const hasRightColumn = data.logo || data.video;
 
@@ -115,6 +118,25 @@
                 </div>
             ` : '';
 
+            const hasMeta = audienceHtml.trim() !== '';
+
+            const badgeHtml = data.featured && isMobile ? '<span class="badge badge-featured">топ-продажів</span>' : '';
+
+            const readMoreBtnHtml = isMobile ? `
+                        <button type="button" class="read-more-btn" id="read-more-btn">
+                            <span class="read-more-text">Читати далі</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+            ` : '';
+
+            const metaHtml = hasMeta ? `
+                        <div class="course-modal-meta">
+                            ${audienceHtml}
+                        </div>
+            ` : '';
+
             const html = `
                 <div class="course-modal-grid ${hasRightColumn ? 'two-columns' : 'single-column'}">
                     <div class="course-modal-left">
@@ -124,31 +146,18 @@
                             <span>${this.escapeHtml(data.title)}</span>
                         </nav>
 
-                        ${data.featured ? '<span class="badge badge-featured">топ-продажів</span>' : ''}
+                        ${badgeHtml}
 
                         <h2 class="course-modal-title" id="course-modal-title">${this.escapeHtml(data.title)}</h2>
 
                         <p class="course-modal-description" id="course-description">${this.escapeHtml(data.description)}</p>
-                        <button type="button" class="read-more-btn" id="read-more-btn">
-                            <span class="read-more-text">Читати далі</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M6 9l6 6 6-6"/>
-                            </svg>
-                        </button>
+                        ${readMoreBtnHtml}
 
-                        <div class="course-modal-meta">
-                            <div class="meta-item">
-                                <span class="meta-label">Ціна:</span>
-                                <span class="meta-value price">${this.escapeHtml(data.price)}₴</span>
-                            </div>
-                            ${audienceHtml}
-                        </div>
+                        ${metaHtml}
 
                         <div class="course-modal-actions">
-                            <a href="${this.escapeHtml(data.joinUrl)}" 
-                               class="btn btn-primary btn-large" 
-                               target="_blank" 
-                               rel="noopener noreferrer">
+                            <a href="/hub/" 
+                               class="btn btn-primary btn-large">
                                 Приєднатись до клубу
                             </a>
                         </div>
