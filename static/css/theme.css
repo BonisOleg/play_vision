@@ -40,13 +40,13 @@
 }
 
 /* Buttons in dark mode */
-[data-theme="dark"] .btn-primary {
+[data-theme="dark"] .btn-primary:not(.hero-btn-new) {
     background: var(--color-primary);
     color: white;
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] .btn-primary {
+    [data-theme="auto"] .btn-primary:not(.hero-btn-new) {
         background: var(--color-primary);
         color: white;
     }
