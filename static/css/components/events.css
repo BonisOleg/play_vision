@@ -815,6 +815,20 @@
     }
 }
 
+@media (max-width: 767px) {
+    .calendar-nav-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .calendar-nav-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
 /* ==================== EVENT DETAIL PAGE ==================== */
 .event-detail-section {
     background: transparent;

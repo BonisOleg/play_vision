@@ -83,6 +83,40 @@
     }
 }
 
+@media (max-width: 767px) {
+    .hub-featured-header {
+        display: contents;
+    }
+
+    .hub-featured-header .section-title {
+        order: 1;
+        margin-bottom: 16px;
+    }
+
+    .hub-featured-carousel {
+        order: 2;
+    }
+
+    .hub-featured-nav {
+        order: 3;
+        align-self: center;
+        width: fit-content;
+        padding-top: 20px;
+    }
+
+    .hub-nav-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .hub-nav-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
 /* Carousel Container */
 .hub-featured-carousel {
     display: flex;
