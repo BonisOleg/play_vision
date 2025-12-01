@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.urls import reverse
 from django.utils import timezone
 from .models import (
@@ -68,6 +69,27 @@ class EventAdmin(admin.ModelAdmin):
         }),
         ('Медіа', {
             'fields': ('thumbnail', 'banner_image')
+        }),
+        ('🇺🇦 Українська версія - Відео', {
+            'fields': ('video_library_id_ua', 'video_id_ua'),
+            'description': mark_safe("""
+                <div class="cms-help-box">
+                    <h4>📹 BunnyNet відео інтеграція</h4>
+                    <p><strong>Де взяти ID?</strong></p>
+                    <ul>
+                        <li><strong>Library ID:</strong> Панель BunnyNet → Stream → Ваша бібліотека → ID зверху</li>
+                        <li><strong>Video ID:</strong> Відкрийте відео → URL містить GUID (напр. abc123-def456-...)</li>
+                    </ul>
+                    <p><strong>Якість:</strong> Desktop = найвища, Mobile = 720p (автоматично)</p>
+                </div>
+            """)
+        }),
+        ('🌍 Світова версія - Відео', {
+            'fields': ('video_library_id_world', 'video_id_world'),
+            'classes': ('collapse',)
+        }),
+        ('Налаштування відео', {
+            'fields': ('video_enabled',)
         }),
         ('Налаштування', {
             'fields': (

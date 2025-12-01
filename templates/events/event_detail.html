@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load cms_tags %}
 
 {% block title %}{{ event.title }} - Play Vision{% endblock %}
 
@@ -9,6 +10,8 @@
 <link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/events.css' %}">
+<link rel="preconnect" href="https://iframe.mediadelivery.net">
+<link rel="dns-prefetch" href="https://iframe.mediadelivery.net">
 {% endblock %}
 
 {% block content %}
@@ -19,7 +22,19 @@
             <section class="fullscreen-section event-detail-section">
                 <div class="section-content">
                     
-                    {% if event.banner_image %}
+                    {% if event.video_enabled and event|has_video:country_code %}
+                    <!-- HERO SECTION - BunnyNet Video Player -->
+                    <div class="event-hero event-hero-video">
+                        <div style="position: relative; padding-top: 56.25%;">
+                            <iframe
+                                src="https://iframe.mediadelivery.net/embed/{{ event|get_video_library_id:country_code }}/{{ event|get_video_id:country_code }}?autoplay=false&muted=false&preload=true&playsinline=true"
+                                style="border: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                                allowfullscreen="true">
+                            </iframe>
+                        </div>
+                    </div>
+                    {% elif event.banner_image %}
                     <div class="event-hero">
                         <img src="{{ event.banner_image.url }}" alt="{{ event.title }}">
                     </div>

@@ -2179,3 +2179,37 @@
         padding-bottom: max(32px, env(safe-area-inset-bottom));
     }
 }
+
+/* ================================================
+   EVENT VIDEO PLAYER - BunnyNet Integration
+   ================================================ */
+
+.event-hero-video {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: var(--spacing-lg, 2rem);
+}
+
+/* Темна тема */
+[data-theme="dark"] .event-hero-video {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Мобільна адаптація */
+@media (max-width: 767px) {
+    .event-hero-video {
+        border-radius: 8px;
+        margin: 0 0 var(--spacing-md, 1.5rem) 0;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .event-hero-video {
+        transition: none;
+        animation: none;
+    }
+}
