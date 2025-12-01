@@ -119,22 +119,129 @@
                     
                     <div class="values-grid">
                         {% if about_section4 %}
-                            {% for i in "123456" %}
-                                {% get_svg_light_by_index about_section4 i country_code "light" as svg_light %}
-                                {% get_svg_dark_by_index about_section4 i country_code "light" as svg_dark %}
-                                <div class="grid-cell">
-                                    <div class="theme-svg-wrapper">
-                                        {% if svg_light %}
-                                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
-                                        {% endif %}
-                                        {% if svg_dark %}
-                                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
-                                        {% elif svg_light %}
-                                            <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            {% endfor %}
+                            {% if country_code == 'UA' %}
+                                {% with svg1_light=about_section4.svg_1_ua_light svg1_dark=about_section4.svg_1_ua_dark %}
+                                    {% with svg2_light=about_section4.svg_2_ua_light svg2_dark=about_section4.svg_2_ua_dark %}
+                                        {% with svg3_light=about_section4.svg_3_ua_light svg3_dark=about_section4.svg_3_ua_dark %}
+                                            {% with svg4_light=about_section4.svg_4_ua_light svg4_dark=about_section4.svg_4_ua_dark %}
+                                                {% with svg5_light=about_section4.svg_5_ua_light svg5_dark=about_section4.svg_5_ua_dark %}
+                                                    {% with svg6_light=about_section4.svg_6_ua_light svg6_dark=about_section4.svg_6_ua_dark %}
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg1_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg1_light|safe }}</div>
+                                                                    {% if svg1_dark %}<div class="theme-svg theme-svg--dark">{{ svg1_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg1_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg2_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg2_light|safe }}</div>
+                                                                    {% if svg2_dark %}<div class="theme-svg theme-svg--dark">{{ svg2_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg2_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg3_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg3_light|safe }}</div>
+                                                                    {% if svg3_dark %}<div class="theme-svg theme-svg--dark">{{ svg3_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg3_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg4_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg4_light|safe }}</div>
+                                                                    {% if svg4_dark %}<div class="theme-svg theme-svg--dark">{{ svg4_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg4_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg5_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg5_light|safe }}</div>
+                                                                    {% if svg5_dark %}<div class="theme-svg theme-svg--dark">{{ svg5_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg5_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg6_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg6_light|safe }}</div>
+                                                                    {% if svg6_dark %}<div class="theme-svg theme-svg--dark">{{ svg6_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg6_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% endwith %}
+                                                {% endwith %}
+                                            {% endwith %}
+                                        {% endwith %}
+                                    {% endwith %}
+                                {% endwith %}
+                            {% else %}
+                                {% with svg1_light=about_section4.svg_1_world_light|default:about_section4.svg_1_ua_light svg1_dark=about_section4.svg_1_world_dark|default:about_section4.svg_1_ua_dark %}
+                                    {% with svg2_light=about_section4.svg_2_world_light|default:about_section4.svg_2_ua_light svg2_dark=about_section4.svg_2_world_dark|default:about_section4.svg_2_ua_dark %}
+                                        {% with svg3_light=about_section4.svg_3_world_light|default:about_section4.svg_3_ua_light svg3_dark=about_section4.svg_3_world_dark|default:about_section4.svg_3_ua_dark %}
+                                            {% with svg4_light=about_section4.svg_4_world_light|default:about_section4.svg_4_ua_light svg4_dark=about_section4.svg_4_world_dark|default:about_section4.svg_4_ua_dark %}
+                                                {% with svg5_light=about_section4.svg_5_world_light|default:about_section4.svg_5_ua_light svg5_dark=about_section4.svg_5_world_dark|default:about_section4.svg_5_ua_dark %}
+                                                    {% with svg6_light=about_section4.svg_6_world_light|default:about_section4.svg_6_ua_light svg6_dark=about_section4.svg_6_world_dark|default:about_section4.svg_6_ua_dark %}
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg1_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg1_light|safe }}</div>
+                                                                    {% if svg1_dark %}<div class="theme-svg theme-svg--dark">{{ svg1_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg1_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg2_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg2_light|safe }}</div>
+                                                                    {% if svg2_dark %}<div class="theme-svg theme-svg--dark">{{ svg2_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg2_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg3_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg3_light|safe }}</div>
+                                                                    {% if svg3_dark %}<div class="theme-svg theme-svg--dark">{{ svg3_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg3_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg4_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg4_light|safe }}</div>
+                                                                    {% if svg4_dark %}<div class="theme-svg theme-svg--dark">{{ svg4_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg4_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg5_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg5_light|safe }}</div>
+                                                                    {% if svg5_dark %}<div class="theme-svg theme-svg--dark">{{ svg5_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg5_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-cell">
+                                                            <div class="theme-svg-wrapper">
+                                                                {% if svg6_light %}
+                                                                    <div class="theme-svg theme-svg--light">{{ svg6_light|safe }}</div>
+                                                                    {% if svg6_dark %}<div class="theme-svg theme-svg--dark">{{ svg6_dark|safe }}</div>{% else %}<div class="theme-svg theme-svg--dark">{{ svg6_light|safe }}</div>{% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% endwith %}
+                                                {% endwith %}
+                                            {% endwith %}
+                                        {% endwith %}
+                                    {% endwith %}
+                                {% endwith %}
+                            {% endif %}
                         {% else %}
                             <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 1" loading="lazy"></div>
                             <div class="grid-cell"><img src="{% static 'images/about3.svg' %}" alt="SVG 2" loading="lazy"></div>
