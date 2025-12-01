@@ -7,6 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cms', '0014_add_page_selection_expertcard'),
+        ('events', '0014_add_experts_to_event'),
     ]
 
     operations = [

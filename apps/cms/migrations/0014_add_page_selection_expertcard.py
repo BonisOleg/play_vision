@@ -59,17 +59,5 @@ class Migration(migrations.Migration):
             model_name='expertcard',
             name='show_on_homepage',
         ),
-        # 5. Додати ManyToMany до Event
-        migrations.AddField(
-            model_name='event',
-            name='experts',
-            field=models.ManyToManyField(
-                blank=True,
-                help_text='Члени команди Play Vision як спікери',
-                related_name='expert_events',
-                to='cms.expertcard',
-                verbose_name='Експерти команди',
-            ),
-        ),
     ]
 
