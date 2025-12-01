@@ -46,7 +46,12 @@ def submit_lead(request):
         first_name = form.cleaned_data['first_name']
         phone = form.cleaned_data['phone']
         email = form.cleaned_data['email']
+        
+        # Валідація source - використати тільки валідні значення
+        VALID_SOURCES = ['landing', 'hub', 'mentoring', 'subscription']
         source = request.POST.get('source', 'landing')
+        if source not in VALID_SOURCES:
+            source = 'landing'  # Fallback на default
         
         # Зберегти в базу даних
         lead = LeadSubmission.objects.create(
