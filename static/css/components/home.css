@@ -98,8 +98,8 @@
         left: 5px;
         transform: none;
         width: calc(100% - 5px);
+        height: 100%;
         padding: 0;
-        display: block;
         position: relative;
     }
 
@@ -141,8 +141,8 @@
     }
 
     .hero-btn-new {
-        padding: 4px 7px;
-        font-size: 0.4375rem;
+        padding: 6px 10px;
+        font-size: 0.75rem;
         min-height: auto;
         white-space: nowrap;
         overflow: hidden;
