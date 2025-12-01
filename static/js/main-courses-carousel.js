@@ -146,25 +146,47 @@ class MainCoursesCarousel {
     addTouchSupport() {
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
         let isDragging = false;
 
         this.track.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchEndX = 0;
+            touchEndY = 0;
             isDragging = true;
         }, { passive: true });
 
         this.track.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             touchEndX = e.touches[0].clientX;
+            touchEndY = e.touches[0].clientY;
         }, { passive: true });
 
-        this.track.addEventListener('touchend', () => {
+        this.track.addEventListener('touchend', (e) => {
             if (!isDragging) return;
             isDragging = false;
 
             const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
+            
+            // КРИТИЧНА ПЕРЕВІРКА: якщо це TAP на картці курсу - ІГНОРУВАТИ
+            const deltaX = Math.abs(touchStartX - (touchEndX || touchStartX));
+            const deltaY = Math.abs(touchStartY - (touchEndY || touchStartY));
+            const isOnCard = e.target.closest('.main-course-card');  // ПРАВИЛЬНИЙ селектор
+            const isTap = deltaX < 20 && deltaY < 20;
+            
+            if (isOnCard && isTap) {
+                // Це TAP на картці курсу - ІГНОРУВАТИ, НЕ рухати карусель
+                touchStartX = 0;
+                touchEndX = 0;
+                touchStartY = 0;
+                touchEndY = 0;
+                return;
+            }
 
+            // Якщо SWIPE (> 50px) - рухати карусель
             if (Math.abs(diff) > swipeThreshold) {
                 if (diff > 0) {
                     // Swipe left - наступний слайд
@@ -177,6 +199,8 @@ class MainCoursesCarousel {
 
             touchStartX = 0;
             touchEndX = 0;
+            touchStartY = 0;
+            touchEndY = 0;
         });
     }
 }
