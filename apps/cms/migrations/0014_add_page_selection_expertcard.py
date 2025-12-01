@@ -4,11 +4,17 @@ from django.db import migrations, models
 
 
 def migrate_show_on_homepage_to_show_on_home(apps, schema_editor):
-    """Перенести дані з show_on_homepage до show_on_home"""
+    """Перенести дані з show_on_homepage до show_on_home, about, mentoring"""
     ExpertCard = apps.get_model('cms', 'ExpertCard')
     for expert in ExpertCard.objects.all():
-        expert.show_on_home = expert.show_on_homepage
+        # Якщо раніше показувався на головній, показуємо на всіх сторінках
+        if expert.show_on_homepage:
+            expert.show_on_home = True
+            expert.show_on_about = True
+            expert.show_on_mentoring = True
         expert.order_home = expert.order
+        expert.order_about = expert.order  # Копіюємо порядок
+        expert.order_mentoring = expert.order  # Копіюємо порядок
         expert.save()
 
 
