@@ -1,0 +1,2151 @@
+/* Events Page Styles */
+
+/* Safe Area Insets для iOS devices з notch/dynamic island */
+.events-intro-section,
+.events-calendar-section,
+.events-catalog-section {
+    padding-top: max(40px, env(safe-area-inset-top, 0));
+    padding-bottom: max(40px, env(safe-area-inset-bottom, 0));
+}
+
+@media (max-width: 768px) {
+    .events-intro-section,
+    .events-calendar-section,
+    .events-catalog-section {
+        padding-top: max(20px, env(safe-area-inset-top, 0));
+        padding-bottom: max(20px, env(safe-area-inset-bottom, 0));
+    }
+}
+
+/* ==================== СЕКЦІЯ 1: Intro ==================== */
+.events-intro-section {
+    background: transparent;
+    overflow-x: hidden;
+}
+
+.events-intro-section .section-content {
+    overflow-x: hidden;
+}
+
+.events-intro-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.events-intro-left {
+    flex: 0 0 45%;
+    min-width: 0;
+}
+
+.events-intro-right {
+    flex: 0 0 55%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+.events-intro-left .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 16px;
+    text-shadow: none;
+}
+
+.events-intro-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-bottom: 100px;
+    line-height: 1.6;
+}
+
+/* Категорії 2x2 */
+.events-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-height: 50%;
+}
+
+.category-block {
+    background: var(--color-bg-gray, #f5f5f5);
+    border: 2px solid var(--color-border, #e0e0e0);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.category-block h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+
+.category-block p {
+    font-size: 0.6rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Відео сітка 3x3 */
+.events-video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin-right: 20px;
+}
+
+.video-placeholder {
+    background: #c4c4c4;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.video-placeholder.video-large {
+    grid-column: span 2;
+}
+
+.video-placeholder.video-medium {
+    grid-column: span 1;
+}
+
+.play-button {
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+/* ==================== СЕКЦІЯ 2: Календар ==================== */
+.events-calendar-section {
+    background: transparent;
+}
+
+.events-calendar-section .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 40px;
+    text-shadow: none;
+}
+
+.calendar-carousel-wrapper {
+    position: relative;
+    padding-bottom: 80px;
+}
+
+.calendar-carousel-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.calendar-carousel-track {
+    display: flex;
+    gap: 24px;
+    transition: transform 0.4s ease;
+    justify-content: flex-start;
+}
+
+.calendar-card {
+    flex: 0 0 calc(30% - 16px);
+    min-width: 280px;
+    background: #171717;
+    color: #ffffff;
+    border: 2px solid #171717;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-card:hover {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+}
+
+.calendar-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+}
+
+.calendar-event-name {
+    font-size: 0.6rem;
+    font-weight: 700;
+    flex: 1;
+    color: #ffffff;
+}
+
+.calendar-event-date {
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #ffffff;
+}
+
+.calendar-card:hover .calendar-event-name,
+.calendar-card:hover .calendar-event-date {
+    color: #ffffff;
+}
+
+.calendar-event-description {
+    font-size: 0.5rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex: 1;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.calendar-card:hover .calendar-event-description {
+    color: #ffffff;
+}
+
+.btn-details {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    color: #171717;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid #ffffff;
+    align-self: flex-start;
+}
+
+.btn-details:hover {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+}
+
+.calendar-card:hover .btn-details {
+    background: #ffffff;
+    color: #171717;
+    border-color: #ffffff;
+}
+
+.calendar-card:hover .btn-details:hover {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+}
+
+/* Ячейка сьогодні - без hover ефектів */
+.calendar-card--today {
+    cursor: default;
+}
+
+.calendar-card--today:hover {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+    transform: none;
+}
+
+.calendar-card--today:hover .calendar-event-name,
+.calendar-card--today:hover .calendar-event-date,
+.calendar-card--today:hover .calendar-event-description {
+    color: inherit;
+}
+
+.calendar-card--today:hover .btn-details {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+}
+
+/* Порожня ячейка - не кликабельна, без hover primary */
+.calendar-card--empty {
+    cursor: default;
+}
+
+.calendar-card--empty:hover {
+    background: #ffffff;
+    color: inherit;
+    border-color: var(--color-border, #e0e0e0);
+    transform: none;
+}
+
+.calendar-card--empty .calendar-event-name,
+.calendar-card--empty .calendar-event-date,
+.calendar-card--empty .calendar-event-description {
+    color: inherit;
+}
+
+/* Темна тема для порожньої ячейки */
+[data-theme="dark"] .calendar-card--empty:hover {
+    background: #1a1a1a;
+    border-color: #333333;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .calendar-card--empty:hover {
+        background: #1a1a1a;
+        border-color: #333333;
+    }
+}
+
+.btn-arrow {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
+    background-size: contain;
+}
+
+/* Приховування навігації (замість inline display:none) */
+.calendar-navigation--hidden {
+    display: none !important;
+}
+
+.calendar-navigation {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    display: flex;
+    gap: 12px;
+}
+
+.calendar-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #171717;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-nav-btn:hover {
+    background: #171717;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.calendar-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* ==================== СЕКЦІЯ 3: Каталог ==================== */
+.events-catalog-section {
+    background: transparent;
+    position: relative;
+}
+
+.events-catalog-section .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 32px;
+    text-shadow: none;
+}
+
+/* === EVENT FILTERS - використовуємо shared tab component === */
+/* Базові стилі (.tab-container, .tab-button, .tab-slider) беруться з tabs-shared.css */
+
+.events-catalog-section .event-filters {
+    margin-bottom: 40px;
+    min-height: 60px;
+    
+}
+
+.events-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.event-catalog-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-catalog-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+.event-card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: var(--color-bg-gray, #f5f5f5);
+}
+
+.event-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-gray, #f5f5f5);
+    color: var(--color-border);
+}
+
+.event-card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.event-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.event-type {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+}
+
+.event-date {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.event-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.event-card-description {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.event-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border, #e0e0e0);
+}
+
+.event-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.event-card-footer .btn-details {
+    padding: 8px 16px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid var(--color-border, #e0e0e0);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.pagination-link:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: #ffffff;
+}
+
+.pagination-info {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.no-events {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--color-text-light);
+}
+
+/* ==================== HOVER ТІЛЬКИ ДЛЯ NON-TOUCH ==================== */
+@media (hover: hover) and (pointer: fine) {
+    .calendar-card:not(.calendar-card--empty):not(.calendar-card--today):hover {
+        background: var(--color-primary);
+        color: #ffffff;
+        border-color: var(--color-primary);
+    }
+    
+    .calendar-nav-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* ==================== ТЕМНА ТЕМА ==================== */
+[data-theme="dark"] .category-block,
+[data-theme="dark"] .event-catalog-card {
+    background: #1a1a1a;
+    border-color: #333333;
+}
+
+[data-theme="dark"] .calendar-card {
+    background: #ffffff;
+    color: #171717;
+    border-color: #ffffff;
+}
+
+[data-theme="dark"] .calendar-card:hover {
+    background: #ffffff;
+    color: #171717;
+    border-color: #ffffff;
+}
+
+[data-theme="dark"] .calendar-card .calendar-event-name,
+[data-theme="dark"] .calendar-card .calendar-event-date {
+    color: #171717;
+}
+
+[data-theme="dark"] .calendar-card .calendar-event-description {
+    color: rgba(23, 23, 23, 0.8);
+}
+
+[data-theme="dark"] .calendar-card .btn-details {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+}
+
+[data-theme="dark"] .calendar-card .btn-details:hover {
+    background: #ffffff;
+    color: #171717;
+    border-color: #ffffff;
+}
+
+[data-theme="dark"] .calendar-nav-btn {
+    background: #e9e9e9;
+    color: #000000;
+}
+
+[data-theme="dark"] .calendar-nav-btn:hover {
+    background: #f0f0f0;
+}
+
+[data-theme="dark"] .event-card-image,
+[data-theme="dark"] .event-image-placeholder {
+    background: #2a2a2a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .category-block,
+    [data-theme="auto"] .event-catalog-card {
+        background: #1a1a1a;
+        border-color: #333333;
+    }
+
+    [data-theme="auto"] .calendar-card {
+        background: #ffffff;
+        color: #171717;
+        border-color: #ffffff;
+    }
+
+    [data-theme="auto"] .calendar-card:hover {
+        background: #ffffff;
+        color: #171717;
+        border-color: #ffffff;
+    }
+
+    [data-theme="auto"] .calendar-card .calendar-event-name,
+    [data-theme="auto"] .calendar-card .calendar-event-date {
+        color: #171717;
+    }
+
+    [data-theme="auto"] .calendar-card .calendar-event-description {
+        color: rgba(23, 23, 23, 0.8);
+    }
+
+    [data-theme="auto"] .calendar-card .btn-details {
+        background: #171717;
+        color: #ffffff;
+        border-color: #171717;
+    }
+
+    [data-theme="auto"] .calendar-card .btn-details:hover {
+        background: #ffffff;
+        color: #171717;
+        border-color: #ffffff;
+    }
+
+    [data-theme="auto"] .calendar-nav-btn {
+        background: #e9e9e9;
+        color: #000000;
+    }
+
+    [data-theme="auto"] .calendar-nav-btn:hover {
+        background: #f0f0f0;
+    }
+
+    [data-theme="auto"] .event-card-image,
+    [data-theme="auto"] .event-image-placeholder {
+        background: #2a2a2a;
+    }
+}
+
+/* ==================== РЕСПОНСИВ ==================== */
+@media (max-width: 1024px) {
+    .events-intro-layout {
+        flex-direction: column;
+    }
+
+    .events-intro-left,
+    .events-intro-right {
+        flex: 0 0 100%;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .events-catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .calendar-card {
+        flex: 0 0 calc(50% - 12px);
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Layout контейнери */
+    .events-intro-layout {
+        gap: 20px;
+        overflow-x: hidden;
+    }
+
+    .events-intro-right {
+        order: 1;
+        flex: 0 0 100%;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .events-intro-left {
+        order: 2;
+        flex: 0 0 100%;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Заголовки */
+    .events-intro-left .section-title,
+    .events-calendar-section .section-title,
+    .events-catalog-section .section-title {
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
+    }
+
+    /* Категорії 2x2 */
+    .events-categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .events-intro-subtitle {
+        margin-bottom: 10px;
+    }
+
+    /* КРИТИЧНО: Відео сітка */
+    .events-video-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .video-placeholder {
+        min-height: 100px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Каталог */
+    .events-catalog-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Календар - мобільна логіка як у курсів */
+    .calendar-carousel-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    .calendar-carousel-container::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .calendar-carousel-track {
+        flex-wrap: nowrap;
+        gap: 16px;
+    }
+
+    .calendar-card {
+        flex: 0 0 calc(50% - 8px);
+        min-width: calc(50% - 8px);
+        max-width: calc(50% - 8px);
+    }
+
+    .calendar-navigation {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+    }
+
+    .calendar-pagination {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 80px;
+    }
+
+    .calendar-carousel-wrapper {
+        padding-bottom: 40px;
+    }
+
+    /* Touch-friendly кнопки */
+    .calendar-nav-btn,
+    .btn-details,
+    .pagination-link {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* ==================== EVENT DETAIL PAGE ==================== */
+.event-detail-section {
+    background: transparent;
+}
+
+.event-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 40px;
+}
+
+.event-detail-main {
+    min-width: 0;
+}
+
+.event-detail-header {
+    margin-bottom: 32px;
+}
+
+.event-detail-header .event-type {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.event-detail-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.event-detail-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+}
+
+.event-detail-meta {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--color-border, #e0e0e0);
+}
+
+.event-detail-meta .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text);
+}
+
+.event-detail-description h2,
+.event-speakers h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 20px;
+}
+
+.event-detail-description {
+    margin-bottom: 40px;
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+.speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.speaker-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--color-bg-gray, #f5f5f5);
+    border-radius: 12px;
+}
+
+.speaker-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.speaker-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.speaker-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-border, #e0e0e0);
+}
+
+.speaker-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 4px;
+}
+
+.speaker-info p {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.event-detail-sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+.event-registration-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 12px;
+    padding: 32px;
+}
+
+.event-registration-card .event-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.btn-register {
+    display: block;
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--color-primary);
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-bottom: 24px;
+}
+
+.btn-register:hover {
+    background: var(--color-primary-dark, #c91f24);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 30, 36, 0.3);
+}
+
+.registration-status {
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.registration-status.success {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4caf50;
+}
+
+.registration-status.warning {
+    background: rgba(255, 152, 0, 0.1);
+    color: #ff9800;
+}
+
+.event-stats {
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border, #e0e0e0);
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+}
+
+.stat-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .event-registration-card,
+[data-theme="dark"] .speaker-card {
+    background: #1a1a1a;
+    border-color: #333333;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-registration-card,
+    [data-theme="auto"] .speaker-card {
+        background: #1a1a1a;
+        border-color: #333333;
+    }
+}
+
+@media (max-width: 1024px) {
+    .event-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .event-detail-sidebar {
+        position: static;
+    }
+
+    .speakers-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .event-detail-title {
+        font-size: 2rem;
+    }
+
+    .event-detail-meta {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+/* ==================== REGISTRATION FORM ==================== */
+.event-registration-section {
+    background: transparent;
+}
+
+.registration-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.registration-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.registration-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.registration-form {
+    background: #ffffff;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 12px;
+    padding: 32px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--color-text);
+    background: #ffffff;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.btn-primary,
+.btn-secondary {
+    flex: 1;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: var(--color-primary-dark, #c91f24);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 30, 36, 0.3);
+}
+
+.btn-secondary {
+    background: var(--color-bg-gray, #f5f5f5);
+    color: var(--color-text);
+    border: 1px solid var(--color-border, #e0e0e0);
+}
+
+.btn-secondary:hover {
+    background: var(--color-border, #e0e0e0);
+}
+
+[data-theme="dark"] .registration-form,
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea {
+    background: #1a1a1a;
+    border-color: #333333;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .registration-form,
+    [data-theme="auto"] .form-group input,
+    [data-theme="auto"] .form-group textarea {
+        background: #1a1a1a;
+        border-color: #333333;
+    }
+}
+
+@media (max-width: 768px) {
+    .registration-form {
+        padding: 24px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+}
+
+/* ==================== NEW EVENT DETAIL REDESIGN ==================== */
+
+.event-hero {
+    width: 100%;
+   
+    overflow: hidden;
+    border-radius: 12px;
+
+}
+
+.event-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-hero-placeholder {
+    background: var(--color-bg-gray, #d3d3d3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.placeholder-content {
+    text-align: center;
+    color: var(--color-text-light);
+}
+
+.placeholder-content svg {
+    opacity: 0.3;
+    margin-bottom: 16px;
+}
+
+.placeholder-content p {
+    font-size: 1rem;
+    opacity: 0.5;
+}
+
+[data-theme="dark"] .event-hero-placeholder {
+    background: #2a2a2a;
+}
+
+.event-description-block {
+    margin-bottom: 48px;
+}
+
+.event-description-block h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 20px;
+}
+
+/* === СТИЛЬНІ КАРТКИ ІНФОРМАЦІЇ (в стилі карток підписки) === */
+.event-info-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.event-info-card {
+    background: var(--color-bg);
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all var(--transition-base);
+}
+
+.event-info-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+.event-info-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.event-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.event-info-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    color: var(--color-text);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.event-info-list li:last-child {
+    margin-bottom: 0;
+}
+
+.event-info-list li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+/* Старі селектори для зворотної сумісності */
+.event-benefits-section {
+    display: none;
+}
+
+.event-column {
+    display: none;
+}
+
+.event-list {
+    display: none;
+}
+
+/* ============================================
+   EVENT EXPERTS SECTION - Команда спікерів на події
+   ============================================ */
+.event-experts-section {
+    background: transparent;
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 48px;
+}
+
+.event-experts-section .section-title {
+    color: #2a2a2a;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 16px;
+    text-shadow: none;
+}
+
+.event-experts-section .experts-subtitle {
+    text-align: left;
+    color: #666666;
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-bottom: 48px;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: none;
+    line-height: 1.6;
+}
+
+[data-theme="dark"] .event-experts-section .section-title {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .event-experts-section .experts-subtitle {
+    color: var(--color-text-light);
+    text-shadow: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-experts-section .section-title {
+        color: var(--color-text);
+    }
+
+    [data-theme="auto"] .event-experts-section .experts-subtitle {
+        color: var(--color-text-light);
+        text-shadow: none;
+    }
+}
+
+/* Адаптивність для event-experts-section */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .event-experts-section {
+        padding: 20px 0;
+    }
+
+    .event-experts-section .section-title {
+        font-size: 2.25rem;
+        margin-bottom: 14px;
+    }
+
+    .event-experts-section .experts-subtitle {
+        font-size: 1.0625rem;
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+    .event-experts-section {
+        padding: 20px 0;
+    }
+
+    .event-experts-section .section-title {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .event-experts-section .experts-subtitle {
+        font-size: 1rem;
+        margin-bottom: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .event-experts-section {
+        padding: 20px 0;
+    }
+
+    .event-experts-section .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 10px;
+    }
+
+    .event-experts-section .experts-subtitle {
+        font-size: 0.9375rem;
+        margin-bottom: 28px;
+        line-height: 1.5;
+    }
+}
+
+.event-pricing-section {
+    margin-bottom: 48px;
+}
+
+.event-pricing-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--color-text);
+}
+
+/* === GRID CONTAINER (ВИРІВНЮВАННЯ ВИСОТИ) === */
+.pricing-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: stretch;
+    gap: 0;
+}
+
+/* Центрування одного квитка (безкоштовний) */
+.pricing-tiers:has(.event-ticket-card:only-child) {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    justify-items: center;
+}
+
+.pricing-tiers:has(.event-ticket-card:only-child) .event-ticket-card {
+    max-width: 100%;
+}
+
+/* === PLAN CARD (базові) === */
+.event-ticket-card {
+    position: relative;
+    background: var(--pricing-card-bg, #FFFFFF);
+    border: 2px solid var(--pricing-border, #E5E7EB);
+    border-radius: 16px;
+    padding: 32px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.event-ticket-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+/* === POPULAR CARD (чорна/біла з інвертованим текстом) === */
+.event-ticket-card.plan-card--popular {
+    background: #000000;
+    border-color: #000000;
+    color: #FFFFFF;
+    transform: scale(1.08);
+    z-index: 10;
+}
+
+.event-ticket-card.plan-card--popular:hover {
+    transform: scale(1.08) translateY(-4px);
+}
+
+/* ТЕМНА ТЕМА: popular card стає білою */
+[data-theme="dark"] .event-ticket-card.plan-card--popular {
+    background: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular {
+        background: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #000000;
+    }
+}
+
+/* ТЕМНА ТЕМА: звичайні картки */
+[data-theme="dark"] .event-ticket-card {
+    background: #1A1A1A;
+    border-color: #2A2A2A;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card {
+        background: #1A1A1A;
+        border-color: #2A2A2A;
+    }
+}
+
+/* === BADGE === */
+.event-ticket-card .plan-badge {
+    position: absolute;
+    top: 75px;
+    left: 20px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #E31E24;
+    color: #FFFFFF;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* === PLAN CONTENT === */
+.event-ticket-card .plan-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.event-ticket-card .plan-name {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 34px;
+    text-align: left;
+}
+
+/* Popular card - білий текст */
+.event-ticket-card.plan-card--popular .plan-name {
+    color: #FFFFFF;
+}
+
+/* ТЕМНА ТЕМА: popular card - чорний текст */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .plan-name {
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .plan-name {
+        color: #000000;
+    }
+}
+
+/* === FEATURES LIST === */
+.event-ticket-card .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px 0;
+    flex-grow: 1;
+}
+
+.event-ticket-card .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--pricing-border, #E5E7EB);
+}
+
+.event-ticket-card .feature-item:last-child {
+    border-bottom: none;
+}
+
+.event-ticket-card .feature-number {
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 24px;
+}
+
+.event-ticket-card .feature-text {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Popular card features - білий текст і borders */
+.event-ticket-card.plan-card--popular .feature-item {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.event-ticket-card.plan-card--popular .feature-number,
+.event-ticket-card.plan-card--popular .feature-text {
+    color: #FFFFFF;
+}
+
+/* ТЕМНА ТЕМА: popular card features - чорний текст і borders */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .feature-item {
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--popular .feature-number,
+[data-theme="dark"] .event-ticket-card.plan-card--popular .feature-text {
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .feature-item {
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .feature-number,
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .feature-text {
+        color: #000000;
+    }
+}
+
+/* === PRICE SECTION === */
+.event-ticket-card .plan-price-section {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.event-ticket-card .price-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.event-ticket-card .price-value {
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.event-ticket-card .price-currency {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--pricing-text-secondary, #6B7280);
+}
+
+/* Popular card price - білий текст */
+.event-ticket-card.plan-card--popular .price-value {
+    color: #FFFFFF;
+}
+
+.event-ticket-card.plan-card--popular .price-currency {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ТЕМНА ТЕМА: popular card price - чорний текст */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .price-value {
+    color: #000000;
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--popular .price-currency {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .price-value {
+        color: #000000;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .price-currency {
+        color: rgba(0, 0, 0, 0.7);
+    }
+}
+
+/* === ACTION BUTTON === */
+.event-ticket-card .plan-action {
+    margin-top: auto;
+}
+
+.event-ticket-card .btn-purchase {
+    display: block;
+    width: 100%;
+    padding: 16px 24px;
+    background: #000000;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.event-ticket-card .btn-purchase:hover {
+    background: #1F2937;
+}
+
+/* Popular card button - інвертовані кольори */
+.event-ticket-card.plan-card--popular .btn-purchase {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.event-ticket-card.plan-card--popular .btn-purchase:hover {
+    background: #E5E7EB;
+}
+
+/* ТЕМНА ТЕМА: звичайні кнопки білі */
+[data-theme="dark"] .event-ticket-card .btn-purchase {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+[data-theme="dark"] .event-ticket-card .btn-purchase:hover {
+    background: #E5E7EB;
+}
+
+/* ТЕМНА ТЕМА: popular card кнопка чорна */
+[data-theme="dark"] .event-ticket-card.plan-card--popular .btn-purchase {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--popular .btn-purchase:hover {
+    background: #1F2937;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card .btn-purchase {
+        background: #FFFFFF;
+        color: #000000;
+    }
+    
+    [data-theme="auto"] .event-ticket-card .btn-purchase:hover {
+        background: #E5E7EB;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .btn-purchase {
+        background: #000000;
+        color: #FFFFFF;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--popular .btn-purchase:hover {
+        background: #1F2937;
+    }
+}
+
+/* === STATUS MESSAGES === */
+.event-ticket-card .pricing-status {
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.event-ticket-card .pricing-status.registered {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+}
+
+.event-ticket-card .pricing-status.unavailable {
+    background: rgba(245, 158, 11, 0.1);
+    color: #F59E0B;
+}
+
+/* === ТЕМНА ТЕМА === */
+[data-theme="dark"] .event-info-card {
+    background: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e5e5e5;
+}
+
+[data-theme="dark"] .event-info-card-title {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .event-info-list li {
+    color: #e5e5e5;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-info-card {
+        background: #1a1a1a;
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #e5e5e5;
+    }
+
+    [data-theme="auto"] .event-info-card-title {
+        color: #ffffff;
+    }
+
+    [data-theme="auto"] .event-info-list li {
+        color: #e5e5e5;
+    }
+}
+
+/* === АДАПТИВНІСТЬ === */
+@media (max-width: 768px) {
+    .event-info-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .event-info-card {
+        padding: 24px;
+    }
+
+    .event-info-card-title {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
+
+    .event-info-list li {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+    .pricing-tiers {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .event-ticket-card.plan-card--popular {
+        transform: scale(1.05);
+    }
+    
+    .event-ticket-card.plan-card--free {
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 768px) {
+    .event-benefits-section {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 24px;
+    }
+
+    .pricing-tiers {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .event-ticket-card {
+        padding: 24px 20px;
+    }
+    
+    .event-ticket-card.plan-card--popular {
+        transform: scale(1);
+    }
+    
+    .event-ticket-card.plan-card--free {
+        transform: scale(1);
+    }
+    
+    .event-ticket-card .plan-name {
+        font-size: 28px;
+    }
+    
+    .event-ticket-card .price-value {
+        font-size: 38px;
+    }
+
+    .event-hero {
+        max-height: 250px;
+    }
+
+    .event-hero-placeholder {
+        min-height: 250px;
+    }
+}
+
+/* ==================== ПЛАШКА АРХІВНА ==================== */
+.event-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+}
+
+.event-badge--archive {
+    background: rgba(158, 158, 158, 0.9);
+    color: #fff;
+    backdrop-filter: blur(8px);
+}
+
+/* ==================== ОНОВЛЕНІ КАРТКИ ==================== */
+.event-card-image-link {
+    display: block;
+    position: relative;
+    text-decoration: none;
+}
+
+.event-card-image {
+    position: relative;
+}
+
+.event-card-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background: var(--color-primary, #2c3e50);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.event-card-button:hover {
+    background: var(--color-primary-dark, #1a252f);
+    transform: translateY(-2px);
+}
+
+/* === FREE CARD (ідентична до popular) === */
+.event-ticket-card.plan-card--free {
+    background: #000000;
+    border-color: #000000;
+    color: #FFFFFF;
+    transform: scale(1.08);
+    z-index: 10;
+}
+
+.event-ticket-card.plan-card--free:hover {
+    transform: scale(1.08) translateY(-4px);
+}
+
+/* ТЕМНА ТЕМА: free card стає білою */
+[data-theme="dark"] .event-ticket-card.plan-card--free {
+    background: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--free {
+        background: #FFFFFF;
+        border-color: #FFFFFF;
+        color: #000000;
+    }
+}
+
+/* Free card - білий текст */
+.event-ticket-card.plan-card--free .plan-name {
+    color: #FFFFFF;
+}
+
+/* ТЕМНА ТЕМА: free card - чорний текст */
+[data-theme="dark"] .event-ticket-card.plan-card--free .plan-name {
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--free .plan-name {
+        color: #000000;
+    }
+}
+
+/* Free card features - білий текст і borders */
+.event-ticket-card.plan-card--free .feature-item {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.event-ticket-card.plan-card--free .feature-number,
+.event-ticket-card.plan-card--free .feature-text {
+    color: #FFFFFF;
+}
+
+/* ТЕМНА ТЕМА: free card features - чорний текст і borders */
+[data-theme="dark"] .event-ticket-card.plan-card--free .feature-item {
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--free .feature-number,
+[data-theme="dark"] .event-ticket-card.plan-card--free .feature-text {
+    color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--free .feature-item {
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--free .feature-number,
+    [data-theme="auto"] .event-ticket-card.plan-card--free .feature-text {
+        color: #000000;
+    }
+}
+
+/* Free card price - білий текст */
+.event-ticket-card.plan-card--free .price-value {
+    color: #FFFFFF;
+}
+
+.event-ticket-card.plan-card--free .price-currency {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ТЕМНА ТЕМА: free card price - чорний текст */
+[data-theme="dark"] .event-ticket-card.plan-card--free .price-value {
+    color: #000000;
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--free .price-currency {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--free .price-value {
+        color: #000000;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--free .price-currency {
+        color: rgba(0, 0, 0, 0.7);
+    }
+}
+
+/* Free card button - інвертовані кольори */
+.event-ticket-card.plan-card--free .btn-purchase {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.event-ticket-card.plan-card--free .btn-purchase:hover {
+    background: #E5E7EB;
+}
+
+/* ТЕМНА ТЕМА: free card кнопка чорна */
+[data-theme="dark"] .event-ticket-card.plan-card--free .btn-purchase {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+[data-theme="dark"] .event-ticket-card.plan-card--free .btn-purchase:hover {
+    background: #1F2937;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .event-ticket-card.plan-card--free .btn-purchase {
+        background: #000000;
+        color: #FFFFFF;
+    }
+    
+    [data-theme="auto"] .event-ticket-card.plan-card--free .btn-purchase:hover {
+        background: #1F2937;
+    }
+}
+
+/* Бейдж "БЕЗКОШТОВНО" - червоний як "НАЙВИГІДНІШЕ" */
+.plan-badge--free {
+    background: #E31E24;
+    color: #FFFFFF;
+}
+
+/* ==================== МОДАЛЬНЕ ВІКНО ==================== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--color-bg, #fff);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-light);
+    line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+}
+
+.free-registration-form {
+    margin-top: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--color-border, #e0e0e0);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary, #2c3e50);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--color-primary, #2c3e50);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: var(--color-primary-dark, #1a252f);
+}
+
+/* iOS Safe Area */
+@supports (padding: max(0px)) {
+    .modal-content {
+        padding-bottom: max(32px, env(safe-area-inset-bottom));
+    }
+}

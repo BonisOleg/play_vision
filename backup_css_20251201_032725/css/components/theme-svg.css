@@ -1,0 +1,40 @@
+/* Динамічне перемикання SVG між світлою/темною темою */
+
+.theme-svg-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.theme-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.theme-svg svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Світла тема - ховаємо темний SVG */
+[data-theme="light"] .theme-svg--dark {
+    display: none;
+}
+
+/* Темна тема - ховаємо світлий SVG */
+[data-theme="dark"] .theme-svg--light {
+    display: none;
+}
+
+/* Fallback: якщо темної версії немає, показуємо світлу в темній темі */
+[data-theme="dark"] .theme-svg--light:only-child {
+    display: block;
+}
+
+/* Smooth transition при зміні теми (опціонально) */
+.theme-svg {
+    transition: opacity 0.2s ease-in-out;
+}
+
+

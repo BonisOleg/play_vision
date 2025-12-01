@@ -1,0 +1,175 @@
+/**
+ * UTILITIES - Допоміжні класи
+ * Використовуються для швидкої стилізації без inline styles
+ */
+
+/* === VISIBILITY === */
+.is-hidden {
+    display: none;
+}
+
+.is-visible {
+    display: block;
+}
+
+/* === MODAL STATES === */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal:not(.is-active) {
+    display: none;
+}
+
+.modal.is-active {
+    display: flex;
+}
+
+/* === PROGRESS BARS === */
+.progress,
+.progress-bar {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: var(--color-bg-gray);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: var(--radius-full);
+    width: var(--progress-width, 0%);
+    transition: width var(--transition-base);
+}
+
+.progress-container {
+    width: 100%;
+}
+
+/* === LOADING STATES === */
+.is-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: wait;
+}
+
+.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* === FLEX UTILITIES === */
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.gap-sm {
+    gap: var(--spacing-sm);
+}
+
+.gap-md {
+    gap: var(--spacing-md);
+}
+
+.gap-lg {
+    gap: var(--spacing-lg);
+}
+
+/* === TEXT ALIGNMENT === */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* === SPACING UTILITIES (optional) === */
+.mt-sm {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-md {
+    margin-top: var(--spacing-md);
+}
+
+.mt-lg {
+    margin-top: var(--spacing-lg);
+}
+
+.mb-sm {
+    margin-bottom: var(--spacing-sm);
+}
+
+.mb-md {
+    margin-bottom: var(--spacing-md);
+}
+
+.mb-lg {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* === POSITION HELPERS === */
+.pos-relative {
+    position: relative;
+}
+
+.pos-absolute {
+    position: absolute;
+}
+
+.pos-fixed {
+    position: fixed;
+}
+
+.pos-sticky {
+    position: sticky;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+    .mobile-hidden {
+        display: none;
+    }
+
+    .mobile-visible {
+        display: block;
+    }
+}
+
+@media (min-width: 1025px) {
+    .desktop-hidden {
+        display: none;
+    }
+
+    .desktop-visible {
+        display: block;
+    }
+}

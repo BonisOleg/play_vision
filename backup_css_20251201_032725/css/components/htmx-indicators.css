@@ -1,0 +1,66 @@
+/* ============================================
+   HTMX Indicators - Loading states
+   ============================================ */
+
+/* Loading indicator */
+.htmx-loading {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: var(--hub-bg-card);
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--hub-text);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.htmx-loading::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--hub-border);
+    border-top-color: var(--hub-primary);
+    border-radius: 50%;
+    animation: htmx-spin 0.6s linear infinite;
+}
+
+/* Show loading indicator during request */
+.htmx-loading.htmx-request {
+    opacity: 1;
+}
+
+/* Spin animation for loading spinner */
+@keyframes htmx-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Dark theme support */
+[data-theme="dark"] .htmx-loading {
+    background: var(--hub-bg-card);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Content fade during loading (optional enhancement) */
+.htmx-request .hub-catalog-grid {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+/* Smooth transition when content loads */
+#catalog-content {
+    transition: opacity 0.2s ease;
+}
+

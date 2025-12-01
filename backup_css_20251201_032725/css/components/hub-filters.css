@@ -1,0 +1,430 @@
+/* Sidebar + Content Layout */
+.hub-catalog-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* Sidebar */
+.hub-filters-sidebar {
+    background: var(--hub-bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    position: sticky;
+    top: 100px;
+}
+
+.hub-filters-title {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+    color: var(--hub-text);
+    margin-bottom: 24px;
+}
+
+/* Список фільтрів */
+.hub-filters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+/* Фільтр Item */
+.hub-filter-item {
+    border: 2px solid var(--hub-border);
+    border-radius: 12px;
+    overflow: visible;
+}
+
+/* Header фільтра */
+.hub-filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.hub-filter-label {
+    font-size: 1rem;
+    color: var(--hub-text);
+    flex: 1;
+}
+
+/* Custom checkbox */
+.hub-filter-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--hub-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.hub-filter-checkbox.checked {
+    background: var(--hub-primary);
+    border-color: var(--hub-primary);
+}
+
+.hub-filter-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Dropdown arrow */
+.hub-filter-arrow {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    fill: var(--hub-text);
+}
+
+.hub-filter-arrow.open {
+    transform: rotate(180deg);
+}
+
+/* Submenu */
+.hub-filter-submenu {
+    padding: 0 16px 12px 16px;
+    display: none;
+}
+
+.hub-filter-submenu.open {
+    display: block;
+}
+
+.hub-filter-subitem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.hub-filter-subitem input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Кнопки */
+.hub-filter-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.hub-filter-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.hub-filter-btn-icon {
+    flex-shrink: 0;
+}
+
+.hub-filter-btn-text {
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.hub-filter-btn-apply {
+    background: var(--hub-primary);
+    color: white;
+}
+
+.hub-filter-btn-apply:hover {
+    background: #d4190c;
+}
+
+.hub-filter-btn-cancel {
+    background: var(--hub-secondary);
+    color: white;
+}
+
+.hub-filter-btn-cancel:hover {
+    background: #333333;
+}
+
+/* ============================================
+   МОБІЛЬНА/ПЛАНШЕТНА ПАНЕЛЬ ФІЛЬТРІВ
+   ============================================ */
+
+/* Кнопка відкриття фільтрів - тільки моб/планшет */
+.hub-filters-toggle-btn {
+    display: none;
+}
+
+/* Шапка панелі (мобільна) */
+.hub-filters-header {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .hub-filters-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: var(--hub-bg-card);
+        border: 2px solid var(--hub-border);
+        border-radius: 12px;
+        color: var(--hub-text);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .hub-filters-toggle-btn:active {
+        background: var(--hub-primary);
+        color: white;
+    }
+    
+    .hub-catalog-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .hub-filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        width: auto;
+        min-width: 320px;
+        max-width: 85%;
+        transition: left 0.25s ease-out;
+        z-index: 999;
+        background: var(--hub-bg-card);
+        box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+    
+    .hub-filters-sidebar.active {
+        left: 0;
+    }
+    
+    .hub-filters-sidebar .hub-filters-title {
+        display: none;
+    }
+    
+    .hub-filters-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        border-bottom: 1px solid var(--hub-border);
+        flex-shrink: 0;
+        background: var(--hub-bg-card);
+    }
+    
+    .hub-filters-title-mobile {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--hub-text);
+        margin: 0;
+    }
+    
+    .hub-filters-close-btn {
+        background: transparent;
+        border: none;
+        padding: 4px;
+        cursor: pointer;
+        color: var(--hub-text);
+        display: flex;
+        border-radius: 4px;
+        transition: background 0.2s;
+    }
+    
+    .hub-filters-close-btn:active {
+        background: var(--hub-border);
+    }
+    
+    .hub-filters-sidebar .hub-filters-list {
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .hub-filter-submenu {
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .hub-filter-actions {
+        padding: 16px;
+        border-top: 1px solid var(--hub-border);
+        flex-shrink: 0;
+        background: var(--hub-bg-card);
+    }
+}
+
+@media (max-width: 768px) {
+    .hub-filters-sidebar {
+        min-width: 280px;
+        max-width: 90%;
+    }
+    
+    .hub-filters-toggle-btn {
+        padding: 8px 12px;
+        font-size: 0.875rem;
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    @media (max-width: 1024px) {
+        .hub-filters-sidebar {
+            height: 100dvh;
+            -webkit-font-smoothing: antialiased;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
+        .hub-filter-label,
+        .hub-filter-subitem span,
+        .hub-filters-title-mobile {
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .hub-filters-sidebar .hub-filters-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .hub-filters-list .hub-filter-item {
+            margin-bottom: 8px;
+            height: auto;
+            overflow: visible;
+        }
+        
+        .hub-filters-list .hub-filter-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .hub-filter-submenu.open {
+            display: block;
+            height: auto;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .hub-filters-sidebar {
+            height: 100dvh;
+        }
+    }
+}
+
+/* Horizontal search bar над каталогом */
+.hub-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 16px;
+    background: var(--hub-bg-card);
+    border-radius: 12px;
+    border: 2px solid var(--hub-border);
+    box-sizing: border-box;
+}
+
+.hub-search-icon {
+    flex-shrink: 0;
+    color: var(--hub-text-light);
+}
+
+.hub-search-field {
+    flex: 1;
+    border: none;
+    font-size: 1rem;
+    color: var(--hub-text);
+    outline: none;
+}
+
+.hub-search-field::placeholder {
+    color: var(--hub-text-light);
+}
+
+.hub-search-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.hub-search-btn-find {
+    background: var(--hub-primary);
+    color: white;
+}
+
+.hub-search-btn-find:hover {
+    background: #d4190c;
+}
+
+.hub-search-btn-reset {
+    background: var(--hub-secondary);
+    color: white;
+}
+
+.hub-search-btn-reset:hover {
+    background: #333333;
+}
+
+/* Search bar responsive */
+@media (max-width: 1024px) {
+    .hub-search-bar {
+        width: 100%;
+        max-width: 100%;
+        padding: 5px 12px;
+        gap: 8px;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+    
+    .hub-search-field {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+    }
+    
+    .hub-search-btn {
+        padding: 6px 12px;
+        font-size: 0.875rem;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .hub-search-bar {
+        padding: 4px 8px;
+        gap: 6px;
+    }
+    
+    .hub-search-btn {
+        padding: 5px 10px;
+        font-size: 0.8125rem;
+    }
+}

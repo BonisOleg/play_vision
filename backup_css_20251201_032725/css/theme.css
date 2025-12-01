@@ -1,0 +1,359 @@
+/**
+ * THEME SYSTEM - Підтримка світлої та темної теми
+ * Використовує CSS custom properties з design-tokens.css
+ */
+
+/* === ROOT VARIABLES === */
+:root {
+    /* iOS Safari viewport height fix */
+    --vh: 1vh;
+}
+
+/* === LIGHT THEME (default) === */
+[data-theme="light"] {
+    color-scheme: light;
+}
+
+/* === DARK THEME === */
+[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+/* === AUTO THEME (follow system) === */
+[data-theme="auto"] {
+    color-scheme: light dark;
+}
+
+/* === COMPONENT THEME OVERRIDES === */
+
+/* Cards in dark mode */
+[data-theme="dark"] .card {
+    background: var(--color-bg-gray);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .card {
+        background: var(--color-bg-gray);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Buttons in dark mode */
+[data-theme="dark"] .btn-primary {
+    background: var(--color-primary);
+    color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .btn-primary {
+        background: var(--color-primary);
+        color: white;
+    }
+
+    [data-theme="auto"] .btn-outline {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+    }
+}
+
+/* Forms in dark mode */
+[data-theme="dark"] .form-control {
+    background: var(--color-bg-gray);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .form-control:focus {
+    background: var(--color-bg-dark);
+    border-color: var(--color-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .form-control {
+        background: var(--color-bg-gray);
+        border-color: var(--color-border);
+        color: var(--color-text);
+    }
+
+    [data-theme="auto"] .form-control:focus {
+        background: var(--color-bg-dark);
+        border-color: var(--color-primary);
+    }
+}
+
+/* Dropdowns in dark mode */
+[data-theme="dark"] .dropdown-menu {
+    background: var(--color-bg-gray);
+    border-color: var(--color-border);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background: var(--color-bg-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .dropdown-menu {
+        background: var(--color-bg-gray);
+        border-color: var(--color-border);
+    }
+
+    [data-theme="auto"] .dropdown-item:hover {
+        background: var(--color-bg-dark);
+    }
+}
+
+/* Messages/Toasts in dark mode */
+[data-theme="dark"] .message,
+[data-theme="dark"] .notification {
+    background: var(--color-bg-gray);
+    border-color: var(--color-border);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .message,
+    [data-theme="auto"] .notification {
+        background: var(--color-bg-gray);
+        border-color: var(--color-border);
+    }
+}
+
+/* Navigation in dark mode */
+[data-theme="dark"] .header,
+[data-theme="dark"] .navbar {
+    background: var(--color-bg);
+    border-bottom-color: var(--color-border);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .header,
+    [data-theme="auto"] .navbar {
+        background: var(--color-bg);
+        border-bottom-color: var(--color-border);
+    }
+}
+
+
+/* Tables in dark mode */
+[data-theme="dark"] table {
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] table thead {
+    background: var(--color-bg-gray);
+}
+
+[data-theme="dark"] table tbody tr:hover {
+    background: var(--color-bg-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] table {
+        background: var(--color-bg);
+        color: var(--color-text);
+    }
+
+    [data-theme="auto"] table thead {
+        background: var(--color-bg-gray);
+    }
+
+    [data-theme="auto"] table tbody tr:hover {
+        background: var(--color-bg-dark);
+    }
+}
+
+/* Modals in dark mode */
+[data-theme="dark"] .modal-content {
+    background: var(--color-bg-gray);
+    color: var(--color-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .modal-content {
+        background: var(--color-bg-gray);
+        color: var(--color-text);
+    }
+}
+
+/* Code blocks in dark mode */
+[data-theme="dark"] pre,
+[data-theme="dark"] code {
+    background: var(--color-bg-dark);
+    color: var(--color-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] pre,
+    [data-theme="auto"] code {
+        background: var(--color-bg-dark);
+        color: var(--color-text);
+    }
+}
+
+/* === IMAGE ADJUSTMENTS FOR DARK MODE === */
+
+/* Logo and icons should stay bright */
+[data-theme="dark"] .logo,
+[data-theme="dark"] .logo-light,
+[data-theme="dark"] .logo-dark,
+[data-theme="dark"] .icon {
+    opacity: 1;
+    filter: brightness(1);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] img {
+        opacity: 0.9;
+    }
+
+    /* Logo and icons should stay bright */
+    [data-theme="auto"] .logo,
+    [data-theme="auto"] .logo-light,
+    [data-theme="auto"] .logo-dark,
+    [data-theme="auto"] .icon {
+        opacity: 1;
+        filter: brightness(1);
+    }
+}
+
+/* SVG інверсія для темної теми (червоний залишається червоним) */
+/* Виключення: .hexagon-icon, .logo-light, .logo-dark, .mentoring-svg-invert, .footer-logo мають власні фільтри */
+[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo),
+[data-theme="dark"] .about-image-block img[src*=".svg"] {
+    filter: invert(1) hue-rotate(180deg);
+    opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo),
+    [data-theme="auto"] .about-image-block img[src*=".svg"] {
+        filter: invert(1) hue-rotate(180deg);
+        opacity: 1;
+    }
+}
+
+/* === SCROLLBAR THEMING === */
+[data-theme="dark"] {
+    scrollbar-color: var(--color-border) var(--color-bg-gray);
+}
+
+[data-theme="dark"]::-webkit-scrollbar {
+    background: var(--color-bg-gray);
+}
+
+[data-theme="dark"]::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+}
+
+[data-theme="dark"]::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+        scrollbar-color: var(--color-border) var(--color-bg-gray);
+    }
+
+    [data-theme="auto"]::-webkit-scrollbar {
+        background: var(--color-bg-gray);
+    }
+
+    [data-theme="auto"]::-webkit-scrollbar-thumb {
+        background: var(--color-border);
+    }
+
+    [data-theme="auto"]::-webkit-scrollbar-thumb:hover {
+        background: var(--color-text-light);
+    }
+}
+
+/* === SELECTION COLORS === */
+[data-theme="dark"] ::selection {
+    background: var(--color-primary);
+    color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] ::selection {
+        background: var(--color-primary);
+        color: white;
+    }
+}
+
+/* === FOCUS STYLES FOR DARK MODE === */
+[data-theme="dark"] *:focus-visible {
+    outline-color: var(--color-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] *:focus-visible {
+        outline-color: var(--color-primary);
+    }
+}
+
+/* === PLACEHOLDER TEXT === */
+[data-theme="dark"] ::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] ::placeholder {
+        color: var(--color-text-muted);
+        opacity: 0.7;
+    }
+}
+
+/* === TRANSITIONS FOR THEME SWITCHING === */
+/* Removed global transitions - they cause flickering
+   Each component defines own transitions if needed */
+
+/* Disable transitions during theme switch to prevent flashing */
+html.theme-transition-disabled,
+html.theme-transition-disabled * {
+    transition: none;
+    animation: none;
+}
+
+/* === PRINT STYLES === */
+@media print {
+
+    [data-theme="dark"],
+    [data-theme="auto"] {
+        background: var(--silver-white);
+        color: black;
+    }
+}
+
+/* === ACCESSIBILITY === */
+
+/* High contrast mode overrides */
+@media (prefers-contrast: high) {
+
+    [data-theme="light"],
+    [data-theme="dark"],
+    [data-theme="auto"] {
+        --color-primary: #E50914;
+        --color-text: currentColor;
+        --color-bg: canvas;
+    }
+
+    .btn,
+    .card,
+    .form-control {
+        border-width: 2px;
+        border-style: solid;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    html[data-theme] *,
+    html[data-theme] *::before,
+    html[data-theme] *::after {
+        transition-duration: 0.01ms;
+        animation-duration: 0.01ms;
+    }
+}

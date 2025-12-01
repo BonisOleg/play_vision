@@ -208,7 +208,7 @@
 /* ============================================
    АДАПТИВНІСТЬ - TABLET (769px - 1024px)
    ============================================ */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .mentor-coaching-section {
         padding: 0;
     }
@@ -256,7 +256,7 @@
 /* ============================================
    АДАПТИВНІСТЬ - MOBILE (480px - 768px)
    ============================================ */
-@media (min-width: 480px) and (max-width: 768px) {
+@media (min-width: 480px) and (max-width: 767px) {
     .mentor-coaching-section {
         padding: 0;
     }
@@ -316,7 +316,7 @@
 /* ============================================
    АДАПТИВНІСТЬ - SMALL MOBILE (до 479px)
    ============================================ */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .mentor-coaching-section {
         padding: 0;
     }
@@ -429,7 +429,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .mentor-coaching-section .mentoring-image-block {
         max-width: 100%;
         margin: 30px auto 40px;
@@ -441,7 +441,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .mentor-coaching-section .mentoring-image-block {
         margin: 20px auto 30px;
         padding: 0;
@@ -461,7 +461,7 @@
 }
 
 @supports (-webkit-touch-callout: none) {
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         .mentor-coaching-section .mentoring-image-block {
             padding: 0;
             box-sizing: border-box;

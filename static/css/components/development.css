@@ -253,7 +253,7 @@
     font-size: 0.875rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .placeholder-card {
         padding: 2rem 1rem;
     }

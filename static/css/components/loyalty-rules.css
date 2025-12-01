@@ -592,7 +592,7 @@
 }
 
 /* Мобільні */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .rules-container {
         padding: 20px 15px;
     }

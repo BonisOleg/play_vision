@@ -150,7 +150,7 @@
 }
 
 /* Touch targets для mobile */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .tab-button {
         min-width: 44px;
         min-height: 44px;

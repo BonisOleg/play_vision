@@ -359,7 +359,7 @@
 }
 
 /* ==================== ADAPTIVE TABLET (769px - 1024px) ==================== */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .main-course-slide {
         flex: 0 0 calc(33.333% - 14px);
         width: calc(33.333% - 14px);
@@ -373,7 +373,7 @@
 }
 
 /* ==================== ADAPTIVE MOBILE (до 768px) ==================== */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .main-courses-section {
         padding: 0;
     }
@@ -453,7 +453,7 @@
 }
 
 /* ==================== ADAPTIVE MOBILE (< 576px) ==================== */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .main-courses-section {
         padding: 0;
     }

@@ -664,7 +664,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .logo-img {
         height: 50px;
     }
@@ -695,7 +695,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .logo-img {
         height: 44px;
     }
@@ -805,7 +805,7 @@
 }
 
 /* Touch target improvements for mobile */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     .navbar-icon,
     .nav-tab-btn {

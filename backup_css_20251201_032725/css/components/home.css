@@ -1,0 +1,949 @@
+/* ============================================
+   HOME PAGE STYLES
+   Base styles (.fullscreen-container, .fullscreen-section) are in section-base.css
+   ============================================ */
+
+/* === OVERLAY VARIANTS === */
+.section-overlay--light {
+    background: var(--white-alpha-90);
+    border: 1px solid var(--accent-dark);
+}
+
+.section-overlay--dark {
+    background: var(--shadow-alpha-60);
+}
+
+.section-overlay--primary {
+    background: var(--color-primary-alpha-80);
+}
+
+.hero-section .section-overlay--gradient {
+    background: linear-gradient(90deg,
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.85) 25%,
+            rgba(0, 0, 0, 0.78) 35%,
+            rgba(0, 0, 0, 0.65) 45%,
+            rgba(0, 0, 0, 0.45) 55%,
+            rgba(0, 0, 0, 0.15) 70%,
+            transparent 85%);
+}
+
+.section-overlay--cta-gradient {
+    background: linear-gradient(135deg, var(--color-secondary-alpha-20) 0%, var(--color-primary-alpha-20) 100%);
+}
+
+
+/* NEW DESIGN - 1в1 як на скріні */
+/* Використовує загальну систему ширини */
+.hero-section.hero-bordered .section-content.hero-new-design {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+    width: 80%;
+    max-width: 1400px;
+    padding: 0 0 90px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 100%;
+    min-height: 100%;
+}
+
+/* Tablet responsiveness (Синхронізовано з content-width) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-section {
+        width: 90%;
+        margin: 20px auto;
+    }
+    
+    .fullscreen-section {
+        min-height: 500px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero-buttons {
+        gap: var(--spacing-sm);
+    }
+
+    /* NEW DESIGN Tablet */
+    .section-content.hero-new-design {
+        width: 90%;
+        padding: 1rem 1.5rem 0.75rem;
+    }
+
+    .hero-new-design .hero-title {
+        font-size: 2rem; /* 70% від 2.5rem */
+        margin-bottom: -1rem;
+    }
+
+    .hero-new-design .hero-subtitle {
+        font-size: 1rem; /* 80% від 1.25rem */
+        margin-bottom: 0.3rem;
+    }
+    
+    .hero-btn-new {
+        padding: 10px 18px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* NEW DESIGN Mobile */
+    .hero-section.hero-bordered .section-content.hero-new-design {
+        left: 5px;
+        transform: none;
+        width: calc(100% - 5px);
+        padding: 0.75rem 1rem 1.5rem 0;
+        justify-content: flex-end;
+    }
+
+    .hero-new-design .hero-title {
+        font-size: 1.5rem; /* 60% від 2.5rem */
+        margin-bottom: -1rem;
+        line-height: 1.2;
+        max-width: 70%;
+    }
+
+    .hero-new-design .hero-subtitle {
+        font-size: 0.875rem; /* 70% від 1.25rem */
+        margin-bottom: 0.3rem;
+        line-height: 1.4;
+        max-width: 50%;
+    }
+    
+    .hero-new-design .hero-buttons {
+        gap: 0.5rem;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero-btn-new {
+        padding: 8px 14px;
+        font-size: 0.875rem;
+        min-height: auto;
+    }
+
+    .hero-btn-new .btn-logo-space {
+        width: 10px;
+        height: 10px;
+    }
+    
+    /* Слайдер-точки компактні */
+    .hero-new-design .hero-slider-dots {
+        margin-top: 0;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-width: 1px;
+    }
+    
+    .slider-dot.active {
+        width: 20px;
+        border-radius: 4px;
+    }
+}
+
+
+/* === HERO SECTION AS CARD === */
+.hero-section {
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-lg);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 4px 8px var(--shadow-alpha-80), 0 2px 4px var(--shadow-alpha-60);
+}
+
+/* NEW DESIGN Title */
+.hero-new-design .hero-title {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+    max-width: 600px;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    margin-bottom: var(--spacing-xxl);
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 2px 4px var(--shadow-alpha-70);
+}
+
+/* NEW DESIGN Subtitle */
+.hero-new-design .hero-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    margin-bottom: var(--spacing-xl);
+    opacity: 0.85;
+    max-width: 550px;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-xxl);
+}
+
+/* NEW DESIGN Buttons */
+.hero-new-design .hero-buttons {
+    justify-content: flex-start;
+    margin-bottom: var(--spacing-lg);
+}
+
+
+/* NEW DESIGN - Кнопка зі світлим логотипом (Hero) */
+.hero-btn-new {
+    background: #e9e9e9;
+    color: #000000;
+    border: none;
+    padding: 8px 14px 8px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    min-height: 54px;
+    overflow: visible;
+}
+
+.hero-btn-new .btn-text {
+    display: inline-block;
+    line-height: 1.2;
+}
+
+.hero-btn-new .btn-logo-space {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
+    background-size: contain;
+}
+
+.hero-btn-new:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+}
+
+
+.hero-slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xl);
+}
+
+/* NEW DESIGN - Точки під кнопкою */
+.hero-new-design .hero-slider-dots {
+    justify-content: flex-start;
+    margin-top: var(--spacing-md);
+    margin-left: 0;
+}
+
+.slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background: var(--color-primary);
+    width: 24px;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .slider-dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .slider-dot.active {
+        width: 18px;
+        border-radius: 3px;
+    }
+}
+
+
+
+
+.experts-section {
+    background: transparent;
+    position: relative;
+    z-index: var(--z-section, 20);
+    border-radius: 0;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+/* Використовує загальну систему ширини з section-base.css */
+/* .experts-section .section-content наслідує з section-base.css: width: 70%, max-width: 1400px, padding з var() */
+
+.experts-section .section-title {
+    color: #2a2a2a;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 16px;
+    text-shadow: none;
+}
+
+.experts-subtitle {
+    text-align: left;
+    color: #666666;
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-bottom: 48px;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-shadow: none;
+    line-height: 1.6;
+}
+
+
+
+.cta-section {
+    text-align: center;
+    position: relative;
+    z-index: var(--z-section, 20);
+    overflow: hidden;
+}
+
+.cta-simple {
+    background-image: url('/static/images/backgroundCTAmain.jpg');
+    background-size: cover;
+    padding: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transform: translateZ(0);
+}
+
+.cta-content {
+    width: 100%;
+    max-width: 800px;
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    transform: translateZ(0);
+    contain: layout style paint;
+}
+
+.cta-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: #000000;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+    font-family: var(--font-heading);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* CTA кнопка "Ставай частиною Play Vision" */
+.cta-section .btn-primary {
+    background: linear-gradient(90deg, #E50914 0%, #000000 100%);
+    color: #ffffff;
+    border: none;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: visible;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+.cta-section .btn-primary .btn-text {
+    display: inline-block;
+    line-height: 1.2;
+}
+
+.cta-section .btn-primary .btn-logo-space {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
+    background-size: contain;
+}
+
+.cta-section .btn-primary:hover {
+    background: linear-gradient(90deg, #b8070f 0%, #1a1a1a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+    -webkit-transform: translateY(-2px);
+}
+
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .experts-section {
+        padding: 20px 0;
+    }
+
+    .experts-section .section-content {
+        padding: 0 30px;
+    }
+
+    .experts-section .section-title {
+        font-size: 2.25rem;
+        margin-bottom: 14px;
+    }
+
+    .experts-subtitle {
+        font-size: 1.0625rem;
+        margin-bottom: 40px;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .hero-section {
+        width: 90%;
+        margin: 15px auto;
+        box-shadow: none;
+    }
+    
+    /* CTA залишається на всю ширину */
+    .cta-section {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        width: 95%;
+        margin: 8px auto;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+    
+    /* CTA залишається на всю ширину */
+    .cta-section {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .hero-buttons,
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+
+    .cta-content {
+        padding: 32px 24px;
+        border-radius: 32px;
+        gap: 20px;
+    }
+
+    .cta-title {
+        font-size: 1.8rem;
+        white-space: normal;
+    }
+
+    .cta-section .btn-primary {
+        width: 100%;
+        max-width: 280px;
+        padding: 14px 28px;
+        font-size: 0.875rem;
+    }
+
+    .cta-section .btn-primary .btn-logo-space {
+        width: 18px;
+        height: 18px;
+    }
+
+
+    .experts-section {
+        padding: 20px 0;
+    }
+
+    .experts-section .section-content {
+        padding: 0 20px;
+    }
+
+    .experts-section .section-title {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .experts-subtitle {
+        font-size: 1rem;
+        margin-bottom: 32px;
+    }
+
+}
+
+@supports (-webkit-touch-callout: none) {
+    .hero-section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+
+    .btn,
+    .cta-section .btn-primary,
+    .carousel-btn,
+    .slider-dot,
+    .hexagon,
+    .hero-btn-new {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .fullscreen-container,
+    .section-content,
+    .hero-new-design,
+    .experts-section {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .hexagon,
+    .hexagon-inner {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+
+    .section-bg-video {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .section-overlay--gradient {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    @media (max-width: 768px) {
+        .hero-new-design .hero-buttons {
+            gap: 0.5rem;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-new-design .hero-slider-dots {
+            margin-top: 0;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cta-section .btn-primary {
+            font-size: 0.875rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-new-design .hero-buttons {
+            gap: 0.5rem;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-new-design .hero-slider-dots {
+            margin-top: 0;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+}
+
+
+/* ============================================ */
+/* DARK THEME SUPPORT - HOME PAGE */
+/* ============================================ */
+
+[data-theme="dark"] {
+
+    /* === HERO SECTION === */
+    .hero-section {
+        color: white;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero-title,
+    .hero-subtitle {
+        color: white;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-btn-new {
+        background: #e9e9e9;
+        color: #000000;
+    }
+
+    .hero-btn-new:hover {
+        background: #e9e9e9;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        text-decoration: none;
+    }
+
+    .no-courses {
+        color: var(--color-text-light);
+    }
+
+    /* === EXPERT CARDS (Команда професіоналів) === */
+    .experts-section {
+        background: transparent;
+    }
+
+    .experts-section .section-title {
+        color: var(--color-text);
+    }
+
+    .experts-subtitle {
+        color: var(--color-text-light);
+        text-shadow: none;
+    }
+
+    /* === MENTOR-COACHING SECTION === */
+    .mentor-coaching-section {
+        background: transparent;
+    }
+
+    .mentor-coaching-section .section-bg {
+        display: none;
+    }
+
+    .mentor-coaching-section .section-overlay--dark {
+        display: none;
+    }
+
+    .mentor-coaching-section .section-title {
+        color: white;
+        text-shadow: 0 2px 8px var(--shadow-alpha-80);
+    }
+
+    .mentor-coaching-section .ecosystem-subtitle {
+        color: white;
+        text-shadow: 0 2px 8px var(--shadow-alpha-80);
+    }
+
+    .mentor-coaching-section .hexagon h4 {
+        color: white;
+        text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    .mentor-coaching-section .hexagon {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .mentor-coaching-section .hexagon:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .hexagon-center-large {
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    .hexagon-orbit-item {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .connection-line {
+        stroke: #ff6b35;
+    }
+
+    /* === SECTION TITLES === */
+    .section-title {
+        color: var(--color-text);
+        text-shadow: none;
+    }
+
+    .featured-courses-section .section-title {
+        color: white;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .courses-section .section-title {
+        color: var(--color-text);
+        text-shadow: none;
+    }
+
+    .mentor-coaching-section .section-title {
+        color: white;
+    }
+
+    .cta-content {
+        background: #1a1a1a;
+    }
+
+    .cta-title {
+        color: #ffffff;
+    }
+
+    /* === CTA BUTTONS === */
+    .cta-section .btn-primary {
+        background: linear-gradient(90deg, #E50914 0%, #000000 100%);
+        border: none;
+        color: #ffffff;
+    }
+
+    .cta-section .btn-primary:hover {
+        background: linear-gradient(90deg, #b8070f 0%, #1a1a1a 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    /* === COURSES LINK === */
+    .courses-link {
+        color: var(--color-primary);
+    }
+
+    .courses-link:hover {
+        color: var(--color-primary-light);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+
+        /* === HERO SECTION === */
+        .hero-section {
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-title,
+        .hero-subtitle {
+            color: white;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-btn-new {
+            background: #e9e9e9;
+            color: #000000;
+        }
+
+        .hero-btn-new:hover {
+            background: #e9e9e9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            text-decoration: none;
+        }
+
+        .no-courses {
+            color: var(--color-text-light);
+        }
+
+        /* === EXPERT CARDS (Команда професіоналів) === */
+        .experts-section {
+            background: transparent;
+        }
+
+        .experts-section .section-title {
+            color: var(--color-text);
+        }
+
+        .experts-subtitle {
+            color: var(--color-text-light);
+            text-shadow: none;
+        }
+
+        /* === MENTOR-COACHING SECTION === */
+        .mentor-coaching-section {
+            background: transparent;
+        }
+
+        .mentor-coaching-section .section-bg {
+            display: none;
+        }
+
+        .mentor-coaching-section .section-overlay--dark {
+            display: none;
+        }
+
+        .mentor-coaching-section .section-title {
+            color: white;
+            text-shadow: 0 2px 8px var(--shadow-alpha-80);
+            margin-top: var(--spacing-xxl);
+        }
+
+        .mentor-coaching-section .ecosystem-subtitle {
+            color: white;
+            text-shadow: 0 2px 8px var(--shadow-alpha-80);
+        }
+
+        .mentor-coaching-section .hexagon h4 {
+            color: white;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .mentor-coaching-section .hexagon {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .mentor-coaching-section .hexagon:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .hexagon-center-large {
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .hexagon-orbit-item {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .connection-line {
+            stroke: #ff6b35;
+        }
+
+        /* === SECTION TITLES === */
+        .section-title {
+            color: var(--color-text);
+            text-shadow: none;
+        }
+
+        .featured-courses-section .section-title {
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .courses-section .section-title {
+            color: var(--color-text);
+            text-shadow: none;
+        }
+
+        .mentor-coaching-section .section-title {
+            color: white;
+        }
+
+        .cta-content {
+            background: #1a1a1a;
+        }
+
+        .cta-title {
+            color: #ffffff;
+        }
+
+        /* === CTA BUTTONS === */
+        .cta-section .btn-primary {
+            background: linear-gradient(90deg, #E50914 0%, #000000 100%);
+            border: none;
+            color: #ffffff;
+        }
+
+        .cta-section .btn-primary:hover {
+            background: linear-gradient(90deg, #b8070f 0%, #1a1a1a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        /* === COURSES LINK === */
+        .courses-link {
+            color: var(--color-primary);
+        }
+
+        .courses-link:hover {
+            color: var(--color-primary-light);
+        }
+    }
+}

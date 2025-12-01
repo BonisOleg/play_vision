@@ -176,7 +176,7 @@
 }
 
 /* ===== SMALL MOBILE (iPhone SE, малі Android) ===== */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .mobile-bottom-nav .nav-label {
         font-size: 10px;
     }

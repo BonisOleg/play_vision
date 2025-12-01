@@ -515,7 +515,7 @@
 }
 
 /* МОБІЛЬНА АДАПТАЦІЯ */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .cart-container {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
@@ -575,7 +575,7 @@
 }
 
 /* ПЛАНШЕТНА АДАПТАЦІЯ */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .cart-container {
         grid-template-columns: 1fr 350px;
         gap: var(--spacing-lg);

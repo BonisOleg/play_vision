@@ -293,7 +293,7 @@
     z-index: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .content-watermark {
         font-size: 1.5rem;
     }
@@ -558,7 +558,7 @@
 }
 
 /* ===== MOBILE RESPONSIVE ===== */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .material-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -594,7 +594,7 @@
 }
 
 /* ===== TABLET RESPONSIVE ===== */
-@media (max-width: 1024px) and (min-width: 769px) {
+@media (max-width: 1024px) and (min-width: 768px) {
     .material-grid {
         grid-template-columns: 1fr 250px;
         gap: 1.5rem;

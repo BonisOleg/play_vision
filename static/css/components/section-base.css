@@ -77,7 +77,7 @@
 }
 
 /* Планшет */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .section-content {
         width: 90%;
         padding: 0 var(--spacing-lg);
@@ -85,7 +85,7 @@
 }
 
 /* Мобіл */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .section-content {
         width: 95%;
         padding: 0 var(--spacing-md);
@@ -128,7 +128,7 @@
 }
 
 /* === RESPONSIVE === */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .section-bg {
         aspect-ratio: 16 / 9; /* ЗАЛИШЕНО 16:9 */
     }
@@ -150,7 +150,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .section-bg {
         aspect-ratio: 16 / 9; /* ЗАЛИШЕНО 16:9 */
     }

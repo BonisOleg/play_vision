@@ -251,7 +251,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hub-hero-main {
         min-height: 300px;
     }
@@ -292,7 +292,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hero-title {
         font-size: 1.75rem;
         min-height: 60px;

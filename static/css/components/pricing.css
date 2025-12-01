@@ -454,7 +454,7 @@
 }
 
 /* Mobile - ОПТИМІЗОВАНА ВЕРСІЯ */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .pricing-title {
         font-size: 36px;
     }
@@ -610,7 +610,7 @@
 }
 
 /* Small Mobile - ЩЕ БІЛЬШЕ ЗМЕНШЕННЯ */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .pricing-page {
         padding: 40px 0 60px;
     }

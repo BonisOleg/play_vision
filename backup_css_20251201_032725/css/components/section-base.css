@@ -1,0 +1,201 @@
+/* ============================================
+   SECTION BASE - Базові стилі для всіх секцій
+   Мінімальний файл замість великого parallax.css
+   Використовується на: home, about, mentoring
+   ============================================ */
+
+/* === БАЗОВІ СТИЛІ СЕКЦІЙ === */
+.section-bg {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+.section-bg-image,
+.section-bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* Fallback для старих Android браузерів */
+@supports not (aspect-ratio: 16 / 9) {
+    .section-bg::before {
+        content: '';
+        display: block;
+        padding-top: 56.25%; /* 16:9 = 9/16 * 100% */
+    }
+    
+    .section-bg-image,
+    .section-bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.section-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-overlay);
+}
+
+/* === SECTION CONTENT === */
+/* Використовує загальну систему ширини */
+.section-content {
+    position: relative;
+    z-index: var(--z-content);
+    width: 80%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+}
+
+/* Hero блоки - контент поверх зображення */
+.hero-section .section-content,
+.about-hero .section-content,
+.mentoring-hero .section-content {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 1400px;
+    height: 100%;
+    z-index: var(--z-content);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem var(--spacing-xl);
+}
+
+/* Планшет */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .section-content {
+        width: 90%;
+        padding: 0 var(--spacing-lg);
+    }
+}
+
+/* Мобіл */
+@media (max-width: 768px) {
+    .section-content {
+        width: 95%;
+        padding: 0 var(--spacing-md);
+    }
+}
+
+/* === HERO SECTION === */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hero контент */
+.hero-section .section-content {
+    pointer-events: auto;
+}
+
+/* === FULLSCREEN CONTAINER === */
+.fullscreen-container {
+    width: 100%;
+    position: relative;
+}
+
+.fullscreen-section {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* === GPU ACCELERATION === */
+.hero-section .section-bg,
+.hero-section .section-overlay {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* === RESPONSIVE === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .section-bg {
+        aspect-ratio: 16 / 9; /* ЗАЛИШЕНО 16:9 */
+    }
+    
+    .fullscreen-section {
+        min-height: auto;
+    }
+    
+    .hero-section .section-content,
+    .about-hero .section-content,
+    .mentoring-hero .section-content {
+        width: 90%;
+        padding: 1rem 1.5rem;
+    }
+    
+    /* Головна сторінка: мінімум зверху, достатньо знизу для слайдера */
+    .hero-section .section-content {
+        padding: 0.5rem 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-bg {
+        aspect-ratio: 16 / 9; /* ЗАЛИШЕНО 16:9 */
+    }
+    
+    .fullscreen-section {
+        min-height: auto;
+    }
+    
+    .hero-section .section-content,
+    .about-hero .section-content,
+    .mentoring-hero .section-content {
+        width: 95%;
+        padding: 0.5rem 0.75rem 0.5rem;
+        justify-content: flex-end;
+    }
+    
+    /* Головна сторінка: мінімум зверху, достатньо знизу для слайдера */
+    .hero-section .section-content {
+        padding: 0.25rem 0.75rem 1rem;
+    }
+}
+
+/* === iOS SAFARI FIX === */
+@supports (-webkit-touch-callout: none) {
+    .hero-section .section-bg,
+    .hero-section .section-overlay {
+        -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+    }
+}
+
+/* === HERO BORDERED (спільний клас для всіх сторінок) === */
+.hero-section.hero-bordered .section-content {
+    border: none;
+    border-radius: 0;
+    padding: 3rem;
+    backdrop-filter: none;
+    background: transparent;
+}
+
+/* === PREFERS REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+    .hero-section .section-bg,
+    .hero-section .section-overlay {
+        transform: none;
+    }
+}
+

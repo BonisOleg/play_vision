@@ -1,0 +1,420 @@
+/**
+ * DESIGN TOKENS - Єдина система дизайн-токенів
+ * Централізовані змінні для всього проекту
+ */
+
+/* === CUSTOM FONTS (AtypDisplay, AtypText) === */
+
+@font-face {
+    font-family: 'AtypDisplay';
+    src: url('/static/AtypDisplay-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-041C, U+043E-FFFF;
+}
+
+@font-face {
+    font-family: 'AtypDisplay';
+    src: url('/static/AtypDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-041C, U+043E-FFFF;
+}
+
+@font-face {
+    font-family: 'AtypDisplay';
+    src: url('/static/AtypDisplay-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-041C, U+043E-FFFF;
+}
+
+@font-face {
+    font-family: 'AtypText';
+    src: url('/static/AtypText-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-041C, U+043E-FFFF;
+}
+
+/* === ROBOTO FOR CYRILLIC н (U+043D) and Н (U+041D) === */
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxP.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmVknXSpBc4.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoForN';
+    src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    unicode-range: U+041D, U+043D;
+    font-display: swap;
+}
+
+/* === CROSS-PLATFORM FONT RENDERING === */
+
+body,
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+:root {
+    /* === BRAND COLORS === */
+    --color-primary: #E50914;
+    --color-primary-dark: #b8070f;
+    --color-primary-light: #ff2b33;
+    --color-secondary: #000000;
+    --color-secondary-light: #1a1a1a;
+
+    /* === NEUTRAL COLORS === */
+    --color-text: #000000;
+    --color-text-light: #666666;
+    --color-text-muted: #999999;
+    --color-bg: #f0f0f0;
+    --color-bg-gray: #e8e8e8;
+    --color-bg-dark: #1a1a1a;
+    --color-bg-accent: #1a1a1a;
+    --color-border: #000000;
+    --color-border-light: #d0d0d0;
+
+    /* === SEMANTIC COLORS === */
+    --color-success: #000000;
+    --color-success-light: #e8e8e8;
+    --color-success-dark: #000000;
+    --color-error: #E50914;
+    --color-error-light: #ffe6e8;
+    --color-error-dark: #b8070f;
+    --color-warning: #E50914;
+    --color-warning-light: #ffe6e8;
+    --color-warning-dark: #b8070f;
+    --color-info: #000000;
+    --color-info-light: #e8e8e8;
+    --color-info-dark: #000000;
+
+    /* === ALPHA VARIATIONS === */
+    --color-primary-alpha-10: rgba(229, 9, 20, 0.1);
+    --color-primary-alpha-20: rgba(229, 9, 20, 0.2);
+    --color-primary-alpha-30: rgba(229, 9, 20, 0.3);
+    --color-primary-alpha-80: rgba(229, 9, 20, 0.8);
+    --color-secondary-alpha-20: rgba(0, 0, 0, 0.2);
+    --color-secondary-alpha-30: rgba(0, 0, 0, 0.3);
+    --color-secondary-alpha-80: rgba(0, 0, 0, 0.8);
+    --shadow-alpha-5: rgba(0, 0, 0, 0.05);
+    --shadow-alpha-10: rgba(0, 0, 0, 0.1);
+    --shadow-alpha-15: rgba(0, 0, 0, 0.15);
+    --shadow-alpha-30: rgba(0, 0, 0, 0.3);
+    --shadow-alpha-40: rgba(0, 0, 0, 0.4);
+    --shadow-alpha-50: rgba(0, 0, 0, 0.5);
+    --shadow-alpha-60: rgba(0, 0, 0, 0.6);
+    --shadow-alpha-70: rgba(0, 0, 0, 0.7);
+    --shadow-alpha-80: rgba(0, 0, 0, 0.8);
+    --white-alpha-90: rgba(240, 240, 240, 0.95);
+    --silver-white: #C0C0C0;
+    --accent-dark: #1a1a1a;
+
+    /* === ALERT COLORS === */
+    --color-success-bg: #e8e8e8;
+    --color-success-text: #000000;
+    --color-warning-bg: #ffe6e8;
+    --color-warning-text: #b8070f;
+    --color-info-bg: #e8e8e8;
+    --color-info-text: #000000;
+    --color-error-bg: #ffe6e8;
+    --color-error-text: #b8070f;
+
+    /* === ADDITIONAL BORDERS === */
+    --color-border-dark: #000000;
+
+    /* === Z-INDEX SYSTEM (unified) === */
+    --z-background: -1;
+    --z-base: 1;
+    --z-overlay: 1;
+    --z-content: 10;
+    --z-section: 20;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-popover: 600;
+    --z-tooltip: 700;
+    --z-toast: 800;
+    --z-fab: 999;
+    --z-header: 1000;
+    --z-notification: 1000;
+    --z-modal-backdrop: 2000;
+    --z-modal-content: 2001;
+    --z-modal: 2001;
+    --z-top: 9999;
+    --z-mobile-menu: 10000;
+
+    /* === EXTENDED COLOR PALETTE === */
+    --color-blue: #000000;
+    --color-blue-dark: #000000;
+    --color-red-brand: #ff6b35;
+    --color-red-brand-dark: #e11d48;
+    --color-green: #000000;
+    --color-green-light: #1a1a1a;
+    --color-purple: #E50914;
+    --color-purple-light: #ff2b33;
+    --color-pink: #E50914;
+    --color-pink-light: #ff2b33;
+
+    /* === TYPOGRAPHY === */
+    --font-primary: 'AtypText', 'RobotoForN', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-heading: 'AtypDisplay', 'RobotoForN', 'Roboto', sans-serif;
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+
+    /* === FONT SIZES === */
+    --font-size-xs: 0.75rem;
+    /* 12px */
+    --font-size-sm: 0.875rem;
+    /* 14px */
+    --font-size-base: 1rem;
+    /* 16px */
+    --font-size-md: 1.125rem;
+    /* 18px */
+    --font-size-lg: 1.25rem;
+    /* 20px */
+    --font-size-xl: 1.5rem;
+    /* 24px */
+    --font-size-2xl: 2rem;
+    /* 32px */
+    --font-size-3xl: 2.5rem;
+    /* 40px */
+    --font-size-4xl: 3rem;
+    /* 48px */
+
+    /* === LINE HEIGHT === */
+    --line-height-tight: 1.2;
+    --line-height-base: 1.6;
+    --line-height-relaxed: 1.8;
+
+    /* === SPACING SCALE === */
+    --spacing-xs: 0.25rem;
+    /* 4px */
+    --spacing-sm: 0.5rem;
+    /* 8px */
+    --spacing-md: 1rem;
+    /* 16px */
+    --spacing-lg: 1.5rem;
+    /* 24px */
+    --spacing-xl: 2rem;
+    /* 32px */
+    --spacing-2xl: 3rem;
+    /* 48px */
+    --spacing-3xl: 4rem;
+    /* 64px */
+    --spacing-4xl: 6rem;
+    /* 96px */
+
+    /* Legacy support */
+    --spacing-xxl: 3rem;
+    /* Alias for 2xl */
+
+    /* === SHADOWS === */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.25);
+
+    /* === TRANSITIONS === */
+    --transition-fast: 150ms ease;
+    --transition-base: 300ms ease;
+    --transition-slow: 500ms ease;
+    --transition-slower: 800ms ease;
+
+    /* === BORDER RADIUS === */
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+    /* === LAYOUT === */
+    --layout-nav-height: 80px;
+    --layout-sidebar-width: 280px;
+    --layout-container-max: 1200px;
+    --layout-container-wide: 1400px;
+
+    /* === BREAKPOINTS (for reference in JS) === */
+    --breakpoint-xs: 320px;
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1440px;
+
+    /* === COMPONENT-SPECIFIC TOKENS === */
+    /* Buttons */
+    --btn-padding-x: var(--spacing-lg);
+    --btn-padding-y: var(--spacing-sm);
+    --btn-radius: var(--radius-md);
+    --btn-font-weight: 500;
+
+    /* Cards */
+    --card-padding: var(--spacing-lg);
+    --card-radius: var(--radius-lg);
+    --card-shadow: var(--shadow-sm);
+    --card-shadow-hover: var(--shadow-md);
+
+    /* Forms */
+    --form-input-padding-x: var(--spacing-md);
+    --form-input-padding-y: var(--spacing-sm);
+    --form-input-radius: var(--radius-md);
+    --form-input-border-width: 2px;
+
+    /* === ANIMATION DURATIONS === */
+    --duration-instant: 0ms;
+    --duration-fast: 150ms;
+    --duration-base: 300ms;
+    --duration-slow: 500ms;
+    --duration-slower: 800ms;
+    --duration-slowest: 1000ms;
+
+    /* === EASING FUNCTIONS === */
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* === ASPECT RATIOS === */
+    --aspect-square: 1 / 1;
+    --aspect-video: 16 / 9;
+    --aspect-portrait: 3 / 4;
+    --aspect-landscape: 4 / 3;
+
+    /* === HUB-SPECIFIC TOKENS === */
+    --hub-primary: var(--color-primary);
+    --hub-secondary: var(--color-secondary);
+    --hub-text: #1A1A1A;
+    --hub-text-light: #666666;
+    --hub-bg-card: #FFFFFF;
+    --hub-border: #E0E0E0;
+    --hub-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* === DARK THEME OVERRIDES === */
+[data-theme="dark"] {
+    --color-bg: #000000;
+    --color-bg-gray: #1a1a1a;
+    --color-bg-dark: #000000;
+    --color-text: #ffffff;
+    --color-text-light: #cccccc;
+    --color-text-muted: #999999;
+    --color-border: #ffffff;
+    --color-border-light: #666666;
+
+    /* Adjust shadows for dark mode */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+    /* Hub-specific dark theme */
+    --hub-text: #FFFFFF;
+    --hub-text-light: #B3B3B3;
+    --hub-bg-card: #2A2A2A;
+    --hub-border: #404040;
+    --hub-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Auto theme: follow system preference */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+        --color-bg: #000000;
+        --color-bg-gray: #1a1a1a;
+        --color-bg-dark: #000000;
+        --color-text: #ffffff;
+        --color-text-light: #cccccc;
+        --color-text-muted: #999999;
+        --color-border: #ffffff;
+        --color-border-light: #666666;
+
+        /* Adjust shadows for dark mode */
+        --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+        --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+        /* Hub-specific auto theme */
+        --hub-text: #FFFFFF;
+        --hub-text-light: #B3B3B3;
+        --hub-bg-card: #2A2A2A;
+        --hub-border: #404040;
+        --hub-shadow: rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* === HIGH CONTRAST MODE === */
+@media (prefers-contrast: high) {
+    :root {
+        --color-text: #000000;
+        --color-bg: #f0f0f0;
+        --color-border: #000000;
+        --color-primary: #E50914;
+        --form-input-border-width: 3px;
+    }
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-fast: 0ms;
+        --transition-base: 0ms;
+        --transition-slow: 0ms;
+        --transition-slower: 0ms;
+        --duration-instant: 0ms;
+        --duration-fast: 0ms;
+        --duration-base: 0ms;
+        --duration-slow: 0ms;
+        --duration-slower: 0ms;
+        --duration-slowest: 0ms;
+    }
+}
+
+/* === PRINT MODE === */
+@media print {
+    :root {
+        --color-bg: #f0f0f0;
+        --color-text: #000000;
+        --shadow-xs: none;
+        --shadow-sm: none;
+        --shadow-md: none;
+        --shadow-lg: none;
+        --shadow-xl: none;
+    }
+}

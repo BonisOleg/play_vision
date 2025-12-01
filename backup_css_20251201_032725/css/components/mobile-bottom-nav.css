@@ -1,0 +1,208 @@
+/* ========================================== */
+/* MOBILE BOTTOM NAVIGATION */
+/* ========================================== */
+
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    z-index: var(--z-sticky);
+    padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== NAV ITEM ===== */
+.mobile-bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 4px;
+    padding: 6px 4px;
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    position: relative;
+    min-height: 56px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.mobile-bottom-nav .nav-item:active {
+    transform: scale(0.95);
+}
+
+.mobile-bottom-nav .nav-item.active {
+    color: var(--color-primary);
+}
+
+/* ===== NAV ICON ===== */
+.mobile-bottom-nav .nav-icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+
+/* ===== NAV LABEL ===== */
+.mobile-bottom-nav .nav-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* ===== NAV BADGE ===== */
+.mobile-bottom-nav .nav-badge {
+    position: absolute;
+    top: 2px;
+    right: 50%;
+    transform: translateX(12px);
+    background: var(--color-primary);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.mobile-bottom-nav .nav-badge:empty,
+.mobile-bottom-nav .nav-badge[data-cart-count="0"] {
+    display: none;
+}
+
+/* ===== MOBILE & TABLET RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .mobile-bottom-nav {
+        display: flex;
+    }
+}
+
+/* ===== TABLET (PORTRAIT & LANDSCAPE) ===== */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .mobile-bottom-nav .nav-item {
+        min-height: 60px;
+        gap: 6px;
+    }
+
+    .mobile-bottom-nav .nav-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .mobile-bottom-nav .nav-label {
+        font-size: 12px;
+    }
+}
+
+/* ===== iOS SAFARI SPECIFIC ===== */
+@supports (-webkit-touch-callout: none) {
+    .mobile-bottom-nav {
+        padding-bottom: max(8px, calc(env(safe-area-inset-bottom) + 8px));
+    }
+
+    .mobile-bottom-nav .nav-item {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+    }
+
+    /* Smooth scroll для iOS */
+    .mobile-bottom-nav {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATION ===== */
+@media (hover: none) and (pointer: coarse) {
+    .mobile-bottom-nav .nav-item {
+        min-height: 56px;
+        min-width: 56px;
+    }
+
+    /* Збільшити touch target для badge */
+    .mobile-bottom-nav .nav-badge {
+        min-width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+    .mobile-bottom-nav {
+        background: var(--color-bg);
+        border-top-color: var(--color-border);
+        box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    .mobile-bottom-nav {
+        border-top-width: 2px;
+    }
+
+    .mobile-bottom-nav .nav-item {
+        font-weight: 600;
+    }
+
+    .mobile-bottom-nav .nav-item.active {
+        outline: 2px solid var(--color-primary);
+        outline-offset: -2px;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    .mobile-bottom-nav .nav-item {
+        transition: none;
+    }
+
+    .mobile-bottom-nav .nav-item:active {
+        transform: none;
+    }
+}
+
+/* ===== SMALL MOBILE (iPhone SE, малі Android) ===== */
+@media (max-width: 768px) {
+    .mobile-bottom-nav .nav-label {
+        font-size: 10px;
+    }
+
+    .mobile-bottom-nav .nav-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .mobile-bottom-nav .nav-item {
+        gap: 2px;
+        padding: 4px 2px;
+    }
+}
+
+/* ===== FOCUS STATES FOR KEYBOARD NAVIGATION ===== */
+.mobile-bottom-nav .nav-item:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
+.mobile-bottom-nav .nav-item:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.mobile-bottom-nav .nav-item:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}

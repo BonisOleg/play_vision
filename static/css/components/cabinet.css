@@ -489,7 +489,7 @@
 }
 
 /* Мобільна адаптація для профілю */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .profile-avatar-section {
         flex-direction: column;
         text-align: center;
@@ -525,7 +525,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .profile-stats-grid {
         grid-template-columns: 1fr;
     }
@@ -1334,7 +1334,7 @@
 }
 
 /* Мобільні пристрої */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .cabinet-wrapper {
         padding: 10px;
     }
@@ -1501,7 +1501,7 @@
 }
 
 /* Малі мобільні пристрої */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     .avatar-img,
     .avatar-placeholder {
@@ -1799,7 +1799,7 @@
 }
 
 /* Адаптивність для нових компонентів */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .subscription-actions {
         flex-direction: column;
     }
@@ -1828,7 +1828,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .courses-section {
         padding: 20px;
         margin-top: 20px;
@@ -2715,7 +2715,7 @@
 }
 
 /* Мобільні */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .loyalty-summary-card {
         padding: 20px;
     }

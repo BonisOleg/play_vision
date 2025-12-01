@@ -310,7 +310,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .course-title {
         font-size: var(--font-size-2xl);
     }

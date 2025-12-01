@@ -1,0 +1,159 @@
+/* =========================================
+   SHARED TAB COMPONENT - Reusable
+   Використовується: header nav, pricing periods
+   БЕЗ inline-стилів, БЕЗ !important
+   ========================================= */
+
+/* === CSS ЗМІННІ === */
+:root {
+    /* Tab container */
+    --tab-container-padding: 3.6px;
+    --tab-container-gap: 2px;
+    --tab-container-radius: 50px;
+    --tab-container-border-width: 2px;
+    --tab-container-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    
+    /* Tab button */
+    --tab-btn-padding-x: 18px;
+    --tab-btn-padding-y: 9px;
+    --tab-btn-min-height: 39.6px;
+    --tab-btn-font-size: 15px;
+    --tab-btn-font-weight: 500;
+    --tab-btn-radius: 50px;
+    
+    /* Tab slider */
+    --tab-slider-transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Colors - light theme (використовуємо глобальні змінні) */
+    --tab-container-bg: var(--color-bg, #f0f0f0);
+    --tab-container-border: var(--color-text, #000000);
+    --tab-slider-bg: var(--color-text, #000000);
+    --tab-btn-color: var(--color-text, #000000);
+    --tab-btn-color-active: #E50914;
+    --tab-btn-color-hover: var(--color-bg, #f0f0f0);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    --tab-container-bg: #171717;
+    --tab-container-border: rgba(255, 255, 255, 0.9);
+    --tab-slider-bg: rgba(255, 255, 255, 0.95);
+    --tab-btn-color: rgba(255, 255, 255, 0.95);
+    --tab-btn-color-hover: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+        --tab-container-bg: #171717;
+        --tab-container-border: rgba(255, 255, 255, 0.9);
+        --tab-slider-bg: rgba(255, 255, 255, 0.95);
+        --tab-btn-color: rgba(255, 255, 255, 0.95);
+        --tab-btn-color-hover: #1a1a1a;
+    }
+}
+
+/* === BASE TAB COMPONENT === */
+
+.tab-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tab-container-gap);
+    padding: var(--tab-container-padding);
+    background: var(--tab-container-bg);
+    border: var(--tab-container-border-width) solid var(--tab-container-border);
+    border-radius: var(--tab-container-radius);
+    box-shadow: var(--tab-container-shadow);
+}
+
+.tab-slider {
+    position: absolute;
+    top: var(--tab-container-padding);
+    left: var(--tab-container-padding);
+    height: calc(100% - calc(var(--tab-container-padding) * 2));
+    background: var(--tab-slider-bg);
+    border-radius: var(--tab-btn-radius);
+    transition: var(--tab-slider-transition);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+}
+
+/* Показуємо slider коли є активна кнопка */
+.tab-container:has(.tab-button.active) .tab-slider {
+    opacity: 1;
+}
+
+/* Fallback для браузерів без :has() */
+.tab-container.has-active .tab-slider {
+    opacity: 1;
+}
+
+.tab-button {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--tab-btn-padding-y) var(--tab-btn-padding-x);
+    min-height: var(--tab-btn-min-height);
+    font-size: var(--tab-btn-font-size);
+    font-weight: var(--tab-btn-font-weight);
+    color: var(--tab-btn-color);
+    background: transparent;
+    border: none;
+    border-radius: var(--tab-btn-radius);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tab-button:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+    color: var(--tab-btn-color-hover);
+}
+
+.tab-button:active {
+    transform: scale(0.98);
+}
+
+.tab-button.active {
+    color: var(--tab-btn-color-active);
+}
+
+/* === ACCESSIBILITY === */
+.tab-button:focus-visible {
+    outline: 2px solid var(--color-primary, #E50914);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .tab-slider,
+    .tab-button {
+        transition: none;
+    }
+}
+
+/* High contrast */
+@media (prefers-contrast: high) {
+    .tab-container {
+        border-width: 3px;
+    }
+    
+    .tab-button:hover {
+        outline: 2px solid currentColor;
+    }
+}
+
+/* Touch targets для mobile */
+@media (max-width: 768px) {
+    .tab-button {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+

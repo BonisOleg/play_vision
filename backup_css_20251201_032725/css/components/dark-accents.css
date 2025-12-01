@@ -1,0 +1,184 @@
+/**
+ * Темні акценти для світлої теми
+ * Застосовує темний колір футера (#1a1a1a) до специфічних компонентів
+ */
+
+/* === AI CHAT === */
+.ai-chat-interface,
+.ai-widget-container,
+.ai-mini-chat {
+    background: var(--accent-dark);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--accent-dark);
+}
+
+.ai-message-content {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ai-input-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-suggestion-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ai-suggestion-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.ai-input {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ai-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.ai-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--color-primary);
+}
+
+.ai-widget-message--bot .ai-message-content,
+.ai-mini-message--bot {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.ai-mini-input {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ai-mini-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* === CABINET (Профіль) === */
+.cabinet-container {
+    background: var(--accent-dark);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: var(--accent-dark);
+}
+
+.profile-info-card,
+.profile-stat-card,
+.profile-detail-card,
+.profile-interests,
+.profile-quick-actions,
+.info-card,
+.material-card,
+.way-item,
+.stat-card,
+.payments-table,
+.courses-section {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cabinet-sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    background: transparent;
+}
+
+.cabinet-sidebar .nav-link:hover,
+.cabinet-sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.tab-link {
+    color: rgba(255, 255, 255, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.tab-link:hover,
+.tab-link.active {
+    color: rgba(255, 255, 255, 0.95);
+    border-bottom-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.profile-info-card h3,
+.profile-stat-card h3,
+.profile-detail-card h3,
+.profile-interests h3,
+.profile-quick-actions h3,
+.info-card h3 {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.profile-info-card p,
+.profile-stat-card p,
+.profile-detail-card p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Interest tags in profile */
+.interest-tag {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.interest-tag:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Progress items */
+.material-progress-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Learning path items */
+.learning-path-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.learning-path-item h4 {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.learning-path-item p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Modal in cabinet */
+.modal-content {
+    background: var(--accent-dark);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.modal-header {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-footer {
+    border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+/* === ТЕМНА ТЕМА (без змін) === */
+[data-theme="dark"] .ai-chat-interface,
+[data-theme="dark"] .cabinet-container {
+    background: var(--color-bg-dark);
+}

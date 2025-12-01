@@ -284,7 +284,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hub-catalog-grid {
         grid-template-columns: 1fr;
         max-width: 70%;
@@ -305,7 +305,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hub-product-title {
         font-size: 0.375rem;
     }
@@ -352,7 +352,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hub-catalog-section {
         padding: var(--spacing-sm);
     }

@@ -278,7 +278,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hub-filters-sidebar {
         min-width: 280px;
         max-width: 90%;
@@ -327,7 +327,7 @@
         }
     }
     
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         .hub-filters-sidebar {
             height: 100dvh;
         }
@@ -417,7 +417,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .hub-search-bar {
         padding: 4px 8px;
         gap: 6px;

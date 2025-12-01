@@ -1,0 +1,127 @@
+/* 
+ * Bunny.net Video Player Styles
+ * Стилі для інтеграції Bunny.net CDN відео плеєра
+ */
+
+/* Контейнер для Bunny.net відео */
+.bunny-video-container {
+    position: relative;
+    width: 100%;
+    background-color: #171717;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive 16:9 aspect ratio */
+.bunny-video-container::before {
+    content: '';
+    display: block;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+}
+
+.bunny-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Завантаження плейсхолдер */
+.bunny-video-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Планшетна адаптація */
+@media (max-width: 1024px) {
+    .bunny-video-container {
+        border-radius: 6px;
+    }
+}
+
+/* Мобільна адаптація */
+@media (max-width: 768px) {
+    .bunny-video-container {
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .bunny-video-container iframe {
+        /* iOS Safari fix для повноекранного відео */
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* iOS Safari специфічні фікси */
+@supports (-webkit-touch-callout: none) {
+    .bunny-video-container {
+        /* Фікс для iOS Safari */
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+    }
+
+    .bunny-video-container iframe {
+        -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+}
+
+/* Темна тема підтримка */
+@media (prefers-color-scheme: dark) {
+    .bunny-video-container {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Стилі для відображення статусу відео в admin */
+.bunny-status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.bunny-status-indicator.status-ready {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.bunny-status-indicator.status-processing {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.bunny-status-indicator.status-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Thumbnail preview */
+.bunny-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Компактний вигляд для списків */
+.bunny-video-compact {
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.bunny-video-compact iframe {
+    width: 100%;
+    height: 100%;
+}

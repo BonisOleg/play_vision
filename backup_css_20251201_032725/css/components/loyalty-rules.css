@@ -1,0 +1,690 @@
+/* Сторінка правил програми лояльності */
+
+.loyalty-rules-page {
+    min-height: 100vh;
+    background: #171717;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.rules-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* === НАВІГАЦІЯ === */
+.back-navigation {
+    margin-bottom: 30px;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-5px);
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/* === HERO SECTION === */
+.loyalty-hero {
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 60px;
+}
+
+.hero-brand {
+    margin-bottom: 40px;
+}
+
+.hero-logo {
+    max-width: 300px;
+    height: auto;
+}
+
+.loyalty-hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
+}
+
+.user-points-display {
+    margin: 30px 0;
+}
+
+.points-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #ff6b35 0%, #ff4500 100%);
+    padding: 20px 40px;
+    border-radius: 50px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.points-label {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.points-value {
+    color: #ffffff;
+    font-size: 32px;
+}
+
+/* === SECTIONS === */
+.rules-section {
+    margin-bottom: 60px;
+    padding: 40px;
+    border-radius: 16px;
+}
+
+.rules-section.dark-section {
+    background: #171717;
+}
+
+.rules-section.light-section {
+    background: #e9e9e9;
+    color: #000000;
+}
+
+.rules-section.red-section {
+    background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+    color: #ffffff;
+}
+
+.rules-section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.rules-section h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 30px 0 20px 0;
+}
+
+.rules-section h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.light-section h2,
+.light-section h3,
+.light-section h4 {
+    color: #000000;
+}
+
+.lead-text {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.light-section p {
+    color: #333333;
+}
+
+/* === BENEFITS GRID === */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+}
+
+.benefit-icon {
+    color: #ff6b35;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* === RED SECTION (Програма лояльності) === */
+.points-formula {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.formula-text {
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.formula-visual {
+    margin: 40px 0;
+}
+
+.formula-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 48px;
+}
+
+.formula-arrow {
+    font-size: 32px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.section-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.section-cta h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.points-exchange {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* === EARNING TABLE === */
+.earning-table-container {
+    margin: 30px 0;
+}
+
+.earning-table-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.earning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.earning-range-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #e9ecef;
+}
+
+.range-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.range-label {
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.range-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.range-points {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.point-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.point-tier {
+    color: #495057;
+}
+
+.point-value {
+    font-weight: 600;
+    color: #dc3545;
+}
+
+/* === SUBSCRIPTION EARNING === */
+.subscription-earning-section {
+    margin: 30px 0;
+}
+
+.subscription-earning-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.subscription-column {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.subscription-column h4 {
+    color: #000000;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.subscription-points-table {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sub-point-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.sub-point-row:last-child {
+    border-bottom: none;
+}
+
+.sub-duration {
+    font-size: 15px;
+    color: #495057;
+}
+
+.sub-points-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #dc3545;
+}
+
+/* === SPENDING LIST === */
+.spending-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.spending-list li {
+    padding: 12px 0 12px 30px;
+    position: relative;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+}
+
+.spending-list li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #ff6b35;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.spending-benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.spending-benefits-list li {
+    padding: 12px 0 12px 30px;
+    position: relative;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.spending-benefits-list li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #ff6b35;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+/* === ROADMAP === */
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.roadmap-card-white {
+    background: #e9e9e9;
+    border-radius: 12px;
+    padding: 25px;
+    color: #000000;
+    transition: all 0.3s ease;
+}
+
+.roadmap-card-white:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+}
+
+.roadmap-card-header {
+    margin-bottom: 15px;
+}
+
+.roadmap-date {
+    font-size: 13px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.roadmap-card-white h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.roadmap-card-white p {
+    font-size: 14px;
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.roadmap-points {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.roadmap-points.earned {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.roadmap-points.spent {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.roadmap-points.milestone {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.roadmap-points.variant {
+    background: #e0e7ff;
+    color: #4f46e5;
+}
+
+/* === PERSPECTIVES === */
+.perspectives-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+}
+
+.perspectives-checklist li {
+    padding: 15px 0 15px 35px;
+    position: relative;
+    font-size: 16px;
+    line-height: 1.7;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.perspectives-checklist li:last-child {
+    border-bottom: none;
+}
+
+.perspectives-checklist li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+/* === PLACEHOLDER === */
+.image-placeholder-large {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 100px 40px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 30px 0;
+}
+
+.placeholder-file {
+    font-size: 13px;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* === FOOTER === */
+.rules-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    margin: 60px 0;
+}
+
+.footer-contact {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.footer-contact p {
+    margin: 5px 0;
+}
+
+.footer-logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* === BOTTOM CTA === */
+.bottom-cta {
+    text-align: center;
+    margin: 60px 0 40px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #ff6b35;
+    color: #ffffff;
+    border: 2px solid #ff6b35;
+}
+
+.btn-primary:hover {
+    background: #ff5722;
+    border-color: #ff5722;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.btn-large {
+    padding: 16px 40px;
+    font-size: 18px;
+}
+
+/* === RESPONSIVE === */
+
+/* Планшети */
+@media (max-width: 1024px) {
+    .earning-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .subscription-earning-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .roadmap-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Мобільні */
+@media (max-width: 768px) {
+    .rules-container {
+        padding: 20px 15px;
+    }
+
+    .loyalty-hero h1 {
+        font-size: 32px;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+    .rules-section {
+        padding: 25px 20px;
+    }
+
+    .rules-section h2 {
+        font-size: 28px;
+    }
+
+    .rules-section h3 {
+        font-size: 20px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .formula-icons {
+        flex-wrap: wrap;
+        font-size: 32px;
+    }
+
+    .rules-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .points-badge {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+    }
+}
+
+/* iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .loyalty-rules-page {
+        min-height: -webkit-fill-available;
+    }
+
+    .rules-container {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Темна тема */
+@media (prefers-color-scheme: dark) {
+    .light-section {
+        background: #171717;
+        color: #ffffff;
+    }
+
+    .light-section h2,
+    .light-section h3,
+    .light-section h4 {
+        color: #ffffff;
+    }
+
+    .light-section p {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .earning-range-card,
+    .subscription-column,
+    .roadmap-card-white {
+        background: #171717;
+        border-color: #404040;
+        color: #ffffff;
+    }
+
+    .roadmap-card-white h4,
+    .subscription-column h4 {
+        color: #ffffff;
+    }
+
+    .roadmap-card-white p {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .spending-list li {
+        color: rgba(255, 255, 255, 0.9);
+    }
+}

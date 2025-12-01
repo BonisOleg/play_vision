@@ -75,7 +75,7 @@
 }
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .unified-sections-wrapper .fullscreen-section {
         width: 90%;
         margin: 12px auto;
@@ -93,7 +93,7 @@
 }
 
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .unified-sections-wrapper .fullscreen-section {
         width: 95%;
         margin: 8px auto;
@@ -165,14 +165,14 @@
 }
 
 /* === АДАПТАЦІЯ ВІДСТУПІВ ДЛЯ ПЛАНШЕТА === */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .unified-sections-wrapper .mentor-coaching-section {
         padding: 35px;
     }
 }
 
 /* === АДАПТАЦІЯ ВІДСТУПІВ ДЛЯ МОБАЙЛА === */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .unified-sections-wrapper .mentor-coaching-section {
         padding: 25px;
     }
@@ -217,7 +217,7 @@
 }
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ ДЛЯ HUB === */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .unified-sections-wrapper .hub-hero-section,
     .unified-sections-wrapper .hub-featured-section,
     .unified-sections-wrapper .hub-catalog-section {
@@ -227,7 +227,7 @@
 }
 
 /* === МОБІЛЬНА АДАПТАЦІЯ ДЛЯ HUB === */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .unified-sections-wrapper .hub-hero-section,
     .unified-sections-wrapper .hub-featured-section,
     .unified-sections-wrapper .hub-catalog-section {

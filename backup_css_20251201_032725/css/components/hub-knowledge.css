@@ -1,0 +1,121 @@
+/* ============================================
+   HUB KNOWLEDGE BASE - Базові змінні та загальні стилі
+   ============================================ */
+
+:root {
+    --hub-primary: #E50914;
+    --hub-secondary: #000000;
+    --hub-text: #1A1A1A;
+    --hub-text-light: #666666;
+    --hub-bg-card: #FFFFFF;
+    --hub-border: #E0E0E0;
+    --hub-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Темна тема */
+[data-theme="dark"] {
+    --hub-text: #FFFFFF;
+    --hub-text-light: #B3B3B3;
+    --hub-bg-card: #2A2A2A;
+    --hub-border: #404040;
+    --hub-shadow: rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+        --hub-text: #FFFFFF;
+        --hub-text-light: #B3B3B3;
+        --hub-bg-card: #2A2A2A;
+        --hub-border: #404040;
+        --hub-shadow: rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Загальна кнопка (скопійовано з home.css) */
+.hub-btn {
+    background: #e9e9e9;
+    color: #000000;
+    border: none;
+    padding: 8px 14px 8px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    min-height: 54px;
+    overflow: visible;
+}
+
+.hub-btn .btn-text {
+    display: inline-block;
+    line-height: 1.2;
+}
+
+.hub-btn .btn-logo-space {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/images/white_botton.png') no-repeat center center;
+    background-size: contain;
+}
+
+.hub-btn:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+}
+
+.hub-btn-small {
+    padding: 8px 14px 8px 16px;
+    font-size: 0.95rem;
+    gap: 10px;
+    min-height: 44px;
+}
+
+/* Section title (синхронізовано з experts-section) */
+.section-title {
+    color: var(--hub-text);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 16px;
+    text-shadow: none;
+}
+
+/* Responsive */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .section-title {
+        font-size: 2.25rem;
+        margin-bottom: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 10px;
+    }
+    
+    .hub-btn {
+        font-size: 0.9rem;
+        padding: 7px 12px 7px 14px;
+    }
+}
+

@@ -1,0 +1,450 @@
+/* Featured Courses Section - Світлий дизайн (100% відповідно до скріншота) */
+
+/* ==================== СЕКЦІЯ ==================== */
+.featured-courses-section {
+    background: #e9e9e9;
+    padding: 60px 0;
+    position: relative;
+    overflow: visible;
+}
+
+[data-theme="dark"] .featured-courses-section {
+    background: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .featured-courses-section {
+        background: #f5f5f5;
+    }
+}
+
+/* ==================== HEADER З НАВІГАЦІЄЮ ==================== */
+/* Використовує загальну систему ширини */
+.featured-courses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    width: 80%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 var(--spacing-xl);
+}
+
+.featured-courses-header .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .featured-courses-header .section-title {
+    color: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .featured-courses-header .section-title {
+        color: #1a1a1a;
+    }
+}
+
+/* ==================== КНОПКИ НАВІГАЦІЇ (вгорі справа) ==================== */
+.featured-navigation {
+    display: flex;
+    gap: 12px;
+}
+
+.featured-nav-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #171717;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.featured-nav-btn:hover:not(:disabled) {
+    background: #171717;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.featured-nav-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.featured-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.featured-nav-btn svg {
+    max-width: 24px;
+    max-height: 24px;
+}
+
+/* ==================== КАРУСЕЛЬ КОНТЕЙНЕР ==================== */
+/* Використовує загальну систему ширини */
+.featured-carousel-container {
+    width: 80%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+    overflow: hidden;
+}
+
+.featured-carousel {
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== СЛАЙД (ОБГОРТКА КАРТКИ) ==================== */
+.carousel-slide {
+    flex: 0 0 calc(25% - 15px);
+    width: calc(25% - 15px);
+    min-width: calc(25% - 15px);
+    max-width: calc(25% - 15px);
+}
+
+/* ==================== КАРТКА КУРСУ ==================== */
+.featured-card {
+    background: #e9e9e9;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.featured-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* ==================== ЗОБРАЖЕННЯ (60% ВИСОТИ) ==================== */
+.featured-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #e8e8e8;
+    flex-shrink: 0;
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.featured-card:hover .featured-image img {
+    transform: scale(1.05);
+}
+
+.featured-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==================== КОНТЕНТ (40% ВИСОТИ) ==================== */
+.featured-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #e9e9e9;
+}
+
+/* КУРС #X */
+.featured-number {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #666666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* ЗАГОЛОВОК */
+.featured-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 2.6em;
+}
+
+/* ОПИС */
+.featured-description {
+    font-size: 0.875rem;
+    color: #666666;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* ==================== ЧЕРВОНА КНОПКА-ІКОНКА ==================== */
+.featured-button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #d32f2f;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+}
+
+.featured-button svg {
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.featured-button:hover {
+    background: #c62828;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.5);
+}
+
+.featured-button:hover svg {
+    transform: translateX(2px);
+}
+
+.featured-button:active {
+    transform: scale(0.95);
+}
+
+/* ==================== ПОРОЖНІЙ СТАН ==================== */
+.no-courses {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666666;
+    font-size: 1.125rem;
+}
+
+/* ==================== ADAPTIVE TABLET (769px - 1024px) ==================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Синхронізовано з content-width */
+    .featured-courses-header,
+    .featured-carousel-container {
+        width: 90%;
+        padding: 0 var(--spacing-lg);
+    }
+
+    .carousel-slide {
+        flex: 0 0 calc(33.333% - 14px);
+        width: calc(33.333% - 14px);
+        min-width: calc(33.333% - 14px);
+        max-width: calc(33.333% - 14px);
+    }
+
+    .featured-courses-header .section-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* ==================== ADAPTIVE MOBILE (до 768px) ==================== */
+@media (max-width: 768px) {
+    /* Синхронізовано з content-width */
+    .featured-courses-header,
+    .featured-carousel-container {
+        width: 95%;
+        padding: 0 var(--spacing-md);
+    }
+
+    .featured-courses-section {
+        padding: 40px 0;
+    }
+
+    .featured-courses-header {
+        margin-bottom: 30px;
+    }
+
+    .featured-courses-header .section-title {
+        font-size: 1.5rem;
+    }
+
+    .featured-nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .featured-nav-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .carousel-slide {
+        flex: 0 0 calc(50% - 10px);
+        width: calc(50% - 10px);
+        min-width: calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+
+    .carousel-track {
+        gap: 16px;
+    }
+
+    .featured-image {
+        height: 180px;
+    }
+
+    .featured-content {
+        padding: 16px;
+    }
+
+    .featured-title {
+        font-size: 1rem;
+    }
+
+    .featured-description {
+        font-size: 0.8125rem;
+    }
+
+    .featured-button {
+        width: 38px;
+        height: 38px;
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .featured-button svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* ==================== ADAPTIVE MOBILE (< 576px) ==================== */
+@media (max-width: 768px) {
+    .featured-courses-section {
+        padding: 32px 0;
+    }
+
+    .featured-courses-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .featured-courses-header .section-title {
+        font-size: 1.375rem;
+    }
+
+    .featured-navigation {
+        align-self: flex-end;
+    }
+
+    .featured-nav-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .featured-nav-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .featured-carousel-container {
+        padding: 0 12px;
+    }
+
+    .carousel-slide {
+        flex: 0 0 100%;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .carousel-track {
+        gap: 12px;
+    }
+
+    .featured-image {
+        height: 200px;
+    }
+}
+
+/* ==================== iOS SAFARI ОПТИМІЗАЦІЯ ==================== */
+@supports (-webkit-touch-callout: none) {
+    .featured-nav-btn {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+    }
+
+    .featured-button {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+    }
+
+    .featured-card {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+/* ==================== ACCESSIBILITY ==================== */
+@media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+        transition: none;
+    }
+
+    .featured-card,
+    .featured-image img,
+    .featured-nav-btn,
+    .featured-button {
+        transition: none;
+    }
+}

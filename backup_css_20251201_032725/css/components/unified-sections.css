@@ -1,0 +1,249 @@
+/* ============================================
+   UNIFIED SECTIONS - Окремі картки для секцій
+   Секції: Наші основні програми, Ментор коучинг, Команда професіоналів
+   Без фону з плюсиками, кожна секція - окрема картка
+   ============================================ */
+
+/* === WRAPPER (БЕЗ ФОНУ) === */
+.unified-sections-wrapper {
+    width: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+/* === КОНТЕЙНЕР (ВИДАЛЕНИЙ, ТЕПЕР КОЖНА СЕКЦІЯ ОКРЕМО) === */
+.unified-sections-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+/* === СЕКЦІЇ ЯК ОКРЕМІ КАРТКИ === */
+.unified-sections-wrapper .fullscreen-section {
+    width: 80%;
+    max-width: 1400px;
+    margin: 15px auto;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    min-height: auto;
+    height: auto;
+}
+
+/* Темна тема для карток */
+[data-theme="dark"] .unified-sections-wrapper .fullscreen-section {
+    background: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .unified-sections-wrapper .fullscreen-section {
+        background: #1a1a1a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Видалити фонові елементи секцій */
+.unified-sections-wrapper .section-bg,
+.unified-sections-wrapper .section-overlay {
+    display: none;
+}
+
+/* Забезпечити правильний колір тексту */
+.unified-sections-wrapper .section-title {
+    color: var(--color-text);
+}
+
+.unified-sections-wrapper .section-content {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    z-index: 1;
+    padding: 0;
+}
+
+/* Overflow control для hub catalog */
+.hub-catalog-section .section-content {
+    overflow-x: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* === ПЛАНШЕТНА АДАПТАЦІЯ === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .unified-sections-wrapper .fullscreen-section {
+        width: 90%;
+        margin: 12px auto;
+        padding: 35px;
+    }
+
+    .unified-sections-wrapper .section-content {
+        padding: 0;
+    }
+
+    /* Виключення для методології - без відступів */
+    .unified-sections-wrapper .mentoring-methodology-section .section-content {
+        padding: 0;
+    }
+}
+
+/* === МОБІЛЬНА АДАПТАЦІЯ === */
+@media (max-width: 768px) {
+    .unified-sections-wrapper .fullscreen-section {
+        width: 95%;
+        margin: 8px auto;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .unified-sections-wrapper .section-content {
+        padding: 0;
+    }
+
+    /* Виключення для методології - без відступів */
+    .unified-sections-wrapper .mentoring-methodology-section .section-content {
+        padding: 0;
+    }
+}
+
+/* === СПЕЦИФІЧНІ СТИЛІ ДЛЯ СЕКЦІЙ === */
+
+/* Курси */
+.unified-sections-wrapper .main-courses-section .section-title {
+    text-shadow: none;
+}
+
+/* Ментор коучинг */
+.unified-sections-wrapper .mentor-coaching-section {
+    padding: 40px;
+}
+
+.unified-sections-wrapper .mentor-coaching-section .section-title {
+    text-shadow: none;
+}
+
+.unified-sections-wrapper .ecosystem-subtitle {
+    color: var(--color-text-light);
+    text-shadow: none;
+}
+
+/* Команда професіоналів */
+.unified-sections-wrapper .experts-section .section-title {
+    text-shadow: none;
+    color: #2a2a2a;
+    text-align: left;
+}
+
+[data-theme="dark"] .unified-sections-wrapper .experts-section .section-title {
+    color: var(--color-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .unified-sections-wrapper .experts-section .section-title {
+        color: var(--color-text);
+    }
+}
+
+.unified-sections-wrapper .experts-subtitle {
+    color: #666666;
+    text-align: left;
+}
+
+[data-theme="dark"] .unified-sections-wrapper .experts-subtitle {
+    color: var(--color-text-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .unified-sections-wrapper .experts-subtitle {
+        color: var(--color-text-light);
+    }
+}
+
+/* === АДАПТАЦІЯ ВІДСТУПІВ ДЛЯ ПЛАНШЕТА === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .unified-sections-wrapper .mentor-coaching-section {
+        padding: 35px;
+    }
+}
+
+/* === АДАПТАЦІЯ ВІДСТУПІВ ДЛЯ МОБАЙЛА === */
+@media (max-width: 768px) {
+    .unified-sections-wrapper .mentor-coaching-section {
+        padding: 25px;
+    }
+}
+
+/* === iOS SAFARI SPECIFIC === */
+@supports (-webkit-touch-callout: none) {
+    .unified-sections-wrapper .fullscreen-section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+}
+
+/* === HUB СЕКЦІЇ ЯК КАРТКИ (БЕЗ PADDING - він вже є в кожній секції) === */
+.unified-sections-wrapper .hub-hero-section,
+.unified-sections-wrapper .hub-featured-section,
+.unified-sections-wrapper .hub-catalog-section {
+    width: 80%;
+    max-width: 1400px;
+    margin: 15px auto;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+/* Темна тема для Hub-секцій */
+[data-theme="dark"] .unified-sections-wrapper .hub-hero-section,
+[data-theme="dark"] .unified-sections-wrapper .hub-featured-section,
+[data-theme="dark"] .unified-sections-wrapper .hub-catalog-section {
+    background: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .unified-sections-wrapper .hub-hero-section,
+    [data-theme="auto"] .unified-sections-wrapper .hub-featured-section,
+    [data-theme="auto"] .unified-sections-wrapper .hub-catalog-section {
+        background: #1a1a1a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* === ПЛАНШЕТНА АДАПТАЦІЯ ДЛЯ HUB === */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .unified-sections-wrapper .hub-hero-section,
+    .unified-sections-wrapper .hub-featured-section,
+    .unified-sections-wrapper .hub-catalog-section {
+        width: 90%;
+        margin: 12px auto;
+    }
+}
+
+/* === МОБІЛЬНА АДАПТАЦІЯ ДЛЯ HUB === */
+@media (max-width: 768px) {
+    .unified-sections-wrapper .hub-hero-section,
+    .unified-sections-wrapper .hub-featured-section,
+    .unified-sections-wrapper .hub-catalog-section {
+        width: 95%;
+        margin: 8px auto;
+        border-radius: 10px;
+    }
+}
+
+/* === iOS SAFARI для HUB секцій === */
+@supports (-webkit-touch-callout: none) {
+    .unified-sections-wrapper .hub-hero-section,
+    .unified-sections-wrapper .hub-featured-section,
+    .unified-sections-wrapper .hub-catalog-section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+}

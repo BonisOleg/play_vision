@@ -497,7 +497,7 @@
 /* typing animation moved to animations.css */
 
 /* MOBILE ADAPTATIONS */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .ai-widget {
         width: calc(100vw - 20px);
         bottom: 10px;
@@ -529,7 +529,7 @@
 }
 
 /* TABLET ADAPTATIONS */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .ai-widget {
         width: 320px;
     }
@@ -890,7 +890,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .ai-fab {
         width: 56px;
         height: 56px;

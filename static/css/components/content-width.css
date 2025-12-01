@@ -21,7 +21,7 @@
 }
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .content-width-container,
     .content-width-padded {
         width: 90%;
@@ -33,7 +33,7 @@
 }
 
 /* === МОБІЛЬНА АДАПТАЦІЯ === */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .content-width-container,
     .content-width-padded {
         width: 95%;

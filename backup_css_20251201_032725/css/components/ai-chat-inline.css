@@ -1,0 +1,1197 @@
+/**
+ * INLINE AI CHAT IN HEADER
+ * Чат AI інтегрований безпосередньо в хедер
+ * КРОС-БРАУЗЕРНА СУМІСНІСТЬ: Chrome, Firefox, Safari (macOS/iOS), Edge, Opera
+ */
+
+/* ========================================
+   ГЛОБАЛЬНІ ВИПРАВЛЕННЯ ДЛЯ КОМПОНЕНТА
+   ======================================== */
+
+/* Виправлення для всіх елементів чату */
+.ai-chat-inline *,
+.ai-chat-modal * {
+    /* Уніфіковане box-sizing */
+    box-sizing: border-box;
+
+    /* Уніфікований font rendering для всіх OS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    /* Вимкнення text selection де не потрібно */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Дозволяємо виділення тексту в контенті */
+.ai-message-content,
+.ai-chat-input,
+.ai-chat-modal-input {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+}
+
+/* ========================================
+   PLACEHOLDER (резервує місце в овалі)
+   ======================================== */
+
+.ai-chat-placeholder {
+    width: 280px;
+    height: 44px;
+    margin-left: 12px;
+    flex-shrink: 0;
+    /* Невидимий, але займає місце */
+}
+
+/* ========================================
+   INLINE CHAT CONTAINER (виглядає всередині, але position: absolute)
+   ======================================== */
+
+.header-nav-actions {
+    position: relative;
+    /* Для absolute позиціонування чату */
+}
+
+.ai-chat-inline {
+    position: absolute;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+
+    /* 🎯 ЗМІНЮЙТЕ ЦІ ЗНАЧЕННЯ ДЛЯ ПОЗИЦІОНУВАННЯ:
+     * - translateX: зміщення праворуч/ліворуч (+ праворуч, - ліворуч)
+     * - translateY: зміщення вниз/вгору (+ вниз, - вгору)
+     */
+    top: 0;
+    right: 0;
+
+    /* КРИТИЧНО: Округлення до цілих пікселів для уникнення розмиття */
+    transform: translate(-2px, 2px);
+    -webkit-transform: translate(-2px, 2px);
+
+    /* Виправлення subpixel rendering */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    /* Performance optimization */
+    will-change: contents;
+
+    /* Створення нового stacking context */
+    isolation: isolate;
+}
+
+/* Messages container - ІСТОРІЯ ЗВЕРХУ, ІНПУТ ОПУСКАЄТЬСЯ */
+.ai-chat-messages {
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--color-bg, #ffffff);
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    border-radius: 30px 30px 0 0;
+    border-bottom: none;
+    padding: 12px;
+    padding-bottom: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    /* Створення нового stacking context для правильного z-index */
+    position: relative;
+    z-index: 1;
+
+    /* Performance optimization */
+    contain: layout style paint;
+    will-change: scroll-position;
+
+    /* Smooth scrolling на всіх платформах */
+    scroll-behavior: smooth;
+
+    /* Виправлення для Firefox scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+/* Fallback для браузерів без підтримки gap */
+@supports not (gap: 12px) {
+    .ai-chat-messages>*+* {
+        margin-top: 12px;
+    }
+}
+
+[data-theme="dark"] .ai-chat-messages {
+    background: #171717;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Firefox scrollbar для темної теми */
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-messages {
+        background: #171717;
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        /* Firefox scrollbar для темної теми */
+        scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+}
+
+/* Custom scrollbar */
+.ai-chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ai-chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ai-chat-messages::-webkit-scrollbar-thumb {
+    background: var(--color-border, rgba(0, 0, 0, 0.1));
+    border-radius: 3px;
+}
+
+.ai-chat-messages::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-light, rgba(0, 0, 0, 0.3));
+}
+
+/* ========================================
+   CHAT MESSAGES
+   ======================================== */
+
+.ai-message {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: fadeInUp 0.3s ease;
+
+    /* Performance optimization */
+    will-change: transform, opacity;
+
+    /* Виправлення subpixel rendering */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Fallback для браузерів без підтримки gap */
+@supports not (gap: 10px) {
+    .ai-message {
+        gap: 0;
+    }
+
+    .ai-message>*+* {
+        margin-left: 10px;
+    }
+
+    .ai-message--user>*+* {
+        margin-left: 0;
+        margin-right: 10px;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ai-message--user {
+    flex-direction: row-reverse;
+}
+
+.ai-message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    /* Явна одиниця для однакової висоти рядка */
+    flex-shrink: 0;
+    background: var(--color-bg-gray, #f5f5f5);
+
+    /* Уніфікований рендеринг emoji на всіх платформах */
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+
+    /* Запобігання деформації при різних розмірах шрифту системи */
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+.ai-message--user .ai-message-avatar {
+    background: #E50914;
+    color: white;
+}
+
+.ai-message-content {
+    flex: 1;
+    background: var(--color-bg-gray, #f5f5f5);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    /* Відносна одиниця ОК для тексту */
+    color: var(--color-text, #1a1a1a);
+
+    /* Уніфікований word breaking на всіх платформах */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    /* Запобігання переповненню */
+    min-width: 0;
+
+    /* Hyphens для кращого перенесення */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
+.ai-message--user .ai-message-content {
+    background: #E50914;
+    color: white;
+}
+
+.ai-message-content p {
+    margin: 0;
+}
+
+.ai-message-content p+p {
+    margin-top: 8px;
+}
+
+/* ========================================
+   CHAT INPUT
+   ======================================== */
+
+.ai-chat-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: var(--color-bg, #ffffff);
+    border: 2px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    border-radius: 24px;
+    padding: 6px 8px 6px 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    /* Створення нового stacking context */
+    position: relative;
+    z-index: 2;
+
+    /* Виправлення border-radius clipping в Safari */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* Fallback для браузерів без підтримки gap */
+@supports not (gap: 8px) {
+    .ai-chat-input-wrapper {
+        gap: 0;
+    }
+
+    .ai-chat-input-wrapper>*+* {
+        margin-left: 8px;
+    }
+}
+
+/* Коли є історія чату - інпут приєднується знизу */
+.ai-chat-inline:has(.ai-chat-messages[style*="display: flex"]) .ai-chat-input-wrapper {
+    border-radius: 0 0 12px 12px;
+    border-top: none;
+}
+
+/* Fallback для браузерів без підтримки :has() */
+@supports not (selector(:has(*))) {
+    .ai-chat-input-wrapper.has-history {
+        border-radius: 0 0 12px 12px;
+        border-top: none;
+    }
+}
+
+.ai-chat-input-wrapper:focus-within {
+    border-color: #E50914;
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.1);
+}
+
+[data-theme="dark"] .ai-chat-input-wrapper {
+    background: #171717;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-input-wrapper {
+        background: #171717;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.ai-chat-input {
+    flex: 1;
+    border: none;
+    border-radius: 30px;
+    background: transparent;
+    outline: none;
+    font-size: 12px;
+    color: var(--color-text, #1a1a1a);
+    padding: 6px 0;
+    min-height: 30px;
+}
+
+.ai-chat-input::placeholder {
+    color: var(--color-text-light, rgba(0, 0, 0, 0.5));
+}
+
+.ai-chat-send-btn,
+.ai-chat-detach-btn,
+.ai-chat-close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--color-text, #1a1a1a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.ai-chat-send-btn img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+
+    /* Уніфікований image rendering на всіх платформах */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
+    /* Запобігання деформації */
+    flex-shrink: 0;
+
+    /* Виправлення для Retina дисплеїв */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.ai-chat-send-btn:hover {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    /* Transform origin для правильного масштабування */
+    transform-origin: center center;
+    -webkit-transform-origin: center center;
+}
+
+.ai-chat-send-btn:active {
+    transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    transform-origin: center center;
+    -webkit-transform-origin: center center;
+}
+
+.ai-chat-detach-btn svg,
+.ai-chat-close-btn svg {
+    width: 18px;
+    height: 18px;
+    /* display: inline-block - дефолтна поведінка SVG, не перезаписуємо */
+    /* pointer-events видалено - дозволяємо природню обробку подій */
+    flex-shrink: 0;
+}
+
+/* КРИТИЧНО: Забороняємо inline атрибути через !important для крос-браузерної сумісності */
+.ai-chat-detach-btn svg *,
+.ai-chat-close-btn svg * {
+    /* Примусово скидаємо fill щоб уникнути дефолтного чорного */
+    fill: none;
+}
+
+.ai-chat-detach-btn:hover,
+.ai-chat-close-btn:hover {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform-origin: center center;
+    -webkit-transform-origin: center center;
+}
+
+.ai-chat-detach-btn:active,
+.ai-chat-close-btn:active {
+    transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    transform-origin: center center;
+    -webkit-transform-origin: center center;
+}
+
+/* Теми для іконок - ВИПРАВЛЕНО з fallback та правильною специфічністю */
+
+/* Дефолтна тема (коли data-theme не встановлено) - світла */
+.ai-chat-detach-btn svg,
+.ai-chat-close-btn svg {
+    stroke: #1a1a1a;
+    color: #1a1a1a;
+    /* fallback для currentColor */
+}
+
+.ai-chat-detach-btn svg *,
+.ai-chat-close-btn svg * {
+    stroke: inherit;
+}
+
+/* Експліцитна світла тема */
+[data-theme="light"] .ai-chat-detach-btn svg,
+[data-theme="light"] .ai-chat-close-btn svg {
+    stroke: #1a1a1a;
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .ai-chat-detach-btn svg *,
+[data-theme="light"] .ai-chat-close-btn svg * {
+    stroke: inherit;
+}
+
+/* Темна тема */
+[data-theme="dark"] .ai-chat-detach-btn svg,
+[data-theme="dark"] .ai-chat-close-btn svg {
+    stroke: #ffffff;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .ai-chat-detach-btn svg *,
+[data-theme="dark"] .ai-chat-close-btn svg * {
+    stroke: inherit;
+}
+
+/* Auto тема з темним prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .ai-chat-detach-btn svg,
+    [data-theme="auto"] .ai-chat-close-btn svg {
+        stroke: #ffffff;
+        color: #ffffff;
+    }
+
+    [data-theme="auto"] .ai-chat-detach-btn svg *,
+    [data-theme="auto"] .ai-chat-close-btn svg * {
+        stroke: inherit;
+    }
+}
+
+/* Auto тема зі світлим prefers-color-scheme (fallback) */
+@media (prefers-color-scheme: light) {
+
+    [data-theme="auto"] .ai-chat-detach-btn svg,
+    [data-theme="auto"] .ai-chat-close-btn svg {
+        stroke: #1a1a1a;
+        color: #1a1a1a;
+    }
+
+    [data-theme="auto"] .ai-chat-detach-btn svg *,
+    [data-theme="auto"] .ai-chat-close-btn svg * {
+        stroke: inherit;
+    }
+}
+
+/* Ховер фони - ВИПРАВЛЕНО з дефолтною темою */
+
+/* Дефолтний ховер (світла тема) */
+.ai-chat-detach-btn:hover,
+.ai-chat-close-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Експліцитна світла тема */
+[data-theme="light"] .ai-chat-detach-btn:hover,
+[data-theme="light"] .ai-chat-close-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Темна тема */
+[data-theme="dark"] .ai-chat-detach-btn:hover,
+[data-theme="dark"] .ai-chat-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Auto тема з темним prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+
+    [data-theme="auto"] .ai-chat-detach-btn:hover,
+    [data-theme="auto"] .ai-chat-close-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Auto тема зі світлим prefers-color-scheme */
+@media (prefers-color-scheme: light) {
+
+    [data-theme="auto"] .ai-chat-detach-btn:hover,
+    [data-theme="auto"] .ai-chat-close-btn:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+}
+
+/* ========================================
+   DETACHED MODAL
+   ======================================== */
+
+.ai-chat-modal {
+    position: fixed;
+    width: 400px;
+    max-height: 50vh;
+    min-height: 200px;
+    background: var(--color-bg, #ffffff);
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    resize: vertical;
+
+    /* Створення нового stacking context */
+    isolation: isolate;
+
+    /* Performance optimization */
+    contain: layout style paint;
+    will-change: transform;
+
+    /* Виправлення position: fixed blur на різних екранах */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+
+    /* Виправлення для Retina дисплеїв */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+[data-theme="dark"] .ai-chat-modal {
+    background: #171717;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-modal {
+        background: #171717;
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Modal Header */
+.ai-chat-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    cursor: move;
+    /* Fallback cursor */
+    cursor: -webkit-grab;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    /* Touch device */
+    touch-action: none;
+}
+
+.ai-chat-modal-header:active {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
+
+.ai-chat-modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text, #1a1a1a);
+    margin: 0;
+}
+
+.ai-chat-modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--color-text, #1a1a1a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.ai-chat-modal-close svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Примусово скидаємо fill */
+.ai-chat-modal-close svg * {
+    fill: none;
+}
+
+.ai-chat-modal-close:hover {
+    background: var(--color-bg-gray, #f5f5f5);
+}
+
+/* Теми для modal close button іконок */
+
+/* Дефолтна тема (світла) */
+.ai-chat-modal-close svg {
+    stroke: #1a1a1a;
+    color: #1a1a1a;
+}
+
+.ai-chat-modal-close svg * {
+    stroke: inherit;
+}
+
+/* Експліцитна світла тема */
+[data-theme="light"] .ai-chat-modal-close svg {
+    stroke: #1a1a1a;
+    color: #1a1a1a;
+}
+
+[data-theme="light"] .ai-chat-modal-close svg * {
+    stroke: inherit;
+}
+
+/* Темна тема */
+[data-theme="dark"] .ai-chat-modal-close svg {
+    stroke: #ffffff;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .ai-chat-modal-close svg * {
+    stroke: inherit;
+}
+
+/* Auto тема з темним prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-modal-close svg {
+        stroke: #ffffff;
+        color: #ffffff;
+    }
+
+    [data-theme="auto"] .ai-chat-modal-close svg * {
+        stroke: inherit;
+    }
+}
+
+/* Auto тема зі світлим prefers-color-scheme */
+@media (prefers-color-scheme: light) {
+    [data-theme="auto"] .ai-chat-modal-close svg {
+        stroke: #1a1a1a;
+        color: #1a1a1a;
+    }
+
+    [data-theme="auto"] .ai-chat-modal-close svg * {
+        stroke: inherit;
+    }
+}
+
+/* Modal Messages */
+.ai-chat-modal-messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    /* Performance optimization */
+    contain: layout style paint;
+    will-change: scroll-position;
+
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+
+    /* Firefox scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+/* Fallback для браузерів без підтримки gap */
+@supports not (gap: 12px) {
+    .ai-chat-modal-messages>*+* {
+        margin-top: 12px;
+    }
+}
+
+.ai-chat-modal-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ai-chat-modal-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ai-chat-modal-messages::-webkit-scrollbar-thumb {
+    background: var(--color-border, rgba(0, 0, 0, 0.1));
+    border-radius: 3px;
+}
+
+.ai-chat-modal-messages::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-light, rgba(0, 0, 0, 0.3));
+}
+
+/* Firefox scrollbar для темної теми modal */
+[data-theme="dark"] .ai-chat-modal-messages {
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-modal-messages {
+        scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+}
+
+/* Modal Input */
+.ai-chat-modal-input-wrapper {
+    padding: 16px 20px;
+    border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Fallback для браузерів без підтримки gap */
+@supports not (gap: 8px) {
+    .ai-chat-modal-input-wrapper {
+        gap: 0;
+    }
+
+    .ai-chat-modal-input-wrapper>*+* {
+        margin-left: 8px;
+    }
+}
+
+.ai-chat-modal-input {
+    flex: 1;
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    background: var(--color-bg, #ffffff);
+    outline: none;
+    font-size: 14px;
+    color: var(--color-text, #1a1a1a);
+    padding: 10px 14px;
+    border-radius: 20px;
+    min-height: 38px;
+    transition: border-color 0.2s ease;
+}
+
+.ai-chat-modal-input:focus {
+    border-color: #E50914;
+}
+
+.ai-chat-modal-send {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    padding: 0;
+}
+
+.ai-chat-modal-send:hover {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform-origin: center center;
+    -webkit-transform-origin: center center;
+}
+
+.ai-chat-modal-send:active {
+    transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    transform-origin: center center;
+    -webkit-transform-origin: center center;
+}
+
+.ai-chat-modal-send img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+
+    /* Уніфікований image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
+    flex-shrink: 0;
+
+    /* Виправлення для Retina */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Resize handle */
+.ai-chat-modal-resize {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: se-resize;
+    /* Fallback cursor */
+    cursor: nwse-resize;
+    background: linear-gradient(135deg, transparent 50%, var(--color-border, rgba(0, 0, 0, 0.1)) 50%);
+
+    /* Збільшена зона для захоплення */
+    z-index: 10;
+
+    /* Touch device */
+    touch-action: none;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+/* Планшети */
+@media (max-width: 1024px) {
+    .header-actions-wrapper {
+        display: none;
+    }
+
+    .ai-chat-inline {
+        width: 280px;
+    }
+
+    .ai-chat-modal {
+        width: 90vw;
+        max-width: 400px;
+    }
+}
+
+/* Мобільні пристрої */
+@media (max-width: 768px) {
+    .ai-chat-inline {
+        width: 100%;
+        position: relative;
+        transform: none;
+        left: auto;
+        right: auto;
+    }
+
+    .ai-chat-messages {
+        max-height: 40vh;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .ai-chat-input-wrapper {
+        border-radius: 20px;
+        padding: 4px 6px 4px 12px;
+    }
+
+    .ai-chat-inline:has(.ai-chat-messages[style*="display: flex"]) .ai-chat-input-wrapper {
+        border-radius: 0 0 8px 8px;
+    }
+
+    .ai-chat-send-btn,
+    .ai-chat-detach-btn,
+    .ai-chat-close-btn {
+        width: 32px;
+        height: 32px;
+        /* Збільшуємо зону натискання для touch */
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .ai-chat-modal {
+        width: 95vw;
+        max-height: 70vh;
+        border-radius: 12px;
+    }
+
+    .ai-chat-modal-header {
+        padding: 12px 16px;
+    }
+
+    .ai-chat-modal-input-wrapper {
+        padding: 12px 16px;
+    }
+}
+
+/* iOS Safari специфічні виправлення */
+@supports (-webkit-touch-callout: none) {
+
+    /* Виправлення для SVG в iOS Safari */
+    .ai-chat-detach-btn svg,
+    .ai-chat-close-btn svg,
+    .ai-chat-modal-close svg {
+        /* Примусове відображення SVG */
+        display: inline-block;
+        vertical-align: middle;
+        /* Вимкнення hardware acceleration для більшої стабільності */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        /* Запобігання проблемам з рендерингом */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+    }
+
+    /* Виправлення для stroke в iOS Safari */
+    .ai-chat-detach-btn svg path,
+    .ai-chat-detach-btn svg line,
+    .ai-chat-close-btn svg path,
+    .ai-chat-close-btn svg line,
+    .ai-chat-modal-close svg path,
+    .ai-chat-modal-close svg line {
+        /* Примусове застосування stroke */
+        vector-effect: non-scaling-stroke;
+        stroke: inherit;
+        -webkit-stroke: inherit;
+    }
+
+    /* Виправлення для touch events в iOS */
+    .ai-chat-send-btn,
+    .ai-chat-detach-btn,
+    .ai-chat-close-btn,
+    .ai-chat-modal-close {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
+        -webkit-user-select: none;
+        user-select: none;
+        /* Збільшена зона натискання для iOS */
+        position: relative;
+    }
+
+    .ai-chat-send-btn::after,
+    .ai-chat-detach-btn::after,
+    .ai-chat-close-btn::after,
+    .ai-chat-modal-close::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 44px;
+        min-height: 44px;
+        width: calc(100% + 8px);
+        height: calc(100% + 8px);
+    }
+
+    /* Виправлення input для iOS */
+    .ai-chat-input,
+    .ai-chat-modal-input {
+        -webkit-appearance: none;
+        appearance: none;
+        /* Вимкнення автозуму в iOS Safari */
+        font-size: 16px;
+        /* Виправлення проблем з курсором */
+        -webkit-user-select: text;
+        user-select: text;
+    }
+
+    /* Виправлення для modal на iOS */
+    .ai-chat-modal {
+        /* Запобігання проблемам з position: fixed */
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    /* Виправлення scroll для iOS */
+    .ai-chat-messages,
+    .ai-chat-modal-messages {
+        -webkit-overflow-scrolling: touch;
+        /* Виправлення rubber band effect */
+        overscroll-behavior: contain;
+    }
+
+    /* iOS - Mobile (max-width: 768px) */
+    @media (max-width: 768px) {
+        .ai-chat-modal {
+            width: 95vw;
+            border-radius: 12px;
+        }
+
+        .ai-chat-messages {
+            max-height: 40vh;
+            border-radius: 20px 20px 0 0;
+        }
+    }
+}
+
+/* Малі мобільні екрани */
+@media (max-width: 768px) {
+    .ai-chat-inline {
+        width: 100%;
+    }
+
+    .ai-chat-messages {
+        max-height: 35vh;
+        padding: 8px;
+        border-radius: 16px 16px 0 0;
+    }
+
+    .ai-chat-input {
+        font-size: 16px;
+        /* Запобігання автозуму в iOS */
+    }
+
+    .ai-chat-modal {
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        top: 0;
+        left: 0;
+    }
+
+    .ai-chat-modal-messages {
+        padding: 12px;
+    }
+
+    .ai-message-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+
+    .ai-message-content {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+.ai-chat-input:focus-visible,
+.ai-chat-send-btn:focus-visible,
+.ai-chat-detach-btn:focus-visible,
+.ai-chat-close-btn:focus-visible,
+.ai-chat-modal-input:focus-visible,
+.ai-chat-modal-send:focus-visible,
+.ai-chat-modal-close:focus-visible {
+    outline: 2px solid #E50914;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ai-message {
+        animation: none;
+    }
+
+    .ai-chat-input-wrapper,
+    .ai-chat-send-btn,
+    .ai-chat-detach-btn,
+    .ai-chat-close-btn,
+    .ai-chat-modal-close,
+    .ai-chat-modal-send {
+        transition: none;
+    }
+}
+
+/* ========================================
+   ТИМЧАСОВО: AI ПОМІЧНИК - НЕЗАБАРОМ
+   ======================================== */
+
+/* Базові стилі - чисте матове скло */
+.ai-chat-inline.coming-soon .ai-chat-input-wrapper {
+    position: relative;
+    pointer-events: none;
+    cursor: not-allowed;
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Темна тема */
+[data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
+    background: rgba(23, 23, 23, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Auto тема з темним prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper {
+        background: rgba(23, 23, 23, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Текст "AI помічник - незабаром" */
+.ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+    content: 'AI помічник - незабаром';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+    letter-spacing: 0.3px;
+}
+
+/* Темна тема для тексту */
+[data-theme="dark"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+        color: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* Затушовування елементів */
+.ai-chat-inline.coming-soon .ai-chat-input,
+.ai-chat-inline.coming-soon .ai-chat-send-btn,
+.ai-chat-inline.coming-soon .ai-chat-detach-btn,
+.ai-chat-inline.coming-soon .ai-chat-close-btn {
+    opacity: 0;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* Responsive для mobile */
+@media (max-width: 768px) {
+    .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
+        font-size: 10px;
+    }
+}

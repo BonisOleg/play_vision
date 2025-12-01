@@ -1,0 +1,803 @@
+/* ============================================
+   МЕНТОР КОУЧИНГ СТОРІНКА
+   ============================================ */
+
+/* === HERO SECTION AS CARD === */
+.mentoring-hero {
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    position: relative;
+}
+
+.mentoring-hero .section-overlay {
+    opacity: 0.3;
+}
+
+/* Dark theme для hero-картки */
+[data-theme="dark"] .mentoring-hero {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-hero {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* === ЩО ТАКЕ МЕНТОР КОУЧИНГ === */
+.mentoring-what-section {
+    padding: 60px 0;
+}
+
+.mentoring-what-section .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 60px 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .mentoring-what-section .section-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-what-section .section-title {
+        color: #ffffff;
+    }
+}
+
+/* ГРІД КАРТОК */
+/* Використовує загальну систему ширини через .section-content */
+.mentoring-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+}
+
+/* КАРТКА */
+.mentoring-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: transparent;
+}
+
+.mentoring-card-image {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.mentoring-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    background: #f5f5f5;
+    transition: transform 0.3s ease;
+}
+
+.mentoring-card:hover .mentoring-card-image img {
+    transform: scale(1.05);
+}
+
+.mentoring-card-content {
+    padding: 0 10px;
+}
+
+.mentoring-card-content p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    margin: 0;
+    text-align: left;
+}
+
+/* === СТРУКТУРА === */
+.mentoring-structure-section {
+    padding: 60px 0;
+}
+
+.mentoring-structure-section .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 60px 0;
+    text-shadow: none;
+}
+
+/* Padding для SVG */
+.mentoring-structure-section .section-content {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+[data-theme="dark"] .mentoring-structure-section .section-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-structure-section .section-title {
+        color: #ffffff;
+    }
+}
+
+/* === МЕТОДОЛОГІЯ (БЕЗ ЗАГОЛОВКА) === */
+.mentoring-methodology-section {
+    padding: 60px 0;
+}
+
+/* Padding для SVG */
+.mentoring-methodology-section .section-content {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.mentoring-image-block {
+    max-width: 1400px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mentoring-image-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* === КОМАНДА МЕНТОР КОУЧИНГУ === */
+.mentoring-team-section {
+    padding: 60px 0;
+}
+
+.mentoring-team-section .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2a2a2a;
+    text-align: left;
+    margin: 0 0 16px 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .mentoring-team-section .section-title {
+    color: var(--color-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-team-section .section-title {
+        color: var(--color-text);
+    }
+}
+
+.mentoring-team-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #666666;
+    text-align: left;
+    max-width: 100%;
+    margin: 0 0 48px 0;
+    padding: 0;
+    font-weight: 400;
+}
+
+[data-theme="dark"] .mentoring-team-description {
+    color: var(--color-text-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-team-description {
+        color: var(--color-text-light);
+    }
+}
+
+/* СТИЛІ ЕКСПЕРТІВ - ВАЖЛИВІ ДЛЯ МЕНТОР СТОРІНКИ */
+.mentoring-team-section .expert-card-content {
+    padding: 24px 20px;
+}
+
+.mentoring-team-section .expert-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2a2a2a;
+    line-height: 1.4;
+    text-shadow: none;
+}
+
+.mentoring-team-section .expert-specialization {
+    color: #757575;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
+
+[data-theme="dark"] .mentoring-team-section .expert-name {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .mentoring-team-section .expert-specialization {
+    color: var(--color-text-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-team-section .expert-name {
+        color: var(--color-text);
+    }
+
+    [data-theme="auto"] .mentoring-team-section .expert-specialization {
+        color: var(--color-text-light);
+    }
+}
+
+/* === ЗВ'ЯЗОК З НАМИ === */
+.mentoring-contact-section {
+    padding: 80px 0 100px;
+}
+
+.mentoring-contact-section .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 60px 0;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .mentoring-contact-section .section-title {
+    color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-contact-section .section-title {
+        color: #ffffff;
+    }
+}
+
+.mentoring-contact-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mentoring-contact-card {
+    padding: 48px 40px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 320px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mentoring-contact-card:hover {
+    transform: translateY(-4px);
+}
+
+.mentoring-contact-card--light {
+    background: #e9e9e9;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mentoring-contact-card--light:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.mentoring-contact-card--dark {
+    background: #171717;
+    border: 1px solid #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.mentoring-contact-card--dark:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.mentoring-contact-card-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.mentoring-contact-card--light .mentoring-contact-card-title {
+    color: #0a0a0a;
+}
+
+.mentoring-contact-card--dark .mentoring-contact-card-title {
+    color: #ffffff;
+}
+
+.mentoring-contact-card-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+}
+
+.mentoring-contact-card--light .mentoring-contact-card-text {
+    color: #4a4a4a;
+}
+
+.mentoring-contact-card--dark .mentoring-contact-card-text {
+    color: #b0b0b0;
+}
+
+/* === КНОПКА WHITE_BONNOM (без ефектів) === */
+.white_bonnom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 24px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid #d32f2f;
+    cursor: pointer;
+    width: 100%;
+    background: #e9e9e9;
+    color: #0a0a0a;
+    transition: all 0.3s ease;
+}
+
+.white_bonnom:hover {
+    background: #f5f5f5;
+    color: #0a0a0a;
+    border-color: #d32f2f;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+}
+
+.white_bonnom .btn-icon {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.white_bonnom .btn-icon::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: url('/static/images/white_botton.png') no-repeat center;
+    background-size: contain;
+    display: block;
+    filter: none;
+}
+
+[data-theme="dark"] .white_bonnom {
+    background: #e9e9e9;
+    color: #0a0a0a;
+}
+
+[data-theme="dark"] .white_bonnom:hover {
+    background: #e9e9e9;
+    color: #0a0a0a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .white_bonnom {
+        background: #e9e9e9;
+        color: #0a0a0a;
+    }
+
+    [data-theme="auto"] .white_bonnom:hover {
+        background: #e9e9e9;
+        color: #0a0a0a;
+    }
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - ПЛАНШЕТИ (769px - 1024px)
+   ============================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* Підтримка виключень для декоративних ліній та методології на планшетах */
+    .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
+    .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
+    .unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+    }
+
+    .mentoring-hero {
+        width: 90%;
+        margin: 0 auto;
+        box-shadow: none;
+    }
+
+    .mentoring-what-section,
+    .mentoring-structure-section,
+    .mentoring-methodology-section,
+    .mentoring-team-section {
+        padding: 50px 0;
+    }
+
+    .mentoring-what-section .section-title,
+    .mentoring-structure-section .section-title,
+    .mentoring-contact-section .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 40px;
+    }
+
+    .mentoring-team-section .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 14px;
+    }
+
+    .mentoring-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+    }
+
+    .mentoring-card-content p {
+        font-size: 0.8125rem;
+    }
+
+    .mentoring-team-description {
+        font-size: 1.0625rem;
+        line-height: 1.6;
+        margin-bottom: 40px;
+    }
+
+    .mentoring-team-section .expert-card-content {
+        padding: 20px 16px;
+    }
+
+    .mentoring-team-section .expert-name {
+        font-size: 1.0625rem;
+    }
+
+    .mentoring-team-section .expert-specialization {
+        font-size: 0.875rem;
+    }
+
+    .mentoring-contact-section {
+        padding: 60px 0 80px;
+    }
+
+    .mentoring-contact-cards {
+        gap: 24px;
+    }
+
+    .mentoring-contact-card {
+        padding: 40px 32px;
+        min-height: 300px;
+    }
+
+    .mentoring-contact-card-title {
+        font-size: 1.5rem;
+    }
+
+    .mentoring-contact-card-text {
+        font-size: 0.9375rem;
+    }
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - МОБІЛЬНІ (480px - 768px)
+   ============================================ */
+@media (min-width: 480px) and (max-width: 768px) {
+
+    /* Підтримка виключень для декоративних ліній та методології на мобільних */
+    .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
+    .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
+    .unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+    }
+
+    .mentoring-hero {
+        width: 95%;
+        margin: 20px auto;
+        border-radius: 10px;
+        min-height: 500px;
+    }
+
+    .mentoring-what-section,
+    .mentoring-structure-section,
+    .mentoring-methodology-section,
+    .mentoring-team-section {
+        padding: 40px 0;
+    }
+
+    .mentoring-what-section .section-title,
+    .mentoring-structure-section .section-title,
+    .mentoring-contact-section .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 32px;
+    }
+
+    .mentoring-team-section .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 12px;
+    }
+
+    .mentoring-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .mentoring-card {
+        gap: 16px;
+    }
+
+    .mentoring-card-image {
+        aspect-ratio: 16/9;
+    }
+
+    .mentoring-card-content p {
+        font-size: 0.8125rem;
+        line-height: 1.5;
+    }
+
+    .mentoring-team-description {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 40px;
+        padding: 0;
+    }
+
+    .mentoring-team-section .expert-card-content {
+        padding: 16px 12px;
+    }
+
+    .mentoring-team-section .expert-name {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .mentoring-team-section .expert-specialization {
+        font-size: 0.8125rem;
+        margin-bottom: 12px;
+    }
+
+    .mentoring-contact-section {
+        padding: 50px 0 70px;
+    }
+
+    .mentoring-contact-cards {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .mentoring-contact-card {
+        padding: 36px 28px;
+        min-height: 280px;
+    }
+
+    .mentoring-contact-card-title {
+        font-size: 1.5rem;
+    }
+
+    .mentoring-contact-card-text {
+        font-size: 0.9375rem;
+    }
+
+    .white_bonnom {
+        padding: 14px 20px;
+        font-size: 0.9375rem;
+    }
+}
+
+/* ============================================
+   АДАПТИВНІСТЬ - МАЛІ МОБІЛЬНІ (до 479px)
+   ============================================ */
+@media (max-width: 768px) {
+
+    /* Підтримка виключень для декоративних ліній та методології на малих мобільних */
+    .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
+    .unified-sections-wrapper .unified-sections-container .mentoring-methodology-section,
+    .unified-sections-wrapper .unified-sections-container .mentoring-unique-methodology-section {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+    }
+
+    .mentoring-hero {
+        width: 95%;
+        margin: 0 auto;
+        padding-top: 8px;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+
+    .mentoring-what-section,
+    .mentoring-structure-section,
+    .mentoring-methodology-section,
+    .mentoring-team-section {
+        padding: 32px 0;
+    }
+
+    .mentoring-what-section .section-title,
+    .mentoring-structure-section .section-title,
+    .mentoring-contact-section .section-title {
+        font-size: 1.375rem;
+        margin-bottom: 28px;
+    }
+
+    .mentoring-team-section .section-title {
+        font-size: 1.375rem;
+        margin-bottom: 10px;
+    }
+
+    .mentoring-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .mentoring-card {
+        gap: 12px;
+    }
+
+    .mentoring-card-image {
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+    }
+
+    .mentoring-card-content {
+        padding: 0 5px;
+    }
+
+    .mentoring-card-content p {
+        font-size: 0.75rem;
+        line-height: 1.5;
+    }
+
+    .mentoring-image-block {
+        border-radius: 8px;
+    }
+
+    .mentoring-team-description {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 32px;
+        padding: 0;
+    }
+
+    .mentoring-team-section .expert-card-content {
+        padding: 18px 16px;
+    }
+
+    .mentoring-team-section .expert-name {
+        font-size: 1.0625rem;
+        margin-bottom: 8px;
+    }
+
+    .mentoring-team-section .expert-specialization {
+        font-size: 0.875rem;
+        margin-bottom: 14px;
+    }
+
+    .mentoring-contact-section {
+        padding: 40px 0 60px;
+    }
+
+    .mentoring-contact-section .section-title {
+        margin-bottom: 32px;
+    }
+
+    .mentoring-contact-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .mentoring-contact-card {
+        padding: 32px 24px;
+        min-height: 260px;
+        gap: 20px;
+    }
+
+    .mentoring-contact-card-title {
+        font-size: 1.375rem;
+    }
+
+    .mentoring-contact-card-text {
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    .white_bonnom {
+        padding: 12px 18px;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   iOS SAFARI ОПТИМІЗАЦІЯ
+   ============================================ */
+@supports (-webkit-touch-callout: none) {
+    .mentoring-hero {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+
+    .mentoring-card-image {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .mentoring-btn {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* ============================================
+   DARK THEME
+   ============================================ */
+[data-theme="dark"] .mentoring-card-content p {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .mentoring-contact-card--light {
+    background: #171717;
+    border: 1px solid #2a2a2a;
+}
+
+[data-theme="dark"] .mentoring-contact-card--light .mentoring-contact-card-title {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .mentoring-contact-card--light .mentoring-contact-card-text {
+    color: #b0b0b0;
+}
+
+[data-theme="dark"] .mentoring-contact-card--light .mentoring-contact-card-btn--light {
+    background: #e9e9e9;
+    color: #0a0a0a;
+}
+
+[data-theme="dark"] .mentoring-contact-card--dark {
+    background: #171717;
+    border: 1px solid #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentoring-card-content p {
+        color: var(--color-text);
+    }
+
+    [data-theme="auto"] .mentoring-contact-card--light {
+        background: #171717;
+        border: 1px solid #2a2a2a;
+    }
+
+    [data-theme="auto"] .mentoring-contact-card--light .mentoring-contact-card-title {
+        color: #ffffff;
+    }
+
+    [data-theme="auto"] .mentoring-contact-card--light .mentoring-contact-card-text {
+        color: #b0b0b0;
+    }
+
+    [data-theme="auto"] .mentoring-contact-card--light .mentoring-contact-card-btn--light {
+        background: #e9e9e9;
+        color: #0a0a0a;
+    }
+
+    [data-theme="auto"] .mentoring-contact-card--dark {
+        background: #171717;
+        border: 1px solid #000000;
+    }
+}
+
+/* === RESPONSIVE MARGIN === */
+/* Видалено - margin налаштовується вище в основних медіа-запитах */

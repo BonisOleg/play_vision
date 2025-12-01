@@ -1,0 +1,439 @@
+/* Home Page Additions - Зміни за Figma дизайном */
+
+/* Featured Courses Carousel */
+.featured-courses-section {
+    position: relative;
+}
+
+/* Використовує загальну систему ширини */
+.featured-carousel-container {
+    position: relative;
+    width: 80%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #171717;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-50%);
+}
+
+.carousel-btn:hover:not(:disabled) {
+    background: #171717;
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.carousel-btn:active:not(:disabled) {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Адаптація до теми (темна тема - білі кола) */
+[data-theme="dark"] .carousel-btn {
+    background: #e9e9e9;
+    color: #000000;
+}
+
+[data-theme="dark"] .carousel-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .carousel-btn {
+        background: #e9e9e9;
+        color: #000000;
+    }
+
+    [data-theme="auto"] .carousel-btn:hover:not(:disabled) {
+        background: #f0f0f0;
+    }
+}
+
+.carousel-btn svg {
+    max-width: 24px;
+    max-height: 24px;
+}
+
+.carousel-btn-prev {
+    left: 4px;
+}
+
+.carousel-btn-next {
+    right: 4px;
+}
+
+.featured-carousel {
+    overflow: hidden;
+    padding: var(--spacing-lg) 0;
+}
+
+.carousel-track {
+    display: flex;
+    flex-wrap: nowrap;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide {
+    flex: 0 0 25%;
+    /* 4 картки замість 3 (Figma design) */
+    flex-shrink: 0;
+    width: 25%;
+    min-width: 25%;
+    max-width: 25%;
+    padding: 0 var(--spacing-md);
+    box-sizing: border-box;
+}
+
+.featured-card {
+    background: #171717;
+    /* Чорний фон (8-й скрін) */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.featured-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #d32f2f;
+    /* Червоний фон (8-й скрін) */
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #d32f2f;
+    /* Червоний placeholder (8-й скрін) */
+}
+
+.featured-content {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #171717;
+    /* Чорний фон (8-й скрін) */
+}
+
+.featured-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #d32f2f;
+    /* Червона категорія (8-й скрін) */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.featured-title {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: #ffffff;
+    /* Білий заголовок (8-й скрін) */
+    margin-bottom: 12px;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.featured-description {
+    font-size: 0.95rem;
+    color: #999999;
+    /* Сірий опис (8-й скрін) */
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.featured-link {
+    color: #d32f2f;
+    /* Червоне посилання (8-й скрін) */
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.featured-link::after {
+    content: "→";
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.featured-link:hover {
+    color: #ff4444;
+}
+
+.featured-link:hover::after {
+    transform: translateX(4px);
+}
+
+.no-courses {
+    text-align: center;
+    padding: var(--spacing-xxl);
+    color: var(--color-text-light);
+}
+
+
+
+.mentor-cta {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* ЧОРНА кнопка з білим текстом і білим колом з логотипом */
+.mentor-cta .btn-primary {
+    background: #171717;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    min-height: 42px;
+    overflow: visible;
+}
+
+.mentor-cta .btn-primary .btn-text {
+    display: inline-block;
+    line-height: 1.2;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+.mentor-cta .btn-primary .btn-logo-space {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9e9e9;
+    border-radius: 50%;
+    position: relative;
+}
+
+.mentor-cta .btn-primary .btn-logo-space::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: url('/static/images/white_botton.png') no-repeat center center;
+    background-size: contain;
+    display: block;
+    filter: brightness(0) saturate(100%) invert(27%) sepia(94%) saturate(7471%) hue-rotate(356deg) brightness(91%) contrast(119%);
+}
+
+.mentor-cta .btn-primary:hover {
+    background: #171717;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+
+/* Responsive для Homepage */
+@media (max-width: 1200px) {
+    .carousel-slide {
+        flex: 0 0 33.333%;
+        /* 3 картки на середніх екранах */
+        flex-shrink: 0;
+        width: 33.333%;
+        min-width: 33.333%;
+        max-width: 33.333%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .carousel-slide {
+        flex: 0 0 50%;
+        /* 2 картки на планшетах */
+        flex-shrink: 0;
+        width: 50%;
+        min-width: 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-slide {
+        flex: 0 0 100%;
+        flex-shrink: 0;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .featured-carousel-container {
+        padding: 0 40px;
+    }
+
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .carousel-btn svg {
+        max-width: 18px;
+        max-height: 18px;
+    }
+
+    .mentor-cta .btn-primary {
+        padding: 8px 14px 8px 18px;
+        font-size: 0.85rem;
+        min-height: 38px;
+        gap: 10px;
+    }
+
+    .mentor-cta .btn-primary .btn-logo-space {
+        width: 26px;
+        height: 26px;
+    }
+
+    .mentor-cta .btn-primary .btn-logo-space::before {
+        width: 16px;
+        height: 16px;
+    }
+
+}
+
+/* Додаткові медіа-запити для малих екранів */
+@media (max-width: 768px) {
+    .featured-carousel-container {
+        padding: 0 36px;
+    }
+
+    .carousel-btn {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+    .carousel-btn svg {
+        max-width: 16px;
+        max-height: 16px;
+    }
+
+    .carousel-btn-prev {
+        left: 2px;
+    }
+
+    .carousel-btn-next {
+        right: 2px;
+    }
+
+    .mentor-cta .btn-primary {
+        padding: 8px 12px 8px 16px;
+        font-size: 0.8rem;
+        min-height: 36px;
+        gap: 8px;
+    }
+
+    .mentor-cta .btn-primary .btn-logo-space {
+        width: 24px;
+        height: 24px;
+    }
+
+    .mentor-cta .btn-primary .btn-logo-space::before {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* iOS Safari специфіка */
+@supports (-webkit-touch-callout: none) {
+    .carousel-btn {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+    }
+}
+
+/* === DARK THEME - MENTOR CTA BUTTON === */
+[data-theme="dark"] .mentor-cta .btn-primary {
+    background: #e9e9e9;
+    color: #000000;
+}
+
+[data-theme="dark"] .mentor-cta .btn-primary .btn-text {
+    color: #000000;
+}
+
+[data-theme="dark"] .mentor-cta .btn-primary:hover {
+    background: #e9e9e9;
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .mentor-cta .btn-primary {
+        background: #e9e9e9;
+        color: #000000;
+    }
+
+    [data-theme="auto"] .mentor-cta .btn-primary .btn-text {
+        color: #000000;
+    }
+
+    [data-theme="auto"] .mentor-cta .btn-primary:hover {
+        background: #e9e9e9;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+}

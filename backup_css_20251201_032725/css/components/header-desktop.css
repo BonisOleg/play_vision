@@ -1,0 +1,823 @@
+/**
+ * DESKTOP HEADER STYLES - REDESIGNED
+ * Новий дизайн меню з анімованим слайдером
+ * БЕЗ !important, БЕЗ inline styles, зовнішній CSS
+ */
+
+/* ========================================
+   MAIN HEADER CONTAINER
+   ======================================== */
+
+.main-header {
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: var(--z-header, 1000);
+    padding-top: env(safe-area-inset-top, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+@supports (-webkit-touch-callout: none) {
+    .main-header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+}
+
+.header-content {
+    display: grid;
+    grid-template-columns: minmax(200px, auto) 1fr auto auto;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg) 0;
+    width: 100%;
+}
+
+/* ========================================
+   LOGO
+   ======================================== */
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+    grid-column: 1;
+}
+
+.logo-link:hover {
+    transform: scale(1.05);
+    text-decoration: none;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.logo-img {
+    height: 60px;
+    width: auto;
+    max-width: 300px;
+    transition: opacity var(--transition-fast);
+}
+
+.logo-tagline {
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-left: 2px;
+}
+
+/* Logo theme switching */
+.logo-light {
+    display: block;
+}
+
+.logo-dark {
+    display: none;
+}
+
+[data-theme="dark"] .logo-light {
+    display: none;
+}
+
+[data-theme="dark"] .logo-dark {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .logo-light {
+        display: none;
+    }
+
+    [data-theme="auto"] .logo-dark {
+        display: block;
+    }
+}
+
+/* ========================================
+   NAVIGATION TABS (NEW DESIGN)
+   ======================================== */
+
+.header-nav-actions {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+}
+
+/* Контейнер для табів з анімованим слайдером */
+.nav-tabs-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3.6px;
+    background: var(--color-bg);
+    border: 2px solid var(--color-text);
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ТЕМНА ТЕМА - темний фон, світла обводка */
+[data-theme="dark"] .nav-tabs-container {
+    background: #171717;
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tabs-container {
+        background: #171717;
+        border-color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+/* Анімований слайдер (жолобок) - ОНОВЛЕНА ПЛАВНІША АНІМАЦІЯ */
+.nav-tabs-slider {
+    position: absolute;
+    top: 3.6px;
+    left: 3.6px;
+    height: calc(100% - 7.2px);
+    background: var(--color-text);
+    border-radius: 50px;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+}
+
+/* ТЕМНА ТЕМА - світлий слайдер */
+[data-theme="dark"] .nav-tabs-slider {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tabs-slider {
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* Показуємо слайдер коли є активний елемент */
+.nav-tabs-container:has(.nav-tab-btn.active) .nav-tabs-slider {
+    opacity: 1;
+}
+
+/* Кнопки навігації - ОНОВЛЕНІ КОЛЬОРИ */
+.nav-tab-btn {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 18px;
+    min-height: 39.6px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    color: var(--color-text);
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ТЕМНА ТЕМА - ВИПРАВЛЕНИЙ світлий текст */
+[data-theme="dark"] .nav-tab-btn {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn {
+        color: rgba(255, 255, 255, 0.95);
+    }
+}
+
+.nav-tab-btn:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+    color: var(--color-bg);
+}
+
+/* ТЕМНА ТЕМА - темний текст при hover */
+[data-theme="dark"] .nav-tab-btn:hover {
+    color: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn:hover {
+        color: #1a1a1a;
+    }
+}
+
+.nav-tab-btn:active {
+    transform: scale(0.98);
+}
+
+/* Активна кнопка - червоний фірмовий текст */
+.nav-tab-btn.active {
+    color: #E50914;
+}
+
+/* ТЕМНА ТЕМА - червоний текст на активній кнопці */
+[data-theme="dark"] .nav-tab-btn.active {
+    color: #E50914;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .nav-tab-btn.active {
+        color: #E50914;
+    }
+}
+
+
+.nav-tab-text {
+    position: relative;
+    z-index: 3;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Жирніший шрифт для "ХАБ знань" та "Підписка" */
+.text-highlight {
+    font-weight: 900;
+}
+
+/* ========================================
+   DROPDOWN (для івентів)
+   ======================================== */
+
+.nav-action-dropdown {
+    position: relative;
+}
+
+.nav-action-dropdown .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    min-width: 320px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 200;
+    max-height: 80vh;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.nav-action-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-header {
+    padding: 12px 16px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-link {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.dropdown-link:hover {
+    background: var(--color-bg-gray);
+    text-decoration: none;
+}
+
+.dropdown-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dropdown-item-title {
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+.dropdown-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+.dropdown-item-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.dropdown-item-badge--online,
+.dropdown-item-badge--webinar {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+}
+
+.dropdown-item-badge--offline,
+.dropdown-item-badge--seminar,
+.dropdown-item-badge--workshop {
+    background: rgba(239, 68, 68, 0.15);
+    color: #dc2626;
+}
+
+.dropdown-item-badge--hybrid,
+.dropdown-item-badge--forum {
+    background: rgba(255, 107, 53, 0.15);
+    color: #ff6b35;
+}
+
+.dropdown-divider {
+    margin: 8px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.dropdown-item--all {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.dropdown-empty {
+    padding: 32px 24px;
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 14px;
+}
+
+/* ========================================
+   HEADER ACTIONS
+   ======================================== */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    grid-column: 3 / 5;
+}
+
+.desktop-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+}
+
+.navbar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--color-text);
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--radius-lg);
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.navbar-icon:hover {
+    background: var(--color-bg-gray);
+    color: var(--color-primary);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.navbar-icon:active {
+    transform: scale(0.98);
+}
+
+.action-icon {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+/* Cart Icon */
+.cart-icon {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-count:empty {
+    display: none;
+}
+
+/* Кошик працює однаково на всіх пристроях через JS */
+
+/* Theme Toggle */
+.theme-toggle {
+    position: relative;
+}
+
+.theme-icon-light,
+.theme-icon-dark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+[data-theme="light"] .theme-icon-light {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+[data-theme="light"] .theme-icon-dark {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+[data-theme="dark"] .theme-icon-light {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+[data-theme="dark"] .theme-icon-dark {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme="auto"] .theme-icon-light {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    [data-theme="auto"] .theme-icon-dark {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .theme-icon-light {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    [data-theme="auto"] .theme-icon-dark {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+}
+
+/* Cart Badge */
+.badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: var(--radius-full);
+    min-width: 20px;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 2px 8px var(--color-primary-alpha-20);
+}
+
+.badge:empty,
+.badge[data-cart-count="0"] {
+    display: none;
+}
+
+/* Auth Entry Button (Увійти/Реєстрація) */
+.auth-entry-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    max-width: 90px;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 44px;
+}
+
+.auth-entry-btn:hover {
+    background: var(--color-bg-gray);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.auth-entry-text {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: center;
+    line-height: 1.3;
+    white-space: normal;
+}
+
+.auth-entry-btn:hover .auth-entry-text {
+    color: var(--color-primary);
+}
+
+/* Dark theme support */
+[data-theme="dark"] .auth-entry-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .auth-entry-btn:hover {
+    border-color: var(--color-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .auth-entry-btn {
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-theme="auto"] .auth-entry-btn:hover {
+        border-color: var(--color-primary);
+    }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 1024px) {
+
+    /* Ховаємо тільки десктопну навігацію, а не всі actions */
+    .header-nav-actions.navbar-desktop-only {
+        display: none;
+    }
+
+    .header-content {
+        max-width: 100%;
+        overflow-x: hidden;
+        display: flex;
+        justify-content: space-between;
+        gap: var(--spacing-md);
+        transform: none;
+    }
+
+    .header-actions {
+        flex-shrink: 0;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    /* Приховуємо кнопку кабінету на планшетах і телефонах для авторизованих */
+    .navbar-cabinet-btn {
+        display: none;
+    }
+
+    .logo-link {
+        flex: 0 0 auto;
+    }
+
+    .header-actions {
+        flex: 0 0 auto;
+    }
+
+    /* Адаптація кнопки входу для планшетів */
+    .auth-entry-btn {
+        padding: 7px 10px;
+        min-height: 44px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 10px;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        height: 50px;
+    }
+
+    .header-content {
+        padding: var(--spacing-md) 0;
+        gap: var(--spacing-md);
+    }
+
+    .navbar-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .action-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .auth-entry-btn {
+        padding: 6px 10px;
+        min-height: 42px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        height: 44px;
+    }
+
+    .header-content {
+        gap: var(--spacing-sm);
+    }
+
+    .navbar-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .auth-entry-btn {
+        padding: 5px 8px;
+        min-height: 40px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 9px;
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .auth-entry-btn {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .auth-entry-text {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* iPad and tablet landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .auth-entry-btn {
+        padding: 6px 10px;
+        min-height: 42px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 10px;
+        line-height: 1.3;
+    }
+}
+
+/* iPad and tablet portrait */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .auth-entry-btn {
+        padding: 7px 10px;
+        min-height: 44px;
+        max-width: 90px;
+    }
+
+    .auth-entry-text {
+        font-size: 10px;
+        line-height: 1.3;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+/* Focus visible для keyboard navigation */
+.navbar-icon:focus-visible,
+.nav-tab-btn:focus-visible,
+.dropdown-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+    .logo-link,
+    .navbar-icon,
+    .nav-tab-btn,
+    .nav-tabs-slider,
+    .dropdown-menu,
+    .theme-icon-light,
+    .theme-icon-dark {
+        transition: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .main-header {
+        border-width: 2px;
+    }
+
+    .navbar-icon:hover,
+    .nav-tab-btn:hover {
+        outline: 2px solid currentColor;
+    }
+
+    .nav-tabs-container {
+        border-width: 3px;
+    }
+}
+
+/* Touch target improvements for mobile */
+@media (max-width: 768px) {
+
+    .navbar-icon,
+    .nav-tab-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* ========================================
+   ТИМЧАСОВО: Приховуємо вхід/реєстрацію
+   ======================================== */
+
+.auth-entry-btn {
+    display: none !important;
+}

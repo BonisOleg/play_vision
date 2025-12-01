@@ -405,7 +405,7 @@
 /* ============================================
    АДАПТИВНІСТЬ - ПЛАНШЕТИ (769px - 1024px)
    ============================================ */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
 
     /* Підтримка виключень для декоративних ліній та методології на планшетах */
     .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
@@ -493,7 +493,7 @@
 /* ============================================
    АДАПТИВНІСТЬ - МОБІЛЬНІ (480px - 768px)
    ============================================ */
-@media (min-width: 480px) and (max-width: 768px) {
+@media (min-width: 480px) and (max-width: 767px) {
 
     /* Підтримка виключень для декоративних ліній та методології на мобільних */
     .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,
@@ -600,7 +600,7 @@
 /* ============================================
    АДАПТИВНІСТЬ - МАЛІ МОБІЛЬНІ (до 479px)
    ============================================ */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     /* Підтримка виключень для декоративних ліній та методології на малих мобільних */
     .unified-sections-wrapper .unified-sections-container .decorative-line-wrapper,

@@ -893,7 +893,7 @@
 }
 
 /* Мобільні пристрої */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .ai-chat-inline {
         width: 100%;
         position: relative;
@@ -1028,8 +1028,8 @@
         overscroll-behavior: contain;
     }
 
-    /* iOS - Mobile (max-width: 768px) */
-    @media (max-width: 768px) {
+    /* iOS - Mobile (max-width: 767px) */
+    @media (max-width: 767px) {
         .ai-chat-modal {
             width: 95vw;
             border-radius: 12px;
@@ -1043,7 +1043,7 @@
 }
 
 /* Малі мобільні екрани */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .ai-chat-inline {
         width: 100%;
     }
@@ -1184,13 +1184,13 @@
 }
 
 /* Responsive для mobile */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
         font-size: 11px;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
         font-size: 10px;
     }

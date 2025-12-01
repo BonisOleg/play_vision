@@ -385,7 +385,7 @@ footer.site-footer .footer-link:hover {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     footer.site-footer {
         padding: 20px 0 90px;
     }
@@ -482,7 +482,7 @@ footer.site-footer .footer-link:hover {
 }
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ (Синхронізовано з content-width) === */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     footer.site-footer .footer-container {
         width: 90%;
         padding: 0 var(--spacing-lg);
@@ -490,14 +490,14 @@ footer.site-footer .footer-link:hover {
 }
 
 /* === МОБІЛЬНА АДАПТАЦІЯ (Синхронізовано з content-width) === */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     footer.site-footer .footer-container {
         width: 95%;
         padding: 0 var(--spacing-md);
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     footer.site-footer .footer-container {
         width: 95%;
         padding: 0 var(--spacing-sm);

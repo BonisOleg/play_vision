@@ -8,7 +8,7 @@
     padding-bottom: max(40px, env(safe-area-inset-bottom, 0));
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .events-intro-section,
     .events-calendar-section,
     .events-catalog-section {
@@ -689,7 +689,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     /* Layout контейнери */
     .events-intro-layout {
         gap: 20px;
@@ -1029,7 +1029,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .event-detail-title {
         font-size: 2rem;
     }
@@ -1164,7 +1164,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .registration-form {
         padding: 24px;
     }
@@ -1358,7 +1358,7 @@
 }
 
 /* Адаптивність для event-experts-section */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .event-experts-section {
         padding: 20px 0;
     }
@@ -1374,7 +1374,7 @@
     }
 }
 
-@media (min-width: 480px) and (max-width: 768px) {
+@media (min-width: 480px) and (max-width: 767px) {
     .event-experts-section {
         padding: 20px 0;
     }
@@ -1390,7 +1390,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .event-experts-section {
         padding: 20px 0;
     }
@@ -1785,7 +1785,7 @@
 }
 
 /* === АДАПТИВНІСТЬ === */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .event-info-cards {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -1821,7 +1821,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .event-benefits-section {
         grid-template-columns: 1fr;
         gap: 24px;
