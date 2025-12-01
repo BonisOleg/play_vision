@@ -1,5 +1,6 @@
 # Migration to add grid SVG fields to AboutSection3 and AboutSection4
-# Uses SeparateDatabaseAndState because models from 0007 are not fully in state
+# CRITICAL: AboutSection3/4 exist in DB but NOT in migration state after 0016
+# Solution: Add models to state first, then add new fields
 
 from django.db import migrations, models
 
@@ -13,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.SeparateDatabaseAndState(
             state_operations=[
-                # Add model definitions to state (from 0007 they were only in database)
+                # STEP 1: Add AboutSection3 to migration state (with existing 9 fields from DB)
                 migrations.CreateModel(
                     name='AboutSection3',
                     fields=[
@@ -24,18 +25,6 @@ class Migration(migrations.Migration):
                         ('svg_ua_dark', models.TextField(blank=True, verbose_name='SVG UA (темна тема)')),
                         ('svg_world_light', models.TextField(blank=True, verbose_name='SVG World (світла)')),
                         ('svg_world_dark', models.TextField(blank=True, verbose_name='SVG World (темна)')),
-                        ('svg_1_ua_light', models.TextField(blank=True, verbose_name='SVG 1 - UA (світла)')),
-                        ('svg_1_ua_dark', models.TextField(blank=True, verbose_name='SVG 1 - UA (темна)')),
-                        ('svg_1_world_light', models.TextField(blank=True, verbose_name='SVG 1 - World (світла)')),
-                        ('svg_1_world_dark', models.TextField(blank=True, verbose_name='SVG 1 - World (темна)')),
-                        ('svg_2_ua_light', models.TextField(blank=True, verbose_name='SVG 2 - UA (світла)')),
-                        ('svg_2_ua_dark', models.TextField(blank=True, verbose_name='SVG 2 - UA (темна)')),
-                        ('svg_2_world_light', models.TextField(blank=True, verbose_name='SVG 2 - World (світла)')),
-                        ('svg_2_world_dark', models.TextField(blank=True, verbose_name='SVG 2 - World (темна)')),
-                        ('svg_3_ua_light', models.TextField(blank=True, verbose_name='SVG 3 - UA (світла)')),
-                        ('svg_3_ua_dark', models.TextField(blank=True, verbose_name='SVG 3 - UA (темна)')),
-                        ('svg_3_world_light', models.TextField(blank=True, verbose_name='SVG 3 - World (світла)')),
-                        ('svg_3_world_dark', models.TextField(blank=True, verbose_name='SVG 3 - World (темна)')),
                         ('is_active', models.BooleanField(default=True, verbose_name='Активно')),
                         ('updated_at', models.DateTimeField(auto_now=True)),
                     ],
@@ -45,6 +34,7 @@ class Migration(migrations.Migration):
                         'db_table': 'cms_about_section3',
                     },
                 ),
+                # STEP 2: Add AboutSection4 to migration state (with existing 9 fields from DB)
                 migrations.CreateModel(
                     name='AboutSection4',
                     fields=[
@@ -55,30 +45,6 @@ class Migration(migrations.Migration):
                         ('svg_ua_dark', models.TextField(blank=True, verbose_name='SVG UA (темна тема)')),
                         ('svg_world_light', models.TextField(blank=True, verbose_name='SVG World (світла)')),
                         ('svg_world_dark', models.TextField(blank=True, verbose_name='SVG World (темна)')),
-                        ('svg_1_ua_light', models.TextField(blank=True, verbose_name='SVG 1 - UA (світла)')),
-                        ('svg_1_ua_dark', models.TextField(blank=True, verbose_name='SVG 1 - UA (темна)')),
-                        ('svg_1_world_light', models.TextField(blank=True, verbose_name='SVG 1 - World (світла)')),
-                        ('svg_1_world_dark', models.TextField(blank=True, verbose_name='SVG 1 - World (темна)')),
-                        ('svg_2_ua_light', models.TextField(blank=True, verbose_name='SVG 2 - UA (світла)')),
-                        ('svg_2_ua_dark', models.TextField(blank=True, verbose_name='SVG 2 - UA (темна)')),
-                        ('svg_2_world_light', models.TextField(blank=True, verbose_name='SVG 2 - World (світла)')),
-                        ('svg_2_world_dark', models.TextField(blank=True, verbose_name='SVG 2 - World (темна)')),
-                        ('svg_3_ua_light', models.TextField(blank=True, verbose_name='SVG 3 - UA (світла)')),
-                        ('svg_3_ua_dark', models.TextField(blank=True, verbose_name='SVG 3 - UA (темна)')),
-                        ('svg_3_world_light', models.TextField(blank=True, verbose_name='SVG 3 - World (світла)')),
-                        ('svg_3_world_dark', models.TextField(blank=True, verbose_name='SVG 3 - World (темна)')),
-                        ('svg_4_ua_light', models.TextField(blank=True, verbose_name='SVG 4 - UA (світла)')),
-                        ('svg_4_ua_dark', models.TextField(blank=True, verbose_name='SVG 4 - UA (темна)')),
-                        ('svg_4_world_light', models.TextField(blank=True, verbose_name='SVG 4 - World (світла)')),
-                        ('svg_4_world_dark', models.TextField(blank=True, verbose_name='SVG 4 - World (темна)')),
-                        ('svg_5_ua_light', models.TextField(blank=True, verbose_name='SVG 5 - UA (світла)')),
-                        ('svg_5_ua_dark', models.TextField(blank=True, verbose_name='SVG 5 - UA (темна)')),
-                        ('svg_5_world_light', models.TextField(blank=True, verbose_name='SVG 5 - World (світла)')),
-                        ('svg_5_world_dark', models.TextField(blank=True, verbose_name='SVG 5 - World (темна)')),
-                        ('svg_6_ua_light', models.TextField(blank=True, verbose_name='SVG 6 - UA (світла)')),
-                        ('svg_6_ua_dark', models.TextField(blank=True, verbose_name='SVG 6 - UA (темна)')),
-                        ('svg_6_world_light', models.TextField(blank=True, verbose_name='SVG 6 - World (світла)')),
-                        ('svg_6_world_dark', models.TextField(blank=True, verbose_name='SVG 6 - World (темна)')),
                         ('is_active', models.BooleanField(default=True, verbose_name='Активно')),
                         ('updated_at', models.DateTimeField(auto_now=True)),
                     ],
@@ -88,9 +54,7 @@ class Migration(migrations.Migration):
                         'db_table': 'cms_about_section4',
                     },
                 ),
-            ],
-            database_operations=[
-                # AboutSection3 - Add 12 grid SVG fields
+                # STEP 3: Add new SVG fields to AboutSection3 in state
                 migrations.AddField(
                     model_name='aboutsection3',
                     name='svg_1_ua_light',
@@ -151,8 +115,7 @@ class Migration(migrations.Migration):
                     name='svg_3_world_dark',
                     field=models.TextField(blank=True, verbose_name='SVG 3 - World (темна)'),
                 ),
-                
-                # AboutSection4 - Add 24 grid SVG fields
+                # STEP 4: Add new SVG fields to AboutSection4 in state
                 migrations.AddField(
                     model_name='aboutsection4',
                     name='svg_1_ua_light',
@@ -272,6 +235,156 @@ class Migration(migrations.Migration):
                     model_name='aboutsection4',
                     name='svg_6_world_dark',
                     field=models.TextField(blank=True, verbose_name='SVG 6 - World (темна)'),
+                ),
+            ],
+            database_operations=[
+                # Only add NEW fields to existing tables in DB
+                # Tables cms_about_section3 and cms_about_section4 already exist!
+                # AboutSection3 - Add 12 new SVG fields to DB
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_1_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_1_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_1_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_1_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_1_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_1_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_1_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_1_world_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_2_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_2_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_2_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_2_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_2_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_2_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_2_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_2_world_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_3_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_3_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_3_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_3_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_3_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_3_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section3 ADD COLUMN IF NOT EXISTS svg_3_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section3 DROP COLUMN IF EXISTS svg_3_world_dark;",
+                ),
+                # AboutSection4 - Add 24 new SVG fields to DB
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_1_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_1_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_1_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_1_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_1_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_1_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_1_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_1_world_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_2_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_2_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_2_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_2_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_2_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_2_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_2_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_2_world_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_3_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_3_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_3_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_3_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_3_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_3_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_3_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_3_world_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_4_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_4_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_4_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_4_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_4_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_4_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_4_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_4_world_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_5_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_5_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_5_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_5_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_5_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_5_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_5_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_5_world_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_6_ua_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_6_ua_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_6_ua_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_6_ua_dark;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_6_world_light TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_6_world_light;",
+                ),
+                migrations.RunSQL(
+                    sql="ALTER TABLE cms_about_section4 ADD COLUMN IF NOT EXISTS svg_6_world_dark TEXT DEFAULT '';",
+                    reverse_sql="ALTER TABLE cms_about_section4 DROP COLUMN IF EXISTS svg_6_world_dark;",
                 ),
             ],
         ),
