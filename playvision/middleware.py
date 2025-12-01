@@ -303,9 +303,8 @@ class DomainRoutingMiddleware:
 
 class LandingDomainRestrictionMiddleware:
     """
-    На playvision.com.ua показує Landing Page для сторінок /mentor-coaching/*, /hub/*, /pricing/*
-    На інших доменах ці сторінки доступні нормально.
     Блокує /submit/ для non-landing domains.
+    Сторінки /mentor-coaching/, /hub/, /pricing/ тепер мають власні Landing-подібні шаблони.
     """
     
     def __init__(self, get_response):
@@ -317,17 +316,8 @@ class LandingDomainRestrictionMiddleware:
         is_com_ua_domain = getattr(request, 'is_com_ua_domain', False)
         path = request.path
         
-        # Шляхи, що показують Landing Page на playvision.com.ua
-        stub_paths = ['/mentor-coaching/', '/hub/', '/pricing/']
-        is_stub_path = any(path.startswith(p) for p in stub_paths)
-        
-        if is_com_ua_domain:
-            # На com.ua для заглушок показуємо Landing Page
-            if is_stub_path:
-                from apps.landing.views import landing_page
-                return landing_page(request)
-        else:
-            # На інших доменах блокуємо /submit/ (це landing-only endpoint)
+        # Блокуємо /submit/ тільки на НЕ landing доменах
+        if not is_com_ua_domain:
             if path == '/submit/':
                 raise Http404("Ця сторінка недоступна на даному домені")
         
