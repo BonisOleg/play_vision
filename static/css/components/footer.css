@@ -447,6 +447,14 @@ footer.site-footer .footer-link:hover {
         justify-content: flex-start;
         gap: 4px;
         width: auto;
+        flex-wrap: wrap; /* Переносить тільки якщо не вміщається */
+        min-width: 0; /* Дозволяє стискатися */
+    }
+
+    footer.site-footer .contact-link {
+        word-break: break-word; /* М'який перенос */
+        overflow-wrap: break-word;
+        min-width: 0;
     }
 
     footer.site-footer .footer-newsletter {

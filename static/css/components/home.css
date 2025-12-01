@@ -109,7 +109,7 @@
         gap: var(--spacing-sm);
         padding: calc(var(--spacing-md) + env(safe-area-inset-top, 0px)) 
                  calc(var(--spacing-md) + env(safe-area-inset-right, 0px))
-                 calc(var(--spacing-md) + env(safe-area-inset-bottom, 0px))
+                 calc(var(--spacing-md) + max(env(safe-area-inset-bottom, 0px), 8px))
                  calc(var(--spacing-md) + env(safe-area-inset-left, 0px));
     }
     
