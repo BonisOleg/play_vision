@@ -226,3 +226,4 @@ print(f"Файлів з невідповідностями breakpoints: {len(set
 print(f"Файлів з невідповідностями CSS вмісту: {len(set(i['file'] for i in content_issues))}")
 print(f"Всього проблем: {len(issues)}")
 
+

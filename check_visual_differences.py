@@ -160,3 +160,4 @@ print("\n" + "=" * 100)
 print(f"ПІДСУМОК: {len(issues)} розбіжностей у {len(by_file)} файлах")
 print("=" * 100)
 
+

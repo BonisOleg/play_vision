@@ -192,3 +192,4 @@ print(f"Десктопні невідповідності: {len(issues['desktop'
 print(f"\nВСЬОГО: {sum(len(issues[c]) for c in issues)} невідповідностей")
 
 
+

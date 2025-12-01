@@ -248,3 +248,4 @@ print(f"Файлів з iOS медіа-запитами: {len(ios_media_queries)
 print(f"Файлів зі стандартними мобільними: {len(standard_mobile_queries)}")
 print(f"Файлів з обома: {len(set(ios_media_queries.keys()) & set(standard_mobile_queries.keys()))}")
 
+
