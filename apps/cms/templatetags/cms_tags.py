@@ -260,6 +260,18 @@ def get_localized_title(obj, country_code):
 
 
 @register.filter
+def highlight_second_word(text):
+    """Обгортає друге слово в span з класом text-highlight"""
+    if not text:
+        return ''
+    words = text.split()
+    if len(words) < 2:
+        return text
+    words[1] = f'<span class="text-highlight">{words[1]}</span>'
+    return ' '.join(words)
+
+
+@register.filter
 def get_localized_subtitle(obj, country_code):
     """
     Отримати subtitle з урахуванням країни

@@ -68,7 +68,7 @@
             {% get_about_section3 as about_section3 %}
             <section class="fullscreen-section about-mission-section">
                 <div class="section-content">
-                    <h2 class="section-title">{% if about_section3 %}{{ about_section3|get_localized_title:country_code }}{% else %}Місія, <span class="text-highlight">філософія</span> і віра{% endif %}</h2>
+                    <h2 class="section-title">{% if about_section3 %}{{ about_section3|get_localized_title:country_code|highlight_second_word|safe }}{% else %}Місія, <span class="text-highlight">візія</span> і віра{% endif %}</h2>
                     
                     <div class="mission-grid">
                         {% if about_section3 %}

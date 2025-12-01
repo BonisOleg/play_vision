@@ -239,6 +239,16 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
+/* Padding тільки для mission-grid в секції місії-візії */
+.about-mission-section .mission-grid {
+    padding: 10px;
+}
+
+/* Червоний колір для другого слова в заголовку */
+.about-mission-section .text-highlight {
+    color: var(--color-primary);
+}
+
 /* Блок 4: 3x2 (3 колонки, 2 ряди) на desktop */
 .values-grid {
     grid-template-columns: repeat(3, 1fr);
