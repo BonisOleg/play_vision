@@ -68,11 +68,14 @@ class ExpertFlipCards {
                 return;
             }
 
+            // БЛОКУЄМО scroll на Android (критично для Android Chrome)
+            e.preventDefault();
+            
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
             touchStartTime = Date.now();
             isMoved = false;
-        }, { passive: true });
+        }, { passive: false });
 
         card.addEventListener('touchmove', (e) => {
             if (!isMoved) {
