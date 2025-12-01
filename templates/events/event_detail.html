@@ -19,36 +19,42 @@
     <div class="unified-sections-wrapper">
         <div class="unified-sections-container">
 
+            <!-- Video OUTSIDE section-content for proper touch events -->
+            {% if event.video_enabled and event|has_video:country_code %}
+            <!-- HERO SECTION - BunnyNet Video Player -->
+            <div class="event-hero event-hero-video">
+                <div style="position: relative; padding-top: 56.25%;">
+                    <iframe
+                        src="https://iframe.mediadelivery.net/embed/{{ event|get_video_library_id:country_code }}/{{ event|get_video_id:country_code }}?autoplay=false&muted=false&preload=true&playsinline=true"
+                        style="border: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                        allowfullscreen="true">
+                    </iframe>
+                </div>
+            </div>
+            {% endif %}
+
             <section class="fullscreen-section event-detail-section">
                 <div class="section-content">
                     
-                    {% if event.video_enabled and event|has_video:country_code %}
-                    <!-- HERO SECTION - BunnyNet Video Player -->
-                    <div class="event-hero event-hero-video">
-                        <div style="position: relative; padding-top: 56.25%;">
-                            <iframe
-                                src="https://iframe.mediadelivery.net/embed/{{ event|get_video_library_id:country_code }}/{{ event|get_video_id:country_code }}?autoplay=false&muted=false&preload=true&playsinline=true"
-                                style="border: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                                allowfullscreen="true">
-                            </iframe>
+                    <!-- Banner or placeholder (shown only if no video) -->
+                    {% if not event.video_enabled %}
+                        {% if event.banner_image %}
+                        <div class="event-hero">
+                            <img src="{{ event.banner_image.url }}" alt="{{ event.title }}">
                         </div>
-                    </div>
-                    {% elif event.banner_image %}
-                    <div class="event-hero">
-                        <img src="{{ event.banner_image.url }}" alt="{{ event.title }}">
-                    </div>
-                    {% else %}
-                    <div class="event-hero event-hero-placeholder">
-                        <div class="placeholder-content">
-                            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                            <p>Зображення події</p>
+                        {% else %}
+                        <div class="event-hero event-hero-placeholder">
+                            <div class="placeholder-content">
+                                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                                <p>Зображення події</p>
+                            </div>
                         </div>
-                    </div>
+                        {% endif %}
                     {% endif %}
 
                     <div class="event-detail-meta">

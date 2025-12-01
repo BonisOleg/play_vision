@@ -2184,6 +2184,16 @@
    EVENT VIDEO PLAYER - BunnyNet Integration
    ================================================ */
 
+/* Video player OUTSIDE unified-sections (like About page) */
+.unified-sections-wrapper > .unified-sections-container > .event-hero-video {
+    width: 80%;
+    max-width: 1400px;
+    margin: 30px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 .event-hero-video {
     width: 100%;
     max-width: 100%;
@@ -2200,6 +2210,11 @@
 
 /* Мобільна адаптація */
 @media (max-width: 767px) {
+    .unified-sections-wrapper > .unified-sections-container > .event-hero-video {
+        width: 90%;
+        margin: 8px auto 0;
+    }
+
     .event-hero-video {
         border-radius: 8px;
         margin: 0 0 var(--spacing-md, 1.5rem) 0;
