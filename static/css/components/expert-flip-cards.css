@@ -284,6 +284,25 @@
     .expert-detail-link {
         font-size: 0.875rem;
     }
+
+    /* Запобігти горизонтальному scroll при touch */
+    .expert-card {
+        touch-action: pan-y;
+    }
+
+    .expert-card-inner {
+        touch-action: pan-y;
+    }
+
+    .expert-card-front,
+    .expert-card-back {
+        touch-action: pan-y;
+    }
+
+    /* Дозволити вертикальний scroll для контенту на задній стороні */
+    .expert-bio-content {
+        touch-action: pan-y;
+    }
 }
 
 /* ============================================

@@ -269,7 +269,7 @@
 
     .experts-carousel-container {
         order: 3;
-        overflow: visible;
+        overflow: hidden;
     }
 
     .experts-navigation {
