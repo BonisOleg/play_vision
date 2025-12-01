@@ -781,6 +781,9 @@
         min-width: calc(50% - 8px);
         max-width: calc(50% - 8px);
         min-height: 180px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
     }
     
     @supports (aspect-ratio: 1 / 1) {
@@ -793,7 +796,7 @@
     .calendar-navigation {
         left: 50%;
         transform: translateX(-50%);
-        bottom: 20px;
+        bottom: 0;
     }
 
     .calendar-pagination {
