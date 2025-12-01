@@ -114,6 +114,10 @@
         font-size: 1rem;
     }
 
+    .about-team-section .section-content {
+        padding-bottom: 60px;
+    }
+
     .about-triangle-section .section-content,
     .about-mission-section .section-content,
     .about-values-section .section-content {
