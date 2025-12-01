@@ -239,6 +239,17 @@
     color: #ffffff;
 }
 
+/* Десктопні версії - зміни з консолі */
+@media (min-width: 1024px) {
+    .calendar-event-name {
+        font-size: 1rem;
+    }
+
+    .calendar-event-description {
+        font-size: 0.8rem;
+    }
+}
+
 .btn-details {
     display: inline-flex;
     align-items: center;
