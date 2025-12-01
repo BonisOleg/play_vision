@@ -268,7 +268,7 @@
 
     .mentor-coaching-section .ecosystem-subtitle {
         font-size: 1.1rem;
-        padding: 0 20px;
+        padding: 0 20px 0 0;
         margin-bottom: 30px;
     }
 
@@ -329,7 +329,7 @@
     .mentor-coaching-section .ecosystem-subtitle {
         font-size: 0.95rem;
         margin-bottom: 20px;
-        padding: 0 15px;
+        padding: 0 15px 0 0;
         line-height: 1.4;
         text-align: center;
     }
