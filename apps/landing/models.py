@@ -54,6 +54,19 @@ class LeadSubmission(models.Model):
         help_text='ID контакту в SendPulse CRM'
     )
     
+    source = models.CharField(
+        'Джерело заявки',
+        max_length=50,
+        choices=[
+            ('landing', 'Landing Page'),
+            ('hub', 'Хаб знань'),
+            ('mentoring', 'Ментор коучинг'),
+            ('subscription', 'Підписка'),
+        ],
+        default='landing',
+        help_text='Джерело, з якого прийшла заявка'
+    )
+    
     class Meta:
         verbose_name = 'Заявка з Landing Page'
         verbose_name_plural = 'Заявки з Landing Page'

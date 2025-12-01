@@ -56,6 +56,11 @@
 /* Забезпечити правильний колір тексту */
 .unified-sections-wrapper .section-title {
     color: var(--color-text);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: left;
+    text-shadow: none;
+    margin-bottom: 5px;
 }
 
 .unified-sections-wrapper .section-content {
@@ -110,6 +115,21 @@
     .unified-sections-wrapper .mentoring-methodology-section .section-content {
         padding: 0;
     }
+
+    /* Уніфіковані мобільні стилі для заголовків секцій */
+    .unified-sections-wrapper .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 5px;
+    }
+
+    /* Уніфіковані мобільні стилі для підзаголовків */
+    .unified-sections-wrapper .ecosystem-subtitle,
+    .unified-sections-wrapper .experts-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        line-height: 1.4;
+        text-align: left;
+    }
 }
 
 /* === СПЕЦИФІЧНІ СТИЛІ ДЛЯ СЕКЦІЙ === */
@@ -117,6 +137,9 @@
 /* Курси */
 .unified-sections-wrapper .main-courses-section .section-title {
     text-shadow: none;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
 }
 
 /* Ментор коучинг */
@@ -126,20 +149,29 @@
 
 .unified-sections-wrapper .mentor-coaching-section .section-title {
     text-shadow: none;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
 }
 
 .unified-sections-wrapper .ecosystem-subtitle {
     color: var(--color-text-light);
     text-shadow: none;
     text-align: left;
+    font-size: 1.75rem;
+    font-weight: 600;
     margin-bottom: 0;
+    line-height: 1.4;
 }
 
 /* Команда професіоналів */
 .unified-sections-wrapper .experts-section .section-title {
     text-shadow: none;
-    color: #2a2a2a;
+    color: var(--color-text);
     text-align: left;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
 }
 
 [data-theme="dark"] .unified-sections-wrapper .experts-section .section-title {
@@ -153,8 +185,12 @@
 }
 
 .unified-sections-wrapper .experts-subtitle {
-    color: #666666;
+    color: var(--color-text-light);
     text-align: left;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0;
+    line-height: 1.4;
 }
 
 [data-theme="dark"] .unified-sections-wrapper .experts-subtitle {

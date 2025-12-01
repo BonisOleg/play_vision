@@ -82,7 +82,8 @@ class ExpertFlipCards {
                 const deltaY = Math.abs(currentY - touchStartY);
                 
                 // Якщо це малий рух (можливо tap) - блокуємо scroll
-                if (deltaX < 5 && deltaY < 5) {
+                // Поріг 20px для підтримки обох платформ (iPhone та Android)
+                if (deltaX < 20 && deltaY < 20) {
                     e.preventDefault();
                 }
             }

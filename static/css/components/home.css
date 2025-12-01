@@ -369,25 +369,25 @@
 /* .experts-section .section-content наслідує з section-base.css: width: 70%, max-width: 1400px, padding з var() */
 
 .experts-section .section-title {
-    color: #2a2a2a;
-    font-size: 2.5rem;
+    color: var(--color-text);
+    font-size: 2rem;
     font-weight: 700;
     text-align: left;
-    margin-bottom: 16px;
+    margin-bottom: 5px;
     text-shadow: none;
 }
 
 .experts-subtitle {
     text-align: left;
-    color: #666666;
-    font-size: 1.125rem;
-    font-weight: 400;
-    margin-bottom: 48px;
+    color: var(--color-text-light);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0;
     max-width: 100%;
     margin-left: 0;
     margin-right: 0;
     text-shadow: none;
-    line-height: 1.6;
+    line-height: 1.4;
 }
 
 
@@ -505,13 +505,13 @@
     }
 
     .experts-section .section-title {
-        font-size: 2.25rem;
-        margin-bottom: 14px;
+        font-size: 2rem;
+        margin-bottom: 5px;
     }
 
     .experts-subtitle {
-        font-size: 1.0625rem;
-        margin-bottom: 40px;
+        font-size: 1.75rem;
+        margin-bottom: 0;
     }
 
 }
@@ -588,13 +588,14 @@
     }
 
     .experts-section .section-title {
-        font-size: 2rem;
-        margin-bottom: 12px;
+        font-size: 1.75rem;
+        margin-bottom: 5px;
     }
 
     .experts-subtitle {
-        font-size: 1rem;
-        margin-bottom: 32px;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        line-height: 1.4;
     }
 
 }

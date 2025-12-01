@@ -10,10 +10,11 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
         'first_name',
         'phone',
         'email',
+        'source',
         'submitted_at',
         'sendpulse_synced'
     ]
-    list_filter = ['sendpulse_synced', 'submitted_at']
+    list_filter = ['source', 'sendpulse_synced', 'submitted_at']
     search_fields = ['first_name', 'phone', 'email']
     readonly_fields = ['submitted_at', 'sendpulse_contact_id']
     date_hierarchy = 'submitted_at'

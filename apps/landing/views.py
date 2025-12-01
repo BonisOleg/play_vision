@@ -21,6 +21,24 @@ def landing_page(request):
     return render(request, 'landing/landing.html', context)
 
 
+@require_GET
+def hub_lead_form_page(request):
+    """Відобразити форму для Хаб знань"""
+    return render(request, 'landing/hub_lead_form.html')
+
+
+@require_GET
+def mentoring_lead_form_page(request):
+    """Відобразити форму для Ментор коучингу"""
+    return render(request, 'landing/mentoring_lead_form.html')
+
+
+@require_GET
+def subscription_lead_form_page(request):
+    """Відобразити форму для Підписки"""
+    return render(request, 'landing/subscription_lead_form.html')
+
+
 @require_POST
 @csrf_protect
 def submit_lead(request):
@@ -46,12 +64,14 @@ def submit_lead(request):
         first_name = form.cleaned_data['first_name']
         phone = form.cleaned_data['phone']
         email = form.cleaned_data['email']
+        source = request.POST.get('source', 'landing')
         
         # Зберегти в базу даних
         lead = LeadSubmission.objects.create(
             first_name=first_name,
             phone=phone,
             email=email,
+            source=source,
         )
         
         logger.info(f'Lead submission saved: {lead.id} - {first_name} ({email})')

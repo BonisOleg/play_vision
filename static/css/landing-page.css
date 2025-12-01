@@ -495,9 +495,35 @@ body {
     line-height: 1.5;
 }
 
+/* === FOOTER WRAPPER - БІЛИЙ БЛОК ПІД ФОРМОЮ === */
+.landing-footer-wrapper {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-footer-wrapper .landing-footer-text {
+    color: #1a1a1a;
+    font-size: 24px;
+}
+
 @media (max-width: 767px) {
     .landing-footer-text {
         font-size: 18px;
+    }
+    
+    .landing-footer-wrapper {
+        padding: 32px 24px;
+        border-radius: 32px;
+    }
+    
+    .landing-footer-wrapper .landing-footer-text {
+        font-size: 16px;
     }
 }
 

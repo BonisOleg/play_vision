@@ -225,6 +225,18 @@
     }
     
     /**
+     * Отримати Facebook Pixel ID з атрибутів форми
+     */
+    function getPixelId() {
+        // Спробувати отримати з data-атрибута форми
+        if (form && form.getAttribute('data-pixel-id')) {
+            return form.getAttribute('data-pixel-id');
+        }
+        // Або просто повернути undefined якщо використовується глобальний fbq
+        return undefined;
+    }
+    
+    /**
      * Валідація форми перед відправкою
      */
     function validateForm() {
