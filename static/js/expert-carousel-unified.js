@@ -120,16 +120,22 @@ class ExpertCarouselUnified {
     }
 
     nextSlide() {
+        const isMobile = window.innerWidth < 768;
+        const step = isMobile ? this.slidesPerView : 1;
+        
         if (this.currentIndex < this.maxIndex) {
-            this.currentIndex++;
+            this.currentIndex = Math.min(this.currentIndex + step, this.maxIndex);
             this.updatePosition();
             this.updateButtons();
         }
     }
 
     prevSlide() {
+        const isMobile = window.innerWidth < 768;
+        const step = isMobile ? this.slidesPerView : 1;
+        
         if (this.currentIndex > 0) {
-            this.currentIndex--;
+            this.currentIndex = Math.max(this.currentIndex - step, 0);
             this.updatePosition();
             this.updateButtons();
         }
