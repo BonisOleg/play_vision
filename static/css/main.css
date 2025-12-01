@@ -640,10 +640,4 @@ html.ios-safari {
     h2 {
         font-size: 1.5rem;
     }
-
-    /* Уніфіковані мобільні стилі для заголовків секцій */
-    .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 5px;
-    }
 }

@@ -146,19 +146,7 @@
 
 /* === RELATED COURSES CAROUSEL === */
 .related-courses-section .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-text);
-    text-align: left;
-    margin-bottom: 5px;
-    text-shadow: none;
-}
-
-@media (max-width: 767px) {
-    .related-courses-section .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 5px;
-    }
+    margin-bottom: var(--spacing-xl);
 }
 
 .courses-carousel {

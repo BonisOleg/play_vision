@@ -95,20 +95,8 @@
 
     .hub-featured-header .section-title {
         order: 1;
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--color-text);
-        text-align: left;
-        margin-bottom: 5px;
-        text-shadow: none;
+        margin-bottom: 16px;
     }
-
-@media (max-width: 767px) {
-    .hub-featured-header .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 5px;
-    }
-}
 
     .hub-featured-carousel {
         order: 2;

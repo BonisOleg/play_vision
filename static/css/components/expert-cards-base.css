@@ -151,11 +151,11 @@
 }
 
 .experts-header .section-title {
-    color: var(--color-text);
-    font-size: 2rem;
+    color: #2a2a2a;
+    font-size: 2.5rem;
     font-weight: 700;
     text-align: left;
-    margin-bottom: 5px;
+    margin: 0;
     text-shadow: none;
 }
 
@@ -259,15 +259,12 @@
     .experts-header .section-title {
         font-size: 1.75rem;
         order: 1;
-        margin-bottom: 5px;
+        margin-bottom: 16px;
     }
 
     .experts-subtitle {
         order: 2;
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-        line-height: 1.4;
-        color: var(--color-text-light);
+        margin-bottom: 24px;
     }
 
     .experts-carousel-container {

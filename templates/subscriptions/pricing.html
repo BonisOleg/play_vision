@@ -1,180 +1,132 @@
-{% extends 'base/base.html' %}
 {% load static %}
-{% load subscription_tags %}
-
-{% block title %}{{ meta_title }}{% endblock %}
-
-{% block meta_description %}{{ meta_description }}{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/components/pricing.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="pricing-page">
-    <div class="container">
-        
-        <!-- Header -->
-        <header class="pricing-header">
-            <h1 class="pricing-title">Тарифи Play Vision</h1>
-            <p class="pricing-subtitle">Твої знання — в одній підписці</p>
-        </header>
-
-        <!-- Period Switcher -->
-        <div class="period-switcher-wrapper">
-            <p class="period-label">Обирай траєкторію свого розвитку на місяць, квартал або рік</p>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Підписка - Play Vision">
+    <title>Підписка - Play Vision</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'logomain.svg' %}">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/design-tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing-page.css' %}">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9B2CF3494S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9B2CF3494S');
+    </script>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'SUBSCRIPTION_PIXEL_ID_PLACEHOLDER');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=SUBSCRIPTION_PIXEL_ID_PLACEHOLDER&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+</head>
+<body>
+    <!-- Кнопка повернення на головну -->
+    <a href="{% url 'core:home' %}" class="landing-home-button" aria-label="Повернутись на головну">
+        <span class="button-text">← Головна</span>
+    </a>
+    
+    <!-- Landing Container з фоновим зображенням -->
+    <div class="landing-container">
+        <div class="landing-content">
             
-            <!-- Desktop Tabs - використовуємо shared tab component -->
-            <div class="period-tabs tab-container desktop-switcher">
-                <div class="tab-slider" data-period-slider></div>
-                {% for period in periods %}
-                <button 
-                    class="tab-button {% if period.value == 'monthly' %}active{% endif %}" 
-                    data-period-tab
-                    data-period="{{ period.value }}">
-                    {{ period.label }}
+            <!-- Рядок 1: COMING SOON -->
+            <div class="landing-coming-soon">
+                <span class="coming-soon-text">coming soon</span>
+            </div>
+            
+            <!-- Рядок 2: Заголовок з білим текстом -->
+            <h1 class="landing-title">
+                Приєднуйся першим до<br class="br-mobile-only"> <span class="title-semibold">Play Vision</span><br class="br-mobile-only"><br class="br-desktop-only"> <span class="title-semibold">навігатора футбольного розвитку для фахівців</span>
+            </h1>
+            
+            <!-- Рядок 3: Білий блок з логотипом та формою -->
+            <div class="landing-form-wrapper">
+                <img src="{% static 'logolend.svg' %}" alt="Play Vision" class="landing-logo">
+                
+                <!-- Форма заявки -->
+                <form id="leadForm" class="landing-form" method="post" action="{% url 'landing:submit_lead' %}">
+                {% csrf_token %}
+                
+                <!-- Hidden input для джерела -->
+                <input type="hidden" name="source" value="subscription">
+                
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        name="first_name" 
+                        id="id_first_name"
+                        class="landing-input" 
+                        placeholder="Ваше ім'я та прізвище"
+                        required
+                        autocomplete="given-name"
+                    >
+                    <span class="form-error" id="error_first_name"></span>
+                </div>
+                
+                <div class="form-group">
+                    <input 
+                        type="tel" 
+                        name="phone" 
+                        id="id_phone"
+                        class="landing-input" 
+                        placeholder="+380(__) ___-__-__"
+                        required
+                        data-phone-input="true"
+                        autocomplete="tel"
+                    >
+                    <span class="form-error" id="error_phone"></span>
+                </div>
+                
+                <div class="form-group">
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="id_email"
+                        class="landing-input" 
+                        placeholder="Ваш email"
+                        required
+                        autocomplete="email"
+                    >
+                    <span class="form-error" id="error_email"></span>
+                </div>
+                
+                <!-- Повідомлення про успіх/помилку -->
+                <div id="formMessage" class="form-message" style="display: none;"></div>
+                
+                <!-- Рядок 5: Кнопка відправки -->
+                <button type="submit" class="landing-submit-btn" id="submitBtn">
+                    <span class="btn-text">Доєднатися</span>
+                    <span class="btn-loader" style="display: none;">Відправка...</span>
                 </button>
-                {% endfor %}
+            </form>
             </div>
             
-            <!-- Mobile Dropdown -->
-            <div class="period-dropdown mobile-dropdown">
-                <select id="period-select" class="period-select">
-                    {% for period in periods %}
-                    <option value="{{ period.value }}" {% if period.value == 'monthly' %}selected{% endif %}>
-                        {{ period.label }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
         </div>
-
-        <!-- Plans Grid -->
-        <div class="plans-container">
-            <div class="plans-grid" id="plans-grid">
-                {% for plan in plans %}
-                <div class="plan-card {% if plan.is_popular %}plan-card--popular{% endif %}" 
-                     data-plan-id="{{ plan.id }}">
-                    
-                    <!-- Badge -->
-                    {% if plan.badge_text %}
-                    <div class="plan-badge" style="background-color: {{ plan.badge_color }};">
-                        {{ plan.badge_text }}
-                    </div>
-                    {% endif %}
-
-                    <!-- Card Content -->
-                    <div class="plan-content">
-                        <!-- Plan Name -->
-                        <h3 class="plan-name">{{ plan.name }}</h3>
-
-                        <!-- Features List -->
-                        <ul class="plan-features">
-                            {% for feature in plan.get_features %}
-                            <li class="feature-item">
-                                <span class="feature-number">{{ forloop.counter|stringformat:"02d" }}</span>
-                                <span class="feature-text">{{ feature }}</span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-
-                        <!-- Price Section -->
-                        <div class="plan-price-section">
-                            <!-- Monthly -->
-                            <div class="price-block" data-period="monthly">
-                                <div class="price-amount">
-                                    <span class="price-value">{{ plan.base_price_uah|floatformat:0 }}</span>
-                                    <span class="price-currency">{{ currency_symbol }}</span>
-                                </div>
-                            </div>
-
-                            <!-- 3 Months -->
-                            <div class="price-block" data-period="3_months" style="display: none;">
-                                <div class="price-amount">
-                                    <span class="price-value">{% calculate_plan_price plan "3_months" currency as price_3m %}{{ price_3m|floatformat:0 }}</span>
-                                    <span class="price-currency">{{ currency_symbol }}</span>
-                                </div>
-                                {% if plan.discount_3_months > 0 %}
-                                <div class="price-save">
-                                    Економія {{ plan.discount_3_months }}%
-                                </div>
-                                {% endif %}
-                            </div>
-
-                            <!-- 12 Months -->
-                            <div class="price-block" data-period="12_months" style="display: none;">
-                                <div class="price-amount">
-                                    <span class="price-value">{% calculate_plan_price plan "12_months" currency as price_12m %}{{ price_12m|floatformat:0 }}</span>
-                                    <span class="price-currency">{{ currency_symbol }}</span>
-                                </div>
-                                {% if plan.discount_12_months > 0 %}
-                                <div class="price-save">
-                                    Економія {{ plan.discount_12_months }}%
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <!-- Action Button -->
-                        <div class="plan-action">
-                            <!-- Monthly Button -->
-                            <div class="action-wrapper" data-period="monthly">
-                                {% if plan.available_monthly %}
-                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=monthly" 
-                                       class="btn-purchase">
-                                        Придбати {{ plan.name }}
-                                    </a>
-                                {% else %}
-                                    <div class="unavailable-notice">
-                                        {{ plan.unavailable_text }}
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <!-- 3 Months Button -->
-                            <div class="action-wrapper" data-period="3_months" style="display: none;">
-                                {% if plan.available_3_months %}
-                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=3_months" 
-                                       class="btn-purchase">
-                                        Придбати {{ plan.name }}
-                                    </a>
-                                {% else %}
-                                    <div class="unavailable-notice">
-                                        {{ plan.unavailable_text }}
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <!-- 12 Months Button -->
-                            <div class="action-wrapper" data-period="12_months" style="display: none;">
-                                {% if plan.available_12_months %}
-                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=12_months" 
-                                       class="btn-purchase">
-                                        Придбати {{ plan.name }}
-                                    </a>
-                                {% else %}
-                                    <div class="unavailable-notice">
-                                        {{ plan.unavailable_text }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="no-plans">
-                    <p>Тарифи тимчасово недоступні</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
     </div>
-</div>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/shared/tab-slider.js' %}"></script>
-<script src="{% static 'js/pricing.js' %}"></script>
-{% endblock %}
-
+    
+    <!-- JavaScript -->
+    <script src="{% static 'js/landing-form.js' %}" defer></script>
+</body>
+</html>

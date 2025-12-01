@@ -79,6 +79,28 @@ class EventForm(forms.ModelForm):
                 self.fields[f'tier_{i}_features'].initial = '\n'.join(features_list)
                 self.fields[f'tier_{i}_popular'].initial = tier.get('is_popular', False)
     
+    def clean(self):
+        cleaned_data = super().clean()
+        is_free = cleaned_data.get('is_free', False)
+        
+        if not is_free:
+            has_valid_tier = False
+            for i in range(1, 4):
+                name = cleaned_data.get(f'tier_{i}_name', '').strip()
+                price = cleaned_data.get(f'tier_{i}_price')
+                
+                if name and price is not None and price > 0:
+                    has_valid_tier = True
+                    break
+            
+            if not has_valid_tier:
+                self.add_error(
+                    'tier_1_name',
+                    'Для платних подій потрібно заповнити хоча б один тариф з ціною > 0'
+                )
+        
+        return cleaned_data
+    
     def save(self, commit=True):
         instance = super().save(commit=False)
         

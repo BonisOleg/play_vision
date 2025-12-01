@@ -228,9 +228,9 @@ class Event(models.Model):
         
         # Валідація тарифів для платних івентів
         if not self.is_free and not self.ticket_tiers:
-            raise ValidationError({
-                'ticket_tiers': 'Для платних подій потрібно заповнити тарифи квитків'
-            })
+            raise ValidationError(
+                'Для платних подій потрібно заповнити тарифи квитків'
+            )
     
     @property
     def is_truly_free(self):

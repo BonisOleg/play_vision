@@ -54,22 +54,19 @@
 .about-values-section .section-title,
 .about-team-section .section-title {
     text-align: left;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: 5px;
-    text-shadow: none;
+    margin-bottom: var(--spacing-md);
 }
 
 /* === 4. КОМАНДА ПРОФЕСІОНАЛІВ === */
 .about-team-section .experts-subtitle {
     text-align: left;
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-size: 1.1rem;
     color: var(--color-text-light);
-    margin-bottom: 0;
+    margin-bottom: var(--spacing-xxl);
     max-width: 800px;
-    line-height: 1.4;
 }
 
 /* === ТЕМНА ТЕМА - ТЕКСТ === */
@@ -102,7 +99,6 @@
     .about-values-section .section-title,
     .about-team-section .section-title {
         font-size: 2rem;
-        margin-bottom: 5px;
     }
 }
 
@@ -112,13 +108,10 @@
     .about-values-section .section-title,
     .about-team-section .section-title {
         font-size: 1.75rem;
-        margin-bottom: 5px;
     }
 
     .about-team-section .experts-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-        line-height: 1.4;
+        font-size: 1rem;
     }
 
     .about-team-section .section-content {
@@ -178,7 +171,16 @@
 }
 
 /* === МАЛИЙ МОБАЙЛ - ТЕКСТ === */
-/* Дублікат видалено - використовується вище */
+@media (max-width: 767px) {
+    .about-mission-section .section-title,
+    .about-values-section .section-title,
+    .about-team-section .section-title {
+        font-size: 1.5rem;
+    }
+
+    .about-team-section .experts-subtitle {
+        font-size: 0.95rem;
+    }
 
     .about-triangle-section .about-image-block {
         width: 100%;

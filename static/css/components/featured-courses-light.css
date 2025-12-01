@@ -35,8 +35,8 @@
 .featured-courses-header .section-title {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 5px;
+    color: #1a1a1a;
+    margin: 0;
     text-shadow: none;
 }
 
@@ -292,7 +292,6 @@
 
     .featured-courses-header .section-title {
         font-size: 1.75rem;
-        margin-bottom: 5px;
     }
 }
 
@@ -320,9 +319,9 @@
     }
 
     .featured-courses-header .section-title {
-        font-size: 1.75rem;
+        font-size: 1.375rem;
         order: 1;
-        margin-bottom: 5px;
+        margin-bottom: 24px;
     }
 
     .featured-carousel-container {

@@ -21,24 +21,6 @@ def landing_page(request):
     return render(request, 'landing/landing.html', context)
 
 
-@require_GET
-def hub_lead_form_page(request):
-    """Відобразити форму для Хаб знань"""
-    return render(request, 'landing/hub_lead_form.html')
-
-
-@require_GET
-def mentoring_lead_form_page(request):
-    """Відобразити форму для Ментор коучингу"""
-    return render(request, 'landing/mentoring_lead_form.html')
-
-
-@require_GET
-def subscription_lead_form_page(request):
-    """Відобразити форму для Підписки"""
-    return render(request, 'landing/subscription_lead_form.html')
-
-
 @require_POST
 @csrf_protect
 def submit_lead(request):

@@ -45,20 +45,18 @@
 }
 
 .events-intro-left .section-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: 5px;
+    margin-bottom: 16px;
     text-shadow: none;
 }
 
 .events-intro-subtitle {
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-size: 1rem;
     color: var(--color-text-light);
-    margin-bottom: 0;
-    line-height: 1.4;
-    text-align: left;
+    margin-bottom: 100px;
+    line-height: 1.6;
 }
 
 /* Категорії 2x2 */
@@ -153,10 +151,10 @@
 }
 
 .events-calendar-section .section-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: 5px;
+    margin-bottom: 40px;
     text-shadow: none;
 }
 
@@ -387,10 +385,10 @@
 }
 
 .events-catalog-section .section-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: 5px;
+    margin-bottom: 32px;
     text-shadow: none;
 }
 
@@ -724,14 +722,11 @@
     .events-intro-left .section-title,
     .events-calendar-section .section-title,
     .events-catalog-section .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 5px;
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
     }
 
     .events-intro-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-        line-height: 1.4;
+        margin-bottom: 10px;
     }
 
     /* Категорії 2x2 */
@@ -1367,25 +1362,25 @@
 }
 
 .event-experts-section .section-title {
-    color: var(--color-text);
-    font-size: 2rem;
+    color: #2a2a2a;
+    font-size: 2.5rem;
     font-weight: 700;
     text-align: left;
-    margin-bottom: 5px;
+    margin-bottom: 16px;
     text-shadow: none;
 }
 
 .event-experts-section .experts-subtitle {
     text-align: left;
-    color: var(--color-text-light);
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 0;
+    color: #666666;
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-bottom: 48px;
     max-width: 100%;
     margin-left: 0;
     margin-right: 0;
     text-shadow: none;
-    line-height: 1.4;
+    line-height: 1.6;
 }
 
 [data-theme="dark"] .event-experts-section .section-title {
@@ -1415,14 +1410,13 @@
     }
 
     .event-experts-section .section-title {
-        font-size: 2rem;
-        margin-bottom: 5px;
+        font-size: 2.25rem;
+        margin-bottom: 14px;
     }
 
     .event-experts-section .experts-subtitle {
-        font-size: 1.75rem;
-        margin-bottom: 0;
-        line-height: 1.4;
+        font-size: 1.0625rem;
+        margin-bottom: 40px;
     }
 }
 
@@ -1432,14 +1426,13 @@
     }
 
     .event-experts-section .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 5px;
+        font-size: 2rem;
+        margin-bottom: 12px;
     }
 
     .event-experts-section .experts-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-        line-height: 1.4;
+        font-size: 1rem;
+        margin-bottom: 32px;
     }
 }
 
@@ -1450,13 +1443,13 @@
 
     .event-experts-section .section-title {
         font-size: 1.75rem;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .event-experts-section .experts-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 20px;
-        line-height: 1.4;
+        font-size: 0.9375rem;
+        margin-bottom: 28px;
+        line-height: 1.5;
     }
 }
 
