@@ -109,8 +109,9 @@ class ExpertCarouselUnified {
     }
 
     updateArrowsVisibility() {
-        // Показуємо стрілки тільки якщо карток >= 5
-        const shouldShow = this.totalSlides >= 5;
+        // На мобільних (≤767px) стрілки завжди видимі
+        const isMobile = window.innerWidth <= 767;
+        const shouldShow = isMobile || this.totalSlides >= 5;
         const navigation = this.section.querySelector('.experts-navigation');
         
         if (navigation) {

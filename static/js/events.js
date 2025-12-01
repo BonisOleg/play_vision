@@ -33,7 +33,9 @@ function initCalendarCarousel() {
     // КЛЮЧОВА ФУНКЦІЯ: показ/приховування стрілок
     // БЕЗ INLINE STYLES - тільки CSS класи
     function updateArrowsVisibility() {
-        const shouldShow = totalCards >= 6;
+        // На мобільних (≤767px) стрілки завжди видимі
+        const isMobile = window.innerWidth <= 767;
+        const shouldShow = isMobile || totalCards >= 6;
         const navigation = section.querySelector('.calendar-navigation');
         
         if (navigation) {
