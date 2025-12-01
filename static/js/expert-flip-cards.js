@@ -73,14 +73,13 @@ class ExpertFlipCards {
                 return;
             }
 
-            // БЛОКУЄМО scroll на Android (критично для Android Chrome)
-            e.preventDefault();
+            // НЕ викликаємо preventDefault - дозволяємо scroll браузеру
             
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
             touchStartTime = Date.now();
             isMoved = false;
-        }, { passive: false });
+        }, { passive: true });
 
         card.addEventListener('touchmove', (e) => {
             // Якщо touch на контенті який має скролитися - пропустити
@@ -88,18 +87,20 @@ class ExpertFlipCards {
                 return;
             }
 
-            if (!isMoved) {
-                const currentX = e.touches[0].clientX;
-                const currentY = e.touches[0].clientY;
-                const deltaX = Math.abs(currentX - touchStartX);
-                const deltaY = Math.abs(currentY - touchStartY);
-                
-                // Якщо це малий рух (можливо tap) - блокуємо scroll
-                // Поріг 20px для підтримки обох платформ (iPhone та Android)
-                if (deltaX < 20 && deltaY < 20) {
-                    e.preventDefault();
-                }
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const deltaX = Math.abs(currentX - touchStartX);
+            const deltaY = Math.abs(currentY - touchStartY);
+            
+            // Визначаємо чи це малий горизонтальний рух (потенційний tap)
+            const isSmallHorizontal = deltaX < 20 && deltaY < 20 && deltaX >= deltaY;
+            
+            // Блокуємо ТІЛЬКИ малий горизонтальний рух (tap)
+            // Для вертикального або великого горизонтального - дозволяємо scroll
+            if (!isMoved && isSmallHorizontal) {
+                e.preventDefault();
             }
+            
             // Відмічаємо що був рух
             isMoved = true;
         }, { passive: false });

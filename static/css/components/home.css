@@ -549,6 +549,11 @@
         border-radius: 0;
     }
 
+    /* Видалити паралакс-ефект на мобільних */
+    .cta-simple {
+        background-attachment: scroll;
+    }
+
     .cta-buttons {
         flex-direction: column;
         align-items: center;

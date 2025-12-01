@@ -148,6 +148,7 @@ body {
 @media (max-width: 767px) {
     .landing-container {
         background-image: url('/static/moblendback.png');
+        background-attachment: scroll;
     }
 }
 
