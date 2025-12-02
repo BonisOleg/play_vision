@@ -373,9 +373,8 @@ footer.site-footer .footer-link:hover {
     }
 
     footer.site-footer .footer-bottom {
-        flex-direction: column;
         align-items: center;
-        gap: 35px;
+        gap: 40px;
     }
 
     footer.site-footer .footer-newsletter {
