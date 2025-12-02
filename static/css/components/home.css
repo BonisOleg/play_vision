@@ -482,7 +482,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: url('/static/images/white_botton.png') no-repeat center center;
+    background: url('/static/logomainlowlogo.svg') no-repeat center center;
     background-size: contain;
 }
 
