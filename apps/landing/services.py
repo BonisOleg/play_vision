@@ -91,6 +91,16 @@ class SendPulseService:
                 'phones': [phone],
             }
             
+            # Додати firstName з variables, якщо є
+            if variables and 'first_name' in variables:
+                first_name = variables.get('first_name', '').strip()
+                if first_name:
+                    # Розділити ім'я на firstName та lastName
+                    name_parts = first_name.split(maxsplit=1)
+                    contact_data['firstName'] = name_parts[0] if name_parts else first_name
+                    if len(name_parts) > 1:
+                        contact_data['lastName'] = name_parts[1]
+            
             # Додати додаткові змінні якщо є
             if variables:
                 contact_data['variables'] = variables
@@ -188,19 +198,24 @@ class SendPulseService:
             
             # Валідація name - має бути не порожнім
             if not name or not name.strip():
-                name = 'User'
+                first_name = 'User'
+                last_name = 'User'
             else:
                 name = name.strip()
+                # Розділити ім'я на firstName та lastName
+                name_parts = name.split(maxsplit=1)
+                first_name = name_parts[0] if name_parts else 'User'
+                last_name = name_parts[1] if len(name_parts) > 1 else first_name  # Якщо немає прізвища, використати те саме ім'я
             
             payload = {
                 'emails': [
                     {
                         'email': email,
-                        'firstName': name,
-                        'lastName': '',  # Порожнє поле, але обов'язкове для API
+                        'firstName': first_name,
+                        'lastName': last_name,
                         'variables': {
                             'phone': phone,
-                            'name': name,
+                            'name': name if name else first_name,
                             'source': source,
                         }
                     }
