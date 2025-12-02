@@ -46,10 +46,15 @@ class HeroCarousel {
                 this.slides = JSON.parse(cmsDataElement.textContent);
             } catch (e) {
                 console.error('Failed to parse CMS slides data:', e);
-                this.slides = this.getDefaultSlides();
+                this.slides = [];
             }
         } else {
-            this.slides = this.getDefaultSlides();
+            this.slides = [];
+        }
+
+        // Якщо немає слайдів - не ініціалізувати carousel
+        if (this.slides.length === 0) {
+            return;
         }
 
         this.titleElement = element.querySelector('.hero-title');
@@ -59,57 +64,17 @@ class HeroCarousel {
         this.dotsContainer = element.querySelector('.hero-slider-dots');
         this.sectionBg = element.querySelector('.section-bg');
 
+        // Кеш для зображень
+        this.imageCache = new Map();
+        this.preloadedSlides = new Set();
+
         this.init();
     }
 
-    getDefaultSlides() {
-        return [
-            {
-                title: 'Продуктивна практика у футбольних клубах',
-                subtitle: 'Реальні кейси, стажування та менторинг з професіоналами індустрії',
-                ctaText: 'Детальніше',
-                ctaUrl: '/about/'
-            },
-            {
-                title: 'Ми відкрились!',
-                subtitle: 'Приєднуйтесь до спільноти футбольних професіоналів України',
-                ctaText: 'Детальніше',
-                ctaUrl: '/about/'
-            },
-            {
-                title: 'Івенти',
-                subtitle: 'Вебінари, майстер-класи та форуми від міжнародних експертів',
-                ctaText: 'Переглянути івенти',
-                ctaUrl: '/events/'
-            },
-            {
-                title: 'Хаб знань — долучайся першим',
-                subtitle: 'Ексклюзивні курси та матеріали для розвитку футбольних фахівців',
-                ctaText: 'До хабу знань',
-                ctaUrl: '/hub/'
-            },
-            {
-                title: 'КОУЧИНГ',
-                subtitle: 'Індивідуальний підхід до комплексного розвитку кожного футболіста',
-                ctaText: 'Детальніше',
-                ctaUrl: '/mentor-coaching/'
-            },
-            {
-                title: 'Про нас',
-                subtitle: 'Дізнайтеся більше про нашу місію, цінності та команду експертів',
-                ctaText: 'Про нас',
-                ctaUrl: '/about/'
-            },
-            {
-                title: 'НАПРЯМИ',
-                subtitle: '4 ключових напрямки для професійного зростання у футболі',
-                ctaText: 'Детальніше',
-                ctaUrl: '/about/#directions'
-            }
-        ];
-    }
-
     init() {
+        // Preload перші слайди одразу
+        this.preloadSlides();
+        
         // Only show dots and autoplay if more than 1 slide
         if (this.slides.length > 1) {
             this.renderDots();
@@ -121,6 +86,63 @@ class HeroCarousel {
             }
         }
         this.updateSlide();
+    }
+
+    // Preload перших 2-3 слайдів
+    preloadSlides() {
+        const slidesToPreload = Math.min(3, this.slides.length);
+        
+        for (let i = 0; i < slidesToPreload; i++) {
+            this.preloadSlide(i, i === 0 ? 'high' : 'low');
+        }
+    }
+
+    // Preload одного слайда
+    preloadSlide(index, priority = 'low') {
+        if (this.preloadedSlides.has(index)) return;
+        
+        const slide = this.slides[index];
+        if (!slide) return;
+        
+        const imageUrl = this.getOptimizedImageUrl(slide.image);
+        
+        if (imageUrl) {
+            const img = new Image();
+            img.fetchPriority = priority;
+            img.src = imageUrl;
+            img.onload = () => {
+                this.imageCache.set(index, img);
+                this.preloadedSlides.add(index);
+            };
+        }
+    }
+
+    // Cloudinary оптимізація для мобільних
+    getOptimizedImageUrl(url) {
+        if (!url) return null;
+        
+        // Якщо це Cloudinary URL
+        if (url.includes('cloudinary.com')) {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                // Додати трансформацію w_800 для мобільних
+                return url.replace('/upload/', '/upload/w_800,f_auto,q_auto/');
+            } else {
+                // Для desktop - auto format і quality
+                return url.replace('/upload/', '/upload/f_auto,q_auto/');
+            }
+        }
+        
+        return url;
+    }
+
+    // Preload наступних слайдів
+    preloadNextSlides() {
+        const next1 = (this.currentSlide + 1) % this.slides.length;
+        const next2 = (this.currentSlide + 2) % this.slides.length;
+        
+        this.preloadSlide(next1, 'low');
+        this.preloadSlide(next2, 'low');
     }
 
     renderDots() {
@@ -193,23 +215,29 @@ class HeroCarousel {
                 video.addEventListener('error', () => {
                     if (slide.image && slide.image.trim() !== '') {
                         video.style.display = 'none';
-                        const img = document.createElement('img');
-                        img.className = 'section-bg-image';
-                        img.src = slide.image;
-                        img.alt = slide.title || '';
-                        img.loading = 'eager';
-                        this.sectionBg.appendChild(img);
+                        const imageUrl = this.getOptimizedImageUrl(slide.image);
+                        if (imageUrl) {
+                            const img = document.createElement('img');
+                            img.className = 'section-bg-image';
+                            img.src = imageUrl;
+                            img.alt = slide.title || '';
+                            img.loading = 'eager';
+                            this.sectionBg.appendChild(img);
+                        }
                     }
                 });
                 
                 // Якщо є зображення, додаємо його як fallback всередині відео
                 if (slide.image && slide.image.trim() !== '') {
-                    const img = document.createElement('img');
-                    img.className = 'section-bg-image';
-                    img.src = slide.image;
-                    img.alt = slide.title || '';
-                    img.loading = 'eager';
-                    video.appendChild(img);
+                    const imageUrl = this.getOptimizedImageUrl(slide.image);
+                    if (imageUrl) {
+                        const img = document.createElement('img');
+                        img.className = 'section-bg-image';
+                        img.src = imageUrl;
+                        img.alt = slide.title || '';
+                        img.loading = 'eager';
+                        video.appendChild(img);
+                    }
                 }
                 
                 this.sectionBg.appendChild(video);
@@ -218,14 +246,24 @@ class HeroCarousel {
                     // Якщо автоплей не працює, відео все одно показуватиметься
                 });
             } else if (slide.image && slide.image.trim() !== '') {
-                const img = document.createElement('img');
-                img.className = 'section-bg-image';
-                img.src = slide.image;
-                img.alt = slide.title || '';
-                img.loading = 'eager';
-                this.sectionBg.appendChild(img);
+                // Використовуємо кешоване зображення якщо є
+                const imageUrl = this.imageCache.has(this.currentSlide) 
+                    ? this.imageCache.get(this.currentSlide).src 
+                    : this.getOptimizedImageUrl(slide.image);
+                
+                if (imageUrl) {
+                    const img = document.createElement('img');
+                    img.className = 'section-bg-image';
+                    img.src = imageUrl;
+                    img.alt = slide.title || '';
+                    img.loading = 'eager';
+                    this.sectionBg.appendChild(img);
+                }
             }
         }
+
+        // Preload наступні 2 слайди в фоні
+        this.preloadNextSlides();
 
         this.updateDots();
     }
@@ -367,7 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const heroElement = document.querySelector('.hero-section');
     if (heroElement) {
-        new HeroCarousel(heroElement);
+        const carousel = new HeroCarousel(heroElement);
+        // Carousel може не ініціалізуватися якщо немає слайдів
     }
 
     const coursesElement = document.querySelector('.featured-carousel-container');

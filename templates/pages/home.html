@@ -15,8 +15,17 @@
 <link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/course-modal.css' %}">
-<link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
 <link rel="preload" href="{% static 'images/backgroundCTAmain.jpg' %}" as="image">
+{% if cms_hero_slides %}
+    {% for slide in cms_hero_slides|slice:":3" %}
+        {% if slide.image %}
+        <link rel="preload" 
+              href="{{ slide.image.url }}" 
+              as="image"
+              {% if forloop.first %}fetchpriority="high"{% endif %}>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -84,16 +93,6 @@
             {% endif %}
             {% endwith %}
             {% endwith %}
-            {% else %}
-            <!-- Fallback: показується ТІЛЬКИ якщо немає HeroSlide в БД -->
-            <h1 class="hero-title">Продуктивна практика<br>у футбольних клубах</h1>
-            <p class="hero-subtitle">Реальні кейси, стажування та менторинг з<br>професіоналами індустрії</p>
-            <div class="hero-buttons">
-                <a href="/about/" class="btn btn-primary hero-btn-new">
-                    <span class="btn-text">Детальніше</span>
-                    <span class="btn-logo-space"></span>
-                </a>
-            </div>
             {% endif %}
 
             <div class="hero-slider-dots"></div>

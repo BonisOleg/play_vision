@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from .models import Cart, CartItem
 from .services import CartService
@@ -117,6 +118,7 @@ class CartUpdateAPIView(APIView):
 
 class CartCountAPIView(APIView):
     """Get cart items count"""
+    permission_classes = [AllowAny]
     
     def get(self, request):
         cart_service = CartService(request)
