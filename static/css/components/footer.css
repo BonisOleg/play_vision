@@ -323,24 +323,6 @@ footer.site-footer .footer-link:hover {
     color: #ffffff;
 }
 
-/* === COPYRIGHT WRAPPER (новий блок під footer-container) === */
-footer.site-footer .footer-copyright-wrapper {
-    width: 100%;
-    text-align: center;
-    padding: 16px 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 0;
-}
-
-footer.site-footer .footer-copyright-wrapper .footer-copyright {
-    font-size: 10px; /* ІДЕНТИЧНО десктоп версії */
-    font-family: 'Roboto', sans-serif;
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0;
-    white-space: nowrap;
-    text-align: center;
-}
-
 /* === RESPONSIVE === */
 
 @media (max-width: 1199px) {
@@ -385,6 +367,7 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
     footer.site-footer .footer-cta {
         flex: 0 0 auto;
         width: 100%;
+        max-width: 500px;
         text-align: center;
         white-space: normal;
     }
@@ -392,7 +375,7 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
     footer.site-footer .footer-bottom {
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+        gap: 35px;
     }
 
     footer.site-footer .footer-newsletter {
@@ -402,6 +385,7 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
     }
 
     footer.site-footer .newsletter-title {
+        font-size: 9px;
         text-align: center;
     }
 
@@ -411,10 +395,6 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
         justify-content: center;
         padding-top: 0;
     }
-
-    footer.site-footer .footer-copyright-wrapper {
-        padding: 14px 24px;
-    }
 }
 
 @media (max-width: 767px) {
@@ -423,8 +403,7 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
     }
     
     footer.site-footer .footer-container {
-        width: 95%;
-        padding: 0 var(--spacing-sm);
+        padding: 0 20px;
     }
     
     footer.site-footer .footer-header {
@@ -442,7 +421,7 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
     }
     
     footer.site-footer .footer-logo {
-        height: 45px;
+        height: 30px;
     }
 
     footer.site-footer .footer-social-contacts {
@@ -499,7 +478,11 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
     }
 
     footer.site-footer .footer-newsletter {
-        max-width: 100%;
+        max-width: 45%;
+    }
+
+    footer.site-footer .newsletter-title {
+        font-size: 9px;
     }
 
     footer.site-footer .newsletter-form {
@@ -510,10 +493,6 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
         width: 100%;
     }
 
-    footer.site-footer .newsletter-title {
-        font-size: 13px;
-    }
-
     footer.site-footer .footer-legal {
         width: auto;
         flex-direction: column;
@@ -522,19 +501,15 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
         gap: 1px;
     }
 
+    footer.site-footer .footer-copyright {
+        text-align: center;
+    }
+
     footer.site-footer .footer-links {
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
+        flex-direction: row;
+        gap: 10px;
+        align-items: flex-start;
         justify-content: center;
-    }
-
-    footer.site-footer .footer-copyright-wrapper {
-        padding: 12px 20px;
-    }
-
-    footer.site-footer .footer-copyright-wrapper .footer-copyright {
-        font-size: 12px;
     }
 }
 
@@ -546,15 +521,47 @@ footer.site-footer .footer-copyright-wrapper .footer-copyright {
     }
 }
 
-/* === iOS Safari specific fixes === */
-@supports (-webkit-touch-callout: none) {
-    footer.site-footer .footer-copyright-wrapper {
-        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+/* === МОБІЛЬНА АДАПТАЦІЯ (Синхронізовано з content-width) === */
+@media (max-width: 767px) {
+    footer.site-footer .footer-container {
+        width: 95%;
+        padding: 0 var(--spacing-md);
+    }
+}
+
+@media (max-width: 767px) {
+    footer.site-footer .footer-container {
+        width: 95%;
+        padding: 0 var(--spacing-sm);
     }
     
-    @media (max-width: 767px) {
-        footer.site-footer .footer-copyright-wrapper {
-            padding-bottom: calc(12px + env(safe-area-inset-bottom));
-        }
+    footer.site-footer .footer-logo-container {
+        height: 45px;
+        justify-content: center;
+        width: auto;
+    }
+    
+    footer.site-footer .footer-logo {
+        height: 30px;
+    }
+    
+    footer.site-footer .footer-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* === COPYRIGHT BLOCK (в самому низу) === */
+footer.site-footer .footer-copyright-block {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 767px) {
+    footer.site-footer .footer-copyright-block {
+        margin-top: 15px;
+        padding-top: 10px;
     }
 }
