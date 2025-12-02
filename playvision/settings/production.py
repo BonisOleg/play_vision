@@ -182,7 +182,7 @@ MEDIA_URL = '/media/'  # Placeholder, MediaCloudinaryStorage ignores this
 # VAPID ключі для push notifications
 VAPID_PRIVATE_KEY = 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgjr19PQPYfjKqpEr6X7783aTxE-CIHkCfFHN1ePvTr66hRANCAAQDScS1jLjPfzr_ieuChn__WVxHE2oLHNhnWr4NoSDmEDuK9dEEpUy7gIRJB7CBIkVXmKXozDRa5lin1tQWp6sh'
 VAPID_PUBLIC_KEY = 'BANJxLWMuM9_Ov-J64KGf_9ZXEcTagsc2Gdavg2hIOYQO4r10QSlTLuAhEkHsIEiRVeYpejMNFrmWKfW1BanqyE'
-VAPID_CLAIMS = {'sub': 'mailto:admin@playvision.com'}
+VAPID_CLAIMS = {'sub': 'mailto:admin@playvision.com.ua'}
 
 # Logging for production
 LOGGING = {
