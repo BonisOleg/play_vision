@@ -54,25 +54,13 @@
                                 {% for cell in event_grid_cells %}
                                 <div class="video-placeholder {% if cell.position == 1 or cell.position == 6 or cell.position == 7 %}video-large{% else %}video-medium{% endif %}">
                                     {% if cell.image %}
-                                    {% if cell.position == 1 or cell.position == 6 or cell.position == 7 %}
-                                    <img src="{{ cell.image.url|cloudinary_optimize:'600' }}" 
-                                         srcset="{{ cell.image.url|cloudinary_optimize:'600' }} 600w,
-                                                 {{ cell.image.url|cloudinary_optimize:'1200' }} 1200w"
-                                         sizes="(max-width: 768px) 50vw, 25vw"
-                                         width="600" height="300"
+                                    <img src="{{ cell.image.url|cloudinary_optimize:'400' }}" 
+                                         srcset="{{ cell.image.url|cloudinary_optimize:'400' }} 400w,
+                                                 {{ cell.image.url|cloudinary_optimize:'800' }} 800w"
+                                         sizes="(max-width: 768px) 25vw, 20vw"
                                          alt="{{ cell.alt_text|default:'Event' }}" 
                                          loading="eager"
                                          fetchpriority="high">
-                                    {% else %}
-                                    <img src="{{ cell.image.url|cloudinary_optimize:'300' }}" 
-                                         srcset="{{ cell.image.url|cloudinary_optimize:'300' }} 300w,
-                                                 {{ cell.image.url|cloudinary_optimize:'600' }} 600w"
-                                         sizes="(max-width: 768px) 25vw, 12.5vw"
-                                         width="300" height="150"
-                                         alt="{{ cell.alt_text|default:'Event' }}" 
-                                         loading="eager"
-                                         fetchpriority="high">
-                                    {% endif %}
                                     {% else %}
                                     <button class="play-button" aria-label="Відтворити відео">
                                         <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
