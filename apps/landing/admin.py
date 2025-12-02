@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.contrib import messages
+import logging
 from .models import LeadSubmission
 from .services import SendPulseService
+
+logger = logging.getLogger(__name__)
 
 
 @admin.register(LeadSubmission)
@@ -37,6 +40,12 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
         }
         
         for lead in queryset.filter(sendpulse_synced=False):
+            # Валідація даних
+            if not lead.email or not lead.phone:
+                error_count += 1
+                logger.warning(f'Lead {lead.id} missing email or phone, skipping')
+                continue
+            
             try:
                 # Для форм з hub, mentoring, subscription використовувати адресні книги
                 if lead.source in addressbook_mapping:
@@ -75,9 +84,13 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
                         error_count += 1
             except Exception as e:
                 error_count += 1
+                logger.error(
+                    f'Failed to sync lead {lead.id} ({lead.email}): {str(e)}',
+                    exc_info=True
+                )
                 self.message_user(
                     request,
-                    f'Помилка синхронізації {lead.first_name}: {str(e)}',
+                    f'Помилка синхронізації {lead.first_name or lead.email}: {str(e)}',
                     level=messages.ERROR
                 )
         

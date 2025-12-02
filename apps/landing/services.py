@@ -91,15 +91,22 @@ class SendPulseService:
                 'phones': [phone],
             }
             
-            # Додати firstName з variables, якщо є
+            # Додати firstName та lastName завжди
             if variables and 'first_name' in variables:
                 first_name = variables.get('first_name', '').strip()
-                if first_name:
-                    # Розділити ім'я на firstName та lastName
-                    name_parts = first_name.split(maxsplit=1)
-                    contact_data['firstName'] = name_parts[0] if name_parts else first_name
-                    if len(name_parts) > 1:
-                        contact_data['lastName'] = name_parts[1]
+            else:
+                first_name = ''
+            
+            # Якщо first_name порожнє, використати email як fallback
+            if not first_name:
+                # Взяти частину email до @
+                email_part = email.split('@')[0] if '@' in email else 'User'
+                first_name = email_part if email_part else 'User'
+            
+            # Розділити ім'я на firstName та lastName
+            name_parts = first_name.split(maxsplit=1)
+            contact_data['firstName'] = name_parts[0] if name_parts else first_name
+            contact_data['lastName'] = name_parts[1] if len(name_parts) > 1 else name_parts[0]
             
             # Додати додаткові змінні якщо є
             if variables:
@@ -198,14 +205,16 @@ class SendPulseService:
             
             # Валідація name - має бути не порожнім
             if not name or not name.strip():
-                first_name = 'User'
-                last_name = 'User'
+                # Використати email як fallback
+                email_part = email.split('@')[0] if '@' in email else 'User'
+                name = email_part if email_part else 'User'
             else:
                 name = name.strip()
-                # Розділити ім'я на firstName та lastName
-                name_parts = name.split(maxsplit=1)
-                first_name = name_parts[0] if name_parts else 'User'
-                last_name = name_parts[1] if len(name_parts) > 1 else first_name  # Якщо немає прізвища, використати те саме ім'я
+            
+            # Розділити ім'я на firstName та lastName
+            name_parts = name.split(maxsplit=1)
+            first_name = name_parts[0] if name_parts else 'User'
+            last_name = name_parts[1] if len(name_parts) > 1 else first_name
             
             payload = {
                 'emails': [
