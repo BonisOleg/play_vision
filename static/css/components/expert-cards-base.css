@@ -66,6 +66,7 @@
 /* === ІМ'Я ЕКСПЕРТА === */
 .expert-name {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     margin-bottom: 8px;
     color: #2a2a2a;
@@ -81,6 +82,7 @@
     margin-bottom: 16px;
     flex: 1;
     font-size: 0.8rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
 }
 
@@ -92,6 +94,7 @@
     display: inline-block;
     margin-top: auto;
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
     transition: all 0.3s ease;
 }
 
@@ -125,14 +128,17 @@
 
     .expert-name {
         font-size: 1.0625rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .expert-specialization {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .expert-link {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -301,16 +307,19 @@
 
     .expert-name {
         font-size: 0.667rem;
+        font-family: 'Roboto', sans-serif;
         text-align: right;
     }
 
     .expert-specialization {
         font-size: 0.6875rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .expert-link,
     .expert-detail-link {
         font-size: 0.6875rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .expert-nav-btn {

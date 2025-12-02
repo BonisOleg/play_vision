@@ -199,3 +199,4 @@ print(f"\nВСЬОГО: {sum(len(issues[c]) for c in issues)} невідпові
 
 
 
+

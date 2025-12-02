@@ -63,26 +63,44 @@ def submit_lead(request):
         
         logger.info(f'Lead submission saved: {lead.id} - {first_name} ({email})')
         
-        # Спробувати відправити в SendPulse CRM
+        # Спробувати відправити в SendPulse
         try:
             sendpulse = SendPulseService()
-            contact_id = sendpulse.add_contact(
-                email=email,
-                phone=phone,
-                variables={
-                    'first_name': first_name,
-                    'source': 'Landing Page - Форум Футбольних Фахівців',
-                    'discount': '15%',
-                }
-            )
             
-            if contact_id:
-                lead.sendpulse_synced = True
-                lead.sendpulse_contact_id = contact_id
-                lead.save()
-                logger.info(f'Lead synced to SendPulse: {contact_id}')
+            # Для форми з hub використовувати адресну книгу
+            if source == 'hub':
+                addressbook_id = getattr(settings, 'SENDPULSE_ADDRESS_BOOK_ID', 497184)
+                success = sendpulse.add_contact_to_addressbook(
+                    addressbook_id=int(addressbook_id),
+                    email=email,
+                    phone=phone,
+                    name=first_name,
+                    source='hub'
+                )
+                if success:
+                    lead.sendpulse_synced = True
+                    lead.save()
+                    logger.info(f'Lead {lead.id} synced to SendPulse addressbook {addressbook_id}')
+                else:
+                    logger.warning(f'Failed to sync lead {lead.id} to SendPulse addressbook')
             else:
-                logger.warning(f'Failed to sync lead {lead.id} to SendPulse')
+                # Для інших джерел використовувати старий метод CRM API
+                contact_id = sendpulse.add_contact(
+                    email=email,
+                    phone=phone,
+                    variables={
+                        'first_name': first_name,
+                        'source': 'Landing Page - Форум Футбольних Фахівців',
+                        'discount': '15%',
+                    }
+                )
+                if contact_id:
+                    lead.sendpulse_synced = True
+                    lead.sendpulse_contact_id = contact_id
+                    lead.save()
+                    logger.info(f'Lead synced to SendPulse: {contact_id}')
+                else:
+                    logger.warning(f'Failed to sync lead {lead.id} to SendPulse')
                 
         except Exception as e:
             # Не падати якщо SendPulse не працює

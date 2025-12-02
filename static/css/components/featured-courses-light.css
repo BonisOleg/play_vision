@@ -192,6 +192,7 @@
 /* КУРС #X */
 .featured-number {
     font-size: 0.75rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #666666;
     text-transform: uppercase;
@@ -203,6 +204,7 @@
 /* ЗАГОЛОВОК */
 .featured-title {
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: #1a1a1a;
     margin: 0 0 12px 0;
@@ -218,6 +220,7 @@
 /* ОПИС */
 .featured-description {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     color: #666666;
     line-height: 1.5;
     margin: 0 0 16px 0;
@@ -272,6 +275,7 @@
     padding: 60px 20px;
     color: #666666;
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* ==================== ADAPTIVE TABLET (769px - 1024px) ==================== */

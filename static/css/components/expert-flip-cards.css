@@ -89,6 +89,7 @@
     display: block;
     color: #d32f2f;
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     text-decoration: underline;
     text-align: center;
@@ -110,6 +111,7 @@
     border: none;
     color: #d32f2f;
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     text-decoration: underline;
     text-align: center;
@@ -153,6 +155,7 @@
 
 .expert-name-back {
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #2a2a2a;
     margin: 0 0 12px 0;
@@ -162,6 +165,7 @@
 
 .expert-bio-text {
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: #333333;
     text-align: justify;
@@ -198,15 +202,18 @@
 
     .expert-name-back {
         font-size: 1.125rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .expert-bio-text {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
         text-align: justify;
     }
 
     .expert-detail-link {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -233,10 +240,12 @@
 
     .expert-name-back {
         font-size: 1.0625rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .expert-bio-text {
         font-size: 0.8125rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
         text-align: justify;
     }
@@ -247,6 +256,7 @@
 
     .expert-detail-link {
         font-size: 0.8125rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -273,10 +283,12 @@
 
     .expert-name-back {
         font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .expert-bio-text {
         font-size: 0.609rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
         text-align: justify;
     }
@@ -287,11 +299,13 @@
 
     .expert-card-front .expert-name {
         font-size: 0.667rem;
+        font-family: 'Roboto', sans-serif;
         text-align: right;
     }
 
     .expert-detail-link {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     /* Дозволити вертикальний scroll для контенту на задній стороні */

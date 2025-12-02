@@ -38,6 +38,7 @@
     border: none;
     padding: 8px 14px 8px 16px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     border-radius: 50px;
     display: inline-flex;
@@ -78,6 +79,7 @@
 .hub-btn-small {
     padding: 8px 14px 8px 16px;
     font-size: 0.95rem;
+    font-family: 'Roboto', sans-serif;
     gap: 10px;
     min-height: 44px;
 }
@@ -115,6 +117,7 @@
     
     .hub-btn {
         font-size: 0.9rem;
+        font-family: 'Roboto', sans-serif;
         padding: 7px 12px 7px 14px;
     }
 }

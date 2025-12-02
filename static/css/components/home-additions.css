@@ -157,6 +157,7 @@
 
 .featured-category {
     font-size: 0.75rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: #d32f2f;
     /* Червона категорія (8-й скрін) */
@@ -181,6 +182,7 @@
 
 .featured-description {
     font-size: 0.95rem;
+    font-family: 'Roboto', sans-serif;
     color: #999999;
     /* Сірий опис (8-й скрін) */
     line-height: 1.6;
@@ -198,11 +200,13 @@
     gap: 6px;
     transition: all 0.3s ease;
     font-size: 0.95rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .featured-link::after {
     content: "→";
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     transition: transform 0.3s ease;
 }
 
@@ -235,6 +239,7 @@
     border: none;
     padding: 10px 16px 10px 20px;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     border-radius: 50px;
     display: inline-flex;
@@ -254,6 +259,7 @@
     line-height: 1.2;
     color: #ffffff;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .mentor-cta .btn-primary .btn-logo-space {
@@ -337,6 +343,7 @@
     .mentor-cta .btn-primary {
         padding: 8px 14px 8px 18px;
         font-size: 0.85rem;
+        font-family: 'Roboto', sans-serif;
         min-height: 38px;
         gap: 10px;
     }

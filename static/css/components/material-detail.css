@@ -46,6 +46,7 @@
     align-items: center;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: #666;
 }
 
@@ -96,6 +97,7 @@
     gap: 1rem;
     margin-bottom: 1rem;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: #666;
 }
 
@@ -115,6 +117,7 @@
 
 .material-description {
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     color: #555;
     line-height: 1.6;
 }
@@ -203,6 +206,7 @@
 .video-time {
     color: white;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     font-family: monospace;
 }
 
@@ -256,6 +260,7 @@
     border-radius: 50px;
     font-weight: 600;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -344,6 +349,7 @@
     border-radius: 4px;
     font-family: 'Monaco', 'Courier New', monospace;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .material-text pre {
@@ -382,6 +388,7 @@
 
 .sidebar-title {
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 1rem;
@@ -436,6 +443,7 @@
     align-items: center;
     justify-content: center;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .material-info {
@@ -444,11 +452,13 @@
 
 .material-name {
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.4;
 }
 
 .material-duration {
     font-size: 0.8rem;
+    font-family: 'Roboto', sans-serif;
     color: #666;
     margin-top: 0.25rem;
 }
@@ -470,6 +480,7 @@
 
 .info-value {
     font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--primary-color);
     display: block;
@@ -477,6 +488,7 @@
 
 .info-label {
     font-size: 0.8rem;
+    font-family: 'Roboto', sans-serif;
     color: #666;
     margin-top: 0.25rem;
 }
@@ -503,6 +515,7 @@
 
 .instructor-details h4 {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 0.25rem;
@@ -510,6 +523,7 @@
 
 .instructor-details .role {
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: #666;
 }
 

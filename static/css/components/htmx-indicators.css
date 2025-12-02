@@ -14,6 +14,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     color: var(--hub-text);
     opacity: 0;

@@ -216,6 +216,7 @@
     align-items: center;
     justify-content: center;
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     line-height: 1;
     /* Явна одиниця для однакової висоти рядка */
     flex-shrink: 0;
@@ -240,6 +241,7 @@
     padding: 10px 14px;
     border-radius: 12px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.5;
     /* Відносна одиниця ОК для тексту */
     color: var(--color-text, #1a1a1a);
@@ -345,6 +347,7 @@
     background: transparent;
     outline: none;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text, #1a1a1a);
     padding: 6px 0;
     min-height: 30px;
@@ -622,6 +625,7 @@
 
 .ai-chat-modal-title {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text, #1a1a1a);
     margin: 0;
@@ -795,6 +799,7 @@
     background: var(--color-bg, #ffffff);
     outline: none;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text, #1a1a1a);
     padding: 10px 14px;
     border-radius: 20px;
@@ -1008,6 +1013,7 @@
         appearance: none;
         /* Вимкнення автозуму в iOS Safari */
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
         /* Виправлення проблем з курсором */
         -webkit-user-select: text;
         user-select: text;
@@ -1056,6 +1062,7 @@
 
     .ai-chat-input {
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
         /* Запобігання автозуму в iOS */
     }
 
@@ -1076,10 +1083,12 @@
         width: 28px;
         height: 28px;
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .ai-message-content {
         font-size: 13px;
+        font-family: 'Roboto', sans-serif;
         padding: 8px 12px;
     }
 }
@@ -1154,6 +1163,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 13px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #1a1a1a;
     white-space: nowrap;
@@ -1187,11 +1197,13 @@
 @media (max-width: 767px) {
     .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
         font-size: 11px;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
 @media (max-width: 767px) {
     .ai-chat-inline.coming-soon .ai-chat-input-wrapper::before {
         font-size: 10px;
+        font-family: 'Roboto', sans-serif;
     }
 }

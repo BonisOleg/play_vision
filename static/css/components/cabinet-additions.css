@@ -40,6 +40,7 @@
     align-items: center;
     gap: var(--spacing-sm);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     transition: var(--transition-base);
 }
 
@@ -102,5 +103,6 @@
 
     .interest-label {
         font-size: 13px;
+        font-family: 'Roboto', sans-serif;
     }
 }

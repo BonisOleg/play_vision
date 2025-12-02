@@ -69,6 +69,7 @@
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -99,6 +100,7 @@
     color: var(--color-text-light);
     margin-bottom: 6px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .form-control {
@@ -107,6 +109,7 @@
     border: 1px solid var(--color-border-dark);
     border-radius: 8px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     transition: all 0.3s ease;
     background: var(--silver-white);
     /* iOS Safari fixes */
@@ -133,6 +136,7 @@
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 11px;
+    font-family: 'Roboto', sans-serif;
     margin-top: 5px;
 }
 
@@ -157,6 +161,7 @@
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
     border: 1px solid var(--color-border-dark);
@@ -247,6 +252,7 @@
 .profile-tab .tab-header p {
     color: var(--color-text-muted);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .profile-info-card {
@@ -293,12 +299,14 @@
     margin: 0;
     color: var(--color-text-muted);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .profile-phone {
     margin: 5px 0 0 0;
     color: var(--color-text-muted);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .profile-status {
@@ -311,6 +319,7 @@
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
@@ -364,6 +373,7 @@
     margin: 5px 0 0 0;
     color: var(--color-text-muted);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .profile-details-grid {
@@ -385,6 +395,7 @@
     margin: 0 0 20px 0;
     color: var(--color-text);
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
 }
 
@@ -403,12 +414,14 @@
 .detail-item label {
     color: var(--color-text-muted);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
 .detail-item span {
     color: var(--color-text);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .profile-interests {
@@ -424,6 +437,7 @@
     margin: 0 0 15px 0;
     color: var(--color-text);
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
 }
 
@@ -439,6 +453,7 @@
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
@@ -454,6 +469,7 @@
     margin: 0 0 20px 0;
     color: var(--color-text);
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
 }
 
@@ -473,6 +489,7 @@
     text-decoration: none;
     color: var(--color-text);
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     transition: all 0.3s ease;
 }
@@ -486,6 +503,7 @@
 
 .action-icon {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Мобільна адаптація для профілю */
@@ -549,6 +567,7 @@
 .info-card h3 {
     margin: 0 0 15px 0;
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     font-weight: 600;
 }
@@ -559,6 +578,7 @@
     border: none;
     border-radius: 6px;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -625,6 +645,7 @@
 
 .progress-text {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     margin-top: 5px;
 }
@@ -639,6 +660,7 @@
 
 .plan-info .plan-name {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-primary);
     margin-bottom: 5px;
@@ -650,6 +672,7 @@
 
 .plan-info .plan-period {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -658,6 +681,7 @@
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
@@ -674,6 +698,7 @@
 .status-details {
     margin-top: 10px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -692,6 +717,7 @@
     align-items: center;
     gap: 8px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .benefit-item.inactive {
@@ -706,6 +732,7 @@
     align-items: center;
     justify-content: center;
     font-size: 10px;
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
 }
 
@@ -775,6 +802,7 @@
 
 .material-title {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text-light);
     margin: 0;
@@ -788,6 +816,7 @@
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 11px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
@@ -795,6 +824,7 @@
     background: none;
     border: none;
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     color: var(--color-border-dark);
     transition: color 0.3s ease;
@@ -836,6 +866,7 @@
 .stat-label {
     display: block;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     margin-top: 5px;
 }
@@ -882,6 +913,7 @@
 
 .tier-points {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     font-weight: 600;
 }
@@ -892,6 +924,7 @@
 
 .progress-remaining {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     margin-top: 5px;
 }
@@ -911,6 +944,7 @@
 
 .discount-value {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
     color: var(--color-primary);
 }
@@ -949,6 +983,7 @@
     border-radius: 8px;
     font-weight: 600;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     min-width: 80px;
     text-align: center;
 }
@@ -959,12 +994,14 @@
 
 .tier-requirements {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     color: var(--color-text-light);
 }
 
 .tier-benefits {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     margin-top: 5px;
 }
@@ -977,6 +1014,7 @@
     padding: 4px 12px;
     border-radius: 12px;
     font-size: 11px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
@@ -1021,12 +1059,14 @@
 .way-item h4 {
     margin: 0 0 10px 0;
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
 }
 
 .way-item p {
     margin: 0;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -1056,17 +1096,20 @@
 
 .transaction-reason {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     font-weight: 500;
 }
 
 .transaction-date {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
 .transaction-points {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
 }
 
@@ -1109,6 +1152,7 @@
 .stat-content p {
     margin: 0;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -1132,6 +1176,7 @@
     background: var(--color-bg-gray);
     font-weight: 600;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -1152,6 +1197,7 @@
 
 .payment-time {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -1163,6 +1209,7 @@
 
 .payment-method {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -1206,6 +1253,7 @@
 .payment-info .info-card li {
     margin-bottom: 8px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -1371,6 +1419,7 @@
         gap: 10px;
         padding: 12px 10px;
         font-size: 12px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .col-action {
@@ -1380,6 +1429,7 @@
     .btn-repeat {
         padding: 6px 12px;
         font-size: 12px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .cabinet-tabs {
@@ -1396,6 +1446,7 @@
         white-space: nowrap;
         padding: 15px 20px;
         font-size: 14px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .tab-content {
@@ -1416,6 +1467,7 @@
     select,
     textarea {
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .materials-grid {
@@ -1487,6 +1539,7 @@
     .support-btn {
         padding: 12px 20px;
         font-size: 14px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .modal-content {
@@ -1516,12 +1569,14 @@
     .form-control {
         padding: 10px 12px;
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
         /* Запобігає zoom на iOS */
     }
 
     .tab-link {
         padding: 12px 15px;
         font-size: 13px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .material-actions {
@@ -1669,6 +1724,7 @@
     padding: 8px 16px;
     border-radius: 6px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1761,6 +1817,7 @@
 
 .course-progress .progress-text {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     color: var(--color-text-muted);
     min-width: 35px;
@@ -1778,6 +1835,7 @@
     border: none;
     border-radius: 6px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -1794,6 +1852,7 @@
     border: none;
     border-radius: 6px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     cursor: not-allowed;
     opacity: 0.7;
 }
@@ -1860,6 +1919,7 @@
     padding: 8px 16px;
     border-radius: 6px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1894,6 +1954,7 @@
     padding: 12px 32px;
     border-radius: 24px;
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     text-transform: uppercase;
 }
@@ -1925,6 +1986,7 @@
 
 .progress-text {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: #6b7280;
     margin-bottom: 8px;
 }
@@ -1947,6 +2009,7 @@
 .progress-percentage {
     text-align: right;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #ff6b35;
 }
@@ -1959,6 +2022,7 @@
 .discount-current,
 .discount-potential {
     font-size: 15px;
+    font-family: 'Roboto', sans-serif;
     margin-bottom: 8px;
     color: #4b5563;
 }
@@ -1966,6 +2030,7 @@
 .discount-current strong,
 .discount-potential strong {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     color: #ff6b35;
 }
 
@@ -1991,6 +2056,7 @@
     background: #f3f4f6;
     border-radius: 8px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: #6b7280;
 }
 
@@ -2009,6 +2075,7 @@
     align-items: center;
     gap: 4px;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     padding: 4px 10px;
     border-radius: 12px;
     margin-top: 4px;
@@ -2035,6 +2102,7 @@
     top: 8px;
     right: 8px;
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     opacity: 0.8;
     cursor: help;
 }
@@ -2079,6 +2147,7 @@
 
 .btn-quick-action .icon {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* === Інтереси як кнопки-теги === */
@@ -2095,6 +2164,7 @@
     background: #f9fafb;
     border-radius: 20px;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: #4b5563;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2142,6 +2212,7 @@
 
 .loyalty-summary-card .card-header h3 {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin: 0 0 15px 0;
@@ -2163,6 +2234,7 @@
 .balance-note,
 .tier-note {
     font-size: 13px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     line-height: 1.5;
     margin: 0;
@@ -2178,6 +2250,7 @@
     padding: 12px 24px;
     border-radius: 8px;
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     margin-bottom: 10px;
 }
@@ -2199,6 +2272,7 @@
 
 .reward-name {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 15px;
@@ -2206,6 +2280,7 @@
 
 .no-reward {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     text-align: center;
     padding: 20px;
@@ -2221,6 +2296,7 @@
     align-items: center;
     margin-bottom: 8px;
     font-size: 13px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
@@ -2241,6 +2317,7 @@
 
 .progress-text {
     font-size: 13px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     text-align: right;
 }
@@ -2284,6 +2361,7 @@
 
 .purchase-type {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
 }
@@ -2296,11 +2374,13 @@
 
 .purchase-price {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
 }
 
 .purchase-status {
     font-size: 11px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -2343,6 +2423,7 @@
 .loyalty-earning-section h3,
 .loyalty-spending-section h3 {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin: 25px 0 15px 0;
@@ -2352,6 +2433,7 @@
 .loyalty-earning-section p,
 .loyalty-spending-section p {
     font-size: 15px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     line-height: 1.7;
     margin-bottom: 15px;
@@ -2364,6 +2446,7 @@
 
 .earning-table-header {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 15px;
@@ -2389,6 +2472,7 @@
 
 .header-cell {
     font-size: 13px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #495057;
     text-align: center;
@@ -2412,6 +2496,7 @@
 
 .earning-cell {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: #495057;
     text-align: center;
     display: flex;
@@ -2443,6 +2528,7 @@
 
 .subscription-tier-group h4 {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 15px;
@@ -2468,11 +2554,13 @@
 
 .sub-duration {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: #495057;
 }
 
 .sub-points {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #dc3545;
 }
@@ -2488,6 +2576,7 @@
     padding: 12px 0 12px 30px;
     position: relative;
     font-size: 15px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     line-height: 1.7;
 }
@@ -2499,6 +2588,7 @@
     color: var(--color-primary);
     font-weight: 700;
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* === Placeholder для зображень === */
@@ -2515,6 +2605,7 @@
 .image-placeholder p {
     margin: 8px 0;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* === Дорожня карта користувача === */
@@ -2549,12 +2640,14 @@
 
 .roadmap-date {
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
     color: #6c757d;
     font-weight: 500;
 }
 
 .roadmap-card h3 {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin: 0 0 10px 0;
@@ -2562,6 +2655,7 @@
 
 .roadmap-card p {
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     line-height: 1.6;
     margin-bottom: 15px;
@@ -2569,6 +2663,7 @@
 
 .roadmap-bonus {
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: #dc3545;
 }
@@ -2588,6 +2683,7 @@
     padding: 15px 0 15px 35px;
     position: relative;
     font-size: 15px;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-muted);
     line-height: 1.7;
     border-bottom: 1px solid var(--color-border-light);
@@ -2605,6 +2701,7 @@
     color: #28a745;
     font-weight: 700;
     font-size: 18px;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* === Кнопка переходу на правила === */
@@ -2651,6 +2748,7 @@
 
 .rules-content p {
     font-size: 15px;
+    font-family: 'Roboto', sans-serif;
     color: rgba(255, 255, 255, 0.9);
     margin: 0;
     line-height: 1.5;
@@ -2666,6 +2764,7 @@
     border-radius: 12px;
     font-weight: 600;
     font-size: 15px;
+    font-family: 'Roboto', sans-serif;
     text-decoration: none;
     transition: all 0.3s ease;
     white-space: nowrap;
@@ -2707,6 +2806,7 @@
         gap: 10px;
         padding: 12px;
         font-size: 12px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .subscription-earning-row {
@@ -2744,10 +2844,12 @@
         gap: 8px;
         padding: 10px;
         font-size: 11px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .earning-cell {
         font-size: 12px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .subscription-earning-row {
@@ -2796,11 +2898,13 @@
 
     .tier-badge {
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
         padding: 10px 20px;
     }
 
     .reward-name {
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .purchase-points {
@@ -2809,14 +2913,17 @@
 
     .roadmap-card h3 {
         font-size: 15px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .roadmap-card p {
         font-size: 13px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .roadmap-bonus {
         font-size: 16px;
+        font-family: 'Roboto', sans-serif;
     }
 }
 

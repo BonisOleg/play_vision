@@ -95,6 +95,7 @@
 
 .mentoring-card-content p {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: var(--color-text);
     margin: 0;
@@ -181,6 +182,7 @@
 
 .mentoring-team-description {
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: #666666;
     text-align: left;
@@ -207,6 +209,7 @@
 
 .mentoring-team-section .expert-name {
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     margin-bottom: 8px;
     color: #2a2a2a;
@@ -220,6 +223,7 @@
     line-height: 1.5;
     margin-bottom: 16px;
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
 }
 
@@ -323,6 +327,7 @@
 
 .mentoring-contact-card-text {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     margin: 0;
     flex: 1;
@@ -345,6 +350,7 @@
     padding: 16px 24px;
     border-radius: 50px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     border: 2px solid #d32f2f;
     cursor: pointer;
@@ -449,10 +455,12 @@
 
     .mentoring-card-content p {
         font-size: 0.8125rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .mentoring-team-description {
         font-size: 1.0625rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.6;
         margin-bottom: 40px;
     }
@@ -463,11 +471,13 @@
 
     .mentoring-team-section .expert-name {
         font-size: 1.0625rem;
+        font-family: 'Roboto', sans-serif;
         text-align: right;
     }
 
     .mentoring-team-section .expert-specialization {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .mentoring-contact-section {
@@ -489,6 +499,7 @@
 
     .mentoring-contact-card-text {
         font-size: 0.9375rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -547,11 +558,13 @@
 
     .mentoring-card-content p {
         font-size: 0.8125rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
     }
 
     .mentoring-team-description {
         font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
         margin-bottom: 40px;
         padding: 0;
@@ -563,12 +576,14 @@
 
     .mentoring-team-section .expert-name {
         font-size: 0.667rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 6px;
         text-align: right;
     }
 
     .mentoring-team-section .expert-specialization {
         font-size: 0.8125rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 12px;
     }
 
@@ -592,11 +607,13 @@
 
     .mentoring-contact-card-text {
         font-size: 0.9375rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .white_bonnom {
         padding: 14px 20px;
         font-size: 0.9375rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -661,6 +678,7 @@
 
     .mentoring-card-content p {
         font-size: 0.75rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
     }
 
@@ -670,6 +688,7 @@
 
     .mentoring-team-description {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
         margin-bottom: 32px;
         padding: 0;
@@ -681,12 +700,14 @@
 
     .mentoring-team-section .expert-name {
         font-size: 0.667rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 8px;
         text-align: right;
     }
 
     .mentoring-team-section .expert-specialization {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 14px;
     }
 
@@ -715,12 +736,14 @@
 
     .mentoring-contact-card-text {
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
     }
 
     .white_bonnom {
         padding: 12px 18px;
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 

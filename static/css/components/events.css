@@ -54,6 +54,7 @@
 
 .events-intro-subtitle {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     margin-bottom: 100px;
     line-height: 1.6;
@@ -84,6 +85,7 @@
 
 .category-block p {
     font-size: 0.6rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     line-height: 1.5;
     margin: 0;
@@ -205,6 +207,7 @@
 
 .calendar-event-name {
     font-size: 0.6rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     flex: 1;
     color: #ffffff;
@@ -212,6 +215,7 @@
 
 .calendar-event-date {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     white-space: nowrap;
     color: #ffffff;
@@ -224,6 +228,7 @@
 
 .calendar-event-description {
     font-size: 0.5rem;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.4;
     margin-bottom: 12px;
     flex: 1;
@@ -243,10 +248,12 @@
 @media (min-width: 1024px) {
     .calendar-event-name {
         font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .calendar-event-description {
         font-size: 0.8rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -260,6 +267,7 @@
     border-radius: 8px;
     text-decoration: none;
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     transition: all 0.3s ease;
     border: 2px solid #ffffff;
@@ -473,6 +481,7 @@
 
 .event-type {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: var(--color-primary);
     text-transform: uppercase;
@@ -480,6 +489,7 @@
 
 .event-date {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
 }
 
@@ -493,6 +503,7 @@
 
 .event-card-description {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     line-height: 1.6;
     margin-bottom: 20px;
@@ -509,6 +520,7 @@
 
 .event-price {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: var(--color-text);
 }
@@ -547,6 +559,7 @@
 
 .pagination-info {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
 }
 
@@ -814,6 +827,7 @@
 
     .calendar-event-date {
         font-size: 0.75rem;
+        font-family: 'Roboto', sans-serif;
         flex-shrink: 0;
         min-width: 0;
         overflow: hidden;
@@ -880,6 +894,7 @@
 
 .event-detail-header .event-type {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: var(--color-primary);
     text-transform: uppercase;
@@ -897,6 +912,7 @@
 
 .event-detail-subtitle {
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     line-height: 1.6;
 }
@@ -967,6 +983,7 @@
 
 .speaker-info h3 {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 4px;
@@ -974,6 +991,7 @@
 
 .speaker-info p {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
 }
 
@@ -1008,6 +1026,7 @@
     text-decoration: none;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     transition: all 0.3s ease;
     margin-bottom: 24px;
@@ -1049,11 +1068,13 @@
 
 .stat-label {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
 }
 
 .stat-value {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
 }
@@ -1117,6 +1138,7 @@
 
 .registration-subtitle {
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     text-align: center;
     margin-bottom: 40px;
@@ -1136,6 +1158,7 @@
 .form-group label {
     display: block;
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: 8px;
@@ -1148,6 +1171,7 @@
     border: 1px solid var(--color-border, #e0e0e0);
     border-radius: 8px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text);
     background: #ffffff;
     transition: border-color 0.3s ease;
@@ -1176,6 +1200,7 @@
     padding: 14px 24px;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     text-align: center;
     text-decoration: none;
@@ -1272,6 +1297,7 @@
 
 .placeholder-content p {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     opacity: 0.5;
 }
 
@@ -1333,6 +1359,7 @@
     color: var(--color-text);
     line-height: 1.6;
     font-size: 0.95rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .event-info-list li:last-child {
@@ -1385,6 +1412,7 @@
     text-align: left;
     color: #666666;
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
     margin-bottom: 48px;
     max-width: 100%;
@@ -1427,6 +1455,7 @@
 
     .event-experts-section .experts-subtitle {
         font-size: 1.0625rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 40px;
     }
 }
@@ -1443,6 +1472,7 @@
 
     .event-experts-section .experts-subtitle {
         font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 32px;
     }
 }
@@ -1459,6 +1489,7 @@
 
     .event-experts-section .experts-subtitle {
         font-size: 0.9375rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 28px;
         line-height: 1.5;
     }
@@ -1564,6 +1595,7 @@
     padding: 6px 16px;
     border-radius: 20px;
     font-size: 13px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     background: #E31E24;
     color: #FFFFFF;
@@ -1623,12 +1655,14 @@
 
 .event-ticket-card .feature-number {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     min-width: 24px;
 }
 
 .event-ticket-card .feature-text {
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
 }
 
@@ -1728,6 +1762,7 @@
     background: #000000;
     color: #FFFFFF;
     font-size: 15px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     text-align: center;
     border-radius: 12px;
@@ -1797,6 +1832,7 @@
     border-radius: 12px;
     text-align: center;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
 }
 
@@ -1854,11 +1890,13 @@
 
     .event-info-card-title {
         font-size: 1.1rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 16px;
     }
 
     .event-info-list li {
         font-size: 0.9rem;
+        font-family: 'Roboto', sans-serif;
         margin-bottom: 10px;
     }
 }
@@ -1927,6 +1965,7 @@
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 0.75rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -2174,6 +2213,7 @@
     border: 2px solid var(--color-border, #e0e0e0);
     border-radius: 8px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     transition: border-color 0.3s ease;
 }
 
@@ -2190,6 +2230,7 @@
     border: none;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;

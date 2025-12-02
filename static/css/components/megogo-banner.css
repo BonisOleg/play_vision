@@ -54,6 +54,7 @@
 
 .stat-label {
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
     color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -68,6 +69,7 @@
     text-decoration: none;
     border-radius: 12px;
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
@@ -118,6 +120,7 @@
 
 .mosaic-title {
     font-size: 0.75rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: white;
     line-height: 1.2;
@@ -224,6 +227,7 @@
 
     .banner-subtitle {
         font-size: 1.125rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .banner-stats {

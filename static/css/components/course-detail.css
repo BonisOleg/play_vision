@@ -19,6 +19,7 @@
     gap: 0.5rem;
     margin-bottom: 1rem;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--hub-text-light);
 }
 
@@ -60,6 +61,7 @@
 
 .course-description {
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: var(--hub-text-light);
     margin-bottom: 2rem;
@@ -84,6 +86,7 @@
 
 .meta-item strong {
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--hub-text-light);
     font-weight: 500;
 }
@@ -170,6 +173,7 @@
     border: none;
     border-radius: 50px;
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     cursor: pointer;
     transition: var(--hub-transition);
@@ -227,11 +231,13 @@
     text-align: center;
     color: var(--hub-text-light);
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .hint {
     text-align: center;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--hub-text-light);
     margin: 0.5rem 0 0;
 }
@@ -295,6 +301,7 @@
     top: -30px;
     right: 0;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--hub-text-light);
 }
 
@@ -356,6 +363,7 @@
 .material-content h3 {
     margin: 0 0 0.5rem;
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--hub-text);
 }
 
@@ -363,6 +371,7 @@
     display: flex;
     gap: 1rem;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--hub-text-light);
 }
 
@@ -431,6 +440,7 @@
 .course-content h3 {
     margin: 0 0 1rem;
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .course-content h3 a {
@@ -458,6 +468,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .course-details .duration {
@@ -553,11 +564,13 @@
     justify-content: center;
     color: white;
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 .preview-timer {
     text-align: center;
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--hub-primary);
 }
@@ -624,6 +637,7 @@
 
     .course-description {
         font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .course-meta {
@@ -702,6 +716,7 @@
 
     .breadcrumb {
         font-size: 0.8rem;
+        font-family: 'Roboto', sans-serif;
         flex-wrap: wrap;
     }
 
@@ -715,6 +730,7 @@
 
     .material-content h3 {
         font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .material-meta {

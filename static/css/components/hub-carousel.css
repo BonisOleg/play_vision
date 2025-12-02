@@ -193,6 +193,7 @@
 
 .hub-featured-subtitle {
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
     color: var(--hub-text);
     margin-bottom: var(--spacing-md);
@@ -200,6 +201,7 @@
 
 .hub-featured-description {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--hub-text-light);
     line-height: 1.6;
     margin-bottom: var(--spacing-md);
@@ -208,6 +210,7 @@
 
 .hub-featured-meta {
     font-size: 0.8125rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: var(--hub-text);
     margin-bottom: var(--spacing-sm);
@@ -243,6 +246,7 @@
     border-radius: 8px;
     padding: 12px 12px;
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -294,6 +298,7 @@
     border-radius: 8px;
     padding: 12px;
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -388,6 +393,7 @@
 
 .hub-featured-counter span {
     font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
     opacity: 0.8;
 }
@@ -467,6 +473,7 @@
         border: none;
         color: var(--hub-primary);
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
         font-weight: 600;
         cursor: pointer;
         padding: 4px 0;

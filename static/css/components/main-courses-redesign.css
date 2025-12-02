@@ -172,6 +172,7 @@
 /* НАЗВА КУРСУ */
 .course-title {
     font-size: 0.875rem;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: #1a1a1a;
     margin: 0;
@@ -273,6 +274,7 @@
     color: #1a1a1a;
     font-weight: 600;
     font-size: 0.75rem;
+    font-family: 'Roboto', sans-serif;
     transition: all 0.3s ease;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
     white-space: nowrap;
@@ -318,6 +320,7 @@
 /* ОПИС КУРСУ */
 .course-description {
     font-size: 0.75rem;
+    font-family: 'Roboto', sans-serif;
     color: #666666;
     line-height: 1.5;
     margin: 0;
@@ -346,6 +349,7 @@
     padding: 60px 20px;
     color: #666666;
     font-size: 1.125rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 [data-theme="dark"] .no-main-courses {
@@ -431,6 +435,7 @@
 
     .course-card-top .course-title {
         font-size: 0.55rem;
+        font-family: 'Roboto', sans-serif;
         line-height: 1.2;
         -webkit-line-clamp: 1;
     }
@@ -446,6 +451,7 @@
     .course-btn {
         padding: 6px 10px 6px 12px;
         font-size: 0.625rem;
+        font-family: 'Roboto', sans-serif;
         min-height: 30px;
         gap: 4px;
         bottom: 12px;

@@ -59,6 +59,7 @@
     line-height: 1.5;
     color: var(--color-text, #333);
     font-size: 0.9375rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* === CLOSE BUTTON === */
@@ -110,6 +111,7 @@
     .notification {
         padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
         font-size: 0.875rem;
+        font-family: 'Roboto', sans-serif;
     }
 }
 

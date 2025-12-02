@@ -53,6 +53,7 @@
 /* ===== NAV LABEL ===== */
 .mobile-bottom-nav .nav-label {
     font-size: 11px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     line-height: 1;
     white-space: nowrap;
@@ -67,6 +68,7 @@
     background: var(--color-primary);
     color: white;
     font-size: 10px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     min-width: 18px;
     height: 18px;
@@ -104,6 +106,7 @@
 
     .mobile-bottom-nav .nav-label {
         font-size: 12px;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -136,6 +139,7 @@
         min-width: 20px;
         height: 20px;
         font-size: 11px;
+        font-family: 'Roboto', sans-serif;
     }
 }
 
@@ -179,6 +183,7 @@
 @media (max-width: 767px) {
     .mobile-bottom-nav .nav-label {
         font-size: 10px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .mobile-bottom-nav .nav-icon {

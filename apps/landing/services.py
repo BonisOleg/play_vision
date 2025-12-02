@@ -152,4 +152,73 @@ class SendPulseService:
         except requests.exceptions.RequestException as e:
             logger.error(f'Error getting contact from SendPulse: {str(e)}')
             return None
+    
+    def add_contact_to_addressbook(
+        self,
+        addressbook_id: int,
+        email: str,
+        phone: str,
+        name: str,
+        source: str = 'hub'
+    ) -> bool:
+        """
+        Додати контакт до адресної книги SendPulse через Email Service API
+        
+        Args:
+            addressbook_id: ID адресної книги (int)
+            email: Email контакту
+            phone: Телефон контакту
+            name: Ім'я контакту
+            source: Джерело заявки
+        
+        Returns:
+            True якщо успішно, False у разі помилки
+        """
+        token = self._get_access_token()
+        if not token:
+            logger.error('Cannot add contact to addressbook: no access token')
+            return False
+        
+        try:
+            url = f'{self.BASE_URL}/addressbooks/{int(addressbook_id)}/emails'
+            headers = {
+                'Authorization': f'Bearer {token}',
+                'Content-Type': 'application/json',
+            }
+            
+            payload = {
+                'emails': [
+                    {
+                        'email': email,
+                        'variables': {
+                            'phone': phone,
+                            'name': name,
+                            'source': source,
+                        }
+                    }
+                ]
+            }
+            
+            response = requests.post(
+                url,
+                json=payload,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get('result') is True:
+                    logger.info(f'Contact added to SendPulse addressbook {addressbook_id}: {email}')
+                    return True
+            
+            logger.error(
+                f'Failed to add contact to SendPulse addressbook: '
+                f'Status {response.status_code}, Response: {response.text}'
+            )
+            return False
+            
+        except requests.exceptions.RequestException as e:
+            logger.error(f'Error adding contact to SendPulse addressbook: {str(e)}')
+            return False
 

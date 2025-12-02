@@ -319,6 +319,7 @@ VAPID_EMAIL = config('VAPID_EMAIL', default=DEFAULT_FROM_EMAIL)
 # SendPulse CRM Integration
 SENDPULSE_ID = config('SENDPULSE_ID', default='')
 SENDPULSE_SECRET = config('SENDPULSE_SECRET', default='')
+SENDPULSE_ADDRESS_BOOK_ID = config('SENDPULSE_ADDRESS_BOOK_ID', default=497184, cast=int)
 
 # Analytics (Google Analytics & Facebook Pixel)
 GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID', default='')

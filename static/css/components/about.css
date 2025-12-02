@@ -90,6 +90,7 @@
 .about-team-section .experts-subtitle {
     text-align: left;
     font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     color: var(--color-text-light);
     margin-bottom: var(--spacing-xxl);
     max-width: 800px;
@@ -147,6 +148,7 @@
 
     .about-team-section .experts-subtitle {
         font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .about-team-section .section-content {
@@ -215,6 +217,7 @@
 
     .about-team-section .experts-subtitle {
         font-size: 0.95rem;
+        font-family: 'Roboto', sans-serif;
     }
 
     .about-triangle-section .about-image-block {
