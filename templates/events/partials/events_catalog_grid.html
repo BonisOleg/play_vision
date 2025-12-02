@@ -1,4 +1,5 @@
 {% load static %}
+{% load image_optimize %}
 
 <div class="events-catalog-grid">
     {% for event in events %}
@@ -11,7 +12,13 @@
                 {% endif %}
                 
                 {% if event.thumbnail %}
-                <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}" loading="lazy">
+                <img src="{{ event.thumbnail.url|cloudinary_optimize:'400' }}" 
+                     srcset="{{ event.thumbnail.url|cloudinary_optimize:'400' }} 400w,
+                             {{ event.thumbnail.url|cloudinary_optimize:'800' }} 800w"
+                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                     width="400" height="225"
+                     alt="{{ event.title }}" 
+                     loading="lazy">
                 {% else %}
                 <div class="event-image-placeholder">
                     <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">

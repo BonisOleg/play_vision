@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load image_optimize %}
 
 {% block title %}Івенти - Play Vision{% endblock %}
 
@@ -53,7 +54,25 @@
                                 {% for cell in event_grid_cells %}
                                 <div class="video-placeholder {% if cell.position == 1 or cell.position == 6 or cell.position == 7 %}video-large{% else %}video-medium{% endif %}">
                                     {% if cell.image %}
-                                    <img src="{{ cell.image.url }}" alt="{{ cell.alt_text|default:'Event' }}" loading="lazy">
+                                    {% if cell.position == 1 or cell.position == 6 or cell.position == 7 %}
+                                    <img src="{{ cell.image.url|cloudinary_optimize:'600' }}" 
+                                         srcset="{{ cell.image.url|cloudinary_optimize:'600' }} 600w,
+                                                 {{ cell.image.url|cloudinary_optimize:'1200' }} 1200w"
+                                         sizes="(max-width: 768px) 50vw, 25vw"
+                                         width="600" height="300"
+                                         alt="{{ cell.alt_text|default:'Event' }}" 
+                                         loading="eager"
+                                         fetchpriority="high">
+                                    {% else %}
+                                    <img src="{{ cell.image.url|cloudinary_optimize:'300' }}" 
+                                         srcset="{{ cell.image.url|cloudinary_optimize:'300' }} 300w,
+                                                 {{ cell.image.url|cloudinary_optimize:'600' }} 600w"
+                                         sizes="(max-width: 768px) 25vw, 12.5vw"
+                                         width="300" height="150"
+                                         alt="{{ cell.alt_text|default:'Event' }}" 
+                                         loading="eager"
+                                         fetchpriority="high">
+                                    {% endif %}
                                     {% else %}
                                     <button class="play-button" aria-label="Відтворити відео">
                                         <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
@@ -63,71 +82,6 @@
                                     {% endif %}
                                 </div>
                                 {% endfor %}
-                                {% else %}
-                                <!-- Fallback якщо немає CMS даних -->
-                                <div class="video-placeholder video-large">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-medium">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-medium">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-medium">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-medium">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-large">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-large">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-medium">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="video-placeholder video-medium">
-                                    <button class="play-button" aria-label="Відтворити відео">
-                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                    </button>
-                                </div>
                                 {% endif %}
                             </div>
                         </div>
