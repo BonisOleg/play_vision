@@ -249,3 +249,4 @@ print(f"Файлів зі стандартними мобільними: {len(st
 print(f"Файлів з обома: {len(set(ios_media_queries.keys()) & set(standard_mobile_queries.keys()))}")
 
 
+

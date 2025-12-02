@@ -437,8 +437,9 @@ footer.site-footer .footer-link:hover {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        gap: 8px;
+        gap: 7.2px; /* Зменшено на 10% з 8px */
         width: auto;
+        padding-top: 13.5px; /* Зменшено на 10% з базового 15px */
     }
 
     footer.site-footer .contact-item {
@@ -451,7 +452,12 @@ footer.site-footer .footer-link:hover {
         min-width: 0; /* Дозволяє стискатися */
     }
 
+    footer.site-footer .contact-label {
+        font-size: 8px; /* Зменшено на 2px з базового 10px для мобільних */
+    }
+
     footer.site-footer .contact-link {
+        font-size: 9.3px; /* Зменшено на 2px з базового 11.3px */
         word-break: break-word; /* М'який перенос */
         overflow-wrap: break-word;
         min-width: 0;

@@ -161,3 +161,4 @@ print(f"ПІДСУМОК: {len(issues)} розбіжностей у {len(by_file
 print("=" * 100)
 
 
+
