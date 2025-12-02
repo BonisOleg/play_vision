@@ -186,11 +186,18 @@ class SendPulseService:
                 'Content-Type': 'application/json',
             }
             
+            # Валідація name - має бути не порожнім
+            if not name or not name.strip():
+                name = 'User'
+            else:
+                name = name.strip()
+            
             payload = {
                 'emails': [
                     {
                         'email': email,
                         'firstName': name,
+                        'lastName': '',  # Порожнє поле, але обов'язкове для API
                         'variables': {
                             'phone': phone,
                             'name': name,
