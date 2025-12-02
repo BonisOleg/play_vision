@@ -5,17 +5,21 @@
 {% block title %}Play Vision - Освітня платформа для футбольних фахівців{% endblock %}
 
 {% block extra_css %}
+<!-- Critical CSS - load first with high priority -->
 <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/home.css' %}">
+<!-- Above-the-fold CSS -->
 <link rel="stylesheet" href="{% static 'css/components/home-additions.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+<!-- Below-the-fold CSS -->
 <link rel="stylesheet" href="{% static 'css/components/featured-courses-light.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/main-courses-redesign.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/mentor-hexagon.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
-<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+<!-- Modal CSS - load last (only when needed) -->
 <link rel="stylesheet" href="{% static 'css/components/course-modal.css' %}">
-<link rel="preload" href="{% static 'images/backgroundCTAmain.jpg' %}" as="image">
+<link rel="preload" href="{% static 'images/backgroundCTAmain.jpg' %}" as="image" fetchpriority="low">
 {% if cms_hero_slides %}
     {% for slide in cms_hero_slides|slice:":3" %}
         {% if slide.image %}
@@ -318,10 +322,10 @@
                                         <div class="course-image-wrapper">
                                             <div class="course-image">
                                                 {% if course.logo %}
-                                                <img src="{{ course.logo.url }}" alt="{{ course.title }}">
+                                                <img src="{{ course.logo.url }}" alt="{{ course.title }}" loading="lazy" fetchpriority="{% if forloop.counter <= 4 %}high{% else %}low{% endif %}">
                                                 {% else %}
                                                 <img src="{% static 'images/course' %}{{ forloop.counter|default:1 }}.png"
-                                                    alt="{{ course.title }}">
+                                                    alt="{{ course.title }}" loading="lazy" fetchpriority="{% if forloop.counter <= 4 %}high{% else %}low{% endif %}">
                                                 {% endif %}
                                             </div>
 

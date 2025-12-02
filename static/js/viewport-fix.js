@@ -35,7 +35,9 @@ window.addEventListener('orientationchange', () => {
         }
     }
 })();
-    
+
+// Header scroll optimization
+(function() {
     const header = document.querySelector('.main-header');
     if (header) {
         let lastScrollTop = 0;
@@ -60,5 +62,5 @@ window.addEventListener('orientationchange', () => {
             }
         }, { passive: true });
     }
-}
+})();
 

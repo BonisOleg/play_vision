@@ -5,14 +5,17 @@
 {% block title %}Про нас - Play Vision{% endblock %}
 
 {% block extra_css %}
+<link rel="preload" href="{% static 'css/components/section-base.css' %}" as="style">
+<link rel="preload" href="{% static 'css/components/about.css' %}" as="style">
 <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/about.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
-<link rel="preload" href="{% static 'images/Hiro.png' %}" as="image">
-<link rel="preconnect" href="https://iframe.mediadelivery.net">
+<link rel="preconnect" href="https://iframe.mediadelivery.net" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://iframe.mediadelivery.net">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
 {% endblock %}
 
 {% block content %}
@@ -22,10 +25,11 @@
     <!-- 1. HERO SECTION - BunnyNet Video Player -->
     {% if about_hero and about_hero.video_enabled and about_hero|has_video:country_code %}
     <section class="about-hero-section">
-        <div style="position: relative; padding-top: 56.25%;">
+        <div class="about-video-container">
             <iframe
-                src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}?autoplay=false&muted=false&preload=true&playsinline=true"
-                style="border: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                src="https://iframe.mediadelivery.net/embed/{{ about_hero|get_video_library_id:country_code }}/{{ about_hero|get_video_id:country_code }}?autoplay=false&muted=false&preload=metadata&playsinline=true"
+                class="about-video-iframe"
+                loading="lazy"
                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
                 allowfullscreen="true">
             </iframe>

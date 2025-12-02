@@ -14,8 +14,8 @@
     <link rel="icon" type="image/svg+xml" href="{% static 'logomain.svg' %}">
 
     <!-- Preload logos for theme switching -->
-    <link rel="preload" href="{% static 'icons/horizontal_desc_black.svg' %}" as="image" type="image/svg+xml">
-    <link rel="preload" href="{% static 'icons/horizontal_desc_white.svg' %}" as="image" type="image/svg+xml">
+    <link rel="preload" href="{% static 'icons/horizontal_desc_black.svg' %}" as="image" type="image/svg+xml" fetchpriority="high">
+    <link rel="preload" href="{% static 'icons/horizontal_desc_white.svg' %}" as="image" type="image/svg+xml" fetchpriority="high">
 
     <!-- PWA Complete Configuration -->
     <link rel="manifest" href="{% static 'manifest.json' %}">
@@ -54,40 +54,64 @@
         media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
         href="{% static 'splash/ipad.png' %}">
 
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+    <link rel="dns-prefetch" href="https://res.cloudinary.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+
     <!-- Preload Custom Fonts -->
-    <link rel="preload" href="{% static 'AtypDisplay-Regular.ttf' %}" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="{% static 'AtypText-Regular.ttf' %}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{% static 'AtypDisplay-Regular.ttf' %}" as="font" type="font/ttf" crossorigin fetchpriority="high">
+    <link rel="preload" href="{% static 'AtypText-Regular.ttf' %}" as="font" type="font/ttf" crossorigin fetchpriority="high">
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <!-- Google Fonts - видалено Roboto, використовуються кастомні шрифти AtypDisplay/AtypText -->
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9B2CF3494S"></script>
+    <!-- Google tag (gtag.js) - Deferred for performance -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-9B2CF3494S');
+      
+      // Defer loading of gtag script
+      window.addEventListener('load', function() {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-9B2CF3494S';
+        document.head.appendChild(script);
+      });
     </script>
 
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Code - Deferred for performance -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1380042320318233');
-    fbq('track', 'PageView');
+    // Defer Facebook Pixel loading
+    window.addEventListener('load', function() {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1380042320318233');
+      fbq('track', 'PageView');
+    });
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1380042320318233&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
 
-    <!-- CSS -->
+    <!-- CSS - Critical styles preloaded -->
+    <link rel="preload" href="{% static 'css/design-tokens.css' %}" as="style">
+    <link rel="preload" href="{% static 'css/theme.css' %}" as="style">
+    <link rel="preload" href="{% static 'css/main.css' %}" as="style">
     <link rel="stylesheet" href="{% static 'css/design-tokens.css' %}">
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/content-width.css' %}">
@@ -107,8 +131,8 @@
     <link rel="stylesheet" href="{% static 'css/components/notifications.css' %}">
     {% block extra_css %}{% endblock %}
 
-    <!-- HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- HTMX - Deferred for performance -->
+    <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
 
     {% block extra_head %}{% endblock %}
 </head>
@@ -404,19 +428,19 @@
 
     <!-- Scripts -->
     <!-- iOS Detection - load first for unified iOS detection -->
-    <script src="{% static 'js/ios-detection.js' %}"></script>
+    <script src="{% static 'js/ios-detection.js' %}" defer></script>
     <!-- Theme Manager - load first to prevent flash -->
-    <script src="{% static 'js/theme-manager.js' %}"></script>
+    <script src="{% static 'js/theme-manager.js' %}" defer></script>
     <!-- Theme Toggle Button -->
-    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}" defer></script>
     <!-- Core utilities -->
-    <script src="{% static 'js/interval-manager.js' %}"></script>
-    <script src="{% static 'js/dom-utils.js' %}"></script>
-    <script src="{% static 'js/api-utils.js' %}"></script>
+    <script src="{% static 'js/interval-manager.js' %}" defer></script>
+    <script src="{% static 'js/dom-utils.js' %}" defer></script>
+    <script src="{% static 'js/api-utils.js' %}" defer></script>
     <!-- Shared utilities -->
-    <script src="{% static 'js/shared/notifications.js' %}"></script>
+    <script src="{% static 'js/shared/notifications.js' %}" defer></script>
     <!-- Main application script -->
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}" defer></script>
 
     <!-- AI Chat Inline -->
     <script src="{% static 'js/components/ai-chat-inline.js' %}" defer></script>
@@ -439,13 +463,13 @@
     <script src="{% static 'js/cart-counter.js' %}" defer></script>
 
     <!-- Shared Tab Slider Component -->
-    <script src="{% static 'js/shared/tab-slider.js' %}"></script>
+    <script src="{% static 'js/shared/tab-slider.js' %}" defer></script>
     
     <!-- Navigation Tabs Slider Animation -->
-    <script src="{% static 'js/nav-tabs-slider.js' %}"></script>
+    <script src="{% static 'js/nav-tabs-slider.js' %}" defer></script>
 
     <!-- iOS Viewport Fix -->
-    <script src="{% static 'js/viewport-fix.js' %}"></script>
+    <script src="{% static 'js/viewport-fix.js' %}" defer></script>
 
     {% block extra_js %}{% endblock %}
 </body>
