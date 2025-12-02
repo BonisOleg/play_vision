@@ -18,6 +18,4 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
-    console.log('✅ About page initialized');
 });

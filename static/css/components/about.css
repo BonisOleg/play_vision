@@ -12,6 +12,32 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Video container with aspect ratio */
+.about-video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+/* Fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 16 / 9) {
+    .about-video-container {
+        padding-top: 56.25%; /* 16:9 aspect ratio */
+    }
+}
+
+.about-video-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    /* Оптимізація для мобільних */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* === ТЕМНА ТЕМА === */
 [data-theme="dark"] .about-hero-section {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
