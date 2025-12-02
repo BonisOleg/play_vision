@@ -22,29 +22,57 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
     actions = ['sync_to_sendpulse']
     
     def sync_to_sendpulse(self, request, queryset):
-        """Синхронізувати обрані заявки з SendPulse CRM"""
+        """Синхронізувати обрані заявки з SendPulse"""
+        from django.conf import settings
+        
         service = SendPulseService()
         success_count = 0
         error_count = 0
         
+        # Мапінг джерел на адресні книги
+        addressbook_mapping = {
+            'hub': getattr(settings, 'SENDPULSE_ADDRESS_BOOK_ID', 497184),
+            'mentoring': getattr(settings, 'SENDPULSE_ADDRESS_BOOK_MENTORING', 497185),
+            'subscription': getattr(settings, 'SENDPULSE_ADDRESS_BOOK_SUBSCRIPTION', 497186),
+        }
+        
         for lead in queryset.filter(sendpulse_synced=False):
             try:
-                contact_id = service.add_contact(
-                    email=lead.email,
-                    phone=lead.phone,
-                    variables={
-                        'first_name': lead.first_name,
-                        'source': 'Landing Page - Форум Футбольних Фахівців'
-                    }
-                )
-                
-                if contact_id:
-                    lead.sendpulse_synced = True
-                    lead.sendpulse_contact_id = contact_id
-                    lead.save()
-                    success_count += 1
+                # Для форм з hub, mentoring, subscription використовувати адресні книги
+                if lead.source in addressbook_mapping:
+                    addressbook_id = addressbook_mapping[lead.source]
+                    success = service.add_contact_to_addressbook(
+                        addressbook_id=int(addressbook_id),
+                        email=lead.email,
+                        phone=lead.phone,
+                        name=lead.first_name,
+                        source=lead.source
+                    )
+                    
+                    if success:
+                        lead.sendpulse_synced = True
+                        lead.save()
+                        success_count += 1
+                    else:
+                        error_count += 1
                 else:
-                    error_count += 1
+                    # Для інших джерел використовувати старий метод CRM API
+                    contact_id = service.add_contact(
+                        email=lead.email,
+                        phone=lead.phone,
+                        variables={
+                            'first_name': lead.first_name,
+                            'source': 'Landing Page - Форум Футбольних Фахівців'
+                        }
+                    )
+                    
+                    if contact_id:
+                        lead.sendpulse_synced = True
+                        lead.sendpulse_contact_id = contact_id
+                        lead.save()
+                        success_count += 1
+                    else:
+                        error_count += 1
             except Exception as e:
                 error_count += 1
                 self.message_user(

@@ -67,22 +67,29 @@ def submit_lead(request):
         try:
             sendpulse = SendPulseService()
             
-            # Для форми з hub використовувати адресну книгу
-            if source == 'hub':
-                addressbook_id = getattr(settings, 'SENDPULSE_ADDRESS_BOOK_ID', 497184)
+            # Мапінг джерел на адресні книги
+            addressbook_mapping = {
+                'hub': getattr(settings, 'SENDPULSE_ADDRESS_BOOK_ID', 497184),
+                'mentoring': getattr(settings, 'SENDPULSE_ADDRESS_BOOK_MENTORING', 497185),
+                'subscription': getattr(settings, 'SENDPULSE_ADDRESS_BOOK_SUBSCRIPTION', 497186),
+            }
+            
+            # Для форм з hub, mentoring, subscription використовувати адресні книги
+            if source in addressbook_mapping:
+                addressbook_id = addressbook_mapping[source]
                 success = sendpulse.add_contact_to_addressbook(
                     addressbook_id=int(addressbook_id),
                     email=email,
                     phone=phone,
                     name=first_name,
-                    source='hub'
+                    source=source
                 )
                 if success:
                     lead.sendpulse_synced = True
                     lead.save()
-                    logger.info(f'Lead {lead.id} synced to SendPulse addressbook {addressbook_id}')
+                    logger.info(f'Lead {lead.id} synced to SendPulse addressbook {addressbook_id} (source: {source})')
                 else:
-                    logger.warning(f'Failed to sync lead {lead.id} to SendPulse addressbook')
+                    logger.warning(f'Failed to sync lead {lead.id} to SendPulse addressbook {addressbook_id}')
             else:
                 # Для інших джерел використовувати старий метод CRM API
                 contact_id = sendpulse.add_contact(

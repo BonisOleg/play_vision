@@ -190,6 +190,7 @@ class SendPulseService:
                 'emails': [
                     {
                         'email': email,
+                        'firstName': name,
                         'variables': {
                             'phone': phone,
                             'name': name,
