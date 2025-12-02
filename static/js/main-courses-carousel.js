@@ -88,12 +88,14 @@ class MainCoursesCarousel {
     updatePosition() {
         if (!this.track) return;
 
-        // Обчислюємо зсув з урахуванням gap (responsive)
+        // Обчислюємо зсув з урахуванням gap
         const gap = window.innerWidth < 768 ? 12 : 24;
-        const slideWidthPercent = 100 / this.slidesPerView;
-        const gapInPercent = (gap * this.currentIndex) / this.track.offsetWidth * 100;
-
-        const translateX = -(this.currentIndex * slideWidthPercent + gapInPercent);
+        const gapPercent = (gap / this.track.offsetWidth) * 100;
+        
+        // Ширина "картка + її частка gap"
+        const slideWithGapPercent = (100 + gapPercent * (this.slidesPerView - 1)) / this.slidesPerView;
+        
+        const translateX = -this.currentIndex * slideWithGapPercent;
         this.track.style.transform = `translateX(${translateX}%)`;
     }
 
