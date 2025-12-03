@@ -1,0 +1,264 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load cms_tags %}
+
+{% block title %}Ментор коучинг - Play Vision{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/mentoring.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-flip-cards.css' %}">
+<link rel="preload" href="{% static 'images/hiromentor.png' %}" as="image">
+{% endblock %}
+
+{% block content %}
+{% get_mentor_hero as mentor_hero %}
+<div class="fullscreen-container">
+
+    <!-- 1. HERO SECTION -->
+    <section class="fullscreen-section hero-section hero-bordered mentoring-hero">
+        <div class="section-bg">
+            {% if mentor_hero and mentor_hero.image %}
+            <img class="section-bg-image" src="{{ mentor_hero.image.url }}" alt="Ментор коучинг" loading="eager">
+            {% else %}
+            <img class="section-bg-image" src="{% static 'images/hiromentor.png' %}" alt="Ментор коучинг" loading="eager">
+            {% endif %}
+        </div>
+        <div class="section-overlay section-overlay--gradient"></div>
+    </section>
+
+    <!-- UNIFIED SECTIONS WRAPPER -->
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
+
+            <!-- 2. ЩО ТАКЕ МЕНТОР КОУЧИНГ -->
+            {% get_mentor_section1_images as mentor_images %}
+            <section class="fullscreen-section mentoring-what-section">
+                <div class="section-content">
+                    <h2 class="section-title">Що таке Ментор коучинг</h2>
+
+                    <div class="mentoring-cards-grid">
+                        {% if mentor_images %}
+                        {% for image_obj in mentor_images %}
+                        {% with img=image_obj|get_localized_image:country_code %}
+                        <article class="mentoring-card">
+                            <div class="mentoring-card-image">
+                                {% if img %}
+                                <img src="{{ img.url }}" alt="{{ image_obj|get_localized_title:country_code }}" loading="lazy">
+                                {% endif %}
+                            </div>
+                            <div class="mentoring-card-content">
+                                <p>{{ image_obj|get_localized_title:country_code }}</p>
+                            </div>
+                        </article>
+                        {% endwith %}
+                        {% endfor %}
+                        {% else %}
+                        <article class="mentoring-card">
+                            <div class="mentoring-card-image">
+                                <img src="{% static 'images/mentor1.png' %}" alt="Ментор коучинг екосистема" loading="lazy">
+                            </div>
+                            <div class="mentoring-card-content">
+                                <p>Ментор коучинг - це екосистема індивідуального розвитку гравця з комплексним
+                                    підходом. Середовище, де кожен юний футболіст вчиться мислити, діяти і жити як
+                                    професіонал.</p>
+                            </div>
+                        </article>
+
+                        <article class="mentoring-card">
+                            <div class="mentoring-card-image">
+                                <img src="{% static 'images/mentor2.png' %}" alt="Комплексний аналіз" loading="lazy">
+                            </div>
+                            <div class="mentoring-card-content">
+                                <p>Наш процес будується на комплексному аналізі гравця, та індивідуалізується під його
+                                    потреби та зони росту.</p>
+                            </div>
+                        </article>
+
+                        <article class="mentoring-card">
+                            <div class="mentoring-card-image">
+                                <img src="{% static 'images/mentor3.png' %}" alt="Підтримка гравця" loading="lazy">
+                            </div>
+                            <div class="mentoring-card-content">
+                                <p>Ми не альтернатива командному контексту — ми його доповнюємо, забезпечуючи всебічну
+                                    експертну підтримку гравцю.</p>
+                            </div>
+                        </article>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. СТРУКТУРА МЕНТОР КОУЧИНГА -->
+            {% get_mentor_section2 as mentor_section2 %}
+            <section class="fullscreen-section mentoring-structure-section">
+                <div class="section-content">
+                    <h2 class="section-title">{% if mentor_section2 %}{{ mentor_section2|get_localized_title:country_code }}{% else %}Структура Ментор коучинга{% endif %}</h2>
+
+                    <div class="mentoring-image-block">
+                        {% if mentor_section2 %}
+                        {% get_localized_svg mentor_section2 country_code 'light' as svg_light %}
+                        {% get_localized_svg mentor_section2 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}" alt="Структура Ментор коучинга" loading="lazy">
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. МЕТОДОЛОГІЯ (БЕЗ ЗАГОЛОВКА) -->
+            {% get_mentor_section3 as mentor_section3 %}
+            <section class="fullscreen-section mentoring-methodology-section">
+                <div class="section-content">
+                    <div class="mentoring-image-block">
+                        {% if mentor_section3 %}
+                        {% get_localized_svg mentor_section3 country_code 'light' as svg_light %}
+                        {% get_localized_svg mentor_section3 country_code 'dark' as svg_dark %}
+                        <div class="theme-svg-wrapper">
+                            {% if svg_light %}
+                            <div class="theme-svg theme-svg--light">{{ svg_light|safe }}</div>
+                            {% endif %}
+                            {% if svg_dark %}
+                            <div class="theme-svg theme-svg--dark">{{ svg_dark|safe }}</div>
+                            {% else %}
+                                {% if svg_light %}
+                                <div class="theme-svg theme-svg--dark">{{ svg_light|safe }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <img class="mentoring-svg-invert" src="{% static 'images/mentor2.svg' %}" alt="Методологія" loading="lazy">
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. КОМАНДА МЕНТОР КОУЧИНГУ -->
+            <section class="fullscreen-section experts-section mentoring-team-section">
+                <div class="section-content">
+                    <div class="experts-header">
+                        <h2 class="section-title">Команда Ментор коучингу</h2>
+
+                        <div class="experts-navigation">
+                            <button class="expert-nav-btn expert-nav-prev" aria-label="Попередні експерти">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </button>
+                            <button class="expert-nav-btn expert-nav-next" aria-label="Наступні експерти">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="mentoring-team-description">Наша команда супроводу працює 24/7 та постійно готова прийти
+                        на допомогу гравцю, підтримує ментально та організаційно, контролює прогрес та аналізує
+                        ефективність підходу для кожного футболіста індивідуально. Завдяки цьому гравець розвивається
+                        комплексно, а батьки завжди бачать прозорий результат і можуть бути впевненими, що їх футболіст
+                        отримує максимум уваги та турботи.</p>
+
+                    <div class="experts-carousel-container">
+                        <div class="experts-grid">
+                            {% if cms_experts_mentoring %}
+                            {% for expert in cms_experts_mentoring %}
+                            <div class="expert-card" data-expert-id="{{ forloop.counter }}">
+                                <div class="expert-card-inner">
+                                    <div class="expert-card-front">
+                                        <div class="expert-photo">
+                                            {% if expert.photo %}
+                                            <img src="{{ expert.photo.url }}" alt="{{ expert.name }}" loading="lazy">
+                                            {% else %}
+                                            <img src="{% static 'images/prof' %}{{ forloop.counter|default:1 }}.png"
+                                                alt="{{ expert.name }}" loading="lazy">
+                                            {% endif %}
+                                        </div>
+                                        <div class="expert-card-content">
+                                            <h3 class="expert-name">{{ expert.name }}</h3>
+                                            <p class="expert-specialization">{{ expert.specialization|default:expert.position }}</p>
+                                            <span class="expert-detail-link">Огляд профілю →</span>
+                                        </div>
+                                    </div>
+                                    <div class="expert-card-back">
+                                        <div class="expert-bio-content">
+                                            <h3 class="expert-name-back">{{ expert.name }}</h3>
+                                            <div class="expert-bio-text">
+                                                {% if expert.bio %}
+                                                {{ expert.bio|linebreaks }}
+                                                {% else %}
+                                                <p>Інформація про експерта скоро буде додана.</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <!-- Немає експертів в БД - показуємо заглушку -->
+                            <div class="no-experts-placeholder">
+                                <p>Експерти будуть додані найближчим часом</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. ЗВ'ЯЗОК З НАМИ -->
+            <section class="fullscreen-section mentoring-contact-section">
+                <div class="section-content">
+                    <h2 class="section-title">Зв'язок з нами</h2>
+
+                    <div class="mentoring-contact-cards">
+                        <article class="mentoring-contact-card mentoring-contact-card--light">
+                            <h3 class="mentoring-contact-card-title">Консультація</h3>
+                            <p class="mentoring-contact-card-text">Отримайте безплатну консультацію з бідності нашого
+                                експерта про шляхи розвитку вашого та індивідуальну програму по зонам які потребують
+                                уваги дитини.</p>
+                            <button class="white_bonnom">
+                                <span class="btn-text">Отримати консультацію</span>
+                                <span class="btn-icon"></span>
+                            </button>
+                        </article>
+
+                        <article class="mentoring-contact-card mentoring-contact-card--dark">
+                            <h3 class="mentoring-contact-card-title">Методологія</h3>
+                            <p class="mentoring-contact-card-text">Наша методика заснована — це передовий підхід
+                                застосовуємо в практиці, який розроблено спільно з провідними експертами з футболу
+                                застосовують повсюдно найталановітіші методологів.</p>
+                            <button class="white_bonnom">
+                                <span class="btn-text">Дізнатись про методологію</span>
+                                <span class="btn-icon"></span>
+                            </button>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <!-- END UNIFIED SECTIONS WRAPPER -->
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/mentoring.js' %}" defer></script>
+<script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
+<script src="{% static 'js/expert-carousel-unified.js' %}" defer></script>
+{% endblock %}
