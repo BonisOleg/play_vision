@@ -145,11 +145,22 @@ class SendPulseService:
             except (ValueError, KeyError):
                 pass
             
+            # Детальне логування помилки для діагностики
             logger.error(
                 f'Failed to add contact to SendPulse CRM: '
                 f'Status {response.status_code}, Response: {error_response}, '
-                f'Payload: {contact_data}'
+                f'Payload: {contact_data}, '
+                f'URL: {url}, '
+                f'Headers: {headers}'
             )
+            
+            # Спробувати отримати детальну інформацію про помилку
+            try:
+                error_json = response.json()
+                logger.error(f'Error details: {error_json}')
+            except (ValueError, KeyError):
+                logger.error(f'Could not parse error response as JSON')
+            
             return None
             
         except requests.exceptions.RequestException as e:
@@ -281,11 +292,22 @@ class SendPulseService:
             except (ValueError, KeyError):
                 pass
             
+            # Детальне логування помилки для діагностики
             logger.error(
                 f'Failed to add contact to SendPulse addressbook {addressbook_id}: '
                 f'Status {response.status_code}, Response: {error_response}, '
-                f'Payload: {payload}'
+                f'Payload: {payload}, '
+                f'URL: {url}, '
+                f'Headers: {headers}'
             )
+            
+            # Спробувати отримати детальну інформацію про помилку
+            try:
+                error_json = response.json()
+                logger.error(f'Error details: {error_json}')
+            except (ValueError, KeyError):
+                logger.error(f'Could not parse error response as JSON')
+            
             return False
             
         except requests.exceptions.RequestException as e:
