@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Хаб Знань - Play Vision{% endblock %}
+{% block meta_description %}Хаб Знань - навчальна платформа для професійного розвитку футбольних фахівців{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/hub-additions.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="fullscreen-container">
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
+            <section class="fullscreen-section hub-catalog-section">
+                <div class="section-content">
+                    <div class="hub-header">
+                        <h1>Хаб Знань</h1>
+                    </div>
+                    {% include 'hub/partials/catalog_grid.html' %}
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/hub.js' %}" defer></script>
+{% endblock %}
+

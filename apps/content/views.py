@@ -17,6 +17,12 @@ class CourseListView(ListView):
     context_object_name = 'courses'
     paginate_by = 12
     
+    def get_template_names(self):
+        """Select template based on domain"""
+        if getattr(self.request, 'is_com_ua_domain', False):
+            return ['hub/course_list.html']  # Landing заглушка
+        return ['hub/course_list_full.html']  # Повна версія
+    
     def get_queryset(self) -> QuerySet[Course]:
         from django.db.models import Q
         

@@ -30,8 +30,13 @@ class TestBunnyView(TemplateView):
 
 
 class MentoringView(TemplateView):
-    """Mentoring page"""
-    template_name = 'pages/mentoring.html'
+    """Mentoring page with domain-based template selection"""
+    
+    def get_template_names(self):
+        """Select template based on domain"""
+        if getattr(self.request, 'is_com_ua_domain', False):
+            return ['pages/mentoring.html']  # Landing заглушка
+        return ['pages/mentoring_full.html']  # Повна версія
 
 
 class ContactView(TemplateView):

@@ -28,7 +28,6 @@ urlpatterns = [
     # Main content
     path('hub/', include('apps.content.urls')),
     path('events/', include('apps.events.urls')),
-    path('mentor-coaching/', include('apps.mentoring.urls')),
     
     # AI Assistant
     path('ai/', include('apps.ai.urls')),

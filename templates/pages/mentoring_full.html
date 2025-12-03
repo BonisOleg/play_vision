@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load cms_tags %}
+
+{% block title %}Ментор коучинг - Play Vision{% endblock %}
+{% block meta_description %}Ментор коучинг - індивідуальний супровід футболістів з комплексним підходом{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unified-sections.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/expert-cards-base.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="fullscreen-container">
+    <div class="unified-sections-wrapper">
+        <div class="unified-sections-container">
+            <section class="fullscreen-section mentoring-section">
+                <div class="section-content">
+                    <h1>Ментор коучинг</h1>
+                    <p>Індивідуальний супровід футболістів з комплексним підходом</p>
+                    
+                    {% get_mentoring_experts as mentoring_experts %}
+                    {% if mentoring_experts %}
+                    <div class="expert-cards-grid">
+                        {% for expert in mentoring_experts %}
+                        <div class="expert-card">
+                            <h3>{{ expert.name }}</h3>
+                            <p>{{ expert.role }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/expert-flip-cards.js' %}" defer></script>
+{% endblock %}
+
