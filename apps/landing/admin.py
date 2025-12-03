@@ -43,7 +43,10 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
             # Валідація даних
             if not lead.email or not lead.phone:
                 error_count += 1
-                logger.warning(f'Lead {lead.id} missing email or phone, skipping')
+                logger.warning(
+                    f'Lead {lead.id} skipped: missing email or phone. '
+                    f'Email: {lead.email}, Phone: {lead.phone}, Source: {lead.source}'
+                )
                 continue
             
             try:
@@ -64,6 +67,10 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
                         success_count += 1
                     else:
                         error_count += 1
+                        logger.error(
+                            f'Failed to sync lead {lead.id} ({lead.email}) to addressbook {addressbook_id}. '
+                            f'Source: {lead.source}, Name: {lead.first_name or "N/A"}'
+                        )
                 else:
                     # Для інших джерел використовувати старий метод CRM API
                     contact_id = service.add_contact(
@@ -77,11 +84,17 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
                     
                     if contact_id:
                         lead.sendpulse_synced = True
-                        lead.sendpulse_contact_id = contact_id
+                        # Зберегти contact_id тільки якщо це не маркер 'existing'
+                        if contact_id != 'existing':
+                            lead.sendpulse_contact_id = contact_id
                         lead.save()
                         success_count += 1
                     else:
                         error_count += 1
+                        logger.error(
+                            f'Failed to sync lead {lead.id} ({lead.email}) to SendPulse CRM. '
+                            f'Source: {lead.source}, Name: {lead.first_name or "N/A"}'
+                        )
             except Exception as e:
                 error_count += 1
                 logger.error(

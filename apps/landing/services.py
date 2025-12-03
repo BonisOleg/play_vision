@@ -122,12 +122,33 @@ class SendPulseService:
             if response.status_code in [200, 201]:
                 result = response.json()
                 contact_id = result.get('id')
-                logger.info(f'Contact added to SendPulse: {email} (ID: {contact_id})')
+                logger.info(f'Contact added to SendPulse CRM: {email} (ID: {contact_id})')
                 return str(contact_id) if contact_id else None
             
+            # Обробка різних типів помилок
+            error_response = response.text
+            try:
+                error_data = response.json()
+                error_message = error_data.get('message', '')
+                
+                # Перевірка на дублікат контакту
+                if 'already exists' in error_message.lower() or 'duplicate' in error_message.lower():
+                    logger.info(
+                        f'Contact {email} already exists in SendPulse CRM. '
+                        f'Treating as successful sync.'
+                    )
+                    # Спробувати отримати існуючий контакт
+                    existing_contact = self.get_contact(email)
+                    if existing_contact and existing_contact.get('id'):
+                        return str(existing_contact['id'])
+                    return 'existing'  # Повертаємо маркер, що контакт існує
+            except (ValueError, KeyError):
+                pass
+            
             logger.error(
-                f'Failed to add contact to SendPulse: '
-                f'Status {response.status_code}, Response: {response.text}'
+                f'Failed to add contact to SendPulse CRM: '
+                f'Status {response.status_code}, Response: {error_response}, '
+                f'Payload: {contact_data}'
             )
             return None
             
@@ -244,9 +265,26 @@ class SendPulseService:
                     logger.info(f'Contact added to SendPulse addressbook {addressbook_id}: {email}')
                     return True
             
+            # Обробка різних типів помилок
+            error_response = response.text
+            try:
+                error_data = response.json()
+                error_message = error_data.get('message', '')
+                
+                # Перевірка на дублікат контакту
+                if 'already exists' in error_message.lower() or 'duplicate' in error_message.lower():
+                    logger.info(
+                        f'Contact {email} already exists in addressbook {addressbook_id}. '
+                        f'Treating as successful sync.'
+                    )
+                    return True
+            except (ValueError, KeyError):
+                pass
+            
             logger.error(
-                f'Failed to add contact to SendPulse addressbook: '
-                f'Status {response.status_code}, Response: {response.text}'
+                f'Failed to add contact to SendPulse addressbook {addressbook_id}: '
+                f'Status {response.status_code}, Response: {error_response}, '
+                f'Payload: {payload}'
             )
             return False
             
