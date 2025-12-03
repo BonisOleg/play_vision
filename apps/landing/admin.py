@@ -84,8 +84,8 @@ class LeadSubmissionAdmin(admin.ModelAdmin):
                     
                     if contact_id:
                         lead.sendpulse_synced = True
-                        # Зберегти contact_id тільки якщо це не маркер 'existing'
-                        if contact_id != 'existing':
+                        # Зберегти contact_id тільки якщо це не маркер 'existing' або 'synced_no_id'
+                        if contact_id not in ['existing', 'synced_no_id']:
                             lead.sendpulse_contact_id = contact_id
                         lead.save()
                         success_count += 1

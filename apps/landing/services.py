@@ -123,7 +123,13 @@ class SendPulseService:
                 result = response.json()
                 contact_id = result.get('id')
                 logger.info(f'Contact added to SendPulse CRM: {email} (ID: {contact_id})')
-                return str(contact_id) if contact_id else None
+                # Якщо API повертає успішну відповідь, але без ID, все одно вважаємо успішним
+                # (ID може бути відсутнім, але контакт додано)
+                if contact_id:
+                    return str(contact_id)
+                else:
+                    # Повертаємо маркер успіху, якщо ID відсутній
+                    return 'synced_no_id'
             
             # Обробка різних типів помилок
             error_response = response.text
