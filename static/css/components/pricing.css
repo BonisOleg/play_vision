@@ -102,7 +102,6 @@
 .period-label {
     text-align: left;
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
     color: var(--pricing-text-secondary);
     margin-bottom: 0;
     padding-left: 7px;
@@ -129,7 +128,6 @@
     border: 2px solid var(--pricing-border);
     border-radius: 12px;
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
     background: var(--pricing-card-bg);
     color: var(--pricing-text);
     cursor: pointer;
@@ -175,7 +173,6 @@
     padding: 6px 16px;
     border-radius: 20px;
     font-size: 13px;
-    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #FFFFFF;
     white-space: nowrap;
@@ -219,7 +216,6 @@
 
 .feature-number {
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     color: var(--pricing-text);
     min-width: 24px;
@@ -227,7 +223,6 @@
 
 .feature-text {
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: var(--pricing-text);
 }
@@ -265,7 +260,6 @@
 .price-save {
     margin-top: 8px;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     color: #10B981;
 }
@@ -282,7 +276,6 @@
     background: var(--pricing-btn-primary);
     color: var(--pricing-btn-text-active);
     font-size: 15px;
-    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     text-align: center;
     border-radius: 12px;
@@ -298,7 +291,6 @@
     border-radius: 12px;
     text-align: center;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
     color: var(--pricing-text-secondary);
     font-style: italic;
 }
@@ -310,7 +302,6 @@
     border-radius: 8px;
     text-align: center;
     font-size: 13px;
-    font-family: 'Roboto', sans-serif;
     color: #92400E;
 }
 
@@ -326,7 +317,6 @@
     border: 2px solid var(--pricing-btn-primary);
     color: var(--pricing-btn-primary);
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
     font-weight: 600;
     border-radius: 12px;
     cursor: pointer;
@@ -464,14 +454,13 @@
 }
 
 /* Mobile - ОПТИМІЗОВАНА ВЕРСІЯ */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .pricing-title {
         font-size: 36px;
     }
     
     .pricing-subtitle {
         font-size: 18px;
-        font-family: 'Roboto', sans-serif;
     }
     
     .pricing-header {
@@ -501,7 +490,6 @@
     
     .period-tabs .tab-button {
         font-size: 14px;
-        font-family: 'Roboto', sans-serif;
         padding: 10px 8px;
         min-height: 44px;
         flex: 1;
@@ -554,7 +542,6 @@
         top: 60px;
         padding: 4px 12px;
         font-size: 12px;
-        font-family: 'Roboto', sans-serif;
     }
     
     /* НАЗВА - менша */
@@ -575,13 +562,11 @@
     
     .feature-number {
         font-size: 14px;
-        font-family: 'Roboto', sans-serif;
         min-width: 20px;
     }
     
     .feature-text {
         font-size: 14px;
-        font-family: 'Roboto', sans-serif;
         line-height: 1.5;
     }
     
@@ -604,7 +589,6 @@
     
     .price-save {
         font-size: 13px;
-        font-family: 'Roboto', sans-serif;
         margin-top: 6px;
     }
     
@@ -612,7 +596,6 @@
     .btn-purchase {
         padding: 14px 20px;
         font-size: 14px;
-        font-family: 'Roboto', sans-serif;
         border-radius: 10px;
     }
     
@@ -627,7 +610,7 @@
 }
 
 /* Small Mobile - ЩЕ БІЛЬШЕ ЗМЕНШЕННЯ */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .pricing-page {
         padding: 40px 0 60px;
     }
@@ -649,7 +632,6 @@
         top: 55px;
         padding: 3px 10px;
         font-size: 11px;
-        font-family: 'Roboto', sans-serif;
     }
     
     /* НАЗВА */
@@ -666,13 +648,11 @@
     
     .feature-number {
         font-size: 13px;
-        font-family: 'Roboto', sans-serif;
         min-width: 18px;
     }
     
     .feature-text {
         font-size: 13px;
-        font-family: 'Roboto', sans-serif;
     }
     
     /* ЦІНА */
@@ -686,14 +666,12 @@
     
     .price-currency {
         font-size: 18px;
-        font-family: 'Roboto', sans-serif;
     }
     
     /* КНОПКА */
     .btn-purchase {
         padding: 12px 16px;
         font-size: 13px;
-        font-family: 'Roboto', sans-serif;
     }
     
     /* GAP */
