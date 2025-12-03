@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Ментор коучинг - Play Vision">
+    <title>Ментор коучинг - Play Vision</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'logomain.svg' %}">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/design-tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing-page.css' %}">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9B2CF3494S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9B2CF3494S');
+    </script>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1380042320318233');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1380042320318233&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+</head>
+<body>
+    <!-- Кнопка повернення на головну -->
+    <a href="{% url 'core:home' %}" class="landing-home-button" aria-label="Повернутись на головну">
+        <span class="button-text">← Головна</span>
+    </a>
+    
+    <!-- Landing Container з фоновим зображенням -->
+    <div class="landing-container">
+        <div class="landing-content">
+            
+            <!-- Рядок 1: COMING SOON -->
+            <div class="landing-coming-soon">
+                <span class="coming-soon-text">coming soon</span>
+            </div>
+            
+            <!-- Рядок 2: Заголовок з білим текстом -->
+            <h1 class="landing-title">
+                <span class="title-semibold">Play Vision</span> — навігатор<br class="br-mobile-only"> футбольного розвитку для<br class="br-mobile-only"><br class="br-desktop-only"> <span class="title-semibold">юних футболістів</span>
+            </h1>
+            
+            <!-- Рядок 3: Білий блок з логотипом та формою -->
+            <div class="landing-form-wrapper">
+                <img src="{% static 'logolend.svg' %}" alt="Play Vision" class="landing-logo">
+                
+                <!-- Форма заявки -->
+                <form id="leadForm" class="landing-form" method="post" action="{% url 'landing:submit_lead' %}">
+                {% csrf_token %}
+                
+                <!-- Hidden input для джерела -->
+                <input type="hidden" name="source" value="mentoring">
+                
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        name="first_name" 
+                        id="id_first_name"
+                        class="landing-input" 
+                        placeholder="Ваше ім'я та прізвище"
+                        required
+                        autocomplete="given-name"
+                    >
+                    <span class="form-error" id="error_first_name"></span>
+                </div>
+                
+                <div class="form-group">
+                    <input 
+                        type="tel" 
+                        name="phone" 
+                        id="id_phone"
+                        class="landing-input" 
+                        placeholder="+380(__) ___-__-__"
+                        required
+                        data-phone-input="true"
+                        autocomplete="tel"
+                    >
+                    <span class="form-error" id="error_phone"></span>
+                </div>
+                
+                <div class="form-group">
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="id_email"
+                        class="landing-input" 
+                        placeholder="Ваш email"
+                        required
+                        autocomplete="email"
+                    >
+                    <span class="form-error" id="error_email"></span>
+                </div>
+                
+                <!-- Повідомлення про успіх/помилку -->
+                <div id="formMessage" class="form-message" style="display: none;"></div>
+                
+                <!-- Рядок 5: Кнопка відправки -->
+                <button type="submit" class="landing-submit-btn" id="submitBtn">
+                    <span class="btn-text">першим дізнатись деталі</span>
+                    <span class="btn-loader" style="display: none;">Відправка...</span>
+                </button>
+            </form>
+            </div>
+            
+            <!-- Фраза внизу в білому блоці -->
+            <div class="landing-footer-wrapper">
+                <p class="landing-footer-text">Ментор коучинг — індивідуальний супровід футболістів з комплексним підходом</p>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="{% static 'js/landing-form.js' %}" defer></script>
+</body>
+</html>
