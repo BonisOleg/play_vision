@@ -18,10 +18,17 @@ class CourseListView(ListView):
     paginate_by = 12
     
     def get_template_names(self):
-        """Select template based on domain"""
+        """Select template based on domain and request type"""
+        # Пріоритет 1: HTMX запит (пагінація, фільтри, пошук) - тільки фрагмент каталогу
+        if 'HTTP_HX_REQUEST' in self.request.META:
+            return ['hub/partials/catalog_grid.html']
+        
+        # Пріоритет 2: Landing домен (playvision.com.ua) - спрощена версія
         if getattr(self.request, 'is_com_ua_domain', False):
-            return ['hub/course_list_landing.html']  # Landing для com.ua
-        return ['hub/course_list.html']  # Повна версія для onrender
+            return ['hub/course_list_landing.html']
+        
+        # Пріоритет 3: Звичайний запит на onrender - повна версія з hero/carousel
+        return ['hub/course_list.html']
     
     def get_queryset(self) -> QuerySet[Course]:
         from django.db.models import Q
@@ -85,12 +92,6 @@ class CourseListView(ListView):
         context['course_points'] = course_points
         
         return context
-    
-    def render_to_response(self, context: dict[str, Any], **response_kwargs: Any) -> HttpResponse:
-        """Return partial template for HTMX requests"""
-        if 'HTTP_HX_REQUEST' in self.request.META:
-            self.template_name = 'hub/partials/catalog_grid.html'
-        return super().render_to_response(context, **response_kwargs)
 
 
 class CourseDetailView(DetailView):
