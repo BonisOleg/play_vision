@@ -1,4 +1,5 @@
 {% load static %}
+{% load hub_tags %}
 
 <!-- Grid продуктів -->
 <div class="hub-catalog-grid">
@@ -76,7 +77,7 @@
         {% if page_obj.has_previous %}
         <a href="#" 
            class="pagination-link pagination-link--prev"
-           hx-get="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page=1"
+           hx-get="{% pagination_url 1 %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
            hx-push-url="true">
@@ -84,7 +85,7 @@
         </a>
         <a href="#" 
            class="pagination-link"
-           hx-get="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}"
+           hx-get="{% pagination_url page_obj.previous_page_number %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
            hx-push-url="true">
@@ -99,7 +100,7 @@
             {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
             <a href="#" 
                class="pagination-link"
-               hx-get="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num }}"
+               hx-get="{% pagination_url num %}"
                hx-target="#catalog-content"
                hx-swap="innerHTML"
                hx-push-url="true">{{ num }}</a>
@@ -110,7 +111,7 @@
         {% if page_obj.has_next %}
         <a href="#" 
            class="pagination-link"
-           hx-get="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}"
+           hx-get="{% pagination_url page_obj.next_page_number %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
            hx-push-url="true">
@@ -118,7 +119,7 @@
         </a>
         <a href="#" 
            class="pagination-link pagination-link--next"
-           hx-get="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.paginator.num_pages }}"
+           hx-get="{% pagination_url page_obj.paginator.num_pages %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
            hx-push-url="true">

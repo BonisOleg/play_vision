@@ -435,58 +435,96 @@ document.addEventListener('DOMContentLoaded', () => {
     initDescriptionToggles();
 });
 
-// Re-initialize favorite buttons after HTMX swap
-document.body.addEventListener('htmx:afterSwap', (event) => {
-    if (event.detail.target.id === 'catalog-content') {
-        initFavoriteButtons();
-        
-        // Scroll to catalog after pagination
-        const catalogSection = document.getElementById('catalog');
-        if (catalogSection) {
-            catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// Показувати індикатор під час будь-якого HTMX запиту до каталогу
+document.body.addEventListener('htmx:beforeRequest', (e) => {
+    if (e.detail.target?.id === 'catalog-content') {
+        const indicator = document.getElementById('catalog-loading-indicator');
+        if (indicator) {
+            indicator.style.display = 'flex';
         }
     }
 });
 
-// Явне перехоплення кліків на посилання пагінації
-// Використовуємо capture phase для перехоплення ДО HTMX
-document.body.addEventListener('click', (e) => {
-    const link = e.target.closest('a.pagination-link');
-    
-    // Перевірка, чи це посилання пагінації
-    if (!link) {
-        return;
-    }
-    
-    // Перевірка, чи є hx-get атрибут
-    const hxGet = link.getAttribute('hx-get');
-    if (!hxGet) {
-        return; // Якщо немає hx-get, дозволити звичайну навігацію
-    }
-    
-    // Перехопити клік
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Перевірка, чи HTMX завантажено
-    if (typeof htmx === 'undefined') {
-        // Fallback: звичайна навігація
-        const href = link.getAttribute('href');
-        if (href && href !== '#') {
-            window.location.href = href;
+// Re-initialize favorite buttons after HTMX swap
+document.body.addEventListener('htmx:afterSwap', (event) => {
+    if (event.detail.target?.id === 'catalog-content') {
+        initFavoriteButtons();
+        
+        // Сховати індикатор після успішного swap
+        const indicator = document.getElementById('catalog-loading-indicator');
+        if (indicator) {
+            indicator.style.display = 'none';
         }
-        return;
+        
+        // Розумний скрол: скролити тільки якщо каталог НЕ у viewport
+        const catalogSection = document.getElementById('catalog');
+        if (catalogSection) {
+            const rect = catalogSection.getBoundingClientRect();
+            const isVisible = rect.top >= 0 && rect.top <= window.innerHeight * 0.3;
+            
+            if (!isVisible) {
+                catalogSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start'
+                });
+            }
+        }
     }
-    
-    // Отримати параметри з атрибутів
-    const target = link.getAttribute('hx-target') || '#catalog-content';
-    const swap = link.getAttribute('hx-swap') || 'innerHTML';
-    const pushUrl = link.getAttribute('hx-push-url') === 'true';
-    
-    // Викликати HTMX програмно
-    htmx.ajax('GET', hxGet, {
-        target: target,
-        swap: swap,
-        pushUrl: pushUrl
-    });
-}, true); // Capture phase - перехоплює ДО HTMX
+});
+
+// Обробка помилок при завантаженні каталогу
+document.body.addEventListener('htmx:responseError', (e) => {
+    if (e.detail.target?.id === 'catalog-content') {
+        // Сховати індикатор при помилці
+        const indicator = document.getElementById('catalog-loading-indicator');
+        if (indicator) {
+            indicator.style.display = 'none';
+        }
+        
+        // Показати користувачу помилку
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'htmx-error-message';
+        errorDiv.style.cssText = 'padding: 16px; margin: 16px 0; background: #fee; border: 1px solid #fcc; border-radius: 8px; color: #c33;';
+        errorDiv.innerHTML = `
+            <p style="margin: 0 0 8px 0; font-weight: 500;">Помилка завантаження каталогу</p>
+            <button onclick="location.reload()" style="padding: 8px 16px; background: #c33; color: white; border: none; border-radius: 4px; cursor: pointer;">Оновити сторінку</button>
+        `;
+        
+        // Видалити попередні повідомлення про помилки
+        const existingError = e.detail.target.querySelector('.htmx-error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        e.detail.target.prepend(errorDiv);
+    }
+});
+
+// Обробка помилок мережі
+document.body.addEventListener('htmx:sendError', (e) => {
+    if (e.detail.target?.id === 'catalog-content') {
+        // Сховати індикатор при помилці
+        const indicator = document.getElementById('catalog-loading-indicator');
+        if (indicator) {
+            indicator.style.display = 'none';
+        }
+        
+        // Показати користувачу помилку
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'htmx-error-message';
+        errorDiv.style.cssText = 'padding: 16px; margin: 16px 0; background: #fee; border: 1px solid #fcc; border-radius: 8px; color: #c33;';
+        errorDiv.innerHTML = `
+            <p style="margin: 0 0 8px 0; font-weight: 500;">Помилка з'єднання</p>
+            <p style="margin: 0 0 8px 0; font-size: 0.875rem;">Перевірте інтернет-з'єднання та спробуйте ще раз.</p>
+            <button onclick="location.reload()" style="padding: 8px 16px; background: #c33; color: white; border: none; border-radius: 4px; cursor: pointer;">Оновити сторінку</button>
+        `;
+        
+        // Видалити попередні повідомлення про помилки
+        const existingError = e.detail.target.querySelector('.htmx-error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        e.detail.target.prepend(errorDiv);
+    }
+});

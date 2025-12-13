@@ -342,8 +342,13 @@
                                 </button>
                             </div>
                             
-                            <div class="htmx-loading htmx-indicator">Завантаження...</div>
-                            <div id="catalog-content">
+                            <!-- Глобальний індикатор для каталогу -->
+                            <div id="catalog-loading-indicator" class="htmx-loading" style="display: none;">
+                                Завантаження...
+                            </div>
+                            
+                            <div id="catalog-content" 
+                                 hx-indicator="#catalog-loading-indicator">
                                 {% include 'hub/partials/catalog_grid.html' %}
                             </div>
                         </div>

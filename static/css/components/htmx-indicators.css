@@ -25,6 +25,18 @@
     gap: 8px;
 }
 
+/* Specific styles for catalog loading indicator */
+#catalog-loading-indicator {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: none; /* Керується через JS */
+    opacity: 1; /* Завжди видимий коли display: flex */
+    pointer-events: auto; /* Дозволити взаємодію для тестування */
+}
+
 .htmx-loading::before {
     content: '';
     display: inline-block;
@@ -63,5 +75,21 @@
 /* Smooth transition when content loads */
 #catalog-content {
     transition: opacity 0.2s ease;
+}
+
+/* Error message styles */
+.htmx-error-message {
+    padding: 16px;
+    margin: 16px 0;
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    color: #c33;
+}
+
+[data-theme="dark"] .htmx-error-message {
+    background: rgba(204, 51, 51, 0.1);
+    border-color: rgba(204, 51, 51, 0.3);
+    color: #ff6b6b;
 }
 
