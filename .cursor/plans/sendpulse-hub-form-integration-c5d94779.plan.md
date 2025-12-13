@@ -1,4 +1,9 @@
-<!-- c5d94779-f096-4e19-8ce0-2316592907e0 422f41b6-2f5c-4e61-83e4-a3eecd0124ba -->
+---
+name: ""
+overview: ""
+todos: []
+---
+
 # Виправлення помилок синхронізації в admin action
 
 ## Проблема
@@ -98,9 +103,3 @@ elif response.status_code == 400:
 
 - `apps/landing/admin.py` - покращити логування в `sync_to_sendpulse()`
 - `apps/landing/services.py` - покращити логування в методах `add_contact()` та `add_contact_to_addressbook()`
-
-### To-dos
-
-- [x] 
-- [x] 
-- [x] 
