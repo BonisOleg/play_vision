@@ -201,10 +201,6 @@
 }
 
 /* СТИЛІ ЕКСПЕРТІВ - ВАЖЛИВІ ДЛЯ МЕНТОР СТОРІНКИ */
-.mentoring-team-section .expert-card-content {
-    padding: 24px 20px;
-}
-
 .mentoring-team-section .expert-name {
     font-size: 1.125rem;
     font-weight: 600;

@@ -76,7 +76,7 @@
 /* ІМ'Я ТА СПЕЦІАЛІЗАЦІЯ */
 .expert-card-front .expert-name {
     margin-bottom: 8px;
-    text-align: right;
+    text-align: center;
 }
 
 .expert-card-front .expert-specialization {
@@ -300,7 +300,7 @@
     .expert-card-front .expert-name {
         font-size: 0.667rem;
         font-family: 'Roboto', sans-serif;
-        text-align: right;
+        text-align: center;
     }
 
     .expert-detail-link {
