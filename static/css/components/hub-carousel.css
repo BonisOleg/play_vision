@@ -157,6 +157,7 @@
     font-weight: 400;
     color: var(--hub-text);
     margin-bottom: var(--spacing-md);
+    white-space: pre-line;
 }
 
 .hub-featured-description {

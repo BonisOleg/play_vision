@@ -39,7 +39,10 @@
         submitButton.disabled = true;
         submitButton.textContent = 'відправка...';
 
-        const csrfToken = formData.get('csrfmiddlewaretoken');
+        let csrfToken = formData.get('csrfmiddlewaretoken');
+        if (!csrfToken) {
+            csrfToken = getCookie('csrftoken');
+        }
 
         fetch('/api/v1/notifications/newsletter/subscribe/', {
             method: 'POST',
@@ -52,13 +55,19 @@
                 email: email
             })
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(data => {
-                    throw new Error(data.error || 'Помилка підписки');
-                });
+        .then(async response => {
+            let data;
+            try {
+                data = await response.json();
+            } catch (e) {
+                throw new Error('Невірний формат відповіді від сервера');
             }
-            return response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || data.message || 'Помилка підписки');
+            }
+
+            return data;
         })
         .then(data => {
             showMessage(messageContainer, 'success', data.message || 'Дякуємо за підписку!');
@@ -80,10 +89,27 @@
         container.className = 'form-message';
         container.classList.add(type);
         container.textContent = text;
+        container.style.display = 'block';
+        container.style.opacity = '1';
 
         setTimeout(() => {
             fadeOut(container);
         }, 5000);
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 
     function fadeOut(element) {

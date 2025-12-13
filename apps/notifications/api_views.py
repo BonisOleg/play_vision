@@ -282,8 +282,8 @@ class NewsletterSubscribeView(APIView):
         }
         """
         try:
-            # Парсинг JSON даних
-            data = json.loads(request.body.decode('utf-8'))
+            # Отримання даних (DRF автоматично парсить JSON)
+            data = request.data
             
             # Валідація обов'язкових полів
             name = data.get('name', '').strip()
