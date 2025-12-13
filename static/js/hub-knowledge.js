@@ -447,3 +447,46 @@ document.body.addEventListener('htmx:afterSwap', (event) => {
         }
     }
 });
+
+// Явне перехоплення кліків на посилання пагінації
+// Використовуємо capture phase для перехоплення ДО HTMX
+document.body.addEventListener('click', (e) => {
+    const link = e.target.closest('a.pagination-link');
+    
+    // Перевірка, чи це посилання пагінації
+    if (!link) {
+        return;
+    }
+    
+    // Перевірка, чи є hx-get атрибут
+    const hxGet = link.getAttribute('hx-get');
+    if (!hxGet) {
+        return; // Якщо немає hx-get, дозволити звичайну навігацію
+    }
+    
+    // Перехопити клік
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Перевірка, чи HTMX завантажено
+    if (typeof htmx === 'undefined') {
+        // Fallback: звичайна навігація
+        const href = link.getAttribute('href');
+        if (href && href !== '#') {
+            window.location.href = href;
+        }
+        return;
+    }
+    
+    // Отримати параметри з атрибутів
+    const target = link.getAttribute('hx-target') || '#catalog-content';
+    const swap = link.getAttribute('hx-swap') || 'innerHTML';
+    const pushUrl = link.getAttribute('hx-push-url') === 'true';
+    
+    // Викликати HTMX програмно
+    htmx.ajax('GET', hxGet, {
+        target: target,
+        swap: swap,
+        pushUrl: pushUrl
+    });
+}, true); // Capture phase - перехоплює ДО HTMX
