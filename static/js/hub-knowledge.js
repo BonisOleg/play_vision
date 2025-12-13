@@ -439,5 +439,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.body.addEventListener('htmx:afterSwap', (event) => {
     if (event.detail.target.id === 'catalog-content') {
         initFavoriteButtons();
+        
+        // Scroll to catalog after pagination
+        const catalogSection = document.getElementById('catalog');
+        if (catalogSection) {
+            catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 });

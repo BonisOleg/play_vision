@@ -88,7 +88,7 @@ class CourseListView(ListView):
     
     def render_to_response(self, context: dict[str, Any], **response_kwargs: Any) -> HttpResponse:
         """Return partial template for HTMX requests"""
-        if self.request.headers.get('HX-Request'):
+        if 'HTTP_HX_REQUEST' in self.request.META:
             self.template_name = 'hub/partials/catalog_grid.html'
         return super().render_to_response(context, **response_kwargs)
 

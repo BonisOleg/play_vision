@@ -171,7 +171,7 @@ class EventListView(ListView):
     
     def render_to_response(self, context, **response_kwargs):
         """Return partial template for HTMX requests"""
-        if self.request.headers.get('HX-Request'):
+        if 'HTTP_HX_REQUEST' in self.request.META:
             self.template_name = 'events/partials/events_catalog_grid.html'
         return super().render_to_response(context, **response_kwargs)
 
