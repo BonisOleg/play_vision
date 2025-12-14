@@ -36,6 +36,36 @@
     text-decoration: underline;
 }
 
+/* Плашки курсу */
+.course-badges {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+/* Базовий стиль бейджу */
+.hub-badge {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+/* Зелений бейдж - Знижка */
+.hub-badge-discount {
+    background: #4CAF50;
+}
+
+/* Червоний бейдж - Топ продажів */
+.hub-badge-top {
+    background: #E50914;
+}
+
 /* Logo курсу над назвою */
 .course-logo {
     width: 80px;
@@ -97,6 +127,26 @@
 .meta-value.price {
     color: var(--color-primary);
     font-size: var(--font-size-2xl);
+}
+
+/* Ціна зі знижкою */
+.meta-value.price.has-discount {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.course-price-old {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    text-decoration: line-through;
+    font-weight: 400;
+}
+
+.course-price-new {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
 }
 
 .course-actions {

@@ -28,6 +28,22 @@
                                 <span>{{ course.title }}</span>
                             </nav>
                             
+                            {% if course.has_discount or course.is_top_seller %}
+                            <div class="course-badges">
+                                {% if course.has_discount and course.discount_percent > 0 %}
+                                <span class="hub-badge hub-badge-discount">
+                                    Знижка -{{ course.discount_percent }}%
+                                </span>
+                                {% endif %}
+                                
+                                {% if course.is_top_seller %}
+                                <span class="hub-badge hub-badge-top">
+                                    Топ продажів
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            
                             <h1 class="course-title">{{ course.title }}</h1>
                             
                             <p class="course-description">{{ course.description }}</p>
@@ -35,7 +51,14 @@
                             <div class="course-meta-grid">
                                 <div class="meta-item">
                                     <span class="meta-label">Ціна:</span>
-                                    <span class="meta-value price">{{ course.price }}₴</span>
+                                    {% if course.has_discount and course.discount_percent > 0 %}
+                                    <div class="meta-value price has-discount">
+                                        <span class="course-price-old">{{ course.price|floatformat:0 }}₴</span>
+                                        <span class="course-price-new">{{ course.get_discounted_price|floatformat:0 }}₴</span>
+                                    </div>
+                                    {% else %}
+                                    <span class="meta-value price">{{ course.price|floatformat:0 }}₴</span>
+                                    {% endif %}
                                 </div>
                                 
                                 {% if target_audience_display %}
