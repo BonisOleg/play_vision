@@ -178,6 +178,7 @@
     line-height: 1.6;
     margin-bottom: var(--spacing-md);
     flex: 1;
+    white-space: pre-line;
 }
 
 .hub-featured-meta {

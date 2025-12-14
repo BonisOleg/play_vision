@@ -96,6 +96,7 @@
     font-size: var(--font-size-base);
     line-height: var(--line-height-relaxed);
     color: var(--color-text);
+    white-space: pre-line;
 }
 
 .course-meta-grid {
