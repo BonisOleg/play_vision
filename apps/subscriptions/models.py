@@ -257,6 +257,38 @@ class SubscriptionPlan(models.Model):
             return self.available_12_months
         return False
     
+    def get_checkout_url(self, period='monthly'):
+        """
+        Повертає посилання на оплату залежно від плану та періоду
+        
+        Args:
+            period: 'monthly' або '3_months'
+        
+        Returns:
+            str: URL для оплати
+        """
+        plan_name_lower = self.name.lower()
+        
+        # C-Vision посилання
+        if 'c-vision' in plan_name_lower or 'c_vision' in plan_name_lower:
+            if period == 'monthly':
+                return 'https://edu.playvision.com.ua/o/W2INE2aFFjt7/payment/2756'
+            elif period == '3_months':
+                return 'https://edu.playvision.com.ua/o/ldxmHjV6K85M/payment/2756'
+        
+        # B-Vision посилання
+        elif 'b-vision' in plan_name_lower or 'b_vision' in plan_name_lower:
+            if period == 'monthly':
+                return 'https://edu.playvision.com.ua/o/kCHKbeCtLCSs/payment/2756'
+            elif period == '3_months':
+                return 'https://edu.playvision.com.ua/o/cg8MMFAGeVED/payment/2756'
+        
+        # Fallback на checkout_url для інших планів
+        if self.checkout_url:
+            return self.checkout_url
+        
+        return ''
+    
     def save(self, *args, **kwargs):
         """Автогенерація slug з назви"""
         if not self.slug:

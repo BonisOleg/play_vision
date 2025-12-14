@@ -85,3 +85,21 @@ def get_feature(plan, index):
         return getattr(plan, feature_attr, '') or ''
     except (ValueError, TypeError, AttributeError):
         return ''
+
+
+@register.simple_tag
+def get_checkout_url(plan, period='monthly'):
+    """
+    Повертає посилання на оплату для плану та періоду
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly' або '3_months'
+    
+    Returns:
+        str: URL для оплати
+    """
+    try:
+        return plan.get_checkout_url(period) or ''
+    except Exception:
+        return ''

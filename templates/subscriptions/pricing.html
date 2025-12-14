@@ -117,7 +117,8 @@
                             <!-- Monthly Button -->
                             <div class="action-wrapper" data-period="monthly">
                                 {% if plan.available_monthly %}
-                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=monthly" 
+                                    {% get_checkout_url plan 'monthly' as checkout_link %}
+                                    <a href="{{ checkout_link }}" 
                                        class="btn-purchase">
                                         Придбати {{ plan.name }}
                                     </a>
@@ -131,7 +132,8 @@
                             <!-- 3 Months Button -->
                             <div class="action-wrapper" data-period="3_months" style="display: none;">
                                 {% if plan.available_3_months %}
-                                    <a href="{{ plan.checkout_url }}?plan={{ plan.slug }}&period=3_months" 
+                                    {% get_checkout_url plan '3_months' as checkout_link %}
+                                    <a href="{{ checkout_link }}" 
                                        class="btn-purchase">
                                         Придбати {{ plan.name }}
                                     </a>

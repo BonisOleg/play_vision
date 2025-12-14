@@ -733,7 +733,7 @@
 /* === COMING SOON OVERLAY === */
 .plan-card-overlay {
     position: absolute;
-    top: 96px; /* Після назви плану: padding-top (32px) + font-size (30px) + margin-bottom (34px) */
+    top: 69px; /* Після назви плану */
     left: 0;
     right: 0;
     bottom: 0;
