@@ -34,12 +34,11 @@ class PricingView(TemplateView):
         context['periods'] = [
             {'value': 'monthly', 'label': 'за місяць', 'label_short': '1 міс'},
             {'value': '3_months', 'label': 'за 3 місяці', 'label_short': '3 міс'},
-            {'value': '12_months', 'label': 'за рік', 'label_short': '12 міс'},
         ]
         
         # SEO метадані
         context['meta_title'] = 'Тарифи Play Vision — Твої знання в одній підписці'
-        context['meta_description'] = 'Обирай траєкторію свого розвитку: місяць, квартал або рік. Повний доступ до всіх матеріалів та курсів від провідних експертів.'
+        context['meta_description'] = 'Обирай траєкторію свого розвитку: місяць або квартал. Повний доступ до всіх матеріалів та курсів від провідних експертів.'
         
         return context
 

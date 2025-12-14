@@ -720,3 +720,89 @@
 
 /* Tab buttons використовують accessibility стилі з tabs-shared.css */
 
+/* === COMING SOON OVERLAY === */
+.plan-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--pricing-radius);
+    z-index: 20; /* Вище за badge (який без z-index) та контент */
+    pointer-events: auto; /* Блокує кліки на картці */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plan-card-overlay--coming-soon {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); /* Стиль AI модального вікна */
+}
+
+[data-theme="dark"] .plan-card-overlay--coming-soon {
+    background: rgba(26, 26, 26, 0.85);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .plan-card-overlay--coming-soon {
+        background: rgba(26, 26, 26, 0.85);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+}
+
+.coming-soon-content {
+    text-align: center;
+    padding: 24px; /* Замість var(--spacing-lg) для сумісності */
+}
+
+.coming-soon-icon {
+    font-size: 48px;
+    margin-bottom: 16px; /* Замість var(--spacing-md) */
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.coming-soon-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--pricing-text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Стилі в дусі AI модального вікна */
+.plan-card--coming-soon {
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-card--coming-soon .btn-purchase {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Заблокувати всі кліки на картці з coming soon */
+.plan-card--coming-soon .plan-content {
+    pointer-events: none;
+}
+
+.plan-card--coming-soon .plan-content * {
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
