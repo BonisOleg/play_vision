@@ -114,6 +114,23 @@
                         {% if featured_courses %}
                         {% for course in featured_courses %}
                         <article class="hub-featured-card">
+                            <!-- Бейджі для featured -->
+                            {% if course.has_discount or course.is_top_seller %}
+                            <div class="hub-featured-badges">
+                                {% if course.has_discount and course.discount_percent > 0 %}
+                                <span class="hub-badge hub-badge-discount">
+                                    Знижка -{{ course.discount_percent }}%
+                                </span>
+                                {% endif %}
+                                
+                                {% if course.is_top_seller %}
+                                <span class="hub-badge hub-badge-top">
+                                    Топ продажів
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            
                             <div class="hub-featured-content">
                                 <h3 class="hub-featured-title">{{ course.title }}</h3>
                                 <p class="hub-featured-subtitle">{{ course.short_description }}</p>
@@ -141,10 +158,20 @@
                                 </div>
                                     <div class="hub-featured-divider"></div>
                                     <div class="hub-featured-footer">
+                                        {% if course.has_discount and course.discount_percent > 0 %}
+                                        <a href="{{ course.get_absolute_url }}" class="hub-featured-price has-discount">
+                                            <div class="hub-price-old">{{ course.price|floatformat:0 }}₴</div>
+                                            <div class="hub-price-new">
+                                                <span class="price-label">Ціна:</span>
+                                                <span class="price-value">{{ course.get_discounted_price|floatformat:0 }}₴</span>
+                                            </div>
+                                        </a>
+                                        {% else %}
                                         <a href="{{ course.get_absolute_url }}" class="hub-featured-price">
                                             <span class="price-label">Ціна:</span>
                                             <span class="price-value">{{ course.price }}₴</span>
                                         </a>
+                                        {% endif %}
                                         <button type="button" class="hub-favorite-btn" data-course-id="{{ course.id }}" {% if course.id in user_favorites %}data-favorited="true"{% endif %} aria-label="Додати до улюблених">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />

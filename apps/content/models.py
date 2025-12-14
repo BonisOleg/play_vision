@@ -103,6 +103,25 @@ class Course(models.Model):
     meta_title = models.CharField(max_length=200, blank=True)
     meta_description = models.TextField(max_length=300, blank=True)
     
+    # 🏷️ Badges and discounts
+    has_discount = models.BooleanField(
+        'Знижка активна',
+        default=False,
+        db_index=True,
+        help_text='Активувати знижку для цього курсу'
+    )
+    discount_percent = models.PositiveIntegerField(
+        'Відсоток знижки',
+        default=0,
+        help_text='Вкажіть відсоток знижки (1-99%)'
+    )
+    is_top_seller = models.BooleanField(
+        'Топ продажів',
+        default=False,
+        db_index=True,
+        help_text='Показати бейдж "Топ продажів"'
+    )
+    
     class Meta:
         db_table = 'courses'
         verbose_name = 'Course'
@@ -141,6 +160,19 @@ class Course(models.Model):
                 return BunnyService.get_video_embed_url(self.promo_video_bunny_id)
         except ImportError:
             pass
+        return None
+    
+    def get_discounted_price(self):
+        """Обчислити ціну зі знижкою"""
+        if self.has_discount and self.discount_percent > 0:
+            discount_amount = self.price * (self.discount_percent / 100)
+            return self.price - discount_amount
+        return self.price
+    
+    def get_old_price(self):
+        """Отримати стару ціну (якщо є знижка)"""
+        if self.has_discount and self.discount_percent > 0:
+            return self.price
         return None
 
 

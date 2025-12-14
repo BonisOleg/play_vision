@@ -17,6 +17,23 @@
             </button>
         </div>
         <div class="hub-product-image">
+            <!-- Бейджі -->
+            {% if course.has_discount or course.is_top_seller %}
+            <div class="hub-product-badges">
+                {% if course.has_discount and course.discount_percent > 0 %}
+                <span class="hub-badge hub-badge-discount">
+                    Знижка -{{ course.discount_percent }}%
+                </span>
+                {% endif %}
+                
+                {% if course.is_top_seller %}
+                <span class="hub-badge hub-badge-top">
+                    Топ продажів
+                </span>
+                {% endif %}
+            </div>
+            {% endif %}
+            
             {% if course.thumbnail %}
             <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" loading="lazy">
             {% else %}
@@ -25,10 +42,24 @@
             {% endif %}
         </div>
         <div class="hub-product-body">
+            {% if course.has_discount and course.discount_percent > 0 %}
+            <!-- Ціна зі знижкою -->
+            <div class="hub-product-price has-discount">
+                <div class="hub-price-old">
+                    Стара ціна: {{ course.price|floatformat:0 }}₴
+                </div>
+                <div class="hub-price-new">
+                    <span class="price-label">Ціна:</span>
+                    <span class="price-value">{{ course.get_discounted_price|floatformat:0 }}₴</span>
+                </div>
+            </div>
+            {% else %}
+            <!-- Звичайна ціна -->
             <div class="hub-product-price">
                 <span class="price-label">Ціна:</span>
                 <span class="price-value">{{ course.price|floatformat:0 }}₴</span>
             </div>
+            {% endif %}
             <p class="hub-product-desc">{{ course.short_description }}</p>
 
             {% if course.target_audience %}

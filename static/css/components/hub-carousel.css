@@ -112,6 +112,18 @@
     box-sizing: border-box;
     scroll-snap-align: center;
     scroll-snap-stop: always;
+    position: relative;
+}
+
+/* Бейджі для featured карток */
+.hub-featured-badges {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
 }
 
 .hub-featured-content {
@@ -229,6 +241,29 @@
 
 .hub-featured-price .price-value {
     color: var(--hub-primary);
+}
+
+/* Ціна зі знижкою у featured */
+.hub-featured-price.has-discount {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.hub-featured-price .hub-price-old {
+    font-size: 0.875rem;
+    color: var(--hub-text-light);
+    text-decoration: line-through;
+}
+
+.hub-featured-price .hub-price-new {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.hub-featured-price .hub-price-new .price-value {
+    font-size: 1.25rem;
 }
 
 [data-theme="dark"] .hub-featured-price {
@@ -382,6 +417,11 @@
 }
 
 @media (max-width: 768px) {
+    .hub-featured-badges {
+        top: 12px;
+        left: 12px;
+    }
+    
     .hub-featured-title {
         font-size: 1.25rem;
         margin-bottom: 10px;

@@ -46,9 +46,9 @@ class MaterialInline(admin.TabularInline):
 class CourseAdmin(admin.ModelAdmin):
     """Курси 🧪 BETA"""
     form = CourseAdminForm
-    list_display = ('title', 'price', 'is_featured', 'is_published', 
+    list_display = ('title', 'price', 'has_discount', 'is_top_seller', 'is_featured', 'is_published', 
                    'view_count', 'enrollment_count', 'created_at')
-    list_filter = ('is_featured', 'is_free', 'is_published', 
+    list_filter = ('is_featured', 'is_free', 'is_published', 'has_discount', 'is_top_seller',
                   'requires_subscription', 'created_at')
     search_fields = ('title', 'slug', 'description', 'author')
     prepopulated_fields = {'slug': ('title',)}
@@ -85,6 +85,16 @@ class CourseAdmin(admin.ModelAdmin):
         ('Зовнішні посилання', {
             'fields': ('external_join_url',),
             'description': 'Якщо не вказано, використовується URL за замовчуванням з налаштувань'
+        }),
+        ('🏷️ Бейджі та знижки', {
+            'fields': ('has_discount', 'discount_percent', 'is_top_seller'),
+            'description': '''
+                <div style="background: #f0f8ff; padding: 12px; border-left: 4px solid #2196F3; margin: 10px 0;">
+                    <p><strong>✅ Знижка:</strong> Активуйте "Знижка активна" та вкажіть відсоток (1-99%)</p>
+                    <p><strong>🔴 Топ продажів:</strong> Активуйте для відображення червоного бейджу</p>
+                    <p>💡 Можна використовувати обидва бейджі одночасно</p>
+                </div>
+            '''
         }),
         ('Статус та відображення', {
             'fields': ('is_featured', 'is_published', 'published_at')

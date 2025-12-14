@@ -43,11 +43,45 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
 }
 
 .hub-product-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px var(--hub-shadow);
+}
+
+/* Контейнер для бейджів */
+.hub-product-badges {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+}
+
+/* Базовий стиль бейджу */
+.hub-badge {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+/* Зелений бейдж - Знижка */
+.hub-badge-discount {
+    background: #4CAF50;
+}
+
+/* Червоний бейдж - Топ продажів */
+.hub-badge-top {
+    background: #E50914;
 }
 
 /* Header з назвою та сердечком */
@@ -156,6 +190,37 @@
 .hub-product-price .price-value {
     font-weight: 700;
     color: var(--hub-primary);
+}
+
+/* Ціна зі знижкою */
+.hub-product-price.has-discount {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.hub-price-old {
+    font-size: 0.75rem;
+    color: var(--hub-text-light);
+    text-decoration: line-through;
+    font-weight: 400;
+}
+
+.hub-price-new {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5px;
+}
+
+.hub-price-new .price-label {
+    font-weight: 400;
+    color: var(--hub-primary);
+}
+
+.hub-price-new .price-value {
+    font-weight: 700;
+    color: var(--hub-primary);
+    font-size: 1.1rem;
 }
 
 .hub-product-desc {
@@ -303,6 +368,19 @@
     .hub-product-body {
         padding: 6px;
         gap: 3px;
+    }
+    
+    .hub-badge {
+        font-size: 0.625rem;
+        padding: 3px 8px;
+    }
+    
+    .hub-price-old {
+        font-size: 0.625rem;
+    }
+    
+    .hub-price-new .price-value {
+        font-size: 1rem;
     }
 }
 
