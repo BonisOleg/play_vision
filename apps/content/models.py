@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.conf import settings
+from decimal import Decimal
 
 
 class Course(models.Model):
@@ -165,7 +166,7 @@ class Course(models.Model):
     def get_discounted_price(self):
         """Обчислити ціну зі знижкою"""
         if self.has_discount and self.discount_percent > 0:
-            discount_amount = self.price * (self.discount_percent / 100)
+            discount_amount = self.price * (Decimal(self.discount_percent) / Decimal('100'))
             return self.price - discount_amount
         return self.price
     
