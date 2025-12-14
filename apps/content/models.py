@@ -129,6 +129,18 @@ class Course(models.Model):
         db_index=True,
         help_text='Показати бейдж "Топ продажів"'
     )
+    is_coming_soon = models.BooleanField(
+        'Незабаром',
+        default=False,
+        db_index=True,
+        help_text='Показати бейдж "Незабаром"'
+    )
+    is_new = models.BooleanField(
+        'Новинка',
+        default=False,
+        db_index=True,
+        help_text='Показати бейдж "Новинка"'
+    )
     
     class Meta:
         db_table = 'courses'

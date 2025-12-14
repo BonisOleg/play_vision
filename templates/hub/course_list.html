@@ -115,7 +115,7 @@
                         {% for course in featured_courses %}
                         <article class="hub-featured-card">
                             <!-- Бейджі для featured -->
-                            {% if course.has_discount or course.is_top_seller %}
+                            {% if course.has_discount or course.is_top_seller or course.is_coming_soon or course.is_new %}
                             <div class="hub-featured-badges">
                                 {% if course.has_discount and course.discount_percent > 0 %}
                                 <span class="hub-badge hub-badge-discount">
@@ -126,6 +126,18 @@
                                 {% if course.is_top_seller %}
                                 <span class="hub-badge hub-badge-top">
                                     Топ продажів
+                                </span>
+                                {% endif %}
+                                
+                                {% if course.is_coming_soon %}
+                                <span class="hub-badge hub-badge-coming-soon">
+                                    Незабаром
+                                </span>
+                                {% endif %}
+                                
+                                {% if course.is_new %}
+                                <span class="hub-badge hub-badge-new">
+                                    Новинка
                                 </span>
                                 {% endif %}
                             </div>

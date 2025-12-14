@@ -84,6 +84,16 @@
     background: #E50914;
 }
 
+/* Синій бейдж - Незабаром */
+.hub-badge-coming-soon {
+    background: #2196F3;
+}
+
+/* Фіолетовий бейдж - Новинка */
+.hub-badge-new {
+    background: #8B5CF6;
+}
+
 /* Header з назвою та сердечком */
 .hub-product-header {
     display: flex;
