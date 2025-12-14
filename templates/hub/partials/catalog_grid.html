@@ -89,6 +89,11 @@
             <div class="hub-product-subscription">
                 Доступно з підпискою: C-VISION, B-VISION, A-VISION, PRO-VISION
             </div>
+            {% elif course.subscription_text %}
+            <div class="hub-product-divider"></div>
+            <div class="hub-product-subscription">
+                {{ course.subscription_text }}
+            </div>
             {% endif %}
         </div>
     </article>

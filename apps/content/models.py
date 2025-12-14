@@ -41,6 +41,13 @@ class Course(models.Model):
     is_free = models.BooleanField(default=False)
     requires_subscription = models.BooleanField(default=True)
     subscription_tiers = models.JSONField(default=list, help_text='List of allowed subscription tiers')
+    subscription_text = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        verbose_name='Текст про підписку',
+        help_text='Кастомний текст, який відображається на картці курсу коли галочка "Доступно за підпискою" не обрана'
+    )
     
     # Media
     thumbnail = models.ImageField(upload_to='course_thumbnails/', max_length=500)

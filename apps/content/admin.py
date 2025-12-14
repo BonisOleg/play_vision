@@ -63,7 +63,7 @@ class CourseAdmin(admin.ModelAdmin):
             'fields': ('short_description', 'description')
         }),
         ('Ціна та доступ', {
-            'fields': ('price', 'is_free', 'requires_subscription', 'subscription_tiers')
+            'fields': ('price', 'is_free', 'requires_subscription', 'subscription_tiers', 'subscription_text')
         }),
         ('Медіа', {
             'fields': ('thumbnail', 'logo', 'promo_video_file', 'promo_video_bunny_id', 
