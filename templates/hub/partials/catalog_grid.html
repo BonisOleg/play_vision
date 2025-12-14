@@ -76,19 +76,21 @@
                 <span class="btn-logo-space"></span>
             </a>
 
-            {% if course.subscription_tiers and course.subscription_tiers|length > 0 %}
-            <div class="hub-product-divider"></div>
-            <div class="hub-product-subscription">
-                Краще з підпискою:
-                {% for tier in course.subscription_tiers %}
-                {{ tier|upper }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </div>
-            {% elif course.requires_subscription %}
-            <div class="hub-product-divider"></div>
-            <div class="hub-product-subscription">
-                Доступно з підпискою: C-VISION, B-VISION, A-VISION, PRO-VISION
-            </div>
+            {% if course.requires_subscription %}
+                {% if course.subscription_tiers and course.subscription_tiers|length > 0 %}
+                <div class="hub-product-divider"></div>
+                <div class="hub-product-subscription">
+                    Краще з підпискою:
+                    {% for tier in course.subscription_tiers %}
+                    {{ tier|upper }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="hub-product-divider"></div>
+                <div class="hub-product-subscription">
+                    Доступно з підпискою: C-VISION, B-VISION, A-VISION, PRO-VISION
+                </div>
+                {% endif %}
             {% elif course.subscription_text %}
             <div class="hub-product-divider"></div>
             <div class="hub-product-subscription">
