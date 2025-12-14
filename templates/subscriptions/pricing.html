@@ -53,7 +53,7 @@
         <div class="plans-container">
             <div class="plans-grid" id="plans-grid">
                 {% for plan in plans %}
-                <div class="plan-card {% if plan.is_popular %}plan-card--popular{% endif %} {% if 'PRO' in plan.name.upper %}plan-card--coming-soon{% endif %}" 
+                <div class="plan-card {% if plan.is_popular %}plan-card--popular{% endif %} {% if 'PRO' in plan.name.upper or 'A-VISION' in plan.name.upper or 'A VISION' in plan.name.upper %}plan-card--coming-soon{% endif %}" 
                      data-plan-id="{{ plan.id }}">
                     
                     <!-- Badge -->
@@ -64,7 +64,7 @@
                     {% endif %}
 
                     <!-- Coming Soon Overlay -->
-                    {% if 'PRO' in plan.name.upper %}
+                    {% if 'PRO' in plan.name.upper or 'A-VISION' in plan.name.upper or 'A VISION' in plan.name.upper %}
                     <div class="plan-card-overlay plan-card-overlay--coming-soon">
                         <div class="coming-soon-content">
                             <div class="coming-soon-icon">🚀</div>

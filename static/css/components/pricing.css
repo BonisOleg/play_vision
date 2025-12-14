@@ -549,6 +549,11 @@
         font-size: 26px;
         margin-bottom: 24px;
     }
+
+    /* OVERLAY - позиція для mobile */
+    .plan-card-overlay {
+        top: calc(20px + 26px + 24px); /* padding (20px) + font-size (26px) + margin-bottom (24px) = 70px */
+    }
     
     /* ХАРАКТЕРИСТИКИ - компактніші */
     .plan-features {
@@ -639,6 +644,11 @@
         font-size: 24px;
         margin-bottom: 20px;
     }
+
+    /* OVERLAY - позиція для small mobile */
+    .plan-card-overlay {
+        top: calc(18px + 24px + 20px); /* padding (18px) + font-size (24px) + margin-bottom (20px) = 62px */
+    }
     
     /* ХАРАКТЕРИСТИКИ */
     .feature-item {
@@ -723,11 +733,11 @@
 /* === COMING SOON OVERLAY === */
 .plan-card-overlay {
     position: absolute;
-    top: 0;
+    top: 96px; /* Після назви плану: padding-top (32px) + font-size (30px) + margin-bottom (34px) */
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: var(--pricing-radius);
+    border-radius: 0 0 var(--pricing-radius) var(--pricing-radius); /* Закруглення тільки знизу */
     z-index: 20; /* Вище за badge (який без z-index) та контент */
     pointer-events: auto; /* Блокує кліки на картці */
     display: flex;
@@ -757,6 +767,8 @@
 .coming-soon-content {
     text-align: center;
     padding: 24px; /* Замість var(--spacing-lg) для сумісності */
+    margin-top: auto; /* Вирівняти по центру вертикально */
+    margin-bottom: auto;
 }
 
 .coming-soon-icon {

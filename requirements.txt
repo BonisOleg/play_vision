@@ -43,3 +43,6 @@ git+https://github.com/liqpay/sdk-python.git
 
 # GeoIP
 geoip2==4.7.0
+
+# SVG to PNG conversion for icon generation
+cairosvg==2.7.1
