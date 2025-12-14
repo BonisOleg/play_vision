@@ -54,11 +54,6 @@
     text-transform: uppercase;
 }
 
-.badge-featured {
-    background: var(--color-primary);
-    color: white;
-}
-
 .course-title {
     font-size: var(--font-size-3xl);
     font-weight: 700;

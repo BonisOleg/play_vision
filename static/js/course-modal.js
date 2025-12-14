@@ -120,8 +120,6 @@
 
             const hasMeta = audienceHtml.trim() !== '';
 
-            const badgeHtml = data.featured && isMobile ? '<span class="badge badge-featured">топ-продажів</span>' : '';
-
             const readMoreBtnHtml = isMobile ? `
                         <button type="button" class="read-more-btn" id="read-more-btn">
                             <span class="read-more-text">Читати далі</span>
@@ -145,8 +143,6 @@
                             <span>/</span>
                             <span>${this.escapeHtml(data.title)}</span>
                         </nav>
-
-                        ${badgeHtml}
 
                         <h2 class="course-modal-title" id="course-modal-title">${this.escapeHtml(data.title)}</h2>
 

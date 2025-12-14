@@ -39,10 +39,6 @@
     flex-wrap: wrap;
 }
 
-.badge-featured {
-    background: var(--hub-primary);
-}
-
 .badge-free {
     background: #4caf50;
 }

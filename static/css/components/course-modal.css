@@ -152,18 +152,6 @@
     text-transform: uppercase;
 }
 
-.badge-featured {
-    background: var(--color-primary);
-    color: white;
-}
-
-/* Приховати badge-featured на десктопі (запасний варіант) */
-@media (min-width: 768px) {
-    .course-modal .badge-featured {
-        display: none;
-    }
-}
-
 .course-modal-title {
     font-size: var(--font-size-3xl);
     font-weight: 700;
@@ -571,14 +559,6 @@
 
     .course-modal-actions .btn:active {
         transform: translateY(0);
-    }
-
-    /* Badge */
-    .badge-featured {
-        font-size: 0.625rem;
-        font-family: 'Roboto', sans-serif;
-        padding: 4px 12px;
-        margin-bottom: var(--spacing-xs);
     }
 }
 
