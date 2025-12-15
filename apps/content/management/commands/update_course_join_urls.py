@@ -159,7 +159,8 @@ class Command(BaseCommand):
             },
             {
                 'title': 'Стандарти - як недооцінений інструмент в українському футболі',
-                'url': 'https://edu.playvision.com.ua/o/fwsOV8rWtwM9/payment/2756'
+                'url': 'https://edu.playvision.com.ua/o/fwsOV8rWtwM9/payment/2756',
+                'search_keywords': ['Стандарти', 'недооцінений', 'інструмент']  # Додаткові ключові слова для пошуку
             },
             {
                 'title': 'Побудова команди з нуля в Україні та за кордоном',
@@ -178,6 +179,7 @@ class Command(BaseCommand):
         for course_data in courses_data:
             title = course_data['title']
             url = course_data['url']
+            search_keywords = course_data.get('search_keywords', [])
 
             # Спочатку точний пошук (case-insensitive)
             courses = Course.objects.filter(title__iexact=title)
@@ -185,12 +187,49 @@ class Command(BaseCommand):
             # Якщо не знайдено - частковий пошук
             if not courses.exists():
                 courses = Course.objects.filter(title__icontains=title)
+            
+            # Якщо все ще не знайдено - спробувати пошук без зайвих пробілів та з нормалізацією дефісів
+            if not courses.exists():
+                # Нормалізувати назву: видалити зайві пробіли, замінити різні типи дефісів на стандартний
+                normalized_title = title.strip().replace('—', '-').replace('–', '-').replace('−', '-')
+                normalized_title = ' '.join(normalized_title.split())  # Нормалізувати пробіли
+                courses = Course.objects.filter(title__iexact=normalized_title)
+                
+                # Якщо все ще не знайдено - частковий пошук з нормалізованою назвою
+                if not courses.exists():
+                    # Використати ключові слова для пошуку (якщо вказані в даних, або з назви)
+                    keywords = search_keywords if search_keywords else [word.strip() for word in normalized_title.split() if len(word.strip()) > 3]
+                    if keywords:
+                        from django.db.models import Q
+                        query = Q()
+                        for keyword in keywords[:3]:  # Використати перші 3 ключові слова
+                            query |= Q(title__icontains=keyword)
+                        courses = Course.objects.filter(query)
 
             if courses.count() == 0:
-                not_found.append(title)
-                self.stdout.write(
-                    self.style.WARNING(f'  ⚠ Не знайдено: {title}')
-                )
+                # Остання спроба - пошук за ключовим словом "Стандарти" для цього конкретного курсу
+                if 'Стандарти' in title:
+                    courses = Course.objects.filter(title__icontains='Стандарти')
+                    if courses.exists():
+                        # Знайти найбільш схожий курс
+                        for course in courses:
+                            if 'недооцінений' in course.title.lower() or 'інструмент' in course.title.lower():
+                                courses = Course.objects.filter(id=course.id)
+                                break
+                
+                if courses.count() == 0:
+                    not_found.append(title)
+                    self.stdout.write(
+                        self.style.WARNING(f'  ⚠ Не знайдено: {title}')
+                    )
+                    # Для дебагу - показати схожі назви
+                    similar = Course.objects.filter(title__icontains=title[:20] if len(title) > 20 else title)
+                    if similar.exists():
+                        self.stdout.write(
+                            self.style.WARNING(f'     Схожі назви в базі:')
+                        )
+                        for sim in similar[:3]:
+                            self.stdout.write(f'       - "{sim.title}"')
             elif courses.count() == 1:
                 course = courses.first()
                 old_url = course.external_join_url

@@ -18,16 +18,12 @@ class CourseListView(ListView):
     paginate_by = 12
     
     def get_template_names(self):
-        """Select template based on domain and request type"""
-        # Пріоритет 1: HTMX запит (пагінація, фільтри, пошук) - тільки фрагмент каталогу
+        """Select template based on request type"""
+        # HTMX запит (пагінація, фільтри, пошук) - тільки фрагмент каталогу
         if 'HTTP_HX_REQUEST' in self.request.META:
             return ['hub/partials/catalog_grid.html']
         
-        # Пріоритет 2: Landing домен (playvision.com.ua) - спрощена версія
-        if getattr(self.request, 'is_com_ua_domain', False):
-            return ['hub/course_list_landing.html']
-        
-        # Пріоритет 3: Звичайний запит на onrender - повна версія з hero/carousel
+        # Звичайний запит - повна версія з hero/carousel
         return ['hub/course_list.html']
     
     def get_queryset(self) -> QuerySet[Course]:

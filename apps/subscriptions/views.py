@@ -12,12 +12,6 @@ class PricingView(TemplateView):
     """
     template_name = 'subscriptions/pricing.html'
     
-    def get_template_names(self):
-        """Select template based on domain"""
-        if getattr(self.request, 'is_com_ua_domain', False):
-            return ['subscriptions/pricing_landing.html']  # Landing для com.ua
-        return ['subscriptions/pricing.html']  # Повна версія для onrender
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         

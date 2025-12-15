@@ -304,7 +304,7 @@ class DomainRoutingMiddleware:
 class LandingDomainRestrictionMiddleware:
     """
     Блокує /submit/ для non-landing domains.
-    Сторінки /mentor-coaching/, /hub/, /pricing/ тепер мають власні Landing-подібні шаблони.
+    Landing заглушка залишилась тільки на сторінці /mentor-coaching/.
     """
     
     def __init__(self, get_response):
