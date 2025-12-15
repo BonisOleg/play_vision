@@ -170,6 +170,46 @@ class Command(BaseCommand):
                 'title': 'Скаутинг в ФК "Колос": специфіка діяльності селекційного відділу',
                 'url': 'https://edu.playvision.com.ua/o/lqaKWirs8G1q/payment/2756'
             },
+            {
+                'title': 'Як розпізнати воротаря на ранньому етапі кар\'єри',
+                'url': 'https://edu.playvision.com.ua/o/q19ghptgXwvQ/payment/2756'
+            },
+            {
+                'title': 'Ментальний фундамент майбутнього чемпіона',
+                'url': 'https://edu.playvision.com.ua/o/dkwEYCrK8jqa/payment/2756'
+            },
+            {
+                'title': 'Особистий бренд та шлях топ-тренера',
+                'url': 'https://edu.playvision.com.ua/o/y5iZGpHUDB6k/payment/2756'
+            },
+            {
+                'title': 'Як виростити чемпіона та не зламати його',
+                'url': 'https://edu.playvision.com.ua/o/8zSs9lGjtfb4/payment/2756'
+            },
+            {
+                'title': 'Інтенсивність в тренувальному процесі',
+                'url': 'https://edu.playvision.com.ua/o/HE1ubBnW6SXy/payment/2756'
+            },
+            {
+                'title': 'Відеозапис "Форуму футбольних фахівців. №4"',
+                'url': 'https://edu.playvision.com.ua/o/iy6tkpljgLhp/payment/2756'
+            },
+            {
+                'title': 'Відеозапис "Форуму футбольних фахівців. №3"',
+                'url': 'https://edu.playvision.com.ua/o/nwI8TR23WrYb/payment/2756'
+            },
+            {
+                'title': 'Відеозапис "Форуму футбольних фахівців. №2"',
+                'url': 'https://edu.playvision.com.ua/o/tpNDfLwfeLX6/payment/2756'
+            },
+            {
+                'title': 'Відеозапис "Форуму футбольних фахівців. №1"',
+                'url': 'https://edu.playvision.com.ua/o/KV8g4Wh8xZRs/payment/2756'
+            },
+            {
+                'title': 'Вплив фізичної терапії на кар\'єру професійного футболіста',
+                'url': 'https://edu.playvision.com.ua/o/qJxNooOR9KDw/payment/2756'
+            },
         ]
 
         updated_count = 0
