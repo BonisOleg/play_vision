@@ -309,30 +309,25 @@ class HubHeroAdmin(admin.ModelAdmin):
     """Hero секція - Хаб знань"""
     
     fieldsets = (
-        ('Фонове зображення', {
+        ('Загальне фонове зображення (fallback)', {
             'fields': ('background_image',),
-            'description': 'Завантажити фонове зображення для Hero секції'
+            'description': 'Використовується як fallback, якщо для слайда не вказано окремий бекграунд'
         }),
-        ('🇺🇦 Заголовок 1 (Україна)', {
-            'fields': ('title_1_ua', 'subtitle_1_ua')
+        ('📌 Слайд 1', {
+            'fields': ('title_1_ua', 'subtitle_1_ua', 'title_1_world', 'subtitle_1_world', 'background_image_1', 'background_video_1'),
+            'description': 'Перший слайд - обов\'язковий'
         }),
-        ('🌍 Заголовок 1 (Світ)', {
-            'fields': ('title_1_world', 'subtitle_1_world'),
-            'classes': ('collapse',)
+        ('📌 Слайд 2', {
+            'fields': ('title_2_ua', 'subtitle_2_ua', 'title_2_world', 'subtitle_2_world', 'background_image_2', 'background_video_2'),
         }),
-        ('🇺🇦 Заголовок 2 (Україна)', {
-            'fields': ('title_2_ua', 'subtitle_2_ua')
+        ('📌 Слайд 3', {
+            'fields': ('title_3_ua', 'subtitle_3_ua', 'title_3_world', 'subtitle_3_world', 'background_image_3', 'background_video_3'),
         }),
-        ('🌍 Заголовок 2 (Світ)', {
-            'fields': ('title_2_world', 'subtitle_2_world'),
-            'classes': ('collapse',)
+        ('📌 Слайд 4', {
+            'fields': ('title_4_ua', 'subtitle_4_ua', 'title_4_world', 'subtitle_4_world', 'background_image_4', 'background_video_4'),
         }),
-        ('🇺🇦 Заголовок 3 (Україна)', {
-            'fields': ('title_3_ua', 'subtitle_3_ua')
-        }),
-        ('🌍 Заголовок 3 (Світ)', {
-            'fields': ('title_3_world', 'subtitle_3_world'),
-            'classes': ('collapse',)
+        ('📌 Слайд 5', {
+            'fields': ('title_5_ua', 'subtitle_5_ua', 'title_5_world', 'subtitle_5_world', 'background_image_5', 'background_video_5'),
         }),
         ('Налаштування', {
             'fields': ('is_active',)

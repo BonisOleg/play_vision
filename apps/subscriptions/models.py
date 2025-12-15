@@ -235,6 +235,108 @@ class SubscriptionPlan(models.Model):
         blank=True
     )
     
+    # Переваги за періодами (monthly)
+    feature_1_monthly = models.CharField(max_length=200, verbose_name='Перевага 1 (місяць)', blank=True)
+    feature_2_monthly = models.CharField(max_length=200, verbose_name='Перевага 2 (місяць)', blank=True)
+    feature_3_monthly = models.CharField(max_length=200, verbose_name='Перевага 3 (місяць)', blank=True)
+    feature_4_monthly = models.CharField(max_length=200, verbose_name='Перевага 4 (місяць)', blank=True)
+    feature_5_monthly = models.CharField(max_length=200, verbose_name='Перевага 5 (місяць)', blank=True)
+    feature_6_monthly = models.CharField(max_length=200, verbose_name='Перевага 6 (місяць)', blank=True)
+    feature_7_monthly = models.CharField(max_length=200, verbose_name='Перевага 7 (місяць)', blank=True)
+    feature_8_monthly = models.CharField(max_length=200, verbose_name='Перевага 8 (місяць)', blank=True)
+    feature_9_monthly = models.CharField(max_length=200, verbose_name='Перевага 9 (місяць)', blank=True)
+    feature_10_monthly = models.CharField(max_length=200, verbose_name='Перевага 10 (місяць)', blank=True)
+    feature_11_monthly = models.CharField(max_length=200, verbose_name='Перевага 11 (місяць)', blank=True)
+    feature_12_monthly = models.CharField(max_length=200, verbose_name='Перевага 12 (місяць)', blank=True)
+    feature_13_monthly = models.CharField(max_length=200, verbose_name='Перевага 13 (місяць)', blank=True)
+    feature_14_monthly = models.CharField(max_length=200, verbose_name='Перевага 14 (місяць)', blank=True)
+    feature_15_monthly = models.CharField(max_length=200, verbose_name='Перевага 15 (місяць)', blank=True)
+    feature_16_monthly = models.CharField(max_length=200, verbose_name='Перевага 16 (місяць)', blank=True)
+    feature_17_monthly = models.CharField(max_length=200, verbose_name='Перевага 17 (місяць)', blank=True)
+    feature_18_monthly = models.CharField(max_length=200, verbose_name='Перевага 18 (місяць)', blank=True)
+    feature_19_monthly = models.CharField(max_length=200, verbose_name='Перевага 19 (місяць)', blank=True)
+    feature_20_monthly = models.CharField(max_length=200, verbose_name='Перевага 20 (місяць)', blank=True)
+    feature_21_monthly = models.CharField(max_length=200, verbose_name='Перевага 21 (місяць)', blank=True)
+    feature_22_monthly = models.CharField(max_length=200, verbose_name='Перевага 22 (місяць)', blank=True)
+    feature_23_monthly = models.CharField(max_length=200, verbose_name='Перевага 23 (місяць)', blank=True)
+    feature_24_monthly = models.CharField(max_length=200, verbose_name='Перевага 24 (місяць)', blank=True)
+    feature_25_monthly = models.CharField(max_length=200, verbose_name='Перевага 25 (місяць)', blank=True)
+    feature_26_monthly = models.CharField(max_length=200, verbose_name='Перевага 26 (місяць)', blank=True)
+    feature_27_monthly = models.CharField(max_length=200, verbose_name='Перевага 27 (місяць)', blank=True)
+    feature_28_monthly = models.CharField(max_length=200, verbose_name='Перевага 28 (місяць)', blank=True)
+    feature_29_monthly = models.CharField(max_length=200, verbose_name='Перевага 29 (місяць)', blank=True)
+    feature_30_monthly = models.CharField(max_length=200, verbose_name='Перевага 30 (місяць)', blank=True)
+    
+    # Переваги за періодами (3_months)
+    feature_1_3months = models.CharField(max_length=200, verbose_name='Перевага 1 (3 міс)', blank=True)
+    feature_2_3months = models.CharField(max_length=200, verbose_name='Перевага 2 (3 міс)', blank=True)
+    feature_3_3months = models.CharField(max_length=200, verbose_name='Перевага 3 (3 міс)', blank=True)
+    feature_4_3months = models.CharField(max_length=200, verbose_name='Перевага 4 (3 міс)', blank=True)
+    feature_5_3months = models.CharField(max_length=200, verbose_name='Перевага 5 (3 міс)', blank=True)
+    feature_6_3months = models.CharField(max_length=200, verbose_name='Перевага 6 (3 міс)', blank=True)
+    feature_7_3months = models.CharField(max_length=200, verbose_name='Перевага 7 (3 міс)', blank=True)
+    feature_8_3months = models.CharField(max_length=200, verbose_name='Перевага 8 (3 міс)', blank=True)
+    feature_9_3months = models.CharField(max_length=200, verbose_name='Перевага 9 (3 міс)', blank=True)
+    feature_10_3months = models.CharField(max_length=200, verbose_name='Перевага 10 (3 міс)', blank=True)
+    feature_11_3months = models.CharField(max_length=200, verbose_name='Перевага 11 (3 міс)', blank=True)
+    feature_12_3months = models.CharField(max_length=200, verbose_name='Перевага 12 (3 міс)', blank=True)
+    feature_13_3months = models.CharField(max_length=200, verbose_name='Перевага 13 (3 міс)', blank=True)
+    feature_14_3months = models.CharField(max_length=200, verbose_name='Перевага 14 (3 міс)', blank=True)
+    feature_15_3months = models.CharField(max_length=200, verbose_name='Перевага 15 (3 міс)', blank=True)
+    feature_16_3months = models.CharField(max_length=200, verbose_name='Перевага 16 (3 міс)', blank=True)
+    feature_17_3months = models.CharField(max_length=200, verbose_name='Перевага 17 (3 міс)', blank=True)
+    feature_18_3months = models.CharField(max_length=200, verbose_name='Перевага 18 (3 міс)', blank=True)
+    feature_19_3months = models.CharField(max_length=200, verbose_name='Перевага 19 (3 міс)', blank=True)
+    feature_20_3months = models.CharField(max_length=200, verbose_name='Перевага 20 (3 міс)', blank=True)
+    feature_21_3months = models.CharField(max_length=200, verbose_name='Перевага 21 (3 міс)', blank=True)
+    feature_22_3months = models.CharField(max_length=200, verbose_name='Перевага 22 (3 міс)', blank=True)
+    feature_23_3months = models.CharField(max_length=200, verbose_name='Перевага 23 (3 міс)', blank=True)
+    feature_24_3months = models.CharField(max_length=200, verbose_name='Перевага 24 (3 міс)', blank=True)
+    feature_25_3months = models.CharField(max_length=200, verbose_name='Перевага 25 (3 міс)', blank=True)
+    feature_26_3months = models.CharField(max_length=200, verbose_name='Перевага 26 (3 міс)', blank=True)
+    feature_27_3months = models.CharField(max_length=200, verbose_name='Перевага 27 (3 міс)', blank=True)
+    feature_28_3months = models.CharField(max_length=200, verbose_name='Перевага 28 (3 міс)', blank=True)
+    feature_29_3months = models.CharField(max_length=200, verbose_name='Перевага 29 (3 міс)', blank=True)
+    feature_30_3months = models.CharField(max_length=200, verbose_name='Перевага 30 (3 міс)', blank=True)
+    
+    # Знижки з таймерами
+    discount_monthly_percentage = models.IntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        verbose_name='Знижка на місяць (%)',
+        help_text='Відсоток знижки для місячної підписки'
+    )
+    discount_monthly_start_date = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name='Початок знижки (місяць)',
+        help_text='Дата початку дії знижки'
+    )
+    discount_monthly_end_date = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name='Кінець знижки (місяць)',
+        help_text='Дата закінчення дії знижки'
+    )
+    discount_3months_percentage = models.IntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        verbose_name='Знижка на 3 місяці (%)',
+        help_text='Відсоток знижки для 3-місячної підписки'
+    )
+    discount_3months_start_date = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name='Початок знижки (3 міс)',
+        help_text='Дата початку дії знижки'
+    )
+    discount_3months_end_date = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name='Кінець знижки (3 міс)',
+        help_text='Дата закінчення дії знижки'
+    )
+    
     # Ціноутворення
     base_price_uah = models.DecimalField(
         max_digits=10,
@@ -343,18 +445,82 @@ class SubscriptionPlan(models.Model):
     def __str__(self):
         return self.name
     
-    def get_features(self):
-        """Повертає список заповнених переваг"""
+    def get_features(self, period='monthly'):
+        """
+        Повертає список заповнених переваг для конкретного періоду
+        
+        Args:
+            period: 'monthly' або '3_months'
+        
+        Returns:
+            list: Список заповнених переваг
+        """
         features = []
+        period_suffix = 'monthly' if period == 'monthly' else '3months'
+        
         for i in range(1, 31):
-            feature = getattr(self, f'feature_{i}', '')
+            feature = getattr(self, f'feature_{i}_{period_suffix}', '')
             if feature:
                 features.append(feature)
+        
+        # Fallback на старі поля якщо нові не заповнені
+        if not features:
+            for i in range(1, 31):
+                feature = getattr(self, f'feature_{i}', '')
+                if feature:
+                    features.append(feature)
+        
         return features
+    
+    def get_active_discount(self, period):
+        """
+        Повертає активну знижку для періоду (якщо таймер активний)
+        
+        Args:
+            period: 'monthly' або '3_months'
+        
+        Returns:
+            int: Відсоток знижки або 0
+        """
+        now = timezone.now()
+        
+        if period == 'monthly':
+            if (self.discount_monthly_start_date and 
+                self.discount_monthly_end_date and
+                self.discount_monthly_start_date <= now <= self.discount_monthly_end_date):
+                return self.discount_monthly_percentage
+        elif period == '3_months':
+            if (self.discount_3months_start_date and 
+                self.discount_3months_end_date and
+                self.discount_3months_start_date <= now <= self.discount_3months_end_date):
+                return self.discount_3months_percentage
+        
+        return 0
+    
+    def get_discount_time_left(self, period):
+        """
+        Повертає час до закінчення знижки
+        
+        Args:
+            period: 'monthly' або '3_months'
+        
+        Returns:
+            timedelta або None
+        """
+        now = timezone.now()
+        
+        if period == 'monthly':
+            if self.discount_monthly_end_date and self.discount_monthly_end_date > now:
+                return self.discount_monthly_end_date - now
+        elif period == '3_months':
+            if self.discount_3months_end_date and self.discount_3months_end_date > now:
+                return self.discount_3months_end_date - now
+        
+        return None
     
     def calculate_price(self, period, currency='uah'):
         """
-        Розраховує ціну з урахуванням періоду та знижки
+        Розраховує ціну з урахуванням періоду та знижки (включаючи таймер)
         
         Args:
             period: 'monthly', '3_months', '12_months'
@@ -368,10 +534,22 @@ class SubscriptionPlan(models.Model):
         base_price = self.base_price_uah if currency == 'uah' else self.base_price_usd
         
         if period == 'monthly':
-            return base_price
+            price = base_price
+            # Перевіряємо активну знижку з таймером
+            active_discount = self.get_active_discount('monthly')
+            if active_discount > 0:
+                discount = Decimal(str(active_discount))
+                return price * (Decimal('1') - discount / Decimal('100'))
+            return price
         
         elif period == '3_months':
             full_price = base_price * 3
+            # Спочатку перевіряємо активну знижку з таймером
+            active_discount = self.get_active_discount('3_months')
+            if active_discount > 0:
+                discount = Decimal(str(active_discount))
+                return full_price * (Decimal('1') - discount / Decimal('100'))
+            # Fallback на стару знижку
             discount = Decimal(str(self.discount_3_months))
             return full_price * (Decimal('1') - discount / Decimal('100'))
         

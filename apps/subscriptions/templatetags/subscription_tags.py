@@ -50,7 +50,7 @@ def get_monthly_price(plan, period, currency='uah'):
 @register.filter
 def get_features_list(plan):
     """
-    Повертає список переваг плану
+    Повертає список переваг плану (backward compatibility)
     
     Args:
         plan: SubscriptionPlan object
@@ -59,9 +59,63 @@ def get_features_list(plan):
         list: Список переваг
     """
     try:
-        return plan.get_features()
+        return plan.get_features('monthly')
     except Exception:
         return []
+
+
+@register.simple_tag
+def get_features_for_period(plan, period='monthly'):
+    """
+    Повертає список переваг для конкретного періоду
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly' або '3_months'
+    
+    Returns:
+        list: Список переваг
+    """
+    try:
+        return plan.get_features(period)
+    except Exception:
+        return []
+
+
+@register.simple_tag
+def get_active_discount(plan, period='monthly'):
+    """
+    Повертає активну знижку для періоду
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly' або '3_months'
+    
+    Returns:
+        int: Відсоток знижки або 0
+    """
+    try:
+        return plan.get_active_discount(period)
+    except Exception:
+        return 0
+
+
+@register.simple_tag
+def get_discount_time_left(plan, period='monthly'):
+    """
+    Повертає час до закінчення знижки
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly' або '3_months'
+    
+    Returns:
+        timedelta або None
+    """
+    try:
+        return plan.get_discount_time_left(period)
+    except Exception:
+        return None
 
 
 @register.filter

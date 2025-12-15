@@ -20,6 +20,8 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
         'price_preview_uah',
         'price_preview_usd',
         'periods_available',
+        'discount_timer_monthly',
+        'discount_timer_3months',
         'is_popular',
         'is_active',
         'updated_at'
@@ -41,7 +43,29 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             'fields': ('badge_text', 'badge_color'),
             'description': 'Колірна мітка над картко тарифу'
         }),
-        ('Переваги (Features)', {
+        ('Переваги для місячної підписки', {
+            'fields': (
+                'feature_1_monthly', 'feature_2_monthly', 'feature_3_monthly', 'feature_4_monthly', 'feature_5_monthly',
+                'feature_6_monthly', 'feature_7_monthly', 'feature_8_monthly', 'feature_9_monthly', 'feature_10_monthly',
+                'feature_11_monthly', 'feature_12_monthly', 'feature_13_monthly', 'feature_14_monthly', 'feature_15_monthly',
+                'feature_16_monthly', 'feature_17_monthly', 'feature_18_monthly', 'feature_19_monthly', 'feature_20_monthly',
+                'feature_21_monthly', 'feature_22_monthly', 'feature_23_monthly', 'feature_24_monthly', 'feature_25_monthly',
+                'feature_26_monthly', 'feature_27_monthly', 'feature_28_monthly', 'feature_29_monthly', 'feature_30_monthly',
+            ),
+            'description': 'Переваги для місячної підписки. На сторінці відображаються тільки заповнені переваги.'
+        }),
+        ('Переваги для 3-місячної підписки', {
+            'fields': (
+                'feature_1_3months', 'feature_2_3months', 'feature_3_3months', 'feature_4_3months', 'feature_5_3months',
+                'feature_6_3months', 'feature_7_3months', 'feature_8_3months', 'feature_9_3months', 'feature_10_3months',
+                'feature_11_3months', 'feature_12_3months', 'feature_13_3months', 'feature_14_3months', 'feature_15_3months',
+                'feature_16_3months', 'feature_17_3months', 'feature_18_3months', 'feature_19_3months', 'feature_20_3months',
+                'feature_21_3months', 'feature_22_3months', 'feature_23_3months', 'feature_24_3months', 'feature_25_3months',
+                'feature_26_3months', 'feature_27_3months', 'feature_28_3months', 'feature_29_3months', 'feature_30_3months',
+            ),
+            'description': 'Переваги для 3-місячної підписки. На сторінці відображаються тільки заповнені переваги.'
+        }),
+        ('Переваги (старі - для backward compatibility)', {
             'fields': (
                 'feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5',
                 'feature_6', 'feature_7', 'feature_8', 'feature_9', 'feature_10',
@@ -50,14 +74,22 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
                 'feature_21', 'feature_22', 'feature_23', 'feature_24', 'feature_25',
                 'feature_26', 'feature_27', 'feature_28', 'feature_29', 'feature_30',
             ),
-            'description': 'Заповніть переваги тарифу. Feature_1 обов\'язкова. На сторінці відображаються тільки заповнені переваги.'
+            'description': 'Старі переваги (будуть видалені після міграції). Використовуються як fallback якщо нові не заповнені.',
+            'classes': ('collapse',),
         }),
         ('Ціноутворення', {
             'fields': (
                 ('base_price_uah', 'base_price_usd'),
                 ('discount_3_months', 'discount_12_months'),
             ),
-            'description': 'Базова ціна за місяць + знижки у відсотках'
+            'description': 'Базова ціна за місяць + знижки у відсотках (старі поля)'
+        }),
+        ('Знижки з таймерами', {
+            'fields': (
+                ('discount_monthly_percentage', 'discount_monthly_start_date', 'discount_monthly_end_date'),
+                ('discount_3months_percentage', 'discount_3months_start_date', 'discount_3months_end_date'),
+            ),
+            'description': 'Знижки з таймерами. Автоматично застосовуються якщо поточна дата між start_date та end_date.'
         }),
         ('Доступні періоди', {
             'fields': (
@@ -164,6 +196,56 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             )
         return format_html('<span style="color: red;">✗ Немає доступних періодів</span>')
     periods_available.short_description = 'Доступні періоди'
+    
+    def discount_timer_monthly(self, obj):
+        """Показує таймер знижки для monthly"""
+        if not obj.discount_monthly_start_date or not obj.discount_monthly_end_date:
+            return format_html('<span style="color: gray;">Не налаштовано</span>')
+        
+        now = timezone.now()
+        if now < obj.discount_monthly_start_date:
+            time_left = obj.discount_monthly_start_date - now
+            return format_html(
+                '<span style="color: orange;">Починається через: {} днів</span>',
+                time_left.days
+            )
+        elif now <= obj.discount_monthly_end_date:
+            time_left = obj.discount_monthly_end_date - now
+            days = time_left.days
+            hours = time_left.seconds // 3600
+            minutes = (time_left.seconds % 3600) // 60
+            return format_html(
+                '<span style="color: green; font-weight: bold;">Активна! Залишилось: {}д {}г {}х ({})</span>',
+                days, hours, minutes, obj.discount_monthly_percentage
+            )
+        else:
+            return format_html('<span style="color: red;">Закінчилась</span>')
+    discount_timer_monthly.short_description = 'Таймер знижки (місяць)'
+    
+    def discount_timer_3months(self, obj):
+        """Показує таймер знижки для 3_months"""
+        if not obj.discount_3months_start_date or not obj.discount_3months_end_date:
+            return format_html('<span style="color: gray;">Не налаштовано</span>')
+        
+        now = timezone.now()
+        if now < obj.discount_3months_start_date:
+            time_left = obj.discount_3months_start_date - now
+            return format_html(
+                '<span style="color: orange;">Починається через: {} днів</span>',
+                time_left.days
+            )
+        elif now <= obj.discount_3months_end_date:
+            time_left = obj.discount_3months_end_date - now
+            days = time_left.days
+            hours = time_left.seconds // 3600
+            minutes = (time_left.seconds % 3600) // 60
+            return format_html(
+                '<span style="color: green; font-weight: bold;">Активна! Залишилось: {}д {}г {}х ({})</span>',
+                days, hours, minutes, obj.discount_3months_percentage
+            )
+        else:
+            return format_html('<span style="color: red;">Закінчилась</span>')
+    discount_timer_3months.short_description = 'Таймер знижки (3 міс)'
     
     def save_model(self, request, obj, form, change):
         """Зберігаємо з логуванням"""

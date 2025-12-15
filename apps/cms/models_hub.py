@@ -5,27 +5,49 @@ from django.db import models
 
 
 class HubHero(models.Model):
-    """Hero секція для Хаб знань - фон + 3 заголовки"""
-    # Фонове зображення
-    background_image = models.ImageField('Фонове зображення', upload_to='cms/hub/hero/', max_length=500)
+    """Hero секція для Хаб знань - фон + до 5 заголовків"""
+    # Загальне фонове зображення (fallback)
+    background_image = models.ImageField('Фонове зображення (загальне)', upload_to='cms/hub/hero/', max_length=500, blank=True, help_text='Використовується як fallback, якщо для слайда не вказано окремий бекграунд')
     
     # Заголовок 1 (UA/World)
     title_1_ua = models.CharField('Заголовок 1 (Україна)', max_length=200)
     subtitle_1_ua = models.CharField('Підзаголовок 1 (Україна)', max_length=300, blank=True)
     title_1_world = models.CharField('Заголовок 1 (Світ)', max_length=200, blank=True)
     subtitle_1_world = models.CharField('Підзаголовок 1 (Світ)', max_length=300, blank=True)
+    background_image_1 = models.ImageField('Бекграунд зображення 1', upload_to='cms/hub/hero/', max_length=500, blank=True, help_text='Рекомендовано: 1920×1080 px')
+    background_video_1 = models.FileField('Бекграунд відео 1', upload_to='cms/hub/hero/videos/', max_length=500, blank=True, help_text='MP4 формат')
     
     # Заголовок 2 (UA/World)
     title_2_ua = models.CharField('Заголовок 2 (Україна)', max_length=200, blank=True)
     subtitle_2_ua = models.CharField('Підзаголовок 2 (Україна)', max_length=300, blank=True)
     title_2_world = models.CharField('Заголовок 2 (Світ)', max_length=200, blank=True)
     subtitle_2_world = models.CharField('Підзаголовок 2 (Світ)', max_length=300, blank=True)
+    background_image_2 = models.ImageField('Бекграунд зображення 2', upload_to='cms/hub/hero/', max_length=500, blank=True, help_text='Рекомендовано: 1920×1080 px')
+    background_video_2 = models.FileField('Бекграунд відео 2', upload_to='cms/hub/hero/videos/', max_length=500, blank=True, help_text='MP4 формат')
     
     # Заголовок 3 (UA/World)
     title_3_ua = models.CharField('Заголовок 3 (Україна)', max_length=200, blank=True)
     subtitle_3_ua = models.CharField('Підзаголовок 3 (Україна)', max_length=300, blank=True)
     title_3_world = models.CharField('Заголовок 3 (Світ)', max_length=200, blank=True)
     subtitle_3_world = models.CharField('Підзаголовок 3 (Світ)', max_length=300, blank=True)
+    background_image_3 = models.ImageField('Бекграунд зображення 3', upload_to='cms/hub/hero/', max_length=500, blank=True, help_text='Рекомендовано: 1920×1080 px')
+    background_video_3 = models.FileField('Бекграунд відео 3', upload_to='cms/hub/hero/videos/', max_length=500, blank=True, help_text='MP4 формат')
+    
+    # Заголовок 4 (UA/World)
+    title_4_ua = models.CharField('Заголовок 4 (Україна)', max_length=200, blank=True)
+    subtitle_4_ua = models.CharField('Підзаголовок 4 (Україна)', max_length=300, blank=True)
+    title_4_world = models.CharField('Заголовок 4 (Світ)', max_length=200, blank=True)
+    subtitle_4_world = models.CharField('Підзаголовок 4 (Світ)', max_length=300, blank=True)
+    background_image_4 = models.ImageField('Бекграунд зображення 4', upload_to='cms/hub/hero/', max_length=500, blank=True, help_text='Рекомендовано: 1920×1080 px')
+    background_video_4 = models.FileField('Бекграунд відео 4', upload_to='cms/hub/hero/videos/', max_length=500, blank=True, help_text='MP4 формат')
+    
+    # Заголовок 5 (UA/World)
+    title_5_ua = models.CharField('Заголовок 5 (Україна)', max_length=200, blank=True)
+    subtitle_5_ua = models.CharField('Підзаголовок 5 (Україна)', max_length=300, blank=True)
+    title_5_world = models.CharField('Заголовок 5 (Світ)', max_length=200, blank=True)
+    subtitle_5_world = models.CharField('Підзаголовок 5 (Світ)', max_length=300, blank=True)
+    background_image_5 = models.ImageField('Бекграунд зображення 5', upload_to='cms/hub/hero/', max_length=500, blank=True, help_text='Рекомендовано: 1920×1080 px')
+    background_video_5 = models.FileField('Бекграунд відео 5', upload_to='cms/hub/hero/videos/', max_length=500, blank=True, help_text='MP4 формат')
     
     is_active = models.BooleanField('Активно', default=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -39,7 +61,7 @@ class HubHero(models.Model):
         return "Hero - Хаб знань"
     
     def get_title(self, number, country_code='UA'):
-        """Отримати заголовок по номеру (1-3) та країні"""
+        """Отримати заголовок по номеру (1-5) та країні"""
         field_name = f"title_{number}_{'world' if country_code != 'UA' else 'ua'}"
         title = getattr(self, field_name, '')
         
@@ -50,7 +72,7 @@ class HubHero(models.Model):
         return title
     
     def get_subtitle(self, number, country_code='UA'):
-        """Отримати підзаголовок по номеру (1-3) та країні"""
+        """Отримати підзаголовок по номеру (1-5) та країні"""
         field_name = f"subtitle_{number}_{'world' if country_code != 'UA' else 'ua'}"
         subtitle = getattr(self, field_name, '')
         
@@ -59,6 +81,20 @@ class HubHero(models.Model):
             subtitle = getattr(self, f"subtitle_{number}_ua", '')
         
         return subtitle
+    
+    def get_background_image(self, number):
+        """Отримати бекграунд зображення для слайда (1-5)"""
+        field_name = f"background_image_{number}"
+        image = getattr(self, field_name, None)
+        # Fallback до загального background_image
+        if not image:
+            return self.background_image
+        return image
+    
+    def get_background_video(self, number):
+        """Отримати бекграунд відео для слайда (1-5)"""
+        field_name = f"background_video_{number}"
+        return getattr(self, field_name, None)
     
     def save(self, *args, **kwargs):
         self.pk = 1

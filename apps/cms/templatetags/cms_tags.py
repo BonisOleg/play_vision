@@ -171,6 +171,81 @@ def get_hub_hero():
         return None
 
 
+@register.filter
+def get_background_image(hub_hero, number):
+    """Отримати бекграунд зображення для слайда"""
+    if not hub_hero:
+        return None
+    try:
+        num = int(number)
+        image = hub_hero.get_background_image(num)
+        return image
+    except (ValueError, AttributeError, TypeError):
+        return None
+
+
+@register.filter
+def get_background_video(hub_hero, number):
+    """Отримати бекграунд відео для слайда"""
+    if not hub_hero:
+        return None
+    try:
+        num = int(number)
+        video = hub_hero.get_background_video(num)
+        return video
+    except (ValueError, AttributeError, TypeError):
+        return None
+
+
+@register.simple_tag
+def get_hub_hero_title(hub_hero, number, country_code='UA'):
+    """Отримати заголовок для слайда HubHero"""
+    if not hub_hero:
+        return ''
+    try:
+        num = int(number)
+        return hub_hero.get_title(num, country_code)
+    except (ValueError, AttributeError, TypeError):
+        return ''
+
+
+@register.simple_tag
+def get_hub_hero_subtitle(hub_hero, number, country_code='UA'):
+    """Отримати підзаголовок для слайда HubHero"""
+    if not hub_hero:
+        return ''
+    try:
+        num = int(number)
+        return hub_hero.get_subtitle(num, country_code)
+    except (ValueError, AttributeError, TypeError):
+        return ''
+
+
+@register.filter
+def get_title(hub_hero, number):
+    """Отримати заголовок для слайда HubHero (filter для зворотної сумісності)"""
+    if not hub_hero:
+        return ''
+    try:
+        num = int(number)
+        # За замовчуванням UA, але метод має fallback
+        return hub_hero.get_title(num, 'UA')
+    except (ValueError, AttributeError, TypeError):
+        return ''
+
+
+@register.filter
+def get_subtitle(hub_hero, number):
+    """Отримати підзаголовок для слайда HubHero (filter для зворотної сумісності)"""
+    if not hub_hero:
+        return ''
+    try:
+        num = int(number)
+        return hub_hero.get_subtitle(num, 'UA')
+    except (ValueError, AttributeError, TypeError):
+        return ''
+
+
 @register.simple_tag
 def get_mentor_hero():
     """Отримати Hero для Ментор коучинг"""

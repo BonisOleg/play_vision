@@ -32,18 +32,18 @@
                 <!-- CMS Hero Data for JS -->
                 <script type="application/json" id="hub-hero-slides-data">
                 [
+                    {% for i in "12345" %}
+                    {% if i == "1" or hub_hero|get_title:i %}
+                    {% get_hub_hero_title hub_hero i country_code as slide_title %}
+                    {% get_hub_hero_subtitle hub_hero i country_code as slide_subtitle %}
                     {
-                        "title": "{% if country_code == 'UA' %}{{ hub_hero.title_1_ua|escapejs }}{% else %}{{ hub_hero.title_1_world|default:hub_hero.title_1_ua|escapejs }}{% endif %}",
-                        "subtitle": "{% if country_code == 'UA' %}{{ hub_hero.subtitle_1_ua|escapejs }}{% else %}{{ hub_hero.subtitle_1_world|default:hub_hero.subtitle_1_ua|escapejs }}{% endif %}"
-                    },
-                    {
-                        "title": "{% if country_code == 'UA' %}{{ hub_hero.title_2_ua|escapejs }}{% else %}{{ hub_hero.title_2_world|default:hub_hero.title_2_ua|escapejs }}{% endif %}",
-                        "subtitle": "{% if country_code == 'UA' %}{{ hub_hero.subtitle_2_ua|escapejs }}{% else %}{{ hub_hero.subtitle_2_world|default:hub_hero.subtitle_2_ua|escapejs }}{% endif %}"
-                    },
-                    {
-                        "title": "{% if country_code == 'UA' %}{{ hub_hero.title_3_ua|escapejs }}{% else %}{{ hub_hero.title_3_world|default:hub_hero.title_3_ua|escapejs }}{% endif %}",
-                        "subtitle": "{% if country_code == 'UA' %}{{ hub_hero.subtitle_3_ua|escapejs }}{% else %}{{ hub_hero.subtitle_3_world|default:hub_hero.subtitle_3_ua|escapejs }}{% endif %}"
-                    }
+                        "title": "{{ slide_title|escapejs }}",
+                        "subtitle": "{{ slide_subtitle|escapejs }}",
+                        "image": {% with bg_img=hub_hero|get_background_image:i %}{% if bg_img %}"{{ bg_img.url|escapejs }}"{% else %}null{% endif %}{% endwith %},
+                        "video": {% with bg_vid=hub_hero|get_background_video:i %}{% if bg_vid %}"{{ bg_vid.url|escapejs }}"{% else %}null{% endif %}{% endwith %}
+                    }{% if not forloop.last %},{% endif %}
+                    {% endif %}
+                    {% endfor %}
                 ]
                 </script>
                 {% endif %}
@@ -52,7 +52,17 @@
                     <!-- Лівий блок з анімованими написами -->
                     <div class="hub-hero-main">
                         <div class="hub-hero-bg">
-                            <img src="{% static 'images/Hiro.png' %}" alt="Хаб знань Play Vision" loading="eager">
+                            {% if hub_hero %}
+                                {% with bg_image=hub_hero|get_background_image:"1" %}
+                                {% if bg_image %}
+                                    <img src="{{ bg_image.url }}" alt="Хаб знань Play Vision" class="hub-hero-bg-image" loading="eager">
+                                {% else %}
+                                    <img src="{% static 'images/Hiro.png' %}" alt="Хаб знань Play Vision" class="hub-hero-bg-image" loading="eager">
+                                {% endif %}
+                                {% endwith %}
+                            {% else %}
+                                <img src="{% static 'images/Hiro.png' %}" alt="Хаб знань Play Vision" class="hub-hero-bg-image" loading="eager">
+                            {% endif %}
                         </div>
                         <div class="hub-hero-content">
                             <!-- Логотип вгорі -->

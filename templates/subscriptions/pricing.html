@@ -79,9 +79,17 @@
                         <h3 class="plan-name">{{ plan.name }}</h3>
 
                         <!-- Features List -->
-                        <ul class="plan-features">
-                            {% for feature in plan.get_features %}
-                            <li class="feature-item">
+                        <ul class="plan-features" data-features-container>
+                            {% get_features_for_period plan 'monthly' as monthly_features %}
+                            {% for feature in monthly_features %}
+                            <li class="feature-item" data-period="monthly">
+                                <span class="feature-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                                <span class="feature-text">{{ feature }}</span>
+                            </li>
+                            {% endfor %}
+                            {% get_features_for_period plan '3_months' as three_months_features %}
+                            {% for feature in three_months_features %}
+                            <li class="feature-item" data-period="3_months" style="display: none;">
                                 <span class="feature-number">{{ forloop.counter|stringformat:"02d" }}</span>
                                 <span class="feature-text">{{ feature }}</span>
                             </li>
@@ -93,9 +101,22 @@
                             <!-- Monthly -->
                             <div class="price-block" data-period="monthly">
                                 <div class="price-amount">
-                                    <span class="price-value">{{ plan.base_price_uah|floatformat:0 }}</span>
+                                    <span class="price-value">{% calculate_plan_price plan "monthly" currency as price_monthly %}{{ price_monthly|floatformat:0 }}</span>
                                     <span class="price-currency">{{ currency_symbol }}</span>
                                 </div>
+                                {% get_active_discount plan "monthly" as monthly_discount %}
+                                {% if monthly_discount > 0 %}
+                                <div class="price-save">
+                                    Економія {{ monthly_discount }}%
+                                </div>
+                                {% get_discount_time_left plan "monthly" as monthly_time_left %}
+                                {% if monthly_time_left %}
+                                <div class="discount-timer" data-discount-end="{{ plan.discount_monthly_end_date|date:'c' }}" data-period="monthly">
+                                    <span class="timer-label">Залишилось:</span>
+                                    <span class="timer-value" data-timer-display></span>
+                                </div>
+                                {% endif %}
+                                {% endif %}
                             </div>
 
                             <!-- 3 Months -->
@@ -104,7 +125,19 @@
                                     <span class="price-value">{% calculate_plan_price plan "3_months" currency as price_3m %}{{ price_3m|floatformat:0 }}</span>
                                     <span class="price-currency">{{ currency_symbol }}</span>
                                 </div>
-                                {% if plan.discount_3_months > 0 %}
+                                {% get_active_discount plan "3_months" as three_months_discount %}
+                                {% if three_months_discount > 0 %}
+                                <div class="price-save">
+                                    Економія {{ three_months_discount }}%
+                                </div>
+                                {% get_discount_time_left plan "3_months" as three_months_time_left %}
+                                {% if three_months_time_left %}
+                                <div class="discount-timer" data-discount-end="{{ plan.discount_3months_end_date|date:'c' }}" data-period="3_months">
+                                    <span class="timer-label">Залишилось:</span>
+                                    <span class="timer-value" data-timer-display></span>
+                                </div>
+                                {% endif %}
+                                {% elif plan.discount_3_months > 0 %}
                                 <div class="price-save">
                                     Економія {{ plan.discount_3_months }}%
                                 </div>

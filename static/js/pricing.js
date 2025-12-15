@@ -20,6 +20,7 @@
         initPeriodSwitcher();
         initComparisonModal();
         initMobileSlider();
+        initDiscountTimers();
     });
 
     // === ПЕРЕМИКАЧ ПЕРІОДІВ ===
@@ -78,6 +79,17 @@
         const activeActionWrappers = document.querySelectorAll(`.action-wrapper[data-period="${period}"]`);
         activeActionWrappers.forEach(wrapper => {
             wrapper.style.display = 'block';
+        });
+
+        // Оновлюємо переваги за періодом
+        const allFeatures = document.querySelectorAll('.feature-item');
+        allFeatures.forEach(feature => {
+            const featurePeriod = feature.getAttribute('data-period');
+            if (featurePeriod === period) {
+                feature.style.display = 'list-item';
+            } else {
+                feature.style.display = 'none';
+            }
         });
 
         // Анімація
@@ -229,6 +241,62 @@
                 left: targetScroll,
                 behavior: 'smooth'
             });
+        }
+    }
+
+    // === ТАЙМЕР ЗНИЖОК ===
+    function initDiscountTimers() {
+        const timers = document.querySelectorAll('.discount-timer[data-discount-end]');
+        
+        timers.forEach(timer => {
+            updateDiscountTimer(timer);
+            // Оновлюємо кожну секунду
+            setInterval(() => updateDiscountTimer(timer), 1000);
+        });
+    }
+
+    function updateDiscountTimer(timerElement) {
+        const endDateStr = timerElement.getAttribute('data-discount-end');
+        if (!endDateStr) return;
+
+        const endDate = new Date(endDateStr);
+        const now = new Date();
+        const diff = endDate - now;
+
+        const displayElement = timerElement.querySelector('[data-timer-display]');
+        if (!displayElement) return;
+
+        if (diff <= 0) {
+            displayElement.textContent = 'Закінчилась';
+            timerElement.classList.add('timer-expired');
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        let timeString = '';
+        if (days > 0) {
+            timeString += `${days}д `;
+        }
+        if (hours > 0 || days > 0) {
+            timeString += `${hours}г `;
+        }
+        if (minutes > 0 || hours > 0 || days > 0) {
+            timeString += `${minutes}х`;
+        } else {
+            timeString += `${seconds}с`;
+        }
+
+        displayElement.textContent = timeString.trim();
+
+        // Додаємо клас для стилізації при малому часі
+        if (days === 0 && hours < 24) {
+            timerElement.classList.add('timer-urgent');
+        } else {
+            timerElement.classList.remove('timer-urgent');
         }
     }
 
