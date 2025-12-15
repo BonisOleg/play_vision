@@ -17,7 +17,7 @@
 /* Слайдер - на всю ширину 3 колонок */
 .hub-hero-main {
     position: relative;
-    min-height: 450px;  /* Повернути меншу висоту */
+    min-height: 450px;  /* Desktop - менша висота */
     border-radius: 12px;
     overflow: hidden;
     grid-row: 1;
@@ -64,18 +64,20 @@
             transparent 85%);
 }
 
-/* Fallback для старих Android браузерів */
-@supports not (aspect-ratio: 16 / 9) {
-    .hub-hero-main::before {
-        content: '';
-        display: block;
-        padding-top: 56.25%; /* 16:9 = 9/16 * 100% */
-    }
-    
-    .hub-hero-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
+/* Fallback для старих Android браузерів - тільки для mobile */
+@media (max-width: 767px) {
+    @supports not (aspect-ratio: 16 / 9) {
+        .hub-hero-main::before {
+            content: '';
+            display: block;
+            padding-top: 56.25%; /* 16:9 = 9/16 * 100% */
+        }
+        
+        .hub-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     }
 }
 
@@ -86,7 +88,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 450px;  /* Повернути меншу висоту */
+    min-height: 450px;  /* Desktop - менша висота */
 }
 
 .hub-hero-logo {
