@@ -75,6 +75,15 @@
     max-width: 100%;
 }
 
+/* Дозволити стрілкам виступати за межі для hub-featured */
+.unified-sections-wrapper .hub-featured-section {
+    overflow: visible;
+}
+
+.unified-sections-wrapper .hub-featured-section .section-content {
+    overflow: visible;
+}
+
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
 @media (min-width: 768px) and (max-width: 1024px) {
     .unified-sections-wrapper .fullscreen-section {

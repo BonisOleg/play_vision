@@ -7,7 +7,7 @@
 }
 
 .hub-featured-section .section-content {
-    overflow-x: hidden;
+    overflow: visible;  /* Дозволити стрілкам виступати */
     position: relative;
 }
 
@@ -508,6 +508,51 @@
     /* Відступ тільки коли розгорнуто */
     .hub-featured-description-wrapper.expanded > .hub-featured-description {
         margin-bottom: var(--spacing-md);
+    }
+}
+
+/* iOS Safari оптимізація */
+@supports (-webkit-touch-callout: none) {
+    /* Переконатися що overflow visible на iOS */
+    .hub-featured-section,
+    .hub-featured-section .section-content {
+        overflow: visible !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* GPU прискорення для зображень */
+    .hub-featured-image {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .hub-featured-image img {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    /* Оптимізація кнопок навігації */
+    .hub-nav-btn {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        appearance: none;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+    
+    /* Карусель */
+    .hub-featured-carousel {
+        -webkit-overflow-scrolling: touch;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
 }
 
