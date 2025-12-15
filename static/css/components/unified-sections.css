@@ -75,13 +75,15 @@
     max-width: 100%;
 }
 
-/* Дозволити стрілкам виступати за межі для hub-featured */
-.unified-sections-wrapper .hub-featured-section {
-    overflow: visible;
-}
+/* Дозволити стрілкам виступати за межі для hub-featured - тільки на мобільних */
+@media (max-width: 767px) {
+    .unified-sections-wrapper .hub-featured-section {
+        overflow: visible;
+    }
 
-.unified-sections-wrapper .hub-featured-section .section-content {
-    overflow: visible;
+    .unified-sections-wrapper .hub-featured-section .section-content {
+        overflow: visible;
+    }
 }
 
 /* === ПЛАНШЕТНА АДАПТАЦІЯ === */
