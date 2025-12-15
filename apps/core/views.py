@@ -3,11 +3,13 @@ Core views - Admin dashboard and public pages
 """
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.db.models import Sum, Count, Avg
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
+from django.conf import settings
 from datetime import timedelta
+import os
 import logging
 
 logger = logging.getLogger(__name__)
@@ -122,6 +124,35 @@ class ServiceWorkerView(TemplateView):
     """Service worker"""
     template_name = 'sw.js'
     content_type = 'application/javascript'
+
+
+class FaviconView(View):
+    """Favicon view - serves favicon.ico from static directory"""
+    def get(self, request):
+        # Шукаємо favicon.ico в STATIC_ROOT або STATICFILES_DIRS
+        favicon_path = None
+        
+        # Спочатку перевіряємо STATIC_ROOT (production)
+        if hasattr(settings, 'STATIC_ROOT') and settings.STATIC_ROOT:
+            favicon_path = os.path.join(settings.STATIC_ROOT, 'favicon.ico')
+            if os.path.exists(favicon_path):
+                return FileResponse(
+                    open(favicon_path, 'rb'),
+                    content_type='image/x-icon'
+                )
+        
+        # Якщо не знайдено, перевіряємо STATICFILES_DIRS (development)
+        if hasattr(settings, 'STATICFILES_DIRS') and settings.STATICFILES_DIRS:
+            for static_dir in settings.STATICFILES_DIRS:
+                favicon_path = os.path.join(static_dir, 'favicon.ico')
+                if os.path.exists(favicon_path):
+                    return FileResponse(
+                        open(favicon_path, 'rb'),
+                        content_type='image/x-icon'
+                    )
+        
+        # Fallback: повертаємо 404
+        return HttpResponse(status=404)
 
 
 @staff_member_required

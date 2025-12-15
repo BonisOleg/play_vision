@@ -26,6 +26,9 @@ urlpatterns = [
     path('sitemap.xml', views.SitemapView.as_view(), name='sitemap'),
     path('health/', views.HealthCheckView.as_view(), name='health_check'),
     
+    # Favicon - має бути в корені для Google
+    path('favicon.ico', views.FaviconView.as_view(), name='favicon'),
+    
     # PWA Service Worker
     path('sw.js', views.ServiceWorkerView.as_view(), name='service_worker'),
 ]

@@ -10,8 +10,15 @@
         content="{% block meta_description %}Play Vision - Освітня платформа для футбольних фахівців{% endblock %}">
     <title>{% block title %}Play Vision{% endblock %}</title>
 
-    <!-- Favicon -->
+    <!-- Favicon - множинні формати для максимальної сумісності -->
+    <!-- ICO формат для старих браузерів та Google -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- SVG формат для сучасних браузерів -->
     <link rel="icon" type="image/svg+xml" href="{% static 'logomain.svg' %}">
+    <!-- PNG формати для різних розмірів -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/icon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icons/icon-16x16.png' %}">
 
     <!-- Preload logos for theme switching -->
     <link rel="preload" href="{% static 'icons/horizontal_desc_black.svg' %}" as="image" type="image/svg+xml" fetchpriority="high">
@@ -21,6 +28,25 @@
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <meta name="theme-color" content="#ff6b35">
     <meta name="application-name" content="Play Vision">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://playvision.com.ua{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}Play Vision - Освітня платформа футбольних фахівців{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% block meta_description %}Play Vision - Освітня платформа для футбольних фахівців{% endblock %}{% endblock %}">
+    <meta property="og:image" content="https://playvision.com.ua{% static 'icons/icon-512x512.png' %}">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:site_name" content="Play Vision">
+    <meta property="og:locale" content="uk_UA">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://playvision.com.ua{{ request.path }}">
+    <meta name="twitter:title" content="{% block twitter_title %}Play Vision - Освітня платформа футбольних фахівців{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{% block meta_description %}Play Vision - Освітня платформа для футбольних фахівців{% endblock %}{% endblock %}">
+    <meta name="twitter:image" content="https://playvision.com.ua{% static 'icons/icon-512x512.png' %}">
 
     <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">

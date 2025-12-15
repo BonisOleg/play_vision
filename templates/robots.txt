@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Allow: /favicon.ico
+Allow: /static/icons/
+Allow: /static/logomain.svg
+Allow: /static/manifest.json
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /account/
+Disallow: /api/
+Disallow: /media/protected/
+Disallow: /payments/
+Disallow: /video-security/
+Disallow: /htmx/
+
+# Sitemap
+Sitemap: https://playvision.com.ua/sitemap.xml
