@@ -210,6 +210,10 @@ class Command(BaseCommand):
                 'title': 'Вплив фізичної терапії на кар\'єру професійного футболіста',
                 'url': 'https://edu.playvision.com.ua/o/qJxNooOR9KDw/payment/2756'
             },
+            {
+                'title': 'Формула успіху Сера Алекса Фергюсона',
+                'url': 'https://edu.playvision.com.ua/o/fcYFIM3I5DvB/payment/2756'
+            },
         ]
 
         updated_count = 0

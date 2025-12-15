@@ -293,18 +293,10 @@
     color: var(--color-text);
 }
 
-[data-theme="dark"] .hub-hero-logo img {
-    filter: invert(1);
-}
-
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .hero-title,
     [data-theme="auto"] .hero-subtitle {
         color: var(--color-text);
-    }
-    
-    [data-theme="auto"] .hub-hero-logo img {
-        filter: invert(1);
     }
 }
 
