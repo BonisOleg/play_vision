@@ -45,7 +45,7 @@ def reverse_migration(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('content', '0015_add_course_badges_and_discounts'),
+        ('content', '0016_add_subscription_text'),
     ]
 
     operations = [
