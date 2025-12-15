@@ -152,8 +152,9 @@
                         ${metaHtml}
 
                         <div class="course-modal-actions">
-                            <a href="/hub/" 
-                               class="btn btn-primary btn-large">
+                            <a href="${this.escapeHtml(data.joinUrl || '/hub/')}" 
+                               class="btn btn-primary btn-large"
+                               ${data.joinUrl && data.joinUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>
                                 Приєднатись до клубу
                             </a>
                         </div>
