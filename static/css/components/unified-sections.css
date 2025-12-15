@@ -230,6 +230,17 @@
     }
 }
 
+/* Desktop - явно встановити overflow для hub-featured */
+@media (min-width: 768px) {
+    .unified-sections-wrapper .hub-featured-section {
+        overflow-x: hidden;
+    }
+    
+    .unified-sections-wrapper .hub-featured-section .section-content {
+        overflow-x: hidden;
+    }
+}
+
 /* === ПЛАНШЕТНА АДАПТАЦІЯ ДЛЯ HUB === */
 @media (min-width: 768px) and (max-width: 1024px) {
     .unified-sections-wrapper .hub-hero-section,
