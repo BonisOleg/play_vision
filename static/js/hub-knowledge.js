@@ -36,12 +36,12 @@ class HubHeroCarousel {
             try {
                 const slides = JSON.parse(dataElement.textContent);
                 if (slides && slides.length > 0) {
-                    // Додати ctaText та ctaUrl для кожного слайда, зберегти image та video
+                    // Зберегти всі дані з JSON, включаючи ctaText та ctaUrl
                     return slides.map(slide => ({
                         title: slide.title || '',
                         subtitle: slide.subtitle || '',
-                        ctaText: 'Дізнатися',
-                        ctaUrl: '#catalog',
+                        ctaText: slide.ctaText || 'Дізнатися',
+                        ctaUrl: slide.ctaUrl || '#catalog',
                         image: slide.image || null,
                         video: slide.video || null
                     }));
@@ -180,11 +180,12 @@ class HubHeroCarousel {
         }
 
         if (this.ctaButton) {
-            this.ctaButton.href = slide.ctaUrl;
-            if (this.ctaButtonText && slide.ctaText) {
-                this.ctaButtonText.textContent = slide.ctaText;
-            } else if (slide.ctaText) {
-                this.ctaButton.textContent = slide.ctaText;
+            this.ctaButton.href = slide.ctaUrl || '#catalog';
+            const ctaText = slide.ctaText || 'Дізнатися';
+            if (this.ctaButtonText) {
+                this.ctaButtonText.textContent = ctaText;
+            } else {
+                this.ctaButton.textContent = ctaText;
             }
         }
 

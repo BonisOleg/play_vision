@@ -247,6 +247,54 @@ def get_subtitle(hub_hero, number):
 
 
 @register.simple_tag
+def get_hub_hero_cta_text(hub_hero, number, country_code='UA'):
+    """Отримати CTA текст для слайда HubHero"""
+    if not hub_hero:
+        return ''
+    try:
+        num = int(number)
+        return hub_hero.get_cta_text(num, country_code)
+    except (ValueError, AttributeError, TypeError):
+        return ''
+
+
+@register.simple_tag
+def get_hub_hero_cta_url(hub_hero, number):
+    """Отримати CTA URL для слайда HubHero"""
+    if not hub_hero:
+        return '#catalog'
+    try:
+        num = int(number)
+        return hub_hero.get_cta_url(num) or '#catalog'
+    except (ValueError, AttributeError, TypeError):
+        return '#catalog'
+
+
+@register.filter
+def get_cta_text(hub_hero, number):
+    """Отримати CTA текст для слайда HubHero (filter для зворотної сумісності)"""
+    if not hub_hero:
+        return ''
+    try:
+        num = int(number)
+        return hub_hero.get_cta_text(num, 'UA')
+    except (ValueError, AttributeError, TypeError):
+        return ''
+
+
+@register.filter
+def get_cta_url(hub_hero, number):
+    """Отримати CTA URL для слайда HubHero (filter для зворотної сумісності)"""
+    if not hub_hero:
+        return '#catalog'
+    try:
+        num = int(number)
+        return hub_hero.get_cta_url(num) or '#catalog'
+    except (ValueError, AttributeError, TypeError):
+        return '#catalog'
+
+
+@register.simple_tag
 def get_mentor_hero():
     """Отримати Hero для Ментор коучинг"""
     try:

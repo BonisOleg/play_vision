@@ -314,20 +314,20 @@ class HubHeroAdmin(admin.ModelAdmin):
             'description': 'Використовується як fallback, якщо для слайда не вказано окремий бекграунд'
         }),
         ('📌 Слайд 1', {
-            'fields': ('title_1_ua', 'subtitle_1_ua', 'title_1_world', 'subtitle_1_world', 'background_image_1', 'background_video_1'),
+            'fields': ('title_1_ua', 'subtitle_1_ua', 'title_1_world', 'subtitle_1_world', 'background_image_1', 'background_video_1', 'cta_text_1_ua', 'cta_text_1_world', 'cta_url_1'),
             'description': 'Перший слайд - обов\'язковий'
         }),
         ('📌 Слайд 2', {
-            'fields': ('title_2_ua', 'subtitle_2_ua', 'title_2_world', 'subtitle_2_world', 'background_image_2', 'background_video_2'),
+            'fields': ('title_2_ua', 'subtitle_2_ua', 'title_2_world', 'subtitle_2_world', 'background_image_2', 'background_video_2', 'cta_text_2_ua', 'cta_text_2_world', 'cta_url_2'),
         }),
         ('📌 Слайд 3', {
-            'fields': ('title_3_ua', 'subtitle_3_ua', 'title_3_world', 'subtitle_3_world', 'background_image_3', 'background_video_3'),
+            'fields': ('title_3_ua', 'subtitle_3_ua', 'title_3_world', 'subtitle_3_world', 'background_image_3', 'background_video_3', 'cta_text_3_ua', 'cta_text_3_world', 'cta_url_3'),
         }),
         ('📌 Слайд 4', {
-            'fields': ('title_4_ua', 'subtitle_4_ua', 'title_4_world', 'subtitle_4_world', 'background_image_4', 'background_video_4'),
+            'fields': ('title_4_ua', 'subtitle_4_ua', 'title_4_world', 'subtitle_4_world', 'background_image_4', 'background_video_4', 'cta_text_4_ua', 'cta_text_4_world', 'cta_url_4'),
         }),
         ('📌 Слайд 5', {
-            'fields': ('title_5_ua', 'subtitle_5_ua', 'title_5_world', 'subtitle_5_world', 'background_image_5', 'background_video_5'),
+            'fields': ('title_5_ua', 'subtitle_5_ua', 'title_5_world', 'subtitle_5_world', 'background_image_5', 'background_video_5', 'cta_text_5_ua', 'cta_text_5_world', 'cta_url_5'),
         }),
         ('Налаштування', {
             'fields': ('is_active',)

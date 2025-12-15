@@ -155,7 +155,7 @@
                             <a href="${this.escapeHtml(data.joinUrl || '/hub/')}" 
                                class="btn btn-primary btn-large"
                                ${data.joinUrl && data.joinUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>
-                                Приєднатись до клубу
+                                Придбати
                             </a>
                         </div>
                     </div>
