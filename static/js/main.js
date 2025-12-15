@@ -1,4 +1,62 @@
+// Видалити текстовий вузол з meta_description перед header
+function removeMetaDescriptionText() {
+    const body = document.body;
+    if (!body) return;
+    
+    // Перевіряємо перший дочірній елемент
+    const firstChild = body.firstChild;
+    if (firstChild && firstChild.nodeType === 3) {
+        // Це текстовий вузол
+        const text = firstChild.textContent.trim();
+        // Перевіряємо, чи це схоже на meta_description
+        if (text && (
+            text.includes('Обирай траєкторію') ||
+            text.includes('Освітні програми') ||
+            text.includes('експертів') ||
+            text.includes('Повний доступ до всіх матеріалів')
+        )) {
+            body.removeChild(firstChild);
+        }
+    }
+    
+    // Також перевіряємо всі текстові вузли перед header
+    const header = document.querySelector('header.main-header');
+    if (header) {
+        let node = body.firstChild;
+        while (node && node !== header) {
+            if (node.nodeType === 3) {
+                const text = node.textContent.trim();
+                if (text && (
+                    text.includes('Обирай траєкторію') ||
+                    text.includes('Освітні програми') ||
+                    text.includes('експертів') ||
+                    text.includes('Повний доступ до всіх матеріалів')
+                )) {
+                    const nextSibling = node.nextSibling;
+                    body.removeChild(node);
+                    node = nextSibling;
+                } else {
+                    node = node.nextSibling;
+                }
+            } else {
+                node = node.nextSibling;
+            }
+        }
+    }
+}
+
+// Викликаємо одразу, якщо DOM вже завантажений
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', removeMetaDescriptionText);
+} else {
+    // DOM вже завантажений
+    removeMetaDescriptionText();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+    // Видалити текстовий вузол перед header (meta_description) - на випадок, якщо він з'явився пізніше
+    removeMetaDescriptionText();
+    
     initializeHTMX();
     initializePWA();
     initializeCart();

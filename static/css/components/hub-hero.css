@@ -272,6 +272,7 @@
         transform: none;
         width: calc(100% - 5px);
         height: 100%;
+        min-height: 0;  /* Скинути desktop min-height */
         background: transparent;
         z-index: var(--z-content);
         
@@ -399,6 +400,7 @@
     
     /* Інші елементи Hub Hero (не в hero-new-design) */
     .hub-hero-main {
+        min-height: 0;  /* Скинути desktop min-height */
         aspect-ratio: 16 / 9;
     }
     
