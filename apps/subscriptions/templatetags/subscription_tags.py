@@ -121,22 +121,34 @@ def get_discount_time_left(plan, period='monthly'):
 @register.filter
 def get_feature(plan, index):
     """
-    Повертає конкретну перевагу плану за індексом
+    Повертає конкретну перевагу плану за індексом (DEPRECATED)
+    Використовуйте get_features_for_period замість цього тега
     
     Args:
         plan: SubscriptionPlan object
-        index: int або str - номер переваги (1-5)
+        index: int або str - номер переваги (1-30)
     
     Returns:
         str: Текст переваги або порожній рядок
     """
     try:
-        # Конвертувати index в int якщо це рядок (з циклу {% for i in "12345" %})
+        # Конвертувати index в int якщо це рядок
         if isinstance(index, str):
             index = int(index)
         
-        feature_attr = f'feature_{index}'
-        return getattr(plan, feature_attr, '') or ''
+        # Спробувати отримати з monthly полів (новий формат)
+        feature_attr = f'feature_{index}_monthly'
+        feature = getattr(plan, feature_attr, '')
+        if feature:
+            return feature
+        
+        # Fallback на 3months поля
+        feature_attr = f'feature_{index}_3months'
+        feature = getattr(plan, feature_attr, '')
+        if feature:
+            return feature
+        
+        return ''
     except (ValueError, TypeError, AttributeError):
         return ''
 

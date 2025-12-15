@@ -31,7 +31,7 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
     
     list_filter = ['is_active', 'is_popular', 'created_at']
     
-    search_fields = ['name', 'badge_text', 'feature_1', 'feature_2', 'feature_3']
+    search_fields = ['name', 'badge_text', 'feature_1_monthly', 'feature_2_monthly', 'feature_3_monthly']
     
     prepopulated_fields = {'slug': ('name',)}
     
@@ -64,18 +64,6 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
                 'feature_26_3months', 'feature_27_3months', 'feature_28_3months', 'feature_29_3months', 'feature_30_3months',
             ),
             'description': 'Переваги для 3-місячної підписки. На сторінці відображаються тільки заповнені переваги.'
-        }),
-        ('Переваги (старі - для backward compatibility)', {
-            'fields': (
-                'feature_1', 'feature_2', 'feature_3', 'feature_4', 'feature_5',
-                'feature_6', 'feature_7', 'feature_8', 'feature_9', 'feature_10',
-                'feature_11', 'feature_12', 'feature_13', 'feature_14', 'feature_15',
-                'feature_16', 'feature_17', 'feature_18', 'feature_19', 'feature_20',
-                'feature_21', 'feature_22', 'feature_23', 'feature_24', 'feature_25',
-                'feature_26', 'feature_27', 'feature_28', 'feature_29', 'feature_30',
-            ),
-            'description': 'Старі переваги (будуть видалені після міграції). Використовуються як fallback якщо нові не заповнені.',
-            'classes': ('collapse',),
         }),
         ('Ціноутворення', {
             'fields': (
