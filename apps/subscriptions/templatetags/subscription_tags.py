@@ -121,6 +121,26 @@ def get_discount_percentage(plan, period='monthly', currency='uah'):
 
 
 @register.simple_tag
+def get_sale_price(plan, period='monthly', currency='uah'):
+    """
+    Повертає ціну після знижки (sale_price) для періоду
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly' або '3_months'
+        currency: 'uah' або 'usd'
+    
+    Returns:
+        float: Ціна після знижки
+    """
+    try:
+        sale_price = plan.get_sale_price(period, currency)
+        return float(sale_price) if sale_price else 0
+    except Exception:
+        return 0
+
+
+@register.simple_tag
 def get_discount_time_left(plan, period='monthly'):
     """
     Повертає час до закінчення знижки
