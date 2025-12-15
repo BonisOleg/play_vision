@@ -515,16 +515,6 @@
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             touch-action: manipulation;
         }
-        
-        /* Виправлення обрізання зображень на iOS */
-        .hub-hero-main {
-            overflow: visible;
-        }
-        
-        .hub-hero-bg {
-            overflow: hidden;
-            border-radius: 12px;
-        }
     }
 }
 
