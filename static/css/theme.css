@@ -218,10 +218,25 @@
 }
 
 /* SVG інверсія для темної теми (червоний залишається червоним) */
-/* Виключення: .hexagon-icon, .logo-light, .logo-dark, .mentoring-svg-invert, .footer-logo мають власні фільтри */
-[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo),
-[data-theme="dark"] .about-image-block img[src*=".svg"] {
+/* Виключення: .hexagon-icon, .logo-light, .logo-dark, .mentoring-svg-invert, .footer-logo, hub-* елементи мають власні фільтри */
+[data-theme="dark"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo):not([class*="hub-"]),
+[data-theme="dark"] .about-image-block img[src*=".svg"]:not([class*="hub-"]) {
     filter: invert(1) hue-rotate(180deg);
+    opacity: 1;
+}
+
+/* Відключення інвертування для всіх елементів на сторінці "Хаб знань" */
+[data-theme="dark"] .hub-hero-section img,
+[data-theme="dark"] .hub-hero-section svg,
+[data-theme="dark"] .hub-featured-section img,
+[data-theme="dark"] .hub-featured-section svg,
+[data-theme="dark"] .hub-catalog-section img,
+[data-theme="dark"] .hub-catalog-section svg,
+[data-theme="dark"] .hub-filters-sidebar img,
+[data-theme="dark"] .hub-filters-sidebar svg,
+[data-theme="dark"] [class*="hub-"] img[src$=".svg"],
+[data-theme="dark"] [class*="hub-"] svg {
+    filter: none !important;
     opacity: 1;
 }
 
@@ -232,15 +247,24 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo),
-    [data-theme="auto"] .about-image-block img[src*=".svg"] {
+    [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo):not([class*="hub-"]),
+    [data-theme="auto"] .about-image-block img[src*=".svg"]:not([class*="hub-"]) {
         filter: invert(1) hue-rotate(180deg);
         opacity: 1;
     }
     
-    /* Виключення для hub-hero-logo - завжди показувати світлий логотип */
-    [data-theme="auto"] .hub-hero-logo img[src$=".svg"] {
-        filter: none;
+    /* Відключення інвертування для всіх елементів на сторінці "Хаб знань" */
+    [data-theme="auto"] .hub-hero-section img,
+    [data-theme="auto"] .hub-hero-section svg,
+    [data-theme="auto"] .hub-featured-section img,
+    [data-theme="auto"] .hub-featured-section svg,
+    [data-theme="auto"] .hub-catalog-section img,
+    [data-theme="auto"] .hub-catalog-section svg,
+    [data-theme="auto"] .hub-filters-sidebar img,
+    [data-theme="auto"] .hub-filters-sidebar svg,
+    [data-theme="auto"] [class*="hub-"] img[src$=".svg"],
+    [data-theme="auto"] [class*="hub-"] svg {
+        filter: none !important;
         opacity: 1;
     }
 }

@@ -300,10 +300,7 @@
     color: var(--color-text);
 }
 
-/* Видалення overlay градієнта в темній темі */
-[data-theme="dark"] .hub-hero-bg::after {
-    display: none;
-}
+/* Градієнт залишається в темній темі (як на головній сторінці) */
 
 /* Видалення тіней на картках статистики в темній темі */
 [data-theme="dark"] .hub-stat-card:hover {
@@ -316,10 +313,7 @@
         color: var(--color-text);
     }
     
-    /* Видалення overlay градієнта для автоматичної теми */
-    [data-theme="auto"] .hub-hero-bg::after {
-        display: none;
-    }
+    /* Градієнт залишається для автоматичної теми (як на головній сторінці) */
     
     /* Видалення тіней на картках для автоматичної теми */
     [data-theme="auto"] .hub-stat-card:hover {
