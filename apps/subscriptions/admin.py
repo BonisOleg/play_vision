@@ -65,25 +65,26 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             ),
             'description': 'Переваги для 3-місячної підписки. На сторінці відображаються тільки заповнені переваги.'
         }),
-        ('Базова ціна', {
+        ('Ціноутворення - Місячна підписка', {
             'fields': (
-                ('base_price_uah', 'base_price_usd'),
-                ('base_price_3months_uah', 'base_price_3months_usd'),
+                ('original_price_monthly_uah', 'original_price_monthly_usd'),
+                ('sale_price_monthly_uah', 'sale_price_monthly_usd'),
             ),
-            'description': 'Базова ціна за місяць та за 3 місяці (окрема графа для 3 місяців)'
+            'description': 'Встановіть ціну до знижки (original) та ціну після знижки (sale). Відсоток знижки розраховується автоматично.'
         }),
-        ('Знижки без таймера', {
+        ('Ціноутворення - 3-місячна підписка', {
             'fields': (
-                ('discount_monthly', 'discount_3_months'),
+                ('original_price_3months_uah', 'original_price_3months_usd'),
+                ('sale_price_3months_uah', 'sale_price_3months_usd'),
             ),
-            'description': 'Звичайні знижки без таймера. Застосовуються якщо таймер не активний.'
+            'description': 'Встановіть ціну до знижки (original) та ціну після знижки (sale) за 3 місяці. Відсоток знижки розраховується автоматично.'
         }),
-        ('Знижки з таймерами', {
+        ('Таймери знижок', {
             'fields': (
-                ('discount_monthly_percentage', 'discount_monthly_start_date', 'discount_monthly_end_date'),
-                ('discount_3months_percentage', 'discount_3months_start_date', 'discount_3months_end_date'),
+                ('discount_monthly_start_date', 'discount_monthly_end_date'),
+                ('discount_3months_start_date', 'discount_3months_end_date'),
             ),
-            'description': 'Знижки з таймерами. Автоматично застосовуються якщо поточна дата між start_date та end_date.'
+            'description': 'Якщо встановлено дати, sale_price буде показано в період між start_date та end_date. Інакше показується original_price.'
         }),
         ('Доступні періоди', {
             'fields': (
@@ -121,31 +122,35 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
         from decimal import Decimal
         
         # Місячна підписка
-        base_monthly = obj.base_price_uah
+        original_monthly = obj.get_original_price('monthly', 'uah')
+        sale_monthly = obj.get_sale_price('monthly', 'uah')
         final_monthly = obj.calculate_price('monthly', 'uah')
-        discount_monthly = obj.get_active_discount('monthly')
+        discount_pct = obj.get_discount_percentage('monthly', 'uah')
+        is_active = obj.is_discount_active('monthly')
         
-        if discount_monthly > 0:
-            old_price = f'<span style="text-decoration: line-through; color: #999;">{base_monthly:.0f} грн</span>'
+        if is_active and sale_monthly > 0 and discount_pct > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">{original_monthly:.0f} грн</span>'
             new_price = f'<span style="color: #e11d48; font-weight: bold;">{final_monthly:.0f} грн</span>'
-            discount_amount = base_monthly - final_monthly
-            monthly = f"{old_price} → {new_price} /міс<br><small style='color: #10b981;'>Економія: {discount_amount:.0f} грн ({discount_monthly}%)</small>"
+            discount_amount = original_monthly - final_monthly
+            monthly = f"{old_price} → {new_price} /міс<br><small style='color: #10b981;'>Економія: {discount_amount:.0f} грн ({discount_pct}%)</small>"
         else:
-            monthly = f"{base_monthly:.0f} грн/міс"
+            monthly = f"{original_monthly:.0f} грн/міс"
         
         # 3-місячна підписка
-        base_3m = obj.base_price_3months_uah if obj.base_price_3months_uah > 0 else obj.base_price_uah * 3
+        original_3m = obj.get_original_price('3_months', 'uah')
+        sale_3m = obj.get_sale_price('3_months', 'uah')
         final_3m = obj.calculate_price('3_months', 'uah')
-        discount_3m = obj.get_active_discount('3_months')
+        discount_3m_pct = obj.get_discount_percentage('3_months', 'uah')
+        is_active_3m = obj.is_discount_active('3_months')
         monthly_3m = final_3m / 3
         
-        if discount_3m > 0:
-            old_price = f'<span style="text-decoration: line-through; color: #999;">{base_3m:.0f} грн</span>'
+        if is_active_3m and sale_3m > 0 and discount_3m_pct > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">{original_3m:.0f} грн</span>'
             new_price = f'<span style="color: #e11d48; font-weight: bold;">{final_3m:.0f} грн</span>'
-            discount_amount = base_3m - final_3m
-            three_months = f"{old_price} → {new_price} за 3міс<br><small style='color: #10b981;'>Економія: {discount_amount:.0f} грн ({discount_3m}%) | {monthly_3m:.0f} грн/міс</small>"
+            discount_amount = original_3m - final_3m
+            three_months = f"{old_price} → {new_price} за 3міс<br><small style='color: #10b981;'>Економія: {discount_amount:.0f} грн ({discount_3m_pct}%) | {monthly_3m:.0f} грн/міс</small>"
         else:
-            three_months = f"{base_3m:.0f} грн за 3міс ({obj.base_price_uah:.0f} грн/міс)"
+            three_months = f"{original_3m:.0f} грн за 3міс ({monthly_3m:.0f} грн/міс)"
         
         return format_html(
             '<div style="line-height: 1.8;">'
@@ -161,31 +166,35 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
         from decimal import Decimal
         
         # Місячна підписка
-        base_monthly = obj.base_price_usd
+        original_monthly = obj.get_original_price('monthly', 'usd')
+        sale_monthly = obj.get_sale_price('monthly', 'usd')
         final_monthly = obj.calculate_price('monthly', 'usd')
-        discount_monthly = obj.get_active_discount('monthly')
+        discount_pct = obj.get_discount_percentage('monthly', 'usd')
+        is_active = obj.is_discount_active('monthly')
         
-        if discount_monthly > 0:
-            old_price = f'<span style="text-decoration: line-through; color: #999;">${base_monthly:.0f}</span>'
+        if is_active and sale_monthly > 0 and discount_pct > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">${original_monthly:.0f}</span>'
             new_price = f'<span style="color: #e11d48; font-weight: bold;">${final_monthly:.0f}</span>'
-            discount_amount = base_monthly - final_monthly
-            monthly = f"{old_price} → {new_price} /міс<br><small style='color: #10b981;'>Економія: ${discount_amount:.0f} ({discount_monthly}%)</small>"
+            discount_amount = original_monthly - final_monthly
+            monthly = f"{old_price} → {new_price} /міс<br><small style='color: #10b981;'>Економія: ${discount_amount:.0f} ({discount_pct}%)</small>"
         else:
-            monthly = f"${base_monthly:.0f}/міс"
+            monthly = f"${original_monthly:.0f}/міс"
         
         # 3-місячна підписка
-        base_3m = obj.base_price_3months_usd if obj.base_price_3months_usd > 0 else obj.base_price_usd * 3
+        original_3m = obj.get_original_price('3_months', 'usd')
+        sale_3m = obj.get_sale_price('3_months', 'usd')
         final_3m = obj.calculate_price('3_months', 'usd')
-        discount_3m = obj.get_active_discount('3_months')
+        discount_3m_pct = obj.get_discount_percentage('3_months', 'usd')
+        is_active_3m = obj.is_discount_active('3_months')
         monthly_3m = final_3m / 3
         
-        if discount_3m > 0:
-            old_price = f'<span style="text-decoration: line-through; color: #999;">${base_3m:.0f}</span>'
+        if is_active_3m and sale_3m > 0 and discount_3m_pct > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">${original_3m:.0f}</span>'
             new_price = f'<span style="color: #e11d48; font-weight: bold;">${final_3m:.0f}</span>'
-            discount_amount = base_3m - final_3m
-            three_months = f"{old_price} → {new_price} за 3міс<br><small style='color: #10b981;'>Економія: ${discount_amount:.0f} ({discount_3m}%) | ${monthly_3m:.0f}/міс</small>"
+            discount_amount = original_3m - final_3m
+            three_months = f"{old_price} → {new_price} за 3міс<br><small style='color: #10b981;'>Економія: ${discount_amount:.0f} ({discount_3m_pct}%) | ${monthly_3m:.0f}/міс</small>"
         else:
-            three_months = f"${base_3m:.0f} за 3міс (${obj.base_price_usd:.0f}/міс)"
+            three_months = f"${original_3m:.0f} за 3міс (${monthly_3m:.0f}/міс)"
         
         return format_html(
             '<div style="line-height: 1.8;">'
@@ -217,12 +226,13 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
         if not obj.discount_monthly_start_date or not obj.discount_monthly_end_date:
             return format_html('<span style="color: gray;">Не налаштовано</span>')
         
+        discount_pct = obj.get_discount_percentage('monthly', 'uah')
         now = timezone.now()
         if now < obj.discount_monthly_start_date:
             time_left = obj.discount_monthly_start_date - now
             return format_html(
-                '<span style="color: orange;">Починається через: {} днів</span>',
-                time_left.days
+                '<span style="color: orange;">Починається через: {} днів ({})</span>',
+                time_left.days, f'{discount_pct}%'
             )
         elif now <= obj.discount_monthly_end_date:
             time_left = obj.discount_monthly_end_date - now
@@ -231,7 +241,7 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             minutes = (time_left.seconds % 3600) // 60
             return format_html(
                 '<span style="color: green; font-weight: bold;">Активна! Залишилось: {}д {}г {}х ({})</span>',
-                days, hours, minutes, obj.discount_monthly_percentage
+                days, hours, minutes, f'{discount_pct}%'
             )
         else:
             return format_html('<span style="color: red;">Закінчилась</span>')
@@ -242,12 +252,13 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
         if not obj.discount_3months_start_date or not obj.discount_3months_end_date:
             return format_html('<span style="color: gray;">Не налаштовано</span>')
         
+        discount_pct = obj.get_discount_percentage('3_months', 'uah')
         now = timezone.now()
         if now < obj.discount_3months_start_date:
             time_left = obj.discount_3months_start_date - now
             return format_html(
-                '<span style="color: orange;">Починається через: {} днів</span>',
-                time_left.days
+                '<span style="color: orange;">Починається через: {} днів ({})</span>',
+                time_left.days, f'{discount_pct}%'
             )
         elif now <= obj.discount_3months_end_date:
             time_left = obj.discount_3months_end_date - now
@@ -256,7 +267,7 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             minutes = (time_left.seconds % 3600) // 60
             return format_html(
                 '<span style="color: green; font-weight: bold;">Активна! Залишилось: {}д {}г {}х ({})</span>',
-                days, hours, minutes, obj.discount_3months_percentage
+                days, hours, minutes, f'{discount_pct}%'
             )
         else:
             return format_html('<span style="color: red;">Закінчилась</span>')

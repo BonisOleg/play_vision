@@ -85,7 +85,8 @@ def get_features_for_period(plan, period='monthly'):
 @register.simple_tag
 def get_active_discount(plan, period='monthly'):
     """
-    Повертає активну знижку для періоду
+    Повертає активну знижку для періоду (відсоток)
+    Якщо таймер активний, повертає відсоток знижки, інакше 0
     
     Args:
         plan: SubscriptionPlan object
@@ -96,6 +97,25 @@ def get_active_discount(plan, period='monthly'):
     """
     try:
         return plan.get_active_discount(period)
+    except Exception:
+        return 0
+
+
+@register.simple_tag
+def get_discount_percentage(plan, period='monthly', currency='uah'):
+    """
+    Повертає відсоток знижки для періоду (розраховується автоматично)
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly' або '3_months'
+        currency: 'uah' або 'usd'
+    
+    Returns:
+        int: Відсоток знижки (0-100) або 0
+    """
+    try:
+        return plan.get_discount_percentage(period, currency)
     except Exception:
         return 0
 
@@ -156,7 +176,7 @@ def get_feature(plan, index):
 @register.simple_tag
 def get_base_price(plan, period, currency='uah'):
     """
-    Повертає базову ціну без знижок для періоду
+    Повертає ціну до знижки (original_price) для періоду
     
     Args:
         plan: SubscriptionPlan object
@@ -164,19 +184,11 @@ def get_base_price(plan, period, currency='uah'):
         currency: 'uah' або 'usd'
     
     Returns:
-        float: Базова ціна
+        float: Ціна до знижки
     """
     try:
-        if period == '3_months':
-            # Використовуємо окрему базову ціну за 3 місяці
-            base_price_3m = float(plan.base_price_3months_uah if currency == 'uah' else plan.base_price_3months_usd)
-            # Якщо окрема ціна не встановлена, використовуємо множення як fallback
-            if base_price_3m == 0:
-                base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
-                return base_price * 3
-            return base_price_3m
-        else:
-            return float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
+        original_price = plan.get_original_price(period, currency)
+        return float(original_price) if original_price else 0
     except Exception:
         return 0
 
@@ -184,7 +196,7 @@ def get_base_price(plan, period, currency='uah'):
 @register.simple_tag
 def get_discount_amount(plan, period, currency='uah'):
     """
-    Повертає суму знижки в грошах для періоду
+    Повертає суму знижки в грошах для періоду (original_price - sale_price)
     
     Args:
         plan: SubscriptionPlan object
@@ -195,18 +207,13 @@ def get_discount_amount(plan, period, currency='uah'):
         float: Сума знижки
     """
     try:
-        if period == '3_months':
-            # Використовуємо окрему базову ціну за 3 місяці
-            base_price_3m = float(plan.base_price_3months_uah if currency == 'uah' else plan.base_price_3months_usd)
-            if base_price_3m == 0:
-                base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
-                base_price_3m = base_price * 3
-            base_price = base_price_3m
-        else:
-            base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
+        original = plan.get_original_price(period, currency)
+        sale = plan.get_sale_price(period, currency)
         
-        final_price = float(plan.calculate_price(period, currency))
-        return base_price - final_price
+        if original == 0 or sale >= original:
+            return 0
+        
+        return float(original - sale)
     except Exception:
         return 0
 

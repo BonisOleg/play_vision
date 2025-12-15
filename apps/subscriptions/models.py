@@ -118,18 +118,87 @@ class SubscriptionPlan(models.Model):
     feature_29_3months = models.CharField(max_length=200, verbose_name='Перевага 29 (3 міс)', blank=True)
     feature_30_3months = models.CharField(max_length=200, verbose_name='Перевага 30 (3 міс)', blank=True)
     
-    # Знижки з таймерами
-    discount_monthly_percentage = models.IntegerField(
-        default=0,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name='Знижка на місяць (%)',
-        help_text='Відсоток знижки для місячної підписки'
+    # Ціноутворення - нова логіка
+    # Місячна підписка
+    original_price_monthly_uah = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна до знижки (грн/міс)',
+        help_text='Ціна за місяць до знижки в гривнях',
+        default=0
     )
+    
+    original_price_monthly_usd = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна до знижки ($/міс)',
+        help_text='Ціна за місяць до знижки в доларах',
+        default=0
+    )
+    
+    sale_price_monthly_uah = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна після знижки (грн/міс)',
+        help_text='Ціна за місяць після знижки в гривнях',
+        default=0
+    )
+    
+    sale_price_monthly_usd = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна після знижки ($/міс)',
+        help_text='Ціна за місяць після знижки в доларах',
+        default=0
+    )
+    
+    # 3-місячна підписка
+    original_price_3months_uah = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна до знижки за 3 місяці (грн)',
+        help_text='Ціна за 3 місяці до знижки в гривнях',
+        default=0
+    )
+    
+    original_price_3months_usd = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна до знижки за 3 місяці ($)',
+        help_text='Ціна за 3 місяці до знижки в доларах',
+        default=0
+    )
+    
+    sale_price_3months_uah = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна після знижки за 3 місяці (грн)',
+        help_text='Ціна за 3 місяці після знижки в гривнях',
+        default=0
+    )
+    
+    sale_price_3months_usd = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Ціна після знижки за 3 місяці ($)',
+        help_text='Ціна за 3 місяці після знижки в доларах',
+        default=0
+    )
+    
+    # Таймери знижок (контролюють, коли показувати знижку)
     discount_monthly_start_date = models.DateTimeField(
         null=True,
         blank=True,
         verbose_name='Початок знижки (місяць)',
-        help_text='Дата початку дії знижки'
+        help_text='Дата початку дії знижки. Якщо встановлено, sale_price буде показано в період між start_date та end_date'
     )
     discount_monthly_end_date = models.DateTimeField(
         null=True,
@@ -137,17 +206,11 @@ class SubscriptionPlan(models.Model):
         verbose_name='Кінець знижки (місяць)',
         help_text='Дата закінчення дії знижки'
     )
-    discount_3months_percentage = models.IntegerField(
-        default=0,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name='Знижка на 3 місяці (%)',
-        help_text='Відсоток знижки для 3-місячної підписки'
-    )
     discount_3months_start_date = models.DateTimeField(
         null=True,
         blank=True,
         verbose_name='Початок знижки (3 міс)',
-        help_text='Дата початку дії знижки'
+        help_text='Дата початку дії знижки. Якщо встановлено, sale_price буде показано в період між start_date та end_date'
     )
     discount_3months_end_date = models.DateTimeField(
         null=True,
@@ -156,53 +219,85 @@ class SubscriptionPlan(models.Model):
         help_text='Дата закінчення дії знижки'
     )
     
-    # Ціноутворення
+    # Старі поля (будуть видалені в міграції, але залишаються для конвертації)
     base_price_uah = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         validators=[MinValueValidator(0)],
-        verbose_name='Базова ціна (грн/міс)',
-        help_text='Ціна за 1 місяць в гривнях'
+        verbose_name='[DEPRECATED] Базова ціна (грн/міс)',
+        help_text='DEPRECATED: Використовуйте original_price_monthly_uah',
+        default=0,
+        null=True,
+        blank=True
     )
     
     base_price_usd = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         validators=[MinValueValidator(0)],
-        verbose_name='Базова ціна ($/міс)',
-        help_text='Ціна за 1 місяць в доларах'
+        verbose_name='[DEPRECATED] Базова ціна ($/міс)',
+        help_text='DEPRECATED: Використовуйте original_price_monthly_usd',
+        default=0,
+        null=True,
+        blank=True
     )
     
     base_price_3months_uah = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         validators=[MinValueValidator(0)],
-        verbose_name='Базова ціна за 3 місяці (грн)',
-        help_text='Окрема базова ціна за 3 місяці в гривнях (не множення!)',
-        default=0
+        verbose_name='[DEPRECATED] Базова ціна за 3 місяці (грн)',
+        help_text='DEPRECATED: Використовуйте original_price_3months_uah',
+        default=0,
+        null=True,
+        blank=True
     )
     
     base_price_3months_usd = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         validators=[MinValueValidator(0)],
-        verbose_name='Базова ціна за 3 місяці ($)',
-        help_text='Окрема базова ціна за 3 місяці в доларах (не множення!)',
-        default=0
+        verbose_name='[DEPRECATED] Базова ціна за 3 місяці ($)',
+        help_text='DEPRECATED: Використовуйте original_price_3months_usd',
+        default=0,
+        null=True,
+        blank=True
     )
     
     discount_3_months = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name='Знижка на 3 місяці (%)',
-        help_text='Відсоток знижки для 3-місячної підписки (без таймера)'
+        verbose_name='[DEPRECATED] Знижка на 3 місяці (%)',
+        help_text='DEPRECATED: Відсоток розраховується автоматично',
+        null=True,
+        blank=True
     )
     
     discount_monthly = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name='Знижка на місяць (%)',
-        help_text='Звичайна знижка для місячної підписки (без таймера)'
+        verbose_name='[DEPRECATED] Знижка на місяць (%)',
+        help_text='DEPRECATED: Відсоток розраховується автоматично',
+        null=True,
+        blank=True
+    )
+    
+    discount_monthly_percentage = models.IntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        verbose_name='[DEPRECATED] Знижка на місяць (%)',
+        help_text='DEPRECATED: Відсоток розраховується автоматично',
+        null=True,
+        blank=True
+    )
+    
+    discount_3months_percentage = models.IntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        verbose_name='[DEPRECATED] Знижка на 3 місяці (%)',
+        help_text='DEPRECATED: Відсоток розраховується автоматично',
+        null=True,
+        blank=True
     )
     
     # Доступність періодів
@@ -297,10 +392,98 @@ class SubscriptionPlan(models.Model):
         
         return features
     
+    def is_discount_active(self, period):
+        """
+        Перевіряє чи активний таймер знижки для періоду
+        
+        Args:
+            period: 'monthly' або '3_months'
+        
+        Returns:
+            bool: True якщо таймер активний
+        """
+        now = timezone.now()
+        
+        if period == 'monthly':
+            return (self.discount_monthly_start_date and 
+                   self.discount_monthly_end_date and
+                   self.discount_monthly_start_date <= now <= self.discount_monthly_end_date)
+        elif period == '3_months':
+            return (self.discount_3months_start_date and 
+                   self.discount_3months_end_date and
+                   self.discount_3months_start_date <= now <= self.discount_3months_end_date)
+        
+        return False
+    
+    def get_original_price(self, period, currency='uah'):
+        """
+        Повертає ціну до знижки для періоду
+        
+        Args:
+            period: 'monthly' або '3_months'
+            currency: 'uah' або 'usd'
+        
+        Returns:
+            Decimal: Ціна до знижки
+        """
+        from decimal import Decimal
+        
+        if period == 'monthly':
+            return Decimal(str(self.original_price_monthly_uah if currency == 'uah' else self.original_price_monthly_usd))
+        elif period == '3_months':
+            return Decimal(str(self.original_price_3months_uah if currency == 'uah' else self.original_price_3months_usd))
+        
+        return Decimal('0')
+    
+    def get_sale_price(self, period, currency='uah'):
+        """
+        Повертає ціну після знижки для періоду
+        
+        Args:
+            period: 'monthly' або '3_months'
+            currency: 'uah' або 'usd'
+        
+        Returns:
+            Decimal: Ціна після знижки
+        """
+        from decimal import Decimal
+        
+        if period == 'monthly':
+            return Decimal(str(self.sale_price_monthly_uah if currency == 'uah' else self.sale_price_monthly_usd))
+        elif period == '3_months':
+            return Decimal(str(self.sale_price_3months_uah if currency == 'uah' else self.sale_price_3months_usd))
+        
+        return Decimal('0')
+    
+    def get_discount_percentage(self, period, currency='uah'):
+        """
+        Розраховує відсоток знижки автоматично на основі original_price та sale_price
+        
+        Args:
+            period: 'monthly' або '3_months'
+            currency: 'uah' або 'usd'
+        
+        Returns:
+            int: Відсоток знижки (0-100) або 0
+        """
+        from decimal import Decimal
+        
+        original = self.get_original_price(period, currency)
+        sale = self.get_sale_price(period, currency)
+        
+        if original == 0:
+            return 0
+        
+        if sale >= original:
+            return 0  # Немає знижки
+        
+        discount = ((original - sale) / original) * Decimal('100')
+        return int(discount)
+    
     def get_active_discount(self, period):
         """
-        Повертає активну знижку для періоду
-        Пріоритет: таймер > звичайна знижка
+        Повертає активну знижку для періоду (відсоток)
+        Якщо таймер активний, повертає відсоток знижки, інакше 0
         
         Args:
             period: 'monthly' або '3_months'
@@ -308,24 +491,9 @@ class SubscriptionPlan(models.Model):
         Returns:
             int: Відсоток знижки або 0
         """
-        now = timezone.now()
-        
-        if period == 'monthly':
-            # Спочатку перевіряємо таймер
-            if (self.discount_monthly_start_date and 
-                self.discount_monthly_end_date and
-                self.discount_monthly_start_date <= now <= self.discount_monthly_end_date):
-                return self.discount_monthly_percentage
-            # Якщо таймер не активний, повертаємо звичайну знижку
-            return self.discount_monthly
-        elif period == '3_months':
-            # Спочатку перевіряємо таймер
-            if (self.discount_3months_start_date and 
-                self.discount_3months_end_date and
-                self.discount_3months_start_date <= now <= self.discount_3months_end_date):
-                return self.discount_3months_percentage
-            # Якщо таймер не активний, повертаємо звичайну знижку
-            return self.discount_3_months
+        if self.is_discount_active(period):
+            # Визначаємо валюту за замовчуванням (можна розширити)
+            return self.get_discount_percentage(period, 'uah')
         
         return 0
     
@@ -352,8 +520,8 @@ class SubscriptionPlan(models.Model):
     
     def calculate_price(self, period, currency='uah'):
         """
-        Розраховує ціну з урахуванням періоду та знижки (включаючи таймер)
-        Пріоритет: таймер > звичайна знижка > базова ціна
+        Розраховує ціну з урахуванням періоду та таймера знижки
+        Якщо таймер активний - повертає sale_price, інакше original_price
         
         Args:
             period: 'monthly', '3_months'
@@ -362,42 +530,17 @@ class SubscriptionPlan(models.Model):
         Returns:
             Decimal: Фінальна ціна
         """
-        from decimal import Decimal
+        original = self.get_original_price(period, currency)
+        sale = self.get_sale_price(period, currency)
         
-        base_price = self.base_price_uah if currency == 'uah' else self.base_price_usd
+        # Якщо таймер активний, показуємо ціну зі знижкою
+        if self.is_discount_active(period):
+            # Якщо sale_price не встановлено, повертаємо original
+            if sale > 0:
+                return sale
         
-        if period == 'monthly':
-            price = base_price
-            # Спочатку перевіряємо активну знижку з таймером
-            active_discount = self.get_active_discount('monthly')
-            if active_discount > 0:
-                discount = Decimal(str(active_discount))
-                return price * (Decimal('1') - discount / Decimal('100'))
-            # Якщо таймер не активний, використовуємо звичайну знижку
-            if self.discount_monthly > 0:
-                discount = Decimal(str(self.discount_monthly))
-                return price * (Decimal('1') - discount / Decimal('100'))
-            return price
-        
-        elif period == '3_months':
-            # Використовуємо окрему базову ціну за 3 місяці (не множення!)
-            base_price_3m = self.base_price_3months_uah if currency == 'uah' else self.base_price_3months_usd
-            # Якщо окрема ціна не встановлена, використовуємо множення як fallback
-            if base_price_3m == 0:
-                base_price_3m = base_price * 3
-            
-            # Спочатку перевіряємо активну знижку з таймером
-            active_discount = self.get_active_discount('3_months')
-            if active_discount > 0:
-                discount = Decimal(str(active_discount))
-                return base_price_3m * (Decimal('1') - discount / Decimal('100'))
-            # Якщо таймер не активний, використовуємо звичайну знижку
-            if self.discount_3_months > 0:
-                discount = Decimal(str(self.discount_3_months))
-                return base_price_3m * (Decimal('1') - discount / Decimal('100'))
-            return base_price_3m
-        
-        return base_price
+        # Якщо таймер не активний або sale_price не встановлено, повертаємо original
+        return original if original > 0 else sale
     
     def get_monthly_price(self, period, currency='uah'):
         """Розраховує ціну за місяць для кожного періоду"""
