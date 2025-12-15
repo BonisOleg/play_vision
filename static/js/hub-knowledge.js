@@ -57,19 +57,25 @@ class HubHeroCarousel {
                 title: 'Програма лояльності Хабу Знань',
                 subtitle: 'Твоя бібліотека футбольних знань',
                 ctaText: 'Дізнатися',
-                ctaUrl: '/loyalty/'
+                ctaUrl: '/loyalty/',
+                image: null,
+                video: null
             },
             {
                 title: 'Ексклюзивні курси та матеріали',
                 subtitle: 'Від базових знань до професійного рівня',
                 ctaText: 'Переглянути курси',
-                ctaUrl: '/hub/'
+                ctaUrl: '/hub/',
+                image: null,
+                video: null
             },
             {
                 title: 'Знання, що працюють на полі',
                 subtitle: 'Навчання від практиків, а не теоретиків',
                 ctaText: 'Обрати напрям',
-                ctaUrl: '/hub/'
+                ctaUrl: '/hub/',
+                image: null,
+                video: null
             }
         ];
     }
@@ -194,19 +200,14 @@ class HubHeroCarousel {
     updateBackground(slide) {
         if (!this.heroBg) return;
         
-        const existingVideo = this.heroBg.querySelector('.hub-hero-bg-video');
-        const existingImage = this.heroBg.querySelector('.hub-hero-bg-image');
-
-        // Видаляємо існуючі елементи
-        if (existingVideo) {
-            existingVideo.remove();
-        }
-        if (existingImage) {
-            existingImage.remove();
-        }
+        // Видаляємо ВСІ існуючі img та video елементи
+        const allImages = this.heroBg.querySelectorAll('img');
+        const allVideos = this.heroBg.querySelectorAll('video');
+        allImages.forEach(img => img.remove());
+        allVideos.forEach(video => video.remove());
 
         // Додаємо новий контент
-        if (slide.video && slide.video.trim() !== '') {
+        if (slide.video && typeof slide.video === 'string' && slide.video.trim() !== '') {
             const video = document.createElement('video');
             video.className = 'hub-hero-bg-video';
             video.muted = true;
@@ -220,7 +221,7 @@ class HubHeroCarousel {
             
             // Обробка помилок завантаження відео - fallback на зображення
             video.addEventListener('error', () => {
-                if (slide.image && slide.image.trim() !== '') {
+                if (slide.image && typeof slide.image === 'string' && slide.image.trim() !== '') {
                     video.style.display = 'none';
                     const imageUrl = this.getOptimizedImageUrl(slide.image);
                     if (imageUrl) {
@@ -235,7 +236,7 @@ class HubHeroCarousel {
             });
             
             // Якщо є зображення, додаємо його як fallback всередині відео
-            if (slide.image && slide.image.trim() !== '') {
+            if (slide.image && typeof slide.image === 'string' && slide.image.trim() !== '') {
                 const imageUrl = this.getOptimizedImageUrl(slide.image);
                 if (imageUrl) {
                     const img = document.createElement('img');
@@ -252,7 +253,7 @@ class HubHeroCarousel {
             video.play().catch(() => {
                 // Якщо автоплей не працює, відео все одно показуватиметься
             });
-        } else if (slide.image && slide.image.trim() !== '') {
+        } else if (slide.image && typeof slide.image === 'string' && slide.image.trim() !== '') {
             // Використовуємо кешоване зображення якщо є
             const imageUrl = this.imageCache.has(this.currentSlide) 
                 ? this.imageCache.get(this.currentSlide).src 
@@ -267,16 +268,13 @@ class HubHeroCarousel {
                 this.heroBg.appendChild(img);
             }
         } else {
-            // Fallback до дефолтного зображення (вже є в HTML)
-            const defaultImg = this.heroBg.querySelector('img');
-            if (!defaultImg) {
-                const img = document.createElement('img');
-                img.className = 'hub-hero-bg-image';
-                img.src = '/static/images/Hiro.png';
-                img.alt = slide.title || '';
-                img.loading = 'eager';
-                this.heroBg.appendChild(img);
-            }
+            // Fallback до дефолтного зображення (всі старі елементи вже видалені)
+            const img = document.createElement('img');
+            img.className = 'hub-hero-bg-image';
+            img.src = '/static/images/Hiro.png';
+            img.alt = slide.title || '';
+            img.loading = 'eager';
+            this.heroBg.appendChild(img);
         }
     }
 

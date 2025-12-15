@@ -34,14 +34,15 @@
                 [
                     {% for i in "12345" %}
                     {% if i == "1" or hub_hero|get_title:i %}
+                    {% if not forloop.first %},{% endif %}
                     {% get_hub_hero_title hub_hero i country_code as slide_title %}
                     {% get_hub_hero_subtitle hub_hero i country_code as slide_subtitle %}
                     {
                         "title": "{{ slide_title|escapejs }}",
                         "subtitle": "{{ slide_subtitle|escapejs }}",
-                        "image": {% with bg_img=hub_hero|get_background_image:i %}{% if bg_img %}"{{ bg_img.url|escapejs }}"{% else %}null{% endif %}{% endwith %},
-                        "video": {% with bg_vid=hub_hero|get_background_video:i %}{% if bg_vid %}"{{ bg_vid.url|escapejs }}"{% else %}null{% endif %}{% endwith %}
-                    }{% if not forloop.last %},{% endif %}
+                        "image": {% with bg_img=hub_hero|get_background_image:i %}{% if bg_img and bg_img.url %}"{{ bg_img.url|escapejs }}"{% else %}null{% endif %}{% endwith %},
+                        "video": {% with bg_vid=hub_hero|get_background_video:i %}{% if bg_vid and bg_vid.url %}"{{ bg_vid.url|escapejs }}"{% else %}null{% endif %}{% endwith %}
+                    }
                     {% endif %}
                     {% endfor %}
                 ]
