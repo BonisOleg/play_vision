@@ -624,6 +624,7 @@
     
     /* ХАРАКТЕРИСТИКИ - компактніші */
     .plan-features {
+        margin-top: 16px;
         margin-bottom: 24px;
     }
     
@@ -684,84 +685,6 @@
     
     .modal-title {
         font-size: 24px;
-    }
-}
-
-/* Small Mobile - ЩЕ БІЛЬШЕ ЗМЕНШЕННЯ */
-@media (max-width: 480px) {
-    .pricing-page {
-        padding: 40px 0 60px;
-    }
-    
-    .pricing-title {
-        font-size: 28px;
-    }
-    
-    /* КАРТКА - максимально компактна */
-    .plan-card {
-        min-width: 240px;
-        max-width: 280px;
-        height: 100%;
-        padding: 18px 14px;
-        border-radius: 14px;
-    }
-    
-    /* BADGE */
-    .plan-badge {
-        top: 65px;
-        padding: 3px 10px;
-        font-size: 11px;
-    }
-    
-    /* НАЗВА */
-    .plan-name {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
-
-    /* OVERLAY - позиція для small mobile */
-    .plan-card-overlay {
-        top: calc(18px + 24px + 20px); /* padding (18px) + font-size (24px) + margin-bottom (20px) = 62px */
-    }
-    
-    /* ХАРАКТЕРИСТИКИ */
-    .feature-item {
-        padding: 10px 0;
-        gap: 8px;
-    }
-    
-    .feature-number {
-        font-size: 13px;
-        min-width: 18px;
-    }
-    
-    .feature-text {
-        font-size: 13px;
-    }
-    
-    /* ЦІНА */
-    .plan-price-section {
-        margin-bottom: 16px;
-    }
-    
-    .price-value {
-        font-size: 34px;
-    }
-    
-    .price-currency {
-        font-size: 18px;
-    }
-    
-    /* КНОПКА */
-    .btn-purchase {
-        padding: 12px 16px;
-        font-size: 13px;
-    }
-    
-    /* GAP */
-    .plans-grid {
-        align-items: stretch;
-        gap: 10px;
     }
 }
 
