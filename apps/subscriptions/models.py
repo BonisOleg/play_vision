@@ -173,6 +173,24 @@ class SubscriptionPlan(models.Model):
         help_text='Ціна за 1 місяць в доларах'
     )
     
+    base_price_3months_uah = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Базова ціна за 3 місяці (грн)',
+        help_text='Окрема базова ціна за 3 місяці в гривнях (не множення!)',
+        default=0
+    )
+    
+    base_price_3months_usd = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Базова ціна за 3 місяці ($)',
+        help_text='Окрема базова ціна за 3 місяці в доларах (не множення!)',
+        default=0
+    )
+    
     discount_3_months = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
@@ -362,17 +380,22 @@ class SubscriptionPlan(models.Model):
             return price
         
         elif period == '3_months':
-            full_price = base_price * 3
+            # Використовуємо окрему базову ціну за 3 місяці (не множення!)
+            base_price_3m = self.base_price_3months_uah if currency == 'uah' else self.base_price_3months_usd
+            # Якщо окрема ціна не встановлена, використовуємо множення як fallback
+            if base_price_3m == 0:
+                base_price_3m = base_price * 3
+            
             # Спочатку перевіряємо активну знижку з таймером
             active_discount = self.get_active_discount('3_months')
             if active_discount > 0:
                 discount = Decimal(str(active_discount))
-                return full_price * (Decimal('1') - discount / Decimal('100'))
+                return base_price_3m * (Decimal('1') - discount / Decimal('100'))
             # Якщо таймер не активний, використовуємо звичайну знижку
             if self.discount_3_months > 0:
                 discount = Decimal(str(self.discount_3_months))
-                return full_price * (Decimal('1') - discount / Decimal('100'))
-            return full_price
+                return base_price_3m * (Decimal('1') - discount / Decimal('100'))
+            return base_price_3m
         
         return base_price
     

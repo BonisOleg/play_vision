@@ -22,6 +22,22 @@ class Migration(migrations.Migration):
                     ALTER TABLE subscription_plans ADD COLUMN discount_monthly INTEGER DEFAULT 0;
                 END IF;
                 
+                -- Add base_price_3months_uah if not exists
+                IF NOT EXISTS (
+                    SELECT 1 FROM information_schema.columns 
+                    WHERE table_name='subscription_plans' AND column_name='base_price_3months_uah'
+                ) THEN
+                    ALTER TABLE subscription_plans ADD COLUMN base_price_3months_uah DECIMAL(10,2) DEFAULT 0;
+                END IF;
+                
+                -- Add base_price_3months_usd if not exists
+                IF NOT EXISTS (
+                    SELECT 1 FROM information_schema.columns 
+                    WHERE table_name='subscription_plans' AND column_name='base_price_3months_usd'
+                ) THEN
+                    ALTER TABLE subscription_plans ADD COLUMN base_price_3months_usd DECIMAL(10,2) DEFAULT 0;
+                END IF;
+                
                 -- Remove discount_12_months if exists
                 IF EXISTS (
                     SELECT 1 FROM information_schema.columns 

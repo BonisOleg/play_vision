@@ -167,10 +167,16 @@ def get_base_price(plan, period, currency='uah'):
         float: Базова ціна
     """
     try:
-        base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
         if period == '3_months':
-            return base_price * 3
-        return base_price
+            # Використовуємо окрему базову ціну за 3 місяці
+            base_price_3m = float(plan.base_price_3months_uah if currency == 'uah' else plan.base_price_3months_usd)
+            # Якщо окрема ціна не встановлена, використовуємо множення як fallback
+            if base_price_3m == 0:
+                base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
+                return base_price * 3
+            return base_price_3m
+        else:
+            return float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
     except Exception:
         return 0
 
@@ -189,9 +195,15 @@ def get_discount_amount(plan, period, currency='uah'):
         float: Сума знижки
     """
     try:
-        base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
         if period == '3_months':
-            base_price = base_price * 3
+            # Використовуємо окрему базову ціну за 3 місяці
+            base_price_3m = float(plan.base_price_3months_uah if currency == 'uah' else plan.base_price_3months_usd)
+            if base_price_3m == 0:
+                base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
+                base_price_3m = base_price * 3
+            base_price = base_price_3m
+        else:
+            base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
         
         final_price = float(plan.calculate_price(period, currency))
         return base_price - final_price

@@ -68,8 +68,9 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
         ('Базова ціна', {
             'fields': (
                 ('base_price_uah', 'base_price_usd'),
+                ('base_price_3months_uah', 'base_price_3months_usd'),
             ),
-            'description': 'Базова ціна за місяць'
+            'description': 'Базова ціна за місяць та за 3 місяці (окрема графа для 3 місяців)'
         }),
         ('Знижки без таймера', {
             'fields': (
@@ -133,7 +134,7 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             monthly = f"{base_monthly:.0f} грн/міс"
         
         # 3-місячна підписка
-        base_3m = obj.base_price_uah * 3
+        base_3m = obj.base_price_3months_uah if obj.base_price_3months_uah > 0 else obj.base_price_uah * 3
         final_3m = obj.calculate_price('3_months', 'uah')
         discount_3m = obj.get_active_discount('3_months')
         monthly_3m = final_3m / 3
@@ -173,7 +174,7 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             monthly = f"${base_monthly:.0f}/міс"
         
         # 3-місячна підписка
-        base_3m = obj.base_price_usd * 3
+        base_3m = obj.base_price_3months_usd if obj.base_price_3months_usd > 0 else obj.base_price_usd * 3
         final_3m = obj.calculate_price('3_months', 'usd')
         discount_3m = obj.get_active_discount('3_months')
         monthly_3m = final_3m / 3
