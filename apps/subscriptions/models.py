@@ -85,6 +85,156 @@ class SubscriptionPlan(models.Model):
         blank=True
     )
     
+    feature_6 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 6',
+        blank=True
+    )
+    
+    feature_7 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 7',
+        blank=True
+    )
+    
+    feature_8 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 8',
+        blank=True
+    )
+    
+    feature_9 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 9',
+        blank=True
+    )
+    
+    feature_10 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 10',
+        blank=True
+    )
+    
+    feature_11 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 11',
+        blank=True
+    )
+    
+    feature_12 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 12',
+        blank=True
+    )
+    
+    feature_13 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 13',
+        blank=True
+    )
+    
+    feature_14 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 14',
+        blank=True
+    )
+    
+    feature_15 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 15',
+        blank=True
+    )
+    
+    feature_16 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 16',
+        blank=True
+    )
+    
+    feature_17 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 17',
+        blank=True
+    )
+    
+    feature_18 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 18',
+        blank=True
+    )
+    
+    feature_19 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 19',
+        blank=True
+    )
+    
+    feature_20 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 20',
+        blank=True
+    )
+    
+    feature_21 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 21',
+        blank=True
+    )
+    
+    feature_22 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 22',
+        blank=True
+    )
+    
+    feature_23 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 23',
+        blank=True
+    )
+    
+    feature_24 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 24',
+        blank=True
+    )
+    
+    feature_25 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 25',
+        blank=True
+    )
+    
+    feature_26 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 26',
+        blank=True
+    )
+    
+    feature_27 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 27',
+        blank=True
+    )
+    
+    feature_28 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 28',
+        blank=True
+    )
+    
+    feature_29 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 29',
+        blank=True
+    )
+    
+    feature_30 = models.CharField(
+        max_length=200,
+        verbose_name='Перевага 30',
+        blank=True
+    )
+    
     # Ціноутворення
     base_price_uah = models.DecimalField(
         max_digits=10,
@@ -196,7 +346,7 @@ class SubscriptionPlan(models.Model):
     def get_features(self):
         """Повертає список заповнених переваг"""
         features = []
-        for i in range(1, 6):
+        for i in range(1, 31):
             feature = getattr(self, f'feature_{i}', '')
             if feature:
                 features.append(feature)
