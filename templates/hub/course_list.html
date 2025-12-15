@@ -69,8 +69,8 @@
                                 <img src="{% static 'images/Hiro.png' %}" alt="Хаб знань Play Vision" class="hub-hero-bg-image" loading="eager">
                             {% endif %}
                         </div>
-                        <div class="hub-hero-content">
-                            <!-- Логотип вгорі -->
+                        <div class="hub-hero-content hero-new-design">
+                            <!-- Логотип вгорі (приховати на мобільних) -->
                             <div class="hub-hero-logo">
                                 <img src="{% static 'images/footerlogoblack.svg' %}" alt="Play Vision" loading="eager">
                             </div>
@@ -78,26 +78,25 @@
                             <h1 class="hero-title"></h1>
                             <!-- Опис -->
                             <p class="hero-subtitle"></p>
-                            <!-- Нижня лінія: точки (ліворуч) + кнопка (праворуч) -->
-                            <div class="hero-bottom-row">
-                                <div class="hero-slider-dots"></div>
-                                <div class="hero-buttons">
-                                    {% if hub_hero %}
-                                    {% with first_cta_text=hub_hero|get_cta_text:"1" %}
-                                    {% with first_cta_url=hub_hero|get_cta_url:"1" %}
-                                    <a href="{{ first_cta_url|default:'#catalog' }}" class="hub-btn">
-                                        <span class="btn-text">{{ first_cta_text|default:'Дізнатися' }}</span>
-                                        <span class="btn-logo-space"></span>
-                                    </a>
-                                    {% endwith %}
-                                    {% endwith %}
-                                    {% else %}
-                                    <a href="#catalog" class="hub-btn">
-                                        <span class="btn-text">Дізнатися</span>
-                                        <span class="btn-logo-space"></span>
-                                    </a>
-                                    {% endif %}
-                                </div>
+                            <!-- Точки слайдера -->
+                            <div class="hero-slider-dots"></div>
+                            <!-- Кнопки -->
+                            <div class="hero-buttons">
+                                {% if hub_hero %}
+                                {% with first_cta_text=hub_hero|get_cta_text:"1" %}
+                                {% with first_cta_url=hub_hero|get_cta_url:"1" %}
+                                <a href="{{ first_cta_url|default:'#catalog' }}" class="hub-btn">
+                                    <span class="btn-text">{{ first_cta_text|default:'Дізнатися' }}</span>
+                                    <span class="btn-logo-space"></span>
+                                </a>
+                                {% endwith %}
+                                {% endwith %}
+                                {% else %}
+                                <a href="#catalog" class="hub-btn">
+                                    <span class="btn-text">Дізнатися</span>
+                                    <span class="btn-logo-space"></span>
+                                </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
