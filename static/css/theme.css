@@ -225,12 +225,25 @@
     opacity: 1;
 }
 
+/* Виключення для hub-hero-logo - завжди показувати світлий логотип */
+[data-theme="dark"] .hub-hero-logo img[src$=".svg"] {
+    filter: none;
+    opacity: 1;
+}
+
 @media (prefers-color-scheme: dark) {
     [data-theme="auto"] img[src$=".svg"]:not(.hexagon-icon):not(.logo-light):not(.logo-dark):not(.mentoring-svg-invert):not(.footer-logo),
     [data-theme="auto"] .about-image-block img[src*=".svg"] {
         filter: invert(1) hue-rotate(180deg);
         opacity: 1;
     }
+    
+    /* Виключення для hub-hero-logo - завжди показувати світлий логотип */
+    [data-theme="auto"] .hub-hero-logo img[src$=".svg"] {
+        filter: none;
+        opacity: 1;
+    }
+}
 }
 
 /* === SCROLLBAR THEMING === */
