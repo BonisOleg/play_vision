@@ -116,6 +116,13 @@
                 }
             }
 
+            const priceHtml = data.price && data.price !== '0' ? `
+                <div class="meta-item">
+                    <span class="meta-label">Ціна:</span>
+                    <span class="meta-value price">${this.escapeHtml(data.price)}₴</span>
+                </div>
+            ` : '';
+
             const audienceHtml = data.audience ? `
                 <div class="meta-item">
                     <span class="meta-label">Кому підходить:</span>
@@ -123,7 +130,7 @@
                 </div>
             ` : '';
 
-            const hasMeta = audienceHtml.trim() !== '';
+            const hasMeta = (priceHtml + audienceHtml).trim() !== '';
 
             const readMoreBtnHtml = isMobile ? `
                         <button type="button" class="read-more-btn" id="read-more-btn">
@@ -136,6 +143,7 @@
 
             const metaHtml = hasMeta ? `
                         <div class="course-modal-meta">
+                            ${priceHtml}
                             ${audienceHtml}
                         </div>
             ` : '';
@@ -157,18 +165,11 @@
                         ${metaHtml}
 
                         <div class="course-modal-actions">
-                            ${data.joinUrl && data.joinUrl !== '#' ? `
-                            <a href="${this.escapeHtml(data.joinUrl)}" 
+                            <a href="${this.escapeHtml(data.joinUrl && data.joinUrl !== '#' ? data.joinUrl : '/hub/')}" 
                                class="btn btn-primary btn-large"
-                               target="_blank" rel="noopener">
+                               ${data.joinUrl && data.joinUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>
                                 Придбати
                             </a>
-                            ` : `
-                            <a href="/hub/" 
-                               class="btn btn-primary btn-large">
-                                Придбати
-                            </a>
-                            `}
                         </div>
                     </div>
 

@@ -17,7 +17,7 @@
 /* Слайдер - на всю ширину 3 колонок */
 .hub-hero-main {
     position: relative;
-    min-height: 450px;
+    aspect-ratio: 16 / 9;
     border-radius: 12px;
     overflow: hidden;
     grid-row: 1;
@@ -64,6 +64,21 @@
             transparent 85%);
 }
 
+/* Fallback для старих Android браузерів */
+@supports not (aspect-ratio: 16 / 9) {
+    .hub-hero-main::before {
+        content: '';
+        display: block;
+        padding-top: 56.25%; /* 16:9 = 9/16 * 100% */
+    }
+    
+    .hub-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
 .hub-hero-content {
     position: relative;
     z-index: 1;
@@ -71,7 +86,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 450px;
+    height: 100%;
 }
 
 .hub-hero-logo {
@@ -273,9 +288,20 @@
         justify-content: unset;
     }
     
-    /* Приховати логотип на мобільних */
+    /* Логотип: ряд 1, колонка 1 (верхній лівий кут) */
     .hub-hero-content.hero-new-design .hub-hero-logo {
-        display: none;
+        grid-row: 1;
+        grid-column: 1;
+        justify-self: start;
+        align-self: start;
+        width: 80px;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .hub-hero-content.hero-new-design .hub-hero-logo img {
+        width: 100%;
+        height: auto;
     }
     
     /* Точки слайдера: ряд 1, колонка 2 (праворуч зверху) */
@@ -371,7 +397,7 @@
     
     /* Інші елементи Hub Hero (не в hero-new-design) */
     .hub-hero-main {
-        min-height: 350px;
+        aspect-ratio: 16 / 9;
     }
     
     .hub-stat-value {
@@ -412,6 +438,45 @@
 
 /* iOS Safari оптимізація */
 @supports (-webkit-touch-callout: none) {
+    /* Hero секція - backface visibility та GPU acceleration */
+    .hub-hero-section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+    
+    .hub-hero-main {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+    
+    .hub-hero-bg {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .hub-hero-bg::after {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    /* Контент - smooth scrolling */
+    .hub-hero-content,
+    .hub-hero-content.hero-new-design {
+        -webkit-overflow-scrolling: touch;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    /* Текст - font smoothing */
+    .hub-hero-content .hero-title,
+    .hub-hero-content .hero-subtitle {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Кнопки та інтерактивні елементи */
     .slider-dot,
     .hub-btn {
         -webkit-appearance: none;
@@ -423,8 +488,37 @@
         cursor: pointer;
     }
     
+    /* Логотип */
     .hub-hero-logo {
         -webkit-user-drag: none;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    /* Додатково для мобільних iOS */
+    @media (max-width: 767px) {
+        /* Viewport height fix */
+        .hub-hero-main {
+            min-height: 100dvh;
+        }
+        
+        .hub-hero-content.hero-new-design {
+            height: 100%;
+        }
+        
+        /* Font rendering на iOS */
+        .hub-hero-content.hero-new-design .hero-title,
+        .hub-hero-content.hero-new-design .hero-subtitle {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Кнопка - відключити масштабування при тапі */
+        .hub-hero-content.hero-new-design .hub-btn {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            touch-action: manipulation;
+        }
     }
 }
 
