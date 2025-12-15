@@ -570,6 +570,7 @@
     /* Cards в слайдері - ЗМЕНШЕНІ РОЗМІРИ */
     .plans-grid {
         display: flex;
+        align-items: stretch;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-padding: 20px;
@@ -596,6 +597,7 @@
     .plan-card {
         min-width: 260px;
         max-width: 300px;
+        height: 100%;
         flex-shrink: 0;
         scroll-snap-align: start;
         padding: 20px 16px;
@@ -604,7 +606,7 @@
     
     /* BADGE - менший */
     .plan-badge {
-        top: 60px;
+        top: 70px;
         padding: 4px 12px;
         font-size: 12px;
     }
@@ -686,7 +688,7 @@
 }
 
 /* Small Mobile - ЩЕ БІЛЬШЕ ЗМЕНШЕННЯ */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     .pricing-page {
         padding: 40px 0 60px;
     }
@@ -699,13 +701,14 @@
     .plan-card {
         min-width: 240px;
         max-width: 280px;
+        height: 100%;
         padding: 18px 14px;
         border-radius: 14px;
     }
     
     /* BADGE */
     .plan-badge {
-        top: 55px;
+        top: 65px;
         padding: 3px 10px;
         font-size: 11px;
     }
@@ -757,6 +760,7 @@
     
     /* GAP */
     .plans-grid {
+        align-items: stretch;
         gap: 10px;
     }
 }
