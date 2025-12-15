@@ -126,16 +126,24 @@
            hx-get="{% pagination_url 1 %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
-           hx-push-url="true">
-            ‹‹ Перша
+           hx-push-url="true"
+           aria-label="Перша сторінка">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 17l-5-5 5-5"/>
+                <path d="M18 17l-5-5 5-5"/>
+            </svg>
+            <span>Перша</span>
         </a>
         <a href="#" 
            class="pagination-link"
            hx-get="{% pagination_url page_obj.previous_page_number %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
-           hx-push-url="true">
-            ‹
+           hx-push-url="true"
+           aria-label="Попередня сторінка">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
         </a>
         {% endif %}
 
@@ -149,7 +157,8 @@
                hx-get="{% pagination_url num %}"
                hx-target="#catalog-content"
                hx-swap="innerHTML"
-               hx-push-url="true">{{ num }}</a>
+               hx-push-url="true"
+               aria-label="Сторінка {{ num }}">{{ num }}</a>
             {% endif %}
             {% endfor %}
         </div>
@@ -160,16 +169,24 @@
            hx-get="{% pagination_url page_obj.next_page_number %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
-           hx-push-url="true">
-            ›
+           hx-push-url="true"
+           aria-label="Наступна сторінка">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6"/>
+            </svg>
         </a>
         <a href="#" 
            class="pagination-link pagination-link--next"
            hx-get="{% pagination_url page_obj.paginator.num_pages %}"
            hx-target="#catalog-content"
            hx-swap="innerHTML"
-           hx-push-url="true">
-            Остання ››
+           hx-push-url="true"
+           aria-label="Остання сторінка">
+            <span>Остання</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 17l5-5-5-5"/>
+                <path d="M6 17l5-5-5-5"/>
+            </svg>
         </a>
         {% endif %}
     </div>

@@ -456,3 +456,116 @@
     }
 }
 
+/* ============================================
+   HUB PAGINATION - Пагінація каталогу
+   ============================================ */
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md);
+}
+
+.pagination-wrapper .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.pagination-wrapper .pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--spacing-sm);
+    border-radius: var(--radius-full);
+    background: var(--hub-bg-card);
+    border: 2px solid var(--hub-border);
+    color: var(--hub-text);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: all var(--transition-base);
+    gap: var(--spacing-xs);
+}
+
+.pagination-wrapper .pagination-link svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.pagination-wrapper .pagination-link span {
+    white-space: nowrap;
+}
+
+.pagination-wrapper .pagination-link--prev,
+.pagination-wrapper .pagination-link--next {
+    padding: 0 var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+
+.pagination-wrapper .pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.pagination-wrapper .pagination-current {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--spacing-sm);
+    border-radius: var(--radius-full);
+    background: var(--hub-primary);
+    color: #FFFFFF;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .pagination-wrapper .pagination-link:hover {
+        border-color: var(--hub-primary);
+        background: var(--hub-primary);
+        color: #FFFFFF;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(229, 9, 20, 0.2);
+    }
+}
+
+.pagination-wrapper .pagination-link:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .pagination-wrapper {
+        margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .pagination-wrapper .pagination-link {
+        min-width: 44px;
+        height: 44px;
+        font-size: var(--font-size-base);
+    }
+    
+    .pagination-wrapper .pagination-current {
+        min-width: 44px;
+        height: 44px;
+        font-size: var(--font-size-base);
+    }
+    
+    .pagination-wrapper .pagination-link svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
