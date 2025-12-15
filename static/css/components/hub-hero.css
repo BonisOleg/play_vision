@@ -497,11 +497,7 @@
     
     /* Додатково для мобільних iOS */
     @media (max-width: 767px) {
-        /* Viewport height fix */
-        .hub-hero-main {
-            min-height: 100dvh;
-        }
-        
+        /* Viewport height fix - видалено, використовуємо aspect-ratio */
         .hub-hero-content.hero-new-design {
             height: 100%;
         }

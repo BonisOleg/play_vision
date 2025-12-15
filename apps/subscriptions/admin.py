@@ -65,12 +65,17 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             ),
             'description': 'Переваги для 3-місячної підписки. На сторінці відображаються тільки заповнені переваги.'
         }),
-        ('Ціноутворення', {
+        ('Базова ціна', {
             'fields': (
                 ('base_price_uah', 'base_price_usd'),
-                ('discount_3_months', 'discount_12_months'),
             ),
-            'description': 'Базова ціна за місяць + знижки у відсотках (старі поля)'
+            'description': 'Базова ціна за місяць'
+        }),
+        ('Знижки без таймера', {
+            'fields': (
+                ('discount_monthly', 'discount_3_months'),
+            ),
+            'description': 'Звичайні знижки без таймера. Застосовуються якщо таймер не активний.'
         }),
         ('Знижки з таймерами', {
             'fields': (
@@ -83,7 +88,6 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             'fields': (
                 'available_monthly',
                 'available_3_months',
-                'available_12_months',
                 'unavailable_text'
             ),
             'description': 'Виберіть які періоди доступні для цього тарифу'
@@ -112,58 +116,82 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
     badge_preview.short_description = 'Бейдж'
     
     def price_preview_uah(self, obj):
-        """Попередній перегляд цін в гривнях"""
-        monthly = f"{obj.base_price_uah} грн/міс"
+        """Попередній перегляд цін в гривнях з відображенням знижок"""
+        from decimal import Decimal
         
-        if obj.discount_3_months > 0:
-            price_3m = obj.calculate_price('3_months', 'uah')
-            monthly_3m = price_3m / 3
-            three_months = f"{price_3m:.0f} грн за 3міс ({monthly_3m:.0f} грн/міс, -{obj.discount_3_months}%)"
-        else:
-            three_months = f"{obj.base_price_uah * 3} грн за 3міс"
+        # Місячна підписка
+        base_monthly = obj.base_price_uah
+        final_monthly = obj.calculate_price('monthly', 'uah')
+        discount_monthly = obj.get_active_discount('monthly')
         
-        if obj.discount_12_months > 0:
-            price_12m = obj.calculate_price('12_months', 'uah')
-            monthly_12m = price_12m / 12
-            twelve_months = f"{price_12m:.0f} грн за рік ({monthly_12m:.0f} грн/міс, -{obj.discount_12_months}%)"
+        if discount_monthly > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">{base_monthly:.0f} грн</span>'
+            new_price = f'<span style="color: #e11d48; font-weight: bold;">{final_monthly:.0f} грн</span>'
+            discount_amount = base_monthly - final_monthly
+            monthly = f"{old_price} → {new_price} /міс<br><small style='color: #10b981;'>Економія: {discount_amount:.0f} грн ({discount_monthly}%)</small>"
         else:
-            twelve_months = f"{obj.base_price_uah * 12} грн за рік"
+            monthly = f"{base_monthly:.0f} грн/міс"
+        
+        # 3-місячна підписка
+        base_3m = obj.base_price_uah * 3
+        final_3m = obj.calculate_price('3_months', 'uah')
+        discount_3m = obj.get_active_discount('3_months')
+        monthly_3m = final_3m / 3
+        
+        if discount_3m > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">{base_3m:.0f} грн</span>'
+            new_price = f'<span style="color: #e11d48; font-weight: bold;">{final_3m:.0f} грн</span>'
+            discount_amount = base_3m - final_3m
+            three_months = f"{old_price} → {new_price} за 3міс<br><small style='color: #10b981;'>Економія: {discount_amount:.0f} грн ({discount_3m}%) | {monthly_3m:.0f} грн/міс</small>"
+        else:
+            three_months = f"{base_3m:.0f} грн за 3міс ({obj.base_price_uah:.0f} грн/міс)"
         
         return format_html(
-            '<div style="line-height: 1.6;">'
-            '<strong>Місяць:</strong> {}<br>'
-            '<strong>3 міс:</strong> {}<br>'
-            '<strong>Рік:</strong> {}'
+            '<div style="line-height: 1.8;">'
+            '<strong>Місяць:</strong><br>{}<br><br>'
+            '<strong>3 міс:</strong><br>{}'
             '</div>',
-            monthly, three_months, twelve_months
+            monthly, three_months
         )
     price_preview_uah.short_description = 'Ціни (₴)'
     
     def price_preview_usd(self, obj):
-        """Попередній перегляд цін в доларах"""
-        monthly = f"${obj.base_price_usd}/міс"
+        """Попередній перегляд цін в доларах з відображенням знижок"""
+        from decimal import Decimal
         
-        if obj.discount_3_months > 0:
-            price_3m = obj.calculate_price('3_months', 'usd')
-            monthly_3m = price_3m / 3
-            three_months = f"${price_3m:.0f} за 3міс (${monthly_3m:.0f}/міс)"
-        else:
-            three_months = f"${obj.base_price_usd * 3} за 3міс"
+        # Місячна підписка
+        base_monthly = obj.base_price_usd
+        final_monthly = obj.calculate_price('monthly', 'usd')
+        discount_monthly = obj.get_active_discount('monthly')
         
-        if obj.discount_12_months > 0:
-            price_12m = obj.calculate_price('12_months', 'usd')
-            monthly_12m = price_12m / 12
-            twelve_months = f"${price_12m:.0f} за рік (${monthly_12m:.0f}/міс)"
+        if discount_monthly > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">${base_monthly:.0f}</span>'
+            new_price = f'<span style="color: #e11d48; font-weight: bold;">${final_monthly:.0f}</span>'
+            discount_amount = base_monthly - final_monthly
+            monthly = f"{old_price} → {new_price} /міс<br><small style='color: #10b981;'>Економія: ${discount_amount:.0f} ({discount_monthly}%)</small>"
         else:
-            twelve_months = f"${obj.base_price_usd * 12} за рік"
+            monthly = f"${base_monthly:.0f}/міс"
+        
+        # 3-місячна підписка
+        base_3m = obj.base_price_usd * 3
+        final_3m = obj.calculate_price('3_months', 'usd')
+        discount_3m = obj.get_active_discount('3_months')
+        monthly_3m = final_3m / 3
+        
+        if discount_3m > 0:
+            old_price = f'<span style="text-decoration: line-through; color: #999;">${base_3m:.0f}</span>'
+            new_price = f'<span style="color: #e11d48; font-weight: bold;">${final_3m:.0f}</span>'
+            discount_amount = base_3m - final_3m
+            three_months = f"{old_price} → {new_price} за 3міс<br><small style='color: #10b981;'>Економія: ${discount_amount:.0f} ({discount_3m}%) | ${monthly_3m:.0f}/міс</small>"
+        else:
+            three_months = f"${base_3m:.0f} за 3міс (${obj.base_price_usd:.0f}/міс)"
         
         return format_html(
-            '<div style="line-height: 1.6;">'
-            '{}<br>'
-            '{}<br>'
-            '{}'
+            '<div style="line-height: 1.8;">'
+            '<strong>Місяць:</strong><br>{}<br><br>'
+            '<strong>3 міс:</strong><br>{}'
             '</div>',
-            monthly, three_months, twelve_months
+            monthly, three_months
         )
     price_preview_usd.short_description = 'Ціни ($)'
     
@@ -174,8 +202,6 @@ class SubscriptionPlanAdmin(admin.ModelAdmin):
             periods.append('1 міс')
         if obj.available_3_months:
             periods.append('3 міс')
-        if obj.available_12_months:
-            periods.append('12 міс')
         
         if periods:
             return format_html(

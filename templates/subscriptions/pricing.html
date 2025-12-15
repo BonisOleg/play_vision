@@ -100,14 +100,19 @@
                         <div class="plan-price-section">
                             <!-- Monthly -->
                             <div class="price-block" data-period="monthly">
+                                {% get_base_price plan "monthly" currency as base_monthly %}
+                                {% calculate_plan_price plan "monthly" currency as price_monthly %}
+                                {% get_active_discount plan "monthly" as monthly_discount %}
+                                {% get_discount_amount plan "monthly" currency as discount_amount_monthly %}
+                                
+                                {% if monthly_discount > 0 %}
                                 <div class="price-amount">
-                                    <span class="price-value">{% calculate_plan_price plan "monthly" currency as price_monthly %}{{ price_monthly|floatformat:0 }}</span>
+                                    <span class="price-old" style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-right: 8px;">{{ base_monthly|floatformat:0 }} {{ currency_symbol }}</span>
+                                    <span class="price-value" style="color: #e11d48; font-weight: bold;">{{ price_monthly|floatformat:0 }}</span>
                                     <span class="price-currency">{{ currency_symbol }}</span>
                                 </div>
-                                {% get_active_discount plan "monthly" as monthly_discount %}
-                                {% if monthly_discount > 0 %}
                                 <div class="price-save">
-                                    Економія {{ monthly_discount }}%
+                                    Економія {{ discount_amount_monthly|floatformat:0 }} {{ currency_symbol }} ({{ monthly_discount }}%)
                                 </div>
                                 {% get_discount_time_left plan "monthly" as monthly_time_left %}
                                 {% if monthly_time_left %}
@@ -116,19 +121,29 @@
                                     <span class="timer-value" data-timer-display></span>
                                 </div>
                                 {% endif %}
+                                {% else %}
+                                <div class="price-amount">
+                                    <span class="price-value">{{ price_monthly|floatformat:0 }}</span>
+                                    <span class="price-currency">{{ currency_symbol }}</span>
+                                </div>
                                 {% endif %}
                             </div>
 
                             <!-- 3 Months -->
                             <div class="price-block" data-period="3_months" style="display: none;">
+                                {% get_base_price plan "3_months" currency as base_3m %}
+                                {% calculate_plan_price plan "3_months" currency as price_3m %}
+                                {% get_active_discount plan "3_months" as three_months_discount %}
+                                {% get_discount_amount plan "3_months" currency as discount_amount_3m %}
+                                
+                                {% if three_months_discount > 0 %}
                                 <div class="price-amount">
-                                    <span class="price-value">{% calculate_plan_price plan "3_months" currency as price_3m %}{{ price_3m|floatformat:0 }}</span>
+                                    <span class="price-old" style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-right: 8px;">{{ base_3m|floatformat:0 }} {{ currency_symbol }}</span>
+                                    <span class="price-value" style="color: #e11d48; font-weight: bold;">{{ price_3m|floatformat:0 }}</span>
                                     <span class="price-currency">{{ currency_symbol }}</span>
                                 </div>
-                                {% get_active_discount plan "3_months" as three_months_discount %}
-                                {% if three_months_discount > 0 %}
                                 <div class="price-save">
-                                    Економія {{ three_months_discount }}%
+                                    Економія {{ discount_amount_3m|floatformat:0 }} {{ currency_symbol }} ({{ three_months_discount }}%)
                                 </div>
                                 {% get_discount_time_left plan "3_months" as three_months_time_left %}
                                 {% if three_months_time_left %}
@@ -137,9 +152,10 @@
                                     <span class="timer-value" data-timer-display></span>
                                 </div>
                                 {% endif %}
-                                {% elif plan.discount_3_months > 0 %}
-                                <div class="price-save">
-                                    Економія {{ plan.discount_3_months }}%
+                                {% else %}
+                                <div class="price-amount">
+                                    <span class="price-value">{{ price_3m|floatformat:0 }}</span>
+                                    <span class="price-currency">{{ currency_symbol }}</span>
                                 </div>
                                 {% endif %}
                             </div>

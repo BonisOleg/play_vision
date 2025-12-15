@@ -14,7 +14,7 @@ def calculate_plan_price(plan, period, currency='uah'):
     
     Args:
         plan: SubscriptionPlan object
-        period: 'monthly', '3_months', '12_months'
+        period: 'monthly', '3_months'
         currency: 'uah' або 'usd'
     
     Returns:
@@ -34,7 +34,7 @@ def get_monthly_price(plan, period, currency='uah'):
     
     Args:
         plan: SubscriptionPlan object
-        period: 'monthly', '3_months', '12_months'
+        period: 'monthly', '3_months'
         currency: 'uah' або 'usd'
     
     Returns:
@@ -151,6 +151,52 @@ def get_feature(plan, index):
         return ''
     except (ValueError, TypeError, AttributeError):
         return ''
+
+
+@register.simple_tag
+def get_base_price(plan, period, currency='uah'):
+    """
+    Повертає базову ціну без знижок для періоду
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly', '3_months'
+        currency: 'uah' або 'usd'
+    
+    Returns:
+        float: Базова ціна
+    """
+    try:
+        base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
+        if period == '3_months':
+            return base_price * 3
+        return base_price
+    except Exception:
+        return 0
+
+
+@register.simple_tag
+def get_discount_amount(plan, period, currency='uah'):
+    """
+    Повертає суму знижки в грошах для періоду
+    
+    Args:
+        plan: SubscriptionPlan object
+        period: 'monthly', '3_months'
+        currency: 'uah' або 'usd'
+    
+    Returns:
+        float: Сума знижки
+    """
+    try:
+        base_price = float(plan.base_price_uah if currency == 'uah' else plan.base_price_usd)
+        if period == '3_months':
+            base_price = base_price * 3
+        
+        final_price = float(plan.calculate_price(period, currency))
+        return base_price - final_price
+    except Exception:
+        return 0
 
 
 @register.simple_tag

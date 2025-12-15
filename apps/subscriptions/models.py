@@ -177,14 +177,14 @@ class SubscriptionPlan(models.Model):
         default=0,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
         verbose_name='Знижка на 3 місяці (%)',
-        help_text='Відсоток знижки для 3-місячної підписки'
+        help_text='Відсоток знижки для 3-місячної підписки (без таймера)'
     )
     
-    discount_12_months = models.IntegerField(
+    discount_monthly = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name='Знижка на рік (%)',
-        help_text='Відсоток знижки для річної підписки'
+        verbose_name='Знижка на місяць (%)',
+        help_text='Звичайна знижка для місячної підписки (без таймера)'
     )
     
     # Доступність періодів
@@ -196,11 +196,6 @@ class SubscriptionPlan(models.Model):
     available_3_months = models.BooleanField(
         default=True,
         verbose_name='Доступно на 3 місяці'
-    )
-    
-    available_12_months = models.BooleanField(
-        default=True,
-        verbose_name='Доступно на рік'
     )
     
     unavailable_text = models.CharField(
@@ -286,7 +281,8 @@ class SubscriptionPlan(models.Model):
     
     def get_active_discount(self, period):
         """
-        Повертає активну знижку для періоду (якщо таймер активний)
+        Повертає активну знижку для періоду
+        Пріоритет: таймер > звичайна знижка
         
         Args:
             period: 'monthly' або '3_months'
@@ -297,15 +293,21 @@ class SubscriptionPlan(models.Model):
         now = timezone.now()
         
         if period == 'monthly':
+            # Спочатку перевіряємо таймер
             if (self.discount_monthly_start_date and 
                 self.discount_monthly_end_date and
                 self.discount_monthly_start_date <= now <= self.discount_monthly_end_date):
                 return self.discount_monthly_percentage
+            # Якщо таймер не активний, повертаємо звичайну знижку
+            return self.discount_monthly
         elif period == '3_months':
+            # Спочатку перевіряємо таймер
             if (self.discount_3months_start_date and 
                 self.discount_3months_end_date and
                 self.discount_3months_start_date <= now <= self.discount_3months_end_date):
                 return self.discount_3months_percentage
+            # Якщо таймер не активний, повертаємо звичайну знижку
+            return self.discount_3_months
         
         return 0
     
@@ -333,9 +335,10 @@ class SubscriptionPlan(models.Model):
     def calculate_price(self, period, currency='uah'):
         """
         Розраховує ціну з урахуванням періоду та знижки (включаючи таймер)
+        Пріоритет: таймер > звичайна знижка > базова ціна
         
         Args:
-            period: 'monthly', '3_months', '12_months'
+            period: 'monthly', '3_months'
             currency: 'uah' або 'usd'
         
         Returns:
@@ -347,10 +350,14 @@ class SubscriptionPlan(models.Model):
         
         if period == 'monthly':
             price = base_price
-            # Перевіряємо активну знижку з таймером
+            # Спочатку перевіряємо активну знижку з таймером
             active_discount = self.get_active_discount('monthly')
             if active_discount > 0:
                 discount = Decimal(str(active_discount))
+                return price * (Decimal('1') - discount / Decimal('100'))
+            # Якщо таймер не активний, використовуємо звичайну знижку
+            if self.discount_monthly > 0:
+                discount = Decimal(str(self.discount_monthly))
                 return price * (Decimal('1') - discount / Decimal('100'))
             return price
         
@@ -361,14 +368,11 @@ class SubscriptionPlan(models.Model):
             if active_discount > 0:
                 discount = Decimal(str(active_discount))
                 return full_price * (Decimal('1') - discount / Decimal('100'))
-            # Fallback на стару знижку
-            discount = Decimal(str(self.discount_3_months))
-            return full_price * (Decimal('1') - discount / Decimal('100'))
-        
-        elif period == '12_months':
-            full_price = base_price * 12
-            discount = Decimal(str(self.discount_12_months))
-            return full_price * (Decimal('1') - discount / Decimal('100'))
+            # Якщо таймер не активний, використовуємо звичайну знижку
+            if self.discount_3_months > 0:
+                discount = Decimal(str(self.discount_3_months))
+                return full_price * (Decimal('1') - discount / Decimal('100'))
+            return full_price
         
         return base_price
     
@@ -382,8 +386,6 @@ class SubscriptionPlan(models.Model):
             return total_price
         elif period == '3_months':
             return total_price / Decimal('3')
-        elif period == '12_months':
-            return total_price / Decimal('12')
         
         return total_price
     
@@ -393,8 +395,6 @@ class SubscriptionPlan(models.Model):
             return self.available_monthly
         elif period == '3_months':
             return self.available_3_months
-        elif period == '12_months':
-            return self.available_12_months
         return False
     
     def get_checkout_url(self, period='monthly'):
