@@ -210,6 +210,21 @@
 
 .course-modal-actions a {
     text-decoration: none;
+    display: inline-block;
+}
+
+/* Стилі для кнопки на десктопі */
+.course-modal-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    transition: var(--transition-base);
+    cursor: pointer;
+    text-align: center;
 }
 
 /* === ПРАВА КОЛОНКА (МЕДІА) === */

@@ -40,6 +40,11 @@
         open(trigger) {
             // Отримати дані з data-атрибутів
             const data = this.getDataFromTrigger(trigger);
+            
+            // Дебаг: перевірити чи передається joinUrl
+            if (!data.joinUrl || data.joinUrl === '#') {
+                console.log('CourseModal: joinUrl не вказано, використовується fallback /hub/');
+            }
 
             // Заповнити контент
             this.renderContent(data);
@@ -152,11 +157,18 @@
                         ${metaHtml}
 
                         <div class="course-modal-actions">
-                            <a href="${this.escapeHtml(data.joinUrl || '/hub/')}" 
+                            ${data.joinUrl && data.joinUrl !== '#' ? `
+                            <a href="${this.escapeHtml(data.joinUrl)}" 
                                class="btn btn-primary btn-large"
-                               ${data.joinUrl && data.joinUrl !== '#' ? 'target="_blank" rel="noopener"' : ''}>
+                               target="_blank" rel="noopener">
                                 Придбати
                             </a>
+                            ` : `
+                            <a href="/hub/" 
+                               class="btn btn-primary btn-large">
+                                Придбати
+                            </a>
+                            `}
                         </div>
                     </div>
 
