@@ -47,14 +47,13 @@
     left: 0;
 }
 
-/* Overlay градієнт - такий самий як на головній сторінці */
-.hub-hero-overlay {
+.hub-hero-bg::after {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(90deg,
             rgba(0, 0, 0, 0.88) 0%,
             rgba(0, 0, 0, 0.85) 25%,
@@ -67,7 +66,7 @@
 
 .hub-hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     padding: var(--spacing-xl);
     display: flex;
     flex-direction: column;
@@ -302,7 +301,7 @@
 }
 
 /* Видалення overlay градієнта в темній темі */
-[data-theme="dark"] .hub-hero-overlay {
+[data-theme="dark"] .hub-hero-bg::after {
     display: none;
 }
 
@@ -318,7 +317,7 @@
     }
     
     /* Видалення overlay градієнта для автоматичної теми */
-    [data-theme="auto"] .hub-hero-overlay {
+    [data-theme="auto"] .hub-hero-bg::after {
         display: none;
     }
     
