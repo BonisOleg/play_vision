@@ -118,6 +118,15 @@ select:focus-visible {
         scroll-behavior: auto;
     }
 
+    /* Виключення для зображень - дозволяємо GIF анімацію */
+    img,
+    img::before,
+    img::after {
+        animation-duration: initial;
+        animation-iteration-count: initial;
+        transition-duration: initial;
+    }
+
     /* Remove all transforms and complex animations */
     .animate-fade-in,
     .animate-fade-out,
