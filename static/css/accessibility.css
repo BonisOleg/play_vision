@@ -80,6 +80,14 @@ select:focus-visible {
     a {
         text-decoration: underline;
     }
+    
+    /* Виняток для статистичних карток хабу */
+    .hub-stat-card,
+    .hub-stat-card:hover,
+    .hub-stat-card:focus,
+    .hub-stat-card:active {
+        text-decoration: none !important;
+    }
 
     /* Increase contrast for form elements */
     input,
@@ -250,4 +258,23 @@ select:focus-visible {
     body {
         overscroll-behavior-y: contain;
     }
+}
+
+/* === ПРИХОВУВАННЯ ТЕКСТУ ПЕРЕД HEADER === */
+/* Додатковий захист: забезпечуємо, що header є першим видимим елементом */
+body > header.main-header {
+    position: relative;
+    z-index: 1;
+}
+
+/* Приховуємо будь-які елементи, які можуть з'явитися перед header */
+/* Це правило спрацює тільки якщо елемент дійсно з'явиться перед header */
+body > *:first-child:not(header):not(script):not(style):not(link):not(meta):not(title):not(noscript) {
+    display: none;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    left: -9999px;
+    width: 0;
 }

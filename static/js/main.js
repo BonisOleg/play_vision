@@ -1,47 +1,22 @@
-// Видалити текстовий вузол з meta_description перед header
+// Видалити ВСІ текстові вузли перед header
 function removeMetaDescriptionText() {
     const body = document.body;
     if (!body) return;
     
-    // Перевіряємо перший дочірній елемент
-    const firstChild = body.firstChild;
-    if (firstChild && firstChild.nodeType === 3) {
-        // Це текстовий вузол
-        const text = firstChild.textContent.trim();
-        // Перевіряємо, чи це схоже на meta_description
-        if (text && (
-            text.includes('Обирай траєкторію') ||
-            text.includes('Освітні програми') ||
-            text.includes('експертів') ||
-            text.includes('Повний доступ до всіх матеріалів')
-        )) {
-            body.removeChild(firstChild);
-        }
-    }
-    
-    // Також перевіряємо всі текстові вузли перед header
     const header = document.querySelector('header.main-header');
-    if (header) {
-        let node = body.firstChild;
-        while (node && node !== header) {
-            if (node.nodeType === 3) {
-                const text = node.textContent.trim();
-                if (text && (
-                    text.includes('Обирай траєкторію') ||
-                    text.includes('Освітні програми') ||
-                    text.includes('експертів') ||
-                    text.includes('Повний доступ до всіх матеріалів')
-                )) {
-                    const nextSibling = node.nextSibling;
-                    body.removeChild(node);
-                    node = nextSibling;
-                } else {
-                    node = node.nextSibling;
-                }
-            } else {
-                node = node.nextSibling;
-            }
+    if (!header) return;
+    
+    // Видаляємо всі текстові вузли перед header
+    let node = body.firstChild;
+    while (node && node !== header) {
+        if (node.nodeType === 3) {
+            // Це текстовий вузол - видаляємо його незалежно від вмісту
+            const nextSibling = node.nextSibling;
+            body.removeChild(node);
+            node = nextSibling;
+            continue;
         }
+        node = node.nextSibling;
     }
 }
 
@@ -54,8 +29,21 @@ if (document.readyState === 'loading') {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Видалити текстовий вузол перед header (meta_description) - на випадок, якщо він з'явився пізніше
+    // Видалити текстовий вузол перед header - на випадок, якщо він з'явився пізніше
     removeMetaDescriptionText();
+    
+    // Відстежуємо зміни в DOM для видалення тексту, який може з'явитися пізніше
+    const observer = new MutationObserver(function(mutations) {
+        removeMetaDescriptionText();
+    });
+    
+    // Спостерігаємо за змінами в body
+    if (document.body) {
+        observer.observe(document.body, {
+            childList: true,
+            subtree: false
+        });
+    }
     
     initializeHTMX();
     initializePWA();
@@ -85,6 +73,8 @@ function initializeHTMX() {
                 setTimeout(() => cartCount.classList.remove('pulse'), 600);
             }
         }
+        // Видалити текст перед header після HTMX завантаження
+        removeMetaDescriptionText();
     });
 
     // Захист навігації від HTMX

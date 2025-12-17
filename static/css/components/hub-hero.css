@@ -181,7 +181,7 @@
     border-radius: 8px;
     padding: var(--spacing-lg);
     text-align: center;
-    text-decoration: none;
+    text-decoration: none !important;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -195,6 +195,7 @@
 .hub-stat-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px var(--hub-shadow);
+    text-decoration: none !important;
 }
 
 .hub-stat-label {
@@ -254,6 +255,11 @@
     .hub-stat-card-2 {
         grid-row: 3;
         grid-column: 1;
+    }
+    
+    .hub-stat-card,
+    .hub-stat-card:hover {
+        text-decoration: none !important;
     }
     
     .hero-title {
@@ -411,6 +417,13 @@
     .hub-hero-slogan {
         font-size: 1rem;
     }
+    
+    .hub-stat-card,
+    .hub-stat-card:hover,
+    .hub-stat-card:focus,
+    .hub-stat-card:active {
+        text-decoration: none !important;
+    }
 }
 
 /* Темна тема */
@@ -422,8 +435,10 @@
 /* Градієнт залишається в темній темі (як на головній сторінці) */
 
 /* Видалення тіней на картках статистики в темній темі */
+[data-theme="dark"] .hub-stat-card,
 [data-theme="dark"] .hub-stat-card:hover {
     box-shadow: none;
+    text-decoration: none !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -435,8 +450,10 @@
     /* Градієнт залишається для автоматичної теми (як на головній сторінці) */
     
     /* Видалення тіней на картках для автоматичної теми */
+    [data-theme="auto"] .hub-stat-card,
     [data-theme="auto"] .hub-stat-card:hover {
         box-shadow: none;
+        text-decoration: none !important;
     }
 }
 

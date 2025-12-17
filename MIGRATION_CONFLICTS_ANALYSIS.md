@@ -171,3 +171,4 @@ render shell playvision -- 'python manage.py showmigrations subscriptions'
 2. ⚠️ **Зберегти backward compatibility** для існуючих викликів `get_features()`
 3. ⚠️ **Тестувати на staging** перед production
 4. ⚠️ **Backup БД** перед видаленням полів
+
