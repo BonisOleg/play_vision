@@ -264,7 +264,7 @@ select:focus-visible {
 /* Додатковий захист: забезпечуємо, що header є першим видимим елементом */
 body > header.main-header {
     position: relative;
-    z-index: 1;
+    z-index: var(--z-header, 1000);
 }
 
 /* Приховуємо будь-які елементи, які можуть з'явитися перед header */
