@@ -225,7 +225,7 @@ class RevenueAnalytics(models.Model):
         ('subscription', 'Підписка'),
         ('course', 'Курс'),
         ('event', 'Івент'),
-        ('mentoring', 'Ментор коучинг'),
+        ('mentoring', 'Ментор-коучинг'),
     ]
     
     date = models.DateField()

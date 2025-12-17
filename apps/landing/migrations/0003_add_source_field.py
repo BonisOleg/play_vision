@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 choices=[
                     ('landing', 'Landing Page'),
                     ('hub', 'Хаб знань'),
-                    ('mentoring', 'Ментор коучинг'),
+                    ('mentoring', 'Ментор-коучинг'),
                     ('subscription', 'Підписка'),
                 ],
                 default='landing',

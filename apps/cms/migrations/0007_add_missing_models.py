@@ -194,7 +194,7 @@ class Migration(migrations.Migration):
                     ],
                     options={
                         'verbose_name': 'Hero блок',
-                        'verbose_name_plural': '💼 Ментор коучинг → Hero блок',
+                        'verbose_name_plural': '💼 Ментор-коучинг → Hero блок',
                         'db_table': 'cms_mentor_hero',
                     },
                 ),
@@ -213,7 +213,7 @@ class Migration(migrations.Migration):
                     ],
                     options={
                         'verbose_name': 'Картинка',
-                        'verbose_name_plural': '💼 Ментор коучинг → Секція 1 (3 картинки)',
+                        'verbose_name_plural': '💼 Ментор-коучинг → Секція 1 (3 картинки)',
                         'db_table': 'cms_mentor_section1_images',
                         'ordering': ['position'],
                     },

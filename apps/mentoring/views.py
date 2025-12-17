@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 def mentoring_page(request):
     """
-    Сторінка Ментор коучингу
+    Сторінка Ментор-коучингу
     """
     # Експерти завантажуються через context processor як cms_experts_mentoring
     context = {}

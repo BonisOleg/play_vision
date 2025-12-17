@@ -296,7 +296,7 @@ def get_cta_url(hub_hero, number):
 
 @register.simple_tag
 def get_mentor_hero():
-    """Отримати Hero для Ментор коучинг"""
+    """Отримати Hero для Ментор-коучинг"""
     try:
         return MentorHero.objects.filter(is_active=True).first()
     except MentorHero.DoesNotExist:
@@ -338,7 +338,7 @@ def get_mentor_section4():
 
 @register.simple_tag
 def get_mentor_coaching_svg():
-    """Отримати SVG для Ментор коучинг на Головній"""
+    """Отримати SVG для Ментор-коучинг на Головній"""
     try:
         return MentorCoachingSVG.objects.filter(is_active=True).first()
     except MentorCoachingSVG.DoesNotExist:

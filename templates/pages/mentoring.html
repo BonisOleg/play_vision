@@ -2,7 +2,7 @@
 {% load static %}
 {% load cms_tags %}
 
-{% block title %}Ментор коучинг - Play Vision{% endblock %}
+{% block title %}Ментор-коучинг - Play Vision{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/section-base.css' %}">
@@ -21,9 +21,9 @@
     <section class="fullscreen-section hero-section hero-bordered mentoring-hero">
         <div class="section-bg">
             {% if mentor_hero and mentor_hero.image %}
-            <img class="section-bg-image" src="{{ mentor_hero.image.url }}" alt="Ментор коучинг" loading="eager">
+            <img class="section-bg-image" src="{{ mentor_hero.image.url }}" alt="Ментор-коучинг" loading="eager">
             {% else %}
-            <img class="section-bg-image" src="{% static 'images/hiromentor.png' %}" alt="Ментор коучинг" loading="eager">
+            <img class="section-bg-image" src="{% static 'images/hiromentor.png' %}" alt="Ментор-коучинг" loading="eager">
             {% endif %}
         </div>
         <div class="section-overlay section-overlay--gradient"></div>
@@ -33,11 +33,11 @@
     <div class="unified-sections-wrapper">
         <div class="unified-sections-container">
 
-            <!-- 2. ЩО ТАКЕ МЕНТОР КОУЧИНГ -->
+            <!-- 2. ЩО ТАКЕ МЕНТОР-КОУЧИНГ -->
             {% get_mentor_section1_images as mentor_images %}
             <section class="fullscreen-section mentoring-what-section">
                 <div class="section-content">
-                    <h2 class="section-title">Що таке Ментор коучинг</h2>
+                    <h2 class="section-title">Що таке Ментор-коучинг</h2>
 
                     <div class="mentoring-cards-grid">
                         {% if mentor_images %}
@@ -58,10 +58,10 @@
                         {% else %}
                         <article class="mentoring-card">
                             <div class="mentoring-card-image">
-                                <img src="{% static 'images/mentor1.png' %}" alt="Ментор коучинг екосистема" loading="lazy">
+                                <img src="{% static 'images/mentor1.png' %}" alt="Ментор-коучинг екосистема" loading="lazy">
                             </div>
                             <div class="mentoring-card-content">
-                                <p>Ментор коучинг - це екосистема індивідуального розвитку гравця з комплексним
+                                <p>Ментор-коучинг - це екосистема індивідуального розвитку гравця з комплексним
                                     підходом. Середовище, де кожен юний футболіст вчиться мислити, діяти і жити як
                                     професіонал.</p>
                             </div>
@@ -91,11 +91,11 @@
                 </div>
             </section>
 
-            <!-- 3. СТРУКТУРА МЕНТОР КОУЧИНГА -->
+            <!-- 3. СТРУКТУРА МЕНТОР-КОУЧИНГА -->
             {% get_mentor_section2 as mentor_section2 %}
             <section class="fullscreen-section mentoring-structure-section">
                 <div class="section-content">
-                    <h2 class="section-title">{% if mentor_section2 %}{{ mentor_section2|get_localized_title:country_code }}{% else %}Структура Ментор коучинга{% endif %}</h2>
+                    <h2 class="section-title">{% if mentor_section2 %}{{ mentor_section2|get_localized_title:country_code }}{% else %}Структура Ментор-коучинга{% endif %}</h2>
 
                     <div class="mentoring-image-block">
                         {% if mentor_section2 %}
@@ -114,7 +114,7 @@
                             {% endif %}
                         </div>
                         {% else %}
-                        <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}" alt="Структура Ментор коучинга" loading="lazy">
+                        <img class="mentoring-svg-invert" src="{% static 'images/mentor1.svg' %}" alt="Структура Ментор-коучинга" loading="lazy">
                         {% endif %}
                     </div>
                 </div>
@@ -147,11 +147,11 @@
                 </div>
             </section>
 
-            <!-- 5. КОМАНДА МЕНТОР КОУЧИНГУ -->
+            <!-- 5. КОМАНДА МЕНТОР-КОУЧИНГУ -->
             <section class="fullscreen-section experts-section mentoring-team-section">
                 <div class="section-content">
                     <div class="experts-header">
-                        <h2 class="section-title">Команда Ментор коучингу</h2>
+                        <h2 class="section-title">Команда Ментор-коучингу</h2>
 
                         <div class="experts-navigation">
                             <button class="expert-nav-btn expert-nav-prev" aria-label="Попередні експерти">

@@ -342,12 +342,12 @@ class HubHeroAdmin(admin.ModelAdmin):
 
 
 # ============================================
-# 💼 МЕНТОР КОУЧИНГ
+# 💼 МЕНТОР-КОУЧИНГ
 # ============================================
 
 @admin.register(MentorHero)
 class MentorHeroAdmin(admin.ModelAdmin):
-    """Hero блок - Ментор коучинг"""
+    """Hero блок - Ментор-коучинг"""
     
     fieldsets = (
         ('Зображення', {
@@ -368,7 +368,7 @@ class MentorHeroAdmin(admin.ModelAdmin):
 
 @admin.register(MentorSection1Image)
 class MentorSection1ImageAdmin(admin.ModelAdmin):
-    """Секція 1 - 3 картинки (Ментор коучинг)"""
+    """Секція 1 - 3 картинки (Ментор-коучинг)"""
     list_display = ['position', 'caption_ua', 'is_active']
     list_editable = ['is_active']
     ordering = ['position']
@@ -401,7 +401,7 @@ class MentorSection1ImageAdmin(admin.ModelAdmin):
 
 @admin.register(MentorSection2)
 class MentorSection2Admin(admin.ModelAdmin):
-    """Секція 2 - Ментор коучинг"""
+    """Секція 2 - Ментор-коучинг"""
     
     fieldsets = (
         ('🇺🇦 Заголовок Україна', {
@@ -439,7 +439,7 @@ class MentorSection2Admin(admin.ModelAdmin):
 
 @admin.register(MentorSection3)
 class MentorSection3Admin(admin.ModelAdmin):
-    """Секція 3 - Ментор коучинг (тільки SVG)"""
+    """Секція 3 - Ментор-коучинг (тільки SVG)"""
     
     fieldsets = (
         ('🇺🇦 SVG Україна - Світла', {
@@ -494,12 +494,12 @@ class MentorSection4Admin(admin.ModelAdmin):
 
 
 # ============================================
-# 🏠 ГОЛОВНА - Ментор коучинг SVG
+# 🏠 ГОЛОВНА - Ментор-коучинг SVG
 # ============================================
 
 @admin.register(MentorCoachingSVG)
 class MentorCoachingSVGAdmin(admin.ModelAdmin):
-    """Ментор коучинг - Головна сторінка"""
+    """Ментор-коучинг - Головна сторінка"""
     
     fieldsets = (
         ('🇺🇦 SVG Україна - Світла', {

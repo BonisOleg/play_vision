@@ -54,8 +54,8 @@ def custom_get_app_list(self, request):
                 {'name': '🎉 Івенти', 'admin_url': '#', 'view_only': True, 'object_name': 'EventsHeader'},
                 get_model_from_app_list(original_app_list, 'cms', 'EventGridCell'),
                 
-                # === 💼 Ментор коучинг ===
-                {'name': '💼 Ментор коучинг', 'admin_url': '#', 'view_only': True, 'object_name': 'MentorHeader'},
+                # === 💼 Ментор-коучинг ===
+                {'name': '💼 Ментор-коучинг', 'admin_url': '#', 'view_only': True, 'object_name': 'MentorHeader'},
                 get_model_from_app_list(original_app_list, 'cms', 'MentorHero'),
                 get_model_from_app_list(original_app_list, 'cms', 'MentorSection1Image'),
                 get_model_from_app_list(original_app_list, 'cms', 'MentorSection2'),

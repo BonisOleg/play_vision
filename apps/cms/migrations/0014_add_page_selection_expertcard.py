@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='expertcard',
             name='show_on_mentoring',
-            field=models.BooleanField(default=False, verbose_name='Показувати на "Ментор коучинг"'),
+            field=models.BooleanField(default=False, verbose_name='Показувати на "Ментор-коучинг"'),
         ),
         # 2. Додати нові поля для порядку
         migrations.AddField(
@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='expertcard',
             name='order_mentoring',
-            field=models.PositiveIntegerField(default=0, verbose_name='Порядок на "Ментор коучинг"'),
+            field=models.PositiveIntegerField(default=0, verbose_name='Порядок на "Ментор-коучинг"'),
         ),
         # 3. Міграція даних
         migrations.RunPython(migrate_show_on_homepage_to_show_on_home),

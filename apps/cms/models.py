@@ -104,12 +104,12 @@ class ExpertCard(models.Model):
     # Display - per page visibility
     show_on_home = models.BooleanField('Показувати на головній', default=False)
     show_on_about = models.BooleanField('Показувати на "Про нас"', default=False)
-    show_on_mentoring = models.BooleanField('Показувати на "Ментор коучинг"', default=False)
+    show_on_mentoring = models.BooleanField('Показувати на "Ментор-коучинг"', default=False)
     
     # Ordering per page
     order_home = models.PositiveIntegerField('Порядок на головній', default=0)
     order_about = models.PositiveIntegerField('Порядок на "Про нас"', default=0)
-    order_mentoring = models.PositiveIntegerField('Порядок на "Ментор коучинг"', default=0)
+    order_mentoring = models.PositiveIntegerField('Порядок на "Ментор-коучинг"', default=0)
     
     # General display
     order = models.PositiveIntegerField('Порядок', default=0)  # для сумісності
@@ -360,7 +360,7 @@ __all__ = [
     'AboutHero', 'AboutSection2', 'AboutSection3', 'AboutSection4',
     # Хаб знань
     'HubHero',
-    # Ментор коучинг
+    # Ментор-коучинг
     'MentorHero', 'MentorSection1Image', 'MentorSection2', 'MentorSection3', 'MentorSection4',
     # Ментор на головній
     'MentorCoachingSVG',

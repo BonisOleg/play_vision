@@ -7,7 +7,7 @@ from .models import (
     AboutHero, AboutSection2, AboutSection3, AboutSection4,
     # Хаб знань
     HubHero,
-    # Ментор коучинг
+    # Ментор-коучинг
     MentorHero, MentorSection1Image, MentorSection2, MentorSection3, MentorSection4,
     MentorCoachingSVG
 )
