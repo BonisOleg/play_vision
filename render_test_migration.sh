@@ -42,3 +42,8 @@ echo "⚠️ ЦЕ БУВ DRY-RUN - нічого не змінено в БД"
 echo "Для реального застосування використайте:"
 echo "  python manage.py migrate subscriptions"
 
+
+
+
+
+

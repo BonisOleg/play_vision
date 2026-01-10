@@ -78,11 +78,12 @@ class VideoPreviewManager {
             );
             actionsDiv.appendChild(registerBtn);
         } else {
-            const subscribeBtn = this.createButton(
-                'Оформити підписку',
-                'btn-primary',
-                () => window.location.href = '/pricing/'
-            );
+            // Subscription button hidden per requirements
+            // const subscribeBtn = this.createButton(
+            //     'Оформити підписку',
+            //     'btn-primary',
+            //     () => window.location.href = '/pricing/'
+            // );
 
             const buyBtn = this.createButton(
                 'Купити курс',
@@ -90,7 +91,7 @@ class VideoPreviewManager {
                 () => this.addToCart()
             );
 
-            actionsDiv.appendChild(subscribeBtn);
+            // actionsDiv.appendChild(subscribeBtn);
             actionsDiv.appendChild(buyBtn);
         }
 

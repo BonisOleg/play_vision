@@ -172,3 +172,8 @@ render shell playvision -- 'python manage.py showmigrations subscriptions'
 3. ⚠️ **Тестувати на staging** перед production
 4. ⚠️ **Backup БД** перед видаленням полів
 
+
+
+
+
+

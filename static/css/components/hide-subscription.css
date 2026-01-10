@@ -1,0 +1,51 @@
+/* Hide subscription navigation items */
+.nav-tab-btn[href*="subscriptions:pricing"],
+.nav-tab-btn[href*="/pricing/"],
+.nav-tab-btn[aria-label="Підписка"],
+.nav-item[href*="subscriptions:pricing"],
+.nav-item[href*="/pricing/"],
+.nav-item[aria-label="Підписка"] {
+    display: none !important;
+}
+
+/* Hide contextual subscription buttons */
+a[href*="subscriptions:pricing"],
+a[href*="/pricing/"] {
+    display: none !important;
+}
+
+/* Hide subscription action buttons in account tabs */
+.subscription-actions a[href*="subscriptions:pricing"],
+.subscription-actions a[href*="/pricing/"] {
+    display: none !important;
+}
+
+/* Hide banner CTA button with subscription link */
+.banner-cta-btn[href*="subscriptions:pricing"],
+.banner-cta-btn[href*="/pricing/"] {
+    display: none !important;
+}
+
+/* Hide CTA section buttons with subscription links */
+.cta-buttons a[href*="subscriptions:pricing"],
+.cta-buttons a[href*="/pricing/"] {
+    display: none !important;
+}
+
+/* Hide access buttons with subscription links */
+.access-buttons a[href*="subscriptions:pricing"],
+.access-buttons a[href*="/pricing/"] {
+    display: none !important;
+}
+
+/* Hide cart subscription links */
+.cart-subscription-link {
+    display: none !important;
+}
+
+/* Hide preview action buttons created by JS with subscription text */
+.preview-actions button[onclick*="pricing"],
+.preview-actions a[href*="pricing"] {
+    display: none !important;
+}
+
