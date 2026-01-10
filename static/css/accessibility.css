@@ -262,8 +262,10 @@ select:focus-visible {
 
 /* === ПРИХОВУВАННЯ ТЕКСТУ ПЕРЕД HEADER === */
 /* Додатковий захист: забезпечуємо, що header є першим видимим елементом */
+/* Виправлено: position: sticky для коректного закріплення при скролі */
 body > header.main-header {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: var(--z-header, 1000);
 }
 
